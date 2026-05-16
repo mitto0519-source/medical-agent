@@ -213,59 +213,139 @@ mechanisms → strengths/limitations → conclusion.
     ) -> str:
         """전체 논문 초안 한번에 생성.
 
-        study_info keys: background, objective, design, population,
-                         dataset, exposure, outcome, covariates, methods_list
-        results keys: descriptive, main_findings, subgroup, sensitivity, conclusion
+        study_info: dataset, design, sample_size, survey_year, journal,
+                    population, exposure, outcome, covariates, methods_list 등
+        results: summary(필수), main_findings(선택), descriptive, subgroup,
+                 sensitivity, conclusion, literature_comparison, mechanisms
         """
+        # ── results 정규화: summary → main_findings 자동 변환 ──────────
+        results_summary = results.get("summary", "")
+        main_findings = results.get("main_findings") or (
+            [results_summary] if results_summary else ["Not provided"]
+        )
+
+        dataset_name = study_info.get("dataset", "")
+        design = study_info.get("design", "cross-sectional")
+        population = study_info.get("population", "")
+        exposure = study_info.get("exposure", "")
+        outcome = study_info.get("outcome", "")
+        sample_size = study_info.get("sample_size", "")
+        journal = study_info.get("journal", "")
+
+        # dataset_name이 긴 서술형이면 "KYRBS" 같은 약어만 추출해 메서드에 넘김
+        dataset_key = None
+        if self._datasets:
+            for ds_name in self._datasets.list_datasets():
+                if ds_name.upper() in dataset_name.upper():
+                    dataset_key = ds_name
+                    break
+
         sections = {}
 
         print("[PaperWriter] Abstract 작성 중...")
-        sections["abstract"] = self.write_abstract(
-            topic=topic,
-            background=study_info.get("background", ""),
-            objective=study_info.get("objective", ""),
-            methods_summary=study_info.get("methods_summary", ""),
-            results_summary=results.get("main_findings", [""])[0] if results.get("main_findings") else "",
-            conclusion=results.get("conclusion", ""),
+        sections["abstract"] = self._generate(
+            self._profile.get_system_prompt(),
+            f"""Write a structured abstract for this medical research paper.
+Word limit: 300 words. Use Background / Objective / Methods / Results / Conclusion format.
+
+TOPIC: {topic}
+STUDY DESIGN: {design}
+DATASET: {dataset_name} (n={sample_size})
+EXPOSURE: {exposure}
+OUTCOME: {outcome}
+POPULATION: {population}
+KEY RESULTS: {results_summary}
+TARGET JOURNAL: {journal}
+
+Write the complete abstract now. Base all content strictly on the information provided above.
+Do NOT substitute content from other studies.""",
         )
 
         print("[PaperWriter] Introduction 작성 중...")
-        sections["introduction"] = self.write_introduction(
-            topic=topic,
-            background_facts=study_info.get("background_facts", [study_info.get("background", "")]),
-            knowledge_gap=study_info.get("knowledge_gap", ""),
-            hypothesis=study_info.get("objective", ""),
-            reference_context=reference_context,
+        ref_block = f"\n\nREFERENCE CONTEXT:\n{reference_context}" if reference_context else ""
+        sections["introduction"] = self._generate(
+            self._profile.get_system_prompt(),
+            f"""Write the Introduction section for this medical research paper.
+
+TOPIC: {topic}
+EXPOSURE: {exposure}
+OUTCOME: {outcome}
+POPULATION: {population}
+STUDY DESIGN: {design}{ref_block}
+
+Structure: broad public health context → specific problem → knowledge gap → study aim.
+Keep strictly to this topic. Do NOT refer to other unrelated studies.
+Write 4–5 paragraphs.""",
         )
 
         print("[PaperWriter] Methods 작성 중...")
-        sections["methods"] = self.write_methods(
-            study_design=study_info.get("design", ""),
-            population=study_info.get("population", ""),
-            dataset_name=study_info.get("dataset"),
-            exposure=study_info.get("exposure", ""),
-            outcome=study_info.get("outcome", ""),
-            covariates=study_info.get("covariates", ""),
-            statistical_methods=study_info.get("methods_list", []),
+        dataset_ctx = self._datasets.get_context(dataset_key) if (dataset_key and self._datasets) else ""
+        methods_ctx = self._methods.get_context_for_claude(
+            study_info.get("methods_list", ["logistic_regression"])
+        ) if self._methods else ""
+        sections["methods"] = self._generate(
+            self._profile.get_system_prompt(),
+            f"""Write the Methods section for this medical research paper.
+
+TOPIC: {topic}
+STUDY DESIGN: {design}
+DATASET: {dataset_name} (n={sample_size})
+EXPOSURE: {exposure}
+OUTCOME: {outcome}
+COVARIATES: {study_info.get("covariates", "sex, age, grade, family_econ, academic_perf, BMI, depression, physical activity")}
+
+{dataset_ctx}
+{methods_ctx}
+
+Write subsections: Study Design and Population / Exposure / Outcome / Covariates / Statistical Analysis.
+Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""",
         )
 
         print("[PaperWriter] Results 작성 중...")
-        sections["results"] = self.write_results(
-            descriptive_stats=results.get("descriptive", ""),
-            main_findings=results.get("main_findings", []),
-            subgroup_findings=results.get("subgroup"),
-            sensitivity_findings=results.get("sensitivity"),
+        sections["results"] = self._generate(
+            self._profile.get_system_prompt(),
+            f"""Write the Results section for this medical research paper.
+
+TOPIC: {topic}
+EXPOSURE: {exposure}
+OUTCOME: {outcome}
+DATASET: {dataset_name} (n={sample_size})
+
+KEY FINDINGS (use these exact numbers):
+{chr(10).join(f'- {f}' for f in main_findings)}
+
+Additional subgroup findings: {results.get("subgroup", "Not provided")}
+Sensitivity analyses: {results.get("sensitivity", "Not provided")}
+
+IMPORTANT: Base the Results ONLY on the numbers above. Do NOT invent statistics.
+Write in this author's exact numeric reporting style (aOR, 95% CI, P values).
+Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""",
         )
 
         print("[PaperWriter] Discussion 작성 중...")
-        sections["discussion"] = self.write_discussion(
-            main_findings=results.get("main_findings", []),
-            comparison_with_literature=results.get("literature_comparison", ""),
-            mechanisms=results.get("mechanisms", ""),
-            strengths=study_info.get("strengths", []),
-            limitations=study_info.get("limitations", []),
-            conclusion_message=results.get("conclusion", ""),
-            reference_context=reference_context,
+        sections["discussion"] = self._generate(
+            self._profile.get_system_prompt(),
+            f"""Write the Discussion section for this medical research paper.
+
+TOPIC: {topic}
+EXPOSURE: {exposure}
+OUTCOME: {outcome}
+
+KEY FINDINGS TO DISCUSS:
+{chr(10).join(f'- {f}' for f in main_findings)}
+
+COMPARISON WITH LITERATURE: {results.get("literature_comparison", "Discuss in relation to prior studies on this topic.")}
+MECHANISMS: {results.get("mechanisms", "Propose biologically plausible mechanisms.")}
+STRENGTHS: nationwide representative sample, large n={sample_size}, validated survey instrument
+LIMITATIONS: cross-sectional design (cannot establish causality), self-reported data, residual confounding
+{ref_block}
+
+Write in this author's hedging style. Structure:
+1) Summary of main findings
+2) Comparison with existing literature
+3) Proposed mechanisms
+4) Strengths and limitations
+5) Conclusion with public health implications""",
         )
 
         # Assemble
