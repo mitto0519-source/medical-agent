@@ -58,7 +58,6 @@ class ResearchPipeline:
         if not self._api_key:
             try:
                 from dotenv import load_dotenv
-                from pathlib import Path
                 _root = Path(__file__).parent.parent.parent
                 load_dotenv(dotenv_path=_root / ".env", override=True)
                 self._api_key = os.environ.get("ANTHROPIC_API_KEY", "")
