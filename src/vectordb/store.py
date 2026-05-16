@@ -22,8 +22,15 @@ class VectorStore:
             persist_dir: Directory where ChromaDB persists its data
             collection_name: Name of the ChromaDB collection
         """
-        import chromadb
-        from chromadb.config import Settings
+        try:
+            import chromadb
+            from chromadb.config import Settings
+        except ImportError:
+            raise ImportError(
+                "chromadb가 설치되지 않았습니다. 로컬에서 사용하려면:\n"
+                "  pip install chromadb\n"
+                "또는 SUPABASE_DB_URL 환경변수를 설정하여 Supabase를 사용하세요."
+            )
 
         Path(persist_dir).mkdir(parents=True, exist_ok=True)
 
@@ -159,9 +166,13 @@ class VectorStore:
 
 
 def get_vector_store(persist_dir: str = "data/chromadb") -> "VectorStore":
-    """환경변수에 따라 Supabase 또는 로컬 ChromaDB VectorStore 반환."""
+    """환경변수에 따라 Supabase 또는 로컬 ChromaDB VectorStore 반환.
+
+    - SUPABASE_DB_URL 설정 시 → SupabaseVectorStore (Streamlit Cloud 기본)
+    - 미설정 시 → VectorStore (ChromaDB, pip install chromadb 필요)
+    """
     import os
     if os.environ.get("SUPABASE_DB_URL"):
         from src.vectordb.supabase_store import SupabaseVectorStore
         return SupabaseVectorStore()  # type: ignore[return-value]
-    return VectorStore(persist_dir=persist_dir)
+    return VectorStore(persist_dir=persist_dir)  # raises ImportError if chromadb not installed

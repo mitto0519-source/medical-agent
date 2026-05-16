@@ -30,8 +30,9 @@ tqdm>=4.65.0
 # ── PDF Processing ───────────────────────────────────────────────────
 pymupdf>=1.23.0
 
-# ── Vector DB — local ────────────────────────────────────────────────
-chromadb>=0.4.0
+# ── Vector DB — local (로컬 개발 시 별도 설치: pip install chromadb) ────
+# chromadb>=0.4.0  ← grpcio→googleapis-common-protos→protobuf4.x 충돌로 제외
+#                     Streamlit Cloud 에서는 SUPABASE_DB_URL 로 Supabase 사용
 
 # ── Vector DB — cloud (Supabase pgvector, SUPABASE_DB_URL 설정 시 사용)
 vecs>=0.4.0
