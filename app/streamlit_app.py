@@ -7,6 +7,7 @@ import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ['HF_HUB_DISABLE_SYMLINKS_WARNING'] = '1'
+os.environ.setdefault('PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION', 'python')
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -131,7 +132,11 @@ with st.sidebar:
         db_label = "Supabase" if os.environ.get("SUPABASE_DB_URL") else "ChromaDB"
         st.success(f"{db_label}: {chunk_count}개 청크")
     except Exception as e:
-        st.error(f"ChromaDB 오류: {e}")
+        _err = str(e)
+        if "protobuf" in _err.lower() or "Descriptors" in _err:
+            st.warning("ChromaDB 비활성 (Supabase 사용 중)")
+        else:
+            st.warning(f"벡터DB 연결 오류")
 
     try:
         from src.library.dataset_library import DatasetLibrary

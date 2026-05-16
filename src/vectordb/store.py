@@ -4,8 +4,6 @@ SUPABASE_DB_URL 환경변수 설정 시 → Supabase 자동 사용 (Streamlit Cl
 미설정 시 → 로컬 ChromaDB
 """
 
-import chromadb
-from chromadb.config import Settings
 from pathlib import Path
 from typing import List, Dict, Optional
 import hashlib
@@ -24,6 +22,9 @@ class VectorStore:
             persist_dir: Directory where ChromaDB persists its data
             collection_name: Name of the ChromaDB collection
         """
+        import chromadb
+        from chromadb.config import Settings
+
         Path(persist_dir).mkdir(parents=True, exist_ok=True)
 
         self._client = chromadb.PersistentClient(
