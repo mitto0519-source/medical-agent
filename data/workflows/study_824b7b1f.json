@@ -1,0 +1,38 @@
+{
+  "workflow_id": "study_824b7b1f",
+  "dataset": "KYRBS",
+  "created_at": "2026-05-16T18:07:36.051611",
+  "current_stage": "variable_plan",
+  "stages": {
+    "topic_proposal": {
+      "focus": "제로음료와 자살 ",
+      "topics": [
+        {
+          "title": "Association Between Zero-Calorie Beverage Consumption and Suicidality Among Korean Adolescents: A Nationwide Cross-Sectional Study",
+          "exposure": "zero_drink_intake",
+          "outcome": "suicidal_ideation, suicidal_plan, suicidal_attempt",
+          "population": "All middle and high school students participating in the 2025 KYRBS (21st wave); students with missing values on exposure, outcome, or key covariates excluded via listwise deletion (after confirming <5% missingness)",
+          "rationale": "Sugar-sweetened beverage intake has been linked to depression and suicidality in adolescents, but zero-calorie (artificially sweetened) beverages have emerged as a popular alternative among Korean youth. Recent evidence suggests artificial sweeteners may affect gut-brain axis, mood regulation, and reward pathways. With zero_drink_intake newly added in the 2025 KYRBS, this is the first opportunity to examine its association with suicidality at a national scale, informing both clinical and policy guidance on adolescent beverage consumption.",
+          "novelty_hint": "First nationally representative analysis using the newly introduced 2025 zero_drink_intake variable; distinguishes zero-calorie from sugar-sweetened beverage effects on mental health, addressing a gap where prior Korean studies focused only on sweet_drink_intake. Also examines a dose-response gradient across the full suicidality continuum (ideation→plan→attempt).",
+          "suggested_design": "Cross-sectional analysis using 2025 KYRBS (single-year, complex survey design)",
+          "covariates": "sex, grade, school_type, region, family_econ, academic_perf, residence_type, stress, depression, sleep_weekday, pa_60min, bmi_category, sweet_drink_intake, caffeine_intake, breakfast_skip, alc_current, cig_current",
+          "analysis_note": "Apply complex survey design (svydesign with cluster_id, strata_id, wt, nest=TRUE) and use svyglm with logit link for each binary suicidality outcome. Mutually adjust for sweet_drink_intake and caffeine_intake to isolate zero-beverage-specific effects; check VIF for collinearity among beverage variables. Stratify by sex given known sex differences in adolescent suicidality. Test linear trend across ordinal zero_drink_intake categories. Conduct sensitivity analyses excluding current depression cases to assess reverse causation. Report aORs with 95% CIs and ICC at school level. Acknowledge cross-sectional design limits causal inference and self-report measurement bias."
+        }
+      ],
+      "approved": true,
+      "selected_topic": {
+        "title": "Association Between Zero-Calorie Beverage Consumption and Suicidality Among Korean Adolescents: A Nationwide Cross-Sectional Study",
+        "exposure": "zero_drink_intake",
+        "outcome": "suicidal_ideation, suicidal_plan, suicidal_attempt",
+        "population": "All middle and high school students participating in the 2025 KYRBS (21st wave); students with missing values on exposure, outcome, or key covariates excluded via listwise deletion (after confirming <5% missingness)",
+        "rationale": "Sugar-sweetened beverage intake has been linked to depression and suicidality in adolescents, but zero-calorie (artificially sweetened) beverages have emerged as a popular alternative among Korean youth. Recent evidence suggests artificial sweeteners may affect gut-brain axis, mood regulation, and reward pathways. With zero_drink_intake newly added in the 2025 KYRBS, this is the first opportunity to examine its association with suicidality at a national scale, informing both clinical and policy guidance on adolescent beverage consumption.",
+        "novelty_hint": "First nationally representative analysis using the newly introduced 2025 zero_drink_intake variable; distinguishes zero-calorie from sugar-sweetened beverage effects on mental health, addressing a gap where prior Korean studies focused only on sweet_drink_intake. Also examines a dose-response gradient across the full suicidality continuum (ideation→plan→attempt).",
+        "suggested_design": "Cross-sectional analysis using 2025 KYRBS (single-year, complex survey design)",
+        "covariates": "sex, grade, school_type, region, family_econ, academic_perf, residence_type, stress, depression, sleep_weekday, pa_60min, bmi_category, sweet_drink_intake, caffeine_intake, breakfast_skip, alc_current, cig_current",
+        "analysis_note": "Apply complex survey design (svydesign with cluster_id, strata_id, wt, nest=TRUE) and use svyglm with logit link for each binary suicidality outcome. Mutually adjust for sweet_drink_intake and caffeine_intake to isolate zero-beverage-specific effects; check VIF for collinearity among beverage variables. Stratify by sex given known sex differences in adolescent suicidality. Test linear trend across ordinal zero_drink_intake categories. Conduct sensitivity analyses excluding current depression cases to assess reverse causation. Report aORs with 95% CIs and ICC at school level. Acknowledge cross-sectional design limits causal inference and self-report measurement bias."
+      },
+      "generated_at": "2026-05-16T18:09:40.605490",
+      "approved_at": "2026-05-16T18:09:52.887754"
+    }
+  }
+}
