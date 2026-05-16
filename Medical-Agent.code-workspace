@@ -1,0 +1,33 @@
+{
+  "folders": [
+    {
+      "path": "learning",
+      "name": "🎓 Learning Area"
+    },
+    {
+      "path": "app",
+      "name": "🚀 Production App"
+    },
+    {
+      "path": "examples",
+      "name": "💡 Examples"
+    },
+    {
+      "path": "src",
+      "name": "📦 Library"
+    },
+    {
+      "path": ".",
+      "name": "📋 Project Root"
+    }
+  ],
+  "settings": {
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.python",
+      "editor.formatOnSave": true
+    }
+  }
+}

@@ -1,0 +1,580 @@
+[
+  {
+    "title": "Longitudinal changes in mammographic density and reproductive hormones during the menopausal transition in middle-aged Korean women: effect modification by obesity.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Samsung Main Building B2, 250, Taepyung-ro 2ga, Jung-gu, Seoul, 04514, Republic of Korea."
+      },
+      {
+        "name": "Jang Yoonyoung",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Samsung Main Building B2, 250, Taepyung-ro 2ga, Jung-gu, Seoul, 04514, Republic of Korea."
+      },
+      {
+        "name": "Woo Hee-Yeon",
+        "affiliation": "Department of Laboratory Medicine, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Samsung Main Building B2, 250, Taepyung-ro 2ga, Jung-gu, Seoul, 04514, Republic of Korea. yoosoo.chang@gmail.com."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Samsung Main Building B2, 250, Taepyung-ro 2ga, Jung-gu, Seoul, 04514, Republic of Korea. sh703.yoo@gmail.com."
+      }
+    ],
+    "abstract": "BACKGROUND: Breast cancer, strongly associated with female hormones, peaks around perimenopause in Asia, versus post-menopause in Western countries. This study aims to investigate longitudinal changes in reproductive hormones and mammographic density (MD) through the menopausal transition (MT), as MD serves as both a strong breast cancer risk factor and a proxy marker of cumulative hormone exposure.\nMETHODS: This longitudinal study included 4,737 Korean women who were in the premenopausal stage at baseline. MD was measured using digital mammography and analyzed with LIBRA software. Mean of craniocaudal views from both breasts were used for density assessments. A subset of 255 women with samples collected at four visits was assayed for hormone measurements across menopausal stages. Linear mixed-effects models were used to analyze longitudinal changes in reproductive hormones, including follicle-stimulating hormone (FSH), estradiol (E2), and anti-Müllerian hormone (AMH), and MD to evaluate potential interaction by obesity status.\nRESULTS: For MD analyses, the mean age of participants was 41.0 (± 3.3) years, with a median follow-up of 7.0 years (IQR 4.1-9.1). For hormone analyses, the mean age was 45.9 (± 2.4) years, with a median follow-up of 6.1 years (IQR 5.8-6.9). As menopausal stage advanced, FSH increased, whereas AMH and E2 decreased. The association between E2 and menopausal stages differed by obesity (P for interaction = 0.016); in early transition, E2 increased in the non-obese group (14.53 [95% CI: -15.68, 44.75]) but decreased in the obese group (- 86.02 [95% CI: -151.05, - 21.00]). Similarly, MD changes across the MT varied by BMI category (P for interaction < 0.001); overall, mean MD decreased with advancing stages, but an increasing MD pattern was observed during early transition in the underweight group (1.69 [95% CI: -0.08, 3.46]).\nCONCLUSIONS: In Korean women undergoing MT, transient increases in MD paralleled E2 elevations, particularly in non-obese women. These findings align with the peak breast cancer incidence in Korean women in their 40s, preceding menopause, and the importance of considering hormonal and MD dynamics, as well as BMI, in breast cancer risk assessment and screening strategies for Asian women.",
+    "journal": "Breast cancer research : BCR",
+    "year": "2025",
+    "pmid": "41168888"
+  },
+  {
+    "title": "Metabolic dysfunction-associated steatotic liver disease, metabolic alcohol-related liver disease, and incident dementia: a nationwide cohort study : MASLD, MetALD, and dementia risk.",
+    "authors": [
+      {
+        "name": "Shin Woo-Young",
+        "affiliation": "Department of Family Medicine, Chung-Ang University Gwangmyeong Hospital, Chung-Ang University College of Medicine, 110 Deokan-Ro, Gwangmyeong-Si, Gyeonggi-Do, South Korea."
+      },
+      {
+        "name": "Kang Eun Seok",
+        "affiliation": "Department of Biomedical Informatics, Korea University College of Medicine, 73 Goryeodae-Ro, Seongbuk-Gu, Seoul, 02841, Republic of Korea."
+      },
+      {
+        "name": "Oh Yun Hwan",
+        "affiliation": "Department of Family Medicine, Chung-Ang University Gwangmyeong Hospital, Chung-Ang University College of Medicine, 110 Deokan-Ro, Gwangmyeong-Si, Gyeonggi-Do, South Korea."
+      },
+      {
+        "name": "Sha Meng",
+        "affiliation": "Department of Liver Surgery, School of Medicine, Renji Hospital, Shanghai Jiao Tong University, Shanghai, China."
+      },
+      {
+        "name": "Xia Qiang",
+        "affiliation": "Department of Liver Surgery, School of Medicine, Renji Hospital, Shanghai Jiao Tong University, Shanghai, China."
+      },
+      {
+        "name": "Jeong Seogsong",
+        "affiliation": "Department of Biomedical Informatics, Korea University College of Medicine, 73 Goryeodae-Ro, Seongbuk-Gu, Seoul, 02841, Republic of Korea. seogsongjeong@korea.ac.kr."
+      },
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Department of Family Medicine, Chung-Ang University Gwangmyeong Hospital, Chung-Ang University College of Medicine, 110 Deokan-Ro, Gwangmyeong-Si, Gyeonggi-Do, South Korea. misslonghorn46@gmail.com."
+      }
+    ],
+    "abstract": "BACKGROUND: The relationship between the newly proposed steatotic liver disease (SLD) subtypes-metabolic dysfunction-associated steatotic liver disease (MASLD) and metabolic alcohol-associated liver disease (MetALD)-and dementia is understudied. We evaluated the dementia risk associated with these subtypes.\nMETHODS: This retrospective cohort study included 296,001 participants aged over 60 who underwent health examinations between 2009 and 2010. Participants were categorized into non-SLD (reference), MASLD, and MetALD groups and followed up until dementia onset, death, or December 31, 2019. SLD was defined by a fatty liver index ≥ 30, with (i) MASLD based on cardiometabolic risk factors, and (ii) MetALD as MASLD with moderate alcohol intake. Outcomes included overall dementia, Alzheimer's disease (AD), and vascular dementia (VaD). Subdistribution hazard ratios (SHRs) was calculated using the Fine-Gray model, treating death as a competing risk.\nRESULTS: Over 7,430,253 person-years of follow-up, 11,345 dementia cases occurred (10,863 AD and 2,159 VaD). Adjusted SHRs for MASLD were 1.10 (1.07-1.13) for AD and 1.20 (1.13-1.27) for VaD. For MetALD, SHRs were 0.90 (0.87-0.94) for AD and 1.53 (1.40-1.66) for VaD. Dementia risk in both MASLD and MetALD increased over longer periods, with MetALD initially linked to increased VaD risk and decreased AD risk, which reversed after three years.\nCONCLUSIONS: MASLD and MetALD were associated with increased risks of AD and VaD; MetALD showing a stronger association with VaD. Understanding the distinct effects of different SLD subtypes on dementia is crucial for improving risk assessment and management strategies.",
+    "journal": "BMC gastroenterology",
+    "year": "2025",
+    "pmid": "40301749"
+  },
+  {
+    "title": "Concordant and discordant breast density patterns by different approaches for assessing breast density and breast cancer risk.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Park Eun Kyung",
+        "affiliation": "Lunit, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea. yoosoo.chang@gmail.com."
+      },
+      {
+        "name": "Kwon Mi-Ri",
+        "affiliation": "Department of Radiology, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kim Eun Young",
+        "affiliation": "Department of Surgery, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kim Minjeong",
+        "affiliation": "Lunit, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Park Boyoung",
+        "affiliation": "Department of Preventive Medicine, Hanyang University College of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Lee Sanghyup",
+        "affiliation": "Lunit, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Jeong Han Eol",
+        "affiliation": "Lunit, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kim Ki Hwan",
+        "affiliation": "Lunit, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kim Tae Soo",
+        "affiliation": "Lunit, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Lee Hyeonsoo",
+        "affiliation": "Lunit, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kwon Ria",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Lim Ga-Young",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Choi JunHyeok",
+        "affiliation": "School of Mechanical Engineering, Sungkyunkwan University, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kook Shin Ho",
+        "affiliation": "Department of Radiology, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea. sh703.yoo@gmail.com."
+      }
+    ],
+    "abstract": "PURPOSE: To examine the discrepancy in breast density assessments by radiologists, LIBRA software, and AI algorithm and their association with breast cancer risk.\nMETHODS: Among 74,610 Korean women aged ≥ 34 years, who underwent screening mammography, density estimates obtained from both LIBRA and the AI algorithm were compared to radiologists using BI-RADS density categories (A-D, designating C and D as dense breasts). The breast cancer risks were compared according to concordant or discordant dense breasts identified by radiologists, LIBRA, and AI. Cox-proportional hazards models were used to determine adjusted hazard ratios (aHRs) [95% confidence intervals (CIs)].\nRESULTS: During a median follow-up of 9.9 years, 479 breast cancer cases developed. Compared to the reference non-dense breast group, the aHRs (95% CIs) for breast cancer were 2.37 (1.68-3.36) for radiologist-classified dense breasts, 1.30 (1.05-1.62) for LIBRA, and 2.55 (1.84-3.56) for AI. For different combinations of breast density assessment, aHRs (95% CI) for breast cancer were 2.40 (1.69-3.41) for radiologist-dense/LIBRA-non-dense, 11.99 (1.64-87.62) for radiologist-non-dense/LIBRA-dense, and 2.99 (1.99-4.50) for both dense breasts, compared to concordant non-dense breasts. Similar trends were observed with radiologists/AI classification: the aHRs (95% CI) were 1.79 (1.02-3.12) for radiologist-dense/AI-non-dense, 2.43 (1.24-4.78) for radiologist-non-dense/AI-dense, and 3.23 (2.15-4.86) for both dense breasts.\nCONCLUSION: The risk of breast cancer was highest in concordant dense breasts. Discordant dense breast cases also had a significantly higher risk of breast cancer, especially when identified as dense by either AI or LIBRA, but not radiologists, compared to concordant non-dense breast cases.",
+    "journal": "Breast cancer research and treatment",
+    "year": "2025",
+    "pmid": "39482557"
+  },
+  {
+    "title": "Baseline and change in serum uric acid level over time and resolution of nonalcoholic fatty liver disease in young adults: The Kangbuk Samsung Health Study.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Wild Sarah H",
+        "affiliation": "Usher Institute, University of Edinburgh, Edinburgh, UK."
+      },
+      {
+        "name": "Byrne Christopher D",
+        "affiliation": "Nutrition and Metabolism, Faculty of Medicine, University of Southampton, Southampton, UK."
+      }
+    ],
+    "abstract": "AIMS: To determine the association between: (i) baseline serum uric acid (SUA) level and (ii) SUA changes over time, and nonalcoholic fatty liver disease (NAFLD) resolution.\nMATERIALS AND METHODS: A retrospective cohort study, comprising 38 483 subjects aged <40 years with pre-existing NAFLD, was undertaken. The effects of SUA changes over time were studied in 25 266 subjects. Participants underwent a health examination between 2011 and 2019, and at least one follow-up liver ultrasonography scan up to December 2020. Exposures included baseline SUA level and SUA changes between baseline and subsequent visits, categorized into quintiles. The reference group was the third quintile (Q3) containing zero change. The primary endpoint was resolution of NAFLD.\nRESULTS: During a median follow-up of 4 years, low baseline SUA level and decreases in SUA levels over time were independently associated with NAFLD resolution (p for trend <0.001). Using SUA as a continuous variable, the likelihood of NAFLD resolution was increased by 10% and 13% in men and women, respectively, per 1-mg/dL decrease in SUA. In a time-dependent model with changes in SUA treated as a time-varying covariate, adjusted hazard ratios (95% confidence intervals) for NAFLD resolution comparing Q1 (highest decrease) and Q2 (slight decrease) to Q3 (reference) were 1.63 (1.49-1.78) and 1.23 (1.11-1.35) in men and 1.78 (1.49-2.12) and 1.18 (0.95-1.46) in women, respectively.\nCONCLUSIONS: Low baseline SUA levels and a decrease in SUA levels over time were both associated with NAFLD resolution in young adults.",
+    "journal": "Diabetes, obesity & metabolism",
+    "year": "2024",
+    "pmid": "38303100"
+  },
+  {
+    "title": "Nonalcoholic fatty liver disease without overlapping metabolic-associated fatty liver disease and the risk of incident type 2 diabetes.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Wild Sarah H",
+        "affiliation": "Usher Institute, University of Edinburgh, Edinburgh, UK."
+      },
+      {
+        "name": "Byrne Christopher D",
+        "affiliation": "Nutrition and Metabolism, Faculty of Medicine, University of Southampton, Southampton, UK."
+      }
+    ],
+    "abstract": "BACKGROUND AND AIMS: Re-classifying NAFLD as metabolic-associated fatty liver (MAFLD) has been proposed. While some people fulfil criteria for NAFLD, they do not have MAFLD; and whether NAFLD-only subjects have increased the risk of type 2 diabetes remains unknown. We compared risk of incident T2D in individuals with: (a) NAFLD-only; and (b) MAFLD, to individuals without fatty liver, considering effect modification by sex.\nMETHODS: 246 424 Koreans without diabetes or a secondary cause of ultrasound-diagnosed hepatic steatosis were studied. Subjects were stratified into: (a) NAFLD-only status and (b) NAFLD that overlapped with MAFLD (MAFLD). Cox proportional hazards models with incident T2D as the outcome were used to estimate hazard ratios (HRs) for: (a) and (b). Models were adjusted for time-dependent covariates, and effect modification by sex was analysed in subgroups.\nRESULTS: A total of 5439 participants had NAFLD-only status and 56 839 met MAFLD criteria. During a median follow-up of 5.5 years, 8402 incident cases of T2D occurred. Multivariable-adjusted HRs (95% CI) for incident T2D comparing NAFLD-only and MAFLD to the reference (neither condition) were 2.39 (1.63-3.51) and 5.75 (5.17-6.36) (women), and 1.53 (1.25-1.88) and 2.60 (2.44-2.76) (men), respectively. The increased risk of T2D in the NAFLD-only group was higher in women than in men (p for interaction by sex <0.001) and consistently observed across all subgroups. Risk of T2D was increased in lean participants regardless of metabolic dysregulation (including prediabetes).\nCONCLUSIONS: NAFLD-only participants without metabolic dysregulation and the criteria for MAFLD are at increased risk of developing T2D. This association was consistently stronger in women than in men.",
+    "journal": "Liver international : official journal of the International Association for the Study of the Liver",
+    "year": "2023",
+    "pmid": "37387519"
+  },
+  {
+    "title": "Synergistic effect of non-alcoholic fatty liver disease and history of gestational diabetes to increase risk of type 2 diabetes.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea. yoosoo.chang@gmail.com."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea. sh703.yoo@gmail.com."
+      },
+      {
+        "name": "Wild Sarah H",
+        "affiliation": "Usher Institute, University of Edinburgh, Edinburgh, U.K."
+      },
+      {
+        "name": "Byrne Christopher D",
+        "affiliation": "Nutrition and Metabolism, Faculty of Medicine, University of Southampton, Southampton, U.K."
+      }
+    ],
+    "abstract": "Whether non-alcoholic fatty liver disease (NAFLD) improves risk prediction for subsequent type 2 diabetes mellitus (T2DM) in women with prior gestational diabetes mellitus (pGDM) is uncertain. We examined the combined effects of NAFLD and pGDM on risk prediction for incident T2DM. This retrospective cohort study included 97,347 Korean parous women without diabetes mellitus at baseline whose mean (SD) age was 39.0 (7.8) years. Cox proportional hazards models were used to estimate hazard ratios (HRs) for incident T2DM according to self-reported pGDM and ultrasound-diagnosed NAFLD at baseline. When combined with conventional diabetes risk factors, the incremental predictive ability of NAFLD and pGDM to identify incident T2DM was assessed. During a median follow-up of 3.9 years, 1,515 cases of incident T2DM occurred. Multivariable-adjusted HRs (95% confidence intervals [CIs]) for incident T2DM comparing pGDM alone, NAFLD alone, and both NAFLD and pGDM to the reference (neither NAFLD nor pGDM) were 2.61 (2.06-3.31), 2.26 (1.96-2.59), and 6.45 (5.19-8.00), respectively (relative excess risk of interaction = 2.58 [95% CI, 1.21-3.95]). These associations were maintained after adjusting for insulin resistance, body mass index, and other potential confounders as time-dependent covariates. The combination of NAFLD and pGDM improved risk prediction for incident T2DM (based on Harrell's C-index, also known as the concordance index, and net reclassification improvement) compared to conventional diabetes risk factors. In conclusion, NAFLD synergistically increases the risk of subsequent T2DM in women with pGDM. The combination of NAFLD and pGDM improves risk prediction for T2DM.",
+    "journal": "European journal of epidemiology",
+    "year": "2023",
+    "pmid": "37253998"
+  },
+  {
+    "title": "History of Gestational Diabetes and Incident Nonalcoholic Fatty Liver Disease: The Kangbuk Samsung Health Study.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Kim Chanmin",
+        "affiliation": "Department of Statistics, Sungkyunkwan University, Seoul, South Korea."
+      },
+      {
+        "name": "Wild Sarah H",
+        "affiliation": "Usher Institute, University of Edinburgh, Edinburgh, UK."
+      },
+      {
+        "name": "Byrne Christopher D",
+        "affiliation": "Nutrition and Metabolism, Faculty of Medicine, University of Southampton, Southampton, UK."
+      }
+    ],
+    "abstract": "INTRODUCTION: We examined the relationship between a previous history of gestational diabetes mellitus (pGDM) and risk of incident nonalcoholic fatty liver disease (NAFLD) and investigated the effect of insulin resistance or development of diabetes as mediators of any association.\nMETHODS: We performed a retrospective cohort study of 64,397 Korean parous women without NAFLD. The presence of and the severity of NAFLD at baseline and follow-up were assessed using liver ultrasonography. Cox proportional hazards models were used to determine adjusted hazard ratios for incident NAFLD according to a self-reported GDM history, adjusting for confounders as time-dependent variables. Mediation analyses were performed to examine whether diabetes or insulin resistance may mediate the association between pGDM and incident NAFLD.\nRESULTS: During a median follow-up of 3.7 years, 6,032 women developed incident NAFLD (of whom 343 had moderate-to-severe NAFLD). Multivariable adjusted hazard ratios (95% confidence intervals) comparing women with time-dependent pGDM with the reference group (no pGDM) were 1.46 (1.33-1.59) and 1.75 (1.25-2.44) for incident overall NAFLD and moderate-to-severe NAFLD, respectively. These associations remained significant in analyses restricted to women with normal fasting glucose <100 mg/dL or that excluded women with prevalent diabetes at baseline or incident diabetes during follow-up. Diabetes and insulin resistance (Homeostatic Model Assessment for Insulin Resistance) each mediated <10% of the association between pGDM and overall NAFLD development.\nDISCUSSION: A previous history of GDM is an independent risk factor for NAFLD development. Insulin resistance, measured by the Homeostatic Model Assessment for Insulin Resistance, and development of diabetes each explained only <10% of the association between GDM and incident NAFLD.",
+    "journal": "The American journal of gastroenterology",
+    "year": "2023",
+    "pmid": "36940424"
+  },
+  {
+    "title": "Persistence or regression of prediabetes and coronary artery calcification among adults without diabetes.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Kim Yejin",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Jung Hyun-Suk",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Kang Jeonggyu",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Choi In Young",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Kim Chan-Won",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Oh Hyungseok",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Republic of Korea."
+      },
+      {
+        "name": "Wild Sarah H",
+        "affiliation": "Centre for Population Health Sciences, Usher Institute, University of Edinburgh, Edinburgh EH8 9AG, United Kingdom."
+      },
+      {
+        "name": "Byrne Christopher D",
+        "affiliation": "Nutrition and Metabolism, Faculty of Medicine, University of Southampton, Southampton SO16 6YD, United Kingdom."
+      }
+    ],
+    "abstract": "OBJECTIVE: The effect of changes in glycemic status on subclinical atherosclerosis is uncertain. We assessed the association of persistence, regression, or progression of prediabetes with coronary artery calcium score (CACS) as a measure of subclinical atherosclerosis.\nDESIGN: A cross-sectional study, comprising 126 765 adults, and longitudinal sub-study, comprising 40 622 adults (with baseline and at least 1 follow-up computed tomography scan to assess changes in CACS), were undertaken.\nMETHODS: Changes in glycemic status over 1.5 years (interquartile range, 1.0-2.0) before the first CACS assessment were categorized according to 6 groups: persistent normoglycemia (reference), normoglycemia to prediabetes, normoglycemia to diabetes, prediabetes to normoglycemia, persistent prediabetes, and prediabetes to diabetes. Logistic regression was used to calculate the odds ratios (ORs) and 95% CIs for prevalent coronary artery calcification (CAC). Mixed models with random intercepts and random slopes were used to estimate 5-year CAC progression rates.\nRESULTS: Mean (SD) age was 41.3 (7.0) years (74.7% male) (n = 126 765). Multivariable-adjusted OR for prevalent CAC was 1.13 (95% CI, 1.08-1.18) for persistent prediabetes, 1.05 (0.98-1.12) for regression to normoglycemia, and 1.46 (95% CI, 1.27-1.67) for progression from prediabetes to diabetes, compared with persistent normoglycemia. Coronary artery calcification progression increased significantly in all prediabetes groups. Multivariable-adjusted ratio of 5-year CAC progression rates was 1.19 (95% CI, 1.16-1.22) (persistent prediabetes), 1.11 (1.07-1.14) (regression to normoglycemia), and 1.63 (95% CI, 1.26-2.10) (progression from prediabetes to diabetes).\nCONCLUSIONS: Unfavorable changes in glycemic status, including persistence of prediabetes or progression to diabetes from prediabetes, were associated with increased risk of CAC.",
+    "journal": "European journal of endocrinology",
+    "year": "2023",
+    "pmid": "36651159"
+  },
+  {
+    "title": "Nonalcoholic Fatty Liver Disease and Risk of Early-Onset Vasomotor Symptoms in Lean and Overweight Premenopausal Women.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Korea."
+      },
+      {
+        "name": "Choi Hye Rin",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Korea."
+      },
+      {
+        "name": "Kang Jeonggyu",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Korea."
+      },
+      {
+        "name": "Kwon Ria",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Korea."
+      },
+      {
+        "name": "Lim Ga-Young",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Korea."
+      },
+      {
+        "name": "Ahn Jiin",
+        "affiliation": "Center for Cohort Studies, Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Korea."
+      },
+      {
+        "name": "Kim Kye-Hyun",
+        "affiliation": "Department of Obstetrics and Gynecology, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 03181, Korea."
+      },
+      {
+        "name": "Kim Hoon",
+        "affiliation": "Department of Obstetrics and Gynecology, Seoul National University College of Medicine, Seoul 03080, Korea."
+      },
+      {
+        "name": "Hong Yun Soo",
+        "affiliation": "Departments of Epidemiology and Medicine, Welch Center for Prevention, Epidemiology, and Clinical Research, Johns Hopkins University Bloomberg School of Public Health, Baltimore, MD 21205, USA."
+      },
+      {
+        "name": "Zhao Di",
+        "affiliation": "Departments of Epidemiology and Medicine, Welch Center for Prevention, Epidemiology, and Clinical Research, Johns Hopkins University Bloomberg School of Public Health, Baltimore, MD 21205, USA."
+      },
+      {
+        "name": "Rampal Sanjay",
+        "affiliation": "Department of Social and Preventive Medicine, Centre for Epidemiology and Evidence Based Practice, Faculty of Medicine, Universiti Malaya, Kuala Lumpur 50603, Malaysia."
+      },
+      {
+        "name": "Cho Juhee",
+        "affiliation": "Department of Clinical Research Design & Evaluation, Samsung Advanced Institute for Health Sciences & Technology, Sungkyunkwan University, Seoul 06355, Korea."
+      },
+      {
+        "name": "Park Hyun-Young",
+        "affiliation": "Department of Precision Medicine, National Institute of Health, Korea Disease Control and Prevention Agency, Cheongju 28159, Korea."
+      },
+      {
+        "name": "Guallar Eliseo",
+        "affiliation": "Departments of Epidemiology and Medicine, Welch Center for Prevention, Epidemiology, and Clinical Research, Johns Hopkins University Bloomberg School of Public Health, Baltimore, MD 21205, USA."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul 04514, Korea."
+      }
+    ],
+    "abstract": "The role of nonalcoholic fatty liver disease (NAFLD) in vasomotor symptom (VMS) risk in premenopausal women is unknown. We examined the prevalence of early-onset VMSs according to NAFLD status in lean and overweight premenopausal women. This cross-sectional study included 4242 premenopausal Korean women (mean age 45.4 years). VMSs (hot flashes and night sweats) were assessed using the Korean version of the Menopause-Specific Quality of Life questionnaire. Hepatic steatosis was determined using liver ultrasound; lean was defined as a body mass index of <23 kg/m2. Participants were categorized into four groups: NAFLD-free lean (reference), NAFLD-free overweight, lean NAFLD, and overweight NAFLD. Compared with the reference, the multivariable-adjusted prevalence ratios (PRs) (95% confidence intervals (CIs)) for VMSs in NAFLD-free overweight, lean NAFLD, and overweight NAFLD were 1.22 (1.06−1.41), 1.38 (1.06−1.79), and 1.49 (1.28−1.73), respectively. For moderate-to-severe VMSs, the multivariable-adjusted PRs (95% CIs) comparing NAFLD-free overweight, lean NAFLD, and overweight NAFLD to the reference were 1.38 (1.10−1.74), 1.73 (1.16−2.57), and 1.74 (1.37−2.21), respectively. NAFLD, even lean NAFLD, was significantly associated with an increased risk of prevalent early-onset VMSs and their severe forms among premenopausal women. Further studies are needed to determine the longitudinal association between NAFLD and VMS risk.",
+    "journal": "Nutrients",
+    "year": "2022",
+    "pmid": "35889762"
+  },
+  {
+    "title": "Skeletal muscle mass to visceral fat area ratio as a predictor of NAFLD in lean and overweight men and women with effect modification by sex.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Jung Hyun-Suk",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kim Chan-Won",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Oh Hyungseok",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kim Mi Kyung",
+        "affiliation": "Department of Preventive Medicine, College of Medicine, Hanyang University, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Sohn Won",
+        "affiliation": "Division of Gastroenterology and Hepatology, Department of Internal Medicine, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Shin Hocheol",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Wild Sarah H",
+        "affiliation": "Usher Institute, University of Edinburgh, Edinburgh, UK."
+      },
+      {
+        "name": "Byrne Christopher D",
+        "affiliation": "Nutrition and Metabolism, Faculty of Medicine, University of Southampton, Southampton, UK."
+      }
+    ],
+    "abstract": "The effect of sarcopenic visceral obesity on the risk of nonalcoholic fatty liver disease (NAFLD) is uncertain. We investigated (a) whether the skeletal muscle mass to visceral fat area ratio (SV ratio), as a measure of sarcopenic visceral obesity, is a risk factor for NAFLD; and (b) whether the SV ratio adds to conventional adiposity measures to improve prediction of incident NAFLD. Adults without NAFLD (n = 151,017) were followed up for a median of 3.7 years. Hepatic steatosis was measured using ultrasonography, and liver fibrosis scores were estimated using the Fibrosis-4 index (FIB-4) and the NAFLD Fibrosis Score (NFS). Cox proportional hazards models were used to determine sex-specific adjusted hazard ratios (aHRs) (95% confidence intervals [CIs]). The incremental predictive performance was assessed using the area under the receiver operating characteristic curve, net reclassification improvement, and integrated discrimination improvement. Multivariable aHRs (95% CIs) for incident NAFLD comparing the lowest versus the highest quintile of SV ratio were 3.77 (3.56-3.99) for men and 11.69 (10.46-13.06) for women (p-interaction by sex < 0.001). For incident NAFLD with intermediate/high FIB-4, aHRs were 2.83 (2.19-3.64) for men and 7.96 (3.85-16.44) for women (similar results were obtained for NFS). Associations remained significant even after adjustment for body mass index, waist circumference, and time-varying covariates. These associations were also more pronounced in nonobese than obese participants (p-interaction < 0.001). The addition of SV ratio to conventional adiposity measures modestly improved risk prediction for incident NAFLD. SV ratio was inversely associated with risk of developing NAFLD, with effect modification by sex and obesity. Conclusion: Low SV ratio is a complementary index to conventional adiposity measures in the evaluation of NAFLD risk.",
+    "journal": "Hepatology communications",
+    "year": "2022",
+    "pmid": "35503803"
+  },
+  {
+    "title": "Fatty liver disease and changes in dense breasts in pre- and postmenopausal women: the Kangbuk Samsung Health Study.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Chang Yoosoo",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea. yoosoo.chang@gmail.com."
+      },
+      {
+        "name": "Jung Hyun-Suk",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kim Chan-Won",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Oh Hyungseok",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Kim Eun Young",
+        "affiliation": "Department of General Surgery, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Shin Hocheol",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea."
+      },
+      {
+        "name": "Wild Sarah H",
+        "affiliation": "Usher Institute, University of Edinburgh, Edinburgh, UK."
+      },
+      {
+        "name": "Byrne Christopher D",
+        "affiliation": "Nutrition and Metabolism, Faculty of Medicine, University of Southampton, Southampton, UK."
+      },
+      {
+        "name": "Ryu Seungho",
+        "affiliation": "Center for Cohort Studies, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, Republic of Korea. sh703.yoo@gmail.com."
+      }
+    ],
+    "abstract": "PURPOSE: While increased breast density is a risk factor for breast cancer, the effect of fatty liver disease on breast density is unknown. We investigated whether fatty liver is a risk factor for changes in breast density over ~ 4 years of follow-up in pre- and postmenopausal women.\nMETHODS: This study included 74,781 middle-aged Korean women with mammographically determined dense breasts at baseline. Changes in dense breasts were identified by more screening mammograms during follow-up. Hepatic steatosis (HS) was measured using ultrasonography. Flexible parametric proportional hazards models were used to determine the adjusted hazard ratios (aHRs) and 95% confidence intervals (CIs), and a Weibull accelerated failure time model (AFT) was used to determine the time ratios (TRs) and 95% CIs.\nRESULTS: During a median follow-up of 4.1 years, 4022 women experienced resolution of the dense breasts. The association between HS and dense breast resolution differed by the menopause status (P for interaction < 0.001). After adjusting for body mass index and other covariates, the aHRs (95% CI) for dense breast resolution comparing HS to non-HS were 0.81 (0.70-0.93) in postmenopausal women, while the association was converse in premenopausal women with the corresponding HRs of 1.30 (1.18-1.43). As an alternative approach, the multivariable-adjusted TR (95% CI) for dense breast survival comparing HS to non-HS were 0.81 (0.75-0.87) and 1.19 (1.06-1.33) in premenopausal and postmenopausal women, respectively.\nCONCLUSION: The association between HS and changes in dense breasts differed with the menopause status. HS increased persistent dense breast survival in postmenopausal women but decreased it in premenopausal women.",
+    "journal": "Breast cancer research and treatment",
+    "year": "2021",
+    "pmid": "34529194"
+  },
+  {
+    "title": "Association between BMI variability and risk of fracture among Korean men and women: a population based study.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Choi Seulggie",
+        "affiliation": "Department of Biomedical Sciences, Seoul National University Graduate School, Seoul, South Korea."
+      },
+      {
+        "name": "Yun Young Ho",
+        "affiliation": "Department of Biomedical Sciences, Seoul National University Graduate School, Seoul, South Korea."
+      },
+      {
+        "name": "Cho Belong",
+        "affiliation": "Department of Family Medicine, Seoul National University College of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Choi Ji-Yeob",
+        "affiliation": "Department of Biomedical Sciences, Seoul National University Graduate School, Seoul, South Korea."
+      },
+      {
+        "name": "Park Sang Min",
+        "affiliation": "Department of Biomedical Sciences, Seoul National University Graduate School, Seoul, South Korea. smpark.snuh@gmail.com."
+      }
+    ],
+    "abstract": "UNLABELLED: In Korean adults aged 50 years and older, the overall risk of fractures increased with greater BMI variability among both men and women, specifically, spinal fractures for men and both spinal and hip fractures for women.\nPURPOSE: The bone-health-related outcome, such as fractures due to BMI fluctuation, has been understudied within Asian populations. In this large-scale, population-based cohort study in Korea, we aimed to investigate the relationship between variability in body mass index (BMI) and the risk of fractures.\nMETHODS: The study included 166,932 subjects aged ≥ 50 years from the National Health Insurance Service-Health Screening Cohort. The BMI variability value from three follow-up examinations during 2002-2007 was categorized into quartiles. The hazard ratios (HRs) with 95% confidence intervals (CIs) for the effects of BMI variability on the risk of admission from hip, spine, and upper extremity fractures during 2008-2015 were evaluated using a Cox proportional hazards regression analysis.\nRESULTS: Compared to those in the lowest BMI variability (1st quartile), men in the highest BMI variability (4th quartile) showed an increased risk of spinal fractures (aHR 1.21, 95% CI 1.07-1.36) with a significant linear trend (P for trend = 0.021). Compared to those in the lowest BMI variability (1st quartile), women in the highest BMI variability (4th quartile) showed an increased risk of hip and spinal fractures (aHR 1.35, 95% CI 1.05-1.69; aHR 1.16, 95% CI 1.05-1.28) with significant linear trends (P for trend = 0.021; P for trend = 0.003, respectively). There was no association between BMI variability and incidents of upper extremity fractures for men or women.\nCONCLUSION: Association between BMI variability and increased fracture risk depended on sex and fracture types. BMI maintenance, instead of high BMI fluctuation, may be beneficial in terms of lowering the overall fracture risk for Korean adults over 50 years old.",
+    "journal": "Archives of osteoporosis",
+    "year": "2021",
+    "pmid": "33839996"
+  },
+  {
+    "title": "Sociodemographic Factors, Health Behaviors, and Biological Indicators Associated With Suicide Mortality Among Young Adults in South Korea: A Nationwide Cohort Study Among 15 Million Men and Women.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Total Healthcare Center, Kangbuk Samsung Hospital, Sungkyunkwan University School of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Choi Seulggie",
+        "affiliation": "Department of Biomedical Sciences, Seoul National University Graduate School, Seoul, South Korea."
+      },
+      {
+        "name": "Kim Kyuwoong",
+        "affiliation": "National Cancer Control Institute, National Cancer Center, Goyang, South Korea."
+      },
+      {
+        "name": "Park Sang Min",
+        "affiliation": "Department of Family Medicine & Department of Biomedical Sciences, Seoul National University College of Medicine, 101 Daehak-ro, Jongno-gu, Seoul, South Korea, 03080. smpark.snuh@gmail.com."
+      }
+    ],
+    "abstract": "OBJECTIVE: The role of sociodemographic factors, health behaviors, and biological indicators as potential risk factors for suicide is relatively understudied among young adults. The aim of this study is to explore the association of these variables with the risk of death by suicide among young adults.\nMETHODS: The study population consisted of 15,534,438 individuals aged 20-39 years from the Korean National Health Insurance Service. Sociodemographic factors associated with death by suicide during 2006-2015 were evaluated. 3,396,353 individuals who underwent health examinations between 2002 and 2005 were separately assessed for health behaviors and biological indicators associated with death by suicide. Cox proportional hazards regression analysis was used to determine the hazard ratios (HRs) and 95% confidence intervals (CIs) for suicide mortality according to sociodemographic factors (age, household income, job status, residence, and Charlson comorbidity index score), health behaviors (physical activity, smoking, and alcohol consumption), and biological indicators (blood pressure, total cholesterol level, body mass index, and fasting serum glucose level).\nRESULTS: Low household income, self- and non-employment, increased comorbidity, smoking, and normal weight elevated the risk of death by suicide among young adults. While older age was associated with elevated risk for death by suicide among men (adjusted HR [aHR] = 2.11; 95% CI, 2.02-2.20 for men aged 35-39 years), older age reduced the risk for death by suicide among women (aHR = 0.72; 95% CI, 0.69-0.75 for women aged 35-39 years). Elevated blood pressure and fasting serum glucose level were associated with increased risk for death by suicide among men (aHR = 1.16; 95% CI, 1.05-1.28 and aHR = 1.48; 95% CI, 1.26-1.75, respectively). Finally, high total cholesterol levels were associated with increased risk for death by suicide among women (aHR = 1.59; 95% CI, 1.19-2.13).\nCONCLUSIONS: Sociodemographic factors, health behaviors, and biological indicators were associated with suicide mortality among young adults.",
+    "journal": "The Journal of clinical psychiatry",
+    "year": "2020",
+    "pmid": "33378140"
+  },
+  {
+    "title": "Association between alcohol consumption and bone mineral density in elderly Korean men and women.",
+    "authors": [
+      {
+        "name": "Cho Yoosun",
+        "affiliation": "Department of Family Medicine, Seoul National University Hospital, Seoul National University College of Medicine, 28 Yunkeon-dong, Jongro-gu, Seoul, 110-744, South Korea."
+      },
+      {
+        "name": "Choi Seulggie",
+        "affiliation": "Department of Biomedical Sciences, Seoul National University College of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Kim Kyuwoong",
+        "affiliation": "Department of Biomedical Sciences, Seoul National University College of Medicine, Seoul, South Korea."
+      },
+      {
+        "name": "Lee Gyeongsil",
+        "affiliation": "Department of Family Medicine, Seoul National University Hospital, Seoul National University College of Medicine, 28 Yunkeon-dong, Jongro-gu, Seoul, 110-744, South Korea."
+      },
+      {
+        "name": "Park Sang Min",
+        "affiliation": "Department of Family Medicine, Seoul National University Hospital, Seoul National University College of Medicine, 28 Yunkeon-dong, Jongro-gu, Seoul, 110-744, South Korea. smpark.snuh@gmail.com."
+      }
+    ],
+    "abstract": "UNLABELLED: In this cross-sectional study based on Korean elderly men and women, heavy alcohol intake for men was related to low whole-body BMD and light alcohol intake for women was associated with high whole-body, lumbar, and total femur BMD.\nPURPOSE: Alcohol is a risk factor of osteoporosis but previous studies on its effect on bone health has been controversial. The aim of this study was to evaluate the association between alcohol intake and bone mineral density in Korean elderly men and women.\nMETHODS: Based on the Fourth and Fifth Korean National Health and Nutrition Examination Surveys (KNHANES), 2657 men and 2080 women 50 to 79 years of age were included. Bone mineral density (BMD) was measured using dual energy X-ray absorptiometry (DXA). Alcohol consumption was determined by self-administered questionnaires and classified into four groups according to sex: non-drinkers (0 g/day), light drinking (1-19 g/day men, 1-9 g/day women), moderate drinking (20-39 g/day men, 10-29 g/day women), and heavy drinking (≥ 40 g/day men, ≥ 20 g/day women). The adjusted mean values calculated by linear regression analysis for BMD were determined according to the amount of alcohol consumed.\nRESULTS: Light drinkers had the highest whole-body BMD for both men (mean 1.164, SD 0.047-1.281) and women (mean 1.046, SD 0.912-1.180). Among men, mean whole-body BMD for heavy drinkers was significantly lower than that among light drinkers (P = 0.031). Among women, BMD for light drinkers was significantly higher in the whole body, lumbar, and total femur than that for non-drinkers (P < 0.001, P = 0.026, P = 0.040, respectively).\nCONCLUSIONS: Heavy alcohol intake may be associated with lower BMD in men while light alcohol intake may associate with higher BMD among women. Future longitudinal studies investigating the effect of alcohol consumption on bone mineral density are needed to validate the findings of this study.",
+    "journal": "Archives of osteoporosis",
+    "year": "2018",
+    "pmid": "29696513"
+  }
+]

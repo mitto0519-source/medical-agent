@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Research Analysis</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #333; }
+    header { background: #1a5276; color: white; padding: 20px 40px; display: flex; align-items: center; gap: 16px; }
+    header h1 { font-size: 1.6rem; }
+    header span { font-size: 0.9rem; opacity: 0.75; }
+    nav { background: #154360; display: flex; gap: 4px; padding: 0 40px; }
+    nav button { background: none; border: none; color: #aed6f1; padding: 12px 20px; cursor: pointer; font-size: 0.95rem; border-bottom: 3px solid transparent; transition: all 0.2s; }
+    nav button.active, nav button:hover { color: white; border-bottom-color: #3498db; }
+    main { max-width: 960px; margin: 30px auto; padding: 0 20px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .card { background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 28px; margin-bottom: 24px; }
+    .card h2 { font-size: 1.15rem; color: #1a5276; margin-bottom: 6px; }
+    .card p.desc { font-size: 0.88rem; color: #666; margin-bottom: 18px; }
+    label { display: block; font-size: 0.88rem; font-weight: 600; color: #444; margin-bottom: 6px; }
+    textarea, input[type=text], select {
+      width: 100%; padding: 10px 12px; border: 1px solid #d5dbdb; border-radius: 6px;
+      font-size: 0.93rem; font-family: inherit; background: #fafafa; resize: vertical;
+      transition: border 0.2s;
+    }
+    textarea:focus, input:focus, select:focus { outline: none; border-color: #3498db; background: white; }
+    .form-row { margin-bottom: 16px; }
+    .btn { background: #2980b9; color: white; border: none; padding: 10px 26px; border-radius: 6px; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: background 0.2s; }
+    .btn:hover { background: #1a6fa0; }
+    .btn:disabled { background: #aaa; cursor: not-allowed; }
+    .result-box { background: #eaf4fb; border: 1px solid #aed6f1; border-radius: 6px; padding: 16px; margin-top: 18px; display: none; }
+    .result-box.show { display: block; }
+    .result-box pre { white-space: pre-wrap; font-size: 0.88rem; font-family: 'Consolas', monospace; line-height: 1.5; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; }
+    .badge.novel { background: #d5f5e3; color: #1e8449; }
+    .badge.not-novel { background: #fadbd8; color: #922b21; }
+    .status-bar { text-align: center; padding: 8px; font-size: 0.85rem; color: #666; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #aaa; border-top-color: #2980b9; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+    .health-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: #2ecc71; margin-right: 6px; }
+    footer { text-align: center; padding: 24px; font-size: 0.82rem; color: #999; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Medical Research Analysis</h1>
+    <span>의료 연구 논문 자동화 분석 플랫폼</span>
+  </div>
+  <div style="margin-left:auto; font-size:0.85rem;" id="healthStatus">
+    <span class="health-dot"></span>서버 연결 중...
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="switchTab('statistics', this)">통계 분석</button>
+  <button onclick="switchTab('novelty', this)">참신성 탐지</button>
+  <button onclick="switchTab('manuscript', this)">논문 생성</button>
+</nav>
+
+<main>
+
+  <!-- 통계 분석 -->
+  <div class="panel active" id="panel-statistics">
+    <div class="card">
+      <h2>통계 검정</h2>
+      <p class="desc">두 그룹의 수치 데이터를 쉼표로 입력하면 t-검정 결과를 반환합니다.</p>
+      <div class="grid-2">
+        <div class="form-row">
+          <label>그룹 1 데이터 (쉼표 구분)</label>
+          <textarea id="stat-group1" rows="3" placeholder="예: 5.1, 4.8, 6.2, 5.5, 4.9">5.1, 4.8, 6.2, 5.5, 4.9, 5.3, 4.7</textarea>
+        </div>
+        <div class="form-row">
+          <label>그룹 2 데이터 (쉼표 구분)</label>
+          <textarea id="stat-group2" rows="3" placeholder="예: 6.5, 7.1, 6.8, 7.3, 6.9">6.5, 7.1, 6.8, 7.3, 6.9, 7.0, 6.4</textarea>
+        </div>
+      </div>
+      <button class="btn" onclick="runStatistics()">분석 실행</button>
+      <div class="result-box" id="stat-result">
+        <pre id="stat-result-text"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 참신성 탐지 -->
+  <div class="panel" id="panel-novelty">
+    <div class="card">
+      <h2>연구 참신성 분석</h2>
+      <p class="desc">새 연구 내용이 기존 연구들과 얼마나 차별화되는지 분석합니다.</p>
+      <div class="form-row">
+        <label>새 연구 내용 (query)</label>
+        <textarea id="novelty-query" rows="3" placeholder="분석할 새 연구 내용을 입력하세요...">Novel machine learning approach for early detection of sepsis using real-time vital sign monitoring and inflammatory biomarkers.</textarea>
+      </div>
+      <div class="form-row">
+        <label>기존 연구 목록 (한 줄에 하나씩)</label>
+        <textarea id="novelty-corpus" rows="5" placeholder="기존 연구 내용을 한 줄씩 입력...">Traditional sepsis diagnosis relies on clinical criteria and blood cultures.
+Machine learning models have been applied to ICU mortality prediction.
+Early warning systems use vital signs for deterioration detection.
+Biomarker-based sepsis diagnosis using procalcitonin and CRP.</textarea>
+      </div>
+      <button class="btn" onclick="runNovelty()">참신성 분석</button>
+      <div class="result-box" id="novelty-result">
+        <pre id="novelty-result-text"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 논문 생성 -->
+  <div class="panel" id="panel-manuscript">
+    <div class="card">
+      <h2>논문 초록 생성</h2>
+      <p class="desc">각 섹션 내용을 입력하면 표준 형식의 논문 초록을 생성합니다.</p>
+      <div class="grid-2">
+        <div class="form-row">
+          <label>논문 제목</label>
+          <input type="text" id="ms-title" value="Automated Sepsis Detection Using Machine Learning">
+        </div>
+        <div class="form-row">
+          <label>저자 (쉼표 구분)</label>
+          <input type="text" id="ms-authors" value="Kim J, Lee S, Park H">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>소속 기관</label>
+        <input type="text" id="ms-institution" value="Seoul National University Hospital">
+      </div>
+      <div class="form-row">
+        <label>배경 (Background)</label>
+        <textarea id="ms-background" rows="2">Sepsis remains a leading cause of ICU mortality worldwide, with diagnosis often delayed due to non-specific clinical presentation.</textarea>
+      </div>
+      <div class="form-row">
+        <label>목적 (Objective)</label>
+        <textarea id="ms-objective" rows="2">To develop and validate a machine learning model for early sepsis detection using routinely collected clinical data.</textarea>
+      </div>
+      <div class="form-row">
+        <label>방법 (Methods)</label>
+        <textarea id="ms-methods" rows="2">Retrospective cohort study of 10,000 ICU admissions. Random forest classifier trained on vital signs, laboratory values, and demographics.</textarea>
+      </div>
+      <div class="form-row">
+        <label>결과 (Results)</label>
+        <textarea id="ms-results" rows="2">The model achieved AUROC of 0.89 (95% CI: 0.86–0.92) for sepsis prediction 6 hours before clinical recognition.</textarea>
+      </div>
+      <div class="form-row">
+        <label>결론 (Conclusion)</label>
+        <textarea id="ms-conclusion" rows="2">Machine learning can significantly improve early sepsis detection, potentially reducing mortality through timely intervention.</textarea>
+      </div>
+      <button class="btn" onclick="runManuscript()">초록 생성</button>
+      <div class="result-box" id="ms-result">
+        <pre id="ms-result-text"></pre>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>Medical Research Analysis Platform &mdash; Flask + Python</footer>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  async function checkHealth() {
+    try {
+      const r = await fetch('/health');
+      const d = await r.json();
+      document.getElementById('healthStatus').innerHTML =
+        '<span class="health-dot"></span>' + (d.status === 'healthy' ? '서버 정상' : '오류');
+    } catch {
+      document.getElementById('healthStatus').innerHTML =
+        '<span class="health-dot" style="background:#e74c3c"></span>연결 실패';
+    }
+  }
+  checkHealth();
+
+  function parseNumbers(str) {
+    return str.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+  }
+
+  function showResult(boxId, textId, content) {
+    document.getElementById(boxId).classList.add('show');
+    document.getElementById(textId).textContent = content;
+  }
+
+  async function runStatistics() {
+    const g1 = parseNumbers(document.getElementById('stat-group1').value);
+    const g2 = parseNumbers(document.getElementById('stat-group2').value);
+    if (g1.length < 2 || g2.length < 2) { alert('각 그룹에 최소 2개 이상의 숫자를 입력하세요.'); return; }
+
+    const btn = event.target; btn.disabled = true; btn.textContent = '분석 중...';
+    try {
+      const r = await fetch('/api/statistics', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ group1: g1, group2: g2 })
+      });
+      const d = await r.json();
+      if (d.status === 'success') {
+        const res = d.result;
+        const sig = res.significant ? '✅ 유의미 (p < 0.05)' : '❌ 유의미하지 않음';
+        const txt = [
+          `=== T-검정 결과 ===`,
+          ``,
+          `그룹 1:  평균 ${res.group1_mean?.toFixed(4)}  표준편차 ${res.group1_sd?.toFixed(4)}  N=${res.n1}`,
+          `그룹 2:  평균 ${res.group2_mean?.toFixed(4)}  표준편차 ${res.group2_sd?.toFixed(4)}  N=${res.n2}`,
+          ``,
+          `t 통계량:   ${res.t_statistic?.toFixed(4)}`,
+          `p-value:    ${res.p_value?.toFixed(6)}`,
+          `Cohen's d:  ${res.cohens_d?.toFixed(4)}  (효과 크기)`,
+          `평균 차이:  ${res.mean_diff?.toFixed(4)}`,
+          `95% CI:     [${res.ci_lower?.toFixed(4)}, ${res.ci_upper?.toFixed(4)}]`,
+          ``,
+          `결론: ${sig}`
+        ].join('\n');
+        showResult('stat-result', 'stat-result-text', txt);
+      } else {
+        showResult('stat-result', 'stat-result-text', '오류: ' + d.message);
+      }
+    } catch(e) {
+      showResult('stat-result', 'stat-result-text', '요청 실패: ' + e.message);
+    }
+    btn.disabled = false; btn.textContent = '분석 실행';
+  }
+
+  async function runNovelty() {
+    const query = document.getElementById('novelty-query').value.trim();
+    const corpus = document.getElementById('novelty-corpus').value
+      .split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    if (!query || corpus.length === 0) { alert('쿼리와 코퍼스를 모두 입력하세요.'); return; }
+
+    const btn = event.target; btn.disabled = true; btn.textContent = '분석 중... (모델 로딩 시 시간 소요)';
+    try {
+      const r = await fetch('/api/analysis/novelty', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ query, corpus })
+      });
+      const d = await r.json();
+      if (d.status === 'success') {
+        const novel = d.is_novel ? '✅ 참신한 연구' : '⚠️ 기존 연구와 유사';
+        const txt = [
+          `=== 참신성 분석 결과 ===`,
+          ``,
+          `판정:          ${novel}`,
+          `Gap Score:     ${d.gap_score?.toFixed(4)}  (1에 가까울수록 참신)`,
+          `최대 유사도:   ${d.max_similarity?.toFixed(4)}`,
+          `유사 연구 수:  ${d.similar_count}건`,
+          ``,
+          `기준: Gap Score >= 0.3 이면 참신으로 판정`
+        ].join('\n');
+        showResult('novelty-result', 'novelty-result-text', txt);
+      } else {
+        showResult('novelty-result', 'novelty-result-text', '오류: ' + d.message);
+      }
+    } catch(e) {
+      showResult('novelty-result', 'novelty-result-text', '요청 실패: ' + e.message);
+    }
+    btn.disabled = false; btn.textContent = '참신성 분석';
+  }
+
+  async function runManuscript() {
+    const payload = {
+      title: document.getElementById('ms-title').value,
+      authors: document.getElementById('ms-authors').value.split(',').map(s => s.trim()),
+      institution: document.getElementById('ms-institution').value,
+      background: document.getElementById('ms-background').value,
+      objective: document.getElementById('ms-objective').value,
+      methods: document.getElementById('ms-methods').value,
+      results: document.getElementById('ms-results').value,
+      conclusion: document.getElementById('ms-conclusion').value,
+    };
+
+    const btn = event.target; btn.disabled = true; btn.textContent = '생성 중...';
+    try {
+      const r = await fetch('/api/manuscript/generate', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const d = await r.json();
+      if (d.status === 'success') {
+        showResult('ms-result', 'ms-result-text', d.abstract);
+      } else {
+        showResult('ms-result', 'ms-result-text', '오류: ' + d.message);
+      }
+    } catch(e) {
+      showResult('ms-result', 'ms-result-text', '요청 실패: ' + e.message);
+    }
+    btn.disabled = false; btn.textContent = '초록 생성';
+  }
+</script>
+</body>
+</html>

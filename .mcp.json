@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "notebooklm-mcp": {
+      "command": "C:\\Users\\mitto\\AppData\\Local\\Python\\pythoncore-3.14-64\\Scripts\\notebooklm-mcp.exe",
+      "args": []
+    }
+  }
+}

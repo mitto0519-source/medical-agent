@@ -1,0 +1,32 @@
+# 환경/인증
+.env
+*.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 데이터 (OneDrive로 공유)
+data/chromadb/
+data/papers/
+data/drafts/
+data/agent_memory.json
+
+# 라이브러리와 프로필은 동기화 (JSON만)
+# data/libraries/ → 동기화 O
+# data/author_profiles/ → 동기화 O
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 임시
+*.tmp
+*.log
