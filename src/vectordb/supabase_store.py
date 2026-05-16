@@ -124,22 +124,45 @@ class SupabaseVectorStore:
 
     def count(self) -> int:
         try:
-            return len(self._col.query(
-                data=[0.0] * _EMBEDDING_DIM, limit=10000, include_value=False
-            ))
+            import sqlalchemy as sa
+            with self._vx._engine.connect() as conn:
+                row = conn.execute(
+                    sa.text(f'SELECT COUNT(*) FROM vecs."{self.COLLECTION}"')
+                ).fetchone()
+                return int(row[0]) if row else 0
         except Exception:
             return 0
 
     def list_sources(self) -> list[str]:
         try:
-            results = self._col.query(
-                data=[0.0] * _EMBEDDING_DIM, limit=10000,
-                include_metadata=True, include_value=False
-            )
-            filenames = {meta.get("filename", "") for _, meta in results if meta}
-            return sorted(f for f in filenames if f)
+            import sqlalchemy as sa
+            with self._vx._engine.connect() as conn:
+                rows = conn.execute(
+                    sa.text(
+                        f"SELECT DISTINCT metadata->>'filename' "
+                        f'FROM vecs."{self.COLLECTION}" '
+                        f"WHERE metadata->>'filename' IS NOT NULL"
+                    )
+                ).fetchall()
+                return sorted(r[0] for r in rows if r[0])
         except Exception:
             return []
+
+    def delete_source(self, filename: str) -> int:
+        try:
+            import sqlalchemy as sa
+            with self._vx._engine.connect() as conn:
+                result = conn.execute(
+                    sa.text(
+                        f'DELETE FROM vecs."{self.COLLECTION}" '
+                        f"WHERE metadata->>'filename' = :fn"
+                    ),
+                    {"fn": filename},
+                )
+                conn.commit()
+                return result.rowcount or 0
+        except Exception:
+            return 0
 
     def close(self):
         try:

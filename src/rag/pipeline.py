@@ -11,7 +11,7 @@ from typing import List, Dict, Optional
 from src.ingestion.document_reader import DocumentReader
 from src.ingestion.web_reader import WebReader
 from src.ingestion.chunker import TextChunker
-from src.vectordb.store import VectorStore
+from src.vectordb.store import get_vector_store
 from src.llm.claude_client import ClaudeClient
 
 
@@ -49,7 +49,7 @@ class RAGPipeline:
         self._reader = DocumentReader(api_key=api_key)
         self._web_reader = WebReader()
         self._chunker = TextChunker(chunk_size=chunk_size, overlap=overlap)
-        self._store = VectorStore(persist_dir=persist_dir)
+        self._store = get_vector_store(persist_dir=persist_dir)
         self._llm = ClaudeClient(api_key=api_key)
 
     # ------------------------------------------------------------------
