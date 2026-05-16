@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 Streamlit UI",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": ["run", "app/streamlit_app.py", "--server.port", "8501"],
+      "jinja": true,
+      "justMyCode": true,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "📚 스타일 시드 구축",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/build_yoosun_cho_seed.py",
+      "console": "integratedTerminal",
+      "env": { "PYTHONIOENCODING": "utf-8" }
+    },
+    {
+      "name": "📊 KYRBS 라이브러리 구축",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/build_kyrbs_library.py",
+      "console": "integratedTerminal",
+      "env": { "PYTHONIOENCODING": "utf-8" }
+    },
+    {
+      "name": "🔍 파이프라인 테스트",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/test_kyrbs_pipeline.py",
+      "console": "integratedTerminal",
+      "env": { "PYTHONIOENCODING": "utf-8" }
+    },
+    {
+      "name": "🌐 Flask API",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/app/main.py",
+      "console": "integratedTerminal",
+      "env": { "PYTHONIOENCODING": "utf-8", "FLASK_ENV": "development" }
+    }
+  ]
+}
