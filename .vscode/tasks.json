@@ -1,45 +1,63 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Install Dependencies",
-            "type": "shell",
-            "command": "pip",
-            "args": ["install", "-r", "requirements.txt"],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Start Jupyter Lab",
-            "type": "shell",
-            "command": "jupyter",
-            "args": ["lab", "--notebook-dir=notebooks"],
-            "isBackground": true,
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Run Tests",
-            "type": "shell",
-            "command": "python",
-            "args": ["-m", "pytest", "tests/", "-v"],
-            "group": {
-                "kind": "test"
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared"
-            }
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🚀 Medical Agent UI 시작",
+      "type": "shell",
+      "command": "streamlit run app/streamlit_app.py --server.port 8501",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "runOptions": { "runOn": "default" },
+      "problemMatcher": [],
+      "detail": "브라우저에서 http://localhost:8501 로 접속"
+    },
+    {
+      "label": "🔄 자동 동기화 시작",
+      "type": "shell",
+      "command": "python scripts/auto_sync.py",
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "detail": "Git 자동 pull/push 데몬"
+    },
+    {
+      "label": "📚 조유선 스타일 시드 구축",
+      "type": "shell",
+      "command": "python build_yoosun_cho_seed.py",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": [],
+      "detail": "PubMed에서 논문 수집 + 스타일 분석"
+    },
+    {
+      "label": "📊 KYRBS 라이브러리 구축",
+      "type": "shell",
+      "command": "python build_kyrbs_library.py",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": [],
+      "detail": "KYRBS 2025 변수 라이브러리 구축"
+    },
+    {
+      "label": "🔍 KYRBS 파이프라인 테스트",
+      "type": "shell",
+      "command": "python test_kyrbs_pipeline.py",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": [],
+      "detail": "연구 주제 생성 테스트"
+    },
+    {
+      "label": "📦 패키지 설치",
+      "type": "shell",
+      "command": "pip install -r requirements.txt",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+    {
+      "label": "📋 동기화 로그 확인",
+      "type": "shell",
+      "command": "Get-Content scripts/sync.log -Encoding utf8 -Tail 30 -Wait",
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "problemMatcher": [],
+      "detail": "실시간 동기화 로그 스트리밍"
+    }
+  ]
 }
