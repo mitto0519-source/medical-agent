@@ -32,7 +32,6 @@ pymupdf>=1.23.0
 
 # ── Vector DB — local ────────────────────────────────────────────────
 chromadb>=0.4.0
-protobuf>=3.20.0,<4.0.0
 
 # ── Vector DB — cloud (Supabase pgvector, SUPABASE_DB_URL 설정 시 사용)
 vecs>=0.4.0

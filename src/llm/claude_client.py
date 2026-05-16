@@ -16,12 +16,25 @@ class ClaudeClient:
     DEFAULT_MODEL = "claude-opus-4-7"
 
     def __init__(self, api_key: Optional[str] = None, model: str = DEFAULT_MODEL):
-        """
-        Args:
-            api_key: Anthropic API key. Falls back to ANTHROPIC_API_KEY env var.
-            model: Model ID string.
-        """
-        self._client = anthropic.Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
+        resolved_key = api_key or os.environ.get("ANTHROPIC_API_KEY") or ""
+        if not resolved_key:
+            # Try loading dotenv one more time with explicit path
+            try:
+                from dotenv import load_dotenv as _ld
+                from pathlib import Path as _P
+                import inspect as _i
+                _root = _P(_i.getfile(_i.currentframe())).parent.parent.parent
+                _ld(dotenv_path=_root / ".env", override=True)
+                resolved_key = os.environ.get("ANTHROPIC_API_KEY", "")
+            except Exception:
+                pass
+        if not resolved_key:
+            raise ValueError(
+                "ANTHROPIC_API_KEY가 설정되지 않았습니다.\n"
+                "1) Medical-Agent/.env 파일에 ANTHROPIC_API_KEY=sk-ant-... 를 추가하거나\n"
+                "2) Streamlit Cloud Secrets에 추가하세요."
+            )
+        self._client = anthropic.Anthropic(api_key=resolved_key)
         self.model = model
 
     # ------------------------------------------------------------------

@@ -7,7 +7,10 @@ os.environ['HF_HUB_DISABLE_SYMLINKS_WARNING'] = '1'
 os.environ.setdefault('PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION', 'python')
 
 from dotenv import load_dotenv
-load_dotenv()
+from pathlib import Path as _Path
+# Explicit path — works regardless of Streamlit's working directory
+_root = _Path(__file__).parent.parent
+load_dotenv(dotenv_path=_root / ".env", override=True)
 
 import streamlit as st
 import json
@@ -93,11 +96,24 @@ hr,[data-testid="stDivider"]{border-color:var(--border)!important;}
 """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════
-# Login Gate
+# Login Gate — with remember-me (st.query_params) + auto-login
 # ══════════════════════════════════════════════════════════════════════
 def _login_gate():
     if "user" in st.session_state:
         return True
+
+    # Auto-login from query params
+    params = st.query_params
+    saved_email = params.get("email", "")
+    auto_login = params.get("auto", "") == "1"
+
+    if saved_email and auto_login:
+        from src.auth.users import get_user_by_email
+        user = get_user_by_email(saved_email.strip().lower())
+        if user:
+            st.session_state["user"] = user
+            st.rerun()
+
     st.markdown("""
     <div style="max-width:420px;margin:80px auto;padding:2.5rem;
                 background:#1c2128;border:1px solid #30363d;border-radius:16px;
@@ -107,9 +123,17 @@ def _login_gate():
         <p style="color:#8b949e;margin-top:.4rem;font-size:.85rem;">조유선 스타일 의학 논문 자동 생산 파이프라인</p>
     </div>
     """, unsafe_allow_html=True)
+
     with st.form("login_form"):
-        email = st.text_input("이메일 주소", placeholder="your@email.com")
+        email = st.text_input("이메일 주소", value=saved_email, placeholder="your@email.com")
+        col_r, col_a = st.columns(2)
+        with col_r:
+            remember = st.checkbox("이메일 기억하기", value=bool(saved_email))
+        with col_a:
+            autologin = st.checkbox("자동 로그인", value=auto_login,
+                                    help="다음 방문 시 이메일 확인 없이 바로 접속")
         submitted = st.form_submit_button("접속하기", use_container_width=True, type="primary")
+
     if submitted:
         if not email or "@" not in email:
             st.error("올바른 이메일 주소를 입력하세요.")
@@ -120,11 +144,30 @@ def _login_gate():
             st.error("등록되지 않은 이메일입니다.")
             return False
         st.session_state["user"] = user
+        # Save to query params for next visit
+        if remember:
+            st.query_params["email"] = email.strip().lower()
+            if autologin:
+                st.query_params["auto"] = "1"
+            else:
+                st.query_params.pop("auto", None)
+        else:
+            st.query_params.pop("email", None)
+            st.query_params.pop("auto", None)
         st.rerun()
     return False
 
 if not _login_gate():
     st.stop()
+
+# API 키 확인 — 누락 시 경고
+if not os.environ.get("ANTHROPIC_API_KEY"):
+    st.warning(
+        "⚠️ **ANTHROPIC_API_KEY가 설정되지 않았습니다.**  \n"
+        f"`{str(_root / '.env')}` 파일에 `ANTHROPIC_API_KEY=sk-ant-...` 를 추가하거나 "
+        "Streamlit Cloud Secrets를 설정하세요.",
+        icon="🔑",
+    )
 
 # ══════════════════════════════════════════════════════════════════════
 # Helpers
@@ -204,6 +247,70 @@ with st.sidebar:
     _nb("○  지식베이스 관리", "지식베이스 관리")
     _nb("○  자동 학습 루프", "자동 학습 루프")
     st.markdown('</div>', unsafe_allow_html=True)
+
+    # ── LLM Provider 설정 ──────────────────────────────────────────
+    st.markdown('<div class="nav-section">AI 어시스턴트</div>', unsafe_allow_html=True)
+    st.markdown('<div style="padding:0 8px 8px;">', unsafe_allow_html=True)
+
+    _PROVIDERS = {
+        "🟠 Claude": "Claude (Anthropic)",
+        "🟢 GPT-4": "GPT-4 (OpenAI)",
+        "🔵 Gemini": "Gemini (Google)",
+    }
+    # Load saved setting
+    _email = _u.get("email", "")
+    if "llm_settings" not in st.session_state:
+        try:
+            from src.auth.users import get_llm_settings
+            st.session_state["llm_settings"] = get_llm_settings(_email)
+        except Exception:
+            st.session_state["llm_settings"] = {"provider": "Claude (Anthropic)", "api_key": ""}
+
+    _saved = st.session_state["llm_settings"]
+    _cur_icon = next((k for k, v in _PROVIDERS.items() if v == _saved["provider"]), "🟠 Claude")
+
+    _sel_icon = st.radio(
+        "LLM 선택",
+        list(_PROVIDERS.keys()),
+        index=list(_PROVIDERS.keys()).index(_cur_icon),
+        horizontal=True,
+        key="_sidebar_llm_radio",
+        label_visibility="collapsed",
+    )
+    _sel_provider = _PROVIDERS[_sel_icon]
+
+    with st.expander("🔑 API Key 설정", expanded=False):
+        _api_key_input = st.text_input(
+            "API Key",
+            value=_saved.get("api_key", ""),
+            type="password",
+            key="_sidebar_api_key",
+            placeholder="sk-ant-... / sk-... / AI...",
+            label_visibility="collapsed",
+        )
+        if st.button("💾 저장", key="_llm_save", use_container_width=True, type="primary"):
+            try:
+                from src.auth.users import save_llm_settings
+                save_llm_settings(_email, _sel_provider, _api_key_input)
+                st.session_state["llm_settings"] = {"provider": _sel_provider, "api_key": _api_key_input}
+                # Push to AI panel session state
+                st.session_state["_ai_provider"] = _sel_provider
+                if _api_key_input:
+                    st.session_state.setdefault("user_api_keys", {})
+                    pk = _sel_provider.split()[0].lower()
+                    st.session_state["user_api_keys"][pk] = _api_key_input
+                st.success("저장됨!")
+            except Exception as e:
+                st.error(f"오류: {e}")
+
+    # Push current provider to AI panel on every render
+    if _sel_provider != _saved.get("provider"):
+        st.session_state["llm_settings"]["provider"] = _sel_provider
+    st.session_state["_ai_provider"] = _sel_provider
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # ── User profile ───────────────────────────────────────────────
     user_initial = (_u.get("name") or "U")[0].upper()
     role_tag = "👑 " if _u.get("role") == "super_admin" else ""
     st.markdown(f"""
@@ -216,6 +323,7 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     if st.button("로그아웃", key="__logout__"):
+        st.query_params.pop("auto", None)
         del st.session_state["user"]
         st.rerun()
 

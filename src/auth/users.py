@@ -131,3 +131,24 @@ def rotate_key(email: str) -> str:
     users[email]["api_key"] = new_key
     _save(users)
     return new_key
+
+
+def save_llm_settings(email: str, provider: str, api_key: str = "") -> None:
+    """사용자 LLM 공급자 및 API 키 저장."""
+    users = _load()
+    if email not in users:
+        return
+    users[email]["llm_provider"] = provider
+    if api_key:
+        users[email]["llm_api_key"] = api_key
+    _save(users)
+
+
+def get_llm_settings(email: str) -> dict:
+    """사용자 LLM 설정 반환."""
+    users = _load()
+    info = users.get(email, {})
+    return {
+        "provider": info.get("llm_provider", "Claude (Anthropic)"),
+        "api_key": info.get("llm_api_key", ""),
+    }

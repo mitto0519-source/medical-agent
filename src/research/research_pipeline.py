@@ -53,7 +53,19 @@ class ResearchPipeline:
         library_dir: str = "data/libraries",
         api_key: Optional[str] = None,
     ):
-        self._api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+        # Load .env explicitly if needed
+        self._api_key = api_key or os.environ.get("ANTHROPIC_API_KEY") or ""
+        if not self._api_key:
+            try:
+                from dotenv import load_dotenv
+                from pathlib import Path
+                _root = Path(__file__).parent.parent.parent
+                load_dotenv(dotenv_path=_root / ".env", override=True)
+                self._api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+            except Exception:
+                pass
+        if not self._api_key:
+            raise ValueError("ANTHROPIC_API_KEY가 설정되지 않았습니다. .env 파일 또는 환경변수를 확인하세요.")
         self._client = anthropic.Anthropic(api_key=self._api_key)
 
         self.author = AuthorProfile(author_name, profile_dir, self._api_key)
