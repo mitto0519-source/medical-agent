@@ -1,51 +1,48 @@
-# Core Data Science
+# ── Core Data Science ────────────────────────────────────────────────
 numpy>=1.24.0
 pandas>=2.0.0
 scipy>=1.11.0
 scikit-learn>=1.3.0
 
-# Statistical Analysis
+# ── Statistical Analysis ─────────────────────────────────────────────
 statsmodels>=0.14.0
 pingouin>=0.5.3
+lifelines>=0.28.0
 
-# Visualization
+# ── Visualization ────────────────────────────────────────────────────
 matplotlib>=3.7.0
 seaborn>=0.12.0
 plotly>=5.15.0
 
-# Jupyter
-jupyter>=1.0.0
-notebook>=7.0.0
-jupyterlab>=4.0.0
-ipython>=8.14.0
-
-# Medical/Healthcare
-lifelines>=0.28.0
-
-# Data Processing
+# ── Data Processing ──────────────────────────────────────────────────
 openpyxl>=3.1.0
-xlrd>=2.0.1
 
-# NLP and Text Processing
-nltk>=3.8.0
+# ── NLP / Embedding ──────────────────────────────────────────────────
 sentence-transformers>=2.2.0
 
-# Web Framework
+# ── Web / API ────────────────────────────────────────────────────────
+streamlit>=1.30.0
 flask>=3.0.0
 python-dotenv>=1.0.0
-
-# Utilities
 requests>=2.31.0
 tqdm>=4.65.0
 
-# IDE and Development
-ipywidgets>=8.0.0
-
-# PDF Processing
+# ── PDF Processing ───────────────────────────────────────────────────
 pymupdf>=1.23.0
 
-# Vector Database
+# ── Vector DB — local ────────────────────────────────────────────────
 chromadb>=0.4.0
 
-# LLM
+# ── Vector DB — cloud (Supabase pgvector, SUPABASE_DB_URL 설정 시 사용)
+vecs>=0.4.0
+psycopg2-binary>=2.9.0
+sqlalchemy>=2.0.0
+pgvector>=0.3.0
+flupy>=1.0.0
+deprecated>=1.2.0
+
+# ── LLM ─────────────────────────────────────────────────────────────
 anthropic>=0.30.0
+
+# ── MCP Server ───────────────────────────────────────────────────────
+fastmcp>=3.0.0

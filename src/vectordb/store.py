@@ -1,4 +1,8 @@
-"""Persistent vector store using ChromaDB"""
+"""Persistent vector store — ChromaDB (local) or Supabase pgvector (cloud).
+
+SUPABASE_DB_URL 환경변수 설정 시 → Supabase 자동 사용 (Streamlit Cloud 배포용)
+미설정 시 → 로컬 ChromaDB
+"""
 
 import chromadb
 from chromadb.config import Settings
@@ -151,3 +155,12 @@ class VectorStore:
         if ids:
             self._collection.delete(ids=ids)
         return len(ids)
+
+
+def get_vector_store(persist_dir: str = "data/chromadb") -> "VectorStore":
+    """환경변수에 따라 Supabase 또는 로컬 ChromaDB VectorStore 반환."""
+    import os
+    if os.environ.get("SUPABASE_DB_URL"):
+        from src.vectordb.supabase_store import SupabaseVectorStore
+        return SupabaseVectorStore()  # type: ignore[return-value]
+    return VectorStore(persist_dir=persist_dir)
