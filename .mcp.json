@@ -7,7 +7,7 @@
     "medical-agent": {
       "url": "https://medical-agent-production.up.railway.app/mcp",
       "headers": {
-        "Authorization": "Bearer ma-YOUR_API_KEY_HERE"
+        "Authorization": "Bearer ma-7447e07290f147213185c456e733e7c7"
       }
     }
   }
