@@ -22,7 +22,7 @@ sentence-transformers>=2.2.0
 
 # ── Web / API ────────────────────────────────────────────────────────
 streamlit>=1.30.0
-# flask>=3.0.0  ← MCP 서버 전용
+flask>=3.0.0
 python-dotenv>=1.0.0
 requests>=2.31.0
 tqdm>=4.65.0
@@ -45,5 +45,5 @@ deprecated>=1.2.0
 # ── LLM ─────────────────────────────────────────────────────────────
 anthropic>=0.30.0
 
-# ── MCP Server (Railway 전용 — Streamlit Cloud에서는 불필요) ──────────
-# fastmcp>=3.0.0
+# ── MCP Server ───────────────────────────────────────────────────────
+fastmcp>=3.0.0
