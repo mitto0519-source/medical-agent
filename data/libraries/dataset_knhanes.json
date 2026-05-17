@@ -772,5 +772,39 @@
     "Mun Eunji, Kim Kyung Hee, Choi Jung Eun et al. Association between vitamin D status and insulin resistance in Korean adolescents: differential effects of obesity using non-insulin-based indices.. BMC pediatrics. 2026. doi:10.4103/ijpvm.IJPVM_329_15",
     "Kim Jiin, Fellinghauer Carolina, Hodel Jsabel et al. Development of a Functioning Measurement Scale for the South Korean Population Using the Korea National Health and Nutrition Examination Survey.. International journal of public health. 2026. doi:10.3928/02793695-20250217-04",
     "Lee Hyang Rae, Ko Minjeong, Cha Seung-Kuy et al. Association Between Fasting Insulin Levels and Handgrip Strength: A Cross-Sectional Study Using the Korean National Health and Nutrition Examination Survey.. Journal of clinical medicine. 2025. doi:10.3390/nu10030364"
-  ]
+  ],
+  "waves": {
+    "1기": "1998",
+    "2기": "2001",
+    "3기": "2005",
+    "4기": "2007-2009",
+    "5기": "2010-2012",
+    "6기": "2013-2015",
+    "7기": "2016-2018",
+    "8기": "2019-2021",
+    "9기": "2022-현재"
+  },
+  "sampling_design": {
+    "method": "층화다단계집락추출 (Stratified multi-stage cluster sampling)",
+    "strata_variable": "kstrata",
+    "cluster_variable": "psu",
+    "weight_variables": {
+      "health_interview": "wt_itvex",
+      "health_examination": "wt_oe (또는 wt_oe_Nth)",
+      "nutrition": "wt_ntr"
+    },
+    "note": "복합표본 미적용 시 표준오차 과소추정 및 유의성 부풀림 발생"
+  },
+  "download_info": {
+    "url": "https://knhanes.kdca.go.kr/knhanes/sub03/sub03_02_02.do",
+    "agency": "질병관리청 (KDCA)",
+    "format": [
+      "SAS (.sas7bdat)",
+      "CSV",
+      "SPSS (.sav)"
+    ],
+    "registration": "필요 (연구목적 사용 신청)",
+    "local_raw_path": "data/raw/knhanes/",
+    "note": "다운로드 후 data/raw/knhanes/ 에 저장하면 scripts/seed_knhanes.py --parse-raw 가 자동 처리"
+  }
 }
