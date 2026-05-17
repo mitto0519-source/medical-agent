@@ -34,6 +34,7 @@ def _setup_session_state():
     st.session_state.setdefault('workflow_focus', '')
     st.session_state.setdefault('workflow_n', 5)
 
+<<<<<<< Updated upstream
 
 def _render_sidebar():
     st.sidebar.header('워크플로우 관리')
@@ -54,6 +55,32 @@ def _render_sidebar():
         st.session_state['wf_dataset'] = st.sidebar.selectbox('데이터셋', ['KYRBS'])
         if st.sidebar.button('시작', type='primary'):
             st.experimental_rerun()
+=======
+def run_workflow_page():
+    st.set_page_config(page_title="단계별 연구 워크플로우", page_icon="🔬", layout="wide")
+    st.title("🔬 단계별 연구 워크플로우")
+    st.caption("각 단계에서 검수·승인 후 다음 단계로 진행됩니다.")
+    
+    # ── 워크플로우 선택/생성 ──────────────────────────────────────────────
+    with st.sidebar:
+    st.header("워크플로우 관리")
+    existing = sorted(Path("data/workflows").glob("*.json")) if Path("data/workflows").exists() else []
+    existing_ids = [p.stem for p in existing if not p.stem.endswith("_analysis")]
+    
+    mode = st.radio(
+        "워크플로우 모드",
+        ["기존 불러오기", "새로 시작"],
+        label_visibility="collapsed",
+    )
+
+    if mode == "새로 시작":
+        new_id = st.text_input("워크플로우 이름", value=f"study_{str(uuid.uuid4())[:8]}")
+        dataset = st.selectbox("데이터셋", ["KYRBS"])
+        if st.button("시작", type="primary"):
+            st.session_state["wf_id"] = new_id
+            st.session_state["wf_dataset"] = dataset
+            st.rerun()
+>>>>>>> Stashed changes
     else:
         if existing_ids:
             selected = st.sidebar.selectbox('워크플로우 선택', existing_ids, index=0)

@@ -6,6 +6,8 @@ from __future__ import annotations
 import os
 import streamlit as st
 
+from src.llm import get_llm_client
+
 _PROVIDERS = ["Claude (Anthropic)", "GPT-4 (OpenAI)", "Gemini (Google)"]
 
 PANEL_CSS = """
@@ -29,31 +31,26 @@ PANEL_CSS = """
 """
 
 
-def _call_claude(messages: list, system: str, api_key: str) -> str:
-    from anthropic import Anthropic
-    client = Anthropic(api_key=api_key)
-    resp = client.messages.create(
-        model="claude-opus-4-7",
-        max_tokens=2048,
-        system=system,
-        messages=messages,
-        thinking={"type": "adaptive"},
+def _flatten_messages(messages: list) -> str:
+    return "\n\n".join(
+        f"{m['role'].capitalize()}: {m['content']}" for m in messages
     )
-    for block in resp.content:
-        if block.type == "text":
-            return block.text
-    return ""
 
 
-def _call_openai(messages: list, system: str, api_key: str) -> str:
-    try:
-        from openai import OpenAI
-        client = OpenAI(api_key=api_key)
-        full_msgs = [{"role": "system", "content": system}] + messages
-        resp = client.chat.completions.create(model="gpt-4o", messages=full_msgs, max_tokens=2048)
-        return resp.choices[0].message.content
-    except ImportError:
-        return "⚠️ openai 패키지가 설치되지 않았습니다. `pip install openai`"
+def _call_llm(provider: str, messages: list, system: str, api_key: str) -> str:
+    provider_key = provider.split()[0].lower()
+    if provider_key == "claude":
+        client = get_llm_client(api_key=api_key or None, provider="anthropic")
+    elif provider_key == "gpt-4":
+        client = get_llm_client(api_key=api_key or None, provider="openai")
+    else:
+        raise ValueError(f"Unsupported LLM provider: {provider}")
+
+    return client.generate(
+        _flatten_messages(messages),
+        system_prompt=system,
+        max_tokens=2048,
+    )
 
 
 def _call_gemini(messages: list, system: str, api_key: str) -> str:
@@ -183,9 +180,9 @@ def render_ai_panel(current_page: str, page_context: dict | None = None):
         with st.spinner("생각 중..."):
             try:
                 if "Claude" in provider:
-                    answer = _call_claude(msgs_for_api, SYSTEM, api_key)
+                    answer = _call_llm(provider, msgs_for_api, SYSTEM, api_key)
                 elif "GPT" in provider:
-                    answer = _call_openai(msgs_for_api, SYSTEM, api_key)
+                    answer = _call_llm(provider, msgs_for_api, SYSTEM, api_key)
                 else:
                     answer = _call_gemini(msgs_for_api, SYSTEM, api_key)
             except Exception as e:
