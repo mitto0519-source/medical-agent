@@ -50,10 +50,9 @@ class DummyClaudeClient:
 
 
 def main():
-    # Monkeypatch factory and client
+    # Monkeypatch factory and client (patch names used inside rag.pipeline)
     rag_pipeline.get_vector_store = lambda persist_dir=None: DummyVectorStore()
-    import src.llm.claude_client as cc
-    cc.ClaudeClient = DummyClaudeClient
+    rag_pipeline.ClaudeClient = DummyClaudeClient
 
     # Instantiate pipeline (uses our dummy store & client)
     rag = rag_pipeline.RAGPipeline(persist_dir=":memory:", api_key="dummy")
