@@ -8,12 +8,15 @@
   5. 통계 수행 (외부 데이터 필요)
   6. 조유선 스타일 논문 작성
 """
+from __future__ import annotations
 
 import json
 import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
+from src.config.env import bootstrap
+from src.config.logging_config import get_logger
 from src.llm import get_llm_client
 from src.profile.author_profile import AuthorProfile
 from src.library.dataset_library import DatasetLibrary
@@ -22,6 +25,8 @@ from src.research.novelty_checker import NoveltyChecker
 from src.research.paper_writer import PaperWriter
 from src.rag.pipeline import RAGPipeline
 from src.ingestion.evidence_reader import EvidenceReader
+
+_log = get_logger(__name__)
 
 
 def _clean_llm_response(raw: str) -> str:
@@ -42,18 +47,9 @@ class ResearchPipeline:
 
     사용 예:
         rp = ResearchPipeline()
-        rp.setup_author("Yoosun Cho")
-
-        # 데이터셋 등록
-        rp.register_dataset("KYBRS", variables=[...])
-
-        # 주제 생성
-        topics = rp.generate_topics("KYBRS", focus="breast density")
-
-        # 신규성 확인
+        rp.register_dataset("KYRBS", variables=[...])
+        topics = rp.generate_topics("KYRBS", focus="sleep quality")
         novelty = rp.check_novelty(topics[0])
-
-        # 논문 초안 작성
         draft = rp.write_paper(topics[0], study_info={...}, results={...})
     """
 
@@ -65,44 +61,15 @@ class ResearchPipeline:
         library_dir: str = "data/libraries",
         api_key: Optional[str] = None,
     ):
-        # Load .env explicitly if needed
-        self._api_key = api_key or os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY") or ""
-        if not self._api_key:
-            try:
-                from dotenv import load_dotenv
-                _root = Path(__file__).parent.parent.parent
-                load_dotenv(dotenv_path=_root / ".env", override=True)
-                self._api_key = os.environ.get("ANTHROPIC_API_KEY", os.environ.get("OPENAI_API_KEY", ""))
-            except Exception:
-                pass
-        if not self._api_key:
-            raise ValueError("LLM API 키가 설정되지 않았습니다. ANTHROPIC_API_KEY 또는 OPENAI_API_KEY를 .env 또는 환경변수에 추가하세요.")
+        bootstrap()  # .env 단일 로드
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        self._llm = get_llm_client(api_key=self._api_key)
-=======
-=======
->>>>>>> Stashed changes
-        # Prefer Claude (Anthropic) if key present, otherwise OpenAI
-        try:
-            self._client = ClaudeClient(api_key=os.environ.get("ANTHROPIC_API_KEY") or None)
-        except Exception:
-            if OpenAIClient is not None and os.environ.get("OPENAI_API_KEY"):
-                self._client = OpenAIClient(api_key=os.environ.get("OPENAI_API_KEY"))
-            else:
-                # re-raise the original error for visibility
-                raise
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+        self._llm = get_llm_client(api_key=api_key, task="standard")
 
-        self.author = AuthorProfile(author_name, profile_dir, self._api_key)
+        self.author = AuthorProfile(author_name, profile_dir, api_key)
         self.datasets = DatasetLibrary(library_dir)
         self.methods = MethodsLibrary(library_dir)
-        self.novelty = NoveltyChecker(self._api_key)
-        self.rag = RAGPipeline(persist_dir=persist_dir, api_key=self._api_key)
+        self.novelty = NoveltyChecker(api_key)
+        self.rag = RAGPipeline(persist_dir=persist_dir, api_key=api_key)
         self.writer = PaperWriter(
             self.author, self.methods, self.datasets, self.rag, llm_client=self._llm
         )
@@ -111,29 +78,26 @@ class ResearchPipeline:
         self._output_dir = Path("data/drafts")
         self._output_dir.mkdir(parents=True, exist_ok=True)
 
-    # ------------------------------------------------------------------
-    # Step 1 — 저자 스타일 시드 구축
-    # ------------------------------------------------------------------
+    # ── Step 1 — 저자 스타일 시드 구축 ───────────────────────────────────────
 
     def build_author_profile(self, paper_texts: List[Dict]) -> str:
         """논문 텍스트 목록으로 저자 스타일 시드 구축.
 
         paper_texts: [{"title": "...", "text": "..."}, ...]
         """
-        print(f"[Pipeline] {self.author.author_name} 스타일 시드 구축 중...")
+        _log.info("%s 스타일 시드 구축 시작...", self.author.author_name)
         for paper in paper_texts:
             title = paper.get("title", "")
             text = paper.get("text", "")
             if len(text) < 200:
                 continue
             result = self.author.analyse_paper(text, title)
-            print(f"  {'[완료]' if result['status'] == 'analysed' else '[스킵]'} {title[:60]}")
+            status = "[완료]" if result["status"] == "analysed" else "[스킵]"
+            _log.info("  %s %s", status, title[:60])
 
         return self.author.summary()
 
-    # ------------------------------------------------------------------
-    # Step 2 — 데이터셋 라이브러리화
-    # ------------------------------------------------------------------
+    # ── Step 2 — 데이터셋 라이브러리화 ──────────────────────────────────────
 
     def register_dataset(
         self,
@@ -143,7 +107,7 @@ class ResearchPipeline:
         variables: Optional[List[Dict]] = None,
         confounders: Optional[List[str]] = None,
         notes: Optional[List[str]] = None,
-    ):
+    ) -> None:
         """데이터셋과 변수를 라이브러리에 등록.
 
         variables: [{"name": "BMI", "label": "...", "type": "continuous", ...}]
@@ -157,11 +121,9 @@ class ResearchPipeline:
             self.datasets.add_confounder(name, c)
         for n in (notes or []):
             self.datasets.add_analysis_note(name, n)
-        print(f"[Pipeline] 데이터셋 '{name}' 라이브러리 등록 완료.")
+        _log.info("데이터셋 '%s' 라이브러리 등록 완료.", name)
 
-    # ------------------------------------------------------------------
-    # Step 3 — 주제 생성
-    # ------------------------------------------------------------------
+    # ── Step 3 — 주제 생성 ───────────────────────────────────────────────────
 
     def generate_topics(
         self,
@@ -173,17 +135,15 @@ class ResearchPipeline:
         """데이터셋 + RAG 컨텍스트 기반 연구 주제 생성.
 
         Returns list of topic dicts:
-        {"title", "exposure", "outcome", "population", "rationale"}
+            {"title", "exposure", "outcome", "population", "rationale",
+             "suggested_design", "suggested_methods"}
         """
         dataset_ctx = self.datasets.get_context(dataset_name)
 
-        # RAG (로컬 인덱스) + Open Evidence 통합 검색
         rag_ctx = ""
         if reference_query or focus:
-            # 로컬 RAG
             hits = self.rag.ask(reference_query or focus)
             rag_ctx = "\n".join(h["text"] for h in hits.get("sources", [])[:3])
-            # 오픈 에비던스 (PubMed + Semantic Scholar)
             ev_summary = self.evidence.search_and_summarise(reference_query or focus, n=5)
             rag_ctx = ev_summary + "\n\n--- LOCAL INDEX ---\n" + rag_ctx
 
@@ -213,40 +173,26 @@ Generate {n_topics} research topics as JSON array:
 ]
 Return JSON only."""
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        raw = self._llm.generate(prompt, max_tokens=3000)
+        raw = self._llm.generate(prompt, max_tokens=3000, task="topic_generation")
         raw = _clean_llm_response(raw)
-=======
-        # Use the client wrapper's generate() method
-        raw = self._client.generate(prompt)
->>>>>>> Stashed changes
-=======
-        # Use the client wrapper's generate() method
-        raw = self._client.generate(prompt)
->>>>>>> Stashed changes
 
         try:
             topics = json.loads(raw)
         except Exception as exc:
             raise ValueError(
-                f"주제 생성 결과를 JSON으로 파싱할 수 없습니다: {exc}\n원본 응답:\n{raw}"
+                f"주제 생성 결과를 JSON으로 파싱할 수 없습니다: {exc}\n원본:\n{raw}"
             )
         if not isinstance(topics, list):
-            raise ValueError(
-                f"주제 생성 결과가 JSON 배열이 아닙니다. 원본 응답:\n{raw}"
-            )
+            raise ValueError(f"JSON 배열이 아닙니다:\n{raw}")
 
-        print(f"[Pipeline] 주제 {len(topics)}개 생성 완료.")
+        _log.info("주제 %d개 생성 완료.", len(topics))
         return topics
 
-    # ------------------------------------------------------------------
-    # Step 4 — 신규성 확인
-    # ------------------------------------------------------------------
+    # ── Step 4 — 신규성 확인 ─────────────────────────────────────────────────
 
     def check_novelty(self, topic: Dict) -> Dict:
         """주제 신규성 PubMed 검증."""
-        print(f"[Pipeline] 신규성 확인: {topic.get('title', '')[:60]}")
+        _log.info("신규성 확인: %s", topic.get("title", "")[:60])
         return self.novelty.check(
             topic=topic.get("title", ""),
             exposure=topic.get("exposure", ""),
@@ -254,9 +200,7 @@ Return JSON only."""
             population=topic.get("population", ""),
         )
 
-    # ------------------------------------------------------------------
-    # Step 5 — 타당성 간이 검증
-    # ------------------------------------------------------------------
+    # ── Step 5 — 타당성 간이 검증 ────────────────────────────────────────────
 
     def validate_feasibility(self, topic: Dict, dataset_name: str) -> Dict:
         """데이터셋 변수 기반 연구 타당성 빠른 검증."""
@@ -281,24 +225,15 @@ Return JSON:
 }}
 Return JSON only."""
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        raw = self._llm.generate(prompt)
-=======
-        raw = self._client.generate(prompt)
->>>>>>> Stashed changes
-=======
-        raw = self._client.generate(prompt)
->>>>>>> Stashed changes
+        raw = self._llm.generate(prompt, task="feasibility")
+        raw = _clean_llm_response(raw)
 
         try:
             return json.loads(raw)
         except Exception:
             return {"raw": raw, "is_feasible": None}
 
-    # ------------------------------------------------------------------
-    # Step 6 — 논문 작성
-    # ------------------------------------------------------------------
+    # ── Step 6 — 논문 작성 ───────────────────────────────────────────────────
 
     def write_paper(
         self,
@@ -308,15 +243,18 @@ Return JSON only."""
         use_rag_references: bool = True,
     ) -> str:
         """조유선 스타일로 논문 초안 생성 및 파일 저장."""
-
         reference_context = None
         if use_rag_references:
-            query = f"{topic.get('exposure', '')} {topic.get('outcome', '')} {topic.get('population', '')}"
+            query = (
+                f"{topic.get('exposure', '')} "
+                f"{topic.get('outcome', '')} "
+                f"{topic.get('population', '')}"
+            )
             hits = self.rag.ask(query)
             if hits.get("sources"):
                 reference_context = "\n\n".join(h["text"] for h in hits["sources"][:5])
 
-        print(f"[Pipeline] 논문 작성 시작: {topic.get('title', '')[:60]}")
+        _log.info("논문 작성 시작: %s", topic.get("title", "")[:60])
         draft = self.writer.write_full_paper(
             topic=topic.get("title", "Untitled"),
             study_info=study_info,
@@ -324,36 +262,38 @@ Return JSON only."""
             reference_context=reference_context,
         )
 
-        # 로컬 저장
-        safe_title = "".join(c if c.isalnum() or c in " _-" else "_" for c in topic.get("title", "draft"))[:60]
+        safe_title = "".join(
+            c if c.isalnum() or c in " _-" else "_"
+            for c in topic.get("title", "draft")
+        )[:60]
         out_path = self._output_dir / f"{safe_title}.txt"
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(draft)
-        print(f"[Pipeline] 논문 저장: {out_path}")
+        _log.info("논문 저장: %s", out_path)
 
-        # 클라우드 저장 (SUPABASE_DB_URL 설정 시)
         try:
             from src.cloud.db import cloud_available, get_engine
             if cloud_available():
                 from sqlalchemy import text
                 with get_engine().begin() as conn:
-                    conn.execute(text("""
-                        INSERT INTO ma_drafts (safe_title, topic_title, content)
-                        VALUES (:safe_title, :topic_title, :content)
-                    """), {
-                        "safe_title": safe_title,
-                        "topic_title": topic.get("title", ""),
-                        "content": draft,
-                    })
-                print(f"[Pipeline] 클라우드 저장 완료: ma_drafts/{safe_title}")
+                    conn.execute(
+                        text(
+                            "INSERT INTO ma_drafts (safe_title, topic_title, content) "
+                            "VALUES (:safe_title, :topic_title, :content)"
+                        ),
+                        {
+                            "safe_title": safe_title,
+                            "topic_title": topic.get("title", ""),
+                            "content": draft,
+                        },
+                    )
+                _log.info("클라우드 저장 완료: ma_drafts/%s", safe_title)
         except Exception as e:
-            print(f"[Pipeline] 클라우드 저장 실패 (로컬만 저장됨): {e}")
+            _log.warning("클라우드 저장 실패 (로컬만 저장됨): %s", e)
 
         return draft
 
-    # ------------------------------------------------------------------
-    # Full automated run
-    # ------------------------------------------------------------------
+    # ── Full automated run ────────────────────────────────────────────────────
 
     def run(
         self,
@@ -362,38 +302,34 @@ Return JSON only."""
         study_info_template: Optional[Dict] = None,
         auto_select_topic: bool = True,
     ) -> Dict:
-        """데이터셋 이름과 주제만 주면 주제 생성 → 신규성 → 타당성 → 출력까지 자동 실행.
+        """데이터셋 + 주제 → 주제 생성 → 신규성 → 타당성 → 자동 실행.
 
-        Returns: {topics, novelty_results, feasibility_results, recommendation}
+        Returns: {"all_topics": [...], "recommended": {...}}
         """
-        print(f"\n{'='*60}")
-        print(f"Research Pipeline 시작: {focus} / {dataset_name}")
-        print(f"{'='*60}\n")
+        _log.info("Research Pipeline 시작: %s / %s", focus, dataset_name)
 
         topics = self.generate_topics(dataset_name, focus=focus)
 
-        results = []
+        scored = []
         for t in topics:
             novelty = self.check_novelty(t)
             feasibility = self.validate_feasibility(t, dataset_name)
             score = (novelty.get("novelty_score", 0) or 0)
             viable = feasibility.get("is_feasible", False)
-            results.append({
+            scored.append({
                 "topic": t,
                 "novelty": novelty,
                 "feasibility": feasibility,
                 "combined_score": score * (1.5 if viable else 0.5),
             })
 
-        results.sort(key=lambda x: x["combined_score"], reverse=True)
-        best = results[0]
+        scored.sort(key=lambda x: x["combined_score"], reverse=True)
+        best = scored[0]
 
-        print(f"\n[Pipeline] 최우선 주제: {best['topic']['title']}")
-        print(f"  신규성: {best['novelty'].get('novelty_score', '?')}/10")
-        print(f"  타당성: {best['feasibility'].get('verdict', '?')}")
-        print(f"  권고: {best['novelty'].get('recommendation', '?')}")
+        _log.info(
+            "최우선 주제: %s (신규성 %s/10)",
+            best["topic"]["title"],
+            best["novelty"].get("novelty_score", "?"),
+        )
 
-        return {
-            "all_topics": results,
-            "recommended": best,
-        }
+        return {"all_topics": scored, "recommended": best}
