@@ -1,0 +1,20 @@
+{
+  "updated_at": "2026-05-17 22:45:33",
+  "overall_score": 88,
+  "smoke_test_status": "passing",
+  "smoke_test_score": "7/7",
+  "known_strengths": [
+    "작업 표준 규칙 자동 로드 (CLAUDE.md)",
+    "장기기억 시스템 (src/memory/change_log.py)",
+    "자가 학습 DB (src/memory/agent_insight.py)",
+    "중앙 모델 레지스트리 (src/config/models.py)",
+    "작업 이력 (data/change_log/history.json)"
+  ],
+  "known_weaknesses": [
+    "Supabase 미연결 (SUPABASE_DB_URL 미설정 — 로컬 전용 모드)"
+  ],
+  "top_next_actions": [],
+  "active_insights": 0,
+  "recent_changes": [],
+  "git_summary": "최근 커밋:\n\n변경사항: M CLAUDE.md\n M src/cloud/db.py\n?? src/memory/self_model.py"
+}

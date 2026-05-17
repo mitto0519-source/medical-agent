@@ -140,6 +140,23 @@ def _init_tables(engine) -> None:
         """,
         "CREATE INDEX IF NOT EXISTS ma_change_log_user_idx ON ma_change_log (user_email, timestamp DESC)",
         "CREATE INDEX IF NOT EXISTS ma_change_log_type_idx ON ma_change_log (action_type, timestamp DESC)",
+        """
+        CREATE TABLE IF NOT EXISTS ma_agent_insights (
+            id           TEXT        PRIMARY KEY,
+            timestamp    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            category     TEXT        NOT NULL DEFAULT 'pattern',
+            title        TEXT        NOT NULL,
+            insight      TEXT        NOT NULL DEFAULT '',
+            why_matters  TEXT        NOT NULL DEFAULT '',
+            how_to_apply TEXT        NOT NULL DEFAULT '',
+            confidence   FLOAT       NOT NULL DEFAULT 0.8,
+            tags         JSONB       NOT NULL DEFAULT '[]',
+            source       TEXT        NOT NULL DEFAULT 'observation',
+            status       TEXT        NOT NULL DEFAULT 'active'
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS ma_insights_cat_idx ON ma_agent_insights (category, timestamp DESC)",
+        "CREATE INDEX IF NOT EXISTS ma_insights_status_idx ON ma_agent_insights (status, timestamp DESC)",
     ]
     with engine.begin() as conn:
         for stmt in ddl_statements:
