@@ -18,28 +18,19 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install lightweight dependencies
+      - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install \
-            anthropic \
-            python-dotenv \
-            requests \
-            sqlalchemy \
-            psycopg2-binary \
-            pgvector \
-            vecs \
-            deprecated \
-            flupy \
-            flask \
-            pytest
+          pip install anthropic python-dotenv requests flask pytest
 
       - name: Syntax check
         run: |
-          find src app scripts -name "*.py" | xargs python -m py_compile && echo "Syntax OK"
+          find src app scripts -name "*.py" | xargs python -m py_compile
+          echo "Syntax OK"
 
       - name: Unit tests (no external services)
         env:
           ANTHROPIC_API_KEY: "dummy-key-for-tests"
+          SUPABASE_DB_URL: ""
         run: |
-          pytest tests/test_functional_smoke.py -q
+          pytest tests/test_functional_smoke.py -q --tb=short
