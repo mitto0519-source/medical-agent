@@ -28,7 +28,7 @@ jobs:
           find src app scripts -name "*.py" | xargs python -m py_compile
           echo "Syntax OK"
 
-      - name: Unit tests (no external services)
+      - name: Unit tests
         env:
           ANTHROPIC_API_KEY: "dummy-key-for-tests"
           SUPABASE_DB_URL: ""
