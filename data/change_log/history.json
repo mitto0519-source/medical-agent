@@ -1,5 +1,175 @@
 [
   {
+    "id": "20260518_083148_114566",
+    "timestamp": "2026-05-18 08:31:48",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "test",
+    "title": "연결성 검증",
+    "description": "test ping",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {},
+    "outputs": {},
+    "impact": {}
+  },
+  {
+    "id": "20260518_083141_859985",
+    "timestamp": "2026-05-18 08:31:41",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / sleep quality",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "sleep quality",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Association Between Weekday-Weekend Sleep Duration Discrepancy (Social Jetlag) and Depressive Symptoms Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+        "Mukbang Viewing Frequency, Dietary Behaviors, and Sleep Quality Among Korean Adolescents: Mediating Role of Night Snacking and Caffeinated Beverage Consumption"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260518_082833_296565",
+    "timestamp": "2026-05-18 08:28:33",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 비만",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 비만",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Association Between Sedentary Behavior, Smartphone Overuse, and Obesity Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+        "Mediating Role of Dietary Patterns and Sleep Duration in the Relationship Between Perceived Stress and Adolescent Obesity: A Complex Survey Mediation Analysis Using KYRBS 2025"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260518_082336_797594",
+    "timestamp": "2026-05-18 08:23:36",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 비만",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 비만",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Associations Between Sedentary Behavior, Screen Time, and Obesity Among Korean Adolescents: A Sex-Stratified Cross-Sectional Analysis Using the 2025 KYRBS",
+        "Mukbang Viewing Frequency, Dietary Behaviors, and Overweight/Obesity in Korean Adolescents: A Cross-Sectional Study with Mediation by Unhealthy Eating Patterns"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260518_082055_870105",
+    "timestamp": "2026-05-18 08:20:55",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "bug_fix",
+    "title": "Critical bug fixes: DatasetLibrary + VectorStore fallback",
+    "description": "2개 크리티컬 버그 수정:\n1. src/library/dataset_library.py _load_all(): cloud에 데이터 있으면 local JSON 무시하던 early-return 제거. 이제 cloud 읽은 후 항상 local JSON도 병합(cloud 우선, local로 gap 보충).\n2. src/vectordb/store.py get_vector_store(): SupabaseVectorStore 초기화 실패 시 NoOpVectorStore 반환하던 버그 수정 → ChromaDB로 폴백하도록 변경. RAG가 Supabase 장애 시에도 정상 동작.",
+    "what_changed": {},
+    "why_better": "KYRBS(local-only) + KNHANES(Supabase) 동시 사용 가능. Supabase 장애 시에도 ChromaDB RAG 활성화 유지.",
+    "inputs": {
+      "files_changed": [
+        "src/library/dataset_library.py",
+        "src/vectordb/store.py"
+      ]
+    },
+    "outputs": {
+      "smoke_test": "12/12 PASS + ChromaDB RAG PASS",
+      "datasets_loaded": [
+        "KYRBS",
+        "KNHANES"
+      ],
+      "supabase_users": [
+        "mitto0519@gmail.com",
+        "misslonghorn46@gmail.com"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "dataset_library",
+        "vectordb",
+        "research_pipeline",
+        "rag"
+      ]
+    }
+  },
+  {
+    "id": "20260517_225817_574075",
+    "timestamp": "2026-05-17 22:58:17",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "config_change",
+    "title": "자가 진단 시스템 완성 및 핵심 next_action 3건 처리",
+    "description": "14개 초기 인사이트 입력, self_model 96/100 달성, ResearchPipeline 3개 메서드(write_paper/generate_topics/check_novelty) continuity 연결, Flask dead code(app/main.py + tests/test_app_health.py) 제거",
+    "what_changed": {},
+    "why_better": "논문 생산 파이프라인 전체가 이제 장기기억 시스템과 연결됨. 자가 진단 + 다음 액션 자동 제안 체계 완비.",
+    "inputs": {
+      "insights_count": 14,
+      "next_actions_resolved": 2
+    },
+    "outputs": {
+      "self_model_score": 96,
+      "smoke_test": "12/12",
+      "continuity_connected": [
+        "write_paper",
+        "generate_topics",
+        "check_novelty"
+      ],
+      "dead_code_removed": [
+        "app/main.py",
+        "tests/test_app_health.py"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "agent_insight",
+        "self_model",
+        "change_log"
+      ]
+    }
+  },
+  {
     "id": "20260517_223622_897135",
     "timestamp": "2026-05-17 22:36:22",
     "user_email": "mitto0519@gmail.com",

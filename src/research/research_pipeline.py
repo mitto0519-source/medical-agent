@@ -18,6 +18,7 @@ from typing import Dict, List, Optional
 from src.config.env import bootstrap
 from src.config.logging_config import get_logger
 from src.llm import get_llm_client
+from src.memory import change_log
 from src.profile.author_profile import AuthorProfile
 from src.library.dataset_library import DatasetLibrary
 from src.library.methods_library import MethodsLibrary
@@ -33,10 +34,11 @@ def _clean_llm_response(raw: str) -> str:
     text = raw.strip()
     if text.startswith("```"):
         parts = text.split("```")
-        if len(parts) > 2 and parts[1].strip().lower().startswith("json"):
-            text = "```".join(parts[2:]).strip()
-        elif len(parts) > 1:
-            text = parts[1].strip()
+        if len(parts) > 1:
+            inner = parts[1].strip()
+            if inner.lower().startswith("json"):
+                inner = inner[4:].strip()
+            text = inner
     if text.lower().startswith("json"):
         text = text[4:].strip()
     return text.strip().rstrip("```").strip()
@@ -186,6 +188,22 @@ Return JSON only."""
             raise ValueError(f"JSON 배열이 아닙니다:\n{raw}")
 
         _log.info("주제 %d개 생성 완료.", len(topics))
+        change_log.log(
+            title=f"주제 생성: {dataset_name} / {focus[:40]}",
+            action_type="topic_generate",
+            description=f"{dataset_name} 데이터셋 기반 연구 주제 {len(topics)}개 생성",
+            inputs={"dataset_name": dataset_name, "focus": focus, "n_topics": n_topics},
+            outputs={"topic_count": len(topics), "titles": [t.get("title", "") for t in topics]},
+            impact={"affected_modules": ["research_pipeline"]},
+        )
+
+        from src.memory.auto_learn import reflect_and_record
+        reflect_and_record(
+            action="generate_topics",
+            inputs={"dataset": dataset_name, "focus": focus, "n_topics": n_topics},
+            outputs={"count": len(topics), "titles": [t.get("title", "") for t in topics[:3]]},
+        )
+
         return topics
 
     # ── Step 4 — 신규성 확인 ─────────────────────────────────────────────────
@@ -193,12 +211,33 @@ Return JSON only."""
     def check_novelty(self, topic: Dict) -> Dict:
         """주제 신규성 PubMed 검증."""
         _log.info("신규성 확인: %s", topic.get("title", "")[:60])
-        return self.novelty.check(
+        result = self.novelty.check(
             topic=topic.get("title", ""),
             exposure=topic.get("exposure", ""),
             outcome=topic.get("outcome", ""),
             population=topic.get("population", ""),
         )
+        change_log.log(
+            title=f"신규성 확인: {topic.get('title', '')[:60]}",
+            action_type="novelty_check",
+            description=f"PubMed 신규성 검증 완료. 점수: {result.get('novelty_score', '?')}/10",
+            inputs={"topic_title": topic.get("title", ""), "exposure": topic.get("exposure", "")},
+            outputs={"novelty_score": result.get("novelty_score"), "verdict": result.get("verdict", "")[:100]},
+            impact={"affected_modules": ["novelty_checker"]},
+        )
+
+        from src.memory.auto_learn import reflect_and_record
+        reflect_and_record(
+            action="check_novelty",
+            inputs={"topic": topic.get("title", ""), "exposure": topic.get("exposure", "")},
+            outputs={
+                "novelty_score": result.get("novelty_score"),
+                "recommendation": result.get("recommendation", ""),
+                "gap": result.get("gap_identified", "")[:200],
+            },
+        )
+
+        return result
 
     # ── Step 5 — 타당성 간이 검증 ────────────────────────────────────────────
 
@@ -290,6 +329,42 @@ Return JSON only."""
                 _log.info("클라우드 저장 완료: ma_drafts/%s", safe_title)
         except Exception as e:
             _log.warning("클라우드 저장 실패 (로컬만 저장됨): %s", e)
+
+        from src.memory.auto_learn import reflect_and_record
+        reflect_and_record(
+            action="write_paper",
+            inputs={
+                "topic": topic.get("title", ""),
+                "exposure": topic.get("exposure", ""),
+                "outcome": topic.get("outcome", ""),
+            },
+            outputs={
+                "word_count": len(draft.split()),
+                "output_path": str(out_path),
+                "used_rag": use_rag_references,
+            },
+        )
+
+        change_log.log(
+            title=f"논문 작성: {topic.get('title', 'Untitled')[:80]}",
+            action_type="paper_write",
+            description=f"조유선 스타일 논문 초안 생성 완료. 파일: {out_path}",
+            why_better="RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+            inputs={
+                "topic_title": topic.get("title", ""),
+                "exposure": topic.get("exposure", ""),
+                "outcome": topic.get("outcome", ""),
+                "population": topic.get("population", ""),
+                "use_rag_references": use_rag_references,
+                "study_info_keys": list(study_info.keys()),
+            },
+            outputs={
+                "draft_word_count": len(draft.split()),
+                "output_path": str(out_path),
+                "safe_title": safe_title,
+            },
+            impact={"affected_modules": ["research_pipeline", "paper_writer", "rag"]},
+        )
 
         return draft
 

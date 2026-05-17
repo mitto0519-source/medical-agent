@@ -149,6 +149,29 @@ def get_all(
     status: str = "active",
     n: int = 100,
 ) -> List[Dict]:
+    if _cloud():
+        try:
+            from sqlalchemy import text
+            conditions, params = [], {"lim": n}
+            if status:
+                conditions.append("status = :status")
+                params["status"] = status
+            if category:
+                conditions.append("category = :category")
+                params["category"] = category
+            where = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+            with _engine().connect() as conn:
+                rows = conn.execute(
+                    text(f"SELECT * FROM ma_agent_insights {where} ORDER BY timestamp DESC LIMIT :lim"),
+                    params,
+                ).mappings().all()
+            entries = [dict(r) for r in rows]
+            if tags:
+                entries = [e for e in entries if any(t in (e.get("tags") or []) for t in tags)]
+            return entries
+        except Exception as e:
+            _log.warning("Cloud get_all failed, falling back to local: %s", e)
+
     entries = _load()
     if status:
         entries = [e for e in entries if e.get("status") == status]

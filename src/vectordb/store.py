@@ -199,8 +199,8 @@ def get_vector_store(persist_dir: str = "data/chromadb"):
             from src.vectordb.supabase_store import SupabaseVectorStore
             return SupabaseVectorStore()
         except Exception as e:
-            _log.warning(f"SupabaseVectorStore 초기화 실패, NoOp으로 폴백: {e}")
-            return NoOpVectorStore()  # Supabase 설정됨 — ChromaDB 폴백 불필요
+            _log.warning(f"SupabaseVectorStore 초기화 실패, ChromaDB로 폴백: {e}")
+            # fall through to ChromaDB
 
     try:
         return VectorStore(persist_dir=persist_dir)

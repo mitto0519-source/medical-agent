@@ -217,7 +217,7 @@ def check_novelty(
     population: str = "",
     ctx=None,
 ) -> dict:
-    """PubMed 기반 연구 주제 신규성 검증.
+    """PubMed 기반 연구 주제 신규성 검증. 결과를 Supabase에 저장해 다른 사용자와 공유.
 
     Args:
         topic_title: 연구 제목
@@ -227,12 +227,51 @@ def check_novelty(
     """
     from src.research.novelty_checker import NoveltyChecker
     checker = NoveltyChecker()
-    return checker.check(
+    result = checker.check(
         topic=topic_title,
         exposure=exposure,
         outcome=outcome,
         population=population,
     )
+
+    caller = _caller_email(ctx)
+    _save_novelty_cloud(caller, topic_title, exposure, outcome, population, result)
+    _log_tool(ctx, "check_novelty",
+              {"topic_title": topic_title, "exposure": exposure, "outcome": outcome},
+              f"신규성 점수 {result.get('novelty_score', '?')}/10: {topic_title}")
+    return result
+
+
+def _save_novelty_cloud(
+    user_email: str, topic_title: str, exposure: str,
+    outcome: str, population: str, result: dict,
+) -> None:
+    from datetime import datetime
+    import json as _json
+    entry_id = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text
+            with get_engine().begin() as conn:
+                conn.execute(text("""
+                    INSERT INTO ma_novelty_results
+                        (id, user_email, topic_title, exposure, outcome, population, result)
+                    VALUES
+                        (:id, :user_email, :topic_title, :exposure, :outcome, :population,
+                         CAST(:result AS jsonb))
+                    ON CONFLICT (id) DO NOTHING
+                """), {
+                    "id": entry_id,
+                    "user_email": user_email,
+                    "topic_title": topic_title,
+                    "exposure": exposure,
+                    "outcome": outcome,
+                    "population": population,
+                    "result": _json.dumps(result, ensure_ascii=False),
+                })
+    except Exception as e:
+        _log.warning("ma_novelty_results 저장 실패: %s", e)
 
 
 @mcp.tool
@@ -242,7 +281,7 @@ def generate_research_topics(
     n_topics: int = 5,
     ctx=None,
 ) -> dict:
-    """데이터셋 + RAG 기반 연구 주제 생성.
+    """데이터셋 + RAG 기반 연구 주제 생성. 결과를 Supabase에 저장해 다른 사용자와 공유.
 
     Args:
         dataset: 사용 데이터셋 (기본: KYRBS)
@@ -252,7 +291,40 @@ def generate_research_topics(
     from src.research.research_pipeline import ResearchPipeline
     rp = ResearchPipeline()
     topics = rp.generate_topics(dataset_name=dataset, focus=focus, n_topics=n_topics)
-    return {"topics": topics, "count": len(topics)}
+
+    caller = _caller_email(ctx)
+    entry_id = _save_topics_cloud(caller, dataset, focus, topics)
+    _log_tool(ctx, "generate_research_topics",
+              {"dataset": dataset, "focus": focus, "n_topics": n_topics},
+              f"{dataset}/{focus} → {len(topics)}개 주제 생성")
+    return {"topics": topics, "count": len(topics), "saved_id": entry_id}
+
+
+def _save_topics_cloud(user_email: str, dataset: str, focus: str, topics: list) -> str:
+    """생성된 주제를 ma_topics에 저장. 저장된 id 반환."""
+    from datetime import datetime
+    import json as _json
+    entry_id = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text
+            with get_engine().begin() as conn:
+                conn.execute(text("""
+                    INSERT INTO ma_topics (id, user_email, dataset, focus, n_topics, topics)
+                    VALUES (:id, :user_email, :dataset, :focus, :n_topics, CAST(:topics AS jsonb))
+                    ON CONFLICT (id) DO NOTHING
+                """), {
+                    "id": entry_id,
+                    "user_email": user_email,
+                    "dataset": dataset,
+                    "focus": focus,
+                    "n_topics": len(topics),
+                    "topics": _json.dumps(topics, ensure_ascii=False),
+                })
+    except Exception as e:
+        _log.warning("ma_topics 저장 실패: %s", e)
+    return entry_id
 
 
 @mcp.tool
@@ -278,6 +350,144 @@ def sync_local_pdfs(
     from src.storage.manager import StorageManager
     sm = StorageManager()
     return sm.sync_pdf_dir(pdf_dir, topic)
+
+
+# ════════════════════════════════════════════════════════════════════════
+# Tools — 공유 데이터 조회 (모든 사용자)
+# ════════════════════════════════════════════════════════════════════════
+
+@mcp.tool
+def get_topics(
+    dataset: str = "",
+    limit: int = 20,
+    ctx=None,
+) -> dict:
+    """저장된 연구 주제 목록 조회 (Supabase 공유 DB).
+
+    Args:
+        dataset: 데이터셋 필터 (빈 문자열이면 전체)
+        limit: 최대 반환 수
+    """
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text
+            conditions, params = [], {"lim": limit}
+            if dataset:
+                conditions.append("dataset = :dataset")
+                params["dataset"] = dataset
+            where = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+            with get_engine().connect() as conn:
+                rows = conn.execute(
+                    text(f"SELECT id, timestamp, user_email, dataset, focus, n_topics, topics FROM ma_topics {where} ORDER BY timestamp DESC LIMIT :lim"),
+                    params,
+                ).mappings().all()
+            return {"source": "supabase", "count": len(rows), "results": [dict(r) for r in rows]}
+    except Exception as e:
+        _log.warning("get_topics cloud failed: %s", e)
+    return {"source": "local_unavailable", "count": 0, "results": []}
+
+
+@mcp.tool
+def get_novelty_results(
+    limit: int = 20,
+    ctx=None,
+) -> dict:
+    """저장된 신규성 검증 결과 목록 조회 (Supabase 공유 DB).
+
+    Args:
+        limit: 최대 반환 수
+    """
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text
+            with get_engine().connect() as conn:
+                rows = conn.execute(
+                    text("SELECT id, timestamp, user_email, topic_title, exposure, outcome, population, result FROM ma_novelty_results ORDER BY timestamp DESC LIMIT :lim"),
+                    {"lim": limit},
+                ).mappings().all()
+            return {"source": "supabase", "count": len(rows), "results": [dict(r) for r in rows]}
+    except Exception as e:
+        _log.warning("get_novelty_results cloud failed: %s", e)
+    return {"source": "local_unavailable", "count": 0, "results": []}
+
+
+@mcp.tool
+def get_drafts(
+    limit: int = 10,
+    ctx=None,
+) -> dict:
+    """저장된 논문 초안 목록 조회 (Supabase 공유 DB).
+
+    Args:
+        limit: 최대 반환 수
+    """
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text
+            with get_engine().connect() as conn:
+                rows = conn.execute(
+                    text("SELECT id, safe_title, topic_title, author_email, created_at, LEFT(content, 500) AS preview FROM ma_drafts ORDER BY created_at DESC LIMIT :lim"),
+                    {"lim": limit},
+                ).mappings().all()
+            return {"source": "supabase", "count": len(rows), "drafts": [dict(r) for r in rows]}
+    except Exception as e:
+        _log.warning("get_drafts cloud failed: %s", e)
+    return {"source": "local_unavailable", "count": 0, "drafts": []}
+
+
+@mcp.tool
+def get_change_log(
+    action_type: str = "",
+    user_email: str = "",
+    limit: int = 30,
+    ctx=None,
+) -> dict:
+    """전체 작업 이력 조회 (Supabase 공유 DB — 모든 사용자의 작업 포함).
+
+    Args:
+        action_type: 필터 (topic_generate / novelty_check / paper_write / mcp_tool / general 등)
+        user_email: 특정 사용자 필터
+        limit: 최대 반환 수
+    """
+    from src.memory.change_log import get_recent
+    entries = get_recent(n=limit, user_email=user_email or None, action_type=action_type or None)
+    return {
+        "source": "supabase" if _cloud_ok() else "local",
+        "count": len(entries),
+        "entries": entries,
+    }
+
+
+@mcp.tool
+def get_insights(
+    category: str = "",
+    limit: int = 50,
+    ctx=None,
+) -> dict:
+    """에이전트 자체 학습 인사이트 조회 (Supabase 공유 DB).
+
+    Args:
+        category: pattern / mistake / optimization / next_action / decision / reference
+        limit: 최대 반환 수
+    """
+    from src.memory.agent_insight import get_all
+    entries = get_all(category=category or None, n=limit)
+    return {
+        "source": "supabase" if _cloud_ok() else "local",
+        "count": len(entries),
+        "insights": entries,
+    }
+
+
+def _cloud_ok() -> bool:
+    try:
+        from src.cloud.db import cloud_available
+        return cloud_available()
+    except Exception:
+        return False
 
 
 # ════════════════════════════════════════════════════════════════════════

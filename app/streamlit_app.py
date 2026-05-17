@@ -47,11 +47,13 @@ st.markdown("""
 [data-testid="stSidebar"]>div:first-child{padding:0!important;}
 .main .block-container{padding:1.5rem 2rem!important;max-width:100%!important;}
 
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"]{gap:2px!important;}
+[data-testid="stSidebar"] [data-testid="stButton"]{margin:0!important;padding:0!important;}
 [data-testid="stSidebar"] .stButton>button{
     background:transparent!important;border:none!important;border-left:3px solid transparent!important;
-    color:var(--t2)!important;text-align:left!important;padding:7px 14px!important;width:100%!important;
-    border-radius:0 6px 6px 0!important;font-size:13.5px!important;transition:all .15s!important;
-    box-shadow:none!important;margin:1px 0!important;justify-content:flex-start!important;
+    color:var(--t2)!important;text-align:left!important;padding:4px 12px!important;width:100%!important;
+    border-radius:0 6px 6px 0!important;font-size:13px!important;transition:all .15s!important;
+    box-shadow:none!important;margin:0!important;justify-content:flex-start!important;
 }
 [data-testid="stSidebar"] .stButton>button:hover{
     background:rgba(59,130,246,.08)!important;color:var(--t1)!important;
@@ -62,8 +64,8 @@ st.markdown("""
     background:rgba(59,130,246,.15)!important;color:var(--t1)!important;
     font-weight:600!important;border-left:3px solid #3B82F6!important;
 }
-.nav-section{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.12em;padding:16px 16px 5px;}
-.sidebar-logo{padding:18px 16px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.nav-section{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.12em;padding:8px 16px 2px;}
+.sidebar-logo{padding:12px 14px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
 .sidebar-profile{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;}
 .s-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1D4ED8,#6366F1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:white;flex-shrink:0;}
 .s-name{font-size:13px;font-weight:600;color:var(--t1);}
@@ -285,7 +287,7 @@ with st.sidebar:
         <span style="font-size:15px;font-weight:800;color:#E5E7EB;letter-spacing:-0.01em;">Medical-Agent</span>
     </div>
     """, unsafe_allow_html=True)
-    st.markdown('<div style="padding:8px 8px 4px;">', unsafe_allow_html=True)
+    st.markdown('<div style="padding:4px 4px 2px;">', unsafe_allow_html=True)
     _nb("🏠  홈", "홈")
     _nb("⚡  워크플로우", "워크플로우")
     _nb("📜  작업 타임라인", "작업 타임라인")

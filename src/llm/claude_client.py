@@ -88,6 +88,10 @@ class ClaudeClient:
             messages=messages,
         )
         t_cfg = thinking_config(effective_task)
+        if t_cfg and t_cfg.get("type") == "enabled":
+            # budget_tokens must be strictly less than max_tokens
+            if t_cfg.get("budget_tokens", 0) >= max_tokens:
+                t_cfg = {"type": "disabled"}
         if t_cfg:
             kwargs["thinking"] = t_cfg
 
@@ -124,6 +128,9 @@ class ClaudeClient:
             messages=messages,
         )
         t_cfg = thinking_config(effective_task)
+        if t_cfg and t_cfg.get("type") == "enabled":
+            if t_cfg.get("budget_tokens", 0) >= max_tokens:
+                t_cfg = {"type": "disabled"}
         if t_cfg:
             kwargs["thinking"] = t_cfg
 
@@ -234,6 +241,9 @@ class ClaudeClient:
             messages=messages,
         )
         t_cfg = thinking_config(task)
+        if t_cfg and t_cfg.get("type") == "enabled":
+            if t_cfg.get("budget_tokens", 0) >= max_tokens:
+                t_cfg = {"type": "disabled"}
         if t_cfg:
             kwargs["thinking"] = t_cfg
 
@@ -249,9 +259,14 @@ class ClaudeClient:
                     return self._extract_text(msg)
             raise
 
-    @staticmethod
-    def _extract_text(response) -> str:
+    @classmethod
+    def _extract_text(cls, response) -> str:
         for block in response.content:
             if hasattr(block, "type") and block.type == "text":
                 return block.text
+        _log.warning(
+            "API 응답에 text 블록이 없습니다. stop_reason=%s, blocks=%s",
+            getattr(response, "stop_reason", "?"),
+            [getattr(b, "type", "?") for b in response.content],
+        )
         return ""
