@@ -69,7 +69,7 @@ def _call_gemini(messages: list, system: str, api_key: str) -> str:
         return "⚠️ google-generativeai 패키지가 설치되지 않았습니다."
 
 
-def render_ai_panel(current_page: str, page_context: dict | None = None):
+def render_ai_panel(current_page: str, page_context: dict | None = None, user_email: str = ""):
     """Render the persistent AI assistant panel in the right column."""
     st.markdown(PANEL_CSS, unsafe_allow_html=True)
 
@@ -119,8 +119,19 @@ def render_ai_panel(current_page: str, page_context: dict | None = None):
             ctx_lines.append(f"{k}: {str(v)[:600]}")
     context_str = "\n".join(ctx_lines)
 
+    # ── Long-term continuity preamble ──────────────────────────────────
+    continuity_preamble = ""
+    if user_email:
+        try:
+            from src.memory.continuity import get_preamble
+            continuity_preamble = get_preamble(user_email=user_email, n=20)
+        except Exception:
+            pass
+
     SYSTEM = f"""당신은 의학 연구 논문 공동 저자 AI 어시스턴트입니다.
 조유선 스타일의 한국 공중보건 의학 논문 생산 파이프라인에서 사용자를 돕습니다.
+
+{continuity_preamble}
 
 === 현재 사용자 작업 컨텍스트 ===
 {context_str}
@@ -134,7 +145,8 @@ def render_ai_panel(current_page: str, page_context: dict | None = None):
 - 조유선 교수 스타일의 논문 구조와 표현 방식 유지
 
 항상 한국어로 답변하고, 의학 통계와 역학 전문 용어를 정확하게 사용하세요.
-사용자가 현재 보고 있는 페이지 컨텍스트를 충분히 활용하여 즉시 실행 가능한 조언을 제공하세요."""
+사용자가 현재 보고 있는 페이지 컨텍스트를 충분히 활용하여 즉시 실행 가능한 조언을 제공하세요.
+이전 작업 이력을 반드시 참조하여 연속성을 유지하고, 이미 결정된 사항을 번복하지 마세요."""
 
     # ── Chat history ───────────────────────────────────────────────
     if "ai_messages" not in st.session_state:

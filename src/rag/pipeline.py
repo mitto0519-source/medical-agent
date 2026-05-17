@@ -158,12 +158,18 @@ class RAGPipeline:
     # Q&A
     # ------------------------------------------------------------------
 
-    def ask(self, question: str, filename_filter: Optional[str] = None) -> Dict:
+    def ask(
+        self,
+        question: str,
+        filename_filter: Optional[str] = None,
+        context_prefix: str = "",
+    ) -> Dict:
         """Answer a question grounded in indexed papers.
 
         Args:
             question: Natural-language question about the research
             filename_filter: Limit search to a specific paper (by filename)
+            context_prefix: Prepend this text to the system prompt (e.g. continuity preamble)
 
         Returns:
             {answer, sources}  where sources is a list of {text, score, metadata}
@@ -178,7 +184,9 @@ class RAGPipeline:
             }
 
         context_chunks = [h["text"] for h in hits]
-        answer = self._llm.answer_from_papers(question, context_chunks)
+        answer = self._llm.answer_from_papers(
+            question, context_chunks, context_prefix=context_prefix
+        )
 
         return {"answer": answer, "sources": hits}
 

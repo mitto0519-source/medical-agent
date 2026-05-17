@@ -215,10 +215,25 @@ def _nav(p):
     st.session_state["nav"] = p
     st.rerun()
 
-def _log(action, inp, summary, out=None):
-    from src.activity.logger import log_activity
+def _log(action, inp, summary, out=None, action_type: str = "general", why_better: str = ""):
     user_email = st.session_state.get("user", {}).get("email", "anonymous")
-    log_activity(user_email, st.session_state["nav"], action, inp, summary, out)
+    page = st.session_state["nav"]
+    from src.activity.logger import log_activity
+    log_activity(user_email, page, action, inp, summary, out)
+    try:
+        from src.memory import change_log
+        change_log.log(
+            title=f"[{page}] {action}",
+            description=str(summary)[:200] if summary else "",
+            action_type=action_type,
+            user_email=user_email,
+            session_id=st.session_state.get("_session_id", ""),
+            inputs=inp if isinstance(inp, dict) else {"input": str(inp)[:200]},
+            outputs={"summary": str(summary)[:200], **(out if isinstance(out, dict) else {})},
+            why_better=why_better,
+        )
+    except Exception:
+        pass
 
 def _show_history(page_name: str):
     """Show collapsed activity history for this page."""
