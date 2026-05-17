@@ -18,10 +18,12 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install anthropic python-dotenv requests flask pytest
+        run: |
+          pip install anthropic python-dotenv requests flask pytest
 
       - name: Run tests
         env:
-          ANTHROPIC_API_KEY: dummy-key-for-tests
+          ANTHROPIC_API_KEY: "dummy-key-for-tests"
           SUPABASE_DB_URL: ""
-        run: pytest tests/test_functional_smoke.py -q --tb=short
+        run: |
+          pytest tests/test_functional_smoke.py -q --tb=short
