@@ -18,7 +18,7 @@ plotly>=5.15.0
 openpyxl>=3.1.0
 
 # ── NLP / Embedding ──────────────────────────────────────────────────
-sentence-transformers>=2.2.0
+# sentence-transformers>=2.2.0  ← 로컬 ChromaDB 전용. Cloud는 Supabase 사용으로 제외
 
 # ── Web / API ────────────────────────────────────────────────────────
 streamlit>=1.30.0
