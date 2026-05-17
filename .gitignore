@@ -16,6 +16,12 @@ data/drafts/
 data/agent_memory.json
 data/medical_knowledge_seed/raw/
 
+# KNHANES 원시데이터 (용량 크고 재다운로드 가능 — pubmed_refs.json은 포함)
+data/raw/knhanes/*.sas7bdat
+data/raw/knhanes/*.sav
+data/raw/knhanes/*.csv
+data/raw/knhanes/extracted_variables.json
+
 # 민감 데이터 (API 키 포함)
 data/users.json
 data/notebooklm_notebooks.json
