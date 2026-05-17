@@ -2,6 +2,28 @@
 
 > 매 세션 시작 시 자동 로드. 이 규칙들은 모든 작업에 예외 없이 적용된다.
 
+## 세션 시작 루틴 (매번 실행)
+
+```python
+# 1. 장기기억 읽기
+from src.memory.change_log import build_context_summary
+from src.memory.agent_insight import build_self_context, get_next_actions
+from src.memory.self_model import get_model, surface_next_action
+
+# 2. 프로젝트 현재 상태 파악
+model = get_model()           # 건강도 점수, 약점, 우선순위
+next = surface_next_action()  # 가장 먼저 할 일
+
+# 3. 필요시 자가 진단 갱신
+from src.memory.self_model import refresh
+model = refresh()             # git 상태 + 모듈 체크 + 점수 재계산
+```
+
+**세션 시작 즉시 확인해야 할 파일:**
+- `data/agent_self/self_model.json` — 현재 건강도 + 우선 작업
+- `data/agent_self/insights.json` — 축적된 자체 학습 내용
+- `data/change_log/history.json` — 최근 작업 이력
+
 ---
 
 ## 프로젝트 목적
