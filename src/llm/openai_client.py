@@ -44,7 +44,12 @@ class OpenAIClient:
         messages.append({"role": "user", "content": user_message})
 
         resp = openai.ChatCompletion.create(model=self.model, messages=messages, max_tokens=1500)
-        return resp.choices[0].message.content.strip()
+        choice = resp.choices[0]
+        if hasattr(choice, 'message'):
+            content = choice.message.get('content') if isinstance(choice.message, dict) else choice.message['content']
+        else:
+            content = choice['message']['content']
+        return content.strip()
 
     def summarize_paper(self, paper_text: str) -> str:
         system = (

@@ -7,7 +7,7 @@ AuthorProfile(스타일 시드) + MethodsLibrary + DatasetLibrary + RAG컨텍스
 import os
 from typing import Dict, List, Optional
 
-import anthropic
+from src.llm import get_llm_client
 
 
 class PaperWriter:
@@ -25,13 +25,14 @@ class PaperWriter:
         methods_library=None,    # MethodsLibrary instance
         dataset_library=None,    # DatasetLibrary instance
         rag_pipeline=None,       # RAGPipeline for reference retrieval
+        llm_client=None,
         api_key: Optional[str] = None,
     ):
         self._profile = author_profile
         self._methods = methods_library
         self._datasets = dataset_library
         self._rag = rag_pipeline
-        self._client = anthropic.Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
+        self._client = llm_client or get_llm_client(api_key=api_key)
 
     # ------------------------------------------------------------------
     # Public API
@@ -388,15 +389,4 @@ DISCUSSION
     # ------------------------------------------------------------------
 
     def _generate(self, system_prompt: str, user_prompt: str) -> str:
-        with self._client.messages.stream(
-            model="claude-opus-4-7",
-            max_tokens=4096,
-            thinking={"type": "adaptive"},
-            system=system_prompt,
-            messages=[{"role": "user", "content": user_prompt}],
-        ) as stream:
-            final = stream.get_final_message()
-            for block in final.content:
-                if hasattr(block, "text"):
-                    return block.text
-            return ""
+        return self._client.generate(user_prompt, system_prompt=system_prompt)

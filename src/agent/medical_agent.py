@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 from src.rag.pipeline import RAGPipeline
-from src.llm.claude_client import ClaudeClient
+from src.llm import get_llm_client
 from src.agent.memory import AgentMemory
 
 
@@ -52,12 +52,13 @@ class MedicalAgent:
         memory_path: str = "data/agent_memory.json",
         api_key: Optional[str] = None,
     ):
+        self._llm = get_llm_client(api_key=api_key)
         self._rag = RAGPipeline(
             persist_dir=persist_dir,
             papers_dir=papers_dir,
             api_key=api_key,
+            llm_client=self._llm,
         )
-        self._llm = ClaudeClient(api_key=api_key)
         self._memory = AgentMemory(memory_path=memory_path)
 
     # ------------------------------------------------------------------

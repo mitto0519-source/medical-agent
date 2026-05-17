@@ -5,7 +5,7 @@ import time
 from typing import Dict, List, Tuple
 import requests
 import os
-import anthropic
+from src.llm import get_llm_client
 
 
 BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
@@ -292,9 +292,7 @@ class NoveltyChecker:
     """연구 주제의 신규성을 PubMed + 규칙기반 유사도 + LLM으로 복합 검증."""
 
     def __init__(self, api_key=None):
-        self._client = anthropic.Anthropic(
-            api_key=api_key or os.environ.get("ANTHROPIC_API_KEY")
-        )
+        self._client = get_llm_client(api_key=api_key)
 
     def check(
         self,
@@ -419,13 +417,7 @@ Evaluate novelty. Your score must be consistent with the rule-based score ({rule
 }}"""
 
         try:
-            response = self._client.messages.create(
-                model="claude-opus-4-7",
-                max_tokens=1500,
-                thinking={"type": "adaptive"},
-                messages=[{"role": "user", "content": prompt}],
-            )
-            raw = response.content[-1].text.strip()
+            raw = self._client.generate(prompt)
         except Exception as e:
             return {
                 "novelty_score": int(rule_score),

@@ -162,10 +162,10 @@ if not _login_gate():
     st.stop()
 
 # API 키 확인 — 누락 시 경고
-if not os.environ.get("ANTHROPIC_API_KEY"):
+if not os.environ.get("ANTHROPIC_API_KEY") and not os.environ.get("OPENAI_API_KEY"):
     st.warning(
-        "⚠️ **ANTHROPIC_API_KEY가 설정되지 않았습니다.**  \n"
-        f"`{str(_root / '.env')}` 파일에 `ANTHROPIC_API_KEY=sk-ant-...` 를 추가하거나 "
+        "⚠️ **LLM API 키가 설정되지 않았습니다.**  \n"
+        f"`{str(_root / '.env')}` 파일에 `ANTHROPIC_API_KEY=sk-ant-...` 또는 `OPENAI_API_KEY=sk-...` 를 추가하거나 "
         "Streamlit Cloud Secrets를 설정하세요.",
         icon="🔑",
     )

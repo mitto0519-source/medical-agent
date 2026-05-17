@@ -14,8 +14,7 @@ import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
-import anthropic
-
+from src.llm import get_llm_client
 from src.profile.author_profile import AuthorProfile
 from src.library.dataset_library import DatasetLibrary
 from src.library.methods_library import MethodsLibrary
@@ -54,18 +53,19 @@ class ResearchPipeline:
         api_key: Optional[str] = None,
     ):
         # Load .env explicitly if needed
-        self._api_key = api_key or os.environ.get("ANTHROPIC_API_KEY") or ""
+        self._api_key = api_key or os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY") or ""
         if not self._api_key:
             try:
                 from dotenv import load_dotenv
                 _root = Path(__file__).parent.parent.parent
                 load_dotenv(dotenv_path=_root / ".env", override=True)
-                self._api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+                self._api_key = os.environ.get("ANTHROPIC_API_KEY", os.environ.get("OPENAI_API_KEY", ""))
             except Exception:
                 pass
         if not self._api_key:
-            raise ValueError("ANTHROPIC_API_KEY가 설정되지 않았습니다. .env 파일 또는 환경변수를 확인하세요.")
-        self._client = anthropic.Anthropic(api_key=self._api_key)
+            raise ValueError("LLM API 키가 설정되지 않았습니다. ANTHROPIC_API_KEY 또는 OPENAI_API_KEY를 .env 또는 환경변수에 추가하세요.")
+
+        self._llm = get_llm_client(api_key=self._api_key)
 
         self.author = AuthorProfile(author_name, profile_dir, self._api_key)
         self.datasets = DatasetLibrary(library_dir)
@@ -73,7 +73,7 @@ class ResearchPipeline:
         self.novelty = NoveltyChecker(self._api_key)
         self.rag = RAGPipeline(persist_dir=persist_dir, api_key=self._api_key)
         self.writer = PaperWriter(
-            self.author, self.methods, self.datasets, self.rag, self._api_key
+            self.author, self.methods, self.datasets, self.rag, llm_client=self._llm
         )
         self.evidence = EvidenceReader()
 
@@ -182,18 +182,7 @@ Generate {n_topics} research topics as JSON array:
 ]
 Return JSON only."""
 
-        response = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=2000,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = response.content[-1].text.strip()
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-        raw = raw.strip().rstrip("```").strip()
+        raw = self._llm.generate(prompt)
 
         try:
             topics = json.loads(raw)
@@ -244,18 +233,7 @@ Return JSON:
 }}
 Return JSON only."""
 
-        response = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=1000,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = response.content[-1].text.strip()
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-        raw = raw.strip().rstrip("```").strip()
+        raw = self._llm.generate(prompt)
 
         try:
             return json.loads(raw)
