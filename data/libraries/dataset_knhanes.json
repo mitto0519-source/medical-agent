@@ -755,6 +755,7 @@
     "Oh Yoon-Jeong, Son Chang-Nam. Male Sex and Obesity are Associated with Sarcopenia in Patients with Rheumatoid Arthritis in the 2008-2011 Korea National Health and Nutrition Examination Survey.. Journal of clinical medicine. 2026. doi:10.1186/s12877-023-03748-x",
     "Lee Kayoung. Infrequent breakfast consumption and lower weekly meal frequency are associated with poor muscle health in Korean older adults.. Nutrition research (New York, N.Y.). 2026. doi:10.1016/j.nutres.2026.02.007",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "Han Seongjae, Shin Baek Sup, Park Peong Gang. Trends in breastfeeding duration in Korea from 2007 to 2022 and implications for low-birth-weight infants: a repeated cross-sectional study.. Translational pediatrics. 2026. doi:10.3346/jkms.2018.33.e272",
     "Kim Taeyeon, Jang Kyeongmin. Sarcopenia and Its Associated Factors Among Rural Older Adults in Korea: A Cross-Sectional Study Using KNHANES 2022 Data.. Research in gerontological nursing. 2026. doi:10.3928/19404921-20260304-01",
     "Han Sujeong, Park Sung-Bae, Oh Sohee et al. Prediction Model for Low Bone Mineral Density in Cancer Survivors and Age-Matched Controls Using a Causal Bayesian Network: A Nationwide Population-Based Study in Korea.. Clinical Medicine Insights. Oncology. 2026. doi:10.1177/11795549251411101",
@@ -809,6 +810,9 @@
     "note": "다운로드 후 data/raw/knhanes/ 에 저장하면 scripts/seed_knhanes.py --parse-raw 가 자동 처리"
   }
 }
+=======
+    "
+>>>>>>> Stashed changes
 =======
     "
 >>>>>>> Stashed changes

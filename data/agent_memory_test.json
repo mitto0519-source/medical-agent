@@ -1,0 +1,14 @@
+{
+  "ingested_papers": [
+    {
+      "filename": "test.pdf",
+      "title": "Test",
+      "chunks_added": 5,
+      "ingested_at": "2026-05-17T17:19:43"
+    }
+  ],
+  "qa_log": [],
+  "summaries": {},
+  "insights": [],
+  "follow_ups": []
+}
