@@ -4,584 +4,584 @@
   "description": "질병관리청 주관 전국 규모 단면조사. 복합표본설계(층화, 집락, 가중치) 적용. 1998년 1기부터 연간 3,000~10,000명 조사. 건강설문+건강검진+영양조사 3개 모듈. 최신 공개 데이터: 제9기 2023년(2024년 공개 예정). 원시데이터 신청: https://knhanes.kdca.go.kr/knhanes/sub03/sub03_02_02.do",
   "variables": {
     "age": {
-      "label": "연령",
       "type": "continuous",
       "unit": "세",
-      "processing": "만 나이 기준; 소아청소년(1-18세)과 성인(19세 이상) 분리 분석 권장",
+      "label": "연령",
+      "notes": "HE_age (검진 연령) vs age (설문 연령) 확인 필요",
       "cutoffs": {
-        "소아청소년": "<19",
+        "노인": ">=65",
         "성인": ">=19",
-        "노인": ">=65"
+        "소아청소년": "<19"
       },
-      "missing_strategy": "exclude",
-      "notes": "HE_age (검진 연령) vs age (설문 연령) 확인 필요"
+      "processing": "만 나이 기준; 소아청소년(1-18세)과 성인(19세 이상) 분리 분석 권장",
+      "missing_strategy": "exclude"
     },
-    "sex": {
-      "label": "성별",
+    "edu": {
       "type": "categorical",
       "unit": "",
-      "processing": "1=남자, 2=여자; 0/1 dummy로 변환 후 분석",
+      "label": "교육수준",
+      "notes": "만 30세 이상에서 측정; 최종 학력 기준",
+      "cutoffs": {},
+      "processing": "1=초졸 이하, 2=중졸, 3=고졸, 4=대졸 이상",
+      "missing_strategy": "exclude"
+    },
+    "psu": {
+      "type": "cluster",
+      "unit": "",
+      "label": "1차 표본추출단위 (집락)",
+      "notes": "kstrata와 함께 svydesign 구성",
+      "cutoffs": {},
+      "processing": "복합표본 설계에서 id=~psu 로 지정",
+      "missing_strategy": "required"
+    },
+    "sex": {
+      "type": "categorical",
+      "unit": "",
+      "label": "성별",
+      "notes": "성별에 따른 층화분석 또는 상호작용항 검토",
       "cutoffs": {
         "남": 1,
         "여": 2
       },
-      "missing_strategy": "exclude",
-      "notes": "성별에 따른 층화분석 또는 상호작용항 검토"
+      "processing": "1=남자, 2=여자; 0/1 dummy로 변환 후 분석",
+      "missing_strategy": "exclude"
     },
-    "region": {
-      "label": "거주지역",
+    "kcal": {
+      "type": "continuous",
+      "unit": "kcal/day",
+      "label": "에너지 섭취량 (24시간 회상법)",
+      "notes": "영양조사 가중치(wt_ntr) 필수 사용; 과소보고 경향 있음",
+      "cutoffs": {},
+      "processing": "1일 24시간 회상법; 극단값 제거: 성인 남 <500/>5000, 여 <500/>4000 kcal",
+      "missing_strategy": "exclude"
+    },
+    "D_1_1": {
       "type": "categorical",
       "unit": "",
-      "processing": "1=도시(dong), 2=농촌(eup/myeon); 도농 차이 교란변수로 자주 사용",
+      "label": "우울 선별 (PHQ-9 기반)",
+      "notes": "일부 차수에서 PHQ-9 총점 직접 제공; D_1_1~D_1_9 합산 필요할 수 있음",
       "cutoffs": {
-        "도시": 1,
-        "농촌": 2
+        "경증": "5-9",
+        "심한": ">=20",
+        "없음": "0-4",
+        "중등도": "10-14",
+        "중등도-심한": "15-19"
       },
-      "missing_strategy": "exclude",
-      "notes": "복합표본 층(strata) 변수로 사용"
+      "processing": "PHQ-9 점수 합산 또는 우울증 여부(1=해당, 2=비해당); 차수별 도구 확인 필요",
+      "missing_strategy": "exclude"
     },
-    "wt_itvex": {
-      "label": "건강설문 가중치 (복합표본)",
-      "type": "weight",
-      "unit": "",
-      "processing": "KNHANES 복합표본설계 반드시 적용. survey::svydesign(id=~psu, strata=~kstrata, weights=~wt_itvex) in R; Python: statsmodels.stats.survey",
-      "cutoffs": {},
-      "missing_strategy": "required",
-      "notes": "건강설문만 사용 시 wt_itvex; 검진 포함 시 wt_oe; 영양 포함 시 wt_ntr"
-    },
-    "wt_oe": {
-      "label": "건강검진 가중치 (복합표본)",
-      "type": "weight",
-      "unit": "",
-      "processing": "검진 변수 포함 분석 시 사용. 기본 가중치보다 규모 작음",
-      "cutoffs": {},
-      "missing_strategy": "required",
-      "notes": "wt_oe_9th (9기) 등 차수별 변수명 확인 필요"
-    },
-    "wt_ntr": {
-      "label": "영양조사 가중치 (복합표본)",
-      "type": "weight",
-      "unit": "",
-      "processing": "24시간 회상법 영양 변수 포함 시 사용",
-      "cutoffs": {},
-      "missing_strategy": "required",
-      "notes": "영양 서브샘플은 표본 규모가 더 작음에 주의"
-    },
-    "psu": {
-      "label": "1차 표본추출단위 (집락)",
-      "type": "cluster",
-      "unit": "",
-      "processing": "복합표본 설계에서 id=~psu 로 지정",
-      "cutoffs": {},
-      "missing_strategy": "required",
-      "notes": "kstrata와 함께 svydesign 구성"
-    },
-    "kstrata": {
-      "label": "층화변수",
-      "type": "stratum",
-      "unit": "",
-      "processing": "복합표본 설계에서 strata=~kstrata 로 지정",
-      "cutoffs": {},
-      "missing_strategy": "required",
-      "notes": "psu와 함께 svydesign 구성"
-    },
-    "HE_BMI": {
-      "label": "체질량지수 (BMI)",
+    "HE_TC": {
       "type": "continuous",
-      "unit": "kg/m²",
-      "processing": "체중(kg)/신장(m)². -1/-3: 측정 불가/거부 → 결측 처리",
+      "unit": "mg/dL",
+      "label": "총콜레스테롤",
+      "notes": "",
       "cutoffs": {
-        "저체중": "<18.5",
-        "정상": "18.5-22.9",
-        "과체중": "23.0-24.9",
-        "비만": ">=25.0",
-        "고도비만": ">=30.0"
+        "경계": "200-239",
+        "정상": "<200",
+        "고콜레스테롤혈증": ">=240"
       },
-      "missing_strategy": "exclude",
-      "notes": "한국인 BMI 기준 적용 (WHO 서태평양 권고): 과체중 23, 비만 25 기준. 서양 기준(과체중25, 비만30)과 구분 명시 필요"
+      "processing": "공복 채혈; 지질강하제 복용자 별도 고려",
+      "missing_strategy": "exclude"
+    },
+    "HE_TG": {
+      "type": "continuous",
+      "unit": "mg/dL",
+      "label": "중성지방 (Triglycerides)",
+      "notes": "대사증후군 진단 지표; 극단값 존재 시 log 변환 또는 상위 1% 제거",
+      "cutoffs": {
+        "경계": "150-199",
+        "정상": "<150",
+        "매우 높음": ">=500",
+        "고중성지방": "200-499"
+      },
+      "processing": "공복 채혈 필수; 비공복 시 부정확. 대수변환(log-TG) 후 분석 권장",
+      "missing_strategy": "exclude"
+    },
+    "HE_hg": {
+      "type": "continuous",
+      "unit": "ug/L",
+      "label": "혈중 수은 (Blood Mercury)",
+      "notes": "식이 어패류 섭취 빈도(영양조사) 교란변수로 고려",
+      "cutoffs": {
+        "정상": "<10"
+      },
+      "processing": "어패류 섭취와 강한 상관; 7기부터 측정",
+      "missing_strategy": "exclude"
     },
     "HE_ht": {
-      "label": "신장",
       "type": "continuous",
       "unit": "cm",
-      "processing": "직접 측정값; -1/-3 결측 처리",
+      "label": "신장",
+      "notes": "",
       "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": ""
+      "processing": "직접 측정값; -1/-3 결측 처리",
+      "missing_strategy": "exclude"
     },
-    "HE_wt": {
-      "label": "체중",
+    "HE_pb": {
       "type": "continuous",
-      "unit": "kg",
-      "processing": "직접 측정값; -1/-3 결측 처리",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": ""
+      "unit": "ug/dL",
+      "label": "혈중 납 (Blood Lead)",
+      "notes": "직업적 노출, 거주지 관련 분석에 활용",
+      "cutoffs": {
+        "성인 우려": ">=10",
+        "소아 위험": ">=3.5"
+      },
+      "processing": "환경 중금속 노출 지표; 7기부터 측정",
+      "missing_strategy": "exclude"
     },
     "HE_wc": {
-      "label": "허리둘레",
       "type": "continuous",
       "unit": "cm",
-      "processing": "배꼽 부위 측정. 복부비만 기준: 남 >=90cm, 여 >=85cm (KSSO/IDF 한국 기준)",
+      "label": "허리둘레",
+      "notes": "대사증후군 진단 핵심 지표",
       "cutoffs": {
         "복부비만(남)": ">=90",
         "복부비만(여)": ">=85"
       },
-      "missing_strategy": "exclude",
-      "notes": "대사증후군 진단 핵심 지표"
+      "processing": "배꼽 부위 측정. 복부비만 기준: 남 >=90cm, 여 >=85cm (KSSO/IDF 한국 기준)",
+      "missing_strategy": "exclude"
     },
-    "HE_sbp": {
-      "label": "수축기혈압",
+    "HE_wt": {
       "type": "continuous",
-      "unit": "mmHg",
-      "processing": "2-3회 측정 후 평균. 혈압약 복용자 포함 주의",
-      "cutoffs": {
-        "정상": "<120",
-        "고혈압 전단계": "120-139",
-        "고혈압 1기": "140-159",
-        "고혈압 2기": ">=160"
-      },
-      "missing_strategy": "exclude",
-      "notes": "고혈압 정의: SBP>=140 OR DBP>=90 OR 혈압약 복용"
+      "unit": "kg",
+      "label": "체중",
+      "notes": "",
+      "cutoffs": {},
+      "processing": "직접 측정값; -1/-3 결측 처리",
+      "missing_strategy": "exclude"
     },
-    "HE_dbp": {
-      "label": "이완기혈압",
+    "na_mg": {
       "type": "continuous",
-      "unit": "mmHg",
-      "processing": "2-3회 측정 후 평균",
+      "unit": "mg/day",
+      "label": "나트륨 섭취량",
+      "notes": "조미료 포함 여부 확인; 고혈압 연구에 중요",
       "cutoffs": {
-        "정상": "<80",
-        "고혈압 전단계": "80-89",
-        "고혈압": ">=90"
+        "WHO 권고 초과": ">2000"
       },
-      "missing_strategy": "exclude",
-      "notes": "HE_sbp와 함께 고혈압 정의에 사용"
+      "processing": "24시간 회상법; WHO 권고: <2000mg/일",
+      "missing_strategy": "exclude"
     },
-    "HE_glu": {
-      "label": "공복혈당",
+    "sleep": {
       "type": "continuous",
-      "unit": "mg/dL",
-      "processing": "8시간 이상 공복 후 채혈. 공복 미충족 시 제외 필요",
+      "unit": "시간",
+      "label": "하루 평균 수면 시간",
+      "notes": "수면 질 변수(EQ5D 등) 별도 확인 가능",
       "cutoffs": {
-        "정상": "<100",
-        "공복혈당장애": "100-125",
-        "당뇨병 의심": ">=126"
+        "정상": "6-8",
+        "단수면": "<6",
+        "장수면": ">=9"
       },
-      "missing_strategy": "exclude",
-      "notes": "공복 여부(fast_yn) 변수 확인 필수; 당뇨 정의: 공복혈당>=126 OR HbA1c>=6.5 OR 의사진단"
+      "processing": "자가보고; 단수면(<6h), 장수면(>=9h)이 건강 위험",
+      "missing_strategy": "exclude"
     },
-    "HE_HbA1c": {
-      "label": "당화혈색소 (HbA1c)",
-      "type": "continuous",
-      "unit": "%",
-      "processing": "4기 이후 측정; 5기부터 NGSP 단위 표준화",
-      "cutoffs": {
-        "정상": "<5.7",
-        "당뇨전단계": "5.7-6.4",
-        "당뇨": ">=6.5"
-      },
-      "missing_strategy": "exclude",
-      "notes": "혈색소이상(빈혈, 혈색소병증) 환자에서 신뢰도 저하"
+    "wt_oe": {
+      "type": "weight",
+      "unit": "",
+      "label": "건강검진 가중치 (복합표본)",
+      "notes": "wt_oe_9th (9기) 등 차수별 변수명 확인 필요",
+      "cutoffs": {},
+      "processing": "검진 변수 포함 분석 시 사용. 기본 가중치보다 규모 작음",
+      "missing_strategy": "required"
     },
-    "HE_TC": {
-      "label": "총콜레스테롤",
-      "type": "continuous",
-      "unit": "mg/dL",
-      "processing": "공복 채혈; 지질강하제 복용자 별도 고려",
-      "cutoffs": {
-        "정상": "<200",
-        "경계": "200-239",
-        "고콜레스테롤혈증": ">=240"
-      },
-      "missing_strategy": "exclude",
-      "notes": ""
+    "DC1_dg": {
+      "type": "categorical",
+      "unit": "",
+      "label": "고혈압 의사진단",
+      "notes": "측정 혈압(SBP>=140 OR DBP>=90)과 통합 정의 권장; 혈압약 복용자 포함",
+      "cutoffs": {},
+      "processing": "1=있음, 2=없음",
+      "missing_strategy": "exclude"
     },
-    "HE_TG": {
-      "label": "중성지방 (Triglycerides)",
+    "DE1_dg": {
+      "type": "categorical",
+      "unit": "",
+      "label": "이상지질혈증 의사진단",
+      "notes": "검사 기반(TC>=240 OR LDL>=160 OR TG>=200 OR HDL<40) 정의와 병행 고려",
+      "cutoffs": {},
+      "processing": "1=있음, 2=없음",
+      "missing_strategy": "exclude"
+    },
+    "DI1_dg": {
+      "type": "categorical",
+      "unit": "",
+      "label": "당뇨병 의사진단",
+      "notes": "검사 기반 당뇨(공복혈당>=126 OR HbA1c>=6.5)와 구분; 진단 + 검사 통합 정의 권장",
+      "cutoffs": {},
+      "processing": "1=있음, 2=없음",
+      "missing_strategy": "exclude"
+    },
+    "HE_BMI": {
       "type": "continuous",
-      "unit": "mg/dL",
-      "processing": "공복 채혈 필수; 비공복 시 부정확. 대수변환(log-TG) 후 분석 권장",
+      "unit": "kg/m²",
+      "label": "체질량지수 (BMI)",
+      "notes": "한국인 BMI 기준 적용 (WHO 서태평양 권고): 과체중 23, 비만 25 기준. 서양 기준(과체중25, 비만30)과 구분 명시 필요",
       "cutoffs": {
-        "정상": "<150",
-        "경계": "150-199",
-        "고중성지방": "200-499",
-        "매우 높음": ">=500"
+        "비만": ">=25.0",
+        "정상": "18.5-22.9",
+        "과체중": "23.0-24.9",
+        "저체중": "<18.5",
+        "고도비만": ">=30.0"
       },
-      "missing_strategy": "exclude",
-      "notes": "대사증후군 진단 지표; 극단값 존재 시 log 변환 또는 상위 1% 제거"
+      "processing": "체중(kg)/신장(m)². -1/-3: 측정 불가/거부 → 결측 처리",
+      "missing_strategy": "exclude"
+    },
+    "HE_CRP": {
+      "type": "continuous",
+      "unit": "mg/L",
+      "label": "고감도 C반응단백 (hs-CRP)",
+      "notes": "급성 감염/염증(CRP>10) 제외 후 분석 권장",
+      "cutoffs": {
+        "낮은 위험": "<1.0",
+        "높은 위험": ">3.0",
+        "중간 위험": "1.0-3.0",
+        "급성 염증 의심": ">10"
+      },
+      "processing": "염증 지표; 극단값 많음 → log 변환 권장",
+      "missing_strategy": "exclude"
     },
     "HE_HDL": {
-      "label": "HDL 콜레스테롤",
       "type": "continuous",
       "unit": "mg/dL",
-      "processing": "낮을수록 심혈관 위험 증가",
+      "label": "HDL 콜레스테롤",
+      "notes": "대사증후군 진단 지표",
       "cutoffs": {
         "저HDL(남)": "<40",
         "저HDL(여)": "<50",
         "정상(남)": ">=40",
         "정상(여)": ">=50"
       },
-      "missing_strategy": "exclude",
-      "notes": "대사증후군 진단 지표"
+      "processing": "낮을수록 심혈관 위험 증가",
+      "missing_strategy": "exclude"
     },
     "HE_LDL": {
-      "label": "LDL 콜레스테롤",
       "type": "continuous",
       "unit": "mg/dL",
-      "processing": "Friedewald 공식: LDL = TC - HDL - TG/5 (TG<400 시). 직접 측정값 가용 차수 확인",
+      "label": "LDL 콜레스테롤",
+      "notes": "TG>=400 시 Friedewald 공식 사용 불가; 직접 측정값 사용 또는 제외",
       "cutoffs": {
-        "정상": "<100",
-        "거의 정상": "100-129",
         "경계": "130-159",
         "높음": "160-189",
+        "정상": "<100",
+        "거의 정상": "100-129",
         "매우 높음": ">=190"
       },
-      "missing_strategy": "exclude",
-      "notes": "TG>=400 시 Friedewald 공식 사용 불가; 직접 측정값 사용 또는 제외"
-    },
-    "HE_ast": {
-      "label": "AST (GOT)",
-      "type": "continuous",
-      "unit": "IU/L",
-      "processing": "간세포 손상 지표; 근육질환에서도 상승",
-      "cutoffs": {
-        "정상": "<40"
-      },
-      "missing_strategy": "exclude",
-      "notes": "간질환 분석 시 ALT, GGT와 함께 사용"
+      "processing": "Friedewald 공식: LDL = TC - HDL - TG/5 (TG<400 시). 직접 측정값 가용 차수 확인",
+      "missing_strategy": "exclude"
     },
     "HE_alt": {
-      "label": "ALT (GPT)",
       "type": "continuous",
       "unit": "IU/L",
-      "processing": "간 특이적 지표; NAFLD 선별에 활용",
+      "label": "ALT (GPT)",
+      "notes": "NAFLD 대리지표로 자주 사용; 상위 5% 극단값 제거 권장",
       "cutoffs": {
         "정상(남)": "<45",
         "정상(여)": "<34"
       },
-      "missing_strategy": "exclude",
-      "notes": "NAFLD 대리지표로 자주 사용; 상위 5% 극단값 제거 권장"
+      "processing": "간 특이적 지표; NAFLD 선별에 활용",
+      "missing_strategy": "exclude"
     },
-    "HE_ggt": {
-      "label": "감마-GTP (GGT)",
+    "HE_ast": {
       "type": "continuous",
       "unit": "IU/L",
-      "processing": "알코올 섭취 및 간질환에 민감; 흡연에도 영향",
+      "label": "AST (GOT)",
+      "notes": "간질환 분석 시 ALT, GGT와 함께 사용",
+      "cutoffs": {
+        "정상": "<40"
+      },
+      "processing": "간세포 손상 지표; 근육질환에서도 상승",
+      "missing_strategy": "exclude"
+    },
+    "HE_dbp": {
+      "type": "continuous",
+      "unit": "mmHg",
+      "label": "이완기혈압",
+      "notes": "HE_sbp와 함께 고혈압 정의에 사용",
+      "cutoffs": {
+        "정상": "<80",
+        "고혈압": ">=90",
+        "고혈압 전단계": "80-89"
+      },
+      "processing": "2-3회 측정 후 평균",
+      "missing_strategy": "exclude"
+    },
+    "HE_fer": {
+      "type": "continuous",
+      "unit": "ng/mL",
+      "label": "혈청 페리틴",
+      "notes": "빈혈 분석 시 Hb, MCV와 함께 사용",
+      "cutoffs": {
+        "과부하": ">300",
+        "결핍(남)": "<30",
+        "결핍(여)": "<15"
+      },
+      "processing": "철 저장 지표; 염증에서 급성반응단백으로 상승",
+      "missing_strategy": "exclude"
+    },
+    "HE_ggt": {
+      "type": "continuous",
+      "unit": "IU/L",
+      "label": "감마-GTP (GGT)",
+      "notes": "음주량과 강한 상관; 음주 교란 통제 필수",
       "cutoffs": {
         "정상(남)": "<63",
         "정상(여)": "<35"
       },
-      "missing_strategy": "exclude",
-      "notes": "음주량과 강한 상관; 음주 교란 통제 필수"
+      "processing": "알코올 섭취 및 간질환에 민감; 흡연에도 영향",
+      "missing_strategy": "exclude"
     },
-    "HE_crea": {
-      "label": "혈청 크레아티닌",
+    "HE_glu": {
       "type": "continuous",
       "unit": "mg/dL",
-      "processing": "신기능 지표; CKD-EPI 또는 MDRD 공식으로 eGFR 계산",
+      "label": "공복혈당",
+      "notes": "공복 여부(fast_yn) 변수 확인 필수; 당뇨 정의: 공복혈당>=126 OR HbA1c>=6.5 OR 의사진단",
+      "cutoffs": {
+        "정상": "<100",
+        "당뇨병 의심": ">=126",
+        "공복혈당장애": "100-125"
+      },
+      "processing": "8시간 이상 공복 후 채혈. 공복 미충족 시 제외 필요",
+      "missing_strategy": "exclude"
+    },
+    "HE_sbp": {
+      "type": "continuous",
+      "unit": "mmHg",
+      "label": "수축기혈압",
+      "notes": "고혈압 정의: SBP>=140 OR DBP>=90 OR 혈압약 복용",
+      "cutoffs": {
+        "정상": "<120",
+        "고혈압 1기": "140-159",
+        "고혈압 2기": ">=160",
+        "고혈압 전단계": "120-139"
+      },
+      "processing": "2-3회 측정 후 평균. 혈압약 복용자 포함 주의",
+      "missing_strategy": "exclude"
+    },
+    "region": {
+      "type": "categorical",
+      "unit": "",
+      "label": "거주지역",
+      "notes": "복합표본 층(strata) 변수로 사용",
+      "cutoffs": {
+        "농촌": 2,
+        "도시": 1
+      },
+      "processing": "1=도시(dong), 2=농촌(eup/myeon); 도농 차이 교란변수로 자주 사용",
+      "missing_strategy": "exclude"
+    },
+    "wt_ntr": {
+      "type": "weight",
+      "unit": "",
+      "label": "영양조사 가중치 (복합표본)",
+      "notes": "영양 서브샘플은 표본 규모가 더 작음에 주의",
+      "cutoffs": {},
+      "processing": "24시간 회상법 영양 변수 포함 시 사용",
+      "missing_strategy": "required"
+    },
+    "DI1_med": {
+      "type": "categorical",
+      "unit": "",
+      "label": "당뇨병 치료 여부",
+      "notes": "미치료 당뇨(uncontrolled DM) 연구에 활용",
+      "cutoffs": {},
+      "processing": "1=약 복용 중, 2=인슐린, 3=약+인슐린, 4=치료 안 함",
+      "missing_strategy": "exclude"
+    },
+    "HE_Ubcr": {
+      "type": "continuous",
+      "unit": "mg/dL",
+      "label": "소변 크레아티닌 (요중)",
+      "notes": "요중 중금속 = (중금속 농도 / 소변 크레아티닌) × 1000 (ug/g Cr)",
+      "cutoffs": {},
+      "processing": "소변 중금속(납, 카드뮴) 보정에 사용",
+      "missing_strategy": "exclude"
+    },
+    "HE_crea": {
+      "type": "continuous",
+      "unit": "mg/dL",
+      "label": "혈청 크레아티닌",
+      "notes": "근육량에 따라 정상 범위 다름",
       "cutoffs": {
         "정상(남)": "0.7-1.2",
         "정상(여)": "0.5-1.0"
       },
-      "missing_strategy": "exclude",
-      "notes": "근육량에 따라 정상 범위 다름"
+      "processing": "신기능 지표; CKD-EPI 또는 MDRD 공식으로 eGFR 계산",
+      "missing_strategy": "exclude"
     },
     "HE_eGFR": {
-      "label": "추정 사구체여과율 (eGFR)",
       "type": "continuous",
       "unit": "mL/min/1.73m²",
-      "processing": "CKD-EPI 2021 공식 권장: 인종 계수 제거. MDRD: 186 × Cr^-1.154 × age^-0.203 × 0.742(여성)",
+      "label": "추정 사구체여과율 (eGFR)",
+      "notes": "CKD 정의: eGFR<60 mL/min/1.73m² (3개월 이상)",
       "cutoffs": {
+        "G4 중증": "15-29",
+        "G5 신부전": "<15",
         "G1 정상/고": ">=90",
         "G2 경도감소": "60-89",
         "G3a 경도-중등도": "45-59",
-        "G3b 중등도-중증": "30-44",
-        "G4 중증": "15-29",
-        "G5 신부전": "<15"
+        "G3b 중등도-중증": "30-44"
       },
-      "missing_strategy": "exclude",
-      "notes": "CKD 정의: eGFR<60 mL/min/1.73m² (3개월 이상)"
+      "processing": "CKD-EPI 2021 공식 권장: 인종 계수 제거. MDRD: 186 × Cr^-1.154 × age^-0.203 × 0.742(여성)",
+      "missing_strategy": "exclude"
     },
     "HE_uric": {
-      "label": "요산 (Uric Acid)",
       "type": "continuous",
       "unit": "mg/dL",
-      "processing": "통풍, 신장질환, 대사증후군과 연관",
+      "label": "요산 (Uric Acid)",
+      "notes": "이뇨제 복용자에서 상승; 약물 교란 고려",
       "cutoffs": {
         "고요산혈증(남)": ">7.0",
         "고요산혈증(여)": ">6.0"
       },
-      "missing_strategy": "exclude",
-      "notes": "이뇨제 복용자에서 상승; 약물 교란 고려"
+      "processing": "통풍, 신장질환, 대사증후군과 연관",
+      "missing_strategy": "exclude"
     },
     "HE_vitD": {
-      "label": "혈청 비타민 D (25(OH)D)",
       "type": "continuous",
       "unit": "ng/mL",
-      "processing": "5기부터 측정; 계절 변이 있음 (겨울 낮음)",
+      "label": "혈청 비타민 D (25(OH)D)",
+      "notes": "계절(survey_month) 보정 필수; 일조량 차이",
       "cutoffs": {
         "결핍": "<12",
-        "불충분": "12-19.9",
         "충분": ">=20",
+        "불충분": "12-19.9",
         "독성 우려": ">=100"
       },
-      "missing_strategy": "exclude",
-      "notes": "계절(survey_month) 보정 필수; 일조량 차이"
+      "processing": "5기부터 측정; 계절 변이 있음 (겨울 낮음)",
+      "missing_strategy": "exclude"
     },
-    "HE_CRP": {
-      "label": "고감도 C반응단백 (hs-CRP)",
-      "type": "continuous",
-      "unit": "mg/L",
-      "processing": "염증 지표; 극단값 많음 → log 변환 권장",
-      "cutoffs": {
-        "낮은 위험": "<1.0",
-        "중간 위험": "1.0-3.0",
-        "높은 위험": ">3.0",
-        "급성 염증 의심": ">10"
-      },
-      "missing_strategy": "exclude",
-      "notes": "급성 감염/염증(CRP>10) 제외 후 분석 권장"
-    },
-    "HE_fer": {
-      "label": "혈청 페리틴",
-      "type": "continuous",
-      "unit": "ng/mL",
-      "processing": "철 저장 지표; 염증에서 급성반응단백으로 상승",
-      "cutoffs": {
-        "결핍(남)": "<30",
-        "결핍(여)": "<15",
-        "과부하": ">300"
-      },
-      "missing_strategy": "exclude",
-      "notes": "빈혈 분석 시 Hb, MCV와 함께 사용"
-    },
-    "HE_pb": {
-      "label": "혈중 납 (Blood Lead)",
-      "type": "continuous",
-      "unit": "ug/dL",
-      "processing": "환경 중금속 노출 지표; 7기부터 측정",
-      "cutoffs": {
-        "소아 위험": ">=3.5",
-        "성인 우려": ">=10"
-      },
-      "missing_strategy": "exclude",
-      "notes": "직업적 노출, 거주지 관련 분석에 활용"
-    },
-    "HE_hg": {
-      "label": "혈중 수은 (Blood Mercury)",
-      "type": "continuous",
-      "unit": "ug/L",
-      "processing": "어패류 섭취와 강한 상관; 7기부터 측정",
-      "cutoffs": {
-        "정상": "<10"
-      },
-      "missing_strategy": "exclude",
-      "notes": "식이 어패류 섭취 빈도(영양조사) 교란변수로 고려"
-    },
-    "pulm_fev1": {
-      "label": "FEV1 (1초 강제호기량)",
-      "type": "continuous",
-      "unit": "L",
-      "processing": "폐기능 검사; ATS/ERS 기준 적용. 예측치 % 계산 필요",
-      "cutoffs": {
-        "폐쇄: FEV1/FVC<0.7": "",
-        "경증": "FEV1>=80%예측치"
-      },
-      "missing_strategy": "exclude",
-      "notes": "폐기능 결과는 pulm_fev1, pulm_fvc, pulm_ratio 변수 확인"
-    },
-    "sm_presnt": {
-      "label": "현재 흡연 여부",
+    "dr_high": {
       "type": "categorical",
       "unit": "",
-      "processing": "1=비흡연, 2=과거흡연, 3=현재흡연 (차수별 코딩 다를 수 있음)",
+      "label": "고위험 음주",
+      "notes": "연구에 따라 자체 정의 가능: AUDIT 점수 사용 권장",
+      "cutoffs": {},
+      "processing": "1=해당, 2=비해당; WHO 고위험 음주 기준 기반",
+      "missing_strategy": "exclude"
+    },
+    "incomeB": {
+      "type": "categorical",
+      "unit": "",
+      "label": "가구 소득 분위",
+      "notes": "사회경제적 지위(SES) 대리변수; 교육수준(edu)과 함께 사용",
+      "cutoffs": {},
+      "processing": "1=하, 2=중하, 3=중상, 4=상; 균등화가구소득 사분위",
+      "missing_strategy": "exclude"
+    },
+    "kstrata": {
+      "type": "stratum",
+      "unit": "",
+      "label": "층화변수",
+      "notes": "psu와 함께 svydesign 구성",
+      "cutoffs": {},
+      "processing": "복합표본 설계에서 strata=~kstrata 로 지정",
+      "missing_strategy": "required"
+    },
+    "marital": {
+      "type": "categorical",
+      "unit": "",
+      "label": "혼인 상태",
+      "notes": "사회적 지지 관련 분석에 활용",
+      "cutoffs": {},
+      "processing": "1=유배우, 2=별거/이혼/사별, 3=미혼",
+      "missing_strategy": "exclude"
+    },
+    "pa_walk": {
+      "type": "continuous",
+      "unit": "일/주",
+      "label": "걷기 (일수/주)",
+      "notes": "",
+      "cutoffs": {},
+      "processing": "주 5일 이상 30분 이상: 걷기 권장기준",
+      "missing_strategy": "exclude"
+    },
+    "sugar_g": {
+      "type": "continuous",
+      "unit": "g/day",
+      "label": "당류 섭취량",
+      "notes": "자유당(free sugars) vs 총당류 구분 필요",
+      "cutoffs": {},
+      "processing": "24시간 회상법; WHO 권고: 총에너지의 10% 미만",
+      "missing_strategy": "exclude"
+    },
+    "HE_HbA1c": {
+      "type": "continuous",
+      "unit": "%",
+      "label": "당화혈색소 (HbA1c)",
+      "notes": "혈색소이상(빈혈, 혈색소병증) 환자에서 신뢰도 저하",
       "cutoffs": {
-        "비흡연": 1,
-        "과거흡연": 2,
-        "현재흡연": 3
+        "당뇨": ">=6.5",
+        "정상": "<5.7",
+        "당뇨전단계": "5.7-6.4"
       },
-      "missing_strategy": "exclude",
-      "notes": "이분화 시: 현재흡연(3) vs 비흡연+과거흡연(1,2)"
+      "processing": "4기 이후 측정; 5기부터 NGSP 단위 표준화",
+      "missing_strategy": "exclude"
+    },
+    "dr_month": {
+      "type": "categorical",
+      "unit": "",
+      "label": "월간 음주 빈도",
+      "notes": "고위험 음주: 주4회 이상 AND 1회 7잔 이상(남) / 5잔 이상(여)",
+      "cutoffs": {},
+      "processing": "0=비음주, 1=월1회 미만, 2=월1회, 3=월2-4회, 4=주2-3회, 5=주4회 이상",
+      "missing_strategy": "exclude"
     },
     "sm_pkday": {
-      "label": "1일 흡연량",
       "type": "continuous",
       "unit": "개비/일",
-      "processing": "현재흡연자만 해당; 갑년(pack-year) = 1일갑수 × 흡연년수",
+      "label": "1일 흡연량",
+      "notes": "갑년 계산: sm_pkday/20 × sm_curtyp",
       "cutoffs": {
         "경흡연": "<10",
         "중등도": "10-19",
         "다량흡연": ">=20"
       },
-      "missing_strategy": "restrict_to_smokers",
-      "notes": "갑년 계산: sm_pkday/20 × sm_curtyp"
+      "processing": "현재흡연자만 해당; 갑년(pack-year) = 1일갑수 × 흡연년수",
+      "missing_strategy": "restrict_to_smokers"
     },
-    "dr_month": {
-      "label": "월간 음주 빈도",
+    "wt_itvex": {
+      "type": "weight",
+      "unit": "",
+      "label": "건강설문 가중치 (복합표본)",
+      "notes": "건강설문만 사용 시 wt_itvex; 검진 포함 시 wt_oe; 영양 포함 시 wt_ntr",
+      "cutoffs": {},
+      "processing": "KNHANES 복합표본설계 반드시 적용. survey::svydesign(id=~psu, strata=~kstrata, weights=~wt_itvex) in R; Python: statsmodels.stats.survey",
+      "missing_strategy": "required"
+    },
+    "pulm_fev1": {
+      "type": "continuous",
+      "unit": "L",
+      "label": "FEV1 (1초 강제호기량)",
+      "notes": "폐기능 결과는 pulm_fev1, pulm_fvc, pulm_ratio 변수 확인",
+      "cutoffs": {
+        "경증": "FEV1>=80%예측치",
+        "폐쇄: FEV1/FVC<0.7": ""
+      },
+      "processing": "폐기능 검사; ATS/ERS 기준 적용. 예측치 % 계산 필요",
+      "missing_strategy": "exclude"
+    },
+    "sm_presnt": {
       "type": "categorical",
       "unit": "",
-      "processing": "0=비음주, 1=월1회 미만, 2=월1회, 3=월2-4회, 4=주2-3회, 5=주4회 이상",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "고위험 음주: 주4회 이상 AND 1회 7잔 이상(남) / 5잔 이상(여)"
-    },
-    "dr_high": {
-      "label": "고위험 음주",
-      "type": "categorical",
-      "unit": "",
-      "processing": "1=해당, 2=비해당; WHO 고위험 음주 기준 기반",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "연구에 따라 자체 정의 가능: AUDIT 점수 사용 권장"
+      "label": "현재 흡연 여부",
+      "notes": "이분화 시: 현재흡연(3) vs 비흡연+과거흡연(1,2)",
+      "cutoffs": {
+        "비흡연": 1,
+        "과거흡연": 2,
+        "현재흡연": 3
+      },
+      "processing": "1=비흡연, 2=과거흡연, 3=현재흡연 (차수별 코딩 다를 수 있음)",
+      "missing_strategy": "exclude"
     },
     "pa_vigorous": {
-      "label": "격렬한 신체활동 (일수/주)",
       "type": "continuous",
       "unit": "일/주",
-      "processing": "주 3회 이상 20분 이상: 권장 기준 충족",
+      "label": "격렬한 신체활동 (일수/주)",
+      "notes": "pa_moderate, pa_walk과 합산하여 총 신체활동량(MET-min) 계산 가능",
       "cutoffs": {
         "권장기준충족": ">=3"
       },
-      "missing_strategy": "exclude",
-      "notes": "pa_moderate, pa_walk과 합산하여 총 신체활동량(MET-min) 계산 가능"
-    },
-    "pa_walk": {
-      "label": "걷기 (일수/주)",
-      "type": "continuous",
-      "unit": "일/주",
-      "processing": "주 5일 이상 30분 이상: 걷기 권장기준",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": ""
-    },
-    "sleep": {
-      "label": "하루 평균 수면 시간",
-      "type": "continuous",
-      "unit": "시간",
-      "processing": "자가보고; 단수면(<6h), 장수면(>=9h)이 건강 위험",
-      "cutoffs": {
-        "단수면": "<6",
-        "정상": "6-8",
-        "장수면": ">=9"
-      },
-      "missing_strategy": "exclude",
-      "notes": "수면 질 변수(EQ5D 등) 별도 확인 가능"
-    },
-    "DI1_dg": {
-      "label": "당뇨병 의사진단",
-      "type": "categorical",
-      "unit": "",
-      "processing": "1=있음, 2=없음",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "검사 기반 당뇨(공복혈당>=126 OR HbA1c>=6.5)와 구분; 진단 + 검사 통합 정의 권장"
-    },
-    "DI1_med": {
-      "label": "당뇨병 치료 여부",
-      "type": "categorical",
-      "unit": "",
-      "processing": "1=약 복용 중, 2=인슐린, 3=약+인슐린, 4=치료 안 함",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "미치료 당뇨(uncontrolled DM) 연구에 활용"
-    },
-    "DC1_dg": {
-      "label": "고혈압 의사진단",
-      "type": "categorical",
-      "unit": "",
-      "processing": "1=있음, 2=없음",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "측정 혈압(SBP>=140 OR DBP>=90)과 통합 정의 권장; 혈압약 복용자 포함"
-    },
-    "DE1_dg": {
-      "label": "이상지질혈증 의사진단",
-      "type": "categorical",
-      "unit": "",
-      "processing": "1=있음, 2=없음",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "검사 기반(TC>=240 OR LDL>=160 OR TG>=200 OR HDL<40) 정의와 병행 고려"
-    },
-    "D_1_1": {
-      "label": "우울 선별 (PHQ-9 기반)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "PHQ-9 점수 합산 또는 우울증 여부(1=해당, 2=비해당); 차수별 도구 확인 필요",
-      "cutoffs": {
-        "없음": "0-4",
-        "경증": "5-9",
-        "중등도": "10-14",
-        "중등도-심한": "15-19",
-        "심한": ">=20"
-      },
-      "missing_strategy": "exclude",
-      "notes": "일부 차수에서 PHQ-9 총점 직접 제공; D_1_1~D_1_9 합산 필요할 수 있음"
-    },
-    "incomeB": {
-      "label": "가구 소득 분위",
-      "type": "categorical",
-      "unit": "",
-      "processing": "1=하, 2=중하, 3=중상, 4=상; 균등화가구소득 사분위",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "사회경제적 지위(SES) 대리변수; 교육수준(edu)과 함께 사용"
-    },
-    "edu": {
-      "label": "교육수준",
-      "type": "categorical",
-      "unit": "",
-      "processing": "1=초졸 이하, 2=중졸, 3=고졸, 4=대졸 이상",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "만 30세 이상에서 측정; 최종 학력 기준"
-    },
-    "marital": {
-      "label": "혼인 상태",
-      "type": "categorical",
-      "unit": "",
-      "processing": "1=유배우, 2=별거/이혼/사별, 3=미혼",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "사회적 지지 관련 분석에 활용"
-    },
-    "kcal": {
-      "label": "에너지 섭취량 (24시간 회상법)",
-      "type": "continuous",
-      "unit": "kcal/day",
-      "processing": "1일 24시간 회상법; 극단값 제거: 성인 남 <500/>5000, 여 <500/>4000 kcal",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "영양조사 가중치(wt_ntr) 필수 사용; 과소보고 경향 있음"
-    },
-    "na_mg": {
-      "label": "나트륨 섭취량",
-      "type": "continuous",
-      "unit": "mg/day",
-      "processing": "24시간 회상법; WHO 권고: <2000mg/일",
-      "cutoffs": {
-        "WHO 권고 초과": ">2000"
-      },
-      "missing_strategy": "exclude",
-      "notes": "조미료 포함 여부 확인; 고혈압 연구에 중요"
-    },
-    "sugar_g": {
-      "label": "당류 섭취량",
-      "type": "continuous",
-      "unit": "g/day",
-      "processing": "24시간 회상법; WHO 권고: 총에너지의 10% 미만",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "자유당(free sugars) vs 총당류 구분 필요"
-    },
-    "HE_Ubcr": {
-      "label": "소변 크레아티닌 (요중)",
-      "type": "continuous",
-      "unit": "mg/dL",
-      "processing": "소변 중금속(납, 카드뮴) 보정에 사용",
-      "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": "요중 중금속 = (중금속 농도 / 소변 크레아티닌) × 1000 (ug/g Cr)"
+      "processing": "주 3회 이상 20분 이상: 권장 기준 충족",
+      "missing_strategy": "exclude"
     }
   },
   "analysis_notes": [
@@ -619,5 +619,145 @@
     "DC1_dg",
     "DE1_dg"
   ],
-  "papers_using_this": []
+  "papers_using_this": [
+    "Kim Taewook. Low Back Pain in Korea: Survey Weighted Analysis with Age Sex and Lumbar Radiographic Grade Matching.. Healthcare (Basel, Switzerland). 2026. doi:10.1111/1475-6773.12090",
+    "Kwan Byung Soo, Cho Jung-Hwan, Kim Jun Young et al. Ultra-Processed Food Consumption and Domain-Specific Quality of Life in Postmenopausal Women: Associations with Mobility and Mental Health.. Healthcare (Basel, Switzerland). 2026. doi:10.1089/jmf.2013.3049",
+    "Jung Jongwon, Ryu Ji Young. Association between heavy metal exposure and high-sensitivity C-reactive protein in the elderly: Korea National Health and Nutrition Examination Survey (KNHANES) 2016-2017.. Annals of occupational and environmental medicine. 2026. doi:10.35371/aoem.2026.38.e13",
+    "Park Jongsuk, Kim Sangho. Validity of muscle-to-fat ratio as a predictor of adult metabolic syndrome.. Journal of physical therapy science. 2016. doi:10.1589/jpts.28.1036",
+    "Bui Thi Tra, Kang Hee-Yeon, Park Eunjung et al. Latency period of lung cancer in relation to tobacco smoking in Korea.. Epidemiology and health. 2026. doi:10.4178/epih.e2026014",
+    "Jang Kyeongmin. Metabolic syndrome in Korean older adults: Prevalence, determinants, and nursing implications.. Geriatric nursing (New York, N.Y.). 2026. doi:10.1016/j.gerinurse.2026.103989",
+    "Hong Namki, Ha Jeonghoon, Yoo Jun-Il et al. Trends in Osteoporosis Prevalence in Korea Using Korea National Health and Nutrition Examination Survey (KNHANES) 2024 and 2008-2011: The KSBMR KNHANES DXA Task Force Report.. Journal of bone metabolism. 2026. doi:10.11005/jbm.26.003",
+    "Cheon Eunsil, Cho Sung-Il. Association Between Smoking Cessation Duration and Heated Tobacco Product Use Among People Who Formerly or Never Used Combustible Cigarettes in Korea.. Nicotine & tobacco research : official journal of the Society for Research on Nicotine and Tobacco. 2026. doi:10.1093/ntr/ntag059",
+    "Kim Yeji, Kim Yun Tae, Kong Mingui et al. Risk Factors and Quality of Life in Patients With Geographic Atrophy, a Late Stage of Age-Related Macular Degeneration: Findings From the Korea National Health and Nutrition Examination Survey.. Journal of Korean medical science. 2026. doi:10.3346/jkms.2026.41.e63",
+    "Park Dana, Lee Soo-Kyung. Comparison of dietary behaviors and nutrient intake by gender and household type among older Koreans: a cross-sectional study using data from the 8th Korea National Health and Nutrition Examination Survey.. Korean journal of community nutrition. 2026. doi:10.7318/KJFC/2025.40.2.104",
+    "Kim Sumin, Ha Kyungho. Association between dietary fat and fatty acid intake and overweight and obesity among Korean children and adolescents.. Nutrition, metabolism, and cardiovascular diseases : NMCD. 2026. doi:10.1016/j.numecd.2026.104666",
+    "Choi Rihwa, Cho Sung-Eun, Lee Sang Gon. Prevalence and Characteristics of Specimens with Extremely Low High-Density Lipoprotein Cholesterol.. Clinical laboratory. 2026. doi:10.7754/Clin.Lab.2025.250534",
+    "Cho Young Hoon, Ryu Sojung, Ahn Joonho. Association between serum 25-hydroxyvitamin D and albuminuria in Korean adolescents: evidence from a national survey.. Pediatric nephrology (Berlin, Germany). 2026. doi:10.1007/s11154-017-9424-1",
+    "Jung Eun-Seo. Mental health vulnerabilities and periodontal disease in Korean adults: Implications for public health policy.. Community dental health. 2025. doi:10.1177/0265539X251405968",
+    "Lee Jeong Mi, Kim Misung, Oh Kyungwon et al. [A Comparative Study of Results Based on Changes in the Health Survey Method of the Korea National Health and Nutrition Examination Survey].. Jugan geon-gang gwa jilbyeong. 2025. doi:10.2196/jmir.1414",
+    "Park Jungmi, Nam Hee-Kyoung, Cho Sung-Il. Domain-specific physical activity and depressive symptoms in Korean adults: An isotemporal substitution study using KNHANES data.. PloS one. 2025. doi:10.1136/bjsports-2024-108294",
+    "Choi Daeun, Seo Sunhee. Differences in lunch nutrient intake and nutritional adequacy among Korean older adults by meal site: a cross-sectional analysis of the 2018-2021 Korea National Health and Nutrition Examination Survey data.. Korean journal of community nutrition. 2026. doi:10.5720/kjcn.2026.00045",
+    "Shin Sunhye. Association between vitamin D status and triglyceride-glucose index among South Korean adults: a cross-sectional study.. Clinical nutrition research. 2026. doi:10.7762/cnr.2026.0013",
+    "Joo Hajung, Choi Taelim, Park Seoyeon et al. Cross-national comparison of depression and risk of diabetes in South Korea and the US: a nationwide representative comparative study.. Psychiatry research. 2026. doi:10.1016/j.psychres.2026.117150",
+    "Kim Hyeon Chang, Lee Hokyou, Choi Hansol et al. Korea Hypertension Fact Sheet 2025: national trends in hypertension with a special analysis of hypertensive disorders of pregnancy.. Clinical hypertension. 2026. doi:10.5646/ch.2026.32.e13",
+    "Kim Bogyeong, Jeon Minjin, Lee Yuseop et al. Association between thyroid function and 10-year cardiovascular disease risk of patients with diabetes: a cross-sectional study using KNHANES 2013-2014.. Journal of Yeungnam medical science. 2026. doi:10.12701/jyms.2026.43.28",
+    "Oh Hak Gyun, Park Jeong In, Kim Ah Kyung et al. Estimating the causal effect of sleep duration on mental health in young adults: A meta-learner approach from physiological and nutritional perspectives.. PloS one. 2026. doi:10.3390/ph18060792",
+    "Kim Kyungjin, Lee Youngro, Seo Jongmo et al. Bridging Ensemble Performance and Transparency: Knowledge Distillation for Obesity Classification on KNHANES Dataset.. Annual International Conference of the IEEE Engineering in Medicine and Biology Society. IEEE Engineering in Medicine and Biology Society. Annual International Conference. 2025. doi:10.1109/EMBC58623.2025.11251879",
+    "Lee Seong Yoon, Lee Hwamin. Influence of concurrent use of conventional and E-cigarettes on rheumatoid arthritis risk among Korean adults: Findings from KNHANES 2015-2021.. Preventive medicine reports. 2026. doi:10.1016/j.pmedr.2025.103362",
+    "Park Jae Young, Park Hyojin. Dynapenic metabolic syndrome phenotypes and depression in older adults: A nationwide population-based study.. Journal of psychosomatic research. 2026. doi:10.1016/j.jpsychores.2026.112861",
+    "Park Kyong Hee, Jeon Chulhyo. Do socioeconomic resources reshape maternal health behaviors? Evidence from a nationally representative network analysis.. Preventive medicine reports. 2026. doi:10.1016/S0140-6736(03)15268-3",
+    "Son Heeju, Lee Hee-Soo, Lee Seung-Yeon et al. Association Between the Korean Healthy Eating Index and Hyperuricemia Among Korean Adults.. Journal of Korean medical science. 2026. doi:10.3346/jkms.2026.41.e135",
+    "Kim Hyunkyu, Park Yu Shin, Kim Seung Hoon et al. Association between low muscle mass and depression in South Korean adults.. BMC psychiatry. 2026. doi:10.1016/j.neurobiolaging.2009.03.008",
+    "Kim Jinsun, Kim Seungju. Associations Between Tobacco Use Behaviors and Metabolic Syndrome in Korean Adults: Analysis of the 2020-2022 KNHANES.. Journal of preventive medicine and public health = Yebang Uihakhoe chi. 2026. doi:10.1210/clinem/dgab558",
+    "Chun Sung Ha, Gong Hyun Sik. Beyond Body Mass Index: Appendicular Lean Mass Index-Defined Sarcopenia and Carpal Tunnel Syndrome-A Cross-Sectional Analysis.. Muscle & nerve. 2026. doi:10.1002/mus.70215",
+    "Jung Ye-Won, Nam Ji-Woong, Lee Kyung-Min et al. Association Between Educational Level and Subjective Health Status: Korea National Health and Nutrition Examination Survey, 2001-2023.. Asia-Pacific journal of public health. 2026. doi:10.1177/10105395251413015",
+    "Yoo Hyunsoo, Choi Yoon-Seok, Yang Young-Mo. Associations between diabetes mellitus and drinking patterns in Korean adults by sex: insights from the Korea National health and nutrition examination survey 2013-2018.. Diabetology & metabolic syndrome. 2025. doi:10.1093/ajcn/80.1.217",
+    "Kim Seonho, Im Jeong-Soo, Ha Beomman. Associations of Body Mass Index and Waist Circumference with Falls among Community-Dwelling Older Adults in Korea.. Journal of preventive medicine and public health = Yebang Uihakhoe chi. 2026. doi:10.3961/jpmph.26.092",
+    "Kim HaeIn, Kim MyungChul. Tracking Sarcopenia and Physical Activities Among Korean Adults Aged 50 Years and Older During COVID-19 Pandemic.. Physiotherapy research international : the journal for researchers and clinicians in physical therapy. 2026. doi:10.1016/j.jshs.2020.01.005",
+    "Shin Dongweon, Ahn Hyunmin, Cho Yunnie et al. The cumulative impact of air pollution on dry eye disease: Evidence from the Korea national health and nutrition examination survey (2017-2020).. The ocular surface. 2026. doi:10.1016/j.jtos.2026.03.003",
+    "Yun HeeJang, Jang Kyeongmin. Association Between Vitamin D Deficiency and Cardiometabolic Risk Clustering Among Rural Community-Dwelling Older Adults: A Cross-Sectional Study.. Healthcare (Basel, Switzerland). 2026. doi:10.1186/s12877-022-03170-9",
+    "Do Byun Kyung, Lee Anbok, Kim Tae Hyun et al. Dental prosthesis needs among breast cancer survivors: a Korean nationwide cross-sectional study with subgroup analysis by menopausal status at diagnosis.. Supportive care in cancer : official journal of the Multinational Association of Supportive Care in Cancer. 2026. doi:10.1097/MD.0000000000034065",
+    "Rajaguru Vasuki, Kim Jeoungmi, Chapagain Durga Datta et al. Low-Carbohydrate Diet and Metabolic Syndrome Risk in Korean Adults: A Korea National Health and Nutrition Examination Survey Study.. Nutrients. 2026. doi:10.1007/s40618-019-01061-2",
+    "Kim Sunghak, Kim Kyuwoong. Combined association of socioeconomic status and type 2 diabetes with influenza vaccination in older adults: A cross-sectional analysis of the Korea National Health and Examination Survey (2019-2022).. PloS one. 2026. doi:10.2337/dc20-0229",
+    "Jeoung Bogja, Park Sunghae. Changes in Lifestyle Behaviors and Cardiovascular Disease Risk Factors Before and After the COVID-19 Pandemic: A Nationally Representative Study from Korea.. Healthcare (Basel, Switzerland). 2025. doi:10.1001/jamanetworkopen.2022.3849",
+    "Kwon Yong-Seok, Kim Ye-Jun, Kim Eun-Kyung et al. Dietary Assessment and Trends Among Preschoolers in South Korea: Data from KNHANES 2012-2021.. Nutrients. 2026. doi:10.5720/kjcn.2024.29.3.234",
+    "Lee Serim. Weight control methods and risk of generalized anxiety disorder (GAD-7) among Korean adults.. Journal of affective disorders. 2026. doi:10.1016/j.jad.2025.121071",
+    "Park Sungchul, Eggleston Karen, Do Young Kyung et al. Income-Based Inequalities in Health System Performance in the US and South Korea.. JAMA health forum. 2026. doi:10.2337/dci20-0053",
+    "Kim Jinhyun, Jang Eunjin, Jeong Sarang et al. Development of a simplified NOVA-based scoring tool for assessing ultra-processed food consumption among Korean young adults: a cross-sectional study.. Korean journal of community nutrition. 2026. doi:10.5720/kjcn.2026.00059",
+    "Go Hyeonjeong, Kim Eun-Kyong, Kuboniwa Masae et al. Trends and life-course trajectories in the burden of oral frailty from midlife to later life: a 13-year population-based study in Korea.. Journal of dentistry. 2026. doi:10.1016/j.jdent.2026.106714",
+    "Jang Kyeongmin. Glycaemic Control, Blood Pressure and Lifestyle Behaviours in Relation to Sarcopenia Among Older Adults in Korea: A Population-Based Cross-Sectional Study.. Australasian journal on ageing. 2026. doi:10.4178/epih.e2020055",
+    "Lee Ji In, Kim Kyung Hee, Choi Jae Wook. Income and Time Poverty and Metabolic Syndrome in Korea: Sex-Specific Patterns After Hierarchical Adjustment.. Inquiry : a journal of medical care organization, provision and financing. 2026. doi:10.1177/00469580261439103",
+    "Kim Kyuho, Han Kyungdo, Kim In Young et al. Association between diabetes duration and hyperuricemia: Korea National Health and Nutrition Examination Survey 2016 to 2021.. The Korean journal of internal medicine. 2026. doi:10.3904/kjim.2024.436",
+    "Kim Hee Soo, Cho Su Hwan. Association between menopausal status and the probability of steatotic liver disease in middle-aged Korean women: a cross-sectional study using the Korea National Health and Nutrition Examination Survey 2007-2023.. Korean journal of family medicine. 2026. doi:10.4082/kjfm.25.0321",
+    "Jung Sukyoung, Lee Eunice Hong Lim, Kim Jee Young et al. Trends in Ultraprocessed Food Consumption Among Korean Children and Adolescents, 2007 to 2024.. JAMA network open. 2026. doi:10.4162/nrp.2025.19.3.331",
+    "Jang Han Byul, Jeong Sarang, Kim Min-Ju et al. Temporal Dietary Patterns and Frailty in Korean Older Adults: Evening-Skewed and Morning-Evening Eating Patterns Associated with Frailty Risk.. Nutrients. 2026. doi:10.1016/j.jclinepi.2023.05.005",
+    "Chi Jeong Hee, Lee Bum Ju. Association of hand grip strength with rheumatoid arthritis and osteoarthritis in the Korean population: A large-scale cross-sectional study.. PloS one. 2026. doi:10.1007/s00520-013-1894-4",
+    "Shin Soogyung, Byeon Sukyung, Jung Dukyoo. [A decision tree-based prediction model for hearing loss in middle-aged and older adults: Secondary analysis of the Korea National Health and Nutrition Examination Survey].. Journal of Korean gerontological nursing. 2025. doi:10.1080/14992027.2022.2045367",
+    "Huh Ki Young, Kang Gaeun. Association between body fat percentage and metabolic and hematologic biomarkers in Korean adults.. The Korean journal of physiology & pharmacology : official journal of the Korean Physiological Society and the Korean Society of Pharmacology. 2026. doi:10.1016/j.clnesp.2024.06.040",
+    "Han Soyoun, Kim Kyounghae. Factors Associated With Poststroke Depression in Stroke Survivors: Findings From the Korea National Health and Nutrition Examination Survey.. The Journal of cardiovascular nursing. 2026. doi:10.1097/JCN.0000000000001332",
+    "Lee Yoonna. The transition of nutritional status in infants, young children, and school-aged children in Korea and future-oriented nutritional strategies: a narrative review.. Korean journal of community nutrition. 2026. doi:10.5720/kjcn.2026.00115",
+    "Na Woori, Sohn Cheongmin. The Association Between Fermented Food Intake and Hs-CRP Across Age Groups in Korean Adults: Effect Modification by Sodium Intake.. Nutrients. 2026. doi:10.3389/fnut.2025.1625816",
+    "Choi Kyung Hee, Shin Sangyoon, Lee Euni et al. Access to Dental Care and Depressive Illness: Results from the Korea National Health Nutrition Examination Survey.. Medicina (Kaunas, Lithuania). 2020. doi:10.1111/jphd.12205",
+    "Kim So-Yeong. Dietary fiber intake and tooth retention among older Korean adults: Analysis of the Korea national health and nutrition examination survey (KNHANES).. Community dental health. 2026. doi:10.1177/0265539X261443670",
+    "Kim Ehn-Young, Heo Seok-Jae, Lee Yaeji et al. Nutrient intake and diet quality in individuals with hyperuricemia: a matched population study.. Frontiers in nutrition. 2026. doi:10.1016/j.numecd.2025.104105",
+    "Wi Sehee, Je Youjin. Soda consumption and the risk of metabolic syndrome in Korean adults during the period surrounding the COVID-19 pandemic.. The British journal of nutrition. 2025. doi:10.1017/S0007114525106168",
+    "Jeong Sarang, Yang Yoon Jung, Park Sohyun. Association of Evening Meal-Timing Chronotype with Lower Calcium Intake After Adjustment for Diet Quality.. Nutrients. 2026. doi:10.1080/00365513.2025.2460026",
+    "Jang Kyeongmin, Yun Hye Won, Kim Sung Hwan. Interaction Between Vitamin D Status and Aerobic Physical Activity in Relation to Cardiometabolic Risk Clustering Among Rural Older Adults.. Healthcare (Basel, Switzerland). 2026. doi:10.1186/s12986-024-00889-7",
+    "Han Kunhee, Kim Hwa Sun, Lee Young et al. Psychosocial predictors of non-adherence to antihypertensive medication among Korean adults: A nationwide cross-sectional study.. PloS one. 2026. doi:10.1016/j.jad.2020.08.001",
+    "Choi Sookja, Kim Yunmi, Kim Jiyun. Association between high-risk drinking and cardiovascular health based on Life's Essential 8: analysis using 2016-2021 Korean National Health and Nutrition Examination Survey data.. BMJ open. 2026. doi:10.35946/arcr.v40.2.12",
+    "Zhao Naisi, Zhan Yue, Choi Jihee et al. Associations between Live Dietary Microbe Intake and Cardiometabolic Health in Korean Adults.. The Journal of nutrition. 2026. doi:10.1016/j.tjnut.2026.101459",
+    "Song Ji Eun, Kim Yun Tae, Kim Joon Mo. Association between Allergen Sensitization and Open-Angle Glaucoma: An Analysis Using 2010 Korea National Health and Nutrition Examination Survey (KNHANES) Data.. Korean journal of ophthalmology : KJO. 2026. doi:10.3341/kjo.2025.0131",
+    "Kim Hyunji, Kim Kyoungwoo. Tinnitus severity and dizziness: The role of psychological distress in a population-based study.. American journal of otolaryngology. 2026. doi:10.1016/j.amjoto.2026.104842",
+    "Choi Yoojung, Lee Hyang Rae, Choung Da Eun et al. Serum vitamin D level is inversely associated with non-high-density lipoprotein/high-density lipoprotein ratio: a cross-sectional study utilizing Korea National Health and Nutrition Examination Survey 2022-2023 data.. Korean journal of family medicine. 2026. doi:10.4082/kjfm.25.0267",
+    "Liu Yue, Li Min, Chen Han. Sedentary Behavior as a Risk Factor for Nasal Inflammatory Diseases: A Cross-Sectional Study.. Ear, nose, & throat journal. 2026. doi:10.1177/01455613261421037",
+    "Lee Ujin, Kim Subeen, Kang Eugene et al. Sociodemographic and lifestyle factors associated with the Planetary Health diet in the Korean adult population.. PloS one. 2026. doi:10.4163/jnh.2022.55.2.278",
+    "Choe Harim, Sung Hoyong, Kim Yeon Soo. Secular trends in grip strength among Korean adults according to socioeconomic factors: the 2014-2022 Korea National Health and Nutrition Examination Survey.. Epidemiology and health. 2025. doi:10.1111/ggi.14372",
+    "Yoon Soo Jeong, Kwon Ho-Jang. The discriminatory ability of the body roundness index and body mass index for metabolic diseases in Korean adults: a comparative study.. Epidemiology and health. 2025. doi:10.1186/s12889-024-19996-4",
+    "Han Su-Yeon, Lee Yae-Ji, Heo Seok-Jae et al. Association between the single-point insulin sensitivity estimator (SPISE) index and periodontitis in Korean adults: Analysis from the Korea national health and nutrition examination survey (KNHANES) 2016-2018.. Community dental health. 2025. doi:10.1177/0265539X251405067",
+    "Ahn Jeong Hyun, Kim Hyejin, Kim Hyeon Chang et al. Association between cardiovascular health measured by Life's Essential 8 and depressive symptoms.. Epidemiology and health. 2026. doi:10.4178/epih.e2026013",
+    "Yang Won Jin. Trends in Combustible Cigarette Smoking, Electronic Cigarette Use, and Related Behaviors among Korean Adults: An 11-Year Analysis of Data from the Korea National Health and Nutrition Examination Survey (2013-2023).. Tuberculosis and respiratory diseases. 2026. doi:10.4046/trd.2025.0201",
+    "Liao Jie, Liu Tingting, Xie Aijie et al. Dose-response relationship between cotinine levels and female reproductive lifespan.. Journal of health, population, and nutrition. 2026. doi:10.1016/j.ajog.2023.05.030",
+    "Kim Sun-Ja, Park Sihyun, Kim Sunja et al. Plan and operations of the 10th Korea National Health and Nutrition Examination Survey (2025-2027).. Epidemiology and health. 2026. doi:10.1038/s41591-023-02278-8",
+    "Kim Yang Jee. Indoor Volatile Organic Compound Exposure Patterns and White Blood Cell Count in Korean Adults: Effect Modification by Smoking.. Toxics. 2026. doi:10.1007/s00228-025-03817-7",
+    "Park Jung-Eun. Association between number of teeth and oxidative balance score in Korean adults: a population-based study.. Korean journal of community nutrition. 2026. doi:10.1152/ajpendo.00506.2005",
+    "Kim Yoon-Jin, Kim Ji-Eun, Choi Choong-Ho et al. Modified Relative Handgrip Strength and Tooth Loss: A Nationwide Study.. Journal of oral rehabilitation. 2026. doi:10.1111/joor.70135",
+    "Choi Eun Chul, Kim Jinyoung, Lee Sungkyu. Cross-price elasticities of cigarettes, heated tobacco products and e-cigarettes in South Korea: evidence for tobacco tax policy design.. Tobacco control. 2026. doi:10.1136/tc-2025-059774",
+    "Hwang Heeyoung, Jang Kyeongmin. Factors associated with unmet healthcare needs among community-dwelling older adults in South Korea: a cross-sectional study using KNHANES 2023.. BMC geriatrics. 2026. doi:10.17079/jkgn.2022.24.3.248",
+    "Chun Jiyeon, Kim Dan Bi, Jang Suk-Yong et al. Association Between Health Literacy and Prehypertension in South Korean Adults: Cross-Sectional Study Using the 2023 Korea National Health and Nutrition Examination Survey.. JMIR public health and surveillance. 2026. doi:10.1057/palgrave.jphp.3200102",
+    "Hong Hyejin, Goo Hyun-Jin, Choi Hyebin et al. Income-related Inequalities in Cancer Screening Among Korean Adults Aged 40 and Above: A Cross-sectional Analysis of the Age-varying Mediation of Health Literacy.. Journal of preventive medicine and public health = Yebang Uihakhoe chi. 2026. doi:10.5934/kjhe.2023.32.5.521",
+    "Kay Hee Yeon, Kim Hyun Ik, Jang Ha Young. Association of LDL-C between parents and younger offspring: A cross-sectional study using the Korea National Health and Nutrition Examination Survey.. Journal of clinical lipidology. 2026. doi:10.1016/j.jacl.2026.03.009",
+    "Park Tai Hwan, Ko Youngchai, Lee Soo Joo et al. Identifying Target Risk Factors Using Population Attributable Risks of Ischemic Stroke by Age and Sex.. Journal of stroke. 2015. doi:10.5853/jos.2015.17.3.302",
+    "Park Mima, Kim Seon-Ha. Association between obstructive sleep Apnea-Related factors and HINT-8 utility scores in adults: a secondary analysis of the 2023 Korea National health and nutrition examination survey (KNHANES).. Quality of life research : an international journal of quality of life aspects of treatment, care and rehabilitation. 2025. doi:10.1007/s11136-012-0331-3",
+    "Cho Hanbi, Choi Taelim, Jeong Jinyoung et al. Binational association between polyunsaturated fatty acid intake and depression in Korea and the US: A cross-national cross-sectional study.. Journal of affective disorders. 2026. doi:10.1016/j.jad.2025.121008",
+    "Kim Doyeon, Woo YeonHee. Association between lifestyle and combined general and abdominal obesity in Korean adults during the pre-pandemic and pandemic periods: using the Korea National Health and Nutrition Examination Survey (2019-2020).. BMC public health. 2026. doi:10.1186/s12889-026-26884-6",
+    "Kim Bokyung, Kim Eunseob, Kim Yun Tae et al. Associations of nutritional intake and body mass index with branch retinal vein occlusion: A cross-sectional study using data from a Korean national survey.. Science progress. 2026. doi:10.3390/nu17071285",
+    "Na Sun Hee, Jo Hyeon Jae, Park Jin Ju et al. Sero-Epidemiologic Study of Respiratory Syncytial Virus Infection in Korea.. Journal of Korean medical science. 2026. doi:10.3346/jkms.2026.41.e129",
+    "Kim Sunmi. Association of smoking with serum uric acid levels, hyperuricemia, and gout based on the 7th to 9th Korea National Health and Nutrition Examination Survey: A secondary dataset analysis based on a cross-sectional study.. Tobacco induced diseases. 2026. doi:10.1007/BF02974233",
+    "Jo Garam, Park Dahyun, Kim Shieon et al. Obesity Transitions by Age, Period, and Cohort: A Population-Based Application of the Lancet Commission Framework in the United States and Korea.. Diabetes & metabolism journal. 2026. doi:10.4093/dmj.2025.0918",
+    "Na Jin-Hee, Park Hyo-Eun, Kim Seok-Hwan. Determinants of Participation in the National Cancer Screening Program Among Older Korean Women: A Cross-Sectional Study Using Nationwide Population-Based Data.. Healthcare (Basel, Switzerland). 2026. doi:10.1111/j.1552-6909.2007.00190.x",
+    "Jeong Dabin, Jo Garam, Kim Rockli et al. Nationwide trends in overall and abdominal obesity among Korean adults, 2007-2022: an age-period-cohort analysis.. International journal of epidemiology. 2026. doi:10.1093/ije/dyag068",
+    "Son Dasom, Seo Yeeun, Ha Kyoung Hwa et al. Trends in cardiovascular health based on Life's Essential 8 among Korean adults, 2007-2023.. American journal of preventive cardiology. 2026. doi:10.1161/cir.0000000000001186",
+    "Lee Kayoung. Association between phase angle and self-rated health among Korean adults: a cross-sectional analysis from the 2022-2023 KNHANES.. Quality of life research : an international journal of quality of life aspects of treatment, care and rehabilitation. 2025. doi:10.1002/alz.088660",
+    "Jeong Sung Hoon, Choi You-Jung, Shin Gain et al. Physical activity levels and HINT-8 health-related quality of life in Korean adults with diabetes: analysis of KNHANES 2019-2021.. Quality of life research : an international journal of quality of life aspects of treatment, care and rehabilitation. 2026. doi:10.1186/s12955-018-1021-9",
+    "Xing Yuanyuan, Kim Yu-Rin, Kim Seon-Rye. Mediating Role of Oral Problems in the Link between Obstructive Sleep Apnea Risk and Hearing Difficulties: A Cross-sectional Study from the Korea National Health and Nutrition Examination Survey 2019-2023.. Noise & health. 2026. doi:10.4103/nah.nah_211_25",
+    "Kim Jin Hwa, Kim Bongseong, Park Se Eun et al. Diabetes Fact Sheet 2025: Comparative Epidemiology and Clinical Features of Obese and Non-Obese Diabetes in Korea.. Diabetes & metabolism journal. 2026. doi:10.4093/dmj.2025.1160",
+    "Seon Jeong-Hwa, Chung Ki-Ho. Oxidative balance score and periodontitis in postmenopausal women: a nationwide study.. Climacteric : the journal of the International Menopause Society. 2026. doi:10.1080/13697137.2026.2631512",
+    "Le Tu Hoang, Mai Xuan Dung, Oh Jin-Kyoung. Dual use of novel tobacco products and socioeconomic paradox in smoking cessation: An age-period-cohort analysis of KNHANES data 2007-2022.. Tobacco induced diseases. 2026. doi:10.2105/ajph.84.7.1086",
+    "Yu Hyejin, Chung Sang-Jin. Association between nutrient intake and frailty status in Korean older adults: a cross-sectional study using the 9th (2022-2023) Korea National Health and Nutrition Examination Survey.. Korean journal of community nutrition. 2026. doi:10.5720/kjcn.2026.00038",
+    "Yoon Leena, Yun Sungha, Oh Kyungwon. Incorporation of an Online Self-Administered Dietary Behavior Survey into the 10th Cycle of the Korea National Health and Nutrition Examination Survey (2025-2027).. Jugan geon-gang gwa jilbyeong. 2026. doi:10.1007/s11136-019-02172-2",
+    "Kim Mijong, Chae Hyunju. Health literacy and associated factors in adult Korean women: a correlational study using the 2023 Korea National Health and Nutrition Examination Survey data.. Women's health nursing (Seoul, Korea). 2026. doi:10.3389/fpubh.2023.1208815",
+    "Chung Jina, Park Sun Jae, Kim Hye Jun et al. Association of Coffee Consumption Frequency and Body Composition in Korean Adults Aged 20 Years or Older: The Korea National Health and Nutrition Examination Survey (KNHANES) 2008-2011.. The Journal of nutrition. 2026. doi:10.1016/j.tjnut.2026.101457",
+    "Lee Seulgi, Kim Kirang. Differential Effects of Vitamin C from Fruit and Vegetables Versus Supplements on the Risk of Frailty.. Nutrients. 2025. doi:10.1007/s12603-011-0340-x",
+    "Seok Jinwoo, Yoon Hee-Young. Association between ambient air pollution and obstructive sleep apnea risk: A population-based cross-sectional study.. Sleep health. 2026. doi:10.1016/j.sleh.2026.01.007",
+    "Lee Yoon, Choi Taelim, Oh Jeongseon et al. Binational component-wise association between cardiovascular-kidney-metabolic syndrome and life's essential 8 in South Korea and the US: A nationally representative comparative study.. Medicine. 2026. doi:10.1097/MD.0000000000047462",
+    "Park Se Eun, Min Se Hee, Kim Jin Hwa et al. Diabetes Fact Sheet 2025: Special Edition on Diabetes with Obesity and in Pregnancy.. Diabetes & metabolism journal. 2026. doi:10.4093/dmj.2025.1162",
+    "Kim Myung-Gwan, Han Hyun Wook. Trends in HDL Cholesterol and Their Association with Dietary Carbohydrate Reduction Among Korean Adults: A Serial Cross-Sectional Trend Analysis Using KNHANES 2014-2023.. Nutrients. 2026. doi:10.35772/ghm.2021.01008",
+    "Chung In-Hyuk, Hong Yong Hee, Chung Sochung. Diagnostic Implications of the Endocrine Society and American Academy of Pediatrics Guidelines on blood pressure: associations with sex, blood pressure components, and metabolic syndrome in Korean Adolescents.. Annals of pediatric endocrinology & metabolism. 2026. doi:10.6065/apem.2550224.112",
+    "Park Jongsuk, Yang Seohyung, Jung Sukyool. Association Between Physical Activity Levels and Chronic Disease Risk Among Korean Adults with Sleep Deficiency.. Journal of clinical medicine. 2025. doi:10.7759/cureus.56186",
+    "Jeong Yoo Mi, Kim Minjeong, Jeong Jae Yeon. Behavior-biological mismatch in metabolic health: Evidence from South Korean adults before, during, and after COVID-19 (KNHANES 2019-2022).. PloS one. 2026. doi:10.1249/MSS.0000000000001938",
+    "Kwon Hye-Young. Dietary supplements lead to reduced medical costs: Fact or wishful thinking?. Public health. 2026. doi:10.1016/j.puhe.2026.106267",
+    "Joo Kwang-Chae, Son Da-Hye, Park Jae-Min. Association between Relative Handgrip Strength and Insulin Resistance in Korean Elderly Men without Diabetes: Findings of the 2015 Korea National Health Nutrition Examination Survey.. Korean journal of family medicine. 2022. doi:10.1007/s11357-021-00384-4",
+    "Lee Jung Min, Lee Wanhyung. Association Between Obstructive Sleep Apnea and Atopic Dermatitis in the Korean Adult Population: Results From the 2019-2022 Korea National Health and Nutrition Examination Survey.. Allergy, asthma & immunology research. 2025. doi:10.4168/aair.2025.17.6.765",
+    "Kim Bomi, Choi Sunyeob. Comparing pre- and post-COVID-19 chronic allergy prevalence in children using National Health and Nutrition Examination Survey in 2019 and 2021.. Allergologie select. 2026.",
+    "Hwang So Dam, Jung Won Young, Lee Seeun et al. Sociodemographic and refractive factors associated with contact lens use: Insights from a nationwide Korean survey.. Contact lens & anterior eye : the journal of the British Contact Lens Association. 2026. doi:10.1016/j.clae.2026.102634",
+    "Choe Hun Jee, Després Jean-Pierre, Wilding John P H et al. Clinical and Preclinical Obesity in Korean Adults from 2014 to 2023.. Diabetes & metabolism journal. 2026. doi:10.4093/dmj.2025.0697",
+    "Seo Myong-Won. Association of health literacy with depressive and anxiety symptoms in Korean adults: a dose-response analysis.. BMC psychology. 2026. doi:10.1186/s40359-026-04765-2",
+    "Lee Hanna, Han Jeongwon. Validation of a health literacy assessment tool in a nationwide population: a measurement invariance study using confirmatory factor analysis and multiple-group latent class analysis.. BMC public health. 2026. doi:10.1007/s11121-011-0201-1",
+    "Suh Sang Heon, Lee Dohyeon, Ma Seong Kwon et al. Urinary Sodium Excretion and the Risk of Prevalent Anemia: Nationwide Population-Based Cross-Sectional Study.. JMIR public health and surveillance. 2026. doi:10.1093/eurheartj/ehad235",
+    "Jeon Hyunyu, Kim Soo-Hyun, Shin Dayeon. Examining the mediating effects of metabolic syndrome components on the relationship between dairy product consumption and nonalcoholic fatty liver disease in Korean adults.. PloS one. 2026. doi:10.1093/advances/nmab118",
+    "Koo Ye-Seul, Lee Yong-Jae, Park Jae-Min. Inverse Association of Serum Folate Level with Metabolic Syndrome and Its Components in Korean Premenopausal Women: Findings of the 2016-2018 Korean National Health Nutrition Examination Survey.. Nutrients. 2022. doi:10.1016/j.jnim.2019.100104",
+    "Kim Soon Ki, Kang Hee Sook, Kim Chul Soo et al. The prevalence of anemia and iron depletion in the population aged 10 years or older.. The Korean journal of hematology. 2011. doi:10.5045/kjh.2011.46.3.196",
+    "Yoo Hyunyi, Yim Yesol, Kim Ji Ho et al. Long-term trends of lipid concentrations and lipid control in South Korea, 2007 to 2023: A nationwide representative study.. Medicine. 2026. doi:10.1097/MD.0000000000048127",
+    "Kyung Yechan. Impact of a Medical-Government Conflict on Healthcare Workers' Mental Health in a Single Tertiary Hospital.. Journal of clinical medicine. 2025. doi:10.3389/fpubh.2025.1514706",
+    "Lee Haein, Lee Bo Gyeong. Differential patterns of health-related quality of life among low- and high-income cancer survivors in South Korea: a latent class analysis.. Quality of life research : an international journal of quality of life aspects of treatment, care and rehabilitation. 2026. doi:10.1200/jco.19.01856",
+    "Kim Sun Mi, Oh Jae Won, Son Nak-Hoon et al. Association Between Employment Status and Suicidal Ideation in Korean Adults.. Psychiatry investigation. 2025. doi:10.30773/pi.2024.0149",
+    "Kim Eunji, Seo Yeeun, Son Dasom et al. Cardiovascular health by Life's Essential 8 and chronic kidney disease: Korea National Health and Nutrition Examination Survey 2019-2021.. Kidney research and clinical practice. 2026. doi:10.23876/j.krcp.25.231",
+    "Oh Yoon-Jeong, Son Chang-Nam. Male Sex and Obesity are Associated with Sarcopenia in Patients with Rheumatoid Arthritis in the 2008-2011 Korea National Health and Nutrition Examination Survey.. Journal of clinical medicine. 2026. doi:10.1186/s12877-023-03748-x",
+    "Lee Kayoung. Infrequent breakfast consumption and lower weekly meal frequency are associated with poor muscle health in Korean older adults.. Nutrition research (New York, N.Y.). 2026. doi:10.1016/j.nutres.2026.02.007",
+    "Han Seongjae, Shin Baek Sup, Park Peong Gang. Trends in breastfeeding duration in Korea from 2007 to 2022 and implications for low-birth-weight infants: a repeated cross-sectional study.. Translational pediatrics. 2026. doi:10.3346/jkms.2018.33.e272",
+    "Kim Taeyeon, Jang Kyeongmin. Sarcopenia and Its Associated Factors Among Rural Older Adults in Korea: A Cross-Sectional Study Using KNHANES 2022 Data.. Research in gerontological nursing. 2026. doi:10.3928/19404921-20260304-01",
+    "Han Sujeong, Park Sung-Bae, Oh Sohee et al. Prediction Model for Low Bone Mineral Density in Cancer Survivors and Age-Matched Controls Using a Causal Bayesian Network: A Nationwide Population-Based Study in Korea.. Clinical Medicine Insights. Oncology. 2026. doi:10.1177/11795549251411101",
+    "Kim Yong-Joon, Jang Kyeongmin. Association Between Vitamin D Deficiency and Glycemic, Lipid, and Adiposity Markers in Older Adults: A Nationally Representative Study.. Metabolites. 2026. doi:10.3390/biomedicines13030723",
+    "Hong Namki, Yoo Jun-Il, Ha Jeonghoon et al. Trends in Low Muscle Mass and Sarcopenia Prevalence in Korea Using Korea National Health and Nutrition Examination Survey (KNHANES) 2024 and 2008-2011: The KSBMR-KSOS KNHANES DXA Joint Task Force Report.. Journal of bone metabolism. 2026. doi:10.11005/jbm.26.1020"
+  ]
 }
