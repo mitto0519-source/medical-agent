@@ -2,24 +2,17 @@
   "name": "KNHANES",
   "full_name": "국민건강영양조사 (Korea National Health and Nutrition Examination Survey)",
   "description": "질병관리청 주관 전국 규모 단면조사. 복합표본설계(층화, 집락, 가중치) 적용. 1998년 1기부터 연간 3,000~10,000명 조사. 건강설문+건강검진+영양조사 3개 모듈. 최신 공개 데이터: 제9기 2023년(2024년 공개 예정). 원시데이터 신청: https://knhanes.kdca.go.kr/knhanes/sub03/sub03_02_02.do",
-  "waves": {
-    "1기": "1998",
-    "2기": "2001",
-    "3기": "2005",
-    "4기": "2007-2009",
-    "5기": "2010-2012",
-    "6기": "2013-2015",
-    "7기": "2016-2018",
-    "8기": "2019-2021",
-    "9기": "2022-현재"
-  },
   "variables": {
     "age": {
       "label": "연령",
       "type": "continuous",
       "unit": "세",
       "processing": "만 나이 기준; 소아청소년(1-18세)과 성인(19세 이상) 분리 분석 권장",
-      "cutoffs": {"소아청소년": "<19", "성인": ">=19", "노인": ">=65"},
+      "cutoffs": {
+        "소아청소년": "<19",
+        "성인": ">=19",
+        "노인": ">=65"
+      },
       "missing_strategy": "exclude",
       "notes": "HE_age (검진 연령) vs age (설문 연령) 확인 필요"
     },
@@ -28,7 +21,10 @@
       "type": "categorical",
       "unit": "",
       "processing": "1=남자, 2=여자; 0/1 dummy로 변환 후 분석",
-      "cutoffs": {"남": 1, "여": 2},
+      "cutoffs": {
+        "남": 1,
+        "여": 2
+      },
       "missing_strategy": "exclude",
       "notes": "성별에 따른 층화분석 또는 상호작용항 검토"
     },
@@ -37,7 +33,10 @@
       "type": "categorical",
       "unit": "",
       "processing": "1=도시(dong), 2=농촌(eup/myeon); 도농 차이 교란변수로 자주 사용",
-      "cutoffs": {"도시": 1, "농촌": 2},
+      "cutoffs": {
+        "도시": 1,
+        "농촌": 2
+      },
       "missing_strategy": "exclude",
       "notes": "복합표본 층(strata) 변수로 사용"
     },
@@ -124,7 +123,10 @@
       "type": "continuous",
       "unit": "cm",
       "processing": "배꼽 부위 측정. 복부비만 기준: 남 >=90cm, 여 >=85cm (KSSO/IDF 한국 기준)",
-      "cutoffs": {"복부비만(남)": ">=90", "복부비만(여)": ">=85"},
+      "cutoffs": {
+        "복부비만(남)": ">=90",
+        "복부비만(여)": ">=85"
+      },
       "missing_strategy": "exclude",
       "notes": "대사증후군 진단 핵심 지표"
     },
@@ -133,7 +135,12 @@
       "type": "continuous",
       "unit": "mmHg",
       "processing": "2-3회 측정 후 평균. 혈압약 복용자 포함 주의",
-      "cutoffs": {"정상": "<120", "고혈압 전단계": "120-139", "고혈압 1기": "140-159", "고혈압 2기": ">=160"},
+      "cutoffs": {
+        "정상": "<120",
+        "고혈압 전단계": "120-139",
+        "고혈압 1기": "140-159",
+        "고혈압 2기": ">=160"
+      },
       "missing_strategy": "exclude",
       "notes": "고혈압 정의: SBP>=140 OR DBP>=90 OR 혈압약 복용"
     },
@@ -142,7 +149,11 @@
       "type": "continuous",
       "unit": "mmHg",
       "processing": "2-3회 측정 후 평균",
-      "cutoffs": {"정상": "<80", "고혈압 전단계": "80-89", "고혈압": ">=90"},
+      "cutoffs": {
+        "정상": "<80",
+        "고혈압 전단계": "80-89",
+        "고혈압": ">=90"
+      },
       "missing_strategy": "exclude",
       "notes": "HE_sbp와 함께 고혈압 정의에 사용"
     },
@@ -164,7 +175,11 @@
       "type": "continuous",
       "unit": "%",
       "processing": "4기 이후 측정; 5기부터 NGSP 단위 표준화",
-      "cutoffs": {"정상": "<5.7", "당뇨전단계": "5.7-6.4", "당뇨": ">=6.5"},
+      "cutoffs": {
+        "정상": "<5.7",
+        "당뇨전단계": "5.7-6.4",
+        "당뇨": ">=6.5"
+      },
       "missing_strategy": "exclude",
       "notes": "혈색소이상(빈혈, 혈색소병증) 환자에서 신뢰도 저하"
     },
@@ -173,7 +188,11 @@
       "type": "continuous",
       "unit": "mg/dL",
       "processing": "공복 채혈; 지질강하제 복용자 별도 고려",
-      "cutoffs": {"정상": "<200", "경계": "200-239", "고콜레스테롤혈증": ">=240"},
+      "cutoffs": {
+        "정상": "<200",
+        "경계": "200-239",
+        "고콜레스테롤혈증": ">=240"
+      },
       "missing_strategy": "exclude",
       "notes": ""
     },
@@ -182,7 +201,12 @@
       "type": "continuous",
       "unit": "mg/dL",
       "processing": "공복 채혈 필수; 비공복 시 부정확. 대수변환(log-TG) 후 분석 권장",
-      "cutoffs": {"정상": "<150", "경계": "150-199", "고중성지방": "200-499", "매우 높음": ">=500"},
+      "cutoffs": {
+        "정상": "<150",
+        "경계": "150-199",
+        "고중성지방": "200-499",
+        "매우 높음": ">=500"
+      },
       "missing_strategy": "exclude",
       "notes": "대사증후군 진단 지표; 극단값 존재 시 log 변환 또는 상위 1% 제거"
     },
@@ -191,7 +215,12 @@
       "type": "continuous",
       "unit": "mg/dL",
       "processing": "낮을수록 심혈관 위험 증가",
-      "cutoffs": {"저HDL(남)": "<40", "저HDL(여)": "<50", "정상(남)": ">=40", "정상(여)": ">=50"},
+      "cutoffs": {
+        "저HDL(남)": "<40",
+        "저HDL(여)": "<50",
+        "정상(남)": ">=40",
+        "정상(여)": ">=50"
+      },
       "missing_strategy": "exclude",
       "notes": "대사증후군 진단 지표"
     },
@@ -200,7 +229,13 @@
       "type": "continuous",
       "unit": "mg/dL",
       "processing": "Friedewald 공식: LDL = TC - HDL - TG/5 (TG<400 시). 직접 측정값 가용 차수 확인",
-      "cutoffs": {"정상": "<100", "거의 정상": "100-129", "경계": "130-159", "높음": "160-189", "매우 높음": ">=190"},
+      "cutoffs": {
+        "정상": "<100",
+        "거의 정상": "100-129",
+        "경계": "130-159",
+        "높음": "160-189",
+        "매우 높음": ">=190"
+      },
       "missing_strategy": "exclude",
       "notes": "TG>=400 시 Friedewald 공식 사용 불가; 직접 측정값 사용 또는 제외"
     },
@@ -209,7 +244,9 @@
       "type": "continuous",
       "unit": "IU/L",
       "processing": "간세포 손상 지표; 근육질환에서도 상승",
-      "cutoffs": {"정상": "<40"},
+      "cutoffs": {
+        "정상": "<40"
+      },
       "missing_strategy": "exclude",
       "notes": "간질환 분석 시 ALT, GGT와 함께 사용"
     },
@@ -218,7 +255,10 @@
       "type": "continuous",
       "unit": "IU/L",
       "processing": "간 특이적 지표; NAFLD 선별에 활용",
-      "cutoffs": {"정상(남)": "<45", "정상(여)": "<34"},
+      "cutoffs": {
+        "정상(남)": "<45",
+        "정상(여)": "<34"
+      },
       "missing_strategy": "exclude",
       "notes": "NAFLD 대리지표로 자주 사용; 상위 5% 극단값 제거 권장"
     },
@@ -227,7 +267,10 @@
       "type": "continuous",
       "unit": "IU/L",
       "processing": "알코올 섭취 및 간질환에 민감; 흡연에도 영향",
-      "cutoffs": {"정상(남)": "<63", "정상(여)": "<35"},
+      "cutoffs": {
+        "정상(남)": "<63",
+        "정상(여)": "<35"
+      },
       "missing_strategy": "exclude",
       "notes": "음주량과 강한 상관; 음주 교란 통제 필수"
     },
@@ -236,7 +279,10 @@
       "type": "continuous",
       "unit": "mg/dL",
       "processing": "신기능 지표; CKD-EPI 또는 MDRD 공식으로 eGFR 계산",
-      "cutoffs": {"정상(남)": "0.7-1.2", "정상(여)": "0.5-1.0"},
+      "cutoffs": {
+        "정상(남)": "0.7-1.2",
+        "정상(여)": "0.5-1.0"
+      },
       "missing_strategy": "exclude",
       "notes": "근육량에 따라 정상 범위 다름"
     },
@@ -261,7 +307,10 @@
       "type": "continuous",
       "unit": "mg/dL",
       "processing": "통풍, 신장질환, 대사증후군과 연관",
-      "cutoffs": {"고요산혈증(남)": ">7.0", "고요산혈증(여)": ">6.0"},
+      "cutoffs": {
+        "고요산혈증(남)": ">7.0",
+        "고요산혈증(여)": ">6.0"
+      },
       "missing_strategy": "exclude",
       "notes": "이뇨제 복용자에서 상승; 약물 교란 고려"
     },
@@ -284,7 +333,12 @@
       "type": "continuous",
       "unit": "mg/L",
       "processing": "염증 지표; 극단값 많음 → log 변환 권장",
-      "cutoffs": {"낮은 위험": "<1.0", "중간 위험": "1.0-3.0", "높은 위험": ">3.0", "급성 염증 의심": ">10"},
+      "cutoffs": {
+        "낮은 위험": "<1.0",
+        "중간 위험": "1.0-3.0",
+        "높은 위험": ">3.0",
+        "급성 염증 의심": ">10"
+      },
       "missing_strategy": "exclude",
       "notes": "급성 감염/염증(CRP>10) 제외 후 분석 권장"
     },
@@ -293,7 +347,11 @@
       "type": "continuous",
       "unit": "ng/mL",
       "processing": "철 저장 지표; 염증에서 급성반응단백으로 상승",
-      "cutoffs": {"결핍(남)": "<30", "결핍(여)": "<15", "과부하": ">300"},
+      "cutoffs": {
+        "결핍(남)": "<30",
+        "결핍(여)": "<15",
+        "과부하": ">300"
+      },
       "missing_strategy": "exclude",
       "notes": "빈혈 분석 시 Hb, MCV와 함께 사용"
     },
@@ -302,7 +360,10 @@
       "type": "continuous",
       "unit": "ug/dL",
       "processing": "환경 중금속 노출 지표; 7기부터 측정",
-      "cutoffs": {"소아 위험": ">=3.5", "성인 우려": ">=10"},
+      "cutoffs": {
+        "소아 위험": ">=3.5",
+        "성인 우려": ">=10"
+      },
       "missing_strategy": "exclude",
       "notes": "직업적 노출, 거주지 관련 분석에 활용"
     },
@@ -311,7 +372,9 @@
       "type": "continuous",
       "unit": "ug/L",
       "processing": "어패류 섭취와 강한 상관; 7기부터 측정",
-      "cutoffs": {"정상": "<10"},
+      "cutoffs": {
+        "정상": "<10"
+      },
       "missing_strategy": "exclude",
       "notes": "식이 어패류 섭취 빈도(영양조사) 교란변수로 고려"
     },
@@ -320,7 +383,10 @@
       "type": "continuous",
       "unit": "L",
       "processing": "폐기능 검사; ATS/ERS 기준 적용. 예측치 % 계산 필요",
-      "cutoffs": {"폐쇄: FEV1/FVC<0.7": "", "경증": "FEV1>=80%예측치"},
+      "cutoffs": {
+        "폐쇄: FEV1/FVC<0.7": "",
+        "경증": "FEV1>=80%예측치"
+      },
       "missing_strategy": "exclude",
       "notes": "폐기능 결과는 pulm_fev1, pulm_fvc, pulm_ratio 변수 확인"
     },
@@ -329,7 +395,11 @@
       "type": "categorical",
       "unit": "",
       "processing": "1=비흡연, 2=과거흡연, 3=현재흡연 (차수별 코딩 다를 수 있음)",
-      "cutoffs": {"비흡연": 1, "과거흡연": 2, "현재흡연": 3},
+      "cutoffs": {
+        "비흡연": 1,
+        "과거흡연": 2,
+        "현재흡연": 3
+      },
       "missing_strategy": "exclude",
       "notes": "이분화 시: 현재흡연(3) vs 비흡연+과거흡연(1,2)"
     },
@@ -338,7 +408,11 @@
       "type": "continuous",
       "unit": "개비/일",
       "processing": "현재흡연자만 해당; 갑년(pack-year) = 1일갑수 × 흡연년수",
-      "cutoffs": {"경흡연": "<10", "중등도": "10-19", "다량흡연": ">=20"},
+      "cutoffs": {
+        "경흡연": "<10",
+        "중등도": "10-19",
+        "다량흡연": ">=20"
+      },
       "missing_strategy": "restrict_to_smokers",
       "notes": "갑년 계산: sm_pkday/20 × sm_curtyp"
     },
@@ -365,7 +439,9 @@
       "type": "continuous",
       "unit": "일/주",
       "processing": "주 3회 이상 20분 이상: 권장 기준 충족",
-      "cutoffs": {"권장기준충족": ">=3"},
+      "cutoffs": {
+        "권장기준충족": ">=3"
+      },
       "missing_strategy": "exclude",
       "notes": "pa_moderate, pa_walk과 합산하여 총 신체활동량(MET-min) 계산 가능"
     },
@@ -383,7 +459,11 @@
       "type": "continuous",
       "unit": "시간",
       "processing": "자가보고; 단수면(<6h), 장수면(>=9h)이 건강 위험",
-      "cutoffs": {"단수면": "<6", "정상": "6-8", "장수면": ">=9"},
+      "cutoffs": {
+        "단수면": "<6",
+        "정상": "6-8",
+        "장수면": ">=9"
+      },
       "missing_strategy": "exclude",
       "notes": "수면 질 변수(EQ5D 등) 별도 확인 가능"
     },
@@ -428,7 +508,13 @@
       "type": "categorical",
       "unit": "",
       "processing": "PHQ-9 점수 합산 또는 우울증 여부(1=해당, 2=비해당); 차수별 도구 확인 필요",
-      "cutoffs": {"없음": "0-4", "경증": "5-9", "중등도": "10-14", "중등도-심한": "15-19", "심한": ">=20"},
+      "cutoffs": {
+        "없음": "0-4",
+        "경증": "5-9",
+        "중등도": "10-14",
+        "중등도-심한": "15-19",
+        "심한": ">=20"
+      },
       "missing_strategy": "exclude",
       "notes": "일부 차수에서 PHQ-9 총점 직접 제공; D_1_1~D_1_9 합산 필요할 수 있음"
     },
@@ -473,7 +559,9 @@
       "type": "continuous",
       "unit": "mg/day",
       "processing": "24시간 회상법; WHO 권고: <2000mg/일",
-      "cutoffs": {"WHO 권고 초과": ">2000"},
+      "cutoffs": {
+        "WHO 권고 초과": ">2000"
+      },
       "missing_strategy": "exclude",
       "notes": "조미료 포함 여부 확인; 고혈압 연구에 중요"
     },
@@ -496,12 +584,6 @@
       "notes": "요중 중금속 = (중금속 농도 / 소변 크레아티닌) × 1000 (ug/g Cr)"
     }
   },
-  "common_confounders": [
-    "age", "sex", "HE_BMI", "sm_presnt", "dr_month", "pa_vigorous",
-    "incomeB", "edu", "region", "marital", "sleep",
-    "HE_TC", "HE_TG", "HE_HDL",
-    "DI1_dg", "DC1_dg", "DE1_dg"
-  ],
   "analysis_notes": [
     "필수: 복합표본설계 반드시 적용 (층화: kstrata, 집락: psu, 가중치: wt_itvex/wt_oe/wt_ntr). 단순 회귀분석 절대 금지",
     "R 분석: library(survey); design <- svydesign(id=~psu, strata=~kstrata, weights=~wt_itvex, data=df, nest=TRUE)",
@@ -518,33 +600,24 @@
     "공복혈당: fast_yn(공복여부) 변수 확인하여 공복 미충족자 제외",
     "비타민D: 계절 보정 필수 (검진 월, 지역); 겨울 측정값이 여름보다 유의하게 낮음"
   ],
-  "sampling_design": {
-    "method": "층화다단계집락추출 (Stratified multi-stage cluster sampling)",
-    "strata_variable": "kstrata",
-    "cluster_variable": "psu",
-    "weight_variables": {
-      "health_interview": "wt_itvex",
-      "health_examination": "wt_oe (또는 wt_oe_Nth)",
-      "nutrition": "wt_ntr"
-    },
-    "note": "복합표본 미적용 시 표준오차 과소추정 및 유의성 부풀림 발생"
-  },
-  "download_info": {
-    "url": "https://knhanes.kdca.go.kr/knhanes/sub03/sub03_02_02.do",
-    "agency": "질병관리청 (KDCA)",
-    "format": ["SAS (.sas7bdat)", "CSV", "SPSS (.sav)"],
-    "registration": "필요 (연구목적 사용 신청)",
-    "local_raw_path": "data/raw/knhanes/",
-    "note": "다운로드 후 data/raw/knhanes/ 디렉토리에 저장하면 scripts/seed_knhanes.py가 자동 처리"
-  },
-  "papers_using_this": [
-    "Cho YS et al. Associations between obesity and health outcomes in Korean adults using KNHANES",
-    "Kim J et al. Prevalence and risk factors of metabolic syndrome in Korean adults: KNHANES",
-    "Park S et al. Association between dietary sodium intake and hypertension in Korea: KNHANES",
-    "Lee JH et al. Vitamin D deficiency and its association with chronic diseases in Korea",
-    "Kwon CS et al. Trends in physical activity and sedentary behavior among Korean adults",
-    "Oh CM et al. Dietary factors associated with non-alcoholic fatty liver disease in Korea",
-    "Jung SJ et al. Sleep duration and metabolic syndrome: KNHANES cross-sectional study",
-    "Choi HY et al. Blood mercury levels and cardiovascular disease risk: KNHANES analysis"
-  ]
+  "common_confounders": [
+    "age",
+    "sex",
+    "HE_BMI",
+    "sm_presnt",
+    "dr_month",
+    "pa_vigorous",
+    "incomeB",
+    "edu",
+    "region",
+    "marital",
+    "sleep",
+    "HE_TC",
+    "HE_TG",
+    "HE_HDL",
+    "DI1_dg",
+    "DC1_dg",
+    "DE1_dg"
+  ],
+  "papers_using_this": []
 }
