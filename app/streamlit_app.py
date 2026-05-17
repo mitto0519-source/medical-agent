@@ -36,9 +36,10 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root {
-    --bg:#0d1117; --bg2:#161b22; --bg3:#1c2128; --bg4:#22272e;
-    --border:#30363d; --t1:#e6edf3; --t2:#8b949e; --t3:#6e7681;
-    --accent:#7c3aed; --accent2:#8b5cf6; --green:#3fb950; --blue:#388bfd;
+    --bg:#0B1220; --bg2:#121A2B; --bg3:#16223A; --bg4:#1A2540;
+    --border:#1F2A44; --t1:#E5E7EB; --t2:#94A3B8; --t3:#64748B;
+    --accent:#6366F1; --accent2:#818CF8; --green:#22C55E; --blue:#3B82F6;
+    --warning:#F59E0B; --danger:#EF4444;
 }
 #MainMenu,header,footer,.stDeployButton{visibility:hidden;display:none;}
 .stApp,[data-testid="stAppViewContainer"]{background:var(--bg)!important;}
