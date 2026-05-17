@@ -193,14 +193,7 @@ Return ONLY the JSON object, no explanation.
 PAPER TEXT:
 {paper_text[:8000]}
 """
-        response = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=2000,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-
-        raw = response.content[-1].text if response.content else "{}"
+        raw = self._client.generate(prompt)
         raw = raw.strip()
         if raw.startswith("```"):
             raw = raw.split("```")[1]

@@ -16,11 +16,23 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from datetime import datetime
 
-import anthropic
-
+from src.llm import get_llm_client
 from src.profile.author_profile import AuthorProfile
 from src.library.dataset_library import DatasetLibrary
 from src.library.methods_library import MethodsLibrary
+
+
+def _clean_llm_response(raw: str) -> str:
+    text = raw.strip()
+    if text.startswith("```"):
+        parts = text.split("```")
+        if len(parts) > 2 and parts[1].strip().lower().startswith("json"):
+            text = "```".join(parts[2:]).strip()
+        elif len(parts) > 1:
+            text = parts[1].strip()
+    if text.lower().startswith("json"):
+        text = text[4:].strip()
+    return text.strip().rstrip("```").strip()
 
 
 STAGES = [
@@ -59,7 +71,7 @@ class ResearchWorkflow:
     ):
         self.workflow_id = workflow_id
         self.dataset_name = dataset_name
-        self._client = anthropic.Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
+        self._client = get_llm_client(api_key=api_key)
         self._author = AuthorProfile(author_name)
         self._datasets = DatasetLibrary()
         self._methods = MethodsLibrary()
@@ -150,17 +162,14 @@ For each topic, specify:
 
 Return JSON array only. No markdown."""
 
-        resp = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=3000,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = resp.content[-1].text.strip().strip("```json").strip("```").strip()
+        raw = self._client.generate(prompt, max_tokens=3000)
+        raw = raw.strip().strip("```json").strip("```").strip()
         try:
             topics = json.loads(raw)
-        except Exception:
-            topics = [{"title": raw, "exposure": "", "outcome": ""}]
+        except Exception as exc:
+            raise ValueError(
+                f"주제 생성 응답을 JSON 배열로 파싱할 수 없습니다: {exc}\n응답 원본:\n{raw}"
+            )
 
         self.state["stages"]["topic_proposal"] = {
             "focus": focus,
