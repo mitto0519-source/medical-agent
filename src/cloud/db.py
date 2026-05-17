@@ -157,6 +157,31 @@ def _init_tables(engine) -> None:
         """,
         "CREATE INDEX IF NOT EXISTS ma_insights_cat_idx ON ma_agent_insights (category, timestamp DESC)",
         "CREATE INDEX IF NOT EXISTS ma_insights_status_idx ON ma_agent_insights (status, timestamp DESC)",
+        """
+        CREATE TABLE IF NOT EXISTS ma_topics (
+            id          TEXT        PRIMARY KEY,
+            timestamp   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            user_email  TEXT        NOT NULL DEFAULT '',
+            dataset     TEXT        NOT NULL DEFAULT '',
+            focus       TEXT        NOT NULL DEFAULT '',
+            n_topics    INT         NOT NULL DEFAULT 0,
+            topics      JSONB       NOT NULL DEFAULT '[]'
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS ma_topics_user_idx ON ma_topics (user_email, timestamp DESC)",
+        """
+        CREATE TABLE IF NOT EXISTS ma_novelty_results (
+            id           TEXT        PRIMARY KEY,
+            timestamp    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            user_email   TEXT        NOT NULL DEFAULT '',
+            topic_title  TEXT        NOT NULL DEFAULT '',
+            exposure     TEXT        NOT NULL DEFAULT '',
+            outcome      TEXT        NOT NULL DEFAULT '',
+            population   TEXT        NOT NULL DEFAULT '',
+            result       JSONB       NOT NULL DEFAULT '{}'
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS ma_novelty_user_idx ON ma_novelty_results (user_email, timestamp DESC)",
     ]
     with engine.begin() as conn:
         for stmt in ddl_statements:

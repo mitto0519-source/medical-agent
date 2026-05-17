@@ -53,16 +53,16 @@ class DatasetLibrary:
                         "common_confounders": row["common_confounders"] or [],
                         "papers_using_this": row["papers_using_this"] or [],
                     }
-                if self._datasets:
-                    return
             except Exception as e:
                 _log.warning(f"Cloud dataset load failed: {e}")
 
-        # ── Local fallback ─────────────────────────────────────────────
+        # ── Always merge local JSON files (fills gaps not in cloud) ────
         for f in self._dir.glob("dataset_*.json"):
             try:
                 ds = json.loads(f.read_text(encoding="utf-8"))
-                self._datasets[ds["name"]] = ds
+                name = ds.get("name")
+                if name and name not in self._datasets:
+                    self._datasets[name] = ds
             except Exception:
                 pass
 

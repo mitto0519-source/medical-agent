@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-05-17 22:45:33",
-  "overall_score": 88,
+  "updated_at": "2026-05-18 08:21:38",
+  "overall_score": 96,
   "smoke_test_status": "passing",
   "smoke_test_score": "7/7",
   "known_strengths": [
@@ -8,13 +8,34 @@
     "장기기억 시스템 (src/memory/change_log.py)",
     "자가 학습 DB (src/memory/agent_insight.py)",
     "중앙 모델 레지스트리 (src/config/models.py)",
-    "작업 이력 (data/change_log/history.json)"
+    "작업 이력 (data/change_log/history.json)",
+    "Supabase 클라우드 연결 활성"
   ],
-  "known_weaknesses": [
-    "Supabase 미연결 (SUPABASE_DB_URL 미설정 — 로컬 전용 모드)"
+  "known_weaknesses": [],
+  "top_next_actions": [
+    {
+      "title": "ResearchPipeline.write_paper() continuity 로깅 미연결",
+      "reason": "가장 중요한 작업(논문 작성)이 타임라인에 기록되지 않음 → 연속성 시스템 공백",
+      "confidence": 0.95
+    },
+    {
+      "title": "HF_TOKEN 미설정으로 HuggingFace 속도 제한",
+      "reason": "embedding 모델 다운로드 실패 시 RAG 파이프라인 지연 또는 중단",
+      "confidence": 0.85
+    },
+    {
+      "title": "app/main.py Flask 레거시 코드 제거 필요",
+      "reason": "혼란 유발 + 향후 누군가 이 파일을 진입점으로 오해할 수 있음",
+      "confidence": 0.8
+    }
   ],
-  "top_next_actions": [],
-  "active_insights": 0,
-  "recent_changes": [],
-  "git_summary": "최근 커밋:\n\n변경사항: M CLAUDE.md\n M src/cloud/db.py\n?? src/memory/self_model.py"
+  "active_insights": 14,
+  "recent_changes": [
+    "Auto-sync [05/17 22:46]: LAUDE.md, src/cloud/db.py, data/agent_self/, src/memory/self_model.py",
+    "Auto-sync [05/17 22:44]: src/memory/agent_insight.py",
+    "Auto-sync [05/17 22:41]: CLAUDE.md",
+    "Auto-sync [05/17 22:39]: rc/vectordb/store.py",
+    "Auto-sync [05/17 22:37]: ata/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin, data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin, data/chromadb_test/chroma.sqlite3, data/change_log/"
+  ],
+  "git_summary": "최근 커밋:\n1d7cb51 Auto-sync [05/17 22:46]: LAUDE.md, src/cloud/db.py, data/agent_self/, src/memory/self_model.py\ne8981fb Auto-sync [05/17 22:44]: src/memory/agent_insight.py\n62c2e9d Auto-sync [05/17 22:41]: CLAUDE.md\n772f3f4 Auto-sync [05/17 22:39]: rc/vectordb/store.py\n029c4bd Auto-sync [05/17 22:37]: ata/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin, data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin, data/chromadb_test/chroma.sqlite3, data/change_log/\ne2d36c2 Auto-sync [05/17 22:36]: cp_server.py\n4d0ef63 Auto-sync [05/17 22:35]: pp/streamlit_app.py\n70d7dde Auto-sync [05/17 22:34]: pp/ai_panel.py, src/agent/medical_agent.py, src/cloud/db.py, src/llm/claude_client.py, src/rag/pipeline.py 외 1개\n변경사항: M .vscode/launch.json\n M app/main.py\n M app/streamlit_app.py\n M data/agent_self/self_model.json\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M data/libraries/dataset_knhanes.json\n M data/libraries/dataset_kyrbs.json\n M mcp_server.py\n M scripts/seed_knhanes.py\n M src/cloud/db.py\n M src/config/models.py\n M src/library/dataset_library.py\n M src/llm/claude_client.py\n M src/memory/agent_insight.py\n M src/research/research_pipeline.py\n M src/vectordb/store.py\n D tests/test_app_health.py\n?? data/agent_self/insights.json\n?? scripts/debug_topics.py\n?? scripts/finalize_session.py\n?? scripts/init_insights.py\n?? scripts/verify_fix.py\n?? scripts/verify_thinking.py\n?? src/memory/auto_learn.py"
 }

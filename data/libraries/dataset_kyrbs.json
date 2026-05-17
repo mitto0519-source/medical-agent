@@ -3,23 +3,41 @@
   "full_name": "Korea Youth Risk Behavior Survey (청소년건강행태조사)",
   "description": "질병관리청이 2005년부터 매년 실시하는 전국 규모 학교기반 건강행태 조사. 전국 800개 중‧고등학교 재학생 약 6만 명 대상, 익명 자기기입식 온라인 설문. 복합표본 설계(층화집락추출): 층=시도×학교급×학교유형, 집락=학교/학급. 2025년(제21차): 14개 영역 88개 문항, 약 150개 변수. 가중치 변수(wt) 필수 적용 — svydesign(id=~class_id, strata=~strata_id, weights=~wt).",
   "variables": {
+    "wt": {
+      "type": "continuous",
+      "unit": "",
+      "label": "표본 가중치",
+      "notes": "복합표본 분석 필수 — 미적용 시 결과 편향",
+      "cutoffs": {},
+      "processing": "모든 분석에 필수 적용. svydesign weights=~wt",
+      "missing_strategy": "제외 불가 (필수 변수)"
+    },
+    "bmi": {
+      "type": "continuous",
+      "unit": "kg/m²",
+      "label": "체질량지수 (파생변수)",
+      "notes": "이용지침서에서 제공하는 파생변수. 직접 계산과 동일",
+      "cutoffs": {},
+      "processing": "bmi = weight / (height/100)^2. 소수점 1자리",
+      "missing_strategy": "결측 제외"
+    },
     "sex": {
-      "label": "성별",
       "type": "categorical",
       "unit": "",
-      "processing": "그대로 사용",
+      "label": "성별",
+      "notes": "모든 분석의 기본 층화변수",
       "cutoffs": {
         "1": "남자",
         "2": "여자"
       },
-      "missing_strategy": "제외",
-      "notes": "모든 분석의 기본 층화변수"
+      "processing": "그대로 사용",
+      "missing_strategy": "제외"
     },
     "grade": {
-      "label": "학년",
       "type": "categorical",
       "unit": "",
-      "processing": "중학생(1-3)/고등학생(4-6)으로 이분화 가능",
+      "label": "학년",
+      "notes": "school_type 변수와 함께 사용",
       "cutoffs": {
         "1": "중1",
         "2": "중2",
@@ -28,374 +46,163 @@
         "5": "고2",
         "6": "고3"
       },
-      "missing_strategy": "제외",
-      "notes": "school_type 변수와 함께 사용"
+      "processing": "중학생(1-3)/고등학생(4-6)으로 이분화 가능",
+      "missing_strategy": "제외"
     },
-    "school_type": {
-      "label": "학교급",
-      "type": "categorical",
-      "unit": "",
-      "processing": "그대로 사용",
-      "cutoffs": {
-        "1": "중학교",
-        "2": "고등학교"
-      },
-      "missing_strategy": "제외",
-      "notes": "grade에서 파생 가능: school_type = ifelse(grade<=3,1,2)"
+    "height": {
+      "type": "continuous",
+      "unit": "cm",
+      "label": "신장",
+      "notes": "BMI 계산에 사용",
+      "cutoffs": {},
+      "processing": "자기보고 신장. 비현실적 값(< 100cm, > 220cm) 제외",
+      "missing_strategy": "결측 제외"
     },
     "region": {
-      "label": "지역 규모",
       "type": "categorical",
       "unit": "",
-      "processing": "그대로 사용",
+      "label": "지역 규모",
+      "notes": "층화변수로 사용됨",
       "cutoffs": {
         "1": "대도시",
         "2": "중소도시",
         "3": "군지역"
       },
-      "missing_strategy": "제외",
-      "notes": "층화변수로 사용됨"
+      "processing": "그대로 사용",
+      "missing_strategy": "제외"
     },
-    "family_type": {
-      "label": "가족 구성",
+    "stress": {
       "type": "categorical",
       "unit": "",
-      "processing": "양친가족(1) vs. 기타(2+)로 이분화 가능",
+      "label": "주관적 스트레스 인지율",
+      "notes": "주관적 스트레스 인지율 핵심 지표",
       "cutoffs": {
-        "1": "양친가족",
-        "2": "편부가족",
-        "3": "편모가족",
-        "4": "조부모가족",
-        "5": "기타"
+        "1": "대단히 많이 느낀다",
+        "2": "많이 느낀다",
+        "3": "조금 느낀다",
+        "4": "거의 느끼지 않는다"
       },
-      "missing_strategy": "결측 범주로 처리",
-      "notes": "2025년 친부모/양부모 동거 여부 항목 포함"
+      "processing": "스트레스 인지(1-2) vs. 비인지(3-4) 이분화",
+      "missing_strategy": "결측 제외"
     },
-    "father_edu": {
-      "label": "아버지 학력",
-      "type": "ordinal",
-      "unit": "",
-      "processing": "모름(4)은 결측 처리 또는 별도 범주",
-      "cutoffs": {
-        "1": "중학교 졸업 이하",
-        "2": "고등학교 졸업",
-        "3": "대학교 졸업 이상",
-        "4": "모름"
-      },
-      "missing_strategy": "결측 범주로 처리",
-      "notes": "사회경제적 지위 대리 지표"
-    },
-    "mother_edu": {
-      "label": "어머니 학력",
-      "type": "ordinal",
-      "unit": "",
-      "processing": "모름(4)은 결측 처리",
-      "cutoffs": {
-        "1": "중학교 졸업 이하",
-        "2": "고등학교 졸업",
-        "3": "대학교 졸업 이상",
-        "4": "모름"
-      },
-      "missing_strategy": "결측 범주로 처리",
-      "notes": "부모학력 중 높은 쪽을 대표값으로 사용하는 경우 多"
-    },
-    "family_econ": {
-      "label": "주관적 경제적 상태",
-      "type": "ordinal",
-      "unit": "",
-      "processing": "상/중상(1-2) vs. 중(3) vs. 중하/하(4-5) 로 3분위 처리 多",
-      "cutoffs": {
-        "1": "상",
-        "2": "중상",
-        "3": "중",
-        "4": "중하",
-        "5": "하"
-      },
-      "missing_strategy": "결측 범주로 처리",
-      "notes": "가장 많이 쓰이는 SES 대리변수"
-    },
-    "academic_perf": {
-      "label": "주관적 학업성적",
-      "type": "ordinal",
-      "unit": "",
-      "processing": "5점 척도 그대로 또는 3분위 처리",
-      "cutoffs": {
-        "1": "상",
-        "2": "중상",
-        "3": "중",
-        "4": "중하",
-        "5": "하"
-      },
-      "missing_strategy": "결측 범주로 처리",
-      "notes": "학업 스트레스 분석 시 통제 변수"
-    },
-    "residence_type": {
-      "label": "현재 거주 형태",
-      "type": "categorical",
-      "unit": "",
-      "processing": "가족동거(1) vs. 비가족(2-4) 이분화",
-      "cutoffs": {
-        "1": "가족과 함께",
-        "2": "친척 집",
-        "3": "하숙/자취/기숙사",
-        "4": "보호시설"
-      },
-      "missing_strategy": "결측 범주",
-      "notes": "주거환경이 건강행태에 미치는 영향 분석"
-    },
-    "parent_nationality": {
-      "label": "부모 한국 국적 여부",
-      "type": "categorical",
-      "unit": "",
-      "processing": "다문화 여부(1 vs. 2+)로 이분화",
-      "cutoffs": {
-        "1": "모두 한국",
-        "2": "한 명 외국",
-        "3": "모두 외국"
-      },
-      "missing_strategy": "결측 범주",
-      "notes": "다문화 청소년 건강불평등 연구"
-    },
-    "birth_year": {
-      "label": "출생연도",
+    "weight": {
       "type": "continuous",
-      "unit": "년",
-      "processing": "나이 계산: 2025 - birth_year",
+      "unit": "kg",
+      "label": "체중",
+      "notes": "BMI 계산에 사용. 측정치 아님(자기보고 오류 가능)",
       "cutoffs": {},
-      "missing_strategy": "제외",
-      "notes": "grade와 함께 연령 파악"
+      "processing": "자기보고 체중. 비현실적 값(< 20kg, > 200kg) 제외",
+      "missing_strategy": "결측 제외"
     },
-    "cig_lifetime": {
-      "label": "평생 일반담배(궐련) 흡연 경험",
+    "scaling": {
       "type": "binary",
       "unit": "",
-      "processing": "이분형 그대로",
+      "label": "스케일링 경험 (최근 12개월)",
+      "notes": "예방치과 스케일링 이용",
       "cutoffs": {
         "1": "있음",
         "2": "없음"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "흡연 경험률 지표"
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
     },
-    "cig_current": {
-      "label": "현재 일반담배(궐련) 흡연 여부 (최근 30일)",
+    "sealant": {
       "type": "binary",
       "unit": "",
-      "processing": "이분형 그대로",
+      "label": "치아홈메우기(실란트) 경험",
+      "notes": "예방치과 처치 경험",
       "cutoffs": {
-        "1": "예(1일 이상)",
-        "2": "아니오"
+        "1": "있음",
+        "2": "없음"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "현재흡연율 핵심 지표"
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
     },
-    "cig_amount": {
-      "label": "월간 일반담배(궐련) 흡연량",
+    "drug_use": {
+      "type": "binary",
+      "unit": "",
+      "label": "습관적 및 의도적 약물 사용 경험 (평생)",
+      "notes": "마약류, 흡입제, 수면제 등 불법/오남용",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "handwash": {
       "type": "categorical",
       "unit": "",
-      "processing": "현재흡연자만 해당; 매일흡연(5) vs. 가끔흡연(1-4)",
+      "label": "비누 이용 손씻기 실천 (학교/집 식사 전·화장실 후·귀가 후)",
+      "notes": "감염병 예방 핵심 지표",
       "cutoffs": {
-        "1": "주 1일 미만",
-        "2": "주 1-2일",
-        "3": "주 3-4일",
-        "4": "주 5-6일",
-        "5": "매일"
+        "1": "항상",
+        "2": "자주",
+        "3": "가끔",
+        "4": "전혀 안 함"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "흡연 빈도 및 양 지표"
+      "processing": "항상/자주(1-2) vs. 가끔/안함(3-4)",
+      "missing_strategy": "결측 제외"
     },
-    "cig_start_age": {
-      "label": "처음 일반담배(궐련) 흡연 경험 연령",
+    "pa_60min": {
       "type": "continuous",
-      "unit": "세",
-      "processing": "평생흡연 경험자만 해당",
+      "unit": "일/주",
+      "label": "하루 60분 이상 신체활동 일수 (최근 7일)",
+      "notes": "WHO 청소년 신체활동 권고 충족률 핵심 지표",
       "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "흡연 시작 연령: 조기 흡연 위험 분석"
+      "processing": "=7이면 권고량 충족; ≥5일로 느슨한 기준 사용도 있음",
+      "missing_strategy": "결측 제외"
     },
-    "ecig_lifetime": {
-      "label": "평생 액상형 전자담배 사용 경험",
+    "seatbelt": {
+      "type": "categorical",
+      "unit": "",
+      "label": "안전벨트 착용 (승용차/택시 앞뒷좌석, 고속버스)",
+      "notes": "안전벨트 착용률",
+      "cutoffs": {
+        "1": "항상 착용",
+        "2": "대부분 착용",
+        "3": "가끔 착용",
+        "4": "거의 안 착용",
+        "5": "탑승 안 함"
+      },
+      "processing": "항상/대부분(1-2) vs. 가끔/거의안함(3-4); 탑승안함(5) 제외",
+      "missing_strategy": "결측 제외"
+    },
+    "alc_binge": {
       "type": "binary",
       "unit": "",
-      "processing": "이분형 그대로",
+      "label": "최근 30일 만취 경험",
+      "notes": "위험음주 지표",
       "cutoffs": {
         "1": "있음",
         "2": "없음"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "전자담배 사용 경험률"
+      "processing": "현재음주자만",
+      "missing_strategy": "결측 제외"
     },
-    "ecig_current": {
-      "label": "현재 액상형 전자담배 사용 여부 (최근 30일)",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "예",
-        "2": "아니오"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "액상형 전자담배 현재 사용률"
-    },
-    "ecig_start_period": {
-      "label": "처음 액상형 전자담배 사용 시기",
-      "type": "categorical",
-      "unit": "",
-      "processing": "사용 경험자만 해당",
-      "cutoffs": {
-        "1": "초등학교 이전",
-        "2": "초등학교",
-        "3": "중학교",
-        "4": "고등학교"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "2025년 신규/수정 항목 (굵게 표시)"
-    },
-    "iqos_lifetime": {
-      "label": "평생 궐련형 전자담배(가열담배) 사용 경험",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "IQOS/아이코스 등 가열담배"
-    },
-    "iqos_current": {
-      "label": "현재 궐련형 전자담배 사용 여부 (최근 30일)",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "예",
-        "2": "아니오"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "현재 궐련형 전자담배 사용률"
-    },
-    "iqos_amount": {
-      "label": "월간 궐련형 전자담배 사용량",
-      "type": "categorical",
-      "unit": "",
-      "processing": "현재 사용자만",
-      "cutoffs": {
-        "1": "주 1일 미만",
-        "2": "주 1-2일",
-        "3": "주 3-4일",
-        "4": "주 5-6일",
-        "5": "매일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "가열담배 사용 빈도"
-    },
-    "tobacco_purchase": {
-      "label": "담배 구매 용이성",
-      "type": "categorical",
-      "unit": "",
-      "processing": "쉽다(1-2) vs. 어렵다(3-4) 이분화",
-      "cutoffs": {
-        "1": "매우 쉽다",
-        "2": "쉽다",
-        "3": "어렵다",
-        "4": "매우 어렵다"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "담배 접근성 정책 관련 지표"
-    },
-    "quit_attempt": {
-      "label": "금연 시도 경험 (최근 12개월)",
-      "type": "binary",
-      "unit": "",
-      "processing": "현재흡연자만 해당",
-      "cutoffs": {
-        "1": "예",
-        "2": "아니오"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "금연 의도 지표"
-    },
-    "secondhand_home": {
-      "label": "가정 실내 간접흡연 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "있음(1-3) vs. 없음(0) 이분화",
-      "cutoffs": {
-        "0": "없음",
-        "1": "1-2일",
-        "2": "3-4일",
-        "3": "5-7일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "비흡연자에서도 적용 가능한 지표"
-    },
-    "secondhand_public": {
-      "label": "공공장소 실내 간접흡연 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "있음(1-3) vs. 없음(0) 이분화",
-      "cutoffs": {
-        "0": "없음",
-        "1": "1-2일",
-        "2": "3-4일",
-        "3": "5-7일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "간접흡연 노출 지표"
-    },
-    "iqos_start_period": {
-      "label": "처음 궐련형 전자담배 사용 시기",
-      "type": "categorical",
-      "unit": "",
-      "processing": "사용 경험자만",
-      "cutoffs": {
-        "1": "초등학교 이전",
-        "2": "초등학교",
-        "3": "중학교",
-        "4": "고등학교"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "2025년 신규/수정 항목"
-    },
-    "alc_lifetime": {
-      "label": "평생 음주 경험",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "음주 경험률 지표"
-    },
-    "alc_current": {
-      "label": "현재 음주 여부 (최근 30일 1잔 이상)",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "예",
-        "2": "아니오"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "현재음주율 핵심 지표"
-    },
-    "alc_start_age": {
-      "label": "처음 음주 경험 연령",
+    "pa_muscle": {
       "type": "continuous",
-      "unit": "세",
-      "processing": "평생음주 경험자만",
+      "unit": "일/주",
+      "label": "근력강화운동 일수 (최근 7일)",
+      "notes": "근력운동 실천율",
       "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "조기 음주 시작 연령 분석"
+      "processing": "≥3일을 충족 기준으로 사용",
+      "missing_strategy": "결측 제외"
+    },
+    "strata_id": {
+      "type": "categorical",
+      "unit": "",
+      "label": "층 변수 (시도×학교급×학교유형)",
+      "notes": "복합표본 설계 반영",
+      "cutoffs": {},
+      "processing": "svydesign strata=~strata_id",
+      "missing_strategy": "제외 불가 (필수 변수)"
     },
     "alc_amount": {
-      "label": "월간 음주량 (1회 평균 잔 수)",
       "type": "categorical",
       "unit": "",
-      "processing": "현재음주자만; 위험음주(≥5잔=3-5) 이분화",
+      "label": "월간 음주량 (1회 평균 잔 수)",
+      "notes": "1회 음주량 지표",
       "cutoffs": {
         "1": "1-2잔",
         "2": "3-4잔",
@@ -403,157 +210,535 @@
         "4": "7-9잔",
         "5": "10잔 이상"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "1회 음주량 지표"
+      "processing": "현재음주자만; 위험음주(≥5잔=3-5) 이분화",
+      "missing_strategy": "결측 제외"
     },
-    "alc_binge": {
-      "label": "최근 30일 만취 경험",
+    "birth_year": {
+      "type": "continuous",
+      "unit": "년",
+      "label": "출생연도",
+      "notes": "grade와 함께 연령 파악",
+      "cutoffs": {},
+      "processing": "나이 계산: 2025 - birth_year",
+      "missing_strategy": "제외"
+    },
+    "body_image": {
+      "type": "categorical",
+      "unit": "",
+      "label": "주관적 체형 인식",
+      "notes": "신체이미지 왜곡 분석 (body image distortion)",
+      "cutoffs": {
+        "1": "매우 마른 편",
+        "2": "약간 마른 편",
+        "3": "보통",
+        "4": "약간 살찐 편",
+        "5": "매우 살찐 편"
+      },
+      "processing": "왜곡 인식: 실제 BMI vs. 인식 체형 불일치",
+      "missing_strategy": "결측 제외"
+    },
+    "cig_amount": {
+      "type": "categorical",
+      "unit": "",
+      "label": "월간 일반담배(궐련) 흡연량",
+      "notes": "흡연 빈도 및 양 지표",
+      "cutoffs": {
+        "1": "주 1일 미만",
+        "2": "주 1-2일",
+        "3": "주 3-4일",
+        "4": "주 5-6일",
+        "5": "매일"
+      },
+      "processing": "현재흡연자만 해당; 매일흡연(5) vs. 가끔흡연(1-4)",
+      "missing_strategy": "결측 제외"
+    },
+    "cluster_id": {
+      "type": "categorical",
+      "unit": "",
+      "label": "집락 변수 (학교·학급 ID)",
+      "notes": "집락 내 상관 보정",
+      "cutoffs": {},
+      "processing": "svydesign id=~cluster_id",
+      "missing_strategy": "제외 불가 (필수 변수)"
+    },
+    "depression": {
       "type": "binary",
       "unit": "",
-      "processing": "현재음주자만",
+      "label": "우울감 경험 (최근 12개월, 2주 이상 연속)",
+      "notes": "우울감 경험률 핵심 지표",
       "cutoffs": {
         "1": "있음",
         "2": "없음"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "위험음주 지표"
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
     },
-    "alc_purchase": {
-      "label": "주류 구매 용이성",
+    "father_edu": {
+      "type": "ordinal",
+      "unit": "",
+      "label": "아버지 학력",
+      "notes": "사회경제적 지위 대리 지표",
+      "cutoffs": {
+        "1": "중학교 졸업 이하",
+        "2": "고등학교 졸업",
+        "3": "대학교 졸업 이상",
+        "4": "모름"
+      },
+      "processing": "모름(4)은 결측 처리 또는 별도 범주",
+      "missing_strategy": "결측 범주로 처리"
+    },
+    "mother_edu": {
+      "type": "ordinal",
+      "unit": "",
+      "label": "어머니 학력",
+      "notes": "부모학력 중 높은 쪽을 대표값으로 사용하는 경우 多",
+      "cutoffs": {
+        "1": "중학교 졸업 이하",
+        "2": "고등학교 졸업",
+        "3": "대학교 졸업 이상",
+        "4": "모름"
+      },
+      "processing": "모름(4)은 결측 처리",
+      "missing_strategy": "결측 범주로 처리"
+    },
+    "alc_current": {
+      "type": "binary",
+      "unit": "",
+      "label": "현재 음주 여부 (최근 30일 1잔 이상)",
+      "notes": "현재음주율 핵심 지표",
+      "cutoffs": {
+        "1": "예",
+        "2": "아니오"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "cig_current": {
+      "type": "binary",
+      "unit": "",
+      "label": "현재 일반담배(궐련) 흡연 여부 (최근 30일)",
+      "notes": "현재흡연율 핵심 지표",
+      "cutoffs": {
+        "1": "예(1일 이상)",
+        "2": "아니오"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "family_econ": {
+      "type": "ordinal",
+      "unit": "",
+      "label": "주관적 경제적 상태",
+      "notes": "가장 많이 쓰이는 SES 대리변수",
+      "cutoffs": {
+        "1": "상",
+        "2": "중상",
+        "3": "중",
+        "4": "중하",
+        "5": "하"
+      },
+      "processing": "상/중상(1-2) vs. 중(3) vs. 중하/하(4-5) 로 3분위 처리 多",
+      "missing_strategy": "결측 범주로 처리"
+    },
+    "family_type": {
       "type": "categorical",
       "unit": "",
-      "processing": "쉽다(1-2) vs. 어렵다(3-4)",
+      "label": "가족 구성",
+      "notes": "2025년 친부모/양부모 동거 여부 항목 포함",
+      "cutoffs": {
+        "1": "양친가족",
+        "2": "편부가족",
+        "3": "편모가족",
+        "4": "조부모가족",
+        "5": "기타"
+      },
+      "processing": "양친가족(1) vs. 기타(2+)로 이분화 가능",
+      "missing_strategy": "결측 범주로 처리"
+    },
+    "iqos_amount": {
+      "type": "categorical",
+      "unit": "",
+      "label": "월간 궐련형 전자담배 사용량",
+      "notes": "가열담배 사용 빈도",
+      "cutoffs": {
+        "1": "주 1일 미만",
+        "2": "주 1-2일",
+        "3": "주 3-4일",
+        "4": "주 5-6일",
+        "5": "매일"
+      },
+      "processing": "현재 사용자만",
+      "missing_strategy": "결측 제외"
+    },
+    "night_snack": {
+      "type": "categorical",
+      "unit": "",
+      "label": "야식 섭취 빈도 (최근 7일)",
+      "notes": "야식 섭취 습관",
+      "cutoffs": {
+        "1": "전혀 먹지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일"
+      },
+      "processing": "섭취 있음(2-5) vs. 없음(1)",
+      "missing_strategy": "결측 제외"
+    },
+    "school_type": {
+      "type": "categorical",
+      "unit": "",
+      "label": "학교급",
+      "notes": "grade에서 파생 가능: school_type = ifelse(grade<=3,1,2)",
+      "cutoffs": {
+        "1": "중학교",
+        "2": "고등학교"
+      },
+      "processing": "그대로 사용",
+      "missing_strategy": "제외"
+    },
+    "sit_weekday": {
+      "type": "categorical",
+      "unit": "",
+      "label": "주중 하루 앉아서 보내는 시간",
+      "notes": "좌식행동 지표",
+      "cutoffs": {
+        "1": "2시간 미만",
+        "2": "2-4시간 미만",
+        "3": "4-6시간 미만",
+        "4": "6-8시간 미만",
+        "5": "8시간 이상"
+      },
+      "processing": "좌식행동: ≥8시간(5) 과다 기준",
+      "missing_strategy": "결측 제외"
+    },
+    "sit_weekend": {
+      "type": "categorical",
+      "unit": "",
+      "label": "주말 하루 앉아서 보내는 시간",
+      "notes": "좌식행동 지표",
+      "cutoffs": {
+        "1": "2시간 미만",
+        "2": "2-4시간 미만",
+        "3": "4-6시간 미만",
+        "4": "6-8시간 미만",
+        "5": "8시간 이상"
+      },
+      "processing": "sit_weekday와 동일한 기준 적용",
+      "missing_strategy": "결측 제외"
+    },
+    "sports_team": {
+      "type": "continuous",
+      "unit": "개",
+      "label": "스포츠 활동 팀 수",
+      "notes": "학교/지역 스포츠팀 참여 지표",
+      "cutoffs": {},
+      "processing": "0개(미참여) vs. 1개 이상(참여) 이분화",
+      "missing_strategy": "결측 제외"
+    },
+    "alc_lifetime": {
+      "type": "binary",
+      "unit": "",
+      "label": "평생 음주 경험",
+      "notes": "음주 경험률 지표",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "이분형",
+      "missing_strategy": "결측 제외"
+    },
+    "alc_purchase": {
+      "type": "categorical",
+      "unit": "",
+      "label": "주류 구매 용이성",
+      "notes": "주류 접근성 정책 지표",
       "cutoffs": {
         "1": "매우 쉽다",
         "2": "쉽다",
         "3": "어렵다",
         "4": "매우 어렵다"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "주류 접근성 정책 지표"
+      "processing": "쉽다(1-2) vs. 어렵다(3-4)",
+      "missing_strategy": "결측 제외"
     },
-    "pa_vigorous_days": {
-      "label": "고강도 신체활동 일수 (최근 7일)",
-      "type": "continuous",
-      "unit": "일/주",
-      "processing": "0-7일; ≥3일을 충족 기준으로 사용",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "고강도 신체활동 충족률"
-    },
-    "pa_vigorous_time": {
-      "label": "고강도 신체활동 1일 평균 시간",
+    "bmi_category": {
       "type": "categorical",
       "unit": "",
-      "processing": "pa_vigorous_days와 함께 활동량 계산",
+      "label": "BMI 분류 (연령·성별 기준, 파생변수)",
+      "notes": "성인 BMI 기준(25/30) 미적용; 반드시 성장도표 기준 사용",
       "cutoffs": {
-        "1": "20분 미만",
-        "2": "20-39분",
-        "3": "40-59분",
-        "4": "1시간 이상"
+        "1": "저체중 (5백분위 미만)",
+        "2": "정상 (5-85백분위 미만)",
+        "3": "과체중 (85-95백분위 미만)",
+        "4": "비만 (95백분위 이상)"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "WHO 권고: 주 3일 이상 고강도 60분"
+      "processing": "2017 소아청소년 성장도표 성별·연령별 백분위 기준 적용",
+      "missing_strategy": "결측 제외"
     },
-    "pa_60min": {
-      "label": "하루 60분 이상 신체활동 일수 (최근 7일)",
-      "type": "continuous",
-      "unit": "일/주",
-      "processing": "=7이면 권고량 충족; ≥5일로 느슨한 기준 사용도 있음",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "WHO 청소년 신체활동 권고 충족률 핵심 지표"
+    "cig_lifetime": {
+      "type": "binary",
+      "unit": "",
+      "label": "평생 일반담배(궐련) 흡연 경험",
+      "notes": "흡연 경험률 지표",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
     },
-    "pa_muscle": {
-      "label": "근력강화운동 일수 (최근 7일)",
-      "type": "continuous",
-      "unit": "일/주",
-      "processing": "≥3일을 충족 기준으로 사용",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "근력운동 실천율"
-    },
-    "sit_weekday": {
-      "label": "주중 하루 앉아서 보내는 시간",
+    "dairy_intake": {
       "type": "categorical",
       "unit": "",
-      "processing": "좌식행동: ≥8시간(5) 과다 기준",
+      "label": "우유 및 유제품 섭취 빈도 (최근 7일)",
+      "notes": "칼슘 섭취 대리 지표",
       "cutoffs": {
-        "1": "2시간 미만",
-        "2": "2-4시간 미만",
-        "3": "4-6시간 미만",
-        "4": "6-8시간 미만",
-        "5": "8시간 이상"
+        "1": "전혀 먹지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "좌식행동 지표"
+      "processing": "매일(5) 섭취 충족률",
+      "missing_strategy": "결측 제외"
     },
-    "sit_weekend": {
-      "label": "주말 하루 앉아서 보내는 시간",
+    "dental_visit": {
+      "type": "binary",
+      "unit": "",
+      "label": "치과 진료 경험 (최근 12개월)",
+      "notes": "치과 의료 이용",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "ecig_current": {
+      "type": "binary",
+      "unit": "",
+      "label": "현재 액상형 전자담배 사용 여부 (최근 30일)",
+      "notes": "액상형 전자담배 현재 사용률",
+      "cutoffs": {
+        "1": "예",
+        "2": "아니오"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "fruit_intake": {
       "type": "categorical",
       "unit": "",
-      "processing": "sit_weekday와 동일한 기준 적용",
+      "label": "과일 섭취 빈도 (최근 7일)",
+      "notes": "과일 섭취율",
       "cutoffs": {
-        "1": "2시간 미만",
-        "2": "2-4시간 미만",
-        "3": "4-6시간 미만",
-        "4": "6-8시간 미만",
-        "5": "8시간 이상"
+        "1": "전혀 먹지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일 1회",
+        "6": "매일 2회 이상"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "좌식행동 지표"
+      "processing": "매일 섭취(5-6) vs. 미달(1-4)",
+      "missing_strategy": "결측 제외"
+    },
+    "iqos_current": {
+      "type": "binary",
+      "unit": "",
+      "label": "현재 궐련형 전자담배 사용 여부 (최근 30일)",
+      "notes": "현재 궐련형 전자담배 사용률",
+      "cutoffs": {
+        "1": "예",
+        "2": "아니오"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "oral_symptom": {
+      "type": "binary",
+      "unit": "",
+      "label": "구강증상 경험 (최근 12개월)",
+      "notes": "치통, 잇몸 출혈 등 구강증상",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "quit_attempt": {
+      "type": "binary",
+      "unit": "",
+      "label": "금연 시도 경험 (최근 12개월)",
+      "notes": "금연 의도 지표",
+      "cutoffs": {
+        "1": "예",
+        "2": "아니오"
+      },
+      "processing": "현재흡연자만 해당",
+      "missing_strategy": "결측 제외"
+    },
+    "water_intake": {
+      "type": "categorical",
+      "unit": "",
+      "label": "물 섭취 빈도 (최근 7일)",
+      "notes": "수분 섭취 충족 지표",
+      "cutoffs": {
+        "1": "전혀 마시지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일"
+      },
+      "processing": "매일(5) 섭취 충족률",
+      "missing_strategy": "결측 제외"
+    },
+    "academic_perf": {
+      "type": "ordinal",
+      "unit": "",
+      "label": "주관적 학업성적",
+      "notes": "학업 스트레스 분석 시 통제 변수",
+      "cutoffs": {
+        "1": "상",
+        "2": "중상",
+        "3": "중",
+        "4": "중하",
+        "5": "하"
+      },
+      "processing": "5점 척도 그대로 또는 3분위 처리",
+      "missing_strategy": "결측 범주로 처리"
+    },
+    "alc_start_age": {
+      "type": "continuous",
+      "unit": "세",
+      "label": "처음 음주 경험 연령",
+      "notes": "조기 음주 시작 연령 분석",
+      "cutoffs": {},
+      "processing": "평생음주 경험자만",
+      "missing_strategy": "결측 제외"
+    },
+    "cig_start_age": {
+      "type": "continuous",
+      "unit": "세",
+      "label": "처음 일반담배(궐련) 흡연 경험 연령",
+      "notes": "흡연 시작 연령: 조기 흡연 위험 분석",
+      "cutoffs": {},
+      "processing": "평생흡연 경험자만 해당",
+      "missing_strategy": "결측 제외"
+    },
+    "contraception": {
+      "type": "binary",
+      "unit": "",
+      "label": "피임 경험 (성관계 경험자 중)",
+      "notes": "성행태 분석",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "성관계 경험자만 해당",
+      "missing_strategy": "결측 제외"
+    },
+    "ecig_lifetime": {
+      "type": "binary",
+      "unit": "",
+      "label": "평생 액상형 전자담배 사용 경험",
+      "notes": "전자담배 사용 경험률",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "iqos_lifetime": {
+      "type": "binary",
+      "unit": "",
+      "label": "평생 궐련형 전자담배(가열담배) 사용 경험",
+      "notes": "IQOS/아이코스 등 가열담배",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "mukbang_watch": {
+      "type": "categorical",
+      "unit": "",
+      "label": "먹방·쿡방 시청 횟수 (최근 7일)",
+      "notes": "2025년 신규/수정 항목 — 먹방이 식습관에 미치는 영향",
+      "cutoffs": {
+        "1": "전혀 보지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일"
+      },
+      "processing": "시청 있음(2-5) vs. 없음(1)",
+      "missing_strategy": "결측 제외"
     },
     "pe_class_freq": {
-      "label": "주간 체육 시간 운동 횟수",
       "type": "categorical",
       "unit": "",
-      "processing": "체육수업 참여도 지표",
+      "label": "주간 체육 시간 운동 횟수",
+      "notes": "학교 체육 참여",
       "cutoffs": {
         "1": "0회",
         "2": "1회",
         "3": "2회",
         "4": "3회 이상"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "학교 체육 참여"
+      "processing": "체육수업 참여도 지표",
+      "missing_strategy": "결측 제외"
     },
-    "sports_team": {
-      "label": "스포츠 활동 팀 수",
-      "type": "continuous",
-      "unit": "개",
-      "processing": "0개(미참여) vs. 1개 이상(참여) 이분화",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "학교/지역 스포츠팀 참여 지표"
-    },
-    "commute_pa_days": {
-      "label": "등하교·하원 시 신체활동 일수 (최근 7일)",
-      "type": "continuous",
-      "unit": "일/주",
-      "processing": "이동 중 신체활동 빈도",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "2025년 신규/수정 항목"
-    },
-    "commute_pa_time": {
-      "label": "등하교·하원 시 신체활동 1일 평균 시간",
-      "type": "categorical",
+    "school_injury": {
+      "type": "binary",
       "unit": "",
-      "processing": "commute_pa_days와 함께 통근 신체활동 계산",
+      "label": "학교 손상으로 인한 병원 치료 경험 (최근 12개월)",
+      "notes": "학교 손상 경험률",
       "cutoffs": {
-        "1": "10분 미만",
-        "2": "10-20분 미만",
-        "3": "20-30분 미만",
-        "4": "30분 이상"
+        "1": "있음",
+        "2": "없음"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "2025년 신규/수정 항목"
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "sleep_weekday": {
+      "type": "continuous",
+      "unit": "시간",
+      "label": "주중 평균 수면 시간 (파생변수)",
+      "notes": "주중 수면시간. < 8시간을 청소년 수면 부족으로 정의 多",
+      "cutoffs": {},
+      "processing": "잠든 시각, 일어난 시각으로 계산. < 6시간 수면 부족",
+      "missing_strategy": "결측 제외"
+    },
+    "sleep_weekend": {
+      "type": "continuous",
+      "unit": "시간",
+      "label": "주말 평균 수면 시간 (파생변수)",
+      "notes": "주말 수면시간. 주중-주말 차이(사회적 시차) 분석 가능",
+      "cutoffs": {},
+      "processing": "잠든 시각, 일어난 시각으로 계산",
+      "missing_strategy": "결측 제외"
+    },
+    "suicidal_plan": {
+      "type": "binary",
+      "unit": "",
+      "label": "자살 계획 경험 (최근 12개월)",
+      "notes": "자살 계획 경험률",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "자살 생각자만 해당",
+      "missing_strategy": "결측 제외"
     },
     "breakfast_skip": {
-      "label": "아침식사 결식 (최근 7일)",
       "type": "categorical",
       "unit": "",
-      "processing": "주 5일 이상 결식(5-7)을 아침결식으로 정의 多",
+      "label": "아침식사 결식 (최근 7일)",
+      "notes": "아침결식률 지표",
       "cutoffs": {
         "0": "0일(매일 먹음)",
         "1": "1일",
@@ -564,356 +749,195 @@
         "6": "6일",
         "7": "7일(매일 굶음)"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "아침결식률 지표"
+      "processing": "주 5일 이상 결식(5-7)을 아침결식으로 정의 多",
+      "missing_strategy": "결측 제외"
     },
-    "fruit_intake": {
-      "label": "과일 섭취 빈도 (최근 7일)",
+    "prevention_edu": {
+      "type": "binary",
+      "unit": "",
+      "label": "학교 내 예방교육 경험 (흡연/음주/식생활/성/자살 등)",
+      "notes": "학교 보건교육 이행 지표",
+      "cutoffs": {
+        "1": "있음",
+        "2": "없음"
+      },
+      "processing": "영역별로 별도 변수 존재 가능",
+      "missing_strategy": "결측 제외"
+    },
+    "residence_type": {
       "type": "categorical",
       "unit": "",
-      "processing": "매일 섭취(5-6) vs. 미달(1-4)",
+      "label": "현재 거주 형태",
+      "notes": "주거환경이 건강행태에 미치는 영향 분석",
       "cutoffs": {
-        "1": "전혀 먹지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일 1회",
-        "6": "매일 2회 이상"
+        "1": "가족과 함께",
+        "2": "친척 집",
+        "3": "하숙/자취/기숙사",
+        "4": "보호시설"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "과일 섭취율"
+      "processing": "가족동거(1) vs. 비가족(2-4) 이분화",
+      "missing_strategy": "결측 범주"
     },
-    "vegetable_intake": {
-      "label": "채소 섭취 빈도 (최근 7일, 김치 포함)",
-      "type": "categorical",
+    "sex_experience": {
+      "type": "binary",
       "unit": "",
-      "processing": "매일 2회 이상(6)을 권고 충족으로 사용 多",
+      "label": "성관계 경험",
+      "notes": "성행태 분석 주의: 민감 변수",
       "cutoffs": {
-        "1": "전혀 먹지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일 1회",
-        "6": "매일 2회 이상"
+        "1": "있음",
+        "2": "없음"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "채소 섭취율"
-    },
-    "fastfood_intake": {
-      "label": "패스트푸드 섭취 빈도 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "주 3회 이상(3-5)을 고빈도 섭취로 정의",
-      "cutoffs": {
-        "1": "전혀 먹지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "가공식품/패스트푸드 섭취"
-    },
-    "caffeine_intake": {
-      "label": "고카페인 음료 섭취 빈도 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "섭취 있음(2-5) vs. 없음(1) 이분화",
-      "cutoffs": {
-        "1": "전혀 마시지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "에너지드링크, 커피 등 고카페인 음료"
-    },
-    "sweet_drink_intake": {
-      "label": "단맛 나는 음료 섭취 빈도 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "고빈도(주 3회 이상: 3-5) 이분화",
-      "cutoffs": {
-        "1": "전혀 마시지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "가당음료 섭취 지표"
-    },
-    "water_intake": {
-      "label": "물 섭취 빈도 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "매일(5) 섭취 충족률",
-      "cutoffs": {
-        "1": "전혀 마시지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "수분 섭취 충족 지표"
-    },
-    "night_snack": {
-      "label": "야식 섭취 빈도 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "섭취 있음(2-5) vs. 없음(1)",
-      "cutoffs": {
-        "1": "전혀 먹지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "야식 섭취 습관"
-    },
-    "dairy_intake": {
-      "label": "우유 및 유제품 섭취 빈도 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "매일(5) 섭취 충족률",
-      "cutoffs": {
-        "1": "전혀 먹지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "칼슘 섭취 대리 지표"
-    },
-    "zero_drink_intake": {
-      "label": "제로음료 섭취 빈도 (최근 7일)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "섭취 있음(2-5) vs. 없음(1)",
-      "cutoffs": {
-        "1": "전혀 마시지 않음",
-        "2": "주 1-2회",
-        "3": "주 3-4회",
-        "4": "주 5-6회",
-        "5": "매일"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "2025년 신규 항목 — 무설탕 인공감미료 음료"
-    },
-    "height": {
-      "label": "신장",
-      "type": "continuous",
-      "unit": "cm",
-      "processing": "자기보고 신장. 비현실적 값(< 100cm, > 220cm) 제외",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "BMI 계산에 사용"
-    },
-    "weight": {
-      "label": "체중",
-      "type": "continuous",
-      "unit": "kg",
-      "processing": "자기보고 체중. 비현실적 값(< 20kg, > 200kg) 제외",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "BMI 계산에 사용. 측정치 아님(자기보고 오류 가능)"
-    },
-    "bmi": {
-      "label": "체질량지수 (파생변수)",
-      "type": "continuous",
-      "unit": "kg/m²",
-      "processing": "bmi = weight / (height/100)^2. 소수점 1자리",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "이용지침서에서 제공하는 파생변수. 직접 계산과 동일"
-    },
-    "bmi_category": {
-      "label": "BMI 분류 (연령·성별 기준, 파생변수)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "2017 소아청소년 성장도표 성별·연령별 백분위 기준 적용",
-      "cutoffs": {
-        "1": "저체중 (5백분위 미만)",
-        "2": "정상 (5-85백분위 미만)",
-        "3": "과체중 (85-95백분위 미만)",
-        "4": "비만 (95백분위 이상)"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "성인 BMI 기준(25/30) 미적용; 반드시 성장도표 기준 사용"
-    },
-    "body_image": {
-      "label": "주관적 체형 인식",
-      "type": "categorical",
-      "unit": "",
-      "processing": "왜곡 인식: 실제 BMI vs. 인식 체형 불일치",
-      "cutoffs": {
-        "1": "매우 마른 편",
-        "2": "약간 마른 편",
-        "3": "보통",
-        "4": "약간 살찐 편",
-        "5": "매우 살찐 편"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "신체이미지 왜곡 분석 (body image distortion)"
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
     },
     "weight_control": {
-      "label": "최근 30일 체중 조절 노력 여부",
       "type": "categorical",
       "unit": "",
-      "processing": "감량 시도(1) vs. 기타(2-4) 이분화가 일반적",
+      "label": "최근 30일 체중 조절 노력 여부",
+      "notes": "체중조절 행동 지표",
       "cutoffs": {
         "1": "감량 시도",
         "2": "유지 시도",
         "3": "증량 시도",
         "4": "노력 안 함"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "체중조절 행동 지표"
+      "processing": "감량 시도(1) vs. 기타(2-4) 이분화가 일반적",
+      "missing_strategy": "결측 제외"
     },
-    "mukbang_watch": {
-      "label": "먹방·쿡방 시청 횟수 (최근 7일)",
+    "caffeine_intake": {
       "type": "categorical",
       "unit": "",
-      "processing": "시청 있음(2-5) vs. 없음(1)",
+      "label": "고카페인 음료 섭취 빈도 (최근 7일)",
+      "notes": "에너지드링크, 커피 등 고카페인 음료",
       "cutoffs": {
-        "1": "전혀 보지 않음",
+        "1": "전혀 마시지 않음",
         "2": "주 1-2회",
         "3": "주 3-4회",
         "4": "주 5-6회",
         "5": "매일"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "2025년 신규/수정 항목 — 먹방이 식습관에 미치는 영향"
+      "processing": "섭취 있음(2-5) vs. 없음(1) 이분화",
+      "missing_strategy": "결측 제외"
     },
-    "stress": {
-      "label": "주관적 스트레스 인지율",
+    "commute_pa_days": {
+      "type": "continuous",
+      "unit": "일/주",
+      "label": "등하교·하원 시 신체활동 일수 (최근 7일)",
+      "notes": "2025년 신규/수정 항목",
+      "cutoffs": {},
+      "processing": "이동 중 신체활동 빈도",
+      "missing_strategy": "결측 제외"
+    },
+    "commute_pa_time": {
       "type": "categorical",
       "unit": "",
-      "processing": "스트레스 인지(1-2) vs. 비인지(3-4) 이분화",
+      "label": "등하교·하원 시 신체활동 1일 평균 시간",
+      "notes": "2025년 신규/수정 항목",
       "cutoffs": {
-        "1": "대단히 많이 느낀다",
-        "2": "많이 느낀다",
-        "3": "조금 느낀다",
-        "4": "거의 느끼지 않는다"
+        "1": "10분 미만",
+        "2": "10-20분 미만",
+        "3": "20-30분 미만",
+        "4": "30분 이상"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "주관적 스트레스 인지율 핵심 지표"
+      "processing": "commute_pa_days와 함께 통근 신체활동 계산",
+      "missing_strategy": "결측 제외"
     },
-    "depression": {
-      "label": "우울감 경험 (최근 12개월, 2주 이상 연속)",
-      "type": "binary",
+    "fastfood_intake": {
+      "type": "categorical",
       "unit": "",
-      "processing": "이분형 그대로",
+      "label": "패스트푸드 섭취 빈도 (최근 7일)",
+      "notes": "가공식품/패스트푸드 섭취",
       "cutoffs": {
-        "1": "있음",
-        "2": "없음"
+        "1": "전혀 먹지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "우울감 경험률 핵심 지표"
+      "processing": "주 3회 이상(3-5)을 고빈도 섭취로 정의",
+      "missing_strategy": "결측 제외"
     },
-    "suicidal_ideation": {
-      "label": "자살 생각 경험 (최근 12개월)",
-      "type": "binary",
+    "secondhand_home": {
+      "type": "categorical",
       "unit": "",
-      "processing": "이분형 그대로",
+      "label": "가정 실내 간접흡연 (최근 7일)",
+      "notes": "비흡연자에서도 적용 가능한 지표",
       "cutoffs": {
-        "1": "있음",
-        "2": "없음"
+        "0": "없음",
+        "1": "1-2일",
+        "2": "3-4일",
+        "3": "5-7일"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "자살 생각 경험률"
+      "processing": "있음(1-3) vs. 없음(0) 이분화",
+      "missing_strategy": "결측 제외"
     },
-    "suicidal_plan": {
-      "label": "자살 계획 경험 (최근 12개월)",
-      "type": "binary",
-      "unit": "",
-      "processing": "자살 생각자만 해당",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "자살 계획 경험률"
-    },
-    "suicidal_attempt": {
-      "label": "자살 시도 경험 (최근 12개월)",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "자살 시도율 핵심 지표"
-    },
-    "sleep_weekday": {
-      "label": "주중 평균 수면 시간 (파생변수)",
+    "pa_vigorous_days": {
       "type": "continuous",
-      "unit": "시간",
-      "processing": "잠든 시각, 일어난 시각으로 계산. < 6시간 수면 부족",
+      "unit": "일/주",
+      "label": "고강도 신체활동 일수 (최근 7일)",
+      "notes": "고강도 신체활동 충족률",
       "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "주중 수면시간. < 8시간을 청소년 수면 부족으로 정의 多"
+      "processing": "0-7일; ≥3일을 충족 기준으로 사용",
+      "missing_strategy": "결측 제외"
     },
-    "sleep_weekend": {
-      "label": "주말 평균 수면 시간 (파생변수)",
-      "type": "continuous",
-      "unit": "시간",
-      "processing": "잠든 시각, 일어난 시각으로 계산",
-      "cutoffs": {},
-      "missing_strategy": "결측 제외",
-      "notes": "주말 수면시간. 주중-주말 차이(사회적 시차) 분석 가능"
+    "pa_vigorous_time": {
+      "type": "categorical",
+      "unit": "",
+      "label": "고강도 신체활동 1일 평균 시간",
+      "notes": "WHO 권고: 주 3일 이상 고강도 60분",
+      "cutoffs": {
+        "1": "20분 미만",
+        "2": "20-39분",
+        "3": "40-59분",
+        "4": "1시간 이상"
+      },
+      "processing": "pa_vigorous_days와 함께 활동량 계산",
+      "missing_strategy": "결측 제외"
     },
     "sleep_sufficient": {
-      "label": "주관적 수면 충족도",
       "type": "categorical",
       "unit": "",
-      "processing": "충분(1) vs. 부족(2-3) 이분화",
+      "label": "주관적 수면 충족도",
+      "notes": "주관적 수면의 질 지표",
       "cutoffs": {
         "1": "충분하다",
         "2": "약간 부족하다",
         "3": "매우 부족하다"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "주관적 수면의 질 지표"
+      "processing": "충분(1) vs. 부족(2-3) 이분화",
+      "missing_strategy": "결측 제외"
     },
-    "seatbelt": {
-      "label": "안전벨트 착용 (승용차/택시 앞뒷좌석, 고속버스)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "항상/대부분(1-2) vs. 가끔/거의안함(3-4); 탑승안함(5) 제외",
-      "cutoffs": {
-        "1": "항상 착용",
-        "2": "대부분 착용",
-        "3": "가끔 착용",
-        "4": "거의 안 착용",
-        "5": "탑승 안 함"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "안전벨트 착용률"
-    },
-    "school_injury": {
-      "label": "학교 손상으로 인한 병원 치료 경험 (최근 12개월)",
+    "suicidal_attempt": {
       "type": "binary",
       "unit": "",
-      "processing": "이분형 그대로",
+      "label": "자살 시도 경험 (최근 12개월)",
+      "notes": "자살 시도율 핵심 지표",
       "cutoffs": {
         "1": "있음",
         "2": "없음"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "학교 손상 경험률"
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
     },
-    "toothbrush_daily": {
-      "label": "하루 칫솔질 횟수",
+    "tobacco_purchase": {
       "type": "categorical",
       "unit": "",
-      "processing": "하루 3회 이상(4-5) vs. 미만(1-3)",
+      "label": "담배 구매 용이성",
+      "notes": "담배 접근성 정책 관련 지표",
+      "cutoffs": {
+        "1": "매우 쉽다",
+        "2": "쉽다",
+        "3": "어렵다",
+        "4": "매우 어렵다"
+      },
+      "processing": "쉽다(1-2) vs. 어렵다(3-4) 이분화",
+      "missing_strategy": "결측 제외"
+    },
+    "toothbrush_daily": {
+      "type": "categorical",
+      "unit": "",
+      "label": "하루 칫솔질 횟수",
+      "notes": "구강위생 핵심 지표",
       "cutoffs": {
         "1": "0회",
         "2": "1회",
@@ -921,197 +945,68 @@
         "4": "3회",
         "5": "4회 이상"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "구강위생 핵심 지표"
+      "processing": "하루 3회 이상(4-5) vs. 미만(1-3)",
+      "missing_strategy": "결측 제외"
     },
     "toothbrush_lunch": {
-      "label": "학교 점심식사 후 칫솔질 실천",
       "type": "binary",
       "unit": "",
-      "processing": "이분형 그대로",
+      "label": "학교 점심식사 후 칫솔질 실천",
+      "notes": "학교 구강위생 실천",
       "cutoffs": {
         "1": "예",
         "2": "아니오"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "학교 구강위생 실천"
-    },
-    "sealant": {
-      "label": "치아홈메우기(실란트) 경험",
-      "type": "binary",
-      "unit": "",
       "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "예방치과 처치 경험"
+      "missing_strategy": "결측 제외"
     },
     "toothbrush_night": {
+      "type": "binary",
+      "unit": "",
       "label": "취침 전 칫솔질 실천",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
+      "notes": "취침 전 구강위생",
       "cutoffs": {
         "1": "예",
         "2": "아니오"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "취침 전 구강위생"
-    },
-    "dental_visit": {
-      "label": "치과 진료 경험 (최근 12개월)",
-      "type": "binary",
-      "unit": "",
       "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "치과 의료 이용"
+      "missing_strategy": "결측 제외"
     },
-    "scaling": {
-      "label": "스케일링 경험 (최근 12개월)",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "예방치과 스케일링 이용"
-    },
-    "oral_health_perception": {
-      "label": "주관적 구강건강 인지",
+    "vegetable_intake": {
       "type": "categorical",
       "unit": "",
-      "processing": "좋음(1-2) vs. 보통이하(3-5) 이분화",
+      "label": "채소 섭취 빈도 (최근 7일, 김치 포함)",
+      "notes": "채소 섭취율",
       "cutoffs": {
-        "1": "매우 좋음",
-        "2": "좋음",
-        "3": "보통",
-        "4": "나쁨",
-        "5": "매우 나쁨"
+        "1": "전혀 먹지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일 1회",
+        "6": "매일 2회 이상"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "자기보고 구강건강 수준"
+      "processing": "매일 2회 이상(6)을 권고 충족으로 사용 多",
+      "missing_strategy": "결측 제외"
     },
-    "oral_symptom": {
-      "label": "구강증상 경험 (최근 12개월)",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "치통, 잇몸 출혈 등 구강증상"
-    },
-    "oral_hygiene_product": {
-      "label": "구강위생용품 사용 여부",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "예",
-        "2": "아니오"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "치실, 구강세정제 등 사용"
-    },
-    "handwash": {
-      "label": "비누 이용 손씻기 실천 (학교/집 식사 전·화장실 후·귀가 후)",
+    "ecig_start_period": {
       "type": "categorical",
       "unit": "",
-      "processing": "항상/자주(1-2) vs. 가끔/안함(3-4)",
+      "label": "처음 액상형 전자담배 사용 시기",
+      "notes": "2025년 신규/수정 항목 (굵게 표시)",
       "cutoffs": {
-        "1": "항상",
-        "2": "자주",
-        "3": "가끔",
-        "4": "전혀 안 함"
+        "1": "초등학교 이전",
+        "2": "초등학교",
+        "3": "중학교",
+        "4": "고등학교"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "감염병 예방 핵심 지표"
-    },
-    "sex_experience": {
-      "label": "성관계 경험",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "성행태 분석 주의: 민감 변수"
-    },
-    "contraception": {
-      "label": "피임 경험 (성관계 경험자 중)",
-      "type": "binary",
-      "unit": "",
-      "processing": "성관계 경험자만 해당",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "성행태 분석"
-    },
-    "drug_use": {
-      "label": "습관적 및 의도적 약물 사용 경험 (평생)",
-      "type": "binary",
-      "unit": "",
-      "processing": "이분형 그대로",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "마약류, 흡입제, 수면제 등 불법/오남용"
-    },
-    "smartphone_weekday": {
-      "label": "주중 스마트폰 사용 시간 (하루 평균)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "과사용(4시간 이상=7) vs. 적정 이분화",
-      "cutoffs": {
-        "1": "사용 안 함",
-        "2": "30분 미만",
-        "3": "30분-1시간 미만",
-        "4": "1-2시간 미만",
-        "5": "2-3시간 미만",
-        "6": "3-4시간 미만",
-        "7": "4시간 이상"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "스마트폰 과의존 지표"
-    },
-    "smartphone_weekend": {
-      "label": "주말 스마트폰 사용 시간 (하루 평균)",
-      "type": "categorical",
-      "unit": "",
-      "processing": "과사용(4시간 이상=7) vs. 적정 이분화",
-      "cutoffs": {
-        "1": "사용 안 함",
-        "2": "30분 미만",
-        "3": "30분-1시간 미만",
-        "4": "1-2시간 미만",
-        "5": "2-3시간 미만",
-        "6": "3-4시간 미만",
-        "7": "4시간 이상"
-      },
-      "missing_strategy": "결측 제외",
-      "notes": "주말 스마트폰 사용"
+      "processing": "사용 경험자만 해당",
+      "missing_strategy": "결측 제외"
     },
     "health_perception": {
-      "label": "주관적 건강 인지",
       "type": "categorical",
       "unit": "",
-      "processing": "좋음(1-2) vs. 보통이하(3-5) 이분화",
+      "label": "주관적 건강 인지",
+      "notes": "전반적 건강 상태 지표 (기타 영역)",
       "cutoffs": {
         "1": "매우 좋음",
         "2": "좋음",
@@ -1119,47 +1014,152 @@
         "4": "나쁨",
         "5": "매우 나쁨"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "전반적 건강 상태 지표 (기타 영역)"
+      "processing": "좋음(1-2) vs. 보통이하(3-5) 이분화",
+      "missing_strategy": "결측 제외"
     },
-    "prevention_edu": {
-      "label": "학교 내 예방교육 경험 (흡연/음주/식생활/성/자살 등)",
+    "iqos_start_period": {
+      "type": "categorical",
+      "unit": "",
+      "label": "처음 궐련형 전자담배 사용 시기",
+      "notes": "2025년 신규/수정 항목",
+      "cutoffs": {
+        "1": "초등학교 이전",
+        "2": "초등학교",
+        "3": "중학교",
+        "4": "고등학교"
+      },
+      "processing": "사용 경험자만",
+      "missing_strategy": "결측 제외"
+    },
+    "secondhand_public": {
+      "type": "categorical",
+      "unit": "",
+      "label": "공공장소 실내 간접흡연 (최근 7일)",
+      "notes": "간접흡연 노출 지표",
+      "cutoffs": {
+        "0": "없음",
+        "1": "1-2일",
+        "2": "3-4일",
+        "3": "5-7일"
+      },
+      "processing": "있음(1-3) vs. 없음(0) 이분화",
+      "missing_strategy": "결측 제외"
+    },
+    "suicidal_ideation": {
       "type": "binary",
       "unit": "",
-      "processing": "영역별로 별도 변수 존재 가능",
+      "label": "자살 생각 경험 (최근 12개월)",
+      "notes": "자살 생각 경험률",
       "cutoffs": {
         "1": "있음",
         "2": "없음"
       },
-      "missing_strategy": "결측 제외",
-      "notes": "학교 보건교육 이행 지표"
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
     },
-    "wt": {
-      "label": "표본 가중치",
-      "type": "continuous",
-      "unit": "",
-      "processing": "모든 분석에 필수 적용. svydesign weights=~wt",
-      "cutoffs": {},
-      "missing_strategy": "제외 불가 (필수 변수)",
-      "notes": "복합표본 분석 필수 — 미적용 시 결과 편향"
-    },
-    "strata_id": {
-      "label": "층 변수 (시도×학교급×학교유형)",
+    "zero_drink_intake": {
       "type": "categorical",
       "unit": "",
-      "processing": "svydesign strata=~strata_id",
-      "cutoffs": {},
-      "missing_strategy": "제외 불가 (필수 변수)",
-      "notes": "복합표본 설계 반영"
+      "label": "제로음료 섭취 빈도 (최근 7일)",
+      "notes": "2025년 신규 항목 — 무설탕 인공감미료 음료",
+      "cutoffs": {
+        "1": "전혀 마시지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일"
+      },
+      "processing": "섭취 있음(2-5) vs. 없음(1)",
+      "missing_strategy": "결측 제외"
     },
-    "cluster_id": {
-      "label": "집락 변수 (학교·학급 ID)",
+    "parent_nationality": {
       "type": "categorical",
       "unit": "",
-      "processing": "svydesign id=~cluster_id",
-      "cutoffs": {},
-      "missing_strategy": "제외 불가 (필수 변수)",
-      "notes": "집락 내 상관 보정"
+      "label": "부모 한국 국적 여부",
+      "notes": "다문화 청소년 건강불평등 연구",
+      "cutoffs": {
+        "1": "모두 한국",
+        "2": "한 명 외국",
+        "3": "모두 외국"
+      },
+      "processing": "다문화 여부(1 vs. 2+)로 이분화",
+      "missing_strategy": "결측 범주"
+    },
+    "smartphone_weekday": {
+      "type": "categorical",
+      "unit": "",
+      "label": "주중 스마트폰 사용 시간 (하루 평균)",
+      "notes": "스마트폰 과의존 지표",
+      "cutoffs": {
+        "1": "사용 안 함",
+        "2": "30분 미만",
+        "3": "30분-1시간 미만",
+        "4": "1-2시간 미만",
+        "5": "2-3시간 미만",
+        "6": "3-4시간 미만",
+        "7": "4시간 이상"
+      },
+      "processing": "과사용(4시간 이상=7) vs. 적정 이분화",
+      "missing_strategy": "결측 제외"
+    },
+    "smartphone_weekend": {
+      "type": "categorical",
+      "unit": "",
+      "label": "주말 스마트폰 사용 시간 (하루 평균)",
+      "notes": "주말 스마트폰 사용",
+      "cutoffs": {
+        "1": "사용 안 함",
+        "2": "30분 미만",
+        "3": "30분-1시간 미만",
+        "4": "1-2시간 미만",
+        "5": "2-3시간 미만",
+        "6": "3-4시간 미만",
+        "7": "4시간 이상"
+      },
+      "processing": "과사용(4시간 이상=7) vs. 적정 이분화",
+      "missing_strategy": "결측 제외"
+    },
+    "sweet_drink_intake": {
+      "type": "categorical",
+      "unit": "",
+      "label": "단맛 나는 음료 섭취 빈도 (최근 7일)",
+      "notes": "가당음료 섭취 지표",
+      "cutoffs": {
+        "1": "전혀 마시지 않음",
+        "2": "주 1-2회",
+        "3": "주 3-4회",
+        "4": "주 5-6회",
+        "5": "매일"
+      },
+      "processing": "고빈도(주 3회 이상: 3-5) 이분화",
+      "missing_strategy": "결측 제외"
+    },
+    "oral_hygiene_product": {
+      "type": "binary",
+      "unit": "",
+      "label": "구강위생용품 사용 여부",
+      "notes": "치실, 구강세정제 등 사용",
+      "cutoffs": {
+        "1": "예",
+        "2": "아니오"
+      },
+      "processing": "이분형 그대로",
+      "missing_strategy": "결측 제외"
+    },
+    "oral_health_perception": {
+      "type": "categorical",
+      "unit": "",
+      "label": "주관적 구강건강 인지",
+      "notes": "자기보고 구강건강 수준",
+      "cutoffs": {
+        "1": "매우 좋음",
+        "2": "좋음",
+        "3": "보통",
+        "4": "나쁨",
+        "5": "매우 나쁨"
+      },
+      "processing": "좋음(1-2) vs. 보통이하(3-5) 이분화",
+      "missing_strategy": "결측 제외"
     }
   },
   "analysis_notes": [
