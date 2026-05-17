@@ -92,6 +92,22 @@ def _caller_email(ctx) -> str:
         return "unknown"
 
 
+def _log_tool(ctx, tool_name: str, inputs: dict, result_summary: str = "") -> None:
+    """MCP tool 호출을 change_log에 기록."""
+    try:
+        from src.memory import change_log
+        change_log.log(
+            title=f"[MCP] {tool_name}",
+            description=result_summary[:200],
+            action_type="mcp_tool",
+            user_email=_caller_email(ctx),
+            inputs=inputs,
+            outputs={"summary": result_summary[:200]},
+        )
+    except Exception:
+        pass
+
+
 def _require_admin(ctx):
     email = _caller_email(ctx)
     if not is_super_admin(email):
@@ -143,7 +159,7 @@ def search_papers(
     else:
         result = {"nlm": 0, "local": len(papers)}
 
-    return {
+    out = {
         "status": "ok",
         "count": len(papers),
         "stored": result,
@@ -157,6 +173,9 @@ def search_papers(
             for p in papers
         ],
     }
+    _log_tool(ctx, "search_papers", {"query": query, "topic": topic},
+              f"PubMed '{query}' → {len(papers)}편 수집")
+    return out
 
 
 @mcp.tool
