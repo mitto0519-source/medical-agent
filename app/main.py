@@ -1,6 +1,12 @@
 """Medical Research Analysis Web Application"""
 
 from flask import Flask, render_template, request, jsonify
+import logging
+
+from src.config.logging_config import setup_logging
+
+setup_logging()
+logger = logging.getLogger(__name__)
 import sys
 import os
 import numpy as np
