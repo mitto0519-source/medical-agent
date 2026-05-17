@@ -34,7 +34,7 @@ class OpenAIClient:
         openai.api_key = resolved
         self.model = model
 
-    def generate(self, user_message: str, system_prompt: str = "", context_chunks: Optional[List[str]] = None, stream: bool = False) -> str:
+    def generate(self, user_message: str, system_prompt: str = "", context_chunks: Optional[List[str]] = None, stream: bool = False, max_tokens: int = 1500) -> str:
         messages = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
@@ -43,7 +43,7 @@ class OpenAIClient:
             messages.append({"role": "system", "content": f"<context>\n{ctx}\n</context>"})
         messages.append({"role": "user", "content": user_message})
 
-        resp = openai.ChatCompletion.create(model=self.model, messages=messages, max_tokens=1500)
+        resp = openai.ChatCompletion.create(model=self.model, messages=messages, max_tokens=max_tokens)
         choice = resp.choices[0]
         if hasattr(choice, 'message'):
             content = choice.message.get('content') if isinstance(choice.message, dict) else choice.message['content']

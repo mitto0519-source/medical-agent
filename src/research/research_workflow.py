@@ -250,13 +250,8 @@ analysis_notes:
 
 Return JSON only."""
 
-        resp = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=4000,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = resp.content[-1].text.strip().strip("```json").strip("```").strip()
+        raw = self._client.generate(prompt, max_tokens=4000)
+        raw = _clean_llm_response(raw)
         try:
             var_plan = json.loads(raw)
         except Exception:

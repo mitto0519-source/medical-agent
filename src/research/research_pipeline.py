@@ -24,6 +24,19 @@ from src.rag.pipeline import RAGPipeline
 from src.ingestion.evidence_reader import EvidenceReader
 
 
+def _clean_llm_response(raw: str) -> str:
+    text = raw.strip()
+    if text.startswith("```"):
+        parts = text.split("```")
+        if len(parts) > 2 and parts[1].strip().lower().startswith("json"):
+            text = "```".join(parts[2:]).strip()
+        elif len(parts) > 1:
+            text = parts[1].strip()
+    if text.lower().startswith("json"):
+        text = text[4:].strip()
+    return text.strip().rstrip("```").strip()
+
+
 class ResearchPipeline:
     """조유선 스타일 논문 생산 마스터 파이프라인.
 
@@ -182,7 +195,8 @@ Generate {n_topics} research topics as JSON array:
 ]
 Return JSON only."""
 
-        raw = self._llm.generate(prompt)
+        raw = self._llm.generate(prompt, max_tokens=3000)
+        raw = _clean_llm_response(raw)
 
         try:
             topics = json.loads(raw)
