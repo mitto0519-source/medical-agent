@@ -138,7 +138,7 @@ def _ncbi_get(url: str, retries: int = 3) -> bytes:
 def search_pubmed(query: str, retmax: int = 100) -> list[str]:
     """Return up to retmax PMID strings matching query."""
     params = urllib.parse.urlencode({"db": "pubmed", "term": query, "retmax": retmax,
-                                     "rettype": "json", "usehistory": "n"})
+                                     "retmode": "json", "usehistory": "n"})
     data = json.loads(_ncbi_get(f"{EUTILS}/esearch.fcgi?{params}"))
     return data["esearchresult"]["idlist"]
 
