@@ -14,7 +14,17 @@ import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
+<<<<<<< Updated upstream
 from src.llm import get_llm_client
+=======
+import os
+from src.llm.claude_client import ClaudeClient
+try:
+    from src.llm.openai_client import OpenAIClient
+except Exception:
+    OpenAIClient = None
+
+>>>>>>> Stashed changes
 from src.profile.author_profile import AuthorProfile
 from src.library.dataset_library import DatasetLibrary
 from src.library.methods_library import MethodsLibrary
@@ -78,7 +88,19 @@ class ResearchPipeline:
         if not self._api_key:
             raise ValueError("LLM API 키가 설정되지 않았습니다. ANTHROPIC_API_KEY 또는 OPENAI_API_KEY를 .env 또는 환경변수에 추가하세요.")
 
+<<<<<<< Updated upstream
         self._llm = get_llm_client(api_key=self._api_key)
+=======
+        # Prefer Claude (Anthropic) if key present, otherwise OpenAI
+        try:
+            self._client = ClaudeClient(api_key=os.environ.get("ANTHROPIC_API_KEY") or None)
+        except Exception:
+            if OpenAIClient is not None and os.environ.get("OPENAI_API_KEY"):
+                self._client = OpenAIClient(api_key=os.environ.get("OPENAI_API_KEY"))
+            else:
+                # re-raise the original error for visibility
+                raise
+>>>>>>> Stashed changes
 
         self.author = AuthorProfile(author_name, profile_dir, self._api_key)
         self.datasets = DatasetLibrary(library_dir)
@@ -195,8 +217,13 @@ Generate {n_topics} research topics as JSON array:
 ]
 Return JSON only."""
 
+<<<<<<< Updated upstream
         raw = self._llm.generate(prompt, max_tokens=3000)
         raw = _clean_llm_response(raw)
+=======
+        # Use the client wrapper's generate() method
+        raw = self._client.generate(prompt)
+>>>>>>> Stashed changes
 
         try:
             topics = json.loads(raw)
@@ -253,7 +280,11 @@ Return JSON:
 }}
 Return JSON only."""
 
+<<<<<<< Updated upstream
         raw = self._llm.generate(prompt)
+=======
+        raw = self._client.generate(prompt)
+>>>>>>> Stashed changes
 
         try:
             return json.loads(raw)
