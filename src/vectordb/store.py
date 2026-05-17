@@ -1,33 +1,36 @@
 """Persistent vector store — ChromaDB (local) or Supabase pgvector (cloud).
 
-SUPABASE_DB_URL 환경변수 설정 시 → Supabase 자동 사용 (Streamlit Cloud 배포용)
+SUPABASE_DB_URL 환경변수 설정 시 → Supabase 자동 사용
 미설정 시 → 로컬 ChromaDB
+
+임베딩 모델: src.config.models.get_embedding_model() (중앙 설정)
 """
+from __future__ import annotations
 
 from pathlib import Path
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
 import hashlib
+
+from src.config.logging_config import get_logger
+from src.config.models import get_embedding_model
+
+_log = get_logger(__name__)
 
 
 class VectorStore:
-    """Store and retrieve text chunks as embeddings via ChromaDB.
+    """ChromaDB 기반 로컬 벡터 스토어."""
 
-    Uses ChromaDB's built-in sentence-transformer embedding function so no
-    separate embedding step is required at ingest time.
-    """
-
-    def __init__(self, persist_dir: str = "data/chromadb", collection_name: str = "papers"):
-        """
-        Args:
-            persist_dir: Directory where ChromaDB persists its data
-            collection_name: Name of the ChromaDB collection
-        """
+    def __init__(
+        self,
+        persist_dir: str = "data/chromadb",
+        collection_name: str = "papers",
+    ):
         try:
             import chromadb
             from chromadb.config import Settings
         except ImportError:
             raise ImportError(
-                "chromadb가 설치되지 않았습니다. 로컬에서 사용하려면:\n"
+                "chromadb가 설치되지 않았습니다.\n"
                 "  pip install chromadb\n"
                 "또는 SUPABASE_DB_URL 환경변수를 설정하여 Supabase를 사용하세요."
             )
@@ -39,8 +42,11 @@ class VectorStore:
             settings=Settings(anonymized_telemetry=False),
         )
 
+        embedding_model = get_embedding_model()
+        _log.debug(f"VectorStore 임베딩 모델: {embedding_model}")
+
         self._ef = chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name="all-MiniLM-L6-v2"
+            model_name=embedding_model
         )
 
         self._collection = self._client.get_or_create_collection(
@@ -49,31 +55,24 @@ class VectorStore:
             metadata={"hnsw:space": "cosine"},
         )
 
-    # ------------------------------------------------------------------
-    # Ingestion
-    # ------------------------------------------------------------------
+    # ── Ingestion ─────────────────────────────────────────────────────────────
 
     def add_chunks(self, chunks: List[Dict]) -> int:
-        """Add text chunks to the collection.
+        """청크 추가. 중복(내용 해시 기준) 자동 스킵.
 
-        Skips chunks that are already stored (deduplication by content hash).
-
-        Args:
-            chunks: List of chunk dicts from TextChunker
-
-        Returns:
-            Number of chunks actually added (excluding duplicates)
+        Returns: 실제로 추가된 청크 수
         """
         if not chunks:
             return 0
 
         ids, documents, metadatas = [], [], []
         for chunk in chunks:
-            text = chunk["text"]
+            text = chunk.get("text", "")
+            if not text:
+                continue
             doc_id = hashlib.sha256(text.encode()).hexdigest()
 
-            # Flatten metadata: ChromaDB only accepts str/int/float/bool values
-            meta = {}
+            meta: Dict = {}
             for k, v in chunk.get("metadata", {}).items():
                 meta[k] = str(v) if not isinstance(v, (str, int, float, bool)) else v
             meta["word_start"] = chunk.get("word_start", 0)
@@ -84,7 +83,9 @@ class VectorStore:
             documents.append(text)
             metadatas.append(meta)
 
-        # Check which IDs already exist
+        if not ids:
+            return 0
+
         existing = set(self._collection.get(ids=ids, include=[])["ids"])
         new_mask = [i for i, d in enumerate(ids) if d not in existing]
 
@@ -98,22 +99,28 @@ class VectorStore:
         )
         return len(new_mask)
 
-    # ------------------------------------------------------------------
-    # Retrieval
-    # ------------------------------------------------------------------
+    # ── Retrieval ─────────────────────────────────────────────────────────────
 
-    def search(self, query: str, n_results: int = 5, where: Optional[Dict] = None) -> List[Dict]:
-        """Semantic search for the most relevant chunks.
+    def search(
+        self,
+        query: str,
+        n_results: int = 5,
+        where: Optional[Dict] = None,
+    ) -> List[Dict]:
+        """의미 기반 유사도 검색.
 
-        Args:
-            query: Natural-language question or statement
-            n_results: How many top chunks to return
-            where: Optional ChromaDB metadata filter, e.g. {"filename": "paper.pdf"}
-
-        Returns:
-            List of dicts with keys: text, score, metadata
+        Returns: [{text, score, metadata}, ...]
         """
-        kwargs = {"query_texts": [query], "n_results": n_results, "include": ["documents", "distances", "metadatas"]}
+        count = self._collection.count()
+        if count == 0:
+            return []
+
+        n = min(n_results, count)
+        kwargs: Dict = {
+            "query_texts": [query],
+            "n_results": n,
+            "include": ["documents", "distances", "metadatas"],
+        }
         if where:
             kwargs["where"] = where
 
@@ -125,40 +132,28 @@ class VectorStore:
             results["distances"][0],
             results["metadatas"][0],
         ):
-            hits.append(
-                {
-                    "text": doc,
-                    "score": round(1 - dist, 4),  # cosine similarity
-                    "metadata": meta,
-                }
-            )
+            hits.append({
+                "text": doc,
+                "score": round(1 - dist, 4),
+                "metadata": meta,
+            })
         return hits
 
-    # ------------------------------------------------------------------
-    # Info
-    # ------------------------------------------------------------------
+    # ── Info ──────────────────────────────────────────────────────────────────
 
     def count(self) -> int:
-        """Return total number of stored chunks."""
         return self._collection.count()
 
     def list_sources(self) -> List[str]:
-        """Return unique filenames indexed in the store."""
         if self.count() == 0:
             return []
         all_meta = self._collection.get(include=["metadatas"])["metadatas"]
         return sorted({m.get("filename", "") for m in all_meta if m.get("filename")})
 
     def delete_source(self, filename: str) -> int:
-        """Remove all chunks belonging to a specific file.
-
-        Args:
-            filename: The filename as stored in metadata (e.g. "paper.pdf")
-
-        Returns:
-            Number of chunks deleted
-        """
-        results = self._collection.get(where={"filename": filename}, include=["metadatas"])
+        results = self._collection.get(
+            where={"filename": filename}, include=["metadatas"]
+        )
         ids = results["ids"]
         if ids:
             self._collection.delete(ids=ids)
@@ -166,28 +161,33 @@ class VectorStore:
 
 
 class NoOpVectorStore:
-    """Fallback when neither Supabase nor ChromaDB is available.
-    All operations silently succeed but store nothing."""
+    """ChromaDB/Supabase 모두 없을 때의 무동작 폴백."""
+
     def add_chunks(self, chunks):
         return 0
+
     def search(self, query, n_results=5, where=None):
         return []
+
     def count(self):
         return 0
+
     def list_sources(self):
         return []
+
     def delete_source(self, filename):
         return 0
+
     def close(self):
         pass
 
 
 def get_vector_store(persist_dir: str = "data/chromadb"):
-    """환경변수에 따라 Supabase 또는 로컬 ChromaDB VectorStore 반환.
+    """환경에 따라 적절한 VectorStore 반환.
 
-    - SUPABASE_DB_URL 설정 시 → SupabaseVectorStore (Streamlit Cloud 기본)
-    - 미설정 시 → VectorStore (ChromaDB)
-    - 둘 다 실패 시 → NoOpVectorStore (silent fallback)
+    SUPABASE_DB_URL → SupabaseVectorStore
+    미설정           → VectorStore (ChromaDB)
+    둘 다 실패       → NoOpVectorStore (경고 출력)
     """
     import os
     if os.environ.get("SUPABASE_DB_URL"):
@@ -195,10 +195,16 @@ def get_vector_store(persist_dir: str = "data/chromadb"):
             from src.vectordb.supabase_store import SupabaseVectorStore
             return SupabaseVectorStore()
         except Exception as e:
-            import logging
-            logging.getLogger(__name__).warning(f"SupabaseVectorStore 초기화 실패, NoOp 사용: {e}")
-            return NoOpVectorStore()
+            _log.warning(f"SupabaseVectorStore 초기화 실패, ChromaDB로 폴백: {e}")
+
     try:
         return VectorStore(persist_dir=persist_dir)
-    except ImportError:
+    except ImportError as e:
+        _log.warning(
+            f"ChromaDB 없음 — NoOpVectorStore 사용 (RAG 비활성화): {e}\n"
+            "  pip install chromadb  으로 설치하세요."
+        )
+        return NoOpVectorStore()
+    except Exception as e:
+        _log.error(f"VectorStore 초기화 실패: {e}")
         return NoOpVectorStore()

@@ -1,40 +1,74 @@
-"""Minimal OpenAI client wrapper compatible with existing usage.
+"""OpenAI client — openai v1+ API (ChatCompletion 구 버전 제거).
 
-This wrapper uses `openai` if available and maps a simple `generate`/`summarize_paper`
-and `answer_from_papers` interface similar to `ClaudeClient`.
+수정 사항:
+  - openai.ChatCompletion.create (v0) → openai.OpenAI().chat.completions.create (v1+)
+  - 모델명 하드코딩 제거 → src.config.models 사용
+  - dotenv 중복 로드 제거 → src.config.env.bootstrap() 사용
 """
+from __future__ import annotations
+
 import os
 from typing import List, Optional
 
-try:
-    import openai
-except Exception:
-    openai = None
+from src.config.env import bootstrap
+from src.config.logging_config import get_logger
+from src.config.models import get_model
+
+_log = get_logger(__name__)
 
 
 class OpenAIClient:
-    DEFAULT_MODEL = "gpt-4"
+    """OpenAI SDK v1+ 래퍼 (ClaudeClient와 동일 인터페이스)."""
 
-    def __init__(self, api_key: Optional[str] = None, model: str = DEFAULT_MODEL):
-        resolved = api_key or os.environ.get("OPENAI_API_KEY") or ""
-        if not resolved:
-            # try dotenv
-            try:
-                from dotenv import load_dotenv
-                from pathlib import Path
-                _root = Path(__file__).parent.parent.parent
-                load_dotenv(_root / ".env")
-                resolved = os.environ.get("OPENAI_API_KEY", "")
-            except Exception:
-                pass
-        if not resolved:
-            raise ValueError("OPENAI_API_KEY가 설정되지 않았습니다. .env 또는 환경변수를 확인하세요.")
-        if openai is None:
-            raise ImportError("openai 패키지가 설치되어 있지 않습니다. pip install openai")
-        openai.api_key = resolved
-        self.model = model
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        model: Optional[str] = None,
+        task: str = "standard",
+    ):
+        bootstrap()
 
-    def generate(self, user_message: str, system_prompt: str = "", context_chunks: Optional[List[str]] = None, stream: bool = False, max_tokens: int = 1500) -> str:
+        try:
+            import openai as _openai
+        except ImportError:
+            raise ImportError(
+                "openai 패키지가 설치되어 있지 않습니다.\n"
+                "  pip install openai"
+            )
+
+        resolved = api_key or os.environ.get("OPENAI_API_KEY", "")
+        if not resolved:
+            raise ValueError(
+                "OPENAI_API_KEY가 설정되지 않았습니다.\n"
+                "Medical-Agent/.env 파일에 OPENAI_API_KEY=sk-... 를 추가하세요."
+            )
+
+        self._openai = _openai
+        self._client = _openai.OpenAI(api_key=resolved)
+
+        if model:
+            self.model = model
+        else:
+            _, self.model = get_model(task)
+            # openai provider가 아닐 때 fallback
+            from src.config.models import OPENAI
+            if "claude" in self.model.lower():
+                tier = "standard"
+                self.model = OPENAI[tier]
+
+        _log.debug(f"OpenAIClient 초기화: model={self.model}")
+
+    # ── Core generation ───────────────────────────────────────────────────────
+
+    def generate(
+        self,
+        user_message: str,
+        system_prompt: str = "",
+        context_chunks: Optional[List[str]] = None,
+        stream: bool = False,
+        max_tokens: int = 1500,
+        task: Optional[str] = None,
+    ) -> str:
         messages = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
@@ -43,13 +77,14 @@ class OpenAIClient:
             messages.append({"role": "system", "content": f"<context>\n{ctx}\n</context>"})
         messages.append({"role": "user", "content": user_message})
 
-        resp = openai.ChatCompletion.create(model=self.model, messages=messages, max_tokens=max_tokens)
-        choice = resp.choices[0]
-        if hasattr(choice, 'message'):
-            content = choice.message.get('content') if isinstance(choice.message, dict) else choice.message['content']
-        else:
-            content = choice['message']['content']
-        return content.strip()
+        resp = self._client.chat.completions.create(
+            model=self.model,
+            messages=messages,
+            max_tokens=max_tokens,
+        )
+        return resp.choices[0].message.content.strip()
+
+    # ── 전문 논문 작업 (ClaudeClient와 동일 인터페이스) ───────────────────────
 
     def summarize_paper(self, paper_text: str) -> str:
         system = (
@@ -65,11 +100,16 @@ class OpenAIClient:
         )
         return self.generate(question, system_prompt=system, context_chunks=context_chunks)
 
-    def draft_abstract(self, background: str, objective: str, methods: str, results: str, conclusion: str) -> str:
+    def draft_abstract(
+        self, background: str, objective: str, methods: str,
+        results: str, conclusion: str,
+    ) -> str:
         system = (
-            "You are a professional medical writer. Write a concise, well-structured abstract (≤250 words) for a medical research paper. Follow the IMRAD format."
+            "You are a professional medical writer. Write a concise, well-structured abstract "
+            "(≤250 words) for a medical research paper. Follow the IMRAD format."
         )
         prompt = (
-            f"Background: {background}\nObjective: {objective}\nMethods: {methods}\nResults: {results}\nConclusion: {conclusion}\n\nWrite the abstract."
+            f"Background: {background}\nObjective: {objective}\nMethods: {methods}\n"
+            f"Results: {results}\nConclusion: {conclusion}\n\nWrite the abstract."
         )
         return self.generate(prompt, system_prompt=system)
