@@ -2,33 +2,22 @@
 from __future__ import annotations
 
 import json
-import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-_log = logging.getLogger(__name__)
+from src.config.logging_config import get_logger
+
+_log = get_logger(__name__)
 LOG_DIR = Path("data/activity")
 
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 def _cloud() -> bool:
     try:
         from src.cloud.db import cloud_available
         return cloud_available()
     except Exception:
         return False
-=======
-def _cloud():
-    from src.cloud.db import cloud_available
-    return cloud_available()
->>>>>>> Stashed changes
-=======
-def _cloud():
-    from src.cloud.db import cloud_available
-    return cloud_available()
->>>>>>> Stashed changes
 
 
 def _engine():
@@ -59,14 +48,7 @@ def log_activity(
         "output": output_data or {},
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
     # ── Cloud write ────────────────────────────────────────────────────
->>>>>>> Stashed changes
-=======
-    # ── Cloud write ────────────────────────────────────────────────────
->>>>>>> Stashed changes
     if _cloud():
         try:
             from sqlalchemy import text
@@ -76,15 +58,7 @@ def log_activity(
                         (id, user_email, page, action, input_data, output_summary, output_data)
                     VALUES
                         (:id, :user_email, :page, :action,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
                          CAST(:input_data AS jsonb), :output_summary, CAST(:output_data AS jsonb))
-=======
-                         :input_data::jsonb, :output_summary, :output_data::jsonb)
->>>>>>> Stashed changes
-=======
-                         :input_data::jsonb, :output_summary, :output_data::jsonb)
->>>>>>> Stashed changes
                     ON CONFLICT (id) DO NOTHING
                 """), {
                     "id": entry_id,
@@ -96,16 +70,9 @@ def log_activity(
                     "output_data": json.dumps(output_data or {}, ensure_ascii=False),
                 })
         except Exception as e:
-            _log.warning(f"Cloud log_activity failed: {e}")
+            _log.warning("Cloud log_activity failed: %s", e)
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
     # ── Local write (always — offline backup) ─────────────────────────
->>>>>>> Stashed changes
-=======
-    # ── Local write (always — offline backup) ─────────────────────────
->>>>>>> Stashed changes
     try:
         LOG_DIR.mkdir(parents=True, exist_ok=True)
         log_file = LOG_DIR / f"{_safe_email(user_email)}.json"
@@ -114,8 +81,8 @@ def log_activity(
         log_file.write_text(
             json.dumps(existing[:200], ensure_ascii=False, indent=2), encoding="utf-8"
         )
-    except Exception:
-        pass
+    except Exception as e:
+        _log.debug("Local log_activity failed: %s", e)
 
     return entry
 
@@ -147,7 +114,7 @@ def get_user_log(user_email: str, page: Optional[str] = None, limit: int = 20) -
                 for r in rows
             ]
         except Exception as e:
-            _log.warning(f"Cloud get_user_log failed: {e}")
+            _log.warning("Cloud get_user_log failed: %s", e)
 
     log_file = LOG_DIR / f"{_safe_email(user_email)}.json"
     if not log_file.exists():
