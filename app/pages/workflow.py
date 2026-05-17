@@ -9,7 +9,6 @@ import uuid
 from pathlib import Path
 
 import streamlit as st
-from streamlit.runtime.scriptrunner_utils.script_run_context import get_script_run_ctx
 from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -21,20 +20,12 @@ load_dotenv()
 from src.research.research_workflow import ResearchWorkflow, STAGES, STAGE_LABELS
 
 
-def _is_streamlit_running() -> bool:
-    try:
-        return get_script_run_ctx() is not None
-    except Exception:
-        return False
-
-
 def _setup_session_state():
     st.session_state.setdefault('wf_id', '')
     st.session_state.setdefault('wf_dataset', 'KYRBS')
     st.session_state.setdefault('workflow_focus', '')
     st.session_state.setdefault('workflow_n', 5)
 
-<<<<<<< Updated upstream
 
 def _render_sidebar():
     st.sidebar.header('워크플로우 관리')
@@ -54,39 +45,13 @@ def _render_sidebar():
         )
         st.session_state['wf_dataset'] = st.sidebar.selectbox('데이터셋', ['KYRBS'])
         if st.sidebar.button('시작', type='primary'):
-            st.experimental_rerun()
-=======
-def run_workflow_page():
-    st.set_page_config(page_title="단계별 연구 워크플로우", page_icon="🔬", layout="wide")
-    st.title("🔬 단계별 연구 워크플로우")
-    st.caption("각 단계에서 검수·승인 후 다음 단계로 진행됩니다.")
-    
-    # ── 워크플로우 선택/생성 ──────────────────────────────────────────────
-    with st.sidebar:
-    st.header("워크플로우 관리")
-    existing = sorted(Path("data/workflows").glob("*.json")) if Path("data/workflows").exists() else []
-    existing_ids = [p.stem for p in existing if not p.stem.endswith("_analysis")]
-    
-    mode = st.radio(
-        "워크플로우 모드",
-        ["기존 불러오기", "새로 시작"],
-        label_visibility="collapsed",
-    )
-
-    if mode == "새로 시작":
-        new_id = st.text_input("워크플로우 이름", value=f"study_{str(uuid.uuid4())[:8]}")
-        dataset = st.selectbox("데이터셋", ["KYRBS"])
-        if st.button("시작", type="primary"):
-            st.session_state["wf_id"] = new_id
-            st.session_state["wf_dataset"] = dataset
             st.rerun()
->>>>>>> Stashed changes
     else:
         if existing_ids:
             selected = st.sidebar.selectbox('워크플로우 선택', existing_ids, index=0)
             if st.sidebar.button('불러오기'):
                 st.session_state['wf_id'] = selected
-                st.experimental_rerun()
+                st.rerun()
         else:
             st.sidebar.info('저장된 워크플로우가 없습니다.')
 
@@ -121,7 +86,7 @@ def _render_topic_stage(wf: ResearchWorkflow):
             with st.spinner('주제를 생성 중입니다...'):
                 topics = wf.propose_topics(focus, n_topics)
             st.success(f'✅ {len(topics)}개 주제 생성 완료')
-            st.experimental_rerun()
+            st.rerun()
     else:
         data = wf.stage_data('topic_proposal')
         topics = data.get('topics', [])
@@ -139,11 +104,11 @@ def _render_topic_stage(wf: ResearchWorkflow):
                     if st.button('이 주제 선택 & 승인', key=f'select_topic_{i}', type='primary'):
                         wf.select_topic(i)
                         wf.approve('topic_proposal')
-                        st.experimental_rerun()
+                        st.rerun()
             if st.button('🔄 주제 다시 생성'):
                 with st.spinner('주제를 다시 생성 중입니다...'):
                     wf.propose_topics(data.get('focus',''), len(topics))
-                st.experimental_rerun()
+                st.rerun()
 
 
 def _render_variable_stage(wf: ResearchWorkflow):
@@ -152,7 +117,7 @@ def _render_variable_stage(wf: ResearchWorkflow):
         if st.button('📋 변수 계획 생성', type='primary'):
             with st.spinner('변수 계획을 생성 중입니다...'):
                 wf.plan_variables()
-            st.experimental_rerun()
+            st.rerun()
     else:
         data = wf.stage_data('variable_plan')
         plan = data.get('plan', {})
@@ -172,14 +137,14 @@ def _render_variable_stage(wf: ResearchWorkflow):
             with col1:
                 if st.button('✅ 승인', type='primary'):
                     wf.approve('variable_plan', modifications)
-                    st.experimental_rerun()
+                    st.rerun()
             with col2:
                 feedback = st.text_input('반려 사유')
                 if st.button('🔴 반려 후 재생성'):
                     wf.reject('variable_plan', feedback)
                     with st.spinner('재생성 중...'):
                         wf.plan_variables()
-                    st.experimental_rerun()
+                    st.rerun()
 
 
 def run_workflow_page():
@@ -216,10 +181,9 @@ def run_workflow_page():
             if st.button('📊 통계 분석 계획 생성', type='primary'):
                 with st.spinner('통계 분석 계획을 생성 중입니다...'):
                     wf.plan_analysis()
-                st.experimental_rerun()
+                st.rerun()
         else:
             st.success('통계 분석 계획이 생성되었습니다.')
 
 
-if _is_streamlit_running():
-    run_workflow_page()
+run_workflow_page()
