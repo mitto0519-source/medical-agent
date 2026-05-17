@@ -211,6 +211,11 @@ if not os.environ.get("ANTHROPIC_API_KEY") and not os.environ.get("OPENAI_API_KE
 if "nav" not in st.session_state:
     st.session_state["nav"] = "홈"
 
+# ── Session ID — persistent per browser session for continuity tracking ──
+if "_session_id" not in st.session_state:
+    import uuid as _uuid
+    st.session_state["_session_id"] = _uuid.uuid4().hex[:12]
+
 def _nav(p):
     st.session_state["nav"] = p
     st.rerun()
@@ -283,6 +288,7 @@ with st.sidebar:
     st.markdown('<div style="padding:8px 8px 4px;">', unsafe_allow_html=True)
     _nb("🏠  홈", "홈")
     _nb("⚡  워크플로우", "워크플로우")
+    _nb("📜  작업 타임라인", "작업 타임라인")
     st.markdown('<div class="nav-section">프로젝트</div>', unsafe_allow_html=True)
     _nb("🔴  논문 생산 파이프라인", "논문 생산 파이프라인")
     _nb("🔴  연구 주제 생성", "연구 주제 생성")
@@ -1232,6 +1238,85 @@ with main_col:
         st.info("Streamlit Cloud: 백그라운드 스케줄러 미지원.\n\n**로컬:** `python run_auto_learn.py` → Windows 작업 스케줄러 등록")
         _show_history("자동 학습 루프")
 
+    # ── 작업 타임라인 ─────────────────────────────────────────────────
+    elif page == "작업 타임라인":
+        st.title("📜 작업 타임라인")
+        st.caption("모든 에이전트 작업의 시간순 기록 — 연속성 및 변경 이력")
+
+        user_email = _u.get("email", "")
+        try:
+            from src.memory import change_log as _cl
+            col_f1, col_f2, col_f3 = st.columns([2, 2, 1])
+            with col_f1:
+                _atype_filter = st.selectbox(
+                    "작업 유형",
+                    ["전체", "qa", "topic_generate", "novelty_check", "paper_write",
+                     "learn", "workflow_step", "config_change", "mcp_tool", "general"],
+                    key="_tl_type",
+                )
+            with col_f2:
+                _n_filter = st.slider("최근 N개", 10, 200, 50, key="_tl_n")
+            with col_f3:
+                st.markdown("<div style='margin-top:28px;'></div>", unsafe_allow_html=True)
+                _show_all = st.checkbox("전체 사용자", value=False, key="_tl_all",
+                                        disabled=(_u.get("role") != "super_admin"))
+
+            atype_arg = None if _atype_filter == "전체" else _atype_filter
+            email_arg = None if _show_all else user_email
+            entries = _cl.get_recent(n=_n_filter, user_email=email_arg, action_type=atype_arg)
+
+            if not entries:
+                st.info("아직 기록된 작업이 없습니다. 파이프라인을 사용하면 자동으로 기록됩니다.")
+            else:
+                st.caption(f"총 {len(entries)}개 항목")
+                _TYPE_COLORS = {
+                    "qa": "#3B82F6", "topic_generate": "#8B5CF6", "novelty_check": "#F59E0B",
+                    "paper_write": "#10B981", "learn": "#06B6D4", "workflow_step": "#6366F1",
+                    "config_change": "#EF4444", "mcp_tool": "#EC4899", "general": "#64748B",
+                }
+                for e in entries:
+                    ts = str(e.get("timestamp", ""))[:16]
+                    title = e.get("title", "")
+                    atype = e.get("action_type", "general")
+                    desc = e.get("description", "")
+                    why = e.get("why_better", "")
+                    u_email = e.get("user_email", "")
+                    color = _TYPE_COLORS.get(atype, "#64748B")
+                    impact = e.get("impact", {})
+                    if isinstance(impact, str):
+                        try:
+                            import json as _j; impact = _j.loads(impact)
+                        except Exception:
+                            impact = {}
+                    affected = impact.get("affected_modules", []) if isinstance(impact, dict) else []
+
+                    with st.expander(f"**[{ts}]** {title}", expanded=False):
+                        c1, c2 = st.columns([1, 4])
+                        with c1:
+                            st.markdown(
+                                f'<span style="background:{color}22;color:{color};'
+                                f'border:1px solid {color}44;border-radius:4px;'
+                                f'padding:2px 8px;font-size:11px;font-weight:700;">{atype}</span>',
+                                unsafe_allow_html=True,
+                            )
+                            if u_email:
+                                st.caption(u_email.split("@")[0])
+                        with c2:
+                            if desc:
+                                st.markdown(f"**내용:** {desc}")
+                            if why:
+                                st.markdown(f"**개선 이유:** {why}")
+                            if affected:
+                                st.markdown(f"**영향 모듈:** `{'`, `'.join(affected)}`")
+                            inp = e.get("inputs", {})
+                            out = e.get("outputs", {})
+                            if isinstance(inp, dict) and inp:
+                                st.caption(f"입력: {str(inp)[:150]}")
+                            if isinstance(out, dict) and out:
+                                st.caption(f"출력: {str(out.get('summary', out))[:150]}")
+        except Exception as ex:
+            st.error(f"타임라인 로드 오류: {ex}")
+
     else:
         st.info(f"페이지를 찾을 수 없습니다: {page}")
 
@@ -1241,5 +1326,5 @@ with main_col:
 with ai_col:
     st.markdown('<div class="ai-panel-wrap">', unsafe_allow_html=True)
     from app.ai_panel import render_ai_panel
-    render_ai_panel(page, page_context)
+    render_ai_panel(page, page_context, user_email=_u.get("email", ""))
     st.markdown('</div>', unsafe_allow_html=True)
