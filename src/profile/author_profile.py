@@ -13,6 +13,19 @@ from typing import Dict, List, Optional
 
 from src.llm import get_llm_client
 
+
+def _clean_llm_response(raw: str) -> str:
+    text = raw.strip()
+    if text.startswith("```"):
+        parts = text.split("```")
+        if len(parts) > 2 and parts[1].strip().lower().startswith("json"):
+            text = "```".join(parts[2:]).strip()
+        elif len(parts) > 1:
+            text = parts[1].strip()
+    if text.lower().startswith("json"):
+        text = text[4:].strip()
+    return text.strip().rstrip("```").strip()
+
 _log = logging.getLogger(__name__)
 
 
@@ -194,12 +207,7 @@ PAPER TEXT:
 {paper_text[:8000]}
 """
         raw = self._client.generate(prompt)
-        raw = raw.strip()
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-        raw = raw.strip().rstrip("```").strip()
+        raw = _clean_llm_response(raw)
 
         try:
             analysis = json.loads(raw)

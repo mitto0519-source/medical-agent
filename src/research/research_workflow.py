@@ -163,7 +163,7 @@ For each topic, specify:
 Return JSON array only. No markdown."""
 
         raw = self._client.generate(prompt, max_tokens=3000)
-        raw = raw.strip().strip("```json").strip("```").strip()
+        raw = _clean_llm_response(raw)
         try:
             topics = json.loads(raw)
         except Exception as exc:
@@ -335,13 +335,8 @@ r_packages_needed:
 
 Return JSON only."""
 
-        resp = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=4000,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = resp.content[-1].text.strip().strip("```json").strip("```").strip()
+        raw = self._client.generate(prompt, max_tokens=4000)
+        raw = _clean_llm_response(raw)
         try:
             sap = json.loads(raw)
         except Exception:
@@ -392,13 +387,8 @@ Write production-quality R code with comments explaining each step.
 Include: library(), data loading, recoding, exclusions, svydesign, all analyses, table export.
 """
 
-        resp = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=6000,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        r_code = resp.content[-1].text.strip()
+        raw = self._client.generate(prompt, max_tokens=6000)
+        r_code = _clean_llm_response(raw)
         # strip markdown code blocks
         if r_code.startswith("```"):
             lines = r_code.split("\n")
@@ -475,13 +465,8 @@ recommendations:
 
 Return JSON only."""
 
-        resp = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=4000,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = resp.content[-1].text.strip().strip("```json").strip("```").strip()
+        raw = self._client.generate(prompt, max_tokens=4000)
+        raw = _clean_llm_response(raw)
         try:
             verification = json.loads(raw)
         except Exception:
@@ -624,19 +609,9 @@ DISCUSSION
 
     # ── 내부 ─────────────────────────────────────────────────────────
 
-    def _call(self, system: str, prompt: str) -> str:
-        with self._client.messages.stream(
-            model="claude-opus-4-7",
-            max_tokens=4096,
-            thinking={"type": "adaptive"},
-            system=system,
-            messages=[{"role": "user", "content": prompt}],
-        ) as stream:
-            msg = stream.get_final_message()
-            for block in msg.content:
-                if hasattr(block, "text"):
-                    return block.text
-            return ""
+    def _call(self, system: str, prompt: str, max_tokens: int = 2048) -> str:
+        response = self._client.generate(prompt, system_prompt=system, max_tokens=max_tokens)
+        return _clean_llm_response(response)
 
     def summary(self) -> str:
         """현재 워크플로우 진행 상태 요약."""

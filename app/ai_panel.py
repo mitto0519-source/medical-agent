@@ -155,13 +155,18 @@ def render_ai_panel(current_page: str, page_context: dict | None = None):
     if prompt:
         st.session_state["ai_messages"].append({"role": "user", "content": prompt})
 
-        # Resolve API key
+        # Resolve API key per provider
         saved_keys = st.session_state.get("user_api_keys", {})
         provider_key = provider.split()[0].lower()
+        default_keys = {
+            "claude": os.environ.get("ANTHROPIC_API_KEY", ""),
+            "gpt-4": os.environ.get("OPENAI_API_KEY", ""),
+            "gemini": os.environ.get("GOOGLE_API_KEY", ""),
+        }
         api_key = (
             st.session_state.get("_ai_key")
             or saved_keys.get(provider_key)
-            or os.environ.get("ANTHROPIC_API_KEY", "")
+            or default_keys.get(provider_key, "")
         )
 
         msgs_for_api = [{"role": m["role"], "content": m["content"]}

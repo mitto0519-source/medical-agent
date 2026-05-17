@@ -46,7 +46,8 @@ class ClaudeClient:
         user_message: str,
         system_prompt: str = "",
         context_chunks: Optional[List[str]] = None,
-        stream: bool = True,
+        stream: bool = False,
+        max_tokens: int = 4096,
     ) -> str:
         """Generate a response, optionally with retrieved context.
 
@@ -63,11 +64,11 @@ class ClaudeClient:
         messages = [{"role": "user", "content": user_message}]
 
         if stream:
-            return self._stream(system, messages)
+            return self._stream(system, messages, max_tokens=max_tokens)
         else:
             response = self._client.messages.create(
                 model=self.model,
-                max_tokens=4096,
+                max_tokens=max_tokens,
                 thinking={"type": "adaptive"},
                 system=system,
                 messages=messages,
@@ -79,6 +80,7 @@ class ClaudeClient:
         user_message: str,
         system_prompt: str = "",
         context_chunks: Optional[List[str]] = None,
+        max_tokens: int = 4096,
     ) -> Iterator[str]:
         """Yield text tokens as they arrive (generator).
 
@@ -89,7 +91,7 @@ class ClaudeClient:
 
         with self._client.messages.stream(
             model=self.model,
-            max_tokens=4096,
+            max_tokens=max_tokens,
             thinking={"type": "adaptive"},
             system=system,
             messages=messages,
