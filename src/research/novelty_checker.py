@@ -219,11 +219,15 @@ def _rule_based_similarity(
         else:
             different_aspects.append(entry)
 
+    from src.research.paper_writer import format_vancouver
     return {
         "paper_title": paper.get("title", ""),
         "pmid": paper.get("pmid", ""),
         "year": paper.get("year", ""),
         "journal": paper.get("journal", ""),
+        "authors": paper.get("authors", []),
+        "doi": paper.get("doi", ""),
+        "vancouver_ref": format_vancouver(paper),
         "overall_similarity": round(overall, 3),
         "dimensions": {
             "exposure": {"score": round(exp_score, 2), "level": exp_level},

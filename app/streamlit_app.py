@@ -633,7 +633,7 @@ with main_col:
                             </div>
                             <div style="font-size:12px;font-weight:600;color:#E5E7EB;margin-bottom:4px;">
                                 {p.get('paper_title','')[:100]}</div>
-                            <div style="font-size:11px;color:#64748B;">{p.get('journal','')[:60]}</div>
+                            <div style="font-size:11px;color:#64748B;margin-bottom:3px;">{p.get('vancouver_ref') or p.get('journal','')[:80]}</div>
                             {sim_row}{diff_row}
                         </div>""", unsafe_allow_html=True)
 
