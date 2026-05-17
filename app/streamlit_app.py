@@ -94,10 +94,10 @@ st.markdown("""
 .qs-title{font-size:13px;font-weight:600;color:var(--t1);}
 .qs-desc{font-size:11px;color:var(--t3);margin-top:1px;}
 .qs-arrow{margin-left:auto;color:var(--t3);font-size:14px;}
+.qs-btn-overlay{margin-top:-54px!important;position:relative;z-index:10;}
 .qs-btn-overlay .stButton>button{
     background:transparent!important;border:none!important;box-shadow:none!important;
-    height:0!important;padding:0!important;margin:-6px 0 0!important;overflow:hidden!important;
-    pointer-events:none!important;opacity:0!important;
+    height:54px!important;width:100%!important;opacity:0.01!important;cursor:pointer!important;
 }
 
 .proj-row{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);gap:12px;}
