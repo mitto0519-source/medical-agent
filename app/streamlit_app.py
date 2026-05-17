@@ -673,39 +673,133 @@ with main_col:
 
     # ── 데이터 분석 ───────────────────────────────────────────────────
     elif page == "데이터 분석":
-        st.markdown("<h2 style='color:#e6edf3;'>🔵 데이터 분석 — 데이터셋 라이브러리</h2>", unsafe_allow_html=True)
-        try:
-            from src.library.dataset_library import DatasetLibrary
-            lib = DatasetLibrary()
-            datasets = lib.list_datasets()
-            if not datasets:
-                st.warning("등록된 데이터셋이 없습니다.")
-            else:
-                sel_ds = st.selectbox("데이터셋 선택", datasets)
-                ds = lib.get_dataset(sel_ds)
-                c1, c2, c3 = st.columns(3)
-                c1.metric("변수 수", len(ds.get("variables", {})))
-                c2.metric("교란변수", len(ds.get("common_confounders", [])))
-                c3.metric("분석 주의사항", len(ds.get("analysis_notes", [])))
-                st.markdown(f"**설명:** {ds.get('description','-')}")
+        st.markdown("<h2 style='color:#e6edf3;'>🔵 데이터 분석</h2>", unsafe_allow_html=True)
+        tab_lib, tab_run = st.tabs(["📚 데이터셋 라이브러리", "📊 통계 분석 실행"])
+
+        with tab_lib:
+            try:
+                from src.library.dataset_library import DatasetLibrary
+                lib = DatasetLibrary()
+                datasets = lib.list_datasets()
+                if not datasets:
+                    st.warning("등록된 데이터셋이 없습니다.")
+                else:
+                    sel_ds = st.selectbox("데이터셋 선택", datasets)
+                    ds = lib.get_dataset(sel_ds)
+                    c1, c2, c3 = st.columns(3)
+                    c1.metric("변수 수", len(ds.get("variables", {})))
+                    c2.metric("교란변수", len(ds.get("common_confounders", [])))
+                    c3.metric("분석 주의사항", len(ds.get("analysis_notes", [])))
+                    st.markdown(f"**설명:** {ds.get('description','-')}")
+                    st.divider()
+                    search = st.text_input("변수명 검색", placeholder="예: bmi, 흡연")
+                    variables = ds.get("variables", {})
+                    if search:
+                        variables = {k: v for k, v in variables.items()
+                                     if search.lower() in k.lower() or search.lower() in v.get("label","").lower()}
+                    st.caption(f"{len(variables)}개 변수")
+                    for vn, vi in variables.items():
+                        with st.expander(f"`{vn}` — {vi.get('label','')} ({vi.get('type','')})", expanded=False):
+                            a, b = st.columns(2)
+                            with a:
+                                st.markdown(f"**타입:** {vi.get('type','-')}")
+                                st.markdown(f"**단위:** {vi.get('unit','-') or '-'}")
+                            with b:
+                                st.markdown(f"**처리:** {vi.get('processing','-')}")
+                    page_context["데이터셋"] = sel_ds
+            except Exception as e:
+                st.error(f"오류: {e}")
+
+        with tab_run:
+            st.markdown("CSV/Excel 파일을 업로드하면 실제 통계 분석을 수행합니다.")
+            uploaded_data = st.file_uploader("데이터 파일 업로드 (CSV / Excel)", type=["csv", "xlsx", "xls"])
+            if uploaded_data:
+                try:
+                    import pandas as pd
+                    if uploaded_data.name.endswith(".csv"):
+                        df = pd.read_csv(uploaded_data)
+                    else:
+                        df = pd.read_excel(uploaded_data)
+                    st.success(f"✅ {df.shape[0]:,}행 × {df.shape[1]}열 로드 완료")
+                    st.dataframe(df.head(5), use_container_width=True)
+                    st.session_state["analysis_df"] = df
+                except Exception as e:
+                    st.error(f"파일 로드 오류: {e}")
+
+            df = st.session_state.get("analysis_df")
+            if df is not None:
+                cols = list(df.columns)
                 st.divider()
-                search = st.text_input("변수명 검색", placeholder="예: bmi, 흡연")
-                variables = ds.get("variables", {})
-                if search:
-                    variables = {k: v for k, v in variables.items()
-                                 if search.lower() in k.lower() or search.lower() in v.get("label","").lower()}
-                st.caption(f"{len(variables)}개 변수")
-                for vn, vi in variables.items():
-                    with st.expander(f"`{vn}` — {vi.get('label','')} ({vi.get('type','')})", expanded=False):
-                        a, b = st.columns(2)
-                        with a:
-                            st.markdown(f"**타입:** {vi.get('type','-')}")
-                            st.markdown(f"**단위:** {vi.get('unit','-') or '-'}")
-                        with b:
-                            st.markdown(f"**처리:** {vi.get('processing','-')}")
-                page_context["데이터셋"] = sel_ds
-        except Exception as e:
-            st.error(f"오류: {e}")
+                analysis_type = st.selectbox("분석 유형", [
+                    "기술통계 (Descriptive Stats)",
+                    "독립표본 t검정 (Independent t-test)",
+                    "카이제곱 검정 (Chi-square)",
+                    "일원분산분석 (One-way ANOVA)",
+                    "피어슨 상관 (Pearson Correlation)",
+                    "로지스틱 회귀 (Logistic Regression)",
+                    "선형 회귀 (Linear Regression)",
+                ])
+
+                if analysis_type == "기술통계 (Descriptive Stats)":
+                    sel_cols = st.multiselect("분석할 변수", cols, default=cols[:5])
+                    if st.button("▶ 실행", type="primary") and sel_cols:
+                        from src.statistics.medical_stats import MedicalStatistics
+                        result_df = MedicalStatistics.descriptive_stats(df[sel_cols])
+                        st.dataframe(result_df, use_container_width=True)
+                        _log("stats_descriptive", {"cols": sel_cols}, f"기술통계: {sel_cols}")
+
+                elif analysis_type == "독립표본 t검정 (Independent t-test)":
+                    val_col = st.selectbox("연속형 변수", cols)
+                    grp_col = st.selectbox("그룹 변수 (2개 그룹)", cols)
+                    if st.button("▶ 실행", type="primary"):
+                        from src.statistics.medical_stats import MedicalStatistics
+                        res = MedicalStatistics.independent_t_test(df, val_col, grp_col)
+                        st.json(res)
+                        _log("stats_ttest", {"val": val_col, "grp": grp_col}, f"t-test: {val_col} by {grp_col}")
+
+                elif analysis_type == "카이제곱 검정 (Chi-square)":
+                    var1 = st.selectbox("변수 1", cols)
+                    var2 = st.selectbox("변수 2", cols, index=min(1, len(cols)-1))
+                    if st.button("▶ 실행", type="primary"):
+                        from src.statistics.medical_stats import MedicalStatistics
+                        res = MedicalStatistics.chi_square_test(df, var1, var2)
+                        st.json(res)
+                        _log("stats_chi2", {"var1": var1, "var2": var2}, f"chi2: {var1} vs {var2}")
+
+                elif analysis_type == "일원분산분석 (One-way ANOVA)":
+                    val_col = st.selectbox("연속형 변수", cols)
+                    grp_col = st.selectbox("그룹 변수", cols)
+                    if st.button("▶ 실행", type="primary"):
+                        from src.statistics.medical_stats import MedicalStatistics
+                        res = MedicalStatistics.one_way_anova(df, val_col, grp_col)
+                        st.json(res)
+                        _log("stats_anova", {"val": val_col, "grp": grp_col}, f"ANOVA: {val_col} by {grp_col}")
+
+                elif analysis_type == "피어슨 상관 (Pearson Correlation)":
+                    sel_cols = st.multiselect("변수 선택 (2개 이상)", cols, default=cols[:4])
+                    if st.button("▶ 실행", type="primary") and len(sel_cols) >= 2:
+                        import pandas as pd
+                        corr = df[sel_cols].corr()
+                        st.dataframe(corr.style.background_gradient(cmap="coolwarm"), use_container_width=True)
+                        _log("stats_corr", {"cols": sel_cols}, f"상관분석: {sel_cols}")
+
+                elif analysis_type == "로지스틱 회귀 (Logistic Regression)":
+                    outcome = st.selectbox("결과변수 (이진)", cols)
+                    predictors = st.multiselect("예측변수", [c for c in cols if c != outcome])
+                    if st.button("▶ 실행", type="primary") and predictors:
+                        from src.statistics.medical_stats import MedicalStatistics
+                        res = MedicalStatistics.logistic_regression(df, outcome, predictors)
+                        st.dataframe(res, use_container_width=True)
+                        _log("stats_logistic", {"outcome": outcome, "predictors": predictors}, f"로지스틱: {outcome}")
+
+                elif analysis_type == "선형 회귀 (Linear Regression)":
+                    outcome = st.selectbox("결과변수", cols)
+                    predictors = st.multiselect("예측변수", [c for c in cols if c != outcome])
+                    if st.button("▶ 실행", type="primary") and predictors:
+                        from src.statistics.medical_stats import MedicalStatistics
+                        res = MedicalStatistics.linear_regression(df, outcome, predictors)
+                        st.json(res)
+                        _log("stats_linear", {"outcome": outcome, "predictors": predictors}, f"선형회귀: {outcome}")
 
     # ── 논문 작성 ─────────────────────────────────────────────────────
     elif page == "논문 작성":
