@@ -1,6 +1,6 @@
 {
-  "built_at": "2026-05-17T07:21:07.117076Z",
-  "papers_count": 0,
+  "built_at": "2026-05-17T07:23:42.986004Z",
+  "papers_count": 2100,
   "topics": [
     "obesity",
     "diabetes",
@@ -26,9 +26,9 @@
     "NAFLD"
   ],
   "topic_count": 22,
-  "vocab_size": 0,
-  "methodology_count": 0,
-  "pattern_count": 0,
+  "vocab_size": 500,
+  "methodology_count": 64,
+  "pattern_count": 50,
   "ncbi_email": "mitto0519@gmail.com",
   "papers_per_topic": 100
 }
