@@ -20,9 +20,8 @@ except Exception:
     pass
 
 MODULES = [
-    "app.streamlit_app",
+    # Skip top-level Streamlit app imports which execute on import
     "app.ai_panel",
-    "app.main",
     "src.ingestion.pdf_reader",
     "src.ingestion.document_reader",
     "src.ingestion.chunker",
