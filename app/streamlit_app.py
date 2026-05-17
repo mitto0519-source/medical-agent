@@ -392,7 +392,17 @@ with main_col:
             try:
                 lp = Path("data/libraries/dataset_kyrbs.json")
                 if lp.exists():
-                    st.markdown('<div class="kb-item"><span style="font-size:20px;">📊</span><div><div style="font-size:13px;font-weight:600;color:#e6edf3;">K-PRESS 2025 연수</div><div style="font-size:12px;color:#8b949e;">최신 의학 논문 트렌드</div></div><div class="kb-badge">100%</div></div>', unsafe_allow_html=True)
+                    ds_kyrbs = json.loads(lp.read_text(encoding="utf-8"))
+                    n_vars = len(ds_kyrbs.get("variables", {}))
+                    st.markdown(f'<div class="kb-item"><span style="font-size:20px;">📊</span><div><div style="font-size:13px;font-weight:600;color:#e6edf3;">KYRBS (청소년건강행태조사)</div><div style="font-size:12px;color:#8b949e;">{n_vars}개 변수</div></div><div class="kb-badge">100%</div></div>', unsafe_allow_html=True)
+            except Exception: pass
+            try:
+                lp2 = Path("data/libraries/dataset_knhanes.json")
+                if lp2.exists():
+                    ds_knh = json.loads(lp2.read_text(encoding="utf-8"))
+                    n_vars2 = len(ds_knh.get("variables", {}))
+                    n_refs = len(ds_knh.get("papers_using_this", []))
+                    st.markdown(f'<div class="kb-item"><span style="font-size:20px;">🏥</span><div><div style="font-size:13px;font-weight:600;color:#e6edf3;">KNHANES (국민건강영양조사)</div><div style="font-size:12px;color:#8b949e;">{n_vars2}개 변수 · 참조논문 {n_refs}편</div></div><div class="kb-badge">100%</div></div>', unsafe_allow_html=True)
             except Exception: pass
             try:
                 from src.vectordb.store import get_vector_store
@@ -460,7 +470,7 @@ with main_col:
 
         col1, col2 = st.columns([2, 1])
         with col1:
-            dataset = st.selectbox("데이터셋", ["KYRBS"])
+            dataset = st.selectbox("데이터셋", ["KYRBS", "KNHANES", "KYRBS + KNHANES"])
             focus = st.text_input("연구 포커스", placeholder="예: 청소년 비만과 정신건강")
         with col2:
             n_topics = st.slider("생성할 주제 수", 1, 10, 5)
@@ -646,7 +656,7 @@ with main_col:
         topic_json = st.text_area("주제 JSON",
             value=json.dumps(prev, ensure_ascii=False, indent=2) if prev else '{"title":"","exposure":"","outcome":"","population":""}',
             height=180)
-        dataset = st.selectbox("데이터셋", ["KYRBS"])
+        dataset = st.selectbox("데이터셋", ["KYRBS", "KNHANES", "KYRBS + KNHANES"])
         page_context["topic_json"] = topic_json
         if st.button("✅ 타당성 검증", type="primary"):
             try:
