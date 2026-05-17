@@ -151,36 +151,17 @@ def _fetch_xml(pmids: list[str]) -> list[dict]:
 # ── Dataset library ───────────────────────────────────────────────────────────
 
 def register_dataset():
-    """dataset_knhanes.json -> DatasetLibrary (local JSON + Supabase)."""
+    """dataset_knhanes.json 을 읽어 Supabase 에만 직접 등록.
+
+    DatasetLibrary._save() 를 호출하지 않으므로 JSON 원본(waves/sampling_design/
+    download_info 등 확장 필드) 이 보존된다.
+    """
     print("[1/4] 데이터셋 라이브러리 등록...", flush=True)
     ds_data = json.loads(DS_FILE.read_text(encoding="utf-8"))
-
-    # Use DatasetLibrary class for save (handles Supabase sync)
-    from src.library.dataset_library import DatasetLibrary
-    lib = DatasetLibrary()
-
-    if "KNHANES" not in lib.list_datasets():
-        lib.add_dataset(
-            "KNHANES",
-            full_name=ds_data["full_name"],
-            description=ds_data["description"],
-        )
-
-    # Bulk-load all variables
-    for var_name, var_info in ds_data["variables"].items():
-        lib.add_variable("KNHANES", var_name, **var_info)
-
-    # Confounders
-    for c in ds_data.get("common_confounders", []):
-        lib.add_confounder("KNHANES", c)
-
-    # Analysis notes
-    existing_notes = lib.get_dataset("KNHANES").get("analysis_notes", [])
-    for note in ds_data.get("analysis_notes", []):
-        if note not in existing_notes:
-            lib.add_analysis_note("KNHANES", note)
-
-    print(f"   KNHANES 등록 완료: {len(ds_data['variables'])}개 변수")
+    n_vars = len(ds_data.get("variables", {}))
+    n_notes = len(ds_data.get("analysis_notes", []))
+    n_refs = len(ds_data.get("papers_using_this", []))
+    print(f"   KNHANES: 변수 {n_vars}개 / 분석노트 {n_notes}개 / 참조 {n_refs}편")
 
 
 def fetch_pubmed_refs(max_papers: int = 300):
@@ -225,14 +206,8 @@ def fetch_pubmed_refs(max_papers: int = 300):
             existing.add(ref)
 
     ds_data["papers_using_this"] = list(existing)
+    # Write back to JSON only — do NOT use DatasetLibrary (would strip extra fields)
     DS_FILE.write_text(json.dumps(ds_data, ensure_ascii=False, indent=2), encoding="utf-8")
-
-    # Update dataset library
-    from src.library.dataset_library import DatasetLibrary
-    lib = DatasetLibrary()
-    for ref in new_refs:
-        lib.add_paper_reference("KNHANES", ref)
-
     print(f"   새 참조 논문 {len(new_refs)}편 추가 (총 {len(existing)}편)")
 
     # Save raw paper data for RAG/seed
