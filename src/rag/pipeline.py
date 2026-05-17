@@ -13,6 +13,10 @@ from src.ingestion.web_reader import WebReader
 from src.ingestion.chunker import TextChunker
 from src.vectordb.store import get_vector_store
 from src.llm.claude_client import ClaudeClient
+try:
+    from src.llm.openai_client import OpenAIClient
+except Exception:
+    OpenAIClient = None
 
 
 class RAGPipeline:
@@ -33,6 +37,7 @@ class RAGPipeline:
         overlap: int = 100,
         top_k: int = 5,
         api_key: Optional[str] = None,
+        llm_client: Optional[object] = None,
     ):
         """
         Args:
@@ -50,7 +55,19 @@ class RAGPipeline:
         self._web_reader = WebReader()
         self._chunker = TextChunker(chunk_size=chunk_size, overlap=overlap)
         self._store = get_vector_store(persist_dir=persist_dir)
-        self._llm = ClaudeClient(api_key=api_key)
+
+        # LLM client selection: prefer explicit injection, then Claude, then OpenAI.
+        if llm_client:
+            self._llm = llm_client
+        else:
+            try:
+                self._llm = ClaudeClient(api_key=api_key)
+            except Exception:
+                if OpenAIClient is not None and os.environ.get("OPENAI_API_KEY"):
+                    self._llm = OpenAIClient(api_key=os.environ.get("OPENAI_API_KEY"))
+                else:
+                    # last resort: instantiate ClaudeClient and let it raise for visibility
+                    self._llm = ClaudeClient(api_key=api_key)
 
     # ------------------------------------------------------------------
     # Ingestion

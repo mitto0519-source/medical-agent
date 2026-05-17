@@ -1,40 +1,29 @@
-"""Dataset Library — 데이터셋과 변수 처리 방법을 라이브러리화
+"""Dataset Library — Supabase (cloud) + local JSON fallback.
 
-예: KYBRS, NHIS, KNHANES, Kangbuk Samsung Health Study 등
-각 데이터셋의 변수 목록, 정의, 처리 방법, 분석 시 주의사항을 저장.
+Cloud: ma_datasets table (name PRIMARY KEY, JSONB columns)
+Local: data/libraries/dataset_*.json
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+_log = logging.getLogger(__name__)
+
+
+def _cloud():
+    from src.cloud.db import cloud_available
+    return cloud_available()
+
+
+def _engine():
+    from src.cloud.db import get_engine
+    return get_engine()
+
 
 class DatasetLibrary:
-    """데이터셋 변수 및 처리 방법 라이브러리.
-
-    저장 구조 (per dataset)
-    -----------------------
-    {
-      "name": "KYBRS",
-      "full_name": "...",
-      "description": "...",
-      "variables": {
-        "BMI": {
-          "label": "Body Mass Index",
-          "type": "continuous",
-          "unit": "kg/m2",
-          "processing": "calculated as weight/height^2",
-          "cutoffs": {"underweight": <18.5, "normal": "18.5-24.9", ...},
-          "missing_strategy": "exclude",
-          "notes": ""
-        },
-        ...
-      },
-      "analysis_notes": [],   # 이 데이터셋 분석 시 주의사항
-      "common_confounders": [], # 이 데이터에서 자주 쓰는 공변량
-      "papers_using_this": []   # 이 데이터 쓴 논문 목록
-    }
-    """
+    """데이터셋 변수 및 처리 방법 라이브러리 — Supabase + 로컬 이중 저장."""
 
     def __init__(self, library_dir: str = "data/libraries"):
         self._dir = Path(library_dir)
@@ -47,25 +36,80 @@ class DatasetLibrary:
     # ------------------------------------------------------------------
 
     def _load_all(self):
+        # ── Cloud read ─────────────────────────────────────────────────
+        if _cloud():
+            try:
+                from sqlalchemy import text
+                with _engine().connect() as conn:
+                    rows = conn.execute(text("SELECT * FROM ma_datasets")).mappings().all()
+                for row in rows:
+                    self._datasets[row["name"]] = {
+                        "name": row["name"],
+                        "full_name": row["full_name"] or "",
+                        "description": row["description"] or "",
+                        "variables": row["variables"] or {},
+                        "analysis_notes": row["analysis_notes"] or [],
+                        "common_confounders": row["common_confounders"] or [],
+                        "papers_using_this": row["papers_using_this"] or [],
+                    }
+                if self._datasets:
+                    return
+            except Exception as e:
+                _log.warning(f"Cloud dataset load failed: {e}")
+
+        # ── Local fallback ─────────────────────────────────────────────
         for f in self._dir.glob("dataset_*.json"):
             try:
-                with open(f, "r", encoding="utf-8") as fp:
-                    ds = json.load(fp)
-                    self._datasets[ds["name"]] = ds
+                ds = json.loads(f.read_text(encoding="utf-8"))
+                self._datasets[ds["name"]] = ds
             except Exception:
                 pass
 
     def _save(self, name: str):
+        # ── Always write local JSON ────────────────────────────────────
         path = self._dir / f"dataset_{name.lower()}.json"
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(self._datasets[name], f, ensure_ascii=False, indent=2)
+        path.write_text(
+            json.dumps(self._datasets[name], ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        # ── Cloud UPSERT ───────────────────────────────────────────────
+        if _cloud():
+            try:
+                from sqlalchemy import text
+                ds = self._datasets[name]
+                with _engine().begin() as conn:
+                    conn.execute(text("""
+                        INSERT INTO ma_datasets
+                            (name, full_name, description, variables,
+                             analysis_notes, common_confounders, papers_using_this, updated_at)
+                        VALUES
+                            (:name, :full_name, :description, :variables::jsonb,
+                             :analysis_notes::jsonb, :common_confounders::jsonb,
+                             :papers_using_this::jsonb, NOW())
+                        ON CONFLICT (name) DO UPDATE SET
+                            full_name          = EXCLUDED.full_name,
+                            description        = EXCLUDED.description,
+                            variables          = EXCLUDED.variables,
+                            analysis_notes     = EXCLUDED.analysis_notes,
+                            common_confounders = EXCLUDED.common_confounders,
+                            papers_using_this  = EXCLUDED.papers_using_this,
+                            updated_at         = NOW()
+                    """), {
+                        "name": name,
+                        "full_name": ds.get("full_name", ""),
+                        "description": ds.get("description", ""),
+                        "variables": json.dumps(ds.get("variables", {}), ensure_ascii=False),
+                        "analysis_notes": json.dumps(ds.get("analysis_notes", []), ensure_ascii=False),
+                        "common_confounders": json.dumps(ds.get("common_confounders", []), ensure_ascii=False),
+                        "papers_using_this": json.dumps(ds.get("papers_using_this", []), ensure_ascii=False),
+                    })
+            except Exception as e:
+                _log.warning(f"Cloud dataset save failed for '{name}': {e}")
 
     # ------------------------------------------------------------------
     # Dataset management
     # ------------------------------------------------------------------
 
     def add_dataset(self, name: str, full_name: str = "", description: str = "") -> Dict:
-        """새 데이터셋 등록."""
         if name not in self._datasets:
             self._datasets[name] = {
                 "name": name,
@@ -90,17 +134,6 @@ class DatasetLibrary:
     # ------------------------------------------------------------------
 
     def add_variable(self, dataset_name: str, var_name: str, **kwargs) -> Dict:
-        """변수 추가 또는 업데이트.
-
-        kwargs 예시:
-            label="Body Mass Index"
-            type="continuous"  # continuous / categorical / binary / ordinal
-            unit="kg/m2"
-            processing="weight(kg)/height(m)^2"
-            cutoffs={"underweight": "<18.5", "normal": "18.5-24.9"}
-            missing_strategy="exclude"  # exclude / impute / carry_forward
-            notes="WHO 기준 적용"
-        """
         if dataset_name not in self._datasets:
             self.add_dataset(dataset_name)
 
@@ -121,7 +154,6 @@ class DatasetLibrary:
         return ds.get("variables", {}).get(var_name)
 
     def add_confounder(self, dataset_name: str, var_name: str):
-        """자주 쓰는 공변량으로 등록."""
         if dataset_name in self._datasets:
             conf = self._datasets[dataset_name]["common_confounders"]
             if var_name not in conf:
@@ -129,7 +161,6 @@ class DatasetLibrary:
                 self._save(dataset_name)
 
     def add_analysis_note(self, dataset_name: str, note: str):
-        """분석 주의사항 추가."""
         if dataset_name in self._datasets:
             self._datasets[dataset_name]["analysis_notes"].append(note)
             self._save(dataset_name)
@@ -146,7 +177,6 @@ class DatasetLibrary:
     # ------------------------------------------------------------------
 
     def get_context(self, dataset_name: str, variables: Optional[List[str]] = None) -> str:
-        """Claude 프롬프트에 삽입할 데이터셋 컨텍스트 생성."""
         ds = self._datasets.get(dataset_name)
         if not ds:
             return f"Dataset '{dataset_name}' not found in library."

@@ -1,30 +1,33 @@
 """Author Profile — Yoosun Cho Style Seed
 
-저자의 논문 스타일, 방법론 선호, 문체, 어투를 추출하고
-JSON으로 영구 저장. 논문 생성 시 이 프로파일을 기준으로 삼음.
+Supabase (cloud) with local JSON fallback.
+Cloud: ma_author_profiles table (slug PRIMARY KEY)
+Local: data/author_profiles/{slug}.json
 """
 
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
 import anthropic
 
+_log = logging.getLogger(__name__)
+
+
+def _cloud():
+    from src.cloud.db import cloud_available
+    return cloud_available()
+
+
+def _engine():
+    from src.cloud.db import get_engine
+    return get_engine()
+
 
 class AuthorProfile:
-    """저자 스타일 시드 저장소.
-
-    저장 항목
-    ---------
-    - writing_style   : 문체, 어투, 문장 구조 특성
-    - methodology     : 선호 연구 설계, 통계 방법론
-    - paper_structure : 섹션 구성 방식, 분량 배분
-    - vocabulary      : 자주 쓰는 표현, 핵심 단어
-    - citation_style  : 인용 스타일, 레퍼런스 패턴
-    - study_focus     : 연구 관심 분야, 주제 패턴
-    - raw_examples    : 실제 Abstract/Introduction 예시 텍스트
-    """
+    """저자 스타일 시드 저장소 — Supabase + 로컬 JSON 이중 저장."""
 
     def __init__(
         self,
@@ -44,12 +47,38 @@ class AuthorProfile:
     # ------------------------------------------------------------------
 
     def _load(self) -> Dict:
+        # ── Cloud read ─────────────────────────────────────────────────
+        if _cloud():
+            try:
+                from sqlalchemy import text
+                with _engine().connect() as conn:
+                    row = conn.execute(
+                        text("SELECT * FROM ma_author_profiles WHERE slug = :slug"),
+                        {"slug": self._slug},
+                    ).mappings().first()
+                if row:
+                    return {
+                        "author_name": row["author_name"],
+                        "writing_style": row["writing_style"] or {},
+                        "methodology": row["methodology"] or {},
+                        "paper_structure": row["paper_structure"] or {},
+                        "vocabulary": row["vocabulary"] or [],
+                        "citation_style": row["citation_style"] or {},
+                        "study_focus": row["study_focus"] or [],
+                        "raw_examples": row["raw_examples"] or [],
+                        "papers_analysed": row["papers_analysed"] or [],
+                        "system_prompt": row["system_prompt"] or "",
+                    }
+            except Exception as e:
+                _log.warning(f"Cloud author_profile load failed: {e}")
+
+        # ── Local fallback ─────────────────────────────────────────────
         if self._path.exists():
             try:
-                with open(self._path, "r", encoding="utf-8") as f:
-                    return json.load(f)
+                return json.loads(self._path.read_text(encoding="utf-8"))
             except Exception:
                 pass
+
         return {
             "author_name": self.author_name,
             "writing_style": {},
@@ -64,16 +93,60 @@ class AuthorProfile:
         }
 
     def save(self):
-        with open(self._path, "w", encoding="utf-8") as f:
-            json.dump(self._profile, f, ensure_ascii=False, indent=2)
+        # ── Always write local JSON ────────────────────────────────────
+        self._path.write_text(
+            json.dumps(self._profile, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        # ── Cloud UPSERT ───────────────────────────────────────────────
+        if _cloud():
+            try:
+                from sqlalchemy import text
+                p = self._profile
+                with _engine().begin() as conn:
+                    conn.execute(text("""
+                        INSERT INTO ma_author_profiles
+                            (slug, author_name, writing_style, methodology, paper_structure,
+                             vocabulary, citation_style, study_focus, raw_examples,
+                             papers_analysed, system_prompt, updated_at)
+                        VALUES
+                            (:slug, :author_name,
+                             :writing_style::jsonb, :methodology::jsonb, :paper_structure::jsonb,
+                             :vocabulary::jsonb, :citation_style::jsonb, :study_focus::jsonb,
+                             :raw_examples::jsonb, :papers_analysed::jsonb,
+                             :system_prompt, NOW())
+                        ON CONFLICT (slug) DO UPDATE SET
+                            author_name     = EXCLUDED.author_name,
+                            writing_style   = EXCLUDED.writing_style,
+                            methodology     = EXCLUDED.methodology,
+                            paper_structure = EXCLUDED.paper_structure,
+                            vocabulary      = EXCLUDED.vocabulary,
+                            citation_style  = EXCLUDED.citation_style,
+                            study_focus     = EXCLUDED.study_focus,
+                            raw_examples    = EXCLUDED.raw_examples,
+                            papers_analysed = EXCLUDED.papers_analysed,
+                            system_prompt   = EXCLUDED.system_prompt,
+                            updated_at      = NOW()
+                    """), {
+                        "slug": self._slug,
+                        "author_name": self.author_name,
+                        "writing_style": json.dumps(p.get("writing_style", {}), ensure_ascii=False),
+                        "methodology": json.dumps(p.get("methodology", {}), ensure_ascii=False),
+                        "paper_structure": json.dumps(p.get("paper_structure", {}), ensure_ascii=False),
+                        "vocabulary": json.dumps(p.get("vocabulary", []), ensure_ascii=False),
+                        "citation_style": json.dumps(p.get("citation_style", {}), ensure_ascii=False),
+                        "study_focus": json.dumps(p.get("study_focus", []), ensure_ascii=False),
+                        "raw_examples": json.dumps(p.get("raw_examples", []), ensure_ascii=False),
+                        "papers_analysed": json.dumps(p.get("papers_analysed", []), ensure_ascii=False),
+                        "system_prompt": p.get("system_prompt", ""),
+                    })
+            except Exception as e:
+                _log.warning(f"Cloud author_profile save failed: {e}")
 
     # ------------------------------------------------------------------
     # Style extraction from paper text
     # ------------------------------------------------------------------
 
     def analyse_paper(self, paper_text: str, paper_title: str = "") -> Dict:
-        """Claude로 논문 한 편을 분석해서 스타일 요소 추출."""
-
         if paper_title and paper_title in self._profile["papers_analysed"]:
             return {"status": "already_analysed", "title": paper_title}
 
@@ -119,7 +192,6 @@ Return ONLY the JSON object, no explanation.
 PAPER TEXT:
 {paper_text[:8000]}
 """
-
         response = self._client.messages.create(
             model="claude-opus-4-7",
             max_tokens=2000,
@@ -128,7 +200,6 @@ PAPER TEXT:
         )
 
         raw = response.content[-1].text if response.content else "{}"
-        # Strip markdown fences if present
         raw = raw.strip()
         if raw.startswith("```"):
             raw = raw.split("```")[1]
@@ -141,13 +212,9 @@ PAPER TEXT:
         except json.JSONDecodeError:
             analysis = {"raw": raw}
 
-        # Merge into cumulative profile
         self._merge(analysis)
-
-        # Save example text (first 1500 chars of abstract/intro)
         if len(self._profile["raw_examples"]) < 10:
             self._profile["raw_examples"].append(paper_text[:1500])
-
         if paper_title:
             self._profile["papers_analysed"].append(paper_title)
 
@@ -161,7 +228,6 @@ PAPER TEXT:
     # ------------------------------------------------------------------
 
     def _rebuild_system_prompt(self):
-        """Build the Claude system prompt that enforces this author's style."""
         p = self._profile
         ws = p.get("writing_style", {})
         meth = p.get("methodology", {})
@@ -211,7 +277,6 @@ RULES:
     # ------------------------------------------------------------------
 
     def get_system_prompt(self) -> str:
-        """Return the Claude system prompt encoding this author's style."""
         if not self._profile.get("system_prompt"):
             self._rebuild_system_prompt()
         return self._profile["system_prompt"]
@@ -237,7 +302,6 @@ RULES:
     # ------------------------------------------------------------------
 
     def _merge(self, analysis: Dict):
-        """Incrementally merge a new paper's analysis into cumulative profile."""
         for section in ("writing_style", "methodology", "paper_structure", "citation_style"):
             if section in analysis and isinstance(analysis[section], dict):
                 existing = self._profile.get(section, {})
