@@ -14,20 +14,7 @@ import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 from src.llm import get_llm_client
-=======
-=======
->>>>>>> Stashed changes
-import os
-from src.llm.claude_client import ClaudeClient
-try:
-    from src.llm.openai_client import OpenAIClient
-except Exception:
-    OpenAIClient = None
-
->>>>>>> Stashed changes
 from src.profile.author_profile import AuthorProfile
 from src.library.dataset_library import DatasetLibrary
 from src.library.methods_library import MethodsLibrary
