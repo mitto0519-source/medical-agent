@@ -33,8 +33,8 @@ ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT))
 os.chdir(ROOT)
 
-from dotenv import load_dotenv
-load_dotenv()
+from src.config.env import bootstrap
+bootstrap()
 os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 
 import fastmcp

@@ -6,12 +6,14 @@ Local: data/author_profiles/{slug}.json
 """
 
 import json
-import logging
 import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
+from src.config.logging_config import get_logger
 from src.llm import get_llm_client
+
+_log = get_logger(__name__)
 
 
 def _clean_llm_response(raw: str) -> str:
@@ -25,8 +27,6 @@ def _clean_llm_response(raw: str) -> str:
     if text.lower().startswith("json"):
         text = text[4:].strip()
     return text.strip().rstrip("```").strip()
-
-_log = logging.getLogger(__name__)
 
 
 def _cloud():
