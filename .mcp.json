@@ -5,7 +5,7 @@
       "args": []
     },
     "medical-agent": {
-      "url": "https://medical-agent-production.up.railway.app/mcp",
+      "url": "https://considerate-purpose.up.railway.app/mcp",
       "headers": {
         "Authorization": "Bearer ma-7447e07290f147213185c456e733e7c7"
       }
