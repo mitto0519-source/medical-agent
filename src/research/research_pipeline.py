@@ -15,8 +15,11 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 from src.llm import get_llm_client
 =======
+=======
+>>>>>>> Stashed changes
 import os
 from src.llm.claude_client import ClaudeClient
 try:
@@ -89,8 +92,11 @@ class ResearchPipeline:
             raise ValueError("LLM API 키가 설정되지 않았습니다. ANTHROPIC_API_KEY 또는 OPENAI_API_KEY를 .env 또는 환경변수에 추가하세요.")
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         self._llm = get_llm_client(api_key=self._api_key)
 =======
+=======
+>>>>>>> Stashed changes
         # Prefer Claude (Anthropic) if key present, otherwise OpenAI
         try:
             self._client = ClaudeClient(api_key=os.environ.get("ANTHROPIC_API_KEY") or None)
@@ -100,6 +106,9 @@ class ResearchPipeline:
             else:
                 # re-raise the original error for visibility
                 raise
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
         self.author = AuthorProfile(author_name, profile_dir, self._api_key)
@@ -218,8 +227,13 @@ Generate {n_topics} research topics as JSON array:
 Return JSON only."""
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         raw = self._llm.generate(prompt, max_tokens=3000)
         raw = _clean_llm_response(raw)
+=======
+        # Use the client wrapper's generate() method
+        raw = self._client.generate(prompt)
+>>>>>>> Stashed changes
 =======
         # Use the client wrapper's generate() method
         raw = self._client.generate(prompt)
@@ -281,7 +295,11 @@ Return JSON:
 Return JSON only."""
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         raw = self._llm.generate(prompt)
+=======
+        raw = self._client.generate(prompt)
+>>>>>>> Stashed changes
 =======
         raw = self._client.generate(prompt)
 >>>>>>> Stashed changes
