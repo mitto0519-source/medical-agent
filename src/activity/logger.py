@@ -12,12 +12,18 @@ LOG_DIR = Path("data/activity")
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 def _cloud() -> bool:
     try:
         from src.cloud.db import cloud_available
         return cloud_available()
     except Exception:
         return False
+=======
+def _cloud():
+    from src.cloud.db import cloud_available
+    return cloud_available()
+>>>>>>> Stashed changes
 =======
 def _cloud():
     from src.cloud.db import cloud_available
@@ -54,6 +60,10 @@ def log_activity(
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    # ── Cloud write ────────────────────────────────────────────────────
+>>>>>>> Stashed changes
 =======
     # ── Cloud write ────────────────────────────────────────────────────
 >>>>>>> Stashed changes
@@ -67,7 +77,11 @@ def log_activity(
                     VALUES
                         (:id, :user_email, :page, :action,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                          CAST(:input_data AS jsonb), :output_summary, CAST(:output_data AS jsonb))
+=======
+                         :input_data::jsonb, :output_summary, :output_data::jsonb)
+>>>>>>> Stashed changes
 =======
                          :input_data::jsonb, :output_summary, :output_data::jsonb)
 >>>>>>> Stashed changes
@@ -85,6 +99,10 @@ def log_activity(
             _log.warning(f"Cloud log_activity failed: {e}")
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    # ── Local write (always — offline backup) ─────────────────────────
+>>>>>>> Stashed changes
 =======
     # ── Local write (always — offline backup) ─────────────────────────
 >>>>>>> Stashed changes
