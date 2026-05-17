@@ -105,6 +105,14 @@ def render_ai_panel(current_page: str, page_context: dict | None = None):
                     st.session_state["user_api_keys"][provider_key] = api_key_input
                     st.success("저장됨")
 
+    if "_ai_provider" not in st.session_state:
+        if os.environ.get("OPENAI_API_KEY") and not os.environ.get("ANTHROPIC_API_KEY"):
+            st.session_state["_ai_provider"] = _PROVIDERS[1]
+        elif os.environ.get("ANTHROPIC_API_KEY"):
+            st.session_state["_ai_provider"] = _PROVIDERS[0]
+        else:
+            st.session_state["_ai_provider"] = _PROVIDERS[1]
+
     provider = st.session_state.get("_ai_provider", _PROVIDERS[0])
 
     # ── Build context for system prompt ───────────────────────────
