@@ -168,8 +168,6 @@ if drafts_dir.exists():
                 conn.execute(text("""
                     INSERT INTO ma_drafts (safe_title, topic_title, content)
                     VALUES (:safe_title, :topic_title, :content)
-                    ON CONFLICT (safe_title) DO UPDATE SET
-                        content = EXCLUDED.content
                 """), {
                     "safe_title": f.stem,
                     "topic_title": f.stem.replace("_", " "),
