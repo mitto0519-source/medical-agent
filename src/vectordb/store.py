@@ -45,9 +45,13 @@ class VectorStore:
         embedding_model = get_embedding_model()
         _log.debug(f"VectorStore 임베딩 모델: {embedding_model}")
 
-        self._ef = chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name=embedding_model
-        )
+        try:
+            self._ef = chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
+                model_name=embedding_model
+            )
+        except Exception as e:
+            _log.warning(f"sentence_transformers 없음 — DefaultEmbeddingFunction 사용: {e}")
+            self._ef = chromadb.utils.embedding_functions.DefaultEmbeddingFunction()
 
         self._collection = self._client.get_or_create_collection(
             name=collection_name,
@@ -195,7 +199,8 @@ def get_vector_store(persist_dir: str = "data/chromadb"):
             from src.vectordb.supabase_store import SupabaseVectorStore
             return SupabaseVectorStore()
         except Exception as e:
-            _log.warning(f"SupabaseVectorStore 초기화 실패, ChromaDB로 폴백: {e}")
+            _log.warning(f"SupabaseVectorStore 초기화 실패, NoOp으로 폴백: {e}")
+            return NoOpVectorStore()  # Supabase 설정됨 — ChromaDB 폴백 불필요
 
     try:
         return VectorStore(persist_dir=persist_dir)
