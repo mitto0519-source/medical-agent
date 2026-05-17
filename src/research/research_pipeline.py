@@ -186,8 +186,14 @@ Return JSON only."""
 
         try:
             topics = json.loads(raw)
-        except Exception:
-            topics = [{"title": raw, "exposure": "", "outcome": "", "population": ""}]
+        except Exception as exc:
+            raise ValueError(
+                f"주제 생성 결과를 JSON으로 파싱할 수 없습니다: {exc}\n원본 응답:\n{raw}"
+            )
+        if not isinstance(topics, list):
+            raise ValueError(
+                f"주제 생성 결과가 JSON 배열이 아닙니다. 원본 응답:\n{raw}"
+            )
 
         print(f"[Pipeline] 주제 {len(topics)}개 생성 완료.")
         return topics
