@@ -31,23 +31,39 @@ _DATASET_KEYWORDS: Dict[str, List[str]] = {
 # PubMed helpers
 # ──────────────────────────────────────────────────────────────────────
 
+def _pubmed_request(url: str, params: dict, retries: int = 3) -> requests.Response:
+    """PubMed API 요청 — 일시적 오류 시 지수 백오프 재시도."""
+    for attempt in range(retries):
+        try:
+            resp = requests.get(url, params=params, timeout=30)
+            resp.raise_for_status()
+            return resp
+        except (requests.Timeout, requests.ConnectionError) as e:
+            if attempt == retries - 1:
+                raise
+            time.sleep(2 ** attempt)
+        except requests.HTTPError as e:
+            if resp.status_code == 429:  # rate limit
+                time.sleep(5 * (attempt + 1))
+            else:
+                raise
+
+
 def _pubmed_search(query: str, max_results: int = 30) -> List[str]:
-    resp = requests.get(f"{BASE}/esearch.fcgi", params={
+    resp = _pubmed_request(f"{BASE}/esearch.fcgi", {
         "db": "pubmed", "term": query,
         "retmax": max_results, "retmode": "json",
-    }, timeout=30)
-    resp.raise_for_status()
+    })
     return resp.json()["esearchresult"]["idlist"]
 
 
 def _fetch_abstracts(pmids: List[str]) -> str:
     if not pmids:
         return ""
-    resp = requests.get(f"{BASE}/efetch.fcgi", params={
+    resp = _pubmed_request(f"{BASE}/efetch.fcgi", {
         "db": "pubmed", "id": ",".join(pmids),
         "rettype": "abstract", "retmode": "text",
-    }, timeout=30)
-    resp.raise_for_status()
+    })
     return resp.text
 
 
@@ -402,13 +418,29 @@ Evaluate novelty. Your score must be consistent with the rule-based score ({rule
   "similar_papers": ["<most similar paper title 1>", "<title 2>", ...]
 }}"""
 
-        response = self._client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=1500,
-            thinking={"type": "adaptive"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = response.content[-1].text.strip()
+        try:
+            response = self._client.messages.create(
+                model="claude-opus-4-7",
+                max_tokens=1500,
+                thinking={"type": "adaptive"},
+                messages=[{"role": "user", "content": prompt}],
+            )
+            raw = response.content[-1].text.strip()
+        except Exception as e:
+            return {
+                "novelty_score": int(rule_score),
+                "rule_based_score": rule_score,
+                "is_novel": rule_score >= 5,
+                "recommendation": "manual_review",
+                "gap_identified": "",
+                "suggested_angle": "",
+                "llm_justification": f"LLM 호출 실패 — 규칙기반 점수 사용: {e}",
+                "overall_similar_aspects": agg_similar,
+                "overall_different_aspects": agg_different,
+                "similar_papers": [],
+                "similarity_matrix": similarity_matrix,
+                "similarity_stats": stats,
+            }
         if raw.startswith("```"):
             raw = raw.split("```")[1]
             if raw.startswith("json"):

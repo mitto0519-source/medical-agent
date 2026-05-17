@@ -52,8 +52,11 @@ def _row_to_dict(row) -> dict:
 
 
 def _upsert_cloud(email: str, info: dict) -> None:
+    engine = _engine()
+    if not engine:
+        return
     from sqlalchemy import text
-    with _engine().begin() as conn:
+    with engine.begin() as conn:
         conn.execute(text("""
             INSERT INTO ma_users
                 (email, name, role, api_key, created_at, active, llm_provider, llm_api_key)
