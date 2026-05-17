@@ -404,28 +404,26 @@ with main_col:
         st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
         col_l, col_r = st.columns(2)
         with col_l:
-            _qs_items = [
+            st.markdown("""
+            <div class="card" style="padding-bottom:10px;">
+                <div style="font-size:15px;font-weight:700;color:#E5E7EB;margin-bottom:3px;">빠른 시작</div>
+                <p style="color:#64748B;font-size:12px;margin-bottom:14px;">원하는 작업을 선택하세요</p>
+            </div>""", unsafe_allow_html=True)
+            for ic_cls, icon, lbl, dsc, tgt in [
                 ("ic-circle ic-blue",   "📝", "연구 주제 생성",  "새로운 연구 아이디어 발굴",   "연구 주제 생성"),
                 ("ic-circle ic-indigo", "🔍", "연구 설계",       "방법론 및 타당성 검토",       "논문 설계 & 타당성"),
                 ("ic-circle ic-purple", "✍️", "논문 초안 생성",  "AI 기반 논문 초안 자동 작성", "논문 작성"),
                 ("ic-circle ic-green",  "📊", "데이터 분석",     "통계 분석 및 변수 탐색",      "데이터 분석"),
-            ]
-            _qs_rows_html = "".join(f"""
+            ]:
+                st.markdown(f"""
                 <div class="qs-row">
-                    <div class="{ic} ic-sm">{ico}</div>
+                    <div class="{ic_cls} ic-sm">{icon}</div>
                     <div style="flex:1;min-width:0;">
                         <div class="qs-title">{lbl}</div>
                         <div class="qs-desc">{dsc}</div>
                     </div>
                     <span class="qs-arrow">›</span>
-                </div>""" for ic, ico, lbl, dsc, _ in _qs_items)
-            st.markdown(f"""
-            <div class="card">
-                <div style="font-size:15px;font-weight:700;color:#E5E7EB;margin-bottom:3px;">빠른 시작</div>
-                <p style="color:#64748B;font-size:12px;margin-bottom:14px;">원하는 작업을 선택하세요</p>
-                {_qs_rows_html}
-            </div>""", unsafe_allow_html=True)
-            for _, _, lbl, dsc, tgt in _qs_items:
+                </div>""", unsafe_allow_html=True)
                 st.markdown('<div class="qs-btn-overlay">', unsafe_allow_html=True)
                 if st.button(lbl, key=f"_qs_{tgt}", use_container_width=True, help=dsc):
                     _nav(tgt)
