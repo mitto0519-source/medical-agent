@@ -145,17 +145,27 @@ class ClaudeClient:
     # ------------------------------------------------------------------
 
     def _build_system(self, base_prompt: str, context_chunks: Optional[List[str]]) -> list:
-        """Build a system prompt list with optional prompt-cached context."""
+        """Build a system prompt list with optional prompt-cached context.
+
+        Prepends the medical knowledge foundation preamble (if seed is built)
+        before any task-specific or author-style prompt.
+        """
+        preamble = ""
+        try:
+            from src.knowledge.medical_seed import get_medical_preamble
+            preamble = get_medical_preamble()
+        except Exception:
+            pass
+
+        base = base_prompt or "You are a helpful medical research assistant."
+        full_base = (preamble + base) if preamble else base
+
         if not context_chunks:
-            return base_prompt or "You are a helpful medical research assistant."
+            return full_base
 
         context_text = "\n\n---\n\n".join(context_chunks)
-        # Wrap context in a cache_control block so repeated calls reuse it
         return [
-            {
-                "type": "text",
-                "text": base_prompt or "You are a helpful medical research assistant.",
-            },
+            {"type": "text", "text": full_base},
             {
                 "type": "text",
                 "text": f"<context>\n{context_text}\n</context>",
