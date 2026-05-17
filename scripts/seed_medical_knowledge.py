@@ -173,8 +173,9 @@ def parse_xml(xml_bytes: bytes) -> list[dict]:
             abstract_parts.append(f"{label}: {text}" if label else text)
         abstract = " ".join(abstract_parts)
 
-        year_el = (article.find(".//PubDate/Year")
-                   or article.find(".//ArticleDate/Year"))
+        year_el = article.find(".//PubDate/Year")
+        if year_el is None:
+            year_el = article.find(".//ArticleDate/Year")
         year = year_el.text if year_el is not None else ""
 
         journal_el = article.find(".//Journal/Title")
