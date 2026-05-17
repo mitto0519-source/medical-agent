@@ -530,29 +530,113 @@ with main_col:
             if not title:
                 st.error("연구 제목을 입력하세요.")
             else:
-                with st.spinner("PubMed 검색 + Claude 분석 중..."):
+                with st.spinner("PubMed 검색 + 규칙기반 유사도 분석 + Claude 평가 중..."):
                     try:
                         from src.research.novelty_checker import NoveltyChecker
-                        result = NoveltyChecker().check(topic=title, exposure=exposure, outcome=outcome, population=population)
-                        score = result.get("novelty_score", 0)
-                        st.metric("신규성 점수", f"{'🟢' if score>=7 else '🟡' if score>=4 else '🔴'} {score}/10")
-                        c1, c2 = st.columns(2)
-                        with c1:
-                            st.markdown(f"**권고:** {result.get('recommendation','-')}")
-                            st.markdown(f"**연구 공백:** {result.get('gap_identified','-')}")
-                        with c2:
-                            st.markdown(f"**제안 각도:** {result.get('suggested_angle','-')}")
-                        if result.get("similar_papers"):
-                            st.subheader("유사 논문")
-                            for p in result["similar_papers"][:5]: st.markdown(f"- {p}")
+                        result = NoveltyChecker().check(
+                            topic=title, exposure=exposure,
+                            outcome=outcome, population=population,
+                        )
                         st.session_state["novelty_result"] = result
-                        _log("check_novelty", {"title": title}, f"신규성 점수 {score}/10: {title}", result)
-                        page_context.update({"novelty_score": score, "gap": result.get("gap_identified","")})
+                        _log("check_novelty", {"title": title},
+                             f"신규성 점수 {result.get('novelty_score',0)}/10: {title}", result)
+                        page_context.update({
+                            "novelty_score": result.get("novelty_score", 0),
+                            "gap": result.get("gap_identified", ""),
+                        })
                     except Exception as e:
                         st.error(f"오류: {e}")
+                        import traceback; st.code(traceback.format_exc())
 
         if "novelty_result" in st.session_state:
-            page_context["이전_신규성_결과"] = f"점수 {st.session_state['novelty_result'].get('novelty_score','')}/10"
+            result = st.session_state["novelty_result"]
+            score = result.get("novelty_score", 0)
+            rule_score = result.get("rule_based_score", score)
+            rec = result.get("recommendation", "")
+            rec_color = "#22C55E" if rec == "proceed" else "#F59E0B" if rec == "modify" else "#EF4444"
+            page_context["이전_신규성_결과"] = f"점수 {score}/10"
+
+            st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
+            s1, s2, s3 = st.columns(3)
+            with s1:
+                emoji = "🟢" if score >= 7 else "🟡" if score >= 4 else "🔴"
+                st.metric("신규성 점수 (LLM)", f"{emoji} {score}/10")
+            with s2:
+                st.metric("규칙기반 점수", f"{rule_score}/10")
+            with s3:
+                stats = result.get("similarity_stats", {})
+                st.metric("유사 논문", f"{stats.get('total_papers', 0)}편 중 {stats.get('high_similarity_count', 0)}편")
+
+            st.markdown(f"""
+            <div style="background:#1A2540;border:1px solid #1F2A44;border-radius:10px;padding:14px 18px;margin:10px 0;">
+                <span style="font-size:13px;font-weight:600;color:#94A3B8;">권고사항</span>
+                <span style="margin-left:12px;padding:3px 12px;border-radius:20px;font-size:13px;
+                             font-weight:700;background:{rec_color}22;color:{rec_color};">{rec.upper()}</span>
+                <p style="margin:8px 0 0;color:#E5E7EB;font-size:13px;">{result.get('llm_justification','')}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            col_sim, col_diff = st.columns(2)
+            with col_sim:
+                similar_list = result.get("overall_similar_aspects", [])
+                items_html = "".join(
+                    f'<div style="font-size:12px;color:#E5E7EB;padding:3px 0;">• {s}</div>'
+                    for s in similar_list
+                ) or '<div style="font-size:12px;color:#64748B;">유사 측면 없음</div>'
+                st.markdown(f"""
+                <div style="background:#1F2A44;border-left:3px solid #F59E0B;border-radius:8px;padding:12px 14px;">
+                    <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:8px;">
+                        ⚠ 기존 연구와 유사한 점 ({len(similar_list)})</div>
+                    {items_html}
+                </div>""", unsafe_allow_html=True)
+            with col_diff:
+                diff_list = result.get("overall_different_aspects", [])
+                items_html2 = "".join(
+                    f'<div style="font-size:12px;color:#E5E7EB;padding:3px 0;">• {d}</div>'
+                    for d in diff_list
+                ) or '<div style="font-size:12px;color:#64748B;">차별 측면 정보 없음</div>'
+                st.markdown(f"""
+                <div style="background:#1A2540;border-left:3px solid #22C55E;border-radius:8px;padding:12px 14px;">
+                    <div style="font-size:13px;font-weight:700;color:#22C55E;margin-bottom:8px;">
+                        ✓ 차별화 포인트 ({len(diff_list)})</div>
+                    {items_html2}
+                </div>""", unsafe_allow_html=True)
+
+            st.markdown("<div style='height:6px'></div>", unsafe_allow_html=True)
+            ga1, ga2 = st.columns(2)
+            with ga1:
+                st.markdown(f"**연구 공백:** {result.get('gap_identified', '-')}")
+            with ga2:
+                st.markdown(f"**차별화 전략:** {result.get('suggested_angle', '-')}")
+
+            matrix = result.get("similarity_matrix", [])
+            if matrix:
+                st.markdown("<div style='height:6px'></div>", unsafe_allow_html=True)
+                with st.expander(f"📊 논문별 유사도 상세 ({len(matrix)}편)", expanded=False):
+                    for p in matrix[:10]:
+                        sim = p["overall_similarity"]
+                        bar_color = "#EF4444" if sim >= 0.7 else "#F59E0B" if sim >= 0.5 else "#22C55E"
+                        bar_pct = int(sim * 100)
+                        sim_asp = ", ".join(a["label"] for a in p.get("similar_aspects", []))
+                        diff_asp = ", ".join(a["label"] for a in p.get("different_aspects", []))
+                        sim_row = f'<div style="font-size:11px;color:#F59E0B;margin-top:5px;">⚠ 유사: {sim_asp}</div>' if sim_asp else ""
+                        diff_row = f'<div style="font-size:11px;color:#22C55E;margin-top:3px;">✓ 차별: {diff_asp}</div>' if diff_asp else ""
+                        st.markdown(f"""
+                        <div style="background:#121A2B;border:1px solid #1F2A44;border-radius:8px;
+                                    padding:11px 14px;margin-bottom:7px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                                <span style="font-size:12px;font-weight:700;color:{bar_color};">{bar_pct}%</span>
+                                <div style="flex:1;background:#1F2A44;border-radius:4px;height:6px;">
+                                    <div style="width:{bar_pct}%;background:{bar_color};border-radius:4px;height:6px;"></div>
+                                </div>
+                                <span style="font-size:10px;color:#64748B;">{p.get('year','')}</span>
+                            </div>
+                            <div style="font-size:12px;font-weight:600;color:#E5E7EB;margin-bottom:4px;">
+                                {p.get('paper_title','')[:100]}</div>
+                            <div style="font-size:11px;color:#64748B;">{p.get('journal','')[:60]}</div>
+                            {sim_row}{diff_row}
+                        </div>""", unsafe_allow_html=True)
+
         _show_history("신규성 확인")
 
     # ── 논문 설계 & 타당성 ────────────────────────────────────────────
