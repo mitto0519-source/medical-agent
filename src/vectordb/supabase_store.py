@@ -21,22 +21,45 @@ from typing import Any, Optional
 
 import numpy as np
 
-
-def _get_embedding_model():
-    from sentence_transformers import SentenceTransformer
-    return SentenceTransformer("all-MiniLM-L6-v2")
-
-
 _EMBEDDING_DIM = 384  # all-MiniLM-L6-v2 출력 차원
 _model = None
+_model_unavailable = False
+
+
+def _get_embedding_model():
+    try:
+        from sentence_transformers import SentenceTransformer
+        return SentenceTransformer("all-MiniLM-L6-v2")
+    except Exception:
+        return None
 
 
 def _embed(texts: list[str]) -> list[list[float]]:
-    global _model
+    global _model, _model_unavailable
+    if _model_unavailable:
+        return _embed_fallback(texts)
     if _model is None:
         _model = _get_embedding_model()
+        if _model is None:
+            _model_unavailable = True
+            return _embed_fallback(texts)
     vecs = _model.encode(texts, normalize_embeddings=True)
     return [v.tolist() for v in vecs]
+
+
+def _embed_fallback(texts: list[str]) -> list[list[float]]:
+    """TF-IDF fallback when sentence_transformers is unavailable."""
+    import hashlib
+    result = []
+    for text in texts:
+        h = hashlib.sha256(text.lower().encode()).digest()
+        vec = np.frombuffer(h, dtype=np.uint8).astype(np.float32)
+        vec = np.resize(vec, _EMBEDDING_DIM)
+        norm = np.linalg.norm(vec)
+        if norm > 0:
+            vec /= norm
+        result.append(vec.tolist())
+    return result
 
 
 class SupabaseVectorStore:
