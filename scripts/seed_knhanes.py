@@ -153,11 +153,15 @@ def _fetch_xml(pmids: list[str]) -> list[dict]:
 def register_dataset():
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     """dataset_knhanes.json 을 읽어 Supabase 에만 직접 등록.
 
     DatasetLibrary._save() 를 호출하지 않으므로 JSON 원본(waves/sampling_design/
     download_info 등 확장 필드) 이 보존된다.
     """
+=======
+    """dataset_knhanes.json -> Supabase 등록. 로컬 JSON은 원본 그대로 보존."""
+>>>>>>> Stashed changes
 =======
     """dataset_knhanes.json -> Supabase 등록. 로컬 JSON은 원본 그대로 보존."""
 >>>>>>> Stashed changes
@@ -173,7 +177,11 @@ def register_dataset():
     n_refs = len(ds_data.get("papers_using_this", []))
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     print(f"   KNHANES: 변수 {n_vars}개 / 분석노트 {n_notes}개 / 참조 {n_refs}편")
+=======
+    print(f"   KNHANES: {n_vars}개 변수 / 분석 노트 {n_notes}개 / 참조 {n_refs}편")
+>>>>>>> Stashed changes
 =======
     print(f"   KNHANES: {n_vars}개 변수 / 분석 노트 {n_notes}개 / 참조 {n_refs}편")
 >>>>>>> Stashed changes
