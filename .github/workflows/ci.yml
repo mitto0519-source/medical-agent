@@ -9,21 +9,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    env:
+      ANTHROPIC_API_KEY: dummy-key-for-tests
+      SUPABASE_DB_URL: ""
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install dependencies
-        run: |
-          pip install anthropic python-dotenv requests flask pytest
-
+        run: pip install anthropic python-dotenv requests flask pytest
       - name: Run tests
-        env:
-          ANTHROPIC_API_KEY: "dummy-key-for-tests"
-          SUPABASE_DB_URL: ""
-        run: |
-          pytest tests/test_functional_smoke.py -q --tb=short
+        run: pytest tests/test_functional_smoke.py -q --tb=short
