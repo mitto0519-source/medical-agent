@@ -395,33 +395,71 @@ with main_col:
                     <div class="step-d">{desc}</div>
                 </div>""", unsafe_allow_html=True)
 
-        st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
         col_l, col_r = st.columns(2)
         with col_l:
-            st.markdown('<div class="card"><div style="font-size:16px;font-weight:700;color:#e6edf3;margin-bottom:4px;">🚀 빠른 시작</div><p style="color:#8b949e;font-size:13px;margin-bottom:12px;">원하는 작업을 선택하세요.</p></div>', unsafe_allow_html=True)
-            for icon, label, desc, target in [
-                ("📝", "연구 주제 생성", "새로운 연구 아이디어 발굴", "연구 주제 생성"),
-                ("🔍", "연구 설계", "방법론 및 타당성 검토", "논문 설계 & 타당성"),
-                ("✍️", "논문 초안 생성", "AI 기반 논문 초안 자동 작성", "논문 작성"),
-                ("📊", "데이터 분석", "통계 분석 및 변수 탐색", "데이터 분석"),
+            st.markdown("""
+            <div class="card" style="margin-bottom:0;">
+                <div style="font-size:15px;font-weight:700;color:#E5E7EB;margin-bottom:3px;">빠른 시작</div>
+                <p style="color:#64748B;font-size:12px;margin-bottom:14px;">원하는 작업을 선택하세요</p>
+            </div>""", unsafe_allow_html=True)
+            for ic_cls, icon, label, desc, target in [
+                ("ic-circle ic-blue",   "📝", "연구 주제 생성",  "새로운 연구 아이디어 발굴",        "연구 주제 생성"),
+                ("ic-circle ic-indigo", "🔍", "연구 설계",       "방법론 및 타당성 검토",            "논문 설계 & 타당성"),
+                ("ic-circle ic-purple", "✍️", "논문 초안 생성",  "AI 기반 논문 초안 자동 작성",      "논문 작성"),
+                ("ic-circle ic-green",  "📊", "데이터 분석",     "통계 분석 및 변수 탐색",           "데이터 분석"),
             ]:
-                if st.button(f"{icon}  {label}  ·  {desc}", key=f"_qs_{target}", use_container_width=True):
+                st.markdown(f"""
+                <div class="qs-row">
+                    <div class="{ic_cls} ic-sm">{icon}</div>
+                    <div style="flex:1;min-width:0;">
+                        <div class="qs-title">{label}</div>
+                        <div class="qs-desc">{desc}</div>
+                    </div>
+                    <span class="qs-arrow">›</span>
+                </div>""", unsafe_allow_html=True)
+                if st.button(label, key=f"_qs_{target}", use_container_width=True,
+                             help=desc):
                     _nav(target)
+                st.markdown("""<style>
+                [data-testid="stButton"]:has(button[data-testid]):last-of-type button{
+                    display:none!important;}
+                </style>""", unsafe_allow_html=True)
 
         with col_r:
-            st.markdown('<div class="card"><div style="font-size:16px;font-weight:700;color:#e6edf3;margin-bottom:4px;">🎓 학습된 자료</div><p style="color:#8b949e;font-size:13px;margin-bottom:12px;">조유선 교수님 연구 스타일 학습 자료.</p></div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="card" style="margin-bottom:0;">
+                <div style="font-size:15px;font-weight:700;color:#E5E7EB;margin-bottom:3px;">학습된 자료</div>
+                <p style="color:#64748B;font-size:12px;margin-bottom:14px;">AI 기반 지식베이스 현황</p>
+            </div>""", unsafe_allow_html=True)
             try:
                 pp = Path("data/yoosun_cho_papers.json")
                 if pp.exists():
                     cnt = len(json.loads(pp.read_text(encoding="utf-8")))
-                    st.markdown(f'<div class="kb-item"><span style="font-size:20px;">📚</span><div><div style="font-size:13px;font-weight:600;color:#e6edf3;">조유선 교수 논문 학습 완료</div><div style="font-size:12px;color:#8b949e;">총 {cnt}편</div></div><div class="kb-badge">100%</div></div>', unsafe_allow_html=True)
+                    st.markdown(f"""
+                    <div class="kb-item">
+                        <div class="ic-circle ic-indigo ic-sm">📚</div>
+                        <div style="flex:1;min-width:0;">
+                            <div style="font-size:13px;font-weight:600;color:#E5E7EB;">조유선 교수 논문</div>
+                            <div style="font-size:11px;color:#64748B;">총 {cnt}편 학습 완료</div>
+                        </div>
+                        <div class="kb-badge">READY</div>
+                    </div>""", unsafe_allow_html=True)
             except Exception: pass
             try:
                 lp = Path("data/libraries/dataset_kyrbs.json")
                 if lp.exists():
                     ds_kyrbs = json.loads(lp.read_text(encoding="utf-8"))
                     n_vars = len(ds_kyrbs.get("variables", {}))
-                    st.markdown(f'<div class="kb-item"><span style="font-size:20px;">📊</span><div><div style="font-size:13px;font-weight:600;color:#e6edf3;">KYRBS (청소년건강행태조사)</div><div style="font-size:12px;color:#8b949e;">{n_vars}개 변수</div></div><div class="kb-badge">100%</div></div>', unsafe_allow_html=True)
+                    st.markdown(f"""
+                    <div class="kb-item">
+                        <div class="ic-circle ic-blue ic-sm">📊</div>
+                        <div style="flex:1;min-width:0;">
+                            <div style="font-size:13px;font-weight:600;color:#E5E7EB;">KYRBS 청소년건강행태조사</div>
+                            <div style="font-size:11px;color:#64748B;">{n_vars}개 변수</div>
+                        </div>
+                        <div class="kb-badge">READY</div>
+                    </div>""", unsafe_allow_html=True)
             except Exception: pass
             try:
                 lp2 = Path("data/libraries/dataset_knhanes.json")
@@ -429,28 +467,59 @@ with main_col:
                     ds_knh = json.loads(lp2.read_text(encoding="utf-8"))
                     n_vars2 = len(ds_knh.get("variables", {}))
                     n_refs = len(ds_knh.get("papers_using_this", []))
-                    st.markdown(f'<div class="kb-item"><span style="font-size:20px;">🏥</span><div><div style="font-size:13px;font-weight:600;color:#e6edf3;">KNHANES (국민건강영양조사)</div><div style="font-size:12px;color:#8b949e;">{n_vars2}개 변수 · 참조논문 {n_refs}편</div></div><div class="kb-badge">100%</div></div>', unsafe_allow_html=True)
+                    st.markdown(f"""
+                    <div class="kb-item">
+                        <div class="ic-circle ic-purple ic-sm">🏥</div>
+                        <div style="flex:1;min-width:0;">
+                            <div style="font-size:13px;font-weight:600;color:#E5E7EB;">KNHANES 국민건강영양조사</div>
+                            <div style="font-size:11px;color:#64748B;">{n_vars2}개 변수 · 참조논문 {n_refs}편</div>
+                        </div>
+                        <div class="kb-badge">READY</div>
+                    </div>""", unsafe_allow_html=True)
             except Exception: pass
             try:
                 from src.vectordb.store import get_vector_store
                 cnt2 = get_vector_store().count()
                 db_lbl = "Supabase" if os.environ.get("SUPABASE_DB_URL") else "ChromaDB"
-                st.markdown(f'<div class="kb-item"><span style="font-size:20px;">🗄️</span><div><div style="font-size:13px;font-weight:600;color:#e6edf3;">의학 용어 사전 ({db_lbl})</div><div style="font-size:12px;color:#8b949e;">{cnt2:,}개 청크</div></div><div class="kb-badge">100%</div></div>', unsafe_allow_html=True)
+                st.markdown(f"""
+                <div class="kb-item">
+                    <div class="ic-circle ic-green ic-sm">🗄️</div>
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-size:13px;font-weight:600;color:#E5E7EB;">의학 지식베이스 ({db_lbl})</div>
+                        <div style="font-size:11px;color:#64748B;">{cnt2:,}개 청크</div>
+                    </div>
+                    <div class="kb-badge">READY</div>
+                </div>""", unsafe_allow_html=True)
             except Exception: pass
             if st.button("전체 학습 자료 보기 →", key="_kb_all", use_container_width=True):
                 _nav("지식베이스 관리")
 
-        st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
         recent = st.session_state.get("recent_projects", [])
-        st.markdown('<div class="card"><div style="font-size:16px;font-weight:700;color:#e6edf3;margin-bottom:14px;">최근 프로젝트</div>', unsafe_allow_html=True)
+        badge_colors = {
+            "논문 작성 중": ("#8B5CF6","rgba(139,92,246,0.12)"),
+            "데이터 분석 중": ("#3B82F6","rgba(59,130,246,0.12)"),
+            "연구 설계 중": ("#10B981","rgba(16,185,129,0.12)"),
+        }
+        proj_html = ""
         if not recent:
-            st.markdown('<div style="text-align:center;padding:24px;color:#6e7681;font-size:13px;">아직 진행 중인 프로젝트가 없습니다.</div>', unsafe_allow_html=True)
+            proj_html = '<div style="text-align:center;padding:28px;color:#4B5563;font-size:13px;">아직 진행 중인 프로젝트가 없습니다</div>'
         else:
-            badge_colors = {"논문 작성 중": "#8b5cf6", "데이터 분석 중": "#3b82f6", "연구 설계 중": "#10b981"}
             for proj in recent[:5]:
-                c = badge_colors.get(proj.get("status",""), "#6e7681")
-                st.markdown(f'<div class="proj-row"><div><div style="font-size:14px;font-weight:600;color:#e6edf3;">{proj.get("title","")}</div><div style="font-size:12px;color:#6e7681;">{proj.get("updated","")}</div></div><div class="proj-badge" style="background:{c}22;color:{c};">{proj.get("status","")}</div></div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+                fc, bg = badge_colors.get(proj.get("status",""), ("#64748B","rgba(100,116,139,0.12)"))
+                proj_html += f"""
+                <div class="proj-row">
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-size:14px;font-weight:600;color:#E5E7EB;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{proj.get("title","")}</div>
+                        <div style="font-size:11px;color:#4B5563;margin-top:2px;">{proj.get("updated","")}</div>
+                    </div>
+                    <div class="proj-badge" style="color:{fc};background:{bg};border:1px solid {fc}33;">{proj.get("status","")}</div>
+                </div>"""
+        st.markdown(f"""
+        <div class="card">
+            <div style="font-size:15px;font-weight:700;color:#E5E7EB;margin-bottom:14px;">최근 프로젝트</div>
+            {proj_html}
+        </div>""", unsafe_allow_html=True)
 
         page_context.update({"recent_projects": len(recent), "학습된_논문수": "14편"})
 
