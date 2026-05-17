@@ -110,9 +110,10 @@ class AuthorProfile:
                              papers_analysed, system_prompt, updated_at)
                         VALUES
                             (:slug, :author_name,
-                             :writing_style::jsonb, :methodology::jsonb, :paper_structure::jsonb,
-                             :vocabulary::jsonb, :citation_style::jsonb, :study_focus::jsonb,
-                             :raw_examples::jsonb, :papers_analysed::jsonb,
+                             CAST(:writing_style AS jsonb), CAST(:methodology AS jsonb),
+                             CAST(:paper_structure AS jsonb), CAST(:vocabulary AS jsonb),
+                             CAST(:citation_style AS jsonb), CAST(:study_focus AS jsonb),
+                             CAST(:raw_examples AS jsonb), CAST(:papers_analysed AS jsonb),
                              :system_prompt, NOW())
                         ON CONFLICT (slug) DO UPDATE SET
                             author_name     = EXCLUDED.author_name,

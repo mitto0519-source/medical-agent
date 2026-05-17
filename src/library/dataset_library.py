@@ -82,9 +82,10 @@ class DatasetLibrary:
                             (name, full_name, description, variables,
                              analysis_notes, common_confounders, papers_using_this, updated_at)
                         VALUES
-                            (:name, :full_name, :description, :variables::jsonb,
-                             :analysis_notes::jsonb, :common_confounders::jsonb,
-                             :papers_using_this::jsonb, NOW())
+                            (:name, :full_name, :description,
+                             CAST(:variables AS jsonb), CAST(:analysis_notes AS jsonb),
+                             CAST(:common_confounders AS jsonb), CAST(:papers_using_this AS jsonb),
+                             NOW())
                         ON CONFLICT (name) DO UPDATE SET
                             full_name          = EXCLUDED.full_name,
                             description        = EXCLUDED.description,

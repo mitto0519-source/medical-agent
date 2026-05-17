@@ -16,6 +16,11 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 os.chdir(ROOT)
 
+# Fix Windows console encoding
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+
 from dotenv import load_dotenv
 load_dotenv(ROOT / ".env", override=True)
 
@@ -27,7 +32,7 @@ if not cloud_available():
     sys.exit(1)
 
 engine = get_engine()
-print(f"Connected to Supabase.\n")
+print("Connected to Supabase.\n")
 
 
 # ── 1. Users ─────────────────────────────────────────────────────────────
@@ -55,8 +60,8 @@ if users_file.exists():
                 "api_key": info.get("api_key", ""),
                 "created_at": info.get("created_at", "2024-01-01"),
                 "active": info.get("active", True),
-                "llm_provider": info.get("llm_provider"),
-                "llm_api_key": info.get("llm_api_key"),
+                "llm_provider": info.get("llm_provider") or "Claude (Anthropic)",
+                "llm_api_key": info.get("llm_api_key") or "",
             })
     print(f"[users] Seeded {len(users)} users.")
 else:
@@ -78,9 +83,10 @@ if profiles_dir.exists():
                          papers_analysed, system_prompt, updated_at)
                     VALUES
                         (:slug, :author_name,
-                         :writing_style::jsonb, :methodology::jsonb, :paper_structure::jsonb,
-                         :vocabulary::jsonb, :citation_style::jsonb, :study_focus::jsonb,
-                         :raw_examples::jsonb, :papers_analysed::jsonb,
+                         CAST(:writing_style AS jsonb), CAST(:methodology AS jsonb),
+                         CAST(:paper_structure AS jsonb), CAST(:vocabulary AS jsonb),
+                         CAST(:citation_style AS jsonb), CAST(:study_focus AS jsonb),
+                         CAST(:raw_examples AS jsonb), CAST(:papers_analysed AS jsonb),
                          :system_prompt, NOW())
                     ON CONFLICT (slug) DO UPDATE SET
                         author_name     = EXCLUDED.author_name,
@@ -125,9 +131,10 @@ if libs_dir.exists():
                         (name, full_name, description, variables, analysis_notes,
                          common_confounders, papers_using_this, updated_at)
                     VALUES
-                        (:name, :full_name, :description, :variables::jsonb,
-                         :analysis_notes::jsonb, :common_confounders::jsonb,
-                         :papers_using_this::jsonb, NOW())
+                        (:name, :full_name, :description,
+                         CAST(:variables AS jsonb), CAST(:analysis_notes AS jsonb),
+                         CAST(:common_confounders AS jsonb), CAST(:papers_using_this AS jsonb),
+                         NOW())
                     ON CONFLICT (name) DO UPDATE SET
                         full_name          = EXCLUDED.full_name,
                         description        = EXCLUDED.description,
@@ -161,6 +168,8 @@ if drafts_dir.exists():
                 conn.execute(text("""
                     INSERT INTO ma_drafts (safe_title, topic_title, content)
                     VALUES (:safe_title, :topic_title, :content)
+                    ON CONFLICT (safe_title) DO UPDATE SET
+                        content = EXCLUDED.content
                 """), {
                     "safe_title": f.stem,
                     "topic_title": f.stem.replace("_", " "),
@@ -171,4 +180,4 @@ if drafts_dir.exists():
             print(f"  ERROR seeding draft {f.name}: {e}")
 print(f"[drafts] Seeded {seeded} drafts.")
 
-print("\n✅ Seed complete. All local data is now in Supabase.")
+print("\nSeed complete. All local data is now in Supabase.")

@@ -56,7 +56,7 @@ def log_activity(
                         (id, user_email, page, action, input_data, output_summary, output_data)
                     VALUES
                         (:id, :user_email, :page, :action,
-                         :input_data::jsonb, :output_summary, :output_data::jsonb)
+                         CAST(:input_data AS jsonb), :output_summary, CAST(:output_data AS jsonb))
                     ON CONFLICT (id) DO NOTHING
                 """), {
                     "id": entry_id,
