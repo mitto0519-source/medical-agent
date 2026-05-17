@@ -94,10 +94,15 @@ st.markdown("""
 .qs-title{font-size:13px;font-weight:600;color:var(--t1);}
 .qs-desc{font-size:11px;color:var(--t3);margin-top:1px;}
 .qs-arrow{margin-left:auto;color:var(--t3);font-size:14px;}
-.qs-btn-overlay{margin-top:-54px!important;position:relative;z-index:10;}
-.qs-btn-overlay .stButton>button{
-    background:transparent!important;border:none!important;box-shadow:none!important;
-    height:54px!important;width:100%!important;opacity:0.01!important;cursor:pointer!important;
+/* Quick-start wide action buttons */
+.main .block-container [data-testid="stColumn"] .stButton>button:not([kind="primary"]){
+    background:rgba(13,27,48,0.55)!important;border:1px solid var(--border)!important;
+    color:var(--t1)!important;text-align:left!important;justify-content:flex-start!important;
+    padding:11px 14px!important;border-radius:10px!important;margin-bottom:4px!important;
+    font-size:13px!important;transition:background .15s,border-color .15s!important;
+}
+.main .block-container [data-testid="stColumn"] .stButton>button:not([kind="primary"]):hover{
+    background:rgba(37,99,235,0.12)!important;border-color:rgba(59,130,246,0.35)!important;
 }
 
 .proj-row{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);gap:12px;}
@@ -405,29 +410,19 @@ with main_col:
         col_l, col_r = st.columns(2)
         with col_l:
             st.markdown("""
-            <div class="card" style="padding-bottom:10px;">
+            <div class="card" style="padding-bottom:14px;">
                 <div style="font-size:15px;font-weight:700;color:#E5E7EB;margin-bottom:3px;">빠른 시작</div>
                 <p style="color:#64748B;font-size:12px;margin-bottom:14px;">원하는 작업을 선택하세요</p>
             </div>""", unsafe_allow_html=True)
-            for ic_cls, icon, lbl, dsc, tgt in [
-                ("ic-circle ic-blue",   "📝", "연구 주제 생성",  "새로운 연구 아이디어 발굴",   "연구 주제 생성"),
-                ("ic-circle ic-indigo", "🔍", "연구 설계",       "방법론 및 타당성 검토",       "논문 설계 & 타당성"),
-                ("ic-circle ic-purple", "✍️", "논문 초안 생성",  "AI 기반 논문 초안 자동 작성", "논문 작성"),
-                ("ic-circle ic-green",  "📊", "데이터 분석",     "통계 분석 및 변수 탐색",      "데이터 분석"),
+            for icon, lbl, dsc, tgt in [
+                ("📝", "연구 주제 생성",  "새로운 연구 아이디어 발굴",   "연구 주제 생성"),
+                ("🔍", "연구 설계",       "방법론 및 타당성 검토",       "논문 설계 & 타당성"),
+                ("✍️", "논문 초안 생성",  "AI 기반 논문 초안 자동 작성", "논문 작성"),
+                ("📊", "데이터 분석",     "통계 분석 및 변수 탐색",      "데이터 분석"),
             ]:
-                st.markdown(f"""
-                <div class="qs-row">
-                    <div class="{ic_cls} ic-sm">{icon}</div>
-                    <div style="flex:1;min-width:0;">
-                        <div class="qs-title">{lbl}</div>
-                        <div class="qs-desc">{dsc}</div>
-                    </div>
-                    <span class="qs-arrow">›</span>
-                </div>""", unsafe_allow_html=True)
-                st.markdown('<div class="qs-btn-overlay">', unsafe_allow_html=True)
-                if st.button(lbl, key=f"_qs_{tgt}", use_container_width=True, help=dsc):
+                if st.button(f"{icon}  {lbl}  —  {dsc}", key=f"_qs_{tgt}",
+                             use_container_width=True):
                     _nav(tgt)
-                st.markdown('</div>', unsafe_allow_html=True)
 
         with col_r:
             st.markdown("""
