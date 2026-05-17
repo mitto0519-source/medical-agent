@@ -12,13 +12,14 @@ so the system degrades gracefully with no error.
 """
 
 import json
-import logging
 from functools import lru_cache
 from pathlib import Path
 from typing import Dict, List
 
+from src.config.logging_config import get_logger
+
 _SEED_DIR = Path("data/medical_knowledge_seed")
-_log = logging.getLogger(__name__)
+_log = get_logger(__name__)
 
 
 @lru_cache(maxsize=1)

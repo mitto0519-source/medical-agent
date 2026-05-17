@@ -35,11 +35,11 @@ st.set_page_config(
 # ══════════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
-:root {
-    --bg:#0B1220; --bg2:#121A2B; --bg3:#16223A; --bg4:#1A2540;
-    --border:#1F2A44; --t1:#E5E7EB; --t2:#94A3B8; --t3:#64748B;
-    --accent:#6366F1; --accent2:#818CF8; --green:#22C55E; --blue:#3B82F6;
-    --warning:#F59E0B; --danger:#EF4444;
+:root{
+    --bg:#080E1C;--bg2:#0A1528;--bg3:#0D1B30;--bg4:#0F1E38;
+    --border:rgba(56,98,180,0.18);--t1:#E5E7EB;--t2:#94A3B8;--t3:#64748B;
+    --accent:#3B82F6;--accent2:#6366F1;--green:#22C55E;--blue:#3B82F6;
+    --warning:#F59E0B;--danger:#EF4444;
 }
 #MainMenu,header,footer,.stDeployButton{visibility:hidden;display:none;}
 .stApp,[data-testid="stAppViewContainer"]{background:var(--bg)!important;}
@@ -48,51 +48,75 @@ st.markdown("""
 .main .block-container{padding:1.5rem 2rem!important;max-width:100%!important;}
 
 [data-testid="stSidebar"] .stButton>button{
-    background:transparent!important;border:none!important;color:var(--t2)!important;
-    text-align:left!important;padding:7px 14px!important;width:100%!important;
-    border-radius:6px!important;font-size:13.5px!important;transition:all 0.15s!important;
+    background:transparent!important;border:none!important;border-left:3px solid transparent!important;
+    color:var(--t2)!important;text-align:left!important;padding:7px 14px!important;width:100%!important;
+    border-radius:0 6px 6px 0!important;font-size:13.5px!important;transition:all .15s!important;
     box-shadow:none!important;margin:1px 0!important;justify-content:flex-start!important;
 }
-[data-testid="stSidebar"] .stButton>button:hover{background:rgba(124,58,237,.12)!important;color:var(--t1)!important;}
+[data-testid="stSidebar"] .stButton>button:hover{
+    background:rgba(59,130,246,.08)!important;color:var(--t1)!important;
+    border-left:3px solid rgba(59,130,246,0.35)!important;
+}
 [data-testid="stSidebar"] .stButton>button:focus{box-shadow:none!important;}
-.nav-active [data-testid="stSidebar"] .stButton>button{background:rgba(124,58,237,.2)!important;color:var(--t1)!important;font-weight:600!important;}
-.nav-section{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;padding:14px 16px 5px;}
+.nav-active [data-testid="stSidebar"] .stButton>button{
+    background:rgba(59,130,246,.15)!important;color:var(--t1)!important;
+    font-weight:600!important;border-left:3px solid #3B82F6!important;
+}
+.nav-section{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.12em;padding:16px 16px 5px;}
 .sidebar-logo{padding:18px 16px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
 .sidebar-profile{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;}
-.s-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#2563eb);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:white;flex-shrink:0;}
+.s-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1D4ED8,#6366F1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:white;flex-shrink:0;}
 .s-name{font-size:13px;font-weight:600;color:var(--t1);}
 .s-email{font-size:11px;color:var(--t3);}
+.logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#1D4ED8,#4F46E5);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 2px 10px rgba(29,78,216,0.45);}
 
-.card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;}
-.pipeline-step{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
-.step-n{font-size:11px;color:var(--accent2);font-weight:600;margin-bottom:6px;}
+.card{background:rgba(13,27,48,0.85);border:1px solid var(--border);border-radius:14px;padding:20px;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);}
+.pipeline-step{background:rgba(13,27,48,0.85);border:1px solid var(--border);border-radius:12px;padding:20px;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);}
+.pipeline-card{background:rgba(13,27,48,0.85);border:1px solid var(--border);border-radius:14px;padding:20px;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);height:100%;}
+
+.ic-circle{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;color:white;flex-shrink:0;margin-bottom:12px;}
+.ic-blue{background:linear-gradient(135deg,#1D4ED8,#3B82F6);box-shadow:0 4px 12px rgba(29,78,216,0.4);}
+.ic-indigo{background:linear-gradient(135deg,#4338CA,#6366F1);box-shadow:0 4px 12px rgba(67,56,202,0.4);}
+.ic-purple{background:linear-gradient(135deg,#6D28D9,#8B5CF6);box-shadow:0 4px 12px rgba(109,40,217,0.4);}
+.ic-green{background:linear-gradient(135deg,#065F46,#10B981);box-shadow:0 4px 12px rgba(16,185,129,0.3);}
+.ic-orange{background:linear-gradient(135deg,#B45309,#F59E0B);box-shadow:0 4px 12px rgba(245,158,11,0.3);}
+.ic-sm{width:34px;height:34px;border-radius:9px;font-size:15px;margin-bottom:0;flex-shrink:0;}
+
+.step-n{font-size:10px;color:#60A5FA;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
 .step-t{font-size:15px;font-weight:700;color:var(--t1);margin-bottom:5px;}
-.step-d{font-size:12px;color:var(--t2);}
-.kb-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:9px;background:var(--bg4);border:1px solid var(--border);margin-bottom:8px;}
-.kb-badge{background:var(--green);color:#000;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto;}
-.proj-row{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);gap:12px;}
-.proj-badge{font-size:12px;padding:3px 10px;border-radius:20px;margin-left:auto;flex-shrink:0;}
+.step-d{font-size:12px;color:var(--t2);line-height:1.55;}
 
-.history-item{padding:10px 12px;border-radius:8px;background:var(--bg4);border:1px solid var(--border);margin-bottom:6px;}
+.kb-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(13,27,48,0.6);border:1px solid var(--border);margin-bottom:8px;}
+.kb-badge{background:rgba(34,197,94,0.12);color:#4ADE80;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:auto;border:1px solid rgba(34,197,94,0.28);white-space:nowrap;}
+
+.qs-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;background:rgba(13,27,48,0.55);border:1px solid var(--border);margin-bottom:8px;}
+.qs-title{font-size:13px;font-weight:600;color:var(--t1);}
+.qs-desc{font-size:11px;color:var(--t3);margin-top:1px;}
+.qs-arrow{margin-left:auto;color:var(--t3);font-size:14px;}
+
+.proj-row{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);gap:12px;}
+.proj-badge{font-size:11px;padding:3px 10px;border-radius:20px;margin-left:auto;flex-shrink:0;font-weight:600;}
+
+.history-item{padding:10px 12px;border-radius:8px;background:rgba(13,27,48,0.6);border:1px solid var(--border);margin-bottom:6px;}
 .history-ts{font-size:10px;color:var(--t3);}
 .history-action{font-size:12px;color:var(--t2);}
 .history-summary{font-size:13px;color:var(--t1);font-weight:500;}
 
-.ai-panel-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px;height:100%;}
+.ai-panel-wrap{background:rgba(10,21,40,0.9);border:1px solid var(--border);border-radius:14px;padding:14px;height:100%;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);}
 
-[data-testid="stMetric"]{background:var(--bg3)!important;border:1px solid var(--border)!important;border-radius:10px!important;padding:16px!important;}
+[data-testid="stMetric"]{background:rgba(13,27,48,0.85)!important;border:1px solid var(--border)!important;border-radius:12px!important;padding:16px!important;-webkit-backdrop-filter:blur(8px)!important;backdrop-filter:blur(8px)!important;}
 [data-testid="stMetricLabel"]{color:var(--t2)!important;font-size:12px!important;}
 [data-testid="stMetricValue"]{color:var(--t1)!important;}
 h1,h2,h3,h4,p,label{color:var(--t1)!important;}
 .stMarkdown p{color:var(--t1)!important;}
-input,textarea,[data-testid="stTextInput"] input,[data-testid="stTextArea"] textarea{background:var(--bg3)!important;border-color:var(--border)!important;color:var(--t1)!important;}
-.stButton>button[kind="primary"]{background:linear-gradient(135deg,var(--accent),var(--accent2))!important;color:white!important;border:none!important;border-radius:8px!important;font-weight:600!important;}
+input,textarea,[data-testid="stTextInput"] input,[data-testid="stTextArea"] textarea{background:rgba(13,27,48,0.9)!important;border-color:var(--border)!important;color:var(--t1)!important;}
+.stButton>button[kind="primary"]{background:linear-gradient(135deg,#2563EB,#6366F1)!important;color:white!important;border:none!important;border-radius:8px!important;font-weight:600!important;box-shadow:0 4px 16px rgba(37,99,235,0.32)!important;}
 hr,[data-testid="stDivider"]{border-color:var(--border)!important;}
-[data-testid="stExpander"]{background:var(--bg3)!important;border:1px solid var(--border)!important;border-radius:8px!important;}
-[data-testid="stSelectbox"]>div>div{background:var(--bg3)!important;border-color:var(--border)!important;color:var(--t1)!important;}
+[data-testid="stExpander"]{background:rgba(13,27,48,0.85)!important;border:1px solid var(--border)!important;border-radius:10px!important;}
+[data-testid="stSelectbox"]>div>div{background:rgba(13,27,48,0.9)!important;border-color:var(--border)!important;color:var(--t1)!important;}
 [data-testid="stTabs"] [role="tablist"]{border-bottom:1px solid var(--border)!important;}
 [data-testid="stTabs"] button[role="tab"]{color:var(--t2)!important;}
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"]{color:var(--accent2)!important;border-bottom:2px solid var(--accent2)!important;}
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"]{color:#60A5FA!important;border-bottom:2px solid #3B82F6!important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -226,8 +250,8 @@ def _nb(label, target):
 with st.sidebar:
     st.markdown("""
     <div class="sidebar-logo">
-        <span style="font-size:22px;">🔬</span>
-        <span style="font-size:15px;font-weight:800;color:#e6edf3;">Medical-Agent</span>
+        <div class="logo-icon">🔬</div>
+        <span style="font-size:15px;font-weight:800;color:#E5E7EB;letter-spacing:-0.01em;">Medical-Agent</span>
     </div>
     """, unsafe_allow_html=True)
     st.markdown('<div style="padding:8px 8px 4px;">', unsafe_allow_html=True)
@@ -345,27 +369,30 @@ with main_col:
         with col_h:
             st.markdown("""
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-                <span style="font-size:26px;font-weight:800;color:#e6edf3;">Medical-Agent</span>
-                <span style="font-size:18px;">✨</span>
+                <span style="font-size:27px;font-weight:800;color:#E5E7EB;letter-spacing:-0.02em;">Medical-Agent</span>
+                <span style="font-size:20px;">✨</span>
             </div>
-            <p style="color:#8b949e;font-size:14px;margin:0;">조유선 스타일 의학 논문 자동 생산 파이프라인</p>
+            <p style="color:#64748B;font-size:14px;margin:0;">조유선 스타일 의학 논문 자동 생산 파이프라인</p>
             """, unsafe_allow_html=True)
         with col_btn:
             st.markdown('<div style="margin-top:6px;"></div>', unsafe_allow_html=True)
-            if st.button("➕ 새 프로젝트", type="primary", use_container_width=True):
+            if st.button("＋ 새 프로젝트 만들기", type="primary", use_container_width=True):
                 _nav("연구 주제 생성")
 
-        st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
         c1, c2, c3 = st.columns(3)
-        for col, (num, title, desc, color) in zip([c1, c2, c3], [
-            ("1 단계", "연구 주제 생성", "K-PRESS 데이터셋 · RAG 기반 주제 자동 생성", "#7c3aed"),
-            ("2 단계", "연구 설계 & 타당성", "PubMed 검색 · Claude 분석", "#8b5cf6"),
-            ("3 단계", "논문 작성", "조유선 스타일로 전체 논문 초안 생성", "#6d28d9"),
+        for col, (ic_cls, num, title, desc) in zip([c1, c2, c3], [
+            ("ic-circle ic-blue",  "01", "연구 주제 생성",     "KYRBS · KNHANES 데이터셋 + RAG 기반 주제 자동 생성"),
+            ("ic-circle ic-indigo","02", "연구 설계 & 타당성", "PubMed 검색 · Claude 심층 분석 · 변수 타당성 검토"),
+            ("ic-circle ic-purple","03", "논문 작성",          "조유선 스타일로 전체 논문 초안 자동 생성"),
         ]):
             with col:
                 st.markdown(f"""
-                <div class="pipeline-step" style="border-left:3px solid {color};">
-                    <div class="step-n">{num}</div><div class="step-t">{title}</div><div class="step-d">{desc}</div>
+                <div class="pipeline-card">
+                    <div class="{ic_cls}">{num}</div>
+                    <div class="step-n">STEP {num}</div>
+                    <div class="step-t">{title}</div>
+                    <div class="step-d">{desc}</div>
                 </div>""", unsafe_allow_html=True)
 
         st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)

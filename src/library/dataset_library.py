@@ -5,11 +5,12 @@ Local: data/libraries/dataset_*.json
 """
 
 import json
-import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-_log = logging.getLogger(__name__)
+from src.config.logging_config import get_logger
+
+_log = get_logger(__name__)
 
 
 def _cloud():

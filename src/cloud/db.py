@@ -10,7 +10,10 @@ from __future__ import annotations
 
 import os
 from functools import lru_cache
-from typing import Optional
+
+from src.config.logging_config import get_logger
+
+_log = get_logger(__name__)
 
 
 @lru_cache(maxsize=1)
@@ -30,8 +33,7 @@ def get_engine():
         _init_tables(engine)
         return engine
     except Exception as e:
-        import logging
-        logging.getLogger(__name__).warning(f"Cloud DB init failed: {e}")
+        _log.warning("Cloud DB init failed: %s", e)
         return None
 
 

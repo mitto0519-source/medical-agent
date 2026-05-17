@@ -16,10 +16,13 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from datetime import datetime
 
+from src.config.logging_config import get_logger
 from src.llm import get_llm_client
 from src.profile.author_profile import AuthorProfile
 from src.library.dataset_library import DatasetLibrary
 from src.library.methods_library import MethodsLibrary
+
+_log = get_logger(__name__)
 
 
 def _clean_llm_response(raw: str) -> str:
@@ -120,8 +123,7 @@ class ResearchWorkflow:
                         "state": json.dumps(self.state, ensure_ascii=False),
                     })
         except Exception as e:
-            import logging
-            logging.getLogger(__name__).warning(f"Workflow cloud sync failed: {e}")
+            _log.warning("Workflow cloud sync failed: %s", e)
 
     def current_stage(self) -> str:
         return self.state["current_stage"]
