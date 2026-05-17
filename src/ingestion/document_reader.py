@@ -1,34 +1,33 @@
-"""Universal document reader — PDF, Word, PowerPoint, Excel, text, images
+"""Universal document reader — PDF, Word, PowerPoint, Excel, text, images.
 
-Supported formats
------------------
-PDF     .pdf            → PyMuPDF
-Word    .docx           → python-docx
-PPT     .pptx           → python-pptx
-Excel   .xlsx .xls .csv → openpyxl / pandas
-Text    .txt .md .rst   → plain read
-Image   .jpg .jpeg .png .webp .bmp .gif → Claude Vision (text + interpretation)
+Supported formats:
+  PDF     .pdf            → PyMuPDF
+  Word    .docx           → python-docx
+  PPT     .pptx           → python-pptx
+  Excel   .xlsx .xls .csv → openpyxl / pandas
+  Text    .txt .md .rst   → plain read
+  Image   .jpg .jpeg .png .webp .bmp .gif → Claude Vision (중앙 모델 설정)
 """
+from __future__ import annotations
 
 import base64
 import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
+from src.config.logging_config import get_logger
+from src.config.models import get_vision_model
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
+_log = get_logger(__name__)
+
+
+# ── format readers ────────────────────────────────────────────────────────────
 
 def _read_pdf(path: Path) -> tuple[str, dict]:
     import fitz
     doc = fitz.open(str(path))
     meta = doc.metadata or {}
-    pages = []
-    for page in doc:
-        text = page.get_text("text").strip()
-        if text:
-            pages.append(text)
+    pages = [page.get_text("text").strip() for page in doc if page.get_text("text").strip()]
     doc.close()
     return "\n\n".join(pages), meta
 
@@ -37,10 +36,9 @@ def _read_docx(path: Path) -> tuple[str, dict]:
     from docx import Document
     doc = Document(str(path))
     paragraphs = [p.text.strip() for p in doc.paragraphs if p.text.strip()]
-    # Also extract tables
     for table in doc.tables:
         for row in table.rows:
-            row_text = " | ".join(cell.text.strip() for cell in row.cells if cell.text.strip())
+            row_text = " | ".join(c.text.strip() for c in row.cells if c.text.strip())
             if row_text:
                 paragraphs.append(row_text)
     return "\n\n".join(paragraphs), {}
@@ -51,10 +49,7 @@ def _read_pptx(path: Path) -> tuple[str, dict]:
     prs = Presentation(str(path))
     slides = []
     for i, slide in enumerate(prs.slides, 1):
-        texts = []
-        for shape in slide.shapes:
-            if hasattr(shape, "text") and shape.text.strip():
-                texts.append(shape.text.strip())
+        texts = [s.text.strip() for s in slide.shapes if hasattr(s, "text") and s.text.strip()]
         if texts:
             slides.append(f"[Slide {i}]\n" + "\n".join(texts))
     return "\n\n".join(slides), {}
@@ -63,13 +58,11 @@ def _read_pptx(path: Path) -> tuple[str, dict]:
 def _read_excel(path: Path) -> tuple[str, dict]:
     import pandas as pd
     ext = path.suffix.lower()
-    if ext == ".csv":
-        df_dict = {"Sheet1": pd.read_csv(str(path))}
-    else:
-        df_dict = pd.read_excel(str(path), sheet_name=None, engine="openpyxl")
-    sheets = []
-    for sheet_name, df in df_dict.items():
-        sheets.append(f"[Sheet: {sheet_name}]\n{df.to_string(index=False)}")
+    df_dict = (
+        {"Sheet1": pd.read_csv(str(path))} if ext == ".csv"
+        else pd.read_excel(str(path), sheet_name=None, engine="openpyxl")
+    )
+    sheets = [f"[Sheet: {name}]\n{df.to_string(index=False)}" for name, df in df_dict.items()]
     return "\n\n".join(sheets), {}
 
 
@@ -83,95 +76,89 @@ def _read_text(path: Path) -> tuple[str, dict]:
 
 
 def _read_image(path: Path, api_key: Optional[str] = None) -> tuple[str, dict]:
-    """Send image to Claude Vision and extract text + interpretation."""
+    """Claude Vision으로 이미지 OCR + 해석.
+    모델은 src.config.models.get_vision_model()에서 자동 선택.
+    """
     import anthropic
 
     ext_map = {
         ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-        ".png": "image/png", ".webp": "image/webp",
-        ".gif": "image/gif", ".bmp": "image/png",
+        ".png": "image/png",  ".webp": "image/webp",
+        ".gif": "image/gif",  ".bmp": "image/png",
     }
     media_type = ext_map.get(path.suffix.lower(), "image/png")
-
     image_data = base64.standard_b64encode(path.read_bytes()).decode("utf-8")
+
+    _, vision_model = get_vision_model()
+    _log.debug(f"이미지 OCR 모델: {vision_model}")
 
     client = anthropic.Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
     response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
+        model=vision_model,
         max_tokens=2048,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": media_type,
-                            "data": image_data,
-                        },
+        messages=[{
+            "role": "user",
+            "content": [
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": media_type,
+                        "data": image_data,
                     },
-                    {
-                        "type": "text",
-                        "text": (
-                            "Please extract ALL text visible in this image (OCR). "
-                            "Then provide a concise interpretation of what the image shows "
-                            "(charts, diagrams, tables, figures, etc.). "
-                            "Format: first the extracted text, then '--- Interpretation ---', "
-                            "then your interpretation."
-                        ),
-                    },
-                ],
-            }
-        ],
+                },
+                {
+                    "type": "text",
+                    "text": (
+                        "Please extract ALL text visible in this image (OCR). "
+                        "Then provide a concise interpretation of what the image shows "
+                        "(charts, diagrams, tables, figures, etc.). "
+                        "Format: first the extracted text, then '--- Interpretation ---', "
+                        "then your interpretation."
+                    ),
+                },
+            ],
+        }],
     )
     text = response.content[0].text if response.content else ""
-    return text, {"vision_processed": True}
+    return text, {"vision_processed": True, "vision_model": vision_model}
 
 
-# ---------------------------------------------------------------------------
-# Main class
-# ---------------------------------------------------------------------------
+# ── Constants ─────────────────────────────────────────────────────────────────
 
 SUPPORTED_EXTENSIONS = {
-    # Documents
     ".pdf", ".docx", ".pptx",
-    # Spreadsheets
     ".xlsx", ".xls", ".csv",
-    # Plain text
     ".txt", ".md", ".rst",
-    # Images
     ".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif",
 }
 
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif"}
 
 
+# ── Main class ────────────────────────────────────────────────────────────────
+
 class DocumentReader:
-    """Read any supported file and return a unified document dict."""
+    """모든 지원 형식을 읽어 통일된 document dict 반환."""
 
     def __init__(self, api_key: Optional[str] = None):
         self._api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
 
     def read(self, file_path: str) -> Dict:
-        """Extract text and metadata from a file.
+        """파일을 읽어 document dict 반환.
 
-        Returns
-        -------
-        {
-            path, filename, title, full_text, page_count,
-            file_type, metadata
-        }
+        Returns:
+            {path, filename, title, full_text, page_count, file_type, metadata}
         """
         path = Path(file_path).resolve()
         if not path.exists():
-            raise FileNotFoundError(f"File not found: {path}")
+            raise FileNotFoundError(f"파일을 찾을 수 없습니다: {path}")
 
         ext = path.suffix.lower()
         if ext not in SUPPORTED_EXTENSIONS:
             raise ValueError(
-                f"Unsupported extension '{ext}'. "
-                f"Supported: {', '.join(sorted(SUPPORTED_EXTENSIONS))}"
+                f"지원하지 않는 확장자 '{ext}'.\n"
+                f"지원 형식: {', '.join(sorted(SUPPORTED_EXTENSIONS))}"
             )
 
         if ext == ".pdf":
@@ -193,11 +180,11 @@ class DocumentReader:
             full_text, meta = _read_image(path, self._api_key)
             file_type = "image"
         else:
-            raise ValueError(f"Unhandled extension: {ext}")
+            raise ValueError(f"처리되지 않은 확장자: {ext}")
 
         title = meta.get("title") or path.stem
         word_count = len(full_text.split())
-        page_count = max(1, word_count // 400)  # rough estimate for non-PDF
+        page_count = max(1, word_count // 400)
 
         return {
             "path": str(path),
@@ -210,23 +197,21 @@ class DocumentReader:
         }
 
     def read_directory(self, directory: str) -> List[Dict]:
-        """Read all supported files in a directory (non-recursive)."""
+        """디렉토리의 모든 지원 파일 읽기 (비재귀)."""
         dir_path = Path(directory)
         if not dir_path.is_dir():
-            raise NotADirectoryError(f"Not a directory: {dir_path}")
-
+            raise NotADirectoryError(f"디렉토리가 아닙니다: {dir_path}")
         results = []
         for f in sorted(dir_path.iterdir()):
             if f.suffix.lower() in SUPPORTED_EXTENSIONS:
                 try:
                     results.append(self.read(str(f)))
                 except Exception as exc:
-                    print(f"[DocumentReader] Skipping {f.name}: {exc}")
-
+                    _log.warning(f"[DocumentReader] 스킵: {f.name} — {exc}")
         return results
 
     def read_directory_recursive(self, directory: str) -> List[Dict]:
-        """Read all supported files recursively."""
+        """디렉토리의 모든 지원 파일 재귀 읽기."""
         dir_path = Path(directory)
         results = []
         for f in sorted(dir_path.rglob("*")):
@@ -234,5 +219,5 @@ class DocumentReader:
                 try:
                     results.append(self.read(str(f)))
                 except Exception as exc:
-                    print(f"[DocumentReader] Skipping {f.name}: {exc}")
+                    _log.warning(f"[DocumentReader] 스킵: {f.name} — {exc}")
         return results
