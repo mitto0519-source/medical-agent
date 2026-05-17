@@ -290,12 +290,30 @@ Return JSON only."""
             reference_context=reference_context,
         )
 
-        # 저장
+        # 로컬 저장
         safe_title = "".join(c if c.isalnum() or c in " _-" else "_" for c in topic.get("title", "draft"))[:60]
         out_path = self._output_dir / f"{safe_title}.txt"
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(draft)
         print(f"[Pipeline] 논문 저장: {out_path}")
+
+        # 클라우드 저장 (SUPABASE_DB_URL 설정 시)
+        try:
+            from src.cloud.db import cloud_available, get_engine
+            if cloud_available():
+                from sqlalchemy import text
+                with get_engine().begin() as conn:
+                    conn.execute(text("""
+                        INSERT INTO ma_drafts (safe_title, topic_title, content)
+                        VALUES (:safe_title, :topic_title, :content)
+                    """), {
+                        "safe_title": safe_title,
+                        "topic_title": topic.get("title", ""),
+                        "content": draft,
+                    })
+                print(f"[Pipeline] 클라우드 저장 완료: ma_drafts/{safe_title}")
+        except Exception as e:
+            print(f"[Pipeline] 클라우드 저장 실패 (로컬만 저장됨): {e}")
 
         return draft
 
