@@ -61,6 +61,10 @@ class TextChunker:
 
         return chunks
 
+    def chunk(self, text: str, metadata: dict | None = None) -> List[dict]:
+        """Alias for chunk_text() — used by app/streamlit_app.py."""
+        return self.chunk_text(text, metadata=metadata)
+
     def chunk_document(self, doc: dict) -> List[dict]:
         """Chunk a document dict produced by PDFReader.
 

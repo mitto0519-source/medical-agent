@@ -165,14 +165,40 @@ class VectorStore:
         return len(ids)
 
 
-def get_vector_store(persist_dir: str = "data/chromadb") -> "VectorStore":
+class NoOpVectorStore:
+    """Fallback when neither Supabase nor ChromaDB is available.
+    All operations silently succeed but store nothing."""
+    def add_chunks(self, chunks):
+        return 0
+    def search(self, query, n_results=5, where=None):
+        return []
+    def count(self):
+        return 0
+    def list_sources(self):
+        return []
+    def delete_source(self, filename):
+        return 0
+    def close(self):
+        pass
+
+
+def get_vector_store(persist_dir: str = "data/chromadb"):
     """환경변수에 따라 Supabase 또는 로컬 ChromaDB VectorStore 반환.
 
     - SUPABASE_DB_URL 설정 시 → SupabaseVectorStore (Streamlit Cloud 기본)
-    - 미설정 시 → VectorStore (ChromaDB, pip install chromadb 필요)
+    - 미설정 시 → VectorStore (ChromaDB)
+    - 둘 다 실패 시 → NoOpVectorStore (silent fallback)
     """
     import os
     if os.environ.get("SUPABASE_DB_URL"):
-        from src.vectordb.supabase_store import SupabaseVectorStore
-        return SupabaseVectorStore()  # type: ignore[return-value]
-    return VectorStore(persist_dir=persist_dir)  # raises ImportError if chromadb not installed
+        try:
+            from src.vectordb.supabase_store import SupabaseVectorStore
+            return SupabaseVectorStore()
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning(f"SupabaseVectorStore 초기화 실패, NoOp 사용: {e}")
+            return NoOpVectorStore()
+    try:
+        return VectorStore(persist_dir=persist_dir)
+    except ImportError:
+        return NoOpVectorStore()

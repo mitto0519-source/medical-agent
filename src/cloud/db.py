@@ -108,6 +108,18 @@ def _init_tables(engine) -> None:
         )
         """,
         "CREATE INDEX IF NOT EXISTS ma_drafts_author_idx ON ma_drafts (author_email, created_at DESC)",
+        """
+        CREATE TABLE IF NOT EXISTS ma_workflows (
+            workflow_id  TEXT        PRIMARY KEY,
+            user_email   TEXT,
+            dataset      TEXT        NOT NULL DEFAULT 'KYRBS',
+            current_stage TEXT       NOT NULL DEFAULT 'topic_proposal',
+            state        JSONB       NOT NULL DEFAULT '{}',
+            created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS ma_workflows_user_idx ON ma_workflows (user_email, updated_at DESC)",
     ]
     with engine.begin() as conn:
         for stmt in ddl_statements:

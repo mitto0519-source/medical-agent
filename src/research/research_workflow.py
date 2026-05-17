@@ -99,6 +99,29 @@ class ResearchWorkflow:
     def _save(self):
         with open(self._path, "w", encoding="utf-8") as f:
             json.dump(self.state, f, ensure_ascii=False, indent=2)
+        try:
+            from src.cloud.db import cloud_available, get_engine
+            from sqlalchemy import text
+            if cloud_available():
+                with get_engine().begin() as conn:
+                    conn.execute(text("""
+                        INSERT INTO ma_workflows
+                            (workflow_id, dataset, current_stage, state, updated_at)
+                        VALUES
+                            (:wid, :ds, :stage, CAST(:state AS jsonb), NOW())
+                        ON CONFLICT (workflow_id) DO UPDATE SET
+                            current_stage = EXCLUDED.current_stage,
+                            state         = EXCLUDED.state,
+                            updated_at    = NOW()
+                    """), {
+                        "wid":   self.workflow_id,
+                        "ds":    self.state.get("dataset", "KYRBS"),
+                        "stage": self.state.get("current_stage", "topic_proposal"),
+                        "state": json.dumps(self.state, ensure_ascii=False),
+                    })
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning(f"Workflow cloud sync failed: {e}")
 
     def current_stage(self) -> str:
         return self.state["current_stage"]

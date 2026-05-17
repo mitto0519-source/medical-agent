@@ -47,10 +47,17 @@ class StorageManager:
             local_count = self._local.count()
         except Exception:
             pass
+        try:
+            from src.cloud.db import cloud_available
+            cloud_ok = cloud_available()
+        except Exception:
+            cloud_ok = False
         return {
             "notebooklm": "online" if nlm_ok else "offline",
-            "local_chromadb_chunks": local_count,
-            "active_storage": "NotebookLM" if nlm_ok else "ChromaDB (fallback)",
+            "supabase": "online" if cloud_ok else "offline",
+            "vector_chunks": local_count,
+            "active_storage": "NotebookLM" if nlm_ok else "Supabase/ChromaDB",
+            "cloud": "connected" if cloud_ok else "disconnected",
         }
 
     # ------------------------------------------------------------------

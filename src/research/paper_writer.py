@@ -5,9 +5,63 @@ AuthorProfile(스타일 시드) + MethodsLibrary + DatasetLibrary + RAG컨텍스
 """
 
 import os
+import re
 from typing import Dict, List, Optional
 
 from src.llm import get_llm_client
+
+
+def format_vancouver(paper: dict, index: int = 1) -> str:
+    """Format a paper dict as a Vancouver-style reference.
+
+    paper keys: title, authors (list|str), journal, year, volume, issue, pages,
+                pmid, doi
+    """
+    authors = paper.get("authors") or []
+    if isinstance(authors, list):
+        if len(authors) > 6:
+            author_str = ", ".join(authors[:6]) + ", et al"
+        else:
+            author_str = ", ".join(authors)
+    else:
+        author_str = str(authors)
+
+    title = paper.get("title", "").rstrip(".")
+    journal = paper.get("journal", "") or paper.get("source", "")
+    year = paper.get("year", "") or paper.get("pub_date", "")
+    volume = paper.get("volume", "")
+    issue = paper.get("issue", "")
+    pages = paper.get("pages", "") or paper.get("page", "")
+    doi = paper.get("doi", "")
+    pmid = paper.get("pmid", "")
+
+    vol_issue = f"{volume}" + (f"({issue})" if issue else "")
+    location = f"{vol_issue}:{pages}".strip(":") if (vol_issue or pages) else ""
+
+    parts = []
+    if author_str:
+        parts.append(author_str + ".")
+    if title:
+        parts.append(title + ".")
+    if journal:
+        journal_part = f"{journal}." + (f" {year};" if year else "")
+        if location:
+            journal_part += location + "."
+        parts.append(journal_part)
+    elif year:
+        parts.append(f"{year}.")
+    if doi:
+        parts.append(f"doi:{doi}")
+    elif pmid:
+        parts.append(f"PMID:{pmid}")
+
+    ref = f"{index}. " + " ".join(parts)
+    return re.sub(r"\s+", " ", ref).strip()
+
+
+def format_references_vancouver(papers: list) -> str:
+    """Return a numbered Vancouver reference list from a list of paper dicts."""
+    return "\n".join(format_vancouver(p, i + 1) for i, p in enumerate(papers))
 
 
 class PaperWriter:
