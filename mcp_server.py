@@ -355,7 +355,7 @@ def sync_between_admins(ctx=None) -> dict:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Medical-Agent MCP Server")
-    parser.add_argument("--port", type=int, default=8765, help="HTTP port (default: 8765)")
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8765)), help="HTTP port (default: 8765)")
     parser.add_argument("--host", default="0.0.0.0", help="Bind host (default: 0.0.0.0)")
     parser.add_argument("--stdio", action="store_true", help="Run in stdio mode (Claude Code)")
     args = parser.parse_args()
