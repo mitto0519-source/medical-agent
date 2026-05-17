@@ -22,6 +22,7 @@ ROLES = {"super_admin", "admin", "viewer"}
 SUPER_ADMIN_EMAILS = {"mitto0519@gmail.com", "misslonghorn46@gmail.com"}
 
 
+<<<<<<< Updated upstream
 # ── Cloud helpers ──────────────────────────────────────────────────────
 
 def _cloud() -> bool:
@@ -30,6 +31,15 @@ def _cloud() -> bool:
         return cloud_available()
     except Exception:
         return False
+=======
+# ──────────────────────────────────────────────────────────────────────
+# Cloud helpers
+# ──────────────────────────────────────────────────────────────────────
+
+def _cloud():
+    from src.cloud.db import cloud_available
+    return cloud_available()
+>>>>>>> Stashed changes
 
 
 def _engine():
@@ -38,13 +48,21 @@ def _engine():
 
 
 def _row_to_dict(row) -> dict:
+<<<<<<< Updated upstream
+=======
+    """Convert a SQLAlchemy Row / Mapping to a users.json-compatible dict."""
+>>>>>>> Stashed changes
     d = dict(row._mapping) if hasattr(row, "_mapping") else dict(row)
     return {
         "email": d["email"],
         "name": d.get("name", ""),
         "role": d.get("role", "viewer"),
         "api_key": d.get("api_key", ""),
+<<<<<<< Updated upstream
         "active": bool(d.get("active", True)),
+=======
+        "active": d.get("active", True),
+>>>>>>> Stashed changes
         "created_at": str(d.get("created_at", "")),
         "llm_provider": d.get("llm_provider") or "Claude (Anthropic)",
         "llm_api_key": d.get("llm_api_key") or "",
@@ -52,11 +70,16 @@ def _row_to_dict(row) -> dict:
 
 
 def _upsert_cloud(email: str, info: dict) -> None:
+<<<<<<< Updated upstream
     engine = _engine()
     if not engine:
         return
     from sqlalchemy import text
     with engine.begin() as conn:
+=======
+    from sqlalchemy import text
+    with _engine().begin() as conn:
+>>>>>>> Stashed changes
         conn.execute(text("""
             INSERT INTO ma_users
                 (email, name, role, api_key, created_at, active, llm_provider, llm_api_key)
@@ -76,12 +99,23 @@ def _upsert_cloud(email: str, info: dict) -> None:
             "api_key": info.get("api_key", ""),
             "created_at": info.get("created_at", datetime.now().strftime("%Y-%m-%d")),
             "active": info.get("active", True),
+<<<<<<< Updated upstream
             "llm_provider": info.get("llm_provider"),
             "llm_api_key": info.get("llm_api_key") or "",
         })
 
 
 # ── Local helpers ──────────────────────────────────────────────────────
+=======
+            "llm_provider": info.get("llm_provider") or info.get("llm_settings", {}).get("provider"),
+            "llm_api_key": info.get("llm_api_key") or info.get("llm_settings", {}).get("api_key", ""),
+        })
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Local helpers
+# ──────────────────────────────────────────────────────────────────────
+>>>>>>> Stashed changes
 
 def _default_users() -> dict:
     return {
@@ -112,9 +146,18 @@ def _save_local(users: dict) -> None:
     _USERS_FILE.write_text(json.dumps(users, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+<<<<<<< Updated upstream
 # ── Core load/save — dual write ────────────────────────────────────────
 
 def _load() -> dict:
+=======
+# ──────────────────────────────────────────────────────────────────────
+# Core load/save — dual write
+# ──────────────────────────────────────────────────────────────────────
+
+def _load() -> dict:
+    """Return {email: {...}} dict — from Supabase or local JSON."""
+>>>>>>> Stashed changes
     if _cloud():
         try:
             from sqlalchemy import text
@@ -122,11 +165,19 @@ def _load() -> dict:
                 rows = conn.execute(text("SELECT * FROM ma_users")).mappings().all()
             return {r["email"]: _row_to_dict(r) for r in rows}
         except Exception as e:
+<<<<<<< Updated upstream
             _log.warning(f"Cloud _load() failed, using local: {e}")
+=======
+            _log.warning(f"Cloud _load() failed, falling back to local: {e}")
+>>>>>>> Stashed changes
     return _load_local()
 
 
 def _save(users: dict) -> None:
+<<<<<<< Updated upstream
+=======
+    """Write to local JSON (always) and Supabase (when available)."""
+>>>>>>> Stashed changes
     _save_local(users)
     if _cloud():
         try:
@@ -136,9 +187,18 @@ def _save(users: dict) -> None:
             _log.warning(f"Cloud _save() failed: {e}")
 
 
+<<<<<<< Updated upstream
 # ── Public API ─────────────────────────────────────────────────────────
 
 def get_user_by_key(api_key: str) -> Optional[dict]:
+=======
+# ──────────────────────────────────────────────────────────────────────
+# Public API
+# ──────────────────────────────────────────────────────────────────────
+
+def get_user_by_key(api_key: str) -> Optional[dict]:
+    """API 키로 사용자 조회. 클라우드에서는 인덱스 단건 조회."""
+>>>>>>> Stashed changes
     if _cloud():
         try:
             from sqlalchemy import text
@@ -225,12 +285,17 @@ def remove_user(email: str) -> bool:
                     text("UPDATE ma_users SET active = FALSE WHERE email = :e"),
                     {"e": email},
                 )
+<<<<<<< Updated upstream
             if result.rowcount > 0:
                 users = _load_local()
                 if email in users:
                     users[email]["active"] = False
                     _save_local(users)
                 return True
+=======
+            if result.rowcount == 0:
+                return False
+>>>>>>> Stashed changes
         except Exception as e:
             _log.warning(f"Cloud remove_user failed: {e}")
     users = _load_local()
