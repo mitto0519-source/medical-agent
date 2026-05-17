@@ -151,13 +151,19 @@ class ClaudeClient:
         )
         return self.generate(paper_text, system_prompt=system, task="summary")
 
-    def answer_from_papers(self, question: str, context_chunks: List[str]) -> str:
-        system = (
+    def answer_from_papers(
+        self,
+        question: str,
+        context_chunks: List[str],
+        context_prefix: str = "",
+    ) -> str:
+        base = (
             "You are a medical research assistant. "
             "Answer the question using ONLY the provided paper excerpts. "
             "If the answer is not in the excerpts, say so explicitly. "
             "Cite the source filename when available."
         )
+        system = f"{context_prefix}\n\n{base}" if context_prefix else base
         return self.generate(
             question, system_prompt=system,
             context_chunks=context_chunks, task="qa",

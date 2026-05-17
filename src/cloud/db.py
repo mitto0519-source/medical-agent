@@ -122,6 +122,24 @@ def _init_tables(engine) -> None:
         )
         """,
         "CREATE INDEX IF NOT EXISTS ma_workflows_user_idx ON ma_workflows (user_email, updated_at DESC)",
+        """
+        CREATE TABLE IF NOT EXISTS ma_change_log (
+            id           TEXT        PRIMARY KEY,
+            timestamp    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            user_email   TEXT        NOT NULL DEFAULT '',
+            session_id   TEXT        NOT NULL DEFAULT '',
+            action_type  TEXT        NOT NULL DEFAULT 'general',
+            title        TEXT        NOT NULL,
+            description  TEXT        NOT NULL DEFAULT '',
+            what_changed JSONB       NOT NULL DEFAULT '{}',
+            why_better   TEXT        NOT NULL DEFAULT '',
+            inputs       JSONB       NOT NULL DEFAULT '{}',
+            outputs      JSONB       NOT NULL DEFAULT '{}',
+            impact       JSONB       NOT NULL DEFAULT '{}'
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS ma_change_log_user_idx ON ma_change_log (user_email, timestamp DESC)",
+        "CREATE INDEX IF NOT EXISTS ma_change_log_type_idx ON ma_change_log (action_type, timestamp DESC)",
     ]
     with engine.begin() as conn:
         for stmt in ddl_statements:

@@ -22,6 +22,7 @@ from typing import Dict, List, Optional
 from src.rag.pipeline import RAGPipeline
 from src.llm import get_llm_client
 from src.agent.memory import AgentMemory
+from src.memory.continuity import ContinuityManager
 
 
 class MedicalAgent:
@@ -51,6 +52,8 @@ class MedicalAgent:
         papers_dir: str = "data/papers",
         memory_path: str = "data/agent_memory.json",
         api_key: Optional[str] = None,
+        user_email: str = "",
+        session_id: Optional[str] = None,
     ):
         self._llm = get_llm_client(api_key=api_key)
         self._rag = RAGPipeline(
@@ -60,6 +63,10 @@ class MedicalAgent:
             llm_client=self._llm,
         )
         self._memory = AgentMemory(memory_path=memory_path)
+        self._continuity = ContinuityManager(
+            user_email=user_email,
+            session_id=session_id,
+        )
 
     # ------------------------------------------------------------------
     # Learning
@@ -79,6 +86,12 @@ class MedicalAgent:
         """
         result = self._rag.ingest_file(file_path)
         self._memory.log_ingest(result)
+        self._continuity.record(
+            title=f"논문 학습: {result.get('filename', file_path)}",
+            action_type="learn",
+            inputs={"file_path": file_path},
+            outputs={"chunks_added": result.get("chunks_added", 0), "summary": result.get("summary", "")[:200]},
+        )
 
         # Auto-summarise newly added papers (skip if already summarised)
         filename = result["filename"]
@@ -141,6 +154,7 @@ class MedicalAgent:
         """Answer a question from all indexed papers.
 
         The answer and sources are saved to memory for continuity.
+        Long-term history is injected into the system prompt automatically.
 
         Args:
             question: Natural-language question
@@ -149,10 +163,17 @@ class MedicalAgent:
         Returns:
             {answer, sources}
         """
-        result = self._rag.ask(question, filename_filter=filename_filter)
+        # Inject long-term continuity context so the agent never forgets past work
+        preamble = self._continuity.get_preamble()
+        result = self._rag.ask(question, filename_filter=filename_filter, context_prefix=preamble)
         self._memory.log_qa(question, result["answer"], result["sources"])
+        self._continuity.record(
+            title=f"Q&A: {question[:80]}",
+            action_type="qa",
+            inputs={"question": question},
+            outputs={"answer": result["answer"][:300], "summary": result["answer"][:100]},
+        )
 
-        # Suggest follow-up questions by examining unanswered aspects
         if "not found" not in result["answer"].lower():
             self._suggest_follow_ups(question, result["answer"])
 
