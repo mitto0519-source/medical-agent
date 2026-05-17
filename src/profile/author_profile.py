@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
-import anthropic
+from src.llm import get_llm_client
 
 _log = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ class AuthorProfile:
         self._slug = author_name.lower().replace(" ", "_")
         self._path = Path(profile_dir) / f"{self._slug}.json"
         self._path.parent.mkdir(parents=True, exist_ok=True)
-        self._client = anthropic.Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
+        self._client = get_llm_client(api_key=api_key)
         self._profile = self._load()
 
     # ------------------------------------------------------------------
