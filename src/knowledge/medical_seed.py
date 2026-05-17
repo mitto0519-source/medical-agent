@@ -118,9 +118,9 @@ def get_medical_preamble(
         preamble += f"MEDICAL WRITING PATTERNS:\n{patterns_block}\n\n"
 
     preamble += (
-        "Apply this foundation automatically — it is your default substrate, not a list\n"
+        "Apply this foundation automatically -- it is your default substrate, not a list\n"
         "to mechanically reproduce. Think and write as an expert medical researcher.\n"
-        "─────────────────────────────────────────────────────────\n"
+        "---------------------------------------------------------\n"
     )
 
     return preamble

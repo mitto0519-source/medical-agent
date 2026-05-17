@@ -349,9 +349,9 @@ def run(resume: bool = False):
         json.dumps(topic_dist, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
-    from datetime import datetime
+    from datetime import datetime, timezone
     meta = {
-        "built_at": datetime.utcnow().isoformat() + "Z",
+        "built_at": datetime.now(timezone.utc).isoformat(),
         "papers_count": len(all_papers),
         "topics": list(topic_dist.keys()),
         "topic_count": len(topic_dist),
@@ -369,7 +369,7 @@ def run(resume: bool = False):
     print(f"Methodology:   {len(features['methodology_terms'])} terms")
     print(f"Patterns:      {len(features['sentence_patterns'])}")
     print(f"\nSeed saved to {SEED_DIR}/")
-    print("Run your app — medical knowledge preamble will be auto-injected.")
+    print("Run your app -- medical knowledge preamble will be auto-injected.")
 
 
 if __name__ == "__main__":
