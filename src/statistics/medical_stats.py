@@ -760,3 +760,32 @@ class MultipleComparison:
             'pvalue': result.pvalue,
             'comparison_table': result.pvalue
         }
+
+    # ── App-facing convenience wrappers ───────────────────────────────
+
+    @staticmethod
+    def independent_t_test(df: pd.DataFrame, value_col: str, group_col: str) -> Dict[str, Any]:
+        """t-test between two groups defined by group_col."""
+        groups = [df[df[group_col] == g][value_col].dropna() for g in df[group_col].dropna().unique()]
+        if len(groups) != 2:
+            return {"error": f"그룹 수가 2개여야 합니다 (현재 {len(groups)}개)"}
+        return MedicalStatistics.t_test(groups[0], groups[1])
+
+    @staticmethod
+    def chi_square_test(df: pd.DataFrame, var1: str, var2: str) -> Dict[str, Any]:
+        """Chi-square test of independence between two categorical variables."""
+        ct = MedicalStatistics.contingency_table(df, var1, var2)
+        return MedicalStatistics.chi_square(ct)
+
+    @staticmethod
+    def one_way_anova(df: pd.DataFrame, value_col: str, group_col: str) -> Dict[str, Any]:
+        """One-way ANOVA across all unique groups in group_col."""
+        groups = [df[df[group_col] == g][value_col].dropna() for g in df[group_col].dropna().unique()]
+        if len(groups) < 2:
+            return {"error": "그룹이 2개 이상 필요합니다"}
+        return MedicalStatistics.anova(*groups)
+
+    @staticmethod
+    def linear_regression(df: pd.DataFrame, outcome: str, predictors: List[str]) -> Dict[str, Any]:
+        """OLS linear regression — wrapper for regression_analysis."""
+        return MedicalStatistics.regression_analysis(df, outcome, predictors)
