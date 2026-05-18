@@ -1,6 +1,7 @@
 # 환경/인증
 .env
 *.env.*
+.streamlit/secrets.toml
 
 # Python
 __pycache__/
