@@ -30,6 +30,45 @@ from src.ingestion.evidence_reader import EvidenceReader
 _log = get_logger(__name__)
 
 
+def _find_real_data(dataset: str):
+    """data/raw/ 폴더에서 실제 원시자료를 자동 탐색해 DataFrame 반환.
+
+    파일명에 'kyrbs' 또는 'knhanes'가 포함된 .sav/.csv를 우선 선택.
+    없으면 None 반환.
+    """
+    import pandas as pd
+    raw_dir = Path("data/raw")
+    if not raw_dir.exists():
+        return None
+    keyword = dataset.lower()
+    candidates = []
+    for ext in ("*.sav", "*.csv", "*.xlsx"):
+        for f in raw_dir.glob(ext):
+            if keyword in f.name.lower():
+                candidates.append(f)
+    if not candidates:
+        # 폴더 내 아무 파일이나
+        for ext in ("*.sav", "*.csv", "*.xlsx"):
+            candidates.extend(raw_dir.glob(ext))
+    if not candidates:
+        return None
+
+    chosen = sorted(candidates, key=lambda f: f.stat().st_mtime, reverse=True)[0]
+    _log.info("실제 원시자료 발견: %s", chosen.name)
+
+    if chosen.suffix.lower() == ".sav":
+        from src.data.kyrbs_raw_loader import KYRBSLoader, KNHANESLoader
+        loader = KNHANESLoader() if "knhanes" in keyword else KYRBSLoader()
+        df, _ = loader.load(chosen)
+    else:
+        try:
+            df = pd.read_csv(chosen, encoding="utf-8-sig", low_memory=False)
+        except UnicodeDecodeError:
+            df = pd.read_csv(chosen, encoding="euc-kr", low_memory=False)
+    _log.info("원시자료 로드 완료: %d행 × %d열", len(df), len(df.columns))
+    return df
+
+
 def _clean_llm_response(raw: str) -> str:
     text = raw.strip()
     if text.startswith("```"):
@@ -393,13 +432,17 @@ Return JSON only."""
         df: 실제 데이터프레임이 있으면 사용, 없으면 합성 데이터 생성.
         Returns: AnalysisResult.to_dict()
         """
-        from src.data.survey_loader import SurveyLoader
         from src.data.stat_bridge import StatBridge
 
         if df is None:
-            loader = SurveyLoader()
-            df = loader.generate_synthetic(dataset.upper(), n=n_synthetic)
-            _log.info("합성 데이터 %d건 생성 (%s)", n_synthetic, dataset)
+            # 실제 원시자료 자동 탐색 (data/raw/ 폴더)
+            df = _find_real_data(dataset)
+            if df is None:
+                raise FileNotFoundError(
+                    f"'{dataset}' 원시자료를 찾을 수 없습니다.\n"
+                    f"data/raw/ 폴더에 .sav 또는 .csv 파일을 넣거나 "
+                    f"Streamlit '원시자료 업로드' 페이지에서 업로드하세요."
+                )
 
         spec = self._build_stat_spec(topic, dataset)
         result = StatBridge().run(df, spec)

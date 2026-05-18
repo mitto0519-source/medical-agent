@@ -365,6 +365,7 @@ with st.sidebar:
     st.markdown('<div class="nav-section">프로젝트</div>', unsafe_allow_html=True)
     _nb("🔴  논문 생산 파이프라인", "논문 생산 파이프라인")
     _nb("🔴  연구 주제 생성", "연구 주제 생성")
+    _nb("📂  원시자료 업로드", "원시자료 업로드")
     _nb("🔵  데이터 분석", "데이터 분석")
     _nb("🟢  논문 설계 & 타당성", "논문 설계 & 타당성")
     _nb("🔴  논문 작성", "논문 작성")
@@ -913,6 +914,186 @@ with main_col:
                 _next_step_btn("데이터 분석 도구", "데이터 분석", "_feas_to_data")
 
         _show_history("논문 설계 & 타당성")
+
+    # ── 원시자료 업로드 ───────────────────────────────────────────────
+    elif page == "원시자료 업로드":
+        st.markdown("<h2 style='color:#e6edf3;'>📂 KYRBS / KNHANES 원시자료 업로드</h2>", unsafe_allow_html=True)
+        st.info("질병관리청 공식 원시자료(.sav) 또는 CSV를 업로드하면 표준 스키마로 자동 변환해 분석에 사용합니다.")
+
+        # 다운로드 안내
+        with st.expander("📋 원시자료 다운로드 방법 (클릭하여 열기)", expanded=False):
+            from src.data.kyrbs_raw_loader import download_instructions
+            st.markdown(download_instructions())
+
+        st.divider()
+
+        # 데이터셋 선택
+        raw_dataset = st.radio("데이터셋 선택", ["KYRBS (청소년건강행태조사)", "KNHANES (국민건강영양조사)"], horizontal=True)
+        is_kyrbs = "KYRBS" in raw_dataset
+
+        uploaded_raw = st.file_uploader(
+            "원시자료 파일 업로드 (.sav / .csv / .xlsx)",
+            type=["sav", "csv", "xlsx", "xls"],
+            help="질병관리청에서 다운로드한 원시자료 파일을 그대로 업로드하세요.",
+        )
+
+        if uploaded_raw is not None:
+            with st.spinner(f"{'KYRBS' if is_kyrbs else 'KNHANES'} 원시자료 처리 중..."):
+                try:
+                    from src.data.kyrbs_raw_loader import KYRBSLoader, KNHANESLoader
+                    loader = KYRBSLoader() if is_kyrbs else KNHANESLoader()
+                    file_bytes = uploaded_raw.read()
+                    df_raw, meta = loader.load_bytes(file_bytes, uploaded_raw.name)
+
+                    # 세션에 저장
+                    st.session_state["raw_df"] = df_raw
+                    st.session_state["raw_meta"] = meta
+                    st.session_state["raw_dataset"] = "KYRBS" if is_kyrbs else "KNHANES"
+                    st.session_state["analysis_df"] = df_raw  # 통계 분석 탭과 공유
+
+                    st.success(f"✅ 로드 완료: {df_raw.shape[0]:,}행 × {df_raw.shape[1]}열 (매핑 변수: {len(meta['mapped_vars'])}개)")
+
+                    # 경고 표시
+                    if meta.get("warnings"):
+                        for w in meta["warnings"]:
+                            st.warning(w)
+
+                except ImportError as e:
+                    st.error(str(e))
+                    st.code("pip install pyreadstat")
+                except Exception as e:
+                    st.error(f"파일 처리 오류: {e}")
+                    import traceback; st.code(traceback.format_exc())
+
+        # 로드된 데이터 표시
+        if "raw_df" in st.session_state:
+            df_raw = st.session_state["raw_df"]
+            meta = st.session_state["raw_meta"]
+            ds_name = st.session_state.get("raw_dataset", "?")
+
+            st.divider()
+            st.markdown(f"### 로드된 {ds_name} 원시자료")
+
+            # 주요 지표
+            m1, m2, m3, m4 = st.columns(4)
+            m1.metric("총 대상자", f"{len(df_raw):,}명")
+            m2.metric("매핑 변수", f"{len(meta['mapped_vars'])}개")
+            m3.metric("원본 총 열", f"{meta.get('total_raw_cols', '?')}개")
+            m4.metric("미매핑", f"{len(meta.get('unmapped_raw', []))}개")
+
+            tab_preview, tab_vars, tab_desc, tab_manual = st.tabs([
+                "📊 데이터 미리보기", "🔗 변수 매핑 결과", "📈 기술통계", "⚙️ 수동 변수 지정"
+            ])
+
+            with tab_preview:
+                st.dataframe(df_raw.head(20), use_container_width=True)
+                import io
+                csv_buf = io.StringIO()
+                df_raw.to_csv(csv_buf, index=False, encoding="utf-8-sig")
+                st.download_button(
+                    "📥 표준화 CSV 다운로드",
+                    data=csv_buf.getvalue().encode("utf-8-sig"),
+                    file_name=f"{ds_name}_standardized.csv",
+                    mime="text/csv",
+                )
+
+            with tab_vars:
+                st.markdown("**자동 매핑된 변수**")
+                import pandas as pd
+                mapping_rows = [
+                    {"표준 변수명": k, "원시 컬럼명": v}
+                    for k, v in meta.get("raw_to_std", {}).items()
+                ]
+                if mapping_rows:
+                    st.dataframe(pd.DataFrame(mapping_rows), use_container_width=True)
+                else:
+                    st.warning("매핑된 변수가 없습니다. 수동 지정 탭을 이용하세요.")
+
+                if meta.get("warnings"):
+                    st.markdown("**매핑 경고**")
+                    for w in meta["warnings"]:
+                        st.warning(w)
+
+            with tab_desc:
+                from src.data.kyrbs_raw_loader import KYRBSLoader as _KL
+                desc = _KL().describe(df_raw)
+                if desc:
+                    desc_rows = []
+                    for col, stats in desc.items():
+                        row = {"변수": col}
+                        if "mean" in stats:
+                            row.update({"N": stats["n"], "결측": stats["missing"],
+                                        "평균": stats["mean"], "표준편차": stats["std"],
+                                        "최솟값": stats["min"], "최댓값": stats["max"]})
+                        else:
+                            row["N"] = stats.get("n", "")
+                            row["결측"] = stats.get("missing", "")
+                            row["범주"] = str(list(stats.get("categories", {}).keys())[:5])
+                        desc_rows.append(row)
+                    st.dataframe(pd.DataFrame(desc_rows), use_container_width=True)
+                else:
+                    st.info("기술통계 정보 없음")
+
+            with tab_manual:
+                st.markdown("자동 매핑에 실패한 변수를 직접 지정합니다.")
+
+                # 원본 파일의 컬럼 목록을 보여주기 위해 재업로드가 필요하지만
+                # 이미 raw_df가 있으면 컬럼 표시
+                raw_cols_available = list(df_raw.columns)
+
+                key_vars = {
+                    "sex": "성별 (1=남/2=여)",
+                    "weight_var": "표본 가중치",
+                    "strata": "층화변수",
+                    "cluster": "집락변수",
+                    "depression": "우울감 경험 (이진)",
+                    "suicidal": "자살 생각 (이진)",
+                    "sleep_hours": "수면 시간",
+                    "smoking": "흡연 여부",
+                    "screen_time": "스크린 타임",
+                }
+                if not is_kyrbs:
+                    key_vars = {
+                        "sex": "성별",
+                        "weight_var": "표본 가중치",
+                        "strata": "층화변수",
+                        "cluster": "집락변수",
+                        "diabetes": "당뇨 여부",
+                        "hypertension": "고혈압 여부",
+                        "bmi": "체질량지수",
+                        "sbp": "수축기 혈압",
+                    }
+
+                manual_map = {}
+                for std_name, label in key_vars.items():
+                    default = std_name if std_name in raw_cols_available else None
+                    opts = ["(선택 안 함)"] + raw_cols_available
+                    sel = st.selectbox(
+                        f"{label} → 원시 컬럼",
+                        opts,
+                        index=(opts.index(default) if default in opts else 0),
+                        key=f"manual_{std_name}",
+                    )
+                    if sel != "(선택 안 함)":
+                        manual_map[std_name] = sel
+
+                if st.button("수동 매핑 적용", type="primary"):
+                    if manual_map:
+                        from src.data.kyrbs_raw_loader import KYRBSLoader as _KL2
+                        # 세션에서 원본 raw df가 있어야 함
+                        # 이 경우 이미 표준화된 df를 다시 manual_map으로 덮어씀
+                        for std, raw_col in manual_map.items():
+                            if raw_col in df_raw.columns:
+                                df_raw[std] = df_raw[raw_col]
+                        st.session_state["raw_df"] = df_raw
+                        st.session_state["analysis_df"] = df_raw
+                        st.success(f"✅ 수동 매핑 적용: {list(manual_map.keys())}")
+                        st.rerun()
+
+            st.divider()
+            if st.button("🔬 이 데이터로 StatBridge 통계 분석 시작", type="primary", key="raw_to_stat"):
+                st.session_state["page"] = "데이터 분석"
+                st.info("데이터 분석 페이지의 'StatBridge 논문통계' 탭에서 분석을 실행하세요.")
 
     # ── 데이터 분석 ───────────────────────────────────────────────────
     elif page == "데이터 분석":
