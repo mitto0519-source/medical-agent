@@ -279,24 +279,33 @@ def _ingest_to_rag(papers: List[Dict]) -> int:
     if not papers:
         return 0
     try:
-        from src.rag.pipeline import RAGPipeline
-        rag = RAGPipeline()
+        from src.vectordb.store import get_vector_store
+        from src.ingestion.chunker import TextChunker
+        store = get_vector_store()
+        chunker = TextChunker(chunk_size=400, overlap=50)
+        total_chunks = 0
         count = 0
         for p in papers:
-            text = f"{p.get('title', '')}\n\n{p.get('abstract', '')}"
+            title = p.get("title", "")
+            abstract = p.get("abstract", "")
+            text = f"Title: {title}\n\nAbstract: {abstract}" if abstract else f"Title: {title}"
             if len(text.strip()) < 30:
                 continue
             meta = {
+                "filename": title[:80],
+                "source": f"pubmed:{p.get('pmid', '')}",
                 "pmid": p.get("pmid", ""),
                 "year": str(p.get("year", "")),
                 "journal": p.get("journal", ""),
-                "source": "pubmed_periodic",
+                "topic": "periodic_learn",
                 "datasets": ",".join(p.get("datasets", [])),
                 "concepts": ",".join(c["concept_id"] for c in p.get("concepts", [])),
             }
-            rag.add_text(text, metadata=meta)
+            chunks = chunker.chunk(text, metadata=meta)
+            added = store.add_chunks(chunks)
+            total_chunks += added
             count += 1
-        _log.info("[trend_learn] RAG 인제스트: %d편", count)
+        _log.info("[trend_learn] RAG 인제스트: %d편 / %d청크", count, total_chunks)
         return count
     except Exception as e:
         _log.warning("[trend_learn] RAG 인제스트 실패: %s", e)
