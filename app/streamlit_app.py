@@ -917,7 +917,7 @@ with main_col:
     # ── 데이터 분석 ───────────────────────────────────────────────────
     elif page == "데이터 분석":
         st.markdown("<h2 style='color:#e6edf3;'>🔵 데이터 분석</h2>", unsafe_allow_html=True)
-        tab_lib, tab_run = st.tabs(["📚 데이터셋 라이브러리", "📊 통계 분석 실행"])
+        tab_lib, tab_run, tab_statbridge = st.tabs(["📚 데이터셋 라이브러리", "📊 통계 분석 실행", "🧬 StatBridge 논문통계"])
 
         with tab_lib:
             try:
@@ -1082,6 +1082,95 @@ with main_col:
                         _show_figure(fig, f"linear_{outcome}")
                         _log("stats_linear", {"outcome": outcome, "predictors": predictors}, f"선형회귀: {outcome}")
 
+        with tab_statbridge:
+            st.markdown("**StatBridge** — KYRBS/KNHANES 데이터를 로지스틱 회귀로 분석해 논문에 바로 주입할 수 있는 OR/CI를 생성합니다.")
+            sb_col1, sb_col2 = st.columns([1, 1])
+            with sb_col1:
+                sb_dataset = st.selectbox("데이터셋", ["KYRBS", "KNHANES"], key="sb_dataset")
+                sb_n = st.slider("합성 데이터 크기 (실제 데이터 미업로드 시)", 1000, 10000, 5000, step=500)
+                sb_outcome = st.selectbox("결과변수 (Outcome)", [
+                    "depression", "suicidal", "obesity", "smoking", "alcohol", "sleep_hours",
+                    "diabetes", "hypertension", "metabolic_syn",
+                ], key="sb_outcome")
+                sb_outcome_label = st.text_input("결과변수 한글명", value={
+                    "depression": "우울감 경험", "suicidal": "자살 생각", "obesity": "비만",
+                    "smoking": "흡연", "alcohol": "음주", "sleep_hours": "수면 시간",
+                    "diabetes": "당뇨", "hypertension": "고혈압", "metabolic_syn": "대사 증후군",
+                }.get(sb_outcome, sb_outcome))
+            with sb_col2:
+                if sb_dataset == "KYRBS":
+                    all_preds = ["sex", "sleep_hours", "screen_time", "smoking", "alcohol", "stress", "physical_act", "bmi"]
+                    all_covs = ["grade", "family_econ", "academic_perf"]
+                else:
+                    all_preds = ["sex", "age", "bmi", "smoking", "physical_act", "alcohol"]
+                    all_covs = ["edu", "income"]
+                sb_preds = st.multiselect("예측변수 (Predictors)", all_preds, default=all_preds[:4], key="sb_preds")
+                sb_covs = st.multiselect("교란변수 (Covariates)", all_covs, default=all_covs[:2], key="sb_covs")
+                sb_subgroup = st.multiselect("층화 분석 변수", ["sex", "grade"] if sb_dataset == "KYRBS" else ["sex", "age"], key="sb_subgroup")
+
+            sb_df = st.session_state.get("analysis_df")
+            if sb_df is not None:
+                st.info(f"세션 데이터 사용: {sb_df.shape[0]:,}행 × {sb_df.shape[1]}열")
+
+            if st.button("🔬 StatBridge 분석 실행", type="primary", key="sb_run"):
+                if not sb_preds:
+                    st.error("예측변수를 하나 이상 선택하세요.")
+                else:
+                    with st.spinner("실제 로지스틱 회귀 분석 중..."):
+                        try:
+                            from src.data.survey_loader import SurveyLoader
+                            from src.data.stat_bridge import StatBridge
+                            df_use = sb_df
+                            if df_use is None:
+                                loader = SurveyLoader()
+                                df_use = loader.generate_synthetic(sb_dataset, n=sb_n)
+                                st.caption(f"합성 데이터 {sb_n:,}건 사용")
+                            spec = {
+                                "outcome": sb_outcome,
+                                "outcome_label": sb_outcome_label,
+                                "predictors": sb_preds,
+                                "covariates": sb_covs,
+                                "analysis": "logistic",
+                                "weight_var": "weight_var",
+                                "subgroups": sb_subgroup,
+                            }
+                            result = StatBridge().run(df_use, spec)
+                            st.session_state["sb_result"] = result.to_dict()
+                            st.success(f"✅ 분석 완료 — n={result.n_total:,}, {sb_outcome_label} {result.outcome_rate:.1f}%")
+                        except Exception as e:
+                            st.error(f"오류: {e}")
+                            import traceback; st.code(traceback.format_exc())
+
+            if "sb_result" in st.session_state:
+                r = st.session_state["sb_result"]
+                st.divider()
+                m1, m2, m3, m4 = st.columns(4)
+                m1.metric("총 대상자", f"{r['n_total']:,}명")
+                m2.metric("사건 수", f"{r['n_outcome']:,}명")
+                m3.metric("발생률", f"{r['outcome_rate']:.1f}%")
+                m4.metric("유의 변수", f"{sum(1 for v in r['model_vars'] if v.get('significant'))}개")
+
+                st.markdown("**OR + 95% CI 결과표**")
+                import pandas as pd
+                rows = []
+                for v in r.get("model_vars", []):
+                    rows.append({
+                        "변수": v.get("label", v.get("variable", "")),
+                        "OR": v.get("or_value", ""),
+                        "95% CI": f"{v.get('ci_lower','')}–{v.get('ci_upper','')}",
+                        "p-value": v.get("p_formatted", v.get("p_value", "")),
+                        "유의": "✅" if v.get("significant") else "",
+                    })
+                if rows:
+                    st.dataframe(pd.DataFrame(rows), use_container_width=True)
+
+                st.markdown("**논문 직접 삽입용 통계 요약 (한국어)**")
+                st.text_area("논문 삽입 텍스트", value=r.get("paper_summary", ""), height=100, key="sb_summary_text")
+                if st.button("📋 이 통계 결과를 '논문 작성'에 사용", key="sb_to_writer"):
+                    st.session_state["stat_result_for_paper"] = r
+                    st.session_state["page"] = "논문 작성"
+                    st.success("✅ 통계 결과가 '논문 작성' 페이지로 전달되었습니다.")
+
     # ── 논문 작성 ─────────────────────────────────────────────────────
     elif page == "논문 작성":
         st.markdown("<h2 style='color:#e6edf3;'>📝 조유선 스타일 논문 작성</h2>", unsafe_allow_html=True)
@@ -1101,6 +1190,25 @@ with main_col:
         section = st.selectbox("작성할 섹션", ["전체 논문", "Abstract", "Introduction", "Methods", "Results", "Discussion"])
         page_context.update({"title": topic_title, "journal": journal, "design": design, "dataset": dataset_name, "results_summary": results_text[:200]})
 
+        # StatBridge 통계 결과가 전달된 경우 알림
+        stat_result_for_paper = st.session_state.get("stat_result_for_paper")
+        if stat_result_for_paper:
+            st.success(f"✅ StatBridge 통계 결과 연동됨 — n={stat_result_for_paper.get('n_total',0):,}, 유의변수 {sum(1 for v in stat_result_for_paper.get('model_vars',[]) if v.get('significant'))}개")
+            if st.button("❌ 통계 연동 해제"):
+                del st.session_state["stat_result_for_paper"]
+                st.rerun()
+
+        pw_col1, pw_col2 = st.columns(2)
+        with pw_col1:
+            use_stat_inject = st.checkbox(
+                "🧬 StatBridge 통계 주입 모드",
+                value=stat_result_for_paper is not None,
+                help="실제 OR/CI 통계값이 논문 본문에 자동 주입됩니다",
+            )
+            export_docx = st.checkbox("📄 DOCX 파일도 저장", value=True)
+        with pw_col2:
+            run_peer_review = st.checkbox("👥 작성 후 동료 심사 자동 실행", value=True)
+
         if st.button("✍️ 논문 작성 시작", type="primary"):
             if not topic_title or not results_text:
                 st.error("연구 제목과 주요 결과를 입력하세요.")
@@ -1110,11 +1218,19 @@ with main_col:
                         from src.research.research_pipeline import ResearchPipeline
                         topic = {"title": topic_title, "exposure": prev.get("exposure",""), "outcome": prev.get("outcome",""), "population": prev.get("population","")}
                         study_info = {"dataset": dataset_name, "design": design, "sample_size": sample_size, "survey_year": survey_year, "journal": journal}
-                        results = {"summary": results_text}
                         rp = ResearchPipeline()
-                        if section == "전체 논문":
+
+                        if use_stat_inject and stat_result_for_paper:
+                            draft, docx_path = rp.write_paper_with_stats(
+                                topic, study_info, stat_result_for_paper, export_docx=export_docx
+                            )
+                            if docx_path:
+                                st.session_state["draft_docx_path"] = docx_path
+                        elif section == "전체 논문":
+                            results = {"summary": results_text}
                             draft = rp.write_paper(topic, study_info, results)
                         else:
+                            results = {"summary": results_text}
                             from src.research.paper_writer import PaperWriter
                             from src.profile.author_profile import AuthorProfile
                             from src.library.methods_library import MethodsLibrary
@@ -1123,6 +1239,7 @@ with main_col:
                             fn = {"Abstract": writer.write_abstract, "Introduction": writer.write_introduction,
                                   "Methods": writer.write_methods, "Results": writer.write_results, "Discussion": writer.write_discussion}[section]
                             draft = fn(topic=topic_title, study_info=study_info, results=results)
+
                         st.session_state["draft"] = draft
                         from datetime import datetime
                         rp_list = st.session_state.get("recent_projects", [])
@@ -1130,18 +1247,83 @@ with main_col:
                         st.session_state["recent_projects"] = rp_list[:10]
                         _log("write_paper", {"title": topic_title, "section": section}, f"{section} 작성 완료: {topic_title}", {"draft_len": len(draft)})
                         st.success("✅ 논문 작성 완료!")
+
+                        if run_peer_review and section in ["전체 논문", "전체"]:
+                            with st.spinner("동료 심사 실행 중..."):
+                                review = rp.run_peer_review(draft, topic, stat_result=stat_result_for_paper)
+                                st.session_state["peer_review"] = review
                     except Exception as e:
                         st.error(f"오류: {e}"); import traceback; st.code(traceback.format_exc())
 
         if "draft" in st.session_state:
             page_context["현재_초안_길이"] = f"{len(st.session_state['draft'])}자"
             st.divider()
-            st.markdown("<h3 style='color:#e6edf3;'>생성된 논문 초안</h3>", unsafe_allow_html=True)
-            draft_val = st.text_area("내용", value=st.session_state["draft"], height=500)
-            if draft_val != st.session_state["draft"]:
-                st.session_state["draft"] = draft_val
-            st.download_button("📥 TXT 다운로드", data=st.session_state["draft"].encode("utf-8"),
-                               file_name=f"draft_{topic_title[:30]}.txt", mime="text/plain")
+            draft_tabs = st.tabs(["📝 논문 초안", "👥 동료 심사 결과"])
+            with draft_tabs[0]:
+                st.markdown("<h3 style='color:#e6edf3;'>생성된 논문 초안</h3>", unsafe_allow_html=True)
+                draft_val = st.text_area("내용", value=st.session_state["draft"], height=500)
+                if draft_val != st.session_state["draft"]:
+                    st.session_state["draft"] = draft_val
+                dl_col1, dl_col2 = st.columns(2)
+                with dl_col1:
+                    st.download_button("📥 TXT 다운로드", data=st.session_state["draft"].encode("utf-8"),
+                                       file_name=f"draft_{topic_title[:30]}.txt", mime="text/plain")
+                with dl_col2:
+                    docx_path = st.session_state.get("draft_docx_path")
+                    if docx_path:
+                        try:
+                            with open(docx_path, "rb") as f:
+                                docx_bytes = f.read()
+                            st.download_button("📄 DOCX 다운로드", data=docx_bytes,
+                                               file_name=f"draft_{topic_title[:30]}.docx",
+                                               mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                        except Exception:
+                            st.caption("DOCX 파일을 찾을 수 없습니다.")
+
+            with draft_tabs[1]:
+                pr = st.session_state.get("peer_review")
+                if pr is None:
+                    if st.button("👥 지금 동료 심사 실행", key="run_pr_now"):
+                        with st.spinner("동료 심사 중..."):
+                            try:
+                                from src.research.research_pipeline import ResearchPipeline
+                                topic_dict = {"title": topic_title, "exposure": prev.get("exposure",""), "outcome": prev.get("outcome",""), "population": prev.get("population","")}
+                                pr = ResearchPipeline().run_peer_review(st.session_state["draft"], topic_dict, stat_result=stat_result_for_paper)
+                                st.session_state["peer_review"] = pr
+                                st.rerun()
+                            except Exception as e:
+                                st.error(f"동료 심사 오류: {e}")
+                    else:
+                        st.info("논문 작성 완료 후 자동으로 실행되거나 위 버튼으로 수동 실행할 수 있습니다.")
+                else:
+                    import pandas as pd
+                    r1, r2, r3, r4 = st.columns(4)
+                    r1.metric("종합 점수", f"{pr.get('total_score',0)}/100")
+                    r2.metric("등급", pr.get("grade", "-"))
+                    r3.metric("권고", pr.get("accept_recommendation", "-"))
+                    r4.metric("섹션 수", len(pr.get("section_scores", {})))
+                    st.divider()
+                    section_rows = []
+                    for k, v in pr.get("section_scores", {}).items():
+                        section_rows.append({
+                            "섹션": v.get("section", k),
+                            "점수": f"{v.get('score',0)}/{v.get('max_score',0)}",
+                            "강점": "; ".join(v.get("strengths", [])[:1]),
+                            "약점": "; ".join(v.get("weaknesses", [])[:1]),
+                        })
+                    if section_rows:
+                        st.dataframe(pd.DataFrame(section_rows), use_container_width=True)
+                    if pr.get("major_concerns"):
+                        st.markdown("**주요 지적사항**")
+                        for c in pr["major_concerns"]:
+                            st.markdown(f"- {c}")
+                    if pr.get("suggested_analyses"):
+                        st.markdown("**추가 분석 제안**")
+                        for a in pr["suggested_analyses"]:
+                            st.markdown(f"- {a}")
+                    if pr.get("revised_abstract"):
+                        with st.expander("개선된 Abstract 보기"):
+                            st.text(pr["revised_abstract"])
         _show_history("논문 작성")
 
     # ── Agent Q&A ─────────────────────────────────────────────────────

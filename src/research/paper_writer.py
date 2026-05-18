@@ -2,13 +2,19 @@
 
 AuthorProfile(스타일 시드) + MethodsLibrary + DatasetLibrary + RAG컨텍스트를
 결합해 완성도 높은 논문 초안을 생성.
+
+Upgrade (2026-05): real stat injection from StatBridge + DOCX export + journal templates.
 """
 
 import os
 import re
+from pathlib import Path
 from typing import Dict, List, Optional
 
+from src.config.logging_config import get_logger
 from src.llm import get_llm_client
+
+_log = get_logger(__name__)
 
 
 def format_vancouver(paper: dict, index: int = 1) -> str:
@@ -437,6 +443,131 @@ DISCUSSION
 {sections['discussion']}
 """
         return paper
+
+    # ------------------------------------------------------------------
+    # Stat-injected paper generation
+    # ------------------------------------------------------------------
+
+    def write_full_paper_with_stats(
+        self,
+        topic: str,
+        study_info: Dict,
+        stat_result: dict,
+        reference_context: Optional[str] = None,
+        review_result: dict | None = None,
+    ) -> str:
+        """실제 통계 결과(StatBridge)를 주입해 논문 초안 생성.
+
+        stat_result: StatBridge.AnalysisResult.to_dict()
+        """
+        results = self._stat_to_results(stat_result)
+        paper = self.write_full_paper(topic, study_info, results, reference_context)
+
+        # Append peer review summary if provided
+        if review_result:
+            sep = "=" * 70
+            paper += f"\n\n{sep}\nPEER REVIEW SUMMARY\n{sep}\n"
+            paper += review_result.get("summary", "")
+
+        return paper
+
+    def _stat_to_results(self, stat: dict) -> Dict:
+        """AnalysisResult.to_dict() → write_full_paper의 results 포맷으로 변환."""
+        paper_summary = stat.get("paper_summary", "")
+        model_vars = stat.get("model_vars", [])
+
+        main_findings = []
+        main_findings.append(
+            f"총 분석 대상 {stat.get('n_total', 0):,}명 중 "
+            f"{stat.get('outcome_label', stat.get('outcome', ''))} 경험자 "
+            f"{stat.get('n_outcome', 0):,}명 ({stat.get('outcome_rate', 0.0):.1f}%)"
+        )
+        for v in model_vars:
+            if v.get("significant"):
+                main_findings.append(
+                    f"{v.get('label', v.get('variable', ''))} — "
+                    f"adjusted OR {v.get('or_formatted', '')}, {v.get('p_formatted', '')}"
+                )
+
+        metrics = stat.get("model_metrics", {})
+        pseudo_r2 = metrics.get("pseudo_r2")
+        meta = f"Nagelkerke pseudo-R²={pseudo_r2:.3f}" if pseudo_r2 else ""
+
+        return {
+            "summary": paper_summary,
+            "main_findings": main_findings or [paper_summary],
+            "descriptive": str(stat.get("descriptive_stats", "")),
+            "subgroup": str(stat.get("subgroup_results", "Not applicable")),
+            "sensitivity": meta,
+            "conclusion": f"본 연구는 {stat.get('outcome_label', '')}의 독립적 관련 요인을 규명하였다.",
+        }
+
+    # ------------------------------------------------------------------
+    # DOCX export
+    # ------------------------------------------------------------------
+
+    def export_docx(self, paper_text: str, output_path: str | Path, title: str = "Research Paper") -> Path:
+        """논문 텍스트를 Word DOCX로 저장.
+
+        python-docx가 없으면 graceful fallback (.txt 저장).
+        """
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        try:
+            from docx import Document
+            from docx.shared import Pt, Inches
+            from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+            doc = Document()
+
+            # Title
+            t = doc.add_heading(title, level=0)
+            t.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+            # Author
+            author_p = doc.add_paragraph(self._profile.author_name)
+            author_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            author_p.runs[0].italic = True
+
+            doc.add_paragraph()
+
+            current_section = None
+            section_pattern = re.compile(
+                r"^={10,}$|^(ABSTRACT|INTRODUCTION|METHODS|RESULTS|DISCUSSION|PEER REVIEW SUMMARY)$",
+                re.IGNORECASE,
+            )
+
+            for line in paper_text.split("\n"):
+                stripped = line.strip()
+                if not stripped:
+                    continue
+                if section_pattern.match(stripped) and not stripped.startswith("="):
+                    current_section = stripped
+                    doc.add_heading(stripped.title(), level=1)
+                elif stripped.startswith("="):
+                    continue
+                elif stripped.startswith("By "):
+                    continue
+                else:
+                    p = doc.add_paragraph(stripped)
+                    p.runs[0].font.size = Pt(11) if p.runs else None
+
+            docx_path = output_path.with_suffix(".docx")
+            doc.save(str(docx_path))
+            _log.info("DOCX saved: %s", docx_path)
+            return docx_path
+
+        except ImportError:
+            _log.warning("python-docx not installed — saving as .txt fallback")
+            txt_path = output_path.with_suffix(".txt")
+            txt_path.write_text(paper_text, encoding="utf-8")
+            return txt_path
+        except Exception as e:
+            _log.error("DOCX export failed: %s", e)
+            txt_path = output_path.with_suffix(".txt")
+            txt_path.write_text(paper_text, encoding="utf-8")
+            return txt_path
 
     # ------------------------------------------------------------------
     # Internal

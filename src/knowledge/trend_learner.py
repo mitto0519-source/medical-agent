@@ -154,13 +154,40 @@ def run_trend_learn(days: int = 60, max_per_query: int = 30) -> Dict[str, Any]:
     queries = []
     queries += ontology.pubmed_queries_for_dataset("KYRBS")
     queries += ontology.pubmed_queries_for_dataset("KNHANES")
-    # 온톨로지 전체 개념에서 고빈도 키워드 추가
+    # 확장된 공중보건 특화 쿼리 (KYRBS/KNHANES 논문 생산 커버리지 극대화)
     extra_topics = [
+        # KYRBS 청소년 건강 핵심 주제
         '"adolescent obesity" AND Korea[Title/Abstract]',
         '"sleep duration" AND Korean[Title/Abstract]',
         '"mental health" AND KYRBS[Title/Abstract]',
         '"physical activity" AND Korean adolescent[Title/Abstract]',
         '"screen time" AND Korean youth[Title/Abstract]',
+        '"adolescent depression" AND Korea[Title/Abstract]',
+        '"suicidal ideation" AND Korean adolescent[Title/Abstract]',
+        '"smoking" AND Korean youth[Title/Abstract]',
+        '"alcohol use" AND Korean adolescent[Title/Abstract]',
+        '"breakfast skipping" AND Korean adolescent[Title/Abstract]',
+        '"academic stress" AND Korean student[Title/Abstract]',
+        '"smartphone" AND Korean adolescent health[Title/Abstract]',
+        '"sedentary behavior" AND Korean youth[Title/Abstract]',
+        # KNHANES 성인 만성질환 주제
+        '"metabolic syndrome" AND KNHANES[Title/Abstract]',
+        '"type 2 diabetes" AND Korean adults[Title/Abstract]',
+        '"hypertension" AND KNHANES[Title/Abstract]',
+        '"dyslipidemia" AND Korean population[Title/Abstract]',
+        '"cardiovascular disease" AND Korean adults[Title/Abstract]',
+        '"obesity" AND KNHANES[Title/Abstract]',
+        '"sarcopenia" AND Korean[Title/Abstract]',
+        '"dietary pattern" AND Korean adults[Title/Abstract]',
+        # 방법론 논문
+        '"complex survey analysis" AND health[Title/Abstract]',
+        '"logistic regression" AND cross-sectional AND Korean[Title/Abstract]',
+        '"propensity score" AND Korean health[Title/Abstract]',
+        # 고급 분석 주제
+        '"sleep quality" AND cardiometabolic AND Korea[Title/Abstract]',
+        '"gut microbiome" AND Korean population[Title/Abstract]',
+        '"air pollution" AND Korea health[Title/Abstract]',
+        '"socioeconomic status" AND health inequality AND Korea[Title/Abstract]',
     ]
     queries += extra_topics
 

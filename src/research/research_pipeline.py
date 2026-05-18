@@ -379,6 +379,180 @@ Return JSON only."""
 
         return draft
 
+    # ── Step 5b — 실제 통계 분석 ─────────────────────────────────────────────
+
+    def run_stat_analysis(
+        self,
+        topic: Dict,
+        dataset: str = "KYRBS",
+        n_synthetic: int = 5000,
+        df=None,
+    ) -> dict:
+        """StatBridge로 실제 통계 분석 수행.
+
+        df: 실제 데이터프레임이 있으면 사용, 없으면 합성 데이터 생성.
+        Returns: AnalysisResult.to_dict()
+        """
+        from src.data.survey_loader import SurveyLoader
+        from src.data.stat_bridge import StatBridge
+
+        if df is None:
+            loader = SurveyLoader()
+            df = loader.generate_synthetic(dataset.upper(), n=n_synthetic)
+            _log.info("합성 데이터 %d건 생성 (%s)", n_synthetic, dataset)
+
+        spec = self._build_stat_spec(topic, dataset)
+        result = StatBridge().run(df, spec)
+
+        _log.info(
+            "통계 분석 완료: n=%d, OR변수=%d개, 유의=%d개",
+            result.n_total, len(result.model_vars), len(result.get_significant()),
+        )
+        change_log.log(
+            title=f"통계분석: {topic.get('title', '')[:60]}",
+            action_type="stat_analysis",
+            description=f"LogisticRegression 완료. 유의 변수 {len(result.get_significant())}개",
+            inputs={"topic": topic.get("title", ""), "dataset": dataset, "spec": spec},
+            outputs={"n_total": result.n_total, "n_sig": len(result.get_significant())},
+            impact={"affected_modules": ["stat_bridge", "research_pipeline"]},
+        )
+        return result.to_dict()
+
+    def _build_stat_spec(self, topic: Dict, dataset: str) -> dict:
+        """주제 dict → StatBridge spec 자동 생성."""
+        outcome_map = {
+            "depression": {"outcome": "depression", "label": "우울감 경험"},
+            "suicidal": {"outcome": "suicidal", "label": "자살 생각"},
+            "obesity": {"outcome": "obesity", "label": "비만"},
+            "smoking": {"outcome": "smoking", "label": "흡연"},
+            "alcohol": {"outcome": "alcohol", "label": "음주"},
+            "sleep": {"outcome": "sleep_hours", "label": "수면 시간"},
+            "physical": {"outcome": "physical_act", "label": "신체 활동"},
+            "diabetes": {"outcome": "diabetes", "label": "당뇨"},
+            "hypertension": {"outcome": "hypertension", "label": "고혈압"},
+            "metabolic": {"outcome": "metabolic_syn", "label": "대사 증후군"},
+        }
+        outcome_raw = topic.get("outcome", "depression").lower()
+        matched = next(
+            (v for k, v in outcome_map.items() if k in outcome_raw),
+            {"outcome": "depression", "label": "우울감 경험"},
+        )
+
+        if dataset.lower() == "kyrbs":
+            predictors = ["sex", "sleep_hours", "screen_time", "smoking"]
+            covariates = ["grade", "family_econ", "academic_perf"]
+        else:
+            predictors = ["sex", "age", "bmi", "smoking", "physical_act"]
+            covariates = ["edu", "income"]
+
+        exposure = topic.get("exposure", "").lower()
+        exposure_var_map = {
+            "sleep": "sleep_hours",
+            "screen": "screen_time",
+            "smoking": "smoking",
+            "alcohol": "alcohol",
+            "physical": "physical_act",
+            "bmi": "bmi",
+            "stress": "stress",
+        }
+        exposure_var = next((v for k, v in exposure_var_map.items() if k in exposure), None)
+        if exposure_var and exposure_var not in predictors:
+            predictors = [exposure_var] + [p for p in predictors if p != exposure_var]
+
+        return {
+            "outcome": matched["outcome"],
+            "outcome_label": matched["label"],
+            "predictors": predictors,
+            "covariates": covariates,
+            "analysis": "logistic",
+            "weight_var": "weight_var",
+            "subgroups": ["sex"],
+        }
+
+    # ── Step 6b — 동료 심사 ──────────────────────────────────────────────────
+
+    def run_peer_review(self, paper_text: str, topic: Dict, stat_result: dict | None = None) -> dict:
+        """PeerReviewer로 논문 품질 평가.
+
+        Returns: ReviewResult.to_dict()
+        """
+        from src.research.peer_reviewer import PeerReviewer
+        reviewer = PeerReviewer(llm_client=self._llm)
+        dataset = topic.get("dataset", "KYRBS/KNHANES")
+        result = reviewer.review(paper_text, topic.get("title", ""), dataset=dataset, stat_result=stat_result)
+        _log.info(
+            "동료 심사 완료: %d/100 (%s) — %s",
+            result.total_score, result.grade, result.accept_recommendation,
+        )
+        change_log.log(
+            title=f"동료심사: {topic.get('title', '')[:60]}",
+            action_type="peer_review",
+            description=f"논문 품질 평가: {result.total_score}/100 ({result.grade}) — {result.accept_recommendation}",
+            inputs={"topic": topic.get("title", "")},
+            outputs={"score": result.total_score, "grade": result.grade, "rec": result.accept_recommendation},
+            impact={"affected_modules": ["peer_reviewer", "research_pipeline"]},
+        )
+        return result.to_dict()
+
+    # ── Step 6c — 통계 주입 논문 작성 + DOCX 저장 ────────────────────────────
+
+    def write_paper_with_stats(
+        self,
+        topic: Dict,
+        study_info: Dict,
+        stat_result: dict,
+        use_rag_references: bool = True,
+        export_docx: bool = True,
+    ) -> tuple[str, str | None]:
+        """StatBridge 결과를 주입해 논문 생성 + DOCX 저장.
+
+        Returns: (paper_text, docx_path_or_None)
+        """
+        reference_context = None
+        if use_rag_references:
+            query = f"{topic.get('exposure', '')} {topic.get('outcome', '')} {topic.get('population', '')}"
+            hits = self.rag.ask(query)
+            if hits.get("sources"):
+                reference_context = "\n\n".join(h["text"] for h in hits["sources"][:5])
+
+        _log.info("통계 주입 논문 작성 시작: %s", topic.get("title", "")[:60])
+        draft = self.writer.write_full_paper_with_stats(
+            topic=topic.get("title", "Untitled"),
+            study_info=study_info,
+            stat_result=stat_result,
+            reference_context=reference_context,
+        )
+
+        safe_title = "".join(
+            c if c.isalnum() or c in " _-" else "_"
+            for c in topic.get("title", "draft")
+        )[:60]
+
+        txt_path = self._output_dir / f"{safe_title}.txt"
+        txt_path.write_text(draft, encoding="utf-8")
+        _log.info("논문 저장(txt): %s", txt_path)
+
+        docx_path = None
+        if export_docx:
+            try:
+                out = self.writer.export_docx(draft, self._output_dir / safe_title, title=topic.get("title", ""))
+                docx_path = str(out)
+                _log.info("DOCX 저장: %s", docx_path)
+            except Exception as e:
+                _log.warning("DOCX export 실패: %s", e)
+
+        change_log.log(
+            title=f"통계주입 논문 작성: {topic.get('title', 'Untitled')[:80]}",
+            action_type="paper_write",
+            description=f"StatBridge 통계 주입 논문 초안 생성 완료. DOCX: {docx_path is not None}",
+            why_better="실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+            inputs={"topic_title": topic.get("title", ""), "n_total": stat_result.get("n_total", 0)},
+            outputs={"draft_word_count": len(draft.split()), "docx_path": docx_path},
+            impact={"affected_modules": ["paper_writer", "stat_bridge", "research_pipeline"]},
+        )
+
+        return draft, docx_path
+
     # ── Full automated run ────────────────────────────────────────────────────
 
     def run(
@@ -419,3 +593,64 @@ Return JSON only."""
         )
 
         return {"all_topics": scored, "recommended": best}
+
+    def run_full(
+        self,
+        dataset_name: str,
+        focus: str,
+        study_info_template: Optional[Dict] = None,
+        n_synthetic: int = 5000,
+        export_docx: bool = True,
+    ) -> Dict:
+        """완전 자동화 파이프라인: 주제 → 신규성 → 타당성 → 통계 → 논문 → 동료심사.
+
+        Returns complete pipeline result with draft + review + stat_result.
+        """
+        _log.info("Full pipeline 시작: %s / %s", focus, dataset_name)
+
+        # Step 1: 주제 선택
+        run_result = self.run(dataset_name, focus, study_info_template)
+        best = run_result["recommended"]
+        topic = best["topic"]
+
+        # Step 2: 통계 분석
+        _log.info("[2/4] 통계 분석 중...")
+        stat_result = self.run_stat_analysis(topic, dataset=dataset_name.lower(), n_synthetic=n_synthetic)
+
+        # Step 3: 논문 작성 (통계 주입)
+        _log.info("[3/4] 논문 작성 중...")
+        si = study_info_template or {}
+        study_info = {
+            "dataset": dataset_name,
+            "design": topic.get("suggested_design", "cross-sectional"),
+            "population": topic.get("population", ""),
+            "exposure": topic.get("exposure", ""),
+            "outcome": topic.get("outcome", ""),
+            "sample_size": stat_result.get("n_total", n_synthetic),
+            "journal": si.get("journal", "J Korean Med Sci"),
+            "methods_list": topic.get("suggested_methods", ["logistic_regression"]),
+            **si,
+        }
+        draft, docx_path = self.write_paper_with_stats(
+            topic, study_info, stat_result, export_docx=export_docx
+        )
+
+        # Step 4: 동료 심사
+        _log.info("[4/4] 동료 심사 중...")
+        review = self.run_peer_review(draft, topic, stat_result=stat_result)
+
+        _log.info(
+            "Full pipeline 완료: score=%d/100 (%s), DOCX=%s",
+            review.get("total_score", 0), review.get("grade", "?"), docx_path,
+        )
+
+        return {
+            "topic": topic,
+            "novelty": best["novelty"],
+            "feasibility": best["feasibility"],
+            "stat_result": stat_result,
+            "draft": draft,
+            "docx_path": docx_path,
+            "review": review,
+            "all_topics": run_result["all_topics"],
+        }

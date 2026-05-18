@@ -170,7 +170,7 @@ class SelfAuditor:
             scores = []
             for query in _SAMPLE_QUERIES[:3]:
                 try:
-                    hits = store.search(query, top_k=3)
+                    hits = store.search(query, n_results=3)
                     scores.extend(h.get("score", 1.0) for h in (hits or []))
                 except Exception as e:
                     _log.warning("RAG 샘플 쿼리 실패 '%s': %s", query, e)
