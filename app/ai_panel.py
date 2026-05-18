@@ -119,6 +119,14 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
             ctx_lines.append(f"{k}: {str(v)[:600]}")
     context_str = "\n".join(ctx_lines)
 
+    # ── 페르소나 시스템 프롬프트 (항상 최우선) ────────────────────────────────
+    persona_prompt = ""
+    try:
+        from src.agent.persona import get_system_prompt
+        persona_prompt = get_system_prompt(task="qa")
+    except Exception:
+        pass
+
     # ── Long-term continuity preamble ──────────────────────────────────
     continuity_preamble = ""
     if user_email:
@@ -128,25 +136,25 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
         except Exception:
             pass
 
-    SYSTEM = f"""당신은 의학 연구 논문 공동 저자 AI 어시스턴트입니다.
-조유선 스타일의 한국 공중보건 의학 논문 생산 파이프라인에서 사용자를 돕습니다.
+    # ── 세션 간 대화 맥락 ───────────────────────────────────────────────
+    conv_ctx = ""
+    try:
+        from src.memory.conversation_memory import get_recent_context
+        conv_ctx = get_recent_context(n=3, context_type="qa")
+    except Exception:
+        pass
+
+    SYSTEM = f"""{persona_prompt}
+
+---
 
 {continuity_preamble}
 
+{conv_ctx}
+
 === 현재 사용자 작업 컨텍스트 ===
 {context_str}
-================================
-
-역할:
-- 연구 주제 선정, PubMed 검색 전략, 통계 분석 방법 제안
-- 논문 섹션별 작성 지원 (Abstract, Introduction, Methods, Results, Discussion)
-- KYRBS/K-PRESS 데이터셋 분석 조언
-- 신규성 판단 및 연구 공백 식별
-- 조유선 교수 스타일의 논문 구조와 표현 방식 유지
-
-항상 한국어로 답변하고, 의학 통계와 역학 전문 용어를 정확하게 사용하세요.
-사용자가 현재 보고 있는 페이지 컨텍스트를 충분히 활용하여 즉시 실행 가능한 조언을 제공하세요.
-이전 작업 이력을 반드시 참조하여 연속성을 유지하고, 이미 결정된 사항을 번복하지 마세요."""
+================================"""
 
     # ── Chat history ───────────────────────────────────────────────
     if "ai_messages" not in st.session_state:
@@ -201,6 +209,20 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
                 answer = f"⚠️ 오류: {e}"
 
         st.session_state["ai_messages"].append({"role": "assistant", "content": answer})
+
+        # 대화 기억에 자동 저장 (세션 간 연속성)
+        if "오류" not in answer[:10]:
+            try:
+                from src.memory.conversation_memory import record as _record_conv
+                _record_conv(
+                    user_message=prompt,
+                    agent_response=answer,
+                    topic=current_page,
+                    context_type="qa",
+                )
+            except Exception:
+                pass
+
         st.rerun()
 
     col_a, col_b = st.columns(2)

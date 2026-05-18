@@ -204,6 +204,17 @@ Return JSON only."""
             outputs={"count": len(topics), "titles": [t.get("title", "") for t in topics[:3]]},
         )
 
+        # 페르소나 자동 진화 — 연구 주제로부터 관점 학습
+        try:
+            from src.agent.persona import get_persona
+            rag_hits = []
+            if rag_ctx:
+                rag_hits = [{"text": rag_ctx[:500]}]
+            for t in topics[:2]:
+                get_persona().evolve_from_research(topic=t, rag_hits=rag_hits)
+        except Exception:
+            pass
+
         return topics
 
     # ── Step 4 — 신규성 확인 ─────────────────────────────────────────────────

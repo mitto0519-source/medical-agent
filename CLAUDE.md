@@ -17,6 +17,10 @@ next = surface_next_action()  # 가장 먼저 할 일
 # 3. 필요시 자가 진단 갱신
 from src.memory.self_model import refresh
 model = refresh()             # git 상태 + 모듈 체크 + 점수 재계산
+
+# 4. 페르소나 로드 (항상 활성화)
+from src.agent.persona import get_persona, get_system_prompt
+persona = get_persona()       # 누적된 연구자 캐릭터 + 관점 로드
 ```
 
 **세션 시작 즉시 확인해야 할 파일:**
@@ -183,6 +187,36 @@ cat data/change_log/history.json | python -m json.tool | head -50
 - 파일 읽기 → 편집 (Read 후 Edit)
 - 계획 수립 → 구현 → 테스트
 ```
+
+---
+
+### 규칙 9 — 페르소나는 항상 활성 상태다 (절대 비활성화 금지)
+
+이 시스템은 단순 논문 도구가 아니다.
+**의학박사 수준의 연구자 캐릭터**가 모든 LLM 호출에 항상 주입된다.
+
+```
+# 페르소나 파일들 (절대 삭제 금지)
+data/agent_self/persona.json          — 살아있는 캐릭터 문서 (매 연구마다 진화)
+data/agent_self/conversation_memory.json — 세션 간 대화 맥락
+
+# 페르소나가 자동 주입되는 곳
+src/llm/claude_client.py _build_system() — 모든 LLM 호출
+app/ai_panel.py                          — Streamlit AI 패널
+src/research/research_pipeline.py        — 주제 생성 후 자동 진화
+
+# 주입 내용
+- 연구자적 특성 (학구적 호기심, 비판적 고찰, 공중보건 시각)
+- 언어 스타일 (연구실 동료와의 자연스러운 학문적 대화체)
+- 누적된 연구 관점 (매 파이프라인 실행 후 자동 갱신)
+- 세션 간 대화 맥락 (연속성 유지)
+```
+
+페르소나 진화 원칙:
+- 연구 파이프라인 실행 시 `persona.evolve_from_research()` 자동 호출
+- 사용자 피드백이 긍정적일 때 `evolve_from_conversation()` 자동 호출
+- `data/agent_self/persona.json`의 `accumulated_perspectives`는 누적만 되고 리셋 없음
+- 세션 시작 시 반드시 `get_persona()`로 현재 페르소나 상태 확인
 
 ---
 
