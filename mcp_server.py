@@ -605,6 +605,71 @@ def sync_between_admins(ctx=None) -> dict:
 
 
 # ════════════════════════════════════════════════════════════════════════
+# Tools — 지식 베이스 자가발전 (trend_learn)
+# ════════════════════════════════════════════════════════════════════════
+
+@mcp.tool
+def get_knowledge_graph_stats(ctx=None) -> dict:
+    """지식 그래프 + 주기적 학습 상태 조회.
+
+    반환: 그래프 노드/엣지 수, 마지막 실행 시간, 누적 수집 논문 수.
+    """
+    from src.knowledge.medical_graph import get_graph
+    from src.knowledge.trend_learner import get_last_run_info
+    graph_stats = get_graph().stats()
+    run_info = get_last_run_info()
+    return {
+        "graph": graph_stats,
+        "periodic_learn": run_info,
+    }
+
+
+@mcp.tool
+def trigger_periodic_learn(days: int = 60, ctx=None) -> dict:
+    """[슈퍼 어드민] 주기적 학습 즉시 실행.
+
+    PubMed에서 최근 N일 논문 수집 → 그래프/RAG 갱신 → 자가학습 기록.
+    Args:
+        days: 수집할 최근 일수 (기본 60)
+    """
+    _require_admin(ctx)
+    from src.knowledge.trend_learner import run_trend_learn
+    summary = run_trend_learn(days=days, max_per_query=30)
+    return {"status": "completed", "summary": summary}
+
+
+# ── 24시간 주기 백그라운드 학습 루프 ──────────────────────────────────────────
+
+import threading as _threading
+
+_LEARN_INTERVAL_H = 24  # 24시간마다 자동 실행
+
+
+def _background_learn_loop():
+    """서버 시작 후 1시간 딜레이 → 이후 24시간마다 주기적 학습."""
+    import time as _t
+    from src.config.logging_config import get_logger
+    _bg_log = get_logger("bg_learn")
+
+    # 서버 완전 기동 후 1시간 딜레이 (초기 부하 방지)
+    _bg_log.info("[bg_learn] 대기 중 — 1시간 후 첫 번째 주기적 학습 시작")
+    _t.sleep(3600)
+
+    while True:
+        try:
+            _bg_log.info("[bg_learn] 주기적 학습 시작")
+            from src.knowledge.trend_learner import run_trend_learn
+            summary = run_trend_learn(days=60, max_per_query=30)
+            _bg_log.info("[bg_learn] 완료: 신규 %d편, 그래프 %d→%d 노드",
+                         summary.get("new_papers", 0),
+                         summary.get("graph_nodes_before", 0),
+                         summary.get("graph_nodes_after", 0))
+        except Exception as e:
+            _bg_log.error("[bg_learn] 실패 (다음 주기에 재시도): %s", e)
+        _t.sleep(_LEARN_INTERVAL_H * 3600)
+
+
+# ════════════════════════════════════════════════════════════════════════
 # Entry point
 # ════════════════════════════════════════════════════════════════════════
 
@@ -621,4 +686,8 @@ if __name__ == "__main__":
     else:
         print(f"[MCP] Medical-Agent MCP Server starting on http://{args.host}:{args.port}")
         print(f"[MCP] Claude Desktop: set URL to http://localhost:{args.port}/mcp")
+        # 백그라운드 학습 루프 시작 (daemon=True: 메인 프로세스 종료 시 자동 종료)
+        bg_thread = _threading.Thread(target=_background_learn_loop, daemon=True, name="bg_learn")
+        bg_thread.start()
+        print("[MCP] 백그라운드 학습 루프 시작됨 (1h 딜레이 후 첫 실행, 이후 24h 주기)")
         mcp.run(transport="http", host=args.host, port=args.port)

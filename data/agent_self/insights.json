@@ -1,5 +1,27 @@
 [
   {
+    "id": "20260518_235949_343257",
+    "timestamp": "2026-05-18 23:59:49",
+    "category": "pattern",
+    "title": "Korean adolescent sleep-behavior topic clustering pattern",
+    "insight": "KYRBS dataset reliably generates multi-layered sleep topics combining chronobiological (social jetlag), behavioral (smartphone use duration), and activity (sedentary clustering) dimensions. Output naturally produces 3-5 interconnected rather than isolated topics.",
+    "why_matters": "Predicts topic interdependence in Korean youth health data; enables efficient multi-exposure modeling and reduces redundant topic generation cycles.",
+    "how_to_apply": "When generating n_topics≥3 for KYRBS sleep focus, expect mediator clustering. Design downstream analysis to capture interaction effects (e.g., smartph",
+    "confidence": 0.78,
+    "tags": [
+      "KYRBS",
+      "sleep_health",
+      "adolescent",
+      "topic_generation",
+      "behavioral_clustering",
+      "Korea",
+      "smartphone",
+      "social_jetlag"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
     "id": "20260518_204631_567555",
     "timestamp": "2026-05-18 20:46:31",
     "category": "pattern",
