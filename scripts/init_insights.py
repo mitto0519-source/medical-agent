@@ -1,0 +1,171 @@
+"""Initial insights population for the self-learning DB."""
+import sys
+import os
+sys.stdout.reconfigure(encoding='utf-8')
+
+# Ensure project root is in path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from src.config.env import bootstrap
+bootstrap()
+
+from src.memory import agent_insight
+
+insights = [
+    dict(
+        title="3단계 git conflict marker 패턴",
+        insight="이 프로젝트에서 git stash + pull 충돌 시 <<<<<<< Updated upstream / ======= / >>>>>>> Stashed changes 형태의 마커가 3겹으로 중첩될 수 있다. 특히 research_pipeline.py, activity/logger.py, auth/users.py가 빈번하게 충돌 발생.",
+        category="pattern",
+        why_matters="충돌 마커가 남아있으면 Python SyntaxError로 전체 파이프라인 중단됨",
+        how_to_apply="충돌 의심 시 grep -r '<<<<<<' --include='*.py' . 로 전체 스캔 먼저. 안전한 수정법은 파일 전체 재작성(Write 도구). Edit로 부분 수정하면 위치 파악 실수 위험.",
+        confidence=0.95,
+        tags=["git", "conflict", "workflow"],
+        source="test_result",
+    ),
+    dict(
+        title="research_pipeline.py가 가장 충돌 빈발 파일",
+        insight="src/research/research_pipeline.py 는 여러 브랜치에서 동시 수정이 자주 발생해 충돌이 가장 많이 생기는 파일. paper_write, workflow_step 등 핵심 기능이 집중되어 있음.",
+        category="pattern",
+        why_matters="이 파일 충돌 → 논문 작성 파이프라인 전체 중단",
+        how_to_apply="이 파일 수정 전 반드시 git log -p -- src/research/research_pipeline.py 확인. 작업 전 git stash를 깔끔하게 정리.",
+        confidence=0.9,
+        tags=["git", "research_pipeline", "risk"],
+        source="observation",
+    ),
+    dict(
+        title="Windows CP949 인코딩 오류 패턴",
+        insight="PowerShell에서 한글이 포함된 Python stdout을 캡처하면 UnicodeDecodeError 발생. sys.stdout.reconfigure(encoding='utf-8') 를 스크립트 최상단에 추가해야 함.",
+        category="pattern",
+        why_matters="한글 포함 출력 스크립트가 Windows에서 에러 없이 실행되지 않으면 자동화 불가",
+        how_to_apply="한글 출력이 있는 모든 스크립트 최상단에 sys.stdout.reconfigure(encoding='utf-8') 추가.",
+        confidence=0.98,
+        tags=["windows", "encoding", "powershell"],
+        source="test_result",
+    ),
+    dict(
+        title="PowerShell -c 인자 안에서 f-string 중첩 따옴표 오류",
+        insight="PowerShell python -c '...' 에서 f-string 내부에 이중 따옴표를 쓰면 SyntaxError 발생. 예: print(f'[{int(a[\"confidence\"]*100)}%]') 가 unterminated string literal 오류를 냄.",
+        category="mistake",
+        why_matters="PowerShell에서 직접 Python 코드 실행 시 따옴표 충돌로 예상치 못한 오류 발생",
+        how_to_apply="복잡한 Python 코드는 반드시 .py 파일로 작성 후 실행. -c는 단순 import 확인용으로만 사용.",
+        confidence=0.95,
+        tags=["powershell", "python", "quoting"],
+        source="test_result",
+    ),
+    dict(
+        title="ChromaDB requirements.txt 누락 재발 방지",
+        insight="chromadb 패키지가 requirements.txt에서 빠진 채 배포된 적 있음. Railway 배포 시 ImportError 발생.",
+        category="mistake",
+        why_matters="클라우드 배포 환경에서 RAG 파이프라인 전체 실패",
+        how_to_apply="새 패키지 추가 시 requirements.txt 동시 업데이트 필수. smoke test에 chromadb import 포함.",
+        confidence=0.85,
+        tags=["chromadb", "requirements", "deployment"],
+        source="observation",
+    ),
+    dict(
+        title="Anthropic API thinking 파라미터 오류",
+        insight="claude client에서 thinking={'type': 'adaptive'} 파라미터를 사용했다가 API 오류 발생. 이 파라미터는 특정 모델에서만 지원됨.",
+        category="mistake",
+        why_matters="잘못된 API 파라미터로 모든 LLM 호출이 실패할 수 있음",
+        how_to_apply="Anthropic API 파라미터 변경 시 공식 문서 확인 필수. src/llm/claude_client.py 수정 시 특히 주의.",
+        confidence=0.9,
+        tags=["anthropic", "api", "claude_client"],
+        source="observation",
+    ),
+    dict(
+        title="OpenAI v0 → v1 API 변경 (ChatCompletion.create 제거)",
+        insight="openai v1에서 ChatCompletion.create가 client.chat.completions.create로 변경됨. v0 코드는 v1 패키지에서 즉시 AttributeError 발생.",
+        category="mistake",
+        why_matters="OpenAI API 업그레이드 시 모든 OpenAI 호출 코드 일괄 수정 필요",
+        how_to_apply="src/llm/openai_client.py 수정 시 v1 API 패턴 준수. openai>=1.0.0 버전 확인 후 작업.",
+        confidence=0.9,
+        tags=["openai", "api", "breaking_change"],
+        source="observation",
+    ),
+    dict(
+        title="filelock + threading.Lock 이중 동시성 보호 패턴",
+        insight="change_log.py 등 파일 기반 스토리지에서 filelock.FileLock(프로세스 간) + threading.Lock(스레드 간)을 함께 쓰면 Streamlit 멀티스레드 환경에서도 안전하게 파일 쓰기 가능.",
+        category="optimization",
+        why_matters="Streamlit은 각 사용자 세션이 별도 스레드로 실행 → 단순 filelock만으로는 부족",
+        how_to_apply="JSON 파일 append 코드 작성 시 두 레이어 동시 적용. tempfile + os.replace로 atomic write.",
+        confidence=0.92,
+        tags=["concurrency", "filelock", "threading", "streamlit"],
+        source="observation",
+    ),
+    dict(
+        title="bootstrap() 단일 dotenv 로드 패턴",
+        insight="각 파일에서 load_dotenv()를 직접 호출하면 중복 로드 + 순서 문제 발생. src/config/env.py의 bootstrap()을 entry point에서만 호출하고 _bootstrapped 플래그로 중복 방지.",
+        category="optimization",
+        why_matters="load_dotenv() 중복 호출 시 환경변수 덮어쓰기 위험 + 초기화 순서 불명확",
+        how_to_apply="새 스크립트/서버 파일 작성 시 from src.config.env import bootstrap; bootstrap() 패턴. 중간 모듈에서는 절대 load_dotenv() 직접 호출 금지.",
+        confidence=0.95,
+        tags=["dotenv", "config", "pattern"],
+        source="observation",
+    ),
+    dict(
+        title="app/main.py Flask 레거시 코드 제거 필요",
+        insight="app/main.py는 존재하지 않는 모듈을 import하는 Flask 레거시 앱. 현재 아키텍처는 Streamlit 기반이므로 이 파일은 사용되지 않는 dead code.",
+        category="next_action",
+        why_matters="혼란 유발 + 향후 누군가 이 파일을 진입점으로 오해할 수 있음",
+        how_to_apply="app/main.py 내용 확인 후 안전하게 삭제 또는 README로 대체. 먼저 git log로 히스토리 확인.",
+        confidence=0.8,
+        tags=["cleanup", "dead_code", "flask"],
+        source="observation",
+    ),
+    dict(
+        title="ResearchPipeline.write_paper() continuity 로깅 미연결",
+        insight="src/research/research_pipeline.py의 write_paper()는 핵심 논문 생성 기능이지만 change_log.log(action_type='paper_write', ...) 호출이 없어 장기기억 시스템과 단절되어 있음.",
+        category="next_action",
+        why_matters="가장 중요한 작업(논문 작성)이 타임라인에 기록되지 않음 → 연속성 시스템 공백",
+        how_to_apply="write_paper() 완료 시점에 change_log.log() 추가. paper title, topic, dataset, author profile slug를 inputs/outputs에 포함.",
+        confidence=0.95,
+        tags=["research_pipeline", "continuity", "high_priority"],
+        source="observation",
+    ),
+    dict(
+        title="HF_TOKEN 미설정으로 HuggingFace 속도 제한",
+        insight=".env에 HF_TOKEN이 없어 HuggingFace 임베딩 모델 다운로드 시 rate limit 경고가 발생. 무료 토큰 발급으로 해결 가능.",
+        category="next_action",
+        why_matters="embedding 모델 다운로드 실패 시 RAG 파이프라인 지연 또는 중단",
+        how_to_apply="huggingface.co에서 HF_TOKEN 발급 후 .env에 HF_TOKEN=hf_... 추가.",
+        confidence=0.85,
+        tags=["huggingface", "embedding", "config"],
+        source="observation",
+    ),
+    dict(
+        title="CLAUDE.md 작업 표준 규칙 8개 확립 (2026-05-17)",
+        insight="Boris Cherny의 Claude Code 8가지 핵심 팁을 이 프로젝트 목적에 맞게 가공하여 CLAUDE.md로 표준화. 매 세션 자동 로드됨. 8규칙: 탐색→코딩, git으로 why 확인, CLAUDE.md+기억 읽기, 계획→승인→실행, smoke test 12/12, 장기기억 업데이트, 실제 데이터 확인, 독립작업 병렬처리.",
+        category="decision",
+        why_matters="에이전트가 세션마다 일관된 방식으로 작업해야 과거 결정을 번복하지 않음",
+        how_to_apply="매 세션 CLAUDE.md를 읽고 8규칙을 따름. 추가 규칙은 CLAUDE.md에만 추가하고 메모리에 레퍼런스.",
+        confidence=1.0,
+        tags=["work_standard", "claude_md", "decision"],
+        source="user_feedback",
+    ),
+    dict(
+        title="장기기억 3-tier 아키텍처 확립 (2026-05-17)",
+        insight="(1) change_log.py — 모든 작업 타임로그 (로컬 JSON + Supabase 이중 저장), (2) agent_insight.py — Claude 자체 학습 DB (패턴/실수/최적화/다음액션), (3) self_model.py — 프로젝트 건강도 자동 분석. 세 모듈이 함께 완전한 연속성 시스템을 구성.",
+        category="decision",
+        why_matters="모든 에이전트가 과거를 기억하고 일관되게 발전할 수 있는 기반",
+        how_to_apply="작업 후 change_log.log() 호출, 새 발견 시 agent_insight.record() 호출, 주기적으로 self_model.refresh() 실행.",
+        confidence=1.0,
+        tags=["memory", "architecture", "decision"],
+        source="user_feedback",
+    ),
+]
+
+print(f"Populating {len(insights)} initial insights...")
+for i, kw in enumerate(insights):
+    entry = agent_insight.record(**kw)
+    print(f"  [{i+1:02d}] {entry.category:12s} | {entry.title[:50]}")
+
+print()
+print("Done. Verifying...")
+all_entries = agent_insight.get_all(n=20)
+print(f"Total active insights: {len(all_entries)}")
+
+next_actions = agent_insight.get_next_actions(n=5)
+print(f"\nTop next actions ({len(next_actions)}):")
+for a in next_actions:
+    conf = int(a.get("confidence", 0.8) * 100)
+    print(f"  [{conf}%] {a['title']}")
