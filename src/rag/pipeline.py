@@ -50,14 +50,15 @@ class RAGPipeline:
         """
         self.papers_dir = papers_dir
         self.top_k = top_k
+        self._persist_dir = persist_dir
+        self._store_obj = None  # lazy: loaded on first access
 
         self._reader = DocumentReader(api_key=api_key)
         self._web_reader = WebReader()
         self._chunker = TextChunker(chunk_size=chunk_size, overlap=overlap)
-        self._store = get_vector_store(persist_dir=persist_dir)
 
         # LLM client selection: prefer explicit injection, then Claude, then OpenAI.
-        if llm_client:
+        if llm_client is not None:
             self._llm = llm_client
         else:
             try:
@@ -68,6 +69,12 @@ class RAGPipeline:
                 else:
                     # last resort: instantiate ClaudeClient and let it raise for visibility
                     self._llm = ClaudeClient(api_key=api_key)
+
+    @property
+    def _store(self):
+        if self._store_obj is None:
+            self._store_obj = get_vector_store(persist_dir=self._persist_dir)
+        return self._store_obj
 
     # ------------------------------------------------------------------
     # Ingestion

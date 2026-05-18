@@ -1,4 +1,3 @@
-import importlib
 import sys
 from pathlib import Path
 
@@ -25,7 +24,7 @@ def test_functional_rag_flow():
 
     class DummyClaudeClient:
         def __init__(self, api_key=None): pass
-        def answer_from_papers(self, question, context_chunks): return '[MOCK ANSWER]'
+        def answer_from_papers(self, question, context_chunks, **kwargs): return '[MOCK ANSWER]'
         def summarize_paper(self, text): return '[MOCK SUMMARY]'
 
     rag_pipeline.get_vector_store = lambda persist_dir=None: DummyVectorStore()

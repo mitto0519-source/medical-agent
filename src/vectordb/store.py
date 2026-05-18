@@ -41,23 +41,29 @@ class VectorStore:
             path=persist_dir,
             settings=Settings(anonymized_telemetry=False),
         )
+        self._collection_name = collection_name
+        self._embedding_model = get_embedding_model()
+        _log.debug(f"VectorStore 임베딩 모델: {self._embedding_model}")
+        self._col = None  # lazy: embedding model loaded on first use
 
-        embedding_model = get_embedding_model()
-        _log.debug(f"VectorStore 임베딩 모델: {embedding_model}")
-
-        try:
-            self._ef = chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
-                model_name=embedding_model
+    @property
+    def _collection(self):
+        """Collection with embedding function — loaded lazily on first use."""
+        if self._col is None:
+            import chromadb
+            try:
+                ef = chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
+                    model_name=self._embedding_model
+                )
+            except Exception as e:
+                _log.warning(f"sentence_transformers 없음 — DefaultEmbeddingFunction 사용: {e}")
+                ef = chromadb.utils.embedding_functions.DefaultEmbeddingFunction()
+            self._col = self._client.get_or_create_collection(
+                name=self._collection_name,
+                embedding_function=ef,
+                metadata={"hnsw:space": "cosine"},
             )
-        except Exception as e:
-            _log.warning(f"sentence_transformers 없음 — DefaultEmbeddingFunction 사용: {e}")
-            self._ef = chromadb.utils.embedding_functions.DefaultEmbeddingFunction()
-
-        self._collection = self._client.get_or_create_collection(
-            name=collection_name,
-            embedding_function=self._ef,
-            metadata={"hnsw:space": "cosine"},
-        )
+        return self._col
 
     # ── Ingestion ─────────────────────────────────────────────────────────────
 

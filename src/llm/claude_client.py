@@ -201,8 +201,18 @@ class ClaudeClient:
         self,
         base_prompt: str,
         context_chunks: Optional[List[str]],
+        task: str = "general",
     ):
-        """시스템 프롬프트 구성. context가 있으면 prompt cache 적용."""
+        """시스템 프롬프트 구성. 페르소나 + medical seed + context 순서로 조립."""
+        # 1. 페르소나 시스템 프롬프트 (항상 최우선)
+        persona_prompt = ""
+        try:
+            from src.agent.persona import get_system_prompt
+            persona_prompt = get_system_prompt(task=task)
+        except Exception:
+            pass
+
+        # 2. 의학 지식 프리앰블 (PubMed seed)
         preamble = ""
         try:
             from src.knowledge.medical_seed import get_medical_preamble
@@ -210,8 +220,12 @@ class ClaudeClient:
         except Exception:
             pass
 
-        base = base_prompt or "You are a helpful medical research assistant."
-        full_base = (preamble + "\n\n" + base) if preamble else base
+        # 3. 호출별 base_prompt (태스크 특화 지시)
+        base = base_prompt or ""
+
+        # 조합: 페르소나 → seed → base
+        parts = [p for p in [persona_prompt, preamble, base] if p]
+        full_base = "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
         if not context_chunks:
             return full_base

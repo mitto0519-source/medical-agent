@@ -134,6 +134,29 @@ hr,[data-testid="stDivider"]{border-color:var(--border)!important;}
 """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════
+# Cached resource factories — loaded once per server lifetime
+# ══════════════════════════════════════════════════════════════════════
+@st.cache_resource
+def _get_cached_store():
+    from src.vectordb.store import get_vector_store
+    return get_vector_store()
+
+@st.cache_resource
+def _get_cached_novelty_checker():
+    from src.research.novelty_checker import NoveltyChecker
+    return NoveltyChecker()
+
+@st.cache_resource
+def _get_cached_medical_agent():
+    from src.agent.medical_agent import MedicalAgent
+    return MedicalAgent()
+
+@st.cache_resource
+def _get_cached_rag_pipeline():
+    from src.rag.pipeline import RAGPipeline
+    return RAGPipeline()
+
+# ══════════════════════════════════════════════════════════════════════
 # Login Gate — with remember-me (st.query_params) + auto-login
 # ══════════════════════════════════════════════════════════════════════
 def _login_gate():
@@ -265,6 +288,54 @@ def _show_history(page_name: str):
                 if st.button("↩ 재사용", key=f"_reuse_{entry['id']}"):
                     st.session_state["_replay"] = entry
                     st.rerun()
+
+def _show_topic_banner():
+    """현재 선택된 주제와 단계별 진행 상태를 상단에 표시."""
+    t = st.session_state.get("selected_topic")
+    if not t:
+        return
+    has_novelty = "novelty_result" in st.session_state
+    has_feasibility = "feasibility_result" in st.session_state
+    has_draft = "draft" in st.session_state
+    steps = [
+        ("주제 선택", True),
+        ("신규성", has_novelty),
+        ("타당성", has_feasibility),
+        ("논문 작성", has_draft),
+    ]
+    badges = " → ".join(
+        f"<span style='padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;"
+        f"background:{'rgba(34,197,94,.18)' if done else 'rgba(255,255,255,.06)'};"
+        f"color:{'#4ADE80' if done else '#64748B'};"
+        f"border:1px solid {'rgba(34,197,94,.35)' if done else 'rgba(255,255,255,.08)'};'>"
+        f"{'✓ ' if done else ''}{label}</span>"
+        for label, done in steps
+    )
+    nov_score = ""
+    if has_novelty:
+        sc = st.session_state["novelty_result"].get("novelty_score", "?")
+        nov_score = f"<span style='font-size:11px;color:#60A5FA;margin-left:6px;'>신규성 {sc}/10</span>"
+    title_safe = t.get('title', '')[:70].replace('"', '&quot;')
+    # 들여쓰기 없는 단일 라인 HTML (Markdown 코드블록 오인식 방지)
+    html = (
+        '<div style="background:rgba(37,99,235,0.07);border:1px solid rgba(59,130,246,0.22);'
+        'border-radius:10px;padding:10px 16px;margin-bottom:14px;display:flex;'
+        'align-items:center;gap:12px;flex-wrap:wrap;">'
+        '<span style="font-size:10px;color:#60A5FA;font-weight:700;text-transform:uppercase;'
+        'letter-spacing:.08em;white-space:nowrap;">현재 프로젝트</span>'
+        f'<span style="font-size:13px;color:#E5E7EB;font-weight:600;flex:1;min-width:0;'
+        f'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="{title_safe}">'
+        f'{title_safe}</span>'
+        f'{nov_score}'
+        f'<div style="display:flex;gap:4px;flex-wrap:wrap;">{badges}</div>'
+        '</div>'
+    )
+    st.markdown(html, unsafe_allow_html=True)
+
+def _next_step_btn(label: str, target: str, key: str):
+    """다음 단계로 이동 버튼."""
+    if st.button(f"▶ {label}", key=key, type="primary"):
+        _nav(target)
 
 page = st.session_state["nav"]
 _u = st.session_state.get("user", {})
@@ -499,8 +570,7 @@ with main_col:
                     </div>""", unsafe_allow_html=True)
             except Exception: pass
             try:
-                from src.vectordb.store import get_vector_store
-                cnt2 = get_vector_store().count()
+                cnt2 = _get_cached_store().count()
                 db_lbl = "Supabase" if os.environ.get("SUPABASE_DB_URL") else "ChromaDB"
                 st.markdown(f"""
                 <div class="kb-item">
@@ -565,18 +635,35 @@ with main_col:
     # ── 논문 생산 파이프라인 ───────────────────────────────────────────
     elif page == "논문 생산 파이프라인":
         st.markdown("<h2 style='color:#e6edf3;'>🔴 논문 생산 파이프라인</h2>", unsafe_allow_html=True)
-        st.info("전체 논문 생산 프로세스 통합 관리. 왼쪽 메뉴에서 각 단계를 선택하세요.")
-        c1, c2 = st.columns(2)
-        with c1:
-            if st.button("📚 연구 주제 생성 →", use_container_width=True, type="primary"): _nav("연구 주제 생성")
-            if st.button("✅ 논문 설계 & 타당성 →", use_container_width=True): _nav("논문 설계 & 타당성")
-        with c2:
-            if st.button("🔍 신규성 확인 →", use_container_width=True): _nav("신규성 확인")
-            if st.button("📝 논문 작성 →", use_container_width=True): _nav("논문 작성")
+        _show_topic_banner()
+        st.info("전체 논문 생산 프로세스 통합 관리. 각 단계를 순서대로 진행하세요.")
+        # 단계별 상태 표시
+        has_topic = bool(st.session_state.get("selected_topic"))
+        has_novelty = "novelty_result" in st.session_state
+        has_feas = "feasibility_result" in st.session_state
+        has_draft = "draft" in st.session_state
+        pipeline_steps = [
+            ("1단계", "📚 연구 주제 생성", "연구 주제 생성", has_topic, "주제를 생성하고 하나를 선택하세요", "primary"),
+            ("2단계", "🔍 신규성 확인", "신규성 확인", has_novelty, "PubMed로 기존 연구 유사도 확인", "secondary"),
+            ("3단계", "✅ 타당성 검증", "논문 설계 & 타당성", has_feas, "데이터셋 변수 기반 연구 실현 가능성 확인", "secondary"),
+            ("4단계", "📝 논문 작성", "논문 작성", has_draft, "조유선 스타일 논문 초안 자동 생성", "secondary"),
+        ]
+        for step_n, label, target, done, desc, btn_type in pipeline_steps:
+            status_icon = "✅" if done else "⬜"
+            sc1, sc2, sc3 = st.columns([1, 5, 2])
+            with sc1:
+                st.markdown(f"<div style='text-align:center;padding-top:8px;font-size:20px;'>{status_icon}</div>", unsafe_allow_html=True)
+            with sc2:
+                st.markdown(f"**{step_n}: {label}**  \n<span style='font-size:12px;color:#64748B;'>{desc}</span>", unsafe_allow_html=True)
+            with sc3:
+                if st.button(label if not done else f"{label} (재실행)", key=f"_pipe_{target}", use_container_width=True,
+                             type="primary" if not done else "secondary"):
+                    _nav(target)
 
     # ── 연구 주제 생성 ────────────────────────────────────────────────
     elif page == "연구 주제 생성":
         st.markdown("<h2 style='color:#e6edf3;'>📚 연구 주제 생성</h2>", unsafe_allow_html=True)
+        _show_topic_banner()
 
         # Replay support
         replay = st.session_state.pop("_replay", None)
@@ -644,6 +731,7 @@ with main_col:
     # ── 신규성 확인 ───────────────────────────────────────────────────
     elif page == "신규성 확인":
         st.markdown("<h2 style='color:#e6edf3;'>🔍 신규성 확인 (PubMed)</h2>", unsafe_allow_html=True)
+        _show_topic_banner()
         prev = st.session_state.get("selected_topic", {})
         title = st.text_input("연구 제목", value=prev.get("title", ""))
         col1, col2 = st.columns(2)
@@ -661,8 +749,7 @@ with main_col:
             else:
                 with st.spinner("PubMed 검색 + 규칙기반 유사도 분석 + Claude 평가 중..."):
                     try:
-                        from src.research.novelty_checker import NoveltyChecker
-                        result = NoveltyChecker().check(
+                        result = _get_cached_novelty_checker().check(
                             topic=title, exposure=exposure,
                             outcome=outcome, population=population,
                         )
@@ -766,11 +853,26 @@ with main_col:
                             {sim_row}{diff_row}
                         </div>""", unsafe_allow_html=True)
 
+        # 신규성 확인 완료 후 다음 단계 CTA
+        if "novelty_result" in st.session_state:
+            st.divider()
+            nc1, nc2, nc3 = st.columns([2, 2, 2])
+            with nc1:
+                _next_step_btn("논문 타당성 검증", "논문 설계 & 타당성", "_nov_to_feas")
+            with nc2:
+                _next_step_btn("논문 작성 바로 이동", "논문 작성", "_nov_to_write")
+            with nc3:
+                if st.session_state.get("selected_topic") and st.button("🗑 주제 초기화", key="_nov_clear"):
+                    for k in ["selected_topic", "novelty_result", "feasibility_result", "draft"]:
+                        st.session_state.pop(k, None)
+                    st.rerun()
+
         _show_history("신규성 확인")
 
     # ── 논문 설계 & 타당성 ────────────────────────────────────────────
     elif page == "논문 설계 & 타당성":
         st.markdown("<h2 style='color:#e6edf3;'>🟢 논문 설계 & 타당성 검증</h2>", unsafe_allow_html=True)
+        _show_topic_banner()
         prev = st.session_state.get("selected_topic", {})
         topic_json = st.text_area("주제 JSON",
             value=json.dumps(prev, ensure_ascii=False, indent=2) if prev else '{"title":"","exposure":"","outcome":"","population":""}',
@@ -784,6 +886,7 @@ with main_col:
                     from src.research.research_pipeline import ResearchPipeline
                     result = ResearchPipeline().validate_feasibility(topic, dataset)
                     feasible = result.get("is_feasible")
+                    st.session_state["feasibility_result"] = result  # 세션에 저장 → 배너 갱신
                     st.metric("타당성", f"{'✅ 가능' if feasible else '❌ 어려움'} (신뢰도: {result.get('confidence','?')})")
                     c1, c2 = st.columns(2)
                     with c1:
@@ -798,6 +901,16 @@ with main_col:
                     _log("validate_feasibility", {"topic": topic}, f"타당성: {'가능' if feasible else '어려움'}", result)
             except Exception as e:
                 st.error(f"오류: {e}")
+
+        # 타당성 검증 완료 후 다음 단계 CTA
+        if "feasibility_result" in st.session_state:
+            st.divider()
+            fc1, fc2 = st.columns([2, 2])
+            with fc1:
+                _next_step_btn("논문 작성으로 이동", "논문 작성", "_feas_to_write")
+            with fc2:
+                _next_step_btn("데이터 분석 도구", "데이터 분석", "_feas_to_data")
+
         _show_history("논문 설계 & 타당성")
 
     # ── 데이터 분석 ───────────────────────────────────────────────────
@@ -971,6 +1084,7 @@ with main_col:
     # ── 논문 작성 ─────────────────────────────────────────────────────
     elif page == "논문 작성":
         st.markdown("<h2 style='color:#e6edf3;'>📝 조유선 스타일 논문 작성</h2>", unsafe_allow_html=True)
+        _show_topic_banner()
         st.info("조유선 교수 논문 스타일 시드를 기반으로 논문 초안을 생성합니다.")
         prev = st.session_state.get("selected_topic", {})
         c1, c2 = st.columns(2)
@@ -1004,8 +1118,7 @@ with main_col:
                             from src.profile.author_profile import AuthorProfile
                             from src.library.methods_library import MethodsLibrary
                             from src.library.dataset_library import DatasetLibrary as DL
-                            from src.rag.pipeline import RAGPipeline
-                            writer = PaperWriter(AuthorProfile("Yoosun Cho"), MethodsLibrary(), DL(), RAGPipeline())
+                            writer = PaperWriter(AuthorProfile("Yoosun Cho"), MethodsLibrary(), DL(), _get_cached_rag_pipeline())
                             fn = {"Abstract": writer.write_abstract, "Introduction": writer.write_introduction,
                                   "Methods": writer.write_methods, "Results": writer.write_results, "Discussion": writer.write_discussion}[section]
                             draft = fn(topic=topic_title, study_info=study_info, results=results)
@@ -1044,8 +1157,7 @@ with main_col:
             with st.chat_message("assistant"):
                 with st.spinner("답변 생성 중..."):
                     try:
-                        from src.agent.medical_agent import MedicalAgent
-                        response = MedicalAgent().ask(prompt)
+                        response = _get_cached_medical_agent().ask(prompt)
                         answer = response.get("answer", response.get("raw", str(response)))
                         st.markdown(answer)
                         st.session_state.messages.append({"role": "assistant", "content": answer})
@@ -1078,8 +1190,7 @@ with main_col:
             if st.button("🔍 검색 후 동기화", type="primary", disabled=not (topic_input and search_query)):
                 with st.spinner(f"PubMed 검색 중..."):
                     try:
-                        from src.research.novelty_checker import NoveltyChecker
-                        papers = NoveltyChecker().search_papers(search_query, max_results=n_papers)
+                        papers = _get_cached_novelty_checker().search_papers(search_query, max_results=n_papers)
                         if papers:
                             st.success(f"✅ {len(papers)}편 검색")
                             result = sm.store_papers(papers, topic=topic_input)
@@ -1128,9 +1239,8 @@ with main_col:
             if st.button("📚 인제스트 시작", type="primary", disabled=not uploaded):
                 from src.ingestion.pdf_reader import PDFReader
                 from src.ingestion.chunker import TextChunker
-                from src.vectordb.store import get_vector_store
                 import tempfile
-                reader = PDFReader(); chunker = TextChunker(); store = get_vector_store(); total = 0
+                reader = PDFReader(); chunker = TextChunker(); store = _get_cached_store(); total = 0
                 for uf in uploaded:
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
                         tmp.write(uf.read()); tmp_path = tmp.name
@@ -1154,13 +1264,11 @@ with main_col:
             if st.button("🔍 검색 후 학습", type="primary", disabled=not pm_q):
                 with st.spinner("PubMed 검색 중..."):
                     try:
-                        from src.research.novelty_checker import NoveltyChecker
-                        from src.vectordb.store import get_vector_store
                         from src.ingestion.chunker import TextChunker
                         from src.notebooklm.paper_sync import PaperSync
-                        papers = NoveltyChecker().search_papers(pm_q, max_results=pm_n)
+                        papers = _get_cached_novelty_checker().search_papers(pm_q, max_results=pm_n)
                         if papers:
-                            store = get_vector_store(); chunker = TextChunker(); total = 0
+                            store = _get_cached_store(); chunker = TextChunker(); total = 0
                             for p in papers:
                                 chunks = chunker.chunk(PaperSync._format_paper_text(p),
                                     metadata={"filename": p.get("title","")[:80], "source": f"pubmed:{p.get('pmid','')}", "topic": pm_topic})
@@ -1180,8 +1288,7 @@ with main_col:
             if st.button("💾 저장", type="primary", disabled=not (txt_title and txt_content)):
                 try:
                     from src.ingestion.chunker import TextChunker
-                    from src.vectordb.store import get_vector_store
-                    added = get_vector_store().add_chunks(TextChunker().chunk(txt_content, metadata={"filename": txt_title[:80], "source": "manual_input", "topic": txt_topic}))
+                    added = _get_cached_store().add_chunks(TextChunker().chunk(txt_content, metadata={"filename": txt_title[:80], "source": "manual_input", "topic": txt_topic}))
                     st.success(f"✅ {added}개 청크 저장")
                     _log("text_ingest", {"title": txt_title}, f"텍스트 입력 → {added}청크")
                 except Exception as e: st.error(f"오류: {e}")
@@ -1192,8 +1299,7 @@ with main_col:
         st.markdown("<h2 style='color:#e6edf3;'>🧠 지식베이스 현황</h2>", unsafe_allow_html=True)
         db_type = "Supabase (클라우드)" if os.environ.get("SUPABASE_DB_URL") else "ChromaDB (로컬)"
         try:
-            from src.vectordb.store import get_vector_store
-            store = get_vector_store()
+            store = _get_cached_store()
             c1, c2, c3 = st.columns(3)
             c1.metric("DB 유형", db_type)
             total_chunks = store.count()
@@ -1260,10 +1366,9 @@ with main_col:
                     cfg["jobs"].pop(i); _sc(cfg); st.rerun()
         st.divider()
         if cfg["jobs"] and st.button("▶️ 전체 키워드 지금 실행", type="primary"):
-            from src.research.novelty_checker import NoveltyChecker
             from src.storage.manager import StorageManager
             from datetime import datetime
-            checker = NoveltyChecker(); sm = StorageManager(); total = 0
+            checker = _get_cached_novelty_checker(); sm = StorageManager(); total = 0
             for job in cfg["jobs"]:
                 with st.spinner(f"수집 중: {job['keyword']}"):
                     try:

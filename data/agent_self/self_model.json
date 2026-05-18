@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-18 08:21:38",
+  "updated_at": "2026-05-19 00:19:25",
   "overall_score": 96,
   "smoke_test_status": "passing",
   "smoke_test_score": "7/7",
@@ -29,13 +29,13 @@
       "confidence": 0.8
     }
   ],
-  "active_insights": 14,
+  "active_insights": 18,
   "recent_changes": [
-    "Auto-sync [05/17 22:46]: LAUDE.md, src/cloud/db.py, data/agent_self/, src/memory/self_model.py",
-    "Auto-sync [05/17 22:44]: src/memory/agent_insight.py",
-    "Auto-sync [05/17 22:41]: CLAUDE.md",
-    "Auto-sync [05/17 22:39]: rc/vectordb/store.py",
-    "Auto-sync [05/17 22:37]: ata/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin, data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin, data/chromadb_test/chroma.sqlite3, data/change_log/"
+    "Fix SupabaseVectorStore.count() / list_sources() returning 0",
+    "Add self-evolving knowledge base: ontology + graph + periodic PubMed learning",
+    "Log 4 missing session entries to change_log; rule compliance audit",
+    "Fix Railway health check — add /health endpoint, update healthcheckPath",
+    "Fix stats bugs + add VS Code interactive analysis script"
   ],
-  "git_summary": "최근 커밋:\n1d7cb51 Auto-sync [05/17 22:46]: LAUDE.md, src/cloud/db.py, data/agent_self/, src/memory/self_model.py\ne8981fb Auto-sync [05/17 22:44]: src/memory/agent_insight.py\n62c2e9d Auto-sync [05/17 22:41]: CLAUDE.md\n772f3f4 Auto-sync [05/17 22:39]: rc/vectordb/store.py\n029c4bd Auto-sync [05/17 22:37]: ata/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin, data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin, data/chromadb_test/chroma.sqlite3, data/change_log/\ne2d36c2 Auto-sync [05/17 22:36]: cp_server.py\n4d0ef63 Auto-sync [05/17 22:35]: pp/streamlit_app.py\n70d7dde Auto-sync [05/17 22:34]: pp/ai_panel.py, src/agent/medical_agent.py, src/cloud/db.py, src/llm/claude_client.py, src/rag/pipeline.py 외 1개\n변경사항: M .vscode/launch.json\n M app/main.py\n M app/streamlit_app.py\n M data/agent_self/self_model.json\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M data/libraries/dataset_knhanes.json\n M data/libraries/dataset_kyrbs.json\n M mcp_server.py\n M scripts/seed_knhanes.py\n M src/cloud/db.py\n M src/config/models.py\n M src/library/dataset_library.py\n M src/llm/claude_client.py\n M src/memory/agent_insight.py\n M src/research/research_pipeline.py\n M src/vectordb/store.py\n D tests/test_app_health.py\n?? data/agent_self/insights.json\n?? scripts/debug_topics.py\n?? scripts/finalize_session.py\n?? scripts/init_insights.py\n?? scripts/verify_fix.py\n?? scripts/verify_thinking.py\n?? src/memory/auto_learn.py"
+  "git_summary": "최근 커밋:\n7bf8677 Fix SupabaseVectorStore.count() / list_sources() returning 0\n8f40db1 Add self-evolving knowledge base: ontology + graph + periodic PubMed learning\n3f29b8b Log 4 missing session entries to change_log; rule compliance audit\n7f8b08d Fix Railway health check — add /health endpoint, update healthcheckPath\n0f89409 Fix stats bugs + add VS Code interactive analysis script\n2098d23 Add figure output to statistics analysis (PNG inline + download)\n07ec496 Add agent insight data, auto_learn, utility scripts; remove stale test\n8bb4b3d Fix critical bugs + full stack verification (2026-05-18)\n변경사항: M app/streamlit_app.py\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M data/knowledge_graph/graph.json\n M data/knowledge_graph/meta.json\n?? data/activity/\n?? data/figures/\n?? data/knowledge_graph/trend_state.json\n?? scripts/debug_topics.py\n?? scripts/screenshots/\n?? scripts/verify_all_pages.py\n?? scripts/verify_fix.py\n?? scripts/verify_flow.py\n?? scripts/verify_ui.py"
 }
