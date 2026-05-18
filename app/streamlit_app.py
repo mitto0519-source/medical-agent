@@ -613,7 +613,9 @@ with main_col:
                         _log("generate_topics", {"focus": focus, "n": n_topics}, f"{len(topics)}개 주제 생성: {focus}", {"topics": topics})
                         st.success(f"✅ {len(topics)}개 주제 생성 완료!")
                     except Exception as e:
+                        import traceback
                         st.error(f"오류: {e}")
+                        st.code(traceback.format_exc())
 
         if "topics" in st.session_state:
             page_context["생성된_주제"] = [t.get("title","") for t in st.session_state["topics"]]
@@ -867,12 +869,29 @@ with main_col:
                     "선형 회귀 (Linear Regression)",
                 ])
 
+                def _show_figure(fig, label: str):
+                    """그림을 인라인 표시 + PNG 다운로드 버튼."""
+                    if fig is None:
+                        return
+                    from src.visualization import MedicalVisualizer
+                    img_bytes = MedicalVisualizer.figure_bytes(fig, fmt="png", dpi=150)
+                    st.image(img_bytes, use_container_width=True)
+                    st.download_button(
+                        label=f"⬇ PNG 다운로드 ({label})",
+                        data=img_bytes,
+                        file_name=f"{label}.png",
+                        mime="image/png",
+                    )
+
                 if analysis_type == "기술통계 (Descriptive Stats)":
                     sel_cols = st.multiselect("분석할 변수", cols, default=cols[:5])
                     if st.button("▶ 실행", type="primary") and sel_cols:
                         from src.statistics.medical_stats import MedicalStatistics
+                        from src.visualization import MedicalVisualizer
                         result_df = MedicalStatistics.descriptive_stats(df[sel_cols])
                         st.dataframe(result_df, use_container_width=True)
+                        fig = MedicalVisualizer.auto_figure("descriptive", df, cols=sel_cols)
+                        _show_figure(fig, f"descriptive_{'_'.join(sel_cols[:3])}")
                         _log("stats_descriptive", {"cols": sel_cols}, f"기술통계: {sel_cols}")
 
                 elif analysis_type == "독립표본 t검정 (Independent t-test)":
@@ -880,8 +899,12 @@ with main_col:
                     grp_col = st.selectbox("그룹 변수 (2개 그룹)", cols)
                     if st.button("▶ 실행", type="primary"):
                         from src.statistics.medical_stats import MedicalStatistics
+                        from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.independent_t_test(df, val_col, grp_col)
                         st.json(res)
+                        fig = MedicalVisualizer.auto_figure("ttest", df, result=res,
+                                                            val_col=val_col, grp_col=grp_col)
+                        _show_figure(fig, f"ttest_{val_col}_by_{grp_col}")
                         _log("stats_ttest", {"val": val_col, "grp": grp_col}, f"t-test: {val_col} by {grp_col}")
 
                 elif analysis_type == "카이제곱 검정 (Chi-square)":
@@ -889,8 +912,12 @@ with main_col:
                     var2 = st.selectbox("변수 2", cols, index=min(1, len(cols)-1))
                     if st.button("▶ 실행", type="primary"):
                         from src.statistics.medical_stats import MedicalStatistics
+                        from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.chi_square_test(df, var1, var2)
                         st.json(res)
+                        fig = MedicalVisualizer.auto_figure("chi2", df, result=res,
+                                                            var1=var1, var2=var2)
+                        _show_figure(fig, f"chi2_{var1}_vs_{var2}")
                         _log("stats_chi2", {"var1": var1, "var2": var2}, f"chi2: {var1} vs {var2}")
 
                 elif analysis_type == "일원분산분석 (One-way ANOVA)":
@@ -898,16 +925,22 @@ with main_col:
                     grp_col = st.selectbox("그룹 변수", cols)
                     if st.button("▶ 실행", type="primary"):
                         from src.statistics.medical_stats import MedicalStatistics
+                        from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.one_way_anova(df, val_col, grp_col)
                         st.json(res)
+                        fig = MedicalVisualizer.auto_figure("anova", df, result=res,
+                                                            val_col=val_col, grp_col=grp_col)
+                        _show_figure(fig, f"anova_{val_col}_by_{grp_col}")
                         _log("stats_anova", {"val": val_col, "grp": grp_col}, f"ANOVA: {val_col} by {grp_col}")
 
                 elif analysis_type == "피어슨 상관 (Pearson Correlation)":
                     sel_cols = st.multiselect("변수 선택 (2개 이상)", cols, default=cols[:4])
                     if st.button("▶ 실행", type="primary") and len(sel_cols) >= 2:
-                        import pandas as pd
+                        from src.visualization import MedicalVisualizer
                         corr = df[sel_cols].corr()
                         st.dataframe(corr.style.background_gradient(cmap="coolwarm"), use_container_width=True)
+                        fig = MedicalVisualizer.auto_figure("correlation", df, cols=sel_cols)
+                        _show_figure(fig, f"corr_{'_'.join(sel_cols[:4])}")
                         _log("stats_corr", {"cols": sel_cols}, f"상관분석: {sel_cols}")
 
                 elif analysis_type == "로지스틱 회귀 (Logistic Regression)":
@@ -915,8 +948,11 @@ with main_col:
                     predictors = st.multiselect("예측변수", [c for c in cols if c != outcome])
                     if st.button("▶ 실행", type="primary") and predictors:
                         from src.statistics.medical_stats import MedicalStatistics
+                        from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.logistic_regression(df, outcome, predictors)
                         st.dataframe(res, use_container_width=True)
+                        fig = MedicalVisualizer.auto_figure("logistic", df, result=res)
+                        _show_figure(fig, f"logistic_{outcome}")
                         _log("stats_logistic", {"outcome": outcome, "predictors": predictors}, f"로지스틱: {outcome}")
 
                 elif analysis_type == "선형 회귀 (Linear Regression)":
@@ -924,8 +960,12 @@ with main_col:
                     predictors = st.multiselect("예측변수", [c for c in cols if c != outcome])
                     if st.button("▶ 실행", type="primary") and predictors:
                         from src.statistics.medical_stats import MedicalStatistics
+                        from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.linear_regression(df, outcome, predictors)
                         st.json(res)
+                        fig = MedicalVisualizer.auto_figure("linear", df, result=res,
+                                                            outcome=outcome, predictors=predictors)
+                        _show_figure(fig, f"linear_{outcome}")
                         _log("stats_linear", {"outcome": outcome, "predictors": predictors}, f"선형회귀: {outcome}")
 
     # ── 논문 작성 ─────────────────────────────────────────────────────
