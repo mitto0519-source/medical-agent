@@ -140,6 +140,10 @@ class StatBridge:
                 return self._linear(df, spec, outcome, outcome_label)
             elif analysis == "chi2":
                 return self._chi2(df, spec, outcome, outcome_label)
+            elif analysis == "cox":
+                return self._cox(df, spec, outcome, outcome_label)
+            elif analysis == "sensitivity":
+                return self._sensitivity(df, spec, outcome, outcome_label)
             else:
                 return self._logistic(df, spec, outcome, outcome_label)
         except Exception as e:
@@ -156,6 +160,7 @@ class StatBridge:
 
     # ------------------------------------------------------------------
     # Logistic regression (binary outcome → OR + 95%CI)
+    # 복합표본설계 가중치 + 상호작용항 지원
     # ------------------------------------------------------------------
 
     def _logistic(self, df: pd.DataFrame, spec: dict, outcome: str, label: str) -> AnalysisResult:
@@ -164,49 +169,73 @@ class StatBridge:
         predictors = spec.get("predictors", [])
         covariates = spec.get("covariates", [])
         weight_var = spec.get("weight_var")
+        strata_var = spec.get("strata_var")       # 복합표본 층화변수
+        cluster_var = spec.get("cluster_var")     # 복합표본 군집변수
+        interactions = spec.get("interactions", [])  # [("var1", "var2"), ...]
         subgroups = spec.get("subgroups", [])
 
         all_vars = predictors + covariates
         cols_needed = [outcome] + all_vars
-        if weight_var and weight_var in df.columns:
-            cols_needed.append(weight_var)
+        for v in [weight_var, strata_var, cluster_var]:
+            if v and v in df.columns:
+                cols_needed.append(v)
 
-        clean = df[cols_needed].dropna()
+        clean = df[[c for c in cols_needed if c in df.columns]].dropna()
         n_total = len(clean)
         n_outcome = int(clean[outcome].sum())
         outcome_rate = n_outcome / n_total * 100 if n_total else 0.0
 
-        # Build design matrix
         X = self._build_X(clean, all_vars)
+
+        # 상호작용항 추가
+        for v1, v2 in interactions:
+            col1 = f"{v1}_x_{v2}"
+            if v1 in clean.columns and v2 in clean.columns:
+                X[col1] = clean[v1].astype(float) * clean[v2].astype(float)
+
         y = clean[outcome].astype(float)
         weights = clean[weight_var].astype(float) if weight_var and weight_var in clean.columns else None
 
         X_const = sm.add_constant(X)
+        fit = None
 
-        if weights is not None:
-            model = sm.WLS(y, X_const, weights=weights)
-            # For binary with weights, use MNLogit approximation via Logit
+        # 복합표본설계 가중 로지스틱 회귀 (GEE 또는 가중 Logit)
+        if weights is not None and cluster_var and cluster_var in clean.columns:
+            try:
+                groups = clean[cluster_var].astype(str)
+                gee_model = sm.GEE(
+                    y, X_const,
+                    groups=groups,
+                    weights=weights,
+                    family=sm.families.Binomial(),
+                    cov_struct=sm.cov_struct.Independence(),
+                )
+                fit = gee_model.fit(disp=False)
+                analysis_type = "logistic_gee"
+            except Exception as e:
+                _log.debug("GEE 실패, weighted Logit으로 폴백: %s", e)
+
+        if fit is None:
             try:
                 logit_model = sm.Logit(y, X_const)
-                fit = logit_model.fit(disp=0, maxiter=200)
+                fit = logit_model.fit(disp=0, maxiter=300, method="bfgs")
             except Exception:
-                fit = model.fit(disp=0)
-                return self._build_result_linear(fit, X_const, clean, spec, outcome, label, n_total, n_outcome, outcome_rate)
-        else:
-            logit_model = sm.Logit(y, X_const)
-            fit = logit_model.fit(disp=0, maxiter=200)
+                fit = sm.Logit(y, X_const).fit(disp=0, maxiter=300)
+            analysis_type = "logistic"
 
         model_vars = self._extract_or(fit, X_const, n_total)
         metrics = {
             "pseudo_r2": getattr(fit, "prsquared", None),
-            "aic": fit.aic,
-            "bic": fit.bic,
+            "aic": getattr(fit, "aic", None),
+            "bic": getattr(fit, "bic", None),
             "llr_pvalue": getattr(fit, "llr_pvalue", None),
-            "n_obs": int(fit.nobs),
+            "n_obs": int(getattr(fit, "nobs", n_total)),
+            "weighted": weights is not None,
+            "complex_sample": bool(strata_var or cluster_var),
         }
         desc = self._describe(clean, outcome, all_vars)
 
-        # Subgroup analysis
+        # 층화 서브그룹 분석
         subgroup_results = {}
         for sg_var in subgroups:
             if sg_var not in clean.columns:
@@ -220,7 +249,7 @@ class StatBridge:
                     Xs = self._build_X(sub, [v for v in all_vars if v != sg_var])
                     Xs_c = sm.add_constant(Xs)
                     ys = sub[outcome].astype(float)
-                    sg_fit = sm.Logit(ys, Xs_c).fit(disp=0, maxiter=100)
+                    sg_fit = sm.Logit(ys, Xs_c).fit(disp=0, maxiter=200)
                     sg_results[str(val)] = self._extract_or(sg_fit, Xs_c, len(sub))
                 except Exception as e:
                     _log.debug("Subgroup %s=%s failed: %s", sg_var, val, e)
@@ -228,7 +257,7 @@ class StatBridge:
                 subgroup_results[sg_var] = sg_results
 
         return AnalysisResult(
-            analysis_type="logistic",
+            analysis_type=analysis_type,
             outcome=outcome,
             outcome_label=label,
             n_total=n_total,
@@ -239,6 +268,126 @@ class StatBridge:
             descriptive_stats=desc,
             subgroup_results=subgroup_results,
         )
+
+    # ------------------------------------------------------------------
+    # Cox proportional hazards regression (생존분석)
+    # ------------------------------------------------------------------
+
+    def _cox(self, df: pd.DataFrame, spec: dict, outcome: str, label: str) -> AnalysisResult:
+        """Cox 비례위험 회귀. spec에 'duration_var' 필수."""
+        try:
+            from lifelines import CoxPHFitter
+        except ImportError:
+            _log.warning("lifelines 미설치 — logistic으로 폴백")
+            return self._logistic(df, spec, outcome, label)
+
+        duration_var = spec.get("duration_var", "duration")
+        predictors = spec.get("predictors", [])
+        covariates = spec.get("covariates", [])
+        all_vars = predictors + covariates
+
+        cols = [outcome, duration_var] + [v for v in all_vars if v in df.columns]
+        clean = df[cols].dropna()
+        n_total = len(clean)
+
+        cph = CoxPHFitter()
+        cph.fit(clean, duration_col=duration_var, event_col=outcome, show_progress=False)
+
+        summary = cph.summary
+        model_vars = []
+        for var in summary.index:
+            row = summary.loc[var]
+            model_vars.append(VariableResult(
+                variable=str(var),
+                label=self._prettify(str(var)),
+                or_value=round(float(row.get("exp(coef)", 1.0)), 3),
+                ci_lower=round(float(row.get("exp(coef) lower 95%", 0.0)), 3),
+                ci_upper=round(float(row.get("exp(coef) upper 95%", 0.0)), 3),
+                p_value=round(float(row.get("p", 1.0)), 4),
+                n=n_total,
+            ))
+
+        metrics = {
+            "concordance": round(cph.concordance_index_, 4),
+            "log_likelihood": round(cph.log_likelihood_, 4),
+            "n_obs": n_total,
+        }
+
+        return AnalysisResult(
+            analysis_type="cox",
+            outcome=outcome,
+            outcome_label=label,
+            n_total=n_total,
+            n_outcome=int(clean[outcome].sum()),
+            outcome_rate=clean[outcome].mean() * 100,
+            model_vars=model_vars,
+            model_metrics=metrics,
+            descriptive_stats=self._describe(clean, outcome, all_vars),
+        )
+
+    # ------------------------------------------------------------------
+    # Sensitivity analysis — E-value + 역전 임계값 계산
+    # ------------------------------------------------------------------
+
+    def _sensitivity(self, df: pd.DataFrame, spec: dict, outcome: str, label: str) -> AnalysisResult:
+        """민감도 분석: 주 분석 결과 + E-value + 역전 임계값(p-value sensitivity).
+
+        E-value: 비측정 교란변수가 결론을 뒤집기 위해 필요한 최소 관련성.
+        """
+        # 주 분석 실행
+        main_spec = {**spec, "analysis": "logistic"}
+        main_result = self._logistic(df, main_spec, outcome, label)
+
+        if main_result.error or not main_result.model_vars:
+            return main_result
+
+        main_or = main_result.model_vars[0].or_value
+        main_ci_low = main_result.model_vars[0].ci_lower
+
+        # E-value 계산 (VanderWeele & Ding, 2017)
+        def e_value(or_val: float) -> float:
+            if or_val <= 0:
+                return float("nan")
+            if or_val >= 1:
+                return or_val + (or_val * (or_val - 1)) ** 0.5
+            else:
+                inv = 1 / or_val
+                return inv + (inv * (inv - 1)) ** 0.5
+
+        ev_point = round(e_value(main_or), 3)
+        ev_ci = round(e_value(max(main_ci_low, 1e-6)), 3)
+
+        # 역전 임계값: outcome prevalence를 변화시켜 OR이 1.0이 되는 지점 탐색
+        thresholds = []
+        try:
+            import numpy as np
+            for cutoff in np.arange(0.05, 0.5, 0.05):
+                mod_df = df.copy()
+                mod_df[outcome] = (mod_df[outcome].astype(float) >= cutoff).astype(int)
+                try:
+                    r = self._logistic(mod_df, {**spec, "analysis": "logistic"}, outcome, label)
+                    if r.model_vars:
+                        thresholds.append({
+                            "cutoff": round(float(cutoff), 2),
+                            "or": r.model_vars[0].or_value,
+                            "p": r.model_vars[0].p_value,
+                        })
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+        main_result.model_metrics["sensitivity"] = {
+            "e_value_point": ev_point,
+            "e_value_ci_lower": ev_ci,
+            "e_value_interpretation": (
+                f"비측정 교란변수가 노출-결과 모두와 OR≥{ev_point:.1f} 이상 관련 있어야 "
+                f"이 결과를 완전히 설명할 수 있음."
+            ),
+            "threshold_analysis": thresholds[:5],
+        }
+        main_result.analysis_type = "logistic+sensitivity"
+        return main_result
 
     # ------------------------------------------------------------------
     # Linear regression (continuous outcome)
