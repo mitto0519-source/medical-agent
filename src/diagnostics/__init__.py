@@ -1,0 +1,1 @@
+"""Self-evolution diagnostics package."""

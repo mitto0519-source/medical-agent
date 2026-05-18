@@ -376,6 +376,7 @@ with st.sidebar:
     _nb("○  논문 업로드 & 인제스트", "논문 업로드 & 인제스트")
     _nb("○  지식베이스 관리", "지식베이스 관리")
     _nb("○  자동 학습 루프", "자동 학습 루프")
+    _nb("🧬  자가 진단 & 자가발전", "자가 진단")
     st.markdown('</div>', unsafe_allow_html=True)
 
     # ── LLM Provider 설정 ──────────────────────────────────────────
@@ -1463,6 +1464,199 @@ with main_col:
                                 st.caption(f"출력: {str(out.get('summary', out))[:150]}")
         except Exception as ex:
             st.error(f"타임라인 로드 오류: {ex}")
+
+    # ── 자가 진단 & 자가발전 ──────────────────────────────────────────
+    elif page == "자가 진단":
+        st.markdown("<h2 style='color:#e6edf3;'>🧬 자가 진단 & 자가발전</h2>", unsafe_allow_html=True)
+        st.caption("Medical-Agent가 스스로 품질을 진단하고 자동으로 개선합니다.")
+
+        from src.diagnostics.self_auditor import get_last_audit, get_audit_history
+        from src.diagnostics.improvement_engine import get_approval_queue, approve_item, reject_item
+
+        last = get_last_audit()
+        history = get_audit_history(10)
+        scores = [h["overall_score"] for h in history]
+
+        # ── 상단 메트릭 ───────────────────────────────────────────────
+        c1, c2, c3, c4 = st.columns(4)
+        if last:
+            score = last["overall_score"]
+            score_color = "#22C55E" if score >= 80 else "#F59E0B" if score >= 60 else "#EF4444"
+            c1.markdown(f"""
+            <div style="background:rgba(13,27,48,0.85);border:1px solid rgba(56,98,180,0.18);
+                        border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:11px;color:#94A3B8;margin-bottom:4px;">종합 점수</div>
+                <div style="font-size:32px;font-weight:800;color:{score_color};">{score}</div>
+                <div style="font-size:10px;color:#64748B;">/100</div>
+            </div>""", unsafe_allow_html=True)
+
+            rag_s = last.get("rag_health", {}).get("status", "?")
+            rag_color = "#22C55E" if rag_s in ("excellent","good") else "#F59E0B" if rag_s == "fair" else "#EF4444"
+            c2.markdown(f"""
+            <div style="background:rgba(13,27,48,0.85);border:1px solid rgba(56,98,180,0.18);
+                        border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:11px;color:#94A3B8;margin-bottom:4px;">RAG 품질</div>
+                <div style="font-size:18px;font-weight:700;color:{rag_color};">{rag_s.upper()}</div>
+                <div style="font-size:10px;color:#64748B;">{last.get('rag_health',{}).get('doc_count',0):,} chunks</div>
+            </div>""", unsafe_allow_html=True)
+
+            n_issues = len(last.get("code_issues", []))
+            n_high = sum(1 for i in last.get("code_issues", []) if i.get("severity") == "high")
+            issue_color = "#22C55E" if n_high == 0 else "#F59E0B" if n_high < 3 else "#EF4444"
+            c3.markdown(f"""
+            <div style="background:rgba(13,27,48,0.85);border:1px solid rgba(56,98,180,0.18);
+                        border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:11px;color:#94A3B8;margin-bottom:4px;">코드 이슈</div>
+                <div style="font-size:32px;font-weight:800;color:{issue_color};">{n_issues}</div>
+                <div style="font-size:10px;color:#64748B;">high={n_high}</div>
+            </div>""", unsafe_allow_html=True)
+
+            n_gaps = len(last.get("llm_gaps", []))
+            c4.markdown(f"""
+            <div style="background:rgba(13,27,48,0.85);border:1px solid rgba(56,98,180,0.18);
+                        border-radius:12px;padding:16px;text-align:center;">
+                <div style="font-size:11px;color:#94A3B8;margin-bottom:4px;">아키텍처 갭</div>
+                <div style="font-size:32px;font-weight:800;color:#8B5CF6;">{n_gaps}</div>
+                <div style="font-size:10px;color:#64748B;">{last.get('timestamp','')[:10]}</div>
+            </div>""", unsafe_allow_html=True)
+        else:
+            st.info("아직 진단 이력이 없습니다. 아래 버튼으로 첫 번째 진단을 실행하세요.")
+
+        # ── 점수 추세 ─────────────────────────────────────────────────
+        if len(scores) >= 2:
+            st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+            trend_arrow = "↑" if scores[0] > scores[-1] else "↓" if scores[0] < scores[-1] else "→"
+            trend_color = "#22C55E" if scores[0] > scores[-1] else "#EF4444" if scores[0] < scores[-1] else "#94A3B8"
+            st.markdown(
+                f'<div style="font-size:12px;color:{trend_color};padding:4px 0;">'
+                f'점수 추세: {" → ".join(str(s) for s in reversed(scores[-5:]))} {trend_arrow}</div>',
+                unsafe_allow_html=True,
+            )
+
+        st.divider()
+
+        # ── 진단 실행 버튼 ────────────────────────────────────────────
+        col_run, col_quick, col_report = st.columns([2, 2, 2])
+        run_full = col_run.button("🔬 전체 진단 실행", type="primary", use_container_width=True,
+                                   help="LLM 아키텍처 평가 포함 (~2분)")
+        run_quick = col_quick.button("⚡ 빠른 진단", use_container_width=True,
+                                      help="코드 + RAG + LLM 연결만 (~30초)")
+
+        if run_full or run_quick:
+            with st.spinner("자가 진단 + 자동 개선 실행 중..."):
+                try:
+                    from src.diagnostics.self_auditor import SelfAuditor
+                    from src.diagnostics.improvement_engine import ImprovementEngine
+                    result = SelfAuditor().run_full_audit(with_llm_eval=run_full)
+                    improvements = ImprovementEngine().run(result.to_dict())
+                    auto_count = len(improvements.get("auto_applied", []))
+                    queued_count = improvements.get("queued_count", 0)
+                    st.success(
+                        f"✅ 진단 완료 — 점수: {result.overall_score}/100 | "
+                        f"자동 개선 {auto_count}건 적용 | 승인 대기 {queued_count}건"
+                    )
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"진단 오류: {e}")
+                    import traceback; st.code(traceback.format_exc())
+
+        if last:
+            tab1, tab2, tab3, tab4 = st.tabs(["🔍 코드 이슈", "🧠 아키텍처 갭", "⏳ 승인 큐", "📊 이력"])
+
+            # ── 코드 이슈 탭 ──────────────────────────────────────────
+            with tab1:
+                issues = last.get("code_issues", [])
+                if not issues:
+                    st.success("✅ 코드 품질 이슈 없음")
+                else:
+                    sev_order = {"high": 0, "medium": 1, "low": 2}
+                    for issue in sorted(issues, key=lambda x: sev_order.get(x.get("severity","low"), 2)):
+                        sev = issue.get("severity", "low")
+                        color = "#EF4444" if sev == "high" else "#F59E0B" if sev == "medium" else "#64748B"
+                        st.markdown(f"""
+                        <div style="background:rgba(13,27,48,0.7);border-left:3px solid {color};
+                                    border-radius:6px;padding:8px 12px;margin-bottom:6px;">
+                            <span style="font-size:10px;color:{color};font-weight:700;text-transform:uppercase;">{sev}</span>
+                            <span style="font-size:11px;color:#64748B;margin-left:8px;">{issue.get('type','')}</span>
+                            <div style="font-size:12px;color:#E5E7EB;margin-top:4px;">{issue.get('text','')}</div>
+                            <div style="font-size:10px;color:#64748B;margin-top:2px;">{issue.get('file','')} L{issue.get('line','')}</div>
+                        </div>""", unsafe_allow_html=True)
+
+            # ── 아키텍처 갭 탭 ────────────────────────────────────────
+            with tab2:
+                gaps = last.get("llm_gaps", [])
+                if not gaps:
+                    st.info("LLM 평가 없음 — 전체 진단 실행 시 분석됩니다.")
+                else:
+                    for gap in sorted(gaps, key=lambda x: x.get("priority", 9)):
+                        auto_label = "🤖 AUTO" if gap.get("auto") else "👤 MANUAL"
+                        auto_color = "#22C55E" if gap.get("auto") else "#F59E0B"
+                        cat = gap.get("category", "")
+                        st.markdown(f"""
+                        <div style="background:rgba(13,27,48,0.85);border:1px solid rgba(56,98,180,0.18);
+                                    border-radius:10px;padding:14px;margin-bottom:10px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                                <span style="font-size:11px;font-weight:700;color:#60A5FA;">P{gap.get('priority',0)}</span>
+                                <span style="font-size:11px;color:{auto_color};font-weight:600;">{auto_label}</span>
+                                <span style="font-size:10px;color:#64748B;background:rgba(255,255,255,0.06);
+                                             padding:1px 8px;border-radius:10px;">{cat}</span>
+                            </div>
+                            <div style="font-size:13px;font-weight:600;color:#E5E7EB;margin-bottom:6px;">{gap.get('gap','')}</div>
+                            <div style="font-size:11px;color:#94A3B8;margin-bottom:4px;">영향: {gap.get('impact','')}</div>
+                            <div style="font-size:11px;color:#4ADE80;">해결책: {gap.get('solution','')}</div>
+                        </div>""", unsafe_allow_html=True)
+
+            # ── 승인 큐 탭 ────────────────────────────────────────────
+            with tab3:
+                pending = get_approval_queue()
+                if not pending:
+                    st.success("✅ 승인 대기 항목 없음")
+                else:
+                    st.caption(f"{len(pending)}건의 수동 검토 항목이 있습니다.")
+                    for item in pending:
+                        with st.expander(f"[P{item.get('priority',0)}] {item.get('gap','')[:60]}", expanded=False):
+                            st.markdown(f"**카테고리:** {item.get('category','')}")
+                            st.markdown(f"**영향:** {item.get('impact','')}")
+                            st.markdown(f"**해결책:** {item.get('solution','')}")
+                            st.caption(f"큐 등록: {item.get('queued_at','')}")
+                            col_a, col_r = st.columns(2)
+                            with col_a:
+                                if st.button("✅ 승인 (구현 진행)", key=f"_approve_{item['id']}",
+                                             use_container_width=True, type="primary"):
+                                    approve_item(item["id"])
+                                    st.success("승인됨 — 다음 세션에서 구현 예정")
+                                    st.rerun()
+                            with col_r:
+                                if st.button("❌ 거부", key=f"_reject_{item['id']}",
+                                             use_container_width=True):
+                                    reject_item(item["id"])
+                                    st.rerun()
+
+            # ── 이력 탭 ───────────────────────────────────────────────
+            with tab4:
+                if not history:
+                    st.info("진단 이력 없음")
+                else:
+                    for h in history:
+                        s = h["overall_score"]
+                        sc = "#22C55E" if s >= 80 else "#F59E0B" if s >= 60 else "#EF4444"
+                        st.markdown(f"""
+                        <div style="display:flex;align-items:center;gap:14px;padding:10px 14px;
+                                    background:rgba(13,27,48,0.6);border:1px solid rgba(56,98,180,0.18);
+                                    border-radius:8px;margin-bottom:6px;">
+                            <span style="font-size:20px;font-weight:800;color:{sc};min-width:36px;">{s}</span>
+                            <div style="flex:1;">
+                                <div style="font-size:12px;color:#E5E7EB;">{h.get('timestamp','')[:16]}</div>
+                                <div style="font-size:11px;color:#64748B;">
+                                    이슈:{len(h.get('code_issues',[]))} |
+                                    RAG:{h.get('rag_health',{}).get('status','?')} |
+                                    갭:{len(h.get('llm_gaps',[]))} |
+                                    {h.get('duration_sec',0):.0f}초
+                                </div>
+                            </div>
+                        </div>""", unsafe_allow_html=True)
+
+        _show_history("자가 진단")
 
     else:
         st.info(f"페이지를 찾을 수 없습니다: {page}")
