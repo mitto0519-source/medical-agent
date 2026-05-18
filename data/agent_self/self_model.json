@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-19 00:19:25",
+  "updated_at": "2026-05-19 02:53:23",
   "overall_score": 96,
   "smoke_test_status": "passing",
   "smoke_test_score": "7/7",
@@ -29,13 +29,13 @@
       "confidence": 0.8
     }
   ],
-  "active_insights": 18,
+  "active_insights": 19,
   "recent_changes": [
-    "Fix SupabaseVectorStore.count() / list_sources() returning 0",
-    "Add self-evolving knowledge base: ontology + graph + periodic PubMed learning",
-    "Log 4 missing session entries to change_log; rule compliance audit",
-    "Fix Railway health check — add /health endpoint, update healthcheckPath",
-    "Fix stats bugs + add VS Code interactive analysis script"
+    "Architecture reinforcement: citation/access-control/statistics upgrade + bug fixes",
+    "Full system upgrade: StatBridge + PeerReviewer + DOCX export + RAG scale-up",
+    "Add self-evolution system: autonomous audit + auto-improvement (12h cycle)",
+    "Add persona system: living researcher character (CLAUDE.md Rule 9)",
+    "Perf: lazy embedding + cache_resource; fix CI test context_prefix"
   ],
-  "git_summary": "최근 커밋:\n7bf8677 Fix SupabaseVectorStore.count() / list_sources() returning 0\n8f40db1 Add self-evolving knowledge base: ontology + graph + periodic PubMed learning\n3f29b8b Log 4 missing session entries to change_log; rule compliance audit\n7f8b08d Fix Railway health check — add /health endpoint, update healthcheckPath\n0f89409 Fix stats bugs + add VS Code interactive analysis script\n2098d23 Add figure output to statistics analysis (PNG inline + download)\n07ec496 Add agent insight data, auto_learn, utility scripts; remove stale test\n8bb4b3d Fix critical bugs + full stack verification (2026-05-18)\n변경사항: M app/streamlit_app.py\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M data/knowledge_graph/graph.json\n M data/knowledge_graph/meta.json\n?? data/activity/\n?? data/figures/\n?? data/knowledge_graph/trend_state.json\n?? scripts/debug_topics.py\n?? scripts/screenshots/\n?? scripts/verify_all_pages.py\n?? scripts/verify_fix.py\n?? scripts/verify_flow.py\n?? scripts/verify_ui.py"
+  "git_summary": "최근 커밋:\nc27151b Architecture reinforcement: citation/access-control/statistics upgrade + bug fixes\n8ca846d Full system upgrade: StatBridge + PeerReviewer + DOCX export + RAG scale-up\n21c0c62 Add self-evolution system: autonomous audit + auto-improvement (12h cycle)\n1498aa6 Add persona system: living researcher character (CLAUDE.md Rule 9)\n01ae59a Perf: lazy embedding + cache_resource; fix CI test context_prefix\n61b33b2 Fix RAG ingest in trend_learner + seed 434 domain-relevant papers\n7bf8677 Fix SupabaseVectorStore.count() / list_sources() returning 0\n8f40db1 Add self-evolving knowledge base: ontology + graph + periodic PubMed learning\n변경사항: M app/streamlit_app.py\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M src/research/research_pipeline.py\n?? data/activity/\n?? data/figures/\n?? scripts/debug_topics.py\n?? scripts/screenshots/\n?? scripts/verify_fix.py\n?? src/data/kyrbs_raw_loader.py"
 }
