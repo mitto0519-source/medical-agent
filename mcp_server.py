@@ -625,6 +625,55 @@ def get_knowledge_graph_stats(ctx=None) -> dict:
 
 
 @mcp.tool
+def trigger_self_audit(quick: bool = False, ctx=None) -> dict:
+    """[슈퍼 어드민] 자가 진단 + 자동 개선 즉시 실행.
+
+    Args:
+        quick: True이면 LLM 아키텍처 평가 제외 (빠른 진단, ~30초)
+    """
+    _require_admin(ctx)
+    from src.diagnostics.self_auditor import SelfAuditor
+    from src.diagnostics.improvement_engine import ImprovementEngine
+
+    result = SelfAuditor().run_full_audit(with_llm_eval=not quick)
+    improvements = ImprovementEngine().run(result.to_dict())
+
+    _log_tool(ctx, "trigger_self_audit", {"quick": quick},
+              f"score={result.overall_score}, gaps={len(result.llm_gaps)}, auto={len(improvements.get('auto_applied', []))}")
+
+    return {
+        "overall_score": result.overall_score,
+        "duration_sec": result.duration_sec,
+        "code_issues_count": len(result.code_issues),
+        "rag_health": result.rag_health.get("status"),
+        "llm_health": result.llm_health.get("status"),
+        "gaps_found": len(result.llm_gaps),
+        "auto_applied": improvements.get("auto_applied", []),
+        "queued_count": improvements.get("queued_count", 0),
+    }
+
+
+@mcp.tool
+def get_self_audit_report(ctx=None) -> dict:
+    """마지막 자가 진단 결과 + 승인 대기 항목 조회."""
+    from src.diagnostics.self_auditor import get_last_audit, get_audit_history
+    from src.diagnostics.improvement_engine import get_approval_queue
+
+    last = get_last_audit()
+    history = get_audit_history(5)
+    scores = [h["overall_score"] for h in history]
+    pending = get_approval_queue()
+
+    return {
+        "last_audit": last,
+        "score_history": scores,
+        "pending_approvals": pending,
+        "trend": "improving" if len(scores) > 1 and scores[0] > scores[-1] else
+                 "degrading" if len(scores) > 1 and scores[0] < scores[-1] else "stable",
+    }
+
+
+@mcp.tool
 def trigger_periodic_learn(days: int = 60, ctx=None) -> dict:
     """[슈퍼 어드민] 주기적 학습 즉시 실행.
 
@@ -651,7 +700,6 @@ def _background_learn_loop():
     from src.config.logging_config import get_logger
     _bg_log = get_logger("bg_learn")
 
-    # 서버 완전 기동 후 1시간 딜레이 (초기 부하 방지)
     _bg_log.info("[bg_learn] 대기 중 — 1시간 후 첫 번째 주기적 학습 시작")
     _t.sleep(3600)
 
@@ -667,6 +715,38 @@ def _background_learn_loop():
         except Exception as e:
             _bg_log.error("[bg_learn] 실패 (다음 주기에 재시도): %s", e)
         _t.sleep(_LEARN_INTERVAL_H * 3600)
+
+
+_AUDIT_INTERVAL_H = 12  # 12시간마다 자가 진단
+
+
+def _background_self_evolution_loop():
+    """서버 시작 후 2시간 딜레이 → 이후 12시간마다 자가 진단 + 자동 개선."""
+    import time as _t
+    from src.config.logging_config import get_logger
+    _bg_log = get_logger("bg_evolve")
+
+    _bg_log.info("[bg_evolve] 대기 중 — 2시간 후 첫 자가 진단 시작")
+    _t.sleep(7200)  # 학습 루프와 시간차 두기
+
+    while True:
+        try:
+            _bg_log.info("[bg_evolve] 자가 진단 + 자동 개선 시작")
+            from src.diagnostics.self_auditor import SelfAuditor
+            from src.diagnostics.improvement_engine import ImprovementEngine
+
+            result = SelfAuditor().run_full_audit(with_llm_eval=True)
+            improvements = ImprovementEngine().run(result.to_dict())
+
+            _bg_log.info(
+                "[bg_evolve] 완료: score=%d, auto=%d건, 큐=%d건",
+                result.overall_score,
+                len(improvements.get("auto_applied", [])),
+                improvements.get("queued_count", 0),
+            )
+        except Exception as e:
+            _bg_log.error("[bg_evolve] 실패 (다음 주기에 재시도): %s", e)
+        _t.sleep(_AUDIT_INTERVAL_H * 3600)
 
 
 # ════════════════════════════════════════════════════════════════════════
@@ -686,8 +766,14 @@ if __name__ == "__main__":
     else:
         print(f"[MCP] Medical-Agent MCP Server starting on http://{args.host}:{args.port}")
         print(f"[MCP] Claude Desktop: set URL to http://localhost:{args.port}/mcp")
-        # 백그라운드 학습 루프 시작 (daemon=True: 메인 프로세스 종료 시 자동 종료)
-        bg_thread = _threading.Thread(target=_background_learn_loop, daemon=True, name="bg_learn")
-        bg_thread.start()
+        # 백그라운드 학습 루프 (24h 주기)
+        bg_learn = _threading.Thread(target=_background_learn_loop, daemon=True, name="bg_learn")
+        bg_learn.start()
         print("[MCP] 백그라운드 학습 루프 시작됨 (1h 딜레이 후 첫 실행, 이후 24h 주기)")
+
+        # 백그라운드 자가 진단 루프 (12h 주기)
+        bg_evolve = _threading.Thread(target=_background_self_evolution_loop, daemon=True, name="bg_evolve")
+        bg_evolve.start()
+        print("[MCP] 자가 진단 루프 시작됨 (2h 딜레이 후 첫 실행, 이후 12h 주기)")
+
         mcp.run(transport="http", host=args.host, port=args.port)
