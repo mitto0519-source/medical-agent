@@ -1,1 +1,1 @@
-web: python mcp_server.py --host 0.0.0.0 --port $PORT
+web: streamlit run app/streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
