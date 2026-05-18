@@ -1,5 +1,27 @@
 [
   {
+    "id": "20260518_204631_567555",
+    "timestamp": "2026-05-18 20:46:31",
+    "category": "pattern",
+    "title": "Korean adolescent obesity: multi-factor mediation topic generation",
+    "insight": "KYRBS adolescent obesity topics naturally cluster around 3 core mediators: sleep architecture (social jetlag), sedentary behavior patterns, and digital food content consumption. These generate distinct mediation/moderation analytic opportunities.",
+    "why_matters": "Prevents redundant topic generation; guides future KYRBS obesity analyses toward mechanistic pathways rather than simple associations. Informs paper s",
+    "how_to_apply": "When generating KYRBS adolescent obesity topics: prioritize sleep timing heterogeneity, physical activity moderation, and behavioral media consumption",
+    "confidence": 0.82,
+    "tags": [
+      "KYRBS",
+      "Korean_adolescent",
+      "obesity",
+      "mediation_analysis",
+      "sleep_behavior",
+      "sedentary_behavior",
+      "topic_generation",
+      "domain_pattern"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
     "id": "20260518_083146_586177",
     "timestamp": "2026-05-18 08:31:46",
     "category": "pattern",
