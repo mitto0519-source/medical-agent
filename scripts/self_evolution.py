@@ -17,6 +17,13 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 os.chdir(ROOT)
 
+# Windows cp949 환경에서 한국어/이모지 출력 보장
+if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf-8-sig"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 from src.config.env import bootstrap
 bootstrap()
 

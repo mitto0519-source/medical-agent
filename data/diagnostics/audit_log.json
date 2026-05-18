@@ -1,0 +1,134 @@
+[
+  {
+    "timestamp": "2026-05-19 02:42:48",
+    "overall_score": 97,
+    "duration_sec": 33.6,
+    "code_issues": [
+      {
+        "file": "src/diagnostics/self_auditor.py",
+        "line": 41,
+        "severity": "medium",
+        "type": "direct_load_dotenv",
+        "text": "load_dotenv() 직접 호출 — bootstrap() 사용"
+      },
+      {
+        "file": "src/diagnostics/self_auditor.py",
+        "line": 42,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      },
+      {
+        "file": "src/notebooklm/client.py",
+        "line": 13,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      },
+      {
+        "file": "src/notebooklm/paper_sync.py",
+        "line": 20,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      }
+    ],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.2642,
+      "doc_count": 573,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 1029,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
+    "timestamp": "2026-05-19 02:41:52",
+    "overall_score": 82,
+    "duration_sec": 12.5,
+    "code_issues": [
+      {
+        "file": "src/diagnostics/self_auditor.py",
+        "line": 41,
+        "severity": "medium",
+        "type": "direct_load_dotenv",
+        "text": "load_dotenv() 직접 호출 — bootstrap() 사용"
+      },
+      {
+        "file": "src/diagnostics/self_auditor.py",
+        "line": 42,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      },
+      {
+        "file": "src/notebooklm/client.py",
+        "line": 13,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      },
+      {
+        "file": "src/notebooklm/paper_sync.py",
+        "line": 20,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      }
+    ],
+    "rag_health": {
+      "status": "no_results",
+      "avg_score": null,
+      "doc_count": 573,
+      "issues": [
+        "RAG 검색 결과 없음 — 인덱스 이상"
+      ]
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 1133,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  }
+]
