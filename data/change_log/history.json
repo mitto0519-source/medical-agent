@@ -1,5 +1,158 @@
 [
   {
+    "id": "20260519_000058_421462",
+    "timestamp": "2026-05-19 00:00:58",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "feature_add",
+    "title": "자가발전 지식 베이스 구축 — 의료 온톨로지 + 그래프 + PubMed 주기 학습",
+    "description": "src/knowledge/medical_ontology.py: 한국 공중보건 MeSH 기반 온톨로지 (6도메인, 30개 개념, KYRBS/KNHANES 특화). src/knowledge/medical_graph.py: NetworkX 논문-개념-데이터셋 관계 그래프 (유사 논문 탐색, 연구 갭 발견). src/knowledge/trend_learner.py: PubMed 주기 수집→온톨로지 개념 추출→그래프 갱신→RAG 인제스트→self_model 자가진단→change_log 기록. scripts/periodic_learn.py: 단독 실행 CLI. mcp_server.py: 24h 백그라운드 스레드 자동 실행 (서버 시작 후 1h 딜레이, 이후 24h 주기). MCP tool: get_knowledge_graph_stats, trigger_periodic_learn 추가.",
+    "what_changed": {},
+    "why_better": "기존에는 일회성 seed 스크립트만 있었음. 이제 PubMed 최신 논문이 자동으로 수집·분류·그래프화되고, 온톨로지 기반 개념 추출로 RAG 검색 정확도 향상. 서버 실행 중 24시간마다 자동으로 지식 베이스가 갱신됨.",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "src/knowledge/medical_ontology.py",
+        "src/knowledge/medical_graph.py",
+        "src/knowledge/trend_learner.py",
+        "scripts/periodic_learn.py",
+        "mcp_server.py",
+        "requirements.txt"
+      ]
+    }
+  },
+  {
+    "id": "20260518_235949_976432",
+    "timestamp": "2026-05-18 23:59:49",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "19866b50fe6b",
+    "action_type": "general",
+    "title": "[연구 주제 생성] generate_topics",
+    "description": "5개 주제 생성: 청소년 스마트폰 사용과 수면 질",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "focus": "청소년 스마트폰 사용과 수면 질",
+      "n": 5
+    },
+    "outputs": {
+      "summary": "5개 주제 생성: 청소년 스마트폰 사용과 수면 질",
+      "topics": [
+        {
+          "title": "Association Between Weekday Smartphone Use Duration and Objectively Estimated Sleep Duration Among Korean Adolescents: A Nationwide Cross-Sectional Study",
+          "exposure": "smartphone_weekday (주중 스마트폰 사용 시간, 과사용 ≥4시간 vs. 적정)",
+          "outcome": "sleep_weekday (주중 평균 수면 시간, 수면 부족 <8시간)",
+          "population": "전국 중·고등학생 (KYRBS 2025, ~60,000명)",
+          "rationale": "스마트폰 과사용과 수면 부족의 연관성은 서구권에서 반복 보고되었으나, 한국 청소년의 대규모 대표 표본에서 복합표본 설계를 반영한 분석은 제한적이다. KYRBS는 smartphone_weekday, sleep_weekday, 그리고 다양한 혼란변수(stress, depression, academic_perf, sit_weekday 등)를 동시에 제공하여 엄밀한 다변수 조정이 가능하다. 또한 성별·학교급별 층화 분석을 통해 취약 집단을 식별할 수 있다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm, binomial)",
+            "complex_survey_linear_regression (sleep_weekday 연속형)",
+            "subgroup_analysis (sex, school_type)",
+            "dose_response_trend_test (p for trend across smartphone use categories)",
+            "propensity_score_weighting (감수성 분석)",
+            "multicollinearity_check (VIF)"
+          ]
+        },
+        {
+          "title": "Social Jetlag (주중-주말 수면 시간 차이)와 스마트폰 과사용의 상호작용이 청소년 우울감 및 주관적 스트레스에 미치는 영향",
+          "exposure": "smartphone_weekday + smartphone_weekend (복합 노출); social jetlag = sleep_weekend - sleep_weekday",
+          "outcome": "depression (우울감 경험), stress (주관적 스트레스 인지)",
+          "population": "전국 중·고등학생, 특히 수면 시간 편차가 큰 고등학생 집단",
+          "rationale": "사회적 시차(social jetlag)는 청소년 정신건강의 독립적 위험요인으로 주목받고 있다. KYRBS는 sleep_weekday와 sleep_weekend를 모두 수집하므로 사회적 시차 지표를 파생할 수 있으며, 스마트폰 과사용이 이 관계를 매개 또는 조절하는지 검증할 수 있다. 스마트폰×사회적 시차 상호작용항을 투입한 분석은 정책적으로 새로운 개입 지점을 제시한다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm)",
+            "interaction_term_analysis (smartphone × social_jetlag)",
+            "mediation_analysis (Baron-Kenny 또는 svyglm 기반 간접효과)",
+            "subgroup_analysis (sex, grade, family_econ)",
+            "sensitivity_analysis (sleep_sufficient 주관적 수면 충족도로 대체)"
+          ]
+        },
+        {
+          "title": "스마트폰 사용 시간과 신체활동 부족 및 좌식행동의 연관성: 청소년 건강행태의 군집 분석",
+          "exposure": "smartphone_weekday, smartphone_weekend",
+          "outcome": "pa_60min (WHO 권고 신체활동 충족 여부), sit_weekday (좌식행동 ≥8시간), pa_vigorous_days",
+          "population": "전국 중·고등학생 전체",
+          "rationale": "스마트폰 과사용은 신체활동 대체재로서 좌식행동을 촉진한다는 가설이 있으나, 한국 청소년에서 수면 부족과 신체활동 부족이 스마트폰 사용을 매개로 군집하는지 확인된 바 없다. KYRBS는 pa_60min, pa_vigorous_days, sit_weekday, sports_team, pe_class_freq 등 다층적 신체활동 지표를 제공하여 latent class analysis 또는 다변수 로지스틱 회귀가 가능하다. 수면 부족까지 결합한 복합 건강위험 군집 식별은 학교 체육정책 근거로 활용 가능하다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm)",
+            "latent_class_analysis (건강위험 군집 도출)",
+            "multinomial_logistic_regression (신체활동 3수준)",
+            "stratified_analysis (sex, school_type, region)",
+            "correlation_analysis (Spearman, 스마트폰-신체활동-수면 삼각 관계)"
+          ]
+        },
+        {
+          "title": "스마트폰 과사용과 고카페인 음료·야식 섭취의 복합 노출이 수면 부족에 미치는 영향: 가산적 상호작용 분석",
+          "exposure": "smartphone_weekday (과사용 여부) + caffeine_intake + night_snack (복합 노출 지표)",
+          "outcome": "sleep_weekday <8시간 (수면 부족), sleep_sufficient (주관적 수면 부족)",
+          "population": "전국 중·고등학생, 특히 고카페인 음료 섭취 경험자",
+          "rationale": "수면 부족은 스마트폰 과사용 단독이 아닌 고카페인 음료 섭취·야식 등 생활습관 복합 노출에 의해 증폭될 수 있다. KYRBS 2025는 caffeine_intake, night_snack, zero_drink_intake(신규)를 포함하여 복합 식이 노출을 정량화할 수 있다. 가산적 상호작용(relative excess risk due to interaction, RERI) 분석을 통해 시너지 효과를 공중보건학적으로 정량화하는 연구는 국내외 문헌에서 드물다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm, binomial)",
+            "additive_interaction_analysis (RERI, AP, SI)",
+            "composite_exposure_scoring (스마트폰+카페인+야식 복합 점수)",
+            "dose_response_trend_test",
+            "subgroup_analysis (sex, family_econ)",
+            "sensitivity_analysis (zero_drink_intake 포함 여부)"
+          ]
+        },
+        {
+          "title": "사회경제적 지위에 따른 청소년 스마트폰 과사용-수면 부족 연관성의 불평등: 다문화 청소년과 저소득 가구 청소년을 중심으로",
+          "exposure": "smartphone_weekday (과사용 ≥4시간)",
+          "outcome": "sleep_weekday <8시간, sleep_sufficient (주관적 수면 부족)",
+          "population": "전국 중·고등학생; 하위집단: 다문화 청소년(parent_nationality ≠1), 저소득 가구(family_econ 4-5), 비가족 거주(residence_type 2-4)",
+          "rationale": "스마트폰 과사용의 수면 영향이 사회경제적 취약 집단에서 더 크게 나타날 수 있으나, 한국 청소년 데이터에서 이를 체계적으로 검토한 연구는 부재하다. KYRBS는 family_econ, father_edu, mother_edu, parent_nationality, residence_type, region을 동시에 제공하여 다차원적 사회경제적 불평등 분석이 가능하다. 건강불평등 관점에서 정책 우선순위 집단 식별에 기여하며, 다문화 청소년 변수(parent_nationality)는 2025년 강화된 항목으로 시의성이 높다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm)",
+            "effect_modification_analysis (interaction: smartphone × family_econ)",
+            "stratified_analysis (다문화 vs. 비다문화, SES 3분위)",
+            "concentration_index (건강불평등 지수)",
+            "multilevel_logistic_regression (학교 수준 ICC 보정)",
+            "sensitivity_analysis (부모학력 대신 family_econ 단독 사용)"
+          ]
+        }
+      ]
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260518_235943_773065",
+    "timestamp": "2026-05-18 23:59:43",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 스마트폰 사용과 수면 질",
+    "description": "KYRBS 데이터셋 기반 연구 주제 5개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 스마트폰 사용과 수면 질",
+      "n_topics": 5
+    },
+    "outputs": {
+      "topic_count": 5,
+      "titles": [
+        "Association Between Weekday Smartphone Use Duration and Objectively Estimated Sleep Duration Among Korean Adolescents: A Nationwide Cross-Sectional Study",
+        "Social Jetlag (주중-주말 수면 시간 차이)와 스마트폰 과사용의 상호작용이 청소년 우울감 및 주관적 스트레스에 미치는 영향",
+        "스마트폰 사용 시간과 신체활동 부족 및 좌식행동의 연관성: 청소년 건강행태의 군집 분석",
+        "스마트폰 과사용과 고카페인 음료·야식 섭취의 복합 노출이 수면 부족에 미치는 영향: 가산적 상호작용 분석",
+        "사회경제적 지위에 따른 청소년 스마트폰 과사용-수면 부족 연관성의 불평등: 다문화 청소년과 저소득 가구 청소년을 중심으로"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
     "id": "20260518_235048_078894",
     "timestamp": "2026-05-18 23:50:48",
     "user_email": "",
