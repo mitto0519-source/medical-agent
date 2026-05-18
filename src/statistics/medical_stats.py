@@ -156,8 +156,8 @@ class MedicalStatistics:
         all_data = pd.concat([pd.Series(g.dropna()) for g in groups])
         grand_mean = all_data.mean()
         
-        ss_between = sum([len(g.dropna()) * (g.mean() - grand_mean)**2 for g in groups])
-        ss_total = sum([(all_data - grand_mean)**2])
+        ss_between = sum(len(g.dropna()) * (g.mean() - grand_mean)**2 for g in groups)
+        ss_total = float(((all_data - grand_mean)**2).sum())
         eta_squared = ss_between / ss_total if ss_total > 0 else 0
         
         result = {
@@ -490,6 +490,37 @@ class MedicalStatistics:
             'skewness': data.skew(),
             'kurtosis': data.kurtosis()
         }
+
+    # ── App-facing convenience wrappers ───────────────────────────────
+
+    @staticmethod
+    def independent_t_test(df: pd.DataFrame, value_col: str, group_col: str) -> Dict[str, Any]:
+        """t-test between two groups defined by group_col."""
+        groups = [df[df[group_col] == g][value_col].dropna()
+                  for g in df[group_col].dropna().unique()]
+        if len(groups) != 2:
+            return {"error": f"그룹 수가 2개여야 합니다 (현재 {len(groups)}개)"}
+        return MedicalStatistics.t_test(groups[0], groups[1])
+
+    @staticmethod
+    def chi_square_test(df: pd.DataFrame, var1: str, var2: str) -> Dict[str, Any]:
+        """Chi-square test of independence between two categorical variables."""
+        ct = pd.crosstab(df[var1], df[var2])
+        return MedicalStatistics.chi_square(ct)
+
+    @staticmethod
+    def one_way_anova(df: pd.DataFrame, value_col: str, group_col: str) -> Dict[str, Any]:
+        """One-way ANOVA across all unique groups in group_col."""
+        groups = [df[df[group_col] == g][value_col].dropna()
+                  for g in df[group_col].dropna().unique()]
+        if len(groups) < 2:
+            return {"error": "그룹이 2개 이상 필요합니다"}
+        return MedicalStatistics.anova(*groups)
+
+    @staticmethod
+    def linear_regression(df: pd.DataFrame, outcome: str, predictors: List[str]) -> Dict[str, Any]:
+        """OLS linear regression — wrapper for regression_analysis."""
+        return MedicalStatistics.regression_analysis(df, outcome, predictors)
 
 
 class SurvivalAnalysis:

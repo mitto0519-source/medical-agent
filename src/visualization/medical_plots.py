@@ -6,7 +6,11 @@ from pathlib import Path
 from typing import Optional, List, Union
 
 import matplotlib
-matplotlib.use("Agg")  # headless — no display required
+# Streamlit sets its own backend; Jupyter sets its own.
+# Only force Agg when there is truly no display (CI/server without DISPLAY).
+import os as _os
+if not _os.environ.get("DISPLAY", "") and _os.name != "nt":
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.graph_objects as go
