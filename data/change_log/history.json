@@ -1,5 +1,432 @@
 [
   {
+    "id": "20260519_001929_638193",
+    "timestamp": "2026-05-19 00:19:29",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "auto_learn",
+    "title": "주기적 학습 완료 — 신규 433편 수집",
+    "description": "PubMed 수집: 433편 신규 / 0편 중복 스킵. 그래프 노드: 9 → 462. 개념 추출: 3297건.",
+    "what_changed": {},
+    "why_better": "지식 베이스 자동 갱신으로 최신 연구 트렌드 반영",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "data/knowledge_graph",
+        "ChromaDB/RAG"
+      ]
+    }
+  },
+  {
+    "id": "20260519_001016_569386",
+    "timestamp": "2026-05-19 00:10:16",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "53c55633b7ed",
+    "action_type": "general",
+    "title": "[신규성 확인] check_novelty",
+    "description": "신규성 점수 7/10: Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "title": "Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study"
+    },
+    "outputs": {
+      "summary": "신규성 점수 7/10: Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+      "novelty_score": 7,
+      "is_novel": true,
+      "recommendation": "modify",
+      "gap_identified": "While associations between screen time and sleep have been studied, no identified study uses the 2025 KYRBS wave with objectively defined smartphone overuse thresholds (≥4 hours/weekday) linked to actigraphy- or survey-defined short sleep (<8 hours) in a nationally representative Korean adolescent sample of ~60,000.",
+      "suggested_angle": "Differentiate by examining dose-response relationships across smartphone use strata and incorporating weekend-versus-weekday contrasts, mediating pathways (e.g., delayed sleep phase, blue-light exposure, displacement of sleep time), and moderation by sex, school level (middle vs. high school), and socioeconomic status to move beyond a simple binary exposure-outcome association.",
+      "llm_justification": "The rule-based search returned zero matching papers, consistent with the 2025 KYRBS dataset not yet being publicly indexed; however, the broader literature on adolescent screen time and sleep (e.g., Choi et al., Korean Youth Risk Behavior surveys pre-2023; Twenge & Hisler, 2019 JAMA Pediatrics; Cabre-Riera et al., 2019 Sleep Medicine Reviews) does cover overlapping constructs, warranting a modest downward adjustment from 9 to 7 to account for the high conceptual overlap with existing screen-time/sleep research despite the dataset novelty. The primary incremental contributions are the 2025 data vintage, the ≥4-hour smartphone-specific threshold, and the nationally representative Korean sample size.",
+      "overall_similar_aspects": [
+        "Cross-sectional design examining screen time and sleep in adolescents",
+        "Use of national youth health surveillance data (KYRBS or equivalent)",
+        "Binary exposure categorization (overuse vs. adequate use)",
+        "Self-reported sleep duration as outcome in school-age youth",
+        "Focus on weekday patterns of technology use and sleep",
+        "Korean adolescent population previously studied for sleep and digital device use",
+        "Logistic regression framework adjusting for demographic covariates"
+      ],
+      "overall_different_aspects": [
+        "Use of the 2025 KYRBS wave — most recent and not yet widely analyzed",
+        "Smartphone-specific exposure (not general screen time) with a defined ≥4-hour weekday threshold",
+        "Sample size of ~60,000 providing exceptional statistical power for subgroup analyses",
+        "Explicit weekday-specific framing for both exposure and outcome, enabling day-type contrasts",
+        "Potential for dose-response modeling across multiple smartphone use strata",
+        "Capacity to stratify by middle vs. high school level within the same nationally representative frame"
+      ],
+      "similar_papers": [
+        "Screen time and sleep among school-aged children and adolescents: a systematic literature review (Hale & Guan, 2015)",
+        "Associations between smartphone use and sleep quality in Korean adolescents (Choi et al., various KYRBS analyses)",
+        "Increases in depressive symptoms, suicide-related outcomes, and suicide rates among U.S. adolescents after 2010 and links to increased new media screen time (Twenge et al., 2018)",
+        "Mobile phone use and sleep quality, duration and disturbances among Taiwanese adolescents (Lemola et al. framework applied in Asian contexts)",
+        "Bedtime mobile phone use and sleep in adults (Lanaj et al. paradigm extended to youth samples)"
+      ],
+      "rule_based_score": 9.0,
+      "similarity_matrix": [],
+      "similarity_stats": {
+        "max": 0.0,
+        "avg": 0.0,
+        "high_similarity_count": 0,
+        "very_high_similarity_count": 0,
+        "total_papers": 0,
+        "frequently_similar_dimensions": []
+      }
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260519_000950_586969",
+    "timestamp": "2026-05-19 00:09:50",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "53c55633b7ed",
+    "action_type": "general",
+    "title": "[연구 주제 생성] generate_topics",
+    "description": "5개 주제 생성: 청소년 스마트폰 사용과 수면 질",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "focus": "청소년 스마트폰 사용과 수면 질",
+      "n": 5
+    },
+    "outputs": {
+      "summary": "5개 주제 생성: 청소년 스마트폰 사용과 수면 질",
+      "topics": [
+        {
+          "title": "Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+          "exposure": "smartphone_weekday (주중 스마트폰 사용 시간, 4시간 이상 과사용 vs. 적정)",
+          "outcome": "sleep_weekday (주중 평균 수면 시간 < 8시간 수면 부족)",
+          "population": "전국 중·고등학생 (KYRBS 2025, 약 6만 명)",
+          "rationale": "스마트폰 과사용과 수면 부족은 청소년 건강의 핵심 공중보건 과제이나, 국내 대규모 대표 표본에서 주중 스마트폰 사용 시간과 실제 수면 시간(파생변수) 간의 용량-반응 관계를 복합표본 설계를 적용하여 정밀 추정한 연구는 드물다. KYRBS 2025는 smartphone_weekday, sleep_weekday, sleep_sufficient, stress, depression 등 핵심 변수를 동시에 포함하며, 성별·학교급별 층화 분석이 가능하다.",
+          "suggested_design": "cross-sectional (복합표본 반복 횡단)",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm, binomial)",
+            "dose_response_trend_analysis (for_trend, ordinal_smartphone_categories)",
+            "sex_stratified_analysis",
+            "school_type_stratified_analysis (중학교 vs. 고등학교)",
+            "mediation_analysis (stress/depression as mediator)",
+            "multivariate_adjustment (sex, grade, region, family_econ, academic_perf, pa_60min, sit_weekday)"
+          ]
+        },
+        {
+          "title": "Weekend-Weekday Smartphone Use Discrepancy and Social Jetlag in Korean Adolescents: Sleep Duration Difference as a Proxy for Circadian Misalignment",
+          "exposure": "smartphone_weekend - smartphone_weekday 차이 (주말-주중 스마트폰 사용 시간 격차)",
+          "outcome": "sleep_weekend - sleep_weekday 차이 (사회적 시차, social jetlag proxy)",
+          "population": "전국 중·고등학생 (KYRBS 2025)",
+          "rationale": "사회적 시차(social jetlag)는 생체리듬 불일치로 인한 심리·대사 건강 악화와 연관되나, 청소년 스마트폰 사용의 주말-주중 패턴 차이가 수면 시간 불일치에 미치는 영향은 국내 대규모 연구에서 미탐구 영역이다. KYRBS의 sleep_weekday, sleep_weekend, smartphone_weekday, smartphone_weekend 4개 파생·측정 변수를 활용해 사회적 시차 대리지표를 구성하고, 이를 우울감·스트레스·주관적 건강 인지와 연결할 수 있다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_linear_regression (sleep_difference as continuous outcome)",
+            "quantile_regression (survey-weighted, 수면 차이 분포 전반 분석)",
+            "interaction_analysis (sex × smartphone_discrepancy)",
+            "path_analysis (social jetlag → depression → health_perception)",
+            "subgroup_analysis by region (대도시 vs. 군지역)",
+            "multivariate_adjustment (family_econ, sit_weekday, sit_weekend, pa_60min, stress)"
+          ]
+        },
+        {
+          "title": "Joint Association of Smartphone Overuse and Physical Inactivity with Depressive Symptoms and Suicidal Ideation Among Korean Middle and High School Students",
+          "exposure": "smartphone_weekday 과사용 × pa_60min 미충족 (joint exposure, 4-category 조합)",
+          "outcome": "depression (우울감 경험) 및 suicidal_ideation (자살 생각 경험)",
+          "population": "전국 중·고등학생 (KYRBS 2025)",
+          "rationale": "스마트폰 과사용과 신체활동 부족은 독립적으로 청소년 정신건강 악화와 연관되지만, 두 위험요인의 상호작용(synergistic/antagonistic)이 우울·자살 생각에 미치는 결합 효과를 추정한 국내 대규모 연구는 부재하다. 수면 부족(sleep_weekday)을 매개변수로 설정해 스마트폰→수면→정신건강 경로를 분해할 수 있으며, 공중보건 메시지 설계에 직접적 함의를 제공한다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm, 4-category joint exposure)",
+            "relative_excess_risk_due_to_interaction (RERI, additive interaction)",
+            "mediation_analysis (sleep_weekday as mediator, counterfactual framework)",
+            "sex_stratified_analysis",
+            "sensitivity_analysis (suicidal_plan, suicidal_attempt as secondary outcomes)",
+            "multivariate_adjustment (stress, academic_perf, family_econ, family_type, residence_type)"
+          ]
+        },
+        {
+          "title": "Smartphone Use Duration, Sleep Insufficiency, and Body Weight Misperception in Korean Adolescents: Exploring the Mediation Role of Night Snacking and Sedentary Behavior",
+          "exposure": "smartphone_weekday / smartphone_weekend (스마트폰 사용 시간)",
+          "outcome": "body_image distortion (주관적 체형 인식 vs. bmi_category 불일치) 및 bmi_category (과체중·비만)",
+          "population": "전국 중·고등학생 (KYRBS 2025)",
+          "rationale": "스마트폰 과사용은 수면 감소→야식 증가→좌식 증가라는 복합 경로를 통해 체중 및 신체이미지 왜곡에 영향을 줄 수 있다. KYRBS 2025는 night_snack, sit_weekday, sit_weekend, sleep_weekday, body_image, bmi_category를 포함해 이 다단계 경로를 검증하기에 최적이며, 2025년 신규 항목인 mukbang_watch를 추가 노출로 분석할 수 있다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (body image distortion as binary outcome)",
+            "serial_mediation_analysis (smartphone → sleep_weekday → night_snack → bmi_category)",
+            "structural_equation_modeling_adapted (survey-weighted path model)",
+            "sex_stratified_analysis (체형 왜곡 성별 차이 검증)",
+            "mukbang_watch_as_effect_modifier (interaction term)",
+            "multivariate_adjustment (fruit_intake, fastfood_intake, vegetable_intake, family_econ, academic_perf)"
+          ]
+        },
+        {
+          "title": "Socioeconomic Inequalities in Smartphone Overuse and Its Downstream Effect on Sleep Quality Among Korean Adolescents: A Concentration Index Approach Using KYRBS 2025",
+          "exposure": "family_econ (주관적 경제적 상태) × smartphone_weekday 과사용 상호작용",
+          "outcome": "sleep_sufficient (주관적 수면 충족도) 및 sleep_weekday (수면 시간)",
+          "population": "전국 중·고등학생 (KYRBS 2025), 특히 저소득 가구 청소년",
+          "rationale": "디지털 기기 과사용과 수면 부족의 사회경제적 격차는 건강불평등의 새로운 차원이나, 한국 청소년에서 소득 수준별 스마트폰 과사용→수면 질 저하 연관의 크기 차이를 정량화한 연구는 없다. KYRBS의 family_econ, father_edu, mother_edu를 SES 지표로 활용하고, parent_nationality(다문화 청소년)를 하위집단으로 추가 분석하면 건강불평등 정책 근거를 제공할 수 있다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression with interaction (family_econ × smartphone_weekday)",
+            "concentration_index (Wagstaff's C-index, survey-weighted, 수면 부족의 SES 불평등 측정)",
+            "effect_modification_analysis by family_econ (stratified ORs)",
+            "subgroup_analysis (parent_nationality: 다문화 청소년)",
+            "region_stratified_analysis (대도시 vs. 군지역 디지털 접근성 차이)",
+            "multivariate_adjustment (residence_type, academic_perf, school_type, prevention_edu, stress, depression)"
+          ]
+        }
+      ]
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260519_000945_675409",
+    "timestamp": "2026-05-19 00:09:45",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 스마트폰 사용과 수면 질",
+    "description": "KYRBS 데이터셋 기반 연구 주제 5개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 스마트폰 사용과 수면 질",
+      "n_topics": 5
+    },
+    "outputs": {
+      "topic_count": 5,
+      "titles": [
+        "Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+        "Weekend-Weekday Smartphone Use Discrepancy and Social Jetlag in Korean Adolescents: Sleep Duration Difference as a Proxy for Circadian Misalignment",
+        "Joint Association of Smartphone Overuse and Physical Inactivity with Depressive Symptoms and Suicidal Ideation Among Korean Middle and High School Students",
+        "Smartphone Use Duration, Sleep Insufficiency, and Body Weight Misperception in Korean Adolescents: Exploring the Mediation Role of Night Snacking and Sedentary Behavior",
+        "Socioeconomic Inequalities in Smartphone Overuse and Its Downstream Effect on Sleep Quality Among Korean Adolescents: A Concentration Index Approach Using KYRBS 2025"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260519_000716_118370",
+    "timestamp": "2026-05-19 00:07:16",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "d30f89f810f1",
+    "action_type": "general",
+    "title": "[논문 업로드 & 인제스트] pubmed_ingest",
+    "description": "50편 학습: ",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "query": "obesity nAFLD"
+    },
+    "outputs": {
+      "summary": "50편 학습: "
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260519_000626_638598",
+    "timestamp": "2026-05-19 00:06:26",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "d30f89f810f1",
+    "action_type": "general",
+    "title": "[논문 업로드 & 인제스트] pubmed_ingest",
+    "description": "20편 학습: ",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "query": "obesity korean disease"
+    },
+    "outputs": {
+      "summary": "20편 학습: "
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260519_000535_985248",
+    "timestamp": "2026-05-19 00:05:35",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "17f8f88e099e",
+    "action_type": "general",
+    "title": "[신규성 확인] check_novelty",
+    "description": "신규성 점수 8/10: Association Between Weekday Smartphone Use Duration and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "title": "Association Between Weekday Smartphone Use Duration and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study"
+    },
+    "outputs": {
+      "summary": "신규성 점수 8/10: Association Between Weekday Smartphone Use Duration and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+      "novelty_score": 8,
+      "is_novel": true,
+      "recommendation": "proceed",
+      "gap_identified": "While screen time and adolescent sleep have been studied broadly, no identified study uses the 2025 KYRBS wave to examine weekday-specific smartphone overuse (≥4 hours/day) against objectively-defined short sleep (<8 hours) with national representativeness among Korean middle and high school students specifically.",
+      "suggested_angle": "Leverage the KYRBS 2025 dataset's large sample (~60,000) to perform dose-response analyses across smartphone use quintiles and stratify by school level (middle vs. high), sex, and academic stress burden, which would add mechanistic granularity beyond simple binary exposure-outcome framing; additionally, incorporating mediation analysis through mental health indicators (depressive symptoms, stress perception) would substantially strengthen causal inference.",
+      "llm_justification": "The rule-based search returned zero similar papers, supporting a high novelty score; the existing literature on adolescent screen time and sleep (e.g., Twenge et al. on U.S. adolescents, WHO-based multi-country studies) rarely isolates weekday-specific smartphone duration as the exposure using nationally representative Korean surveillance data, and the 2025 KYRBS wave is inherently novel. A minor downward adjustment from 9 to 8 reflects the acknowledged global literature base on screen time and adolescent sleep quality that could raise methodological similarity concerns during peer review, even if no directly matching paper was identified.",
+      "overall_similar_aspects": [
+        "Cross-sectional study design examining screen/smartphone use and sleep in adolescents",
+        "Use of self-reported sleep duration as the outcome variable",
+        "Focus on adolescent populations in nationally representative surveys",
+        "Binary categorization of sleep insufficiency using WHO/age-based thresholds (<8 hours)",
+        "Logistic regression framework for screen time–sleep association"
+      ],
+      "overall_different_aspects": [
+        "Use of the 2025 KYRBS wave — the most current and previously unpublished surveillance cycle",
+        "Explicit weekday-specificity of both smartphone exposure and sleep outcome (vs. overall or weekend measures)",
+        "Smartphone overuse threshold defined at ≥4 hours/day, distinct from general screen time metrics",
+        "National representativeness specific to Korean adolescent population with ~60,000 sample size",
+        "Potential to capture post-COVID behavioral normalization patterns in Korean youth smartphone use",
+        "Distinction between middle school and high school subgroups within a single nationally representative framework"
+      ],
+      "similar_papers": [
+        "Screen time and sleep among school-aged children and adolescents: a systematic review",
+        "Association between smartphone use and sleep quality in Korean adolescents",
+        "Digital media use and sleep in adolescents: results from a large cross-sectional study",
+        "Trends in adolescent screen time and associations with sleep duration in nationally representative U.S. surveys"
+      ],
+      "rule_based_score": 9.0,
+      "similarity_matrix": [],
+      "similarity_stats": {
+        "max": 0.0,
+        "avg": 0.0,
+        "high_similarity_count": 0,
+        "very_high_similarity_count": 0,
+        "total_papers": 0,
+        "frequently_similar_dimensions": []
+      }
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260519_000512_510428",
+    "timestamp": "2026-05-19 00:05:12",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "17f8f88e099e",
+    "action_type": "general",
+    "title": "[연구 주제 생성] generate_topics",
+    "description": "5개 주제 생성: 청소년 스마트폰 사용과 수면 질",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "focus": "청소년 스마트폰 사용과 수면 질",
+      "n": 5
+    },
+    "outputs": {
+      "summary": "5개 주제 생성: 청소년 스마트폰 사용과 수면 질",
+      "topics": [
+        {
+          "title": "Association Between Weekday Smartphone Use Duration and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+          "exposure": "smartphone_weekday (주중 스마트폰 사용 시간, 과사용 ≥4시간 기준)",
+          "outcome": "sleep_weekday (주중 평균 수면 시간 < 8시간 수면 부족)",
+          "population": "전국 중·고등학생 (KYRBS 2025, 약 6만 명)",
+          "rationale": "스마트폰 과사용과 수면 부족의 연관성은 개별 연구에서 보고되어 왔으나, 전국 대표 표본에서 복합표본 설계를 적용한 정밀 추정치는 부족하다. 주중·주말 스마트폰 사용량과 수면시간을 모두 보유한 KYRBS 2025는 평일 수면 부족과 스마트폰 과사용의 dose-response 관계를 검증하기에 최적의 자료이며, 정책적 권고 기준(4시간 이상) 도출에 기여할 수 있다.",
+          "suggested_design": "cross-sectional (복합표본 반복 횡단)",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm, binomial)",
+            "dose_response_trend_analysis (smartphone_weekday 순서형 독립변수로 for-trend p값 산출)",
+            "subgroup_analysis (sex × school_type 층화)",
+            "multivariate_adjustment (sex, grade, family_econ, academic_perf, stress, depression, pa_60min, sit_weekday)",
+            "interaction_test (sex × smartphone_weekday 교호작용항)"
+          ]
+        },
+        {
+          "title": "Mediating Role of Stress and Depression in the Relationship Between Excessive Smartphone Use and Subjective Sleep Insufficiency in Korean Middle and High School Students",
+          "exposure": "smartphone_weekday / smartphone_weekend (주중·주말 스마트폰 과사용)",
+          "outcome": "sleep_sufficient (주관적 수면 충족도 부족)",
+          "population": "전국 중·고등학생, 정신건강 변수 응답 완료자",
+          "rationale": "스마트폰 과사용이 수면의 질을 저하시키는 경로로 심리적 각성(스트레스, 우울)이 매개할 가능성이 제기되고 있다. KYRBS는 stress, depression, suicidal_ideation과 수면 변수를 동시에 포함하므로 매개분석이 가능하며, 청소년 디지털 정신건강 개입 설계에 직접적 근거를 제공한다. 특히 주관적 수면 충족도(sleep_sufficient)는 수면 시간만으로 포착되지 않는 수면의 질 측면을 반영한다.",
+          "suggested_design": "cross-sectional with mediation analysis",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (svyglm)",
+            "causal_mediation_analysis (survey-weighted, counterfactual framework; R mediation 패키지 또는 svyglm 기반 단계적 분해)",
+            "bootstrapped_indirect_effect (1000 resamples, 95% CI)",
+            "path_analysis (stress → depression → sleep_sufficient 순차 매개 모형)",
+            "sensitivity_analysis (E-value 산출로 미측정 교란 강건성 평가)"
+          ]
+        },
+        {
+          "title": "Sex Differences in the Association Between Smartphone Overuse and Sleep-Wake Pattern Irregularity (Social Jetlag) in Korean Adolescents",
+          "exposure": "smartphone_weekday + smartphone_weekend (주중·주말 사용 시간 차이로 주말 과사용 패턴 정의)",
+          "outcome": "social_jetlag_proxy (sleep_weekend - sleep_weekday 차이 ≥2시간을 사회적 시차로 정의, 연속 파생변수)",
+          "population": "전국 중·고등학생, 주중·주말 수면 및 스마트폰 데이터 완전 응답자",
+          "rationale": "사회적 시차(social jetlag)는 만성 피로, 비만, 우울의 위험인자로 주목받고 있으나 한국 청소년에서 스마트폰 사용 패턴과의 관련성은 미규명이다. KYRBS의 sleep_weekday/sleep_weekend 및 smartphone_weekday/weekend 변수를 활용해 파생 지표를 구성할 수 있으며, 성별에 따른 수면 행태 차이를 탐색함으로써 성별 맞춤형 수면 개입 전략 수립에 기여한다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_linear_regression (svyglm, gaussian; 사회적 시차 연속 결과)",
+            "complex_survey_logistic_regression (≥2시간 이분화 후)",
+            "sex_stratified_analysis",
+            "interaction_test (sex × smartphone_weekend_overuse)",
+            "multivariate_adjustment (grade, family_econ, academic_perf, pa_60min, caffeine_intake, night_snack, sit_weekend)"
+          ]
+        },
+        {
+          "title": "Joint Association of Smartphone Overuse and Physical Inactivity With Short Sleep Duration and Depressive Symptoms Among Korean Adolescents: A Synergistic Risk Analysis",
+          "exposure": "smartphone_weekday (과사용 ≥4시간) × pa_60min (WHO 권고 미충족 <7일/주) 결합 노출 4분위",
+          "outcome": "sleep_weekday (<8시간) 및 depression (우울감 경험) 이중 결과",
+          "population": "전국 중·고등학생",
+          "rationale": "스마트폰 과사용과 신체활동 부족은 각각 수면 부족 및 우울과 독립적으로 연관되어 있으나, 두 위험 요인이 공존할 때의 상승적 효과(synergism)는 체계적으로 규명되지 않았다. 복합 노출 4군 비교를 통해 가장 취약한 하위집단(과사용+비활동)을 식별하고, 교호작용 지수(RERI, AP)를 산출함으로써 통합적 개입 우선순위 근거를 제공한다.",
+          "suggested_design": "cross-sectional",
+          "suggested_methods": [
+            "complex_survey_logistic_regression (결합 노출 4범주 더미변수)",
+            "additive_interaction_analysis (RERI, AP, SI 산출; 가법적 교호작용)",
+            "multiplicative_interaction_test (교호작용항 투입)",
+            "propensity_score_weighting (관찰 교란 최소화 보조 분석)",
+            "subgroup_analysis (sex, school_type, family_econ)"
+          ]
+        },
+        {
+          "title": "Mukbang Viewing Frequency, Smartphone Use, Night Snacking, and Sleep Duration in Korean Adolescents: A Multi-Pathway Analysis Using 2025 KYRBS Novel Variables",
+          "exposure": "mukbang_watch (먹방 시청 빈도) 및 smartphone_weekday (스마트폰 사용 시간)",
+          "outcome": "sleep_weekday (주중 수면 시간, 연속 및 <8시간 이분화)",
+          "population": "전국 중·고등학생 (KYRBS 2025 신규 항목 적용 가능 코호트)",
+          "rationale": "2025년 KYRBS에 신규 도입된 mukbang_watch 변수는 야식(night_snack), 스마트폰 사용, 수면 질을 연결하는 행태 경로를 처음으로 전국 규모에서 탐색할 수 있게 한다. 먹방 시청이 야식 섭취를 촉진하고 취침 지연을 유발하여 수면을 단축시킨다는 가설을 검증함으로써, 디지털 미디어·식행태·수면의 삼각 관계에 대한 선도적 근거를 제시할 수 있다. 국내외 학술지에서 신규성이 높은 주제이다.",
+          "suggested_design": "cross-sectional with sequential mediation analysis",
+          "suggested_methods": [
+            "complex_survey_linear_regression (sleep_weekday 연속 결과, svyglm gaussian)",
+            "complex_survey_logistic_regression (수면 부족 <8시간 이분화)",
+            "sequential_mediation_analysis (mukbang_watch → smartphone_weekday → night_snack → sleep_weekday 경로)",
+            "dose_response_trend_test (mukbang_watch 순서형 for-trend)",
+            "multivariate_adjustment (sex, grade, family_econ, academic_perf, stress, depression, caffeine_intake, sweet_drink_intake, sit_weekday)"
+          ]
+        }
+      ]
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260519_000508_156783",
+    "timestamp": "2026-05-19 00:05:08",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 스마트폰 사용과 수면 질",
+    "description": "KYRBS 데이터셋 기반 연구 주제 5개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 스마트폰 사용과 수면 질",
+      "n_topics": 5
+    },
+    "outputs": {
+      "topic_count": 5,
+      "titles": [
+        "Association Between Weekday Smartphone Use Duration and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+        "Mediating Role of Stress and Depression in the Relationship Between Excessive Smartphone Use and Subjective Sleep Insufficiency in Korean Middle and High School Students",
+        "Sex Differences in the Association Between Smartphone Overuse and Sleep-Wake Pattern Irregularity (Social Jetlag) in Korean Adolescents",
+        "Joint Association of Smartphone Overuse and Physical Inactivity With Short Sleep Duration and Depressive Symptoms Among Korean Adolescents: A Synergistic Risk Analysis",
+        "Mukbang Viewing Frequency, Smartphone Use, Night Snacking, and Sleep Duration in Korean Adolescents: A Multi-Pathway Analysis Using 2025 KYRBS Novel Variables"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
     "id": "20260519_000058_421462",
     "timestamp": "2026-05-19 00:00:58",
     "user_email": "",
