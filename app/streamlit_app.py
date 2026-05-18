@@ -662,6 +662,60 @@ with main_col:
                              type="primary" if not done else "secondary"):
                     _nav(target)
 
+        st.divider()
+        st.markdown("### 원스톱 자동 파이프라인")
+
+        raw_df_available = st.session_state.get("raw_df")
+        if raw_df_available is not None:
+            ds_loaded = st.session_state.get("raw_dataset", "원시자료")
+            st.success(f"실제 원시자료 준비됨: {ds_loaded} ({len(raw_df_available):,}명)")
+        else:
+            st.warning("실제 원시자료가 없습니다. **'📂 원시자료 업로드'** 페이지에서 먼저 업로드하세요.")
+
+        auto_col1, auto_col2 = st.columns(2)
+        with auto_col1:
+            auto_dataset = st.selectbox("데이터셋", ["KYRBS", "KNHANES"], key="auto_dataset")
+            auto_focus = st.text_input("연구 포커스", placeholder="예: 수면 부족과 우울감", key="auto_focus")
+        with auto_col2:
+            auto_journal = st.text_input("목표 저널", value="J Korean Med Sci", key="auto_journal")
+            auto_docx = st.checkbox("DOCX 저장", value=True, key="auto_docx")
+
+        if st.button("전체 자동 실행 (주제→통계→논문→동료심사)", type="primary", key="auto_run_full"):
+            if not auto_focus:
+                st.error("연구 포커스를 입력하세요.")
+            elif raw_df_available is None:
+                st.error("실제 원시자료를 먼저 업로드하세요 (왼쪽 사이드바 '📂 원시자료 업로드').")
+            else:
+                with st.spinner("전체 파이프라인 실행 중... (수 분 소요)"):
+                    try:
+                        from src.research.research_pipeline import ResearchPipeline
+                        rp = ResearchPipeline()
+                        full_result = rp.run_full(
+                            dataset_name=auto_dataset,
+                            focus=auto_focus,
+                            study_info_template={"journal": auto_journal},
+                            df=raw_df_available,
+                            export_docx=auto_docx,
+                        )
+                        st.session_state["draft"] = full_result["draft"]
+                        st.session_state["peer_review"] = full_result["review"]
+                        st.session_state["stat_result_for_paper"] = full_result["stat_result"]
+                        if full_result.get("docx_path"):
+                            st.session_state["draft_docx_path"] = full_result["docx_path"]
+
+                        review = full_result["review"]
+                        st.success(
+                            f"완료! 논문 작성 완료 — 동료심사 {review.get('total_score',0)}/100점 "
+                            f"({review.get('grade','?')})"
+                        )
+                        st.info("왼쪽 메뉴 '논문 작성'에서 초안 및 심사 결과를 확인하세요.")
+                        _log("auto_run_full", {"focus": auto_focus, "dataset": auto_dataset}, "전체 자동 실행 완료")
+                    except FileNotFoundError as e:
+                        st.error(str(e))
+                    except Exception as e:
+                        st.error(f"오류: {e}")
+                        import traceback; st.code(traceback.format_exc())
+
     # ── 연구 주제 생성 ────────────────────────────────────────────────
     elif page == "연구 주제 생성":
         st.markdown("<h2 style='color:#e6edf3;'>📚 연구 주제 생성</h2>", unsafe_allow_html=True)

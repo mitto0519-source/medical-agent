@@ -1,5 +1,45 @@
 [
   {
+    "id": "20260519_025315_592121",
+    "timestamp": "2026-05-19 02:53:15",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "architecture_upgrade",
+    "title": "아키텍처 보강: citation/collaboration/statistics/export 모듈 완성",
+    "description": "세션 크래시 복구 후 아키텍처 보강 전체 완료. 버그 3개 수정(generate_synthetic tuple, 대소문자, __init__ 누락). 신규: CitationManager(Vancouver+PubMed), AccessControl(초대+세션+권한매트릭스), WordExporter+FigureBuilder+TableBuilder. 통계고도화: GEE복합표본, 상호작용항, Cox회귀, E-value민감도분석.",
+    "what_changed": {},
+    "why_better": "논문 생산 파이프라인이 실제 학술지 제출 수준으로 완성됨. 다중사용자 접근제어로 misslonghorn46 등 추가 사용자 운용 가능.",
+    "inputs": {
+      "session": "crash-recovery-2026-05-19"
+    },
+    "outputs": {
+      "new_modules": [
+        "src/citation/",
+        "src/collaboration/",
+        "src/export/"
+      ],
+      "bugs_fixed": 3,
+      "stats_methods_added": [
+        "GEE",
+        "Cox",
+        "sensitivity(E-value)",
+        "interaction_terms"
+      ],
+      "commit": "c27151b"
+    },
+    "impact": {
+      "affected_modules": [
+        "stat_bridge",
+        "citation",
+        "collaboration",
+        "export",
+        "statistics",
+        "research_pipeline",
+        "streamlit_app"
+      ]
+    }
+  },
+  {
     "id": "20260519_001929_638193",
     "timestamp": "2026-05-19 00:19:29",
     "user_email": "",

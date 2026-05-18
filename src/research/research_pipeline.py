@@ -642,11 +642,12 @@ Return JSON only."""
         dataset_name: str,
         focus: str,
         study_info_template: Optional[Dict] = None,
-        n_synthetic: int = 5000,
+        df=None,
         export_docx: bool = True,
     ) -> Dict:
         """완전 자동화 파이프라인: 주제 → 신규성 → 타당성 → 통계 → 논문 → 동료심사.
 
+        df: 실제 원시자료 DataFrame (없으면 data/raw/ 자동 탐색).
         Returns complete pipeline result with draft + review + stat_result.
         """
         _log.info("Full pipeline 시작: %s / %s", focus, dataset_name)
@@ -656,9 +657,9 @@ Return JSON only."""
         best = run_result["recommended"]
         topic = best["topic"]
 
-        # Step 2: 통계 분석
-        _log.info("[2/4] 통계 분석 중...")
-        stat_result = self.run_stat_analysis(topic, dataset=dataset_name.lower(), n_synthetic=n_synthetic)
+        # Step 2: 통계 분석 (실제 원시자료 사용)
+        _log.info("[2/4] 통계 분석 중 (실제 원시자료)...")
+        stat_result = self.run_stat_analysis(topic, dataset=dataset_name.lower(), df=df)
 
         # Step 3: 논문 작성 (통계 주입)
         _log.info("[3/4] 논문 작성 중...")
@@ -669,7 +670,7 @@ Return JSON only."""
             "population": topic.get("population", ""),
             "exposure": topic.get("exposure", ""),
             "outcome": topic.get("outcome", ""),
-            "sample_size": stat_result.get("n_total", n_synthetic),
+            "sample_size": stat_result.get("n_total", 0),
             "journal": si.get("journal", "J Korean Med Sci"),
             "methods_list": topic.get("suggested_methods", ["logistic_regression"]),
             **si,
