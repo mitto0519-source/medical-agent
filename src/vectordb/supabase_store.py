@@ -133,21 +133,33 @@ class SupabaseVectorStore:
 
     # ── Info ──────────────────────────────────────────────────────────────────
 
+    def _get_engine(self):
+        """vecs.Client의 SQLAlchemy engine 반환 (버전 무관)."""
+        # vecs >=0.4 에서는 .engine (public), 구버전은 ._engine
+        return getattr(self._vx, "engine", None) or getattr(self._vx, "_engine", None)
+
     def count(self) -> int:
         try:
             import sqlalchemy as sa
-            with self._vx._engine.connect() as conn:
+            engine = self._get_engine()
+            if engine is None:
+                return 0
+            with engine.connect() as conn:
                 row = conn.execute(
                     sa.text(f'SELECT COUNT(*) FROM vecs."{self.COLLECTION}"')
                 ).fetchone()
                 return int(row[0]) if row else 0
-        except Exception:
+        except Exception as e:
+            _log.debug("count() 실패: %s", e)
             return 0
 
     def list_sources(self) -> list[str]:
         try:
             import sqlalchemy as sa
-            with self._vx._engine.connect() as conn:
+            engine = self._get_engine()
+            if engine is None:
+                return []
+            with engine.connect() as conn:
                 rows = conn.execute(
                     sa.text(
                         f"SELECT DISTINCT metadata->>'filename' "
@@ -156,13 +168,17 @@ class SupabaseVectorStore:
                     )
                 ).fetchall()
                 return sorted(r[0] for r in rows if r[0])
-        except Exception:
+        except Exception as e:
+            _log.debug("list_sources() 실패: %s", e)
             return []
 
     def delete_source(self, filename: str) -> int:
         try:
             import sqlalchemy as sa
-            with self._vx._engine.connect() as conn:
+            engine = self._get_engine()
+            if engine is None:
+                return 0
+            with engine.connect() as conn:
                 result = conn.execute(
                     sa.text(
                         f'DELETE FROM vecs."{self.COLLECTION}" '
@@ -172,7 +188,8 @@ class SupabaseVectorStore:
                 )
                 conn.commit()
                 return result.rowcount or 0
-        except Exception:
+        except Exception as e:
+            _log.debug("delete_source() 실패: %s", e)
             return 0
 
     def close(self):
