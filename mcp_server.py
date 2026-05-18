@@ -83,6 +83,32 @@ mcp = fastmcp.FastMCP(
     auth=EmailKeyVerifier(),
 )
 
+# ── Railway / Uptime health check — 인증 불필요 ──────────────────────────────
+
+import time as _time
+_START_TIME = _time.time()
+
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request):
+    from starlette.responses import JSONResponse
+    from src.cloud.db import cloud_available
+    uptime = int(_time.time() - _START_TIME)
+    return JSONResponse({
+        "status": "ok",
+        "service": "medical-agent-mcp",
+        "uptime_seconds": uptime,
+        "cloud": cloud_available(),
+    })
+
+@mcp.custom_route("/", methods=["GET"])
+async def root(request):
+    from starlette.responses import JSONResponse
+    return JSONResponse({
+        "service": "Medical-Agent MCP Server",
+        "mcp_endpoint": "/mcp",
+        "health_endpoint": "/health",
+    })
+
 
 def _caller_email(ctx) -> str:
     """현재 요청 사용자 이메일 반환."""
