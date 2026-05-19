@@ -6,7 +6,7 @@
 > **규칙**: 새 모듈을 만들기 전에 반드시 이 파일을 확인한다.
 > 모듈을 추가/변경/삭제할 때마다 이 파일을 업데이트한다.
 >
-> Last updated: 2026-05-19
+> Last updated: 2026-05-19 (status check + zombie cleanup)
 
 ---
 
@@ -27,8 +27,6 @@
 |------|----------|------|------|
 | **논문용 OR/CI 회귀분석** | `src/data/stat_bridge.py` → `StatBridge` | ✅ active | 로지스틱/GEE/Cox/선형. 논문 파이프라인 전용 |
 | **UI 대화형 통계** | `src/statistics/medical_stats.py` → `MedicalStatistics` | ✅ active | 기술통계/t검정/카이제곱/ANOVA. Streamlit UI 전용 |
-| 통계 자동분석기 | `src/statistics/auto_analyzer.py` → `AutoAnalyzer` | ⚠️ 미연결 | stat_bridge에 통합 예정. 직접 호출 없음 |
-| 결과 텍스트 작성 | `src/statistics/results_writer.py` → `ResultsWriter` | ⚠️ 미연결 | paper_writer가 직접 처리. 정리 예정 |
 
 > **stat_bridge vs medical_stats 구분**:
 > - `stat_bridge` = 논문 파이프라인 (run_full → 실 데이터 → OR/CI → 논문 본문 자동 주입)
@@ -123,6 +121,8 @@
 | `src/learning/knowledge_distiller.py` | 2026-05-19 | 위와 동일 | `src/memory/auto_learn.py` |
 | `src/learning/outcome_tracker.py` | 2026-05-19 | 위와 동일 | `src/memory/auto_learn.py` |
 | `examples/` (전체) | 2026-05-19 | 삭제된 모듈만 참조, 유지 가치 없음 | — |
+| `src/statistics/auto_analyzer.py` | 2026-05-19 | 미호출 dead code. stat_bridge가 OR/CI 담당 | `src/data/stat_bridge.py` |
+| `src/statistics/results_writer.py` | 2026-05-19 | 미호출 dead code. paper_writer가 직접 처리 | `src/research/paper_writer.py` |
 
 ---
 
@@ -140,6 +140,4 @@
 
 | 항목 | 내용 | 계획 |
 |------|------|------|
-| `src/statistics/auto_analyzer.py` | 미호출, stat_bridge와 기능 겹침 | stat_bridge에 흡수 후 삭제 |
-| `src/statistics/results_writer.py` | 미호출, paper_writer가 직접 처리 | 삭제 예정 |
 | `survey_loader.generate_synthetic()` | 실제 데이터처럼 보이는 합성 데이터 fallback | 명확한 경고 추가 |
