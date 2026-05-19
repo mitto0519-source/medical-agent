@@ -220,11 +220,19 @@ class ClaudeClient:
         except Exception:
             pass
 
-        # 3. 호출별 base_prompt (태스크 특화 지시)
+        # 3. MetaLearner 통합 인사이트 (자율 학습 결과)
+        meta_context = ""
+        try:
+            from src.learning.meta_learner import MetaLearner
+            meta_context = MetaLearner().get_learning_context()
+        except Exception:
+            pass
+
+        # 4. 호출별 base_prompt (태스크 특화 지시)
         base = base_prompt or ""
 
-        # 조합: 페르소나 → seed → base
-        parts = [p for p in [persona_prompt, preamble, base] if p]
+        # 조합: 페르소나 → seed → meta_context → base
+        parts = [p for p in [persona_prompt, preamble, meta_context, base] if p]
         full_base = "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
         if not context_chunks:
