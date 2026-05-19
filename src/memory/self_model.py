@@ -116,6 +116,8 @@ def refresh() -> ProjectHealthModel:
 
     # ── 클라우드 상태 ────────────────────────────────────────────────
     try:
+        from src.config.env import bootstrap as _bootstrap
+        _bootstrap()
         from src.cloud.db import cloud_available
         if cloud_available():
             model.known_strengths.append("Supabase 클라우드 연결 활성")
