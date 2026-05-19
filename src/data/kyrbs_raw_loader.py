@@ -52,23 +52,30 @@ _VAR_MAP: dict[str, list[str]] = {
     "height":    ["HT",  "E_HT",  "ht",  "height"],
     "weight_kg": ["WT",  "E_WGT", "wgt", "WGT", "E_WG"],          # kg (BMI 계산용)
 
-    # ── 수면 (제21차: 취침시각·기상시각 분리 → sleep_hours 계산 필요) ─────
-    "sleep_start_hr": ["M_SLP_HR", "J_SLS",  "SLS",  "sleep_start"], # 취침 시각 (시)
-    "wake_hr":        ["M_WK_HR",  "J_WK",   "WK",   "wake_hr"],     # 기상 시각 (시)
-    "sleep_satis":    ["M_SLP_EN", "J_SLS2", "J_SLSA", "sleep_sat"], # 수면 만족/충분도
+    # ── 수면 ──────────────────────────────────────────────────────────────
+    # 2007~2025: M_SLP_HR(취침시각) + M_WK_HR(기상시각) → sleep_hours 계산
+    # 2005~2006: M_SLP_DR(수면시간, 직접기록) — 계산 불필요
+    "sleep_start_hr": ["M_SLP_HR", "J_SLS",  "SLS",  "sleep_start"], # 취침 시각(시)
+    "wake_hr":        ["M_WK_HR",  "J_WK",   "WK",   "wake_hr"],     # 기상 시각(시)
+    "sleep_hours_raw":["M_SLP_DR"],                                    # 직접 수면시간(2005-06)
+    "sleep_satis":    ["M_SLP_EN", "J_SLS2", "J_SLSA", "sleep_sat"], # 수면 만족
 
     # ── 정신건강 ──────────────────────────────────────────────────────────
-    # 제21차: M_STR(스트레스) / M_SAD(우울감, 1=있음 2=없음) / M_SUI_CON(자살생각)
+    # 전 연도 동일 코딩: M_SAD 1=없음, 2=있음(우울) — 2005~2025 일관
     "stress":     ["M_STR",     "C_STR",  "STR",  "stress"],
-    "depression": ["M_SAD",     "C_DEP",  "DEP",  "depression"],   # 1=있음, 2=없음
-    "suicidal":   ["M_SUI_CON", "C_SUI",  "SUI",  "suicidal"],     # 1=있음, 2=없음
+    "depression": ["M_SAD",     "C_DEP",  "DEP",  "depression"],
+    "suicidal":   ["M_SUI_CON", "C_SUI",  "SUI",  "suicidal"],
 
     # ── 신체활동 ──────────────────────────────────────────────────────────
-    "physical_act": ["PA_VIG_D", "J_PAT", "PAT", "J_PA", "PA"],    # 격렬 신체활동 일수
+    # 2022~2025: PA_VIG_D (변수명 변경), 2005~2021: PA_VIG — 동일 개념
+    "physical_act": ["PA_VIG_D", "PA_VIG", "J_PAT", "PAT"],         # 격렬 신체활동 일수
 
-    # ── 스크린 타임 (제21차: INT_SPWD_TM = 스마트폰 주중 분/일) ────────────
-    "screen_time_min": ["INT_SPWD_TM", "J_SMT", "SMT", "J_SPH"],   # 분/일 → hours 계산
-    "screen_time_pc":  ["INT_CPWD_TM", "J_CPT", "CPT", "J_CP"],    # PC 주중 분/일
+    # ── 스크린 타임 ───────────────────────────────────────────────────────
+    # 2020~2025: INT_SPWD_TM = 스마트폰 주중 이용시간(분) — 특화
+    # 2007~2019: INT_WD_MM   = 인터넷(PC+모바일) 주중 이용시간(분) — 개념 다름 ⚠️
+    # meta["screen_time_concept"]로 구분 필요
+    "screen_time_min": ["INT_SPWD_TM", "INT_WD_MM", "J_SMT", "SMT"], # 분/일 → hours
+    "screen_time_pc":  ["INT_CPWD_TM", "INT_WD_MM2", "J_CPT"],       # PC 주중 분/일
 
     # ── 흡연 (제21차: TC_LT=경험, TC_DAYS=최근흡연일, 9999=해당없음) ────────
     "smoking_ever": ["TC_LT",   "D_SMS", "SMS"],                    # 1=경험있음, 2=없음
@@ -317,17 +324,24 @@ class KYRBSLoader:
             df.loc[df["bmi"].isna(), "obesity"] = np.nan
             _log.info("BMI 계산: mean=%.1f, n=%d", df["bmi"].mean(), df["bmi"].notna().sum())
 
-        # 수면 시간: M_SLP_HR(취침시각) + M_WK_HR(기상시각) → 시간
+        # 수면 시간
+        # 방법1: M_SLP_HR + M_WK_HR → 차이 계산 (2007~2025)
         if "sleep_start_hr" in df.columns and "wake_hr" in df.columns:
             s = pd.to_numeric(df["sleep_start_hr"], errors="coerce")
             w_hr = pd.to_numeric(df["wake_hr"], errors="coerce")
-            # 취침시 > 기상시 = 자정 넘김 (정상), 반대면 당일
             hours = np.where(s > w_hr, w_hr + 24 - s, w_hr - s)
             hours_s = pd.Series(hours, index=df.index, dtype=float)
             df["sleep_hours"] = hours_s.where((hours_s >= 1) & (hours_s <= 16))
-            _log.info("수면시간 계산: mean=%.1fh, n=%d", df["sleep_hours"].mean(), df["sleep_hours"].notna().sum())
+            _log.info("수면시간 계산(시각차): mean=%.1fh, n=%d", df["sleep_hours"].mean(), df["sleep_hours"].notna().sum())
+        # 방법2: M_SLP_DR 직접 수면시간 (2005~2006)
+        elif "sleep_hours_raw" in df.columns:
+            raw_slp = pd.to_numeric(df["sleep_hours_raw"], errors="coerce")
+            df["sleep_hours"] = raw_slp.where((raw_slp >= 1) & (raw_slp <= 16))
+            df.drop(columns=["sleep_hours_raw"], inplace=True, errors="ignore")
+            _log.info("수면시간(직접값): mean=%.1fh, n=%d", df["sleep_hours"].mean(), df["sleep_hours"].notna().sum())
 
         # 스크린 타임: 분/일 → 시간/일
+        # INT_SPWD_TM(스마트폰, 2020~) vs INT_WD_MM(인터넷전체, 2007~2019) — 개념 다름
         if "screen_time_min" in df.columns:
             df["screen_time"] = pd.to_numeric(df["screen_time_min"], errors="coerce") / 60
             df["screen_time"] = df["screen_time"].where(df["screen_time"] <= 24)
@@ -372,7 +386,16 @@ class KYRBSLoader:
             df.loc[ad.isna(), "alcohol"] = np.nan
 
         # ── 이진화 (매핑 원시 변수 직접 변환) ────────────────────────────
-        for std_name, rule in _BINARIZE.items():
+        # breakfast(F_BR) 코딩 자동감지:
+        #   2010 이전 = 4단계(4=결식), 2011 이후 = 8단계(8=결식)
+        binarize_rules = dict(_BINARIZE)
+        if "breakfast" in df.columns:
+            br_max = pd.to_numeric(df["breakfast"], errors="coerce").max()
+            if not np.isnan(br_max):
+                binarize_rules["breakfast"] = "==4" if br_max <= 4 else "==8"
+                _log.info("breakfast 코딩 자동감지: max=%.0f → 결식기준=%s", br_max, binarize_rules["breakfast"])
+
+        for std_name, rule in binarize_rules.items():
             if std_name not in df.columns:
                 continue
             col = pd.to_numeric(df[std_name], errors="coerce")
@@ -390,12 +413,39 @@ class KYRBSLoader:
 
         unmapped = [c for c in raw_df.columns if c not in mapped.values()]
         computed = [v for v in ("bmi", "obesity", "sleep_hours", "screen_time", "smoking", "alcohol") if v in df.columns]
+
+        # screen_time 개념 구분 (분석 시 주의 필요)
+        screen_concept = "none"
+        if "screen_time_min" in mapped:
+            raw_screen_col = mapped["screen_time_min"]
+            if "SPWD" in raw_screen_col:
+                screen_concept = "smartphone_weekday"   # 2020+
+            elif "WD_MM" in raw_screen_col or "WK_MM" in raw_screen_col:
+                screen_concept = "internet_weekday"     # 2007~2019 — 개념 다름 ⚠️
+            else:
+                screen_concept = "other"
+
+        # 한계점 자동 기록
+        limitations: list[str] = []
+        if "sleep_hours" not in df.columns:
+            limitations.append("수면시간 없음 (2005~2006: 취침/기상시각 미조사)")
+        if screen_concept == "none":
+            limitations.append("스크린타임 없음 (2005~2006: 스마트폰/인터넷 미조사)")
+        elif screen_concept == "internet_weekday":
+            limitations.append("스크린타임=인터넷전체(INT_WD_MM), 스마트폰 특화값 아님 — 2020+ 데이터와 직접 비교 불가")
+        if "breakfast" in binarize_rules and binarize_rules["breakfast"] == "==4":
+            limitations.append("아침식사: 4단계 코딩(2010 이전) — 2011+ 8단계와 비교 시 주의")
+        if "physical_act" in mapped and "PA_VIG" == mapped.get("physical_act", ""):
+            limitations.append("신체활동: PA_VIG (구버전명) — PA_VIG_D(2022+)와 동일 개념")
+
         meta = {
             "mapped_vars": list(mapped.keys()),
             "computed_vars": computed,
             "raw_to_std": {v: k for k, v in mapped.items()},
             "unmapped_raw": unmapped[:20],
             "warnings": warnings,
+            "limitations": limitations,
+            "screen_time_concept": screen_concept,
             "total_raw_cols": len(raw_df.columns),
             "encoding_info": {k: list(v.keys())[:5] for k, v in list(value_labels.items())[:5]},
         }
