@@ -14,11 +14,14 @@ Medical-Agent/
 │   └── tutorials/            # 튜토리얼 및 가이드
 │
 ├── 🚀 app/                   # 💼 프로덕션 애플리케이션 영역
-│   ├── main.py              # Flask 웹 애플리케이션
-│   ├── api/                 # REST API 엔드포인트
-│   ├── config/              # 설정 파일
+│   ├── streamlit_app.py      # Streamlit 메인 애플리케이션 (현재 진입점)
+│   ├── ai_panel.py           # AI 패널 모듈
+│   ├── api/                  # REST API 엔드포인트
+│   ├── config/               # 설정 파일
 │   │   └── settings.py
-│   └── templates/           # HTML 템플릿
+│   ├── pages/                # Streamlit 페이지
+│   ├── templates/            # HTML 템플릿
+│   └── ⚠️ main.py            # [DEPRECATED] Flask 레거시 코드 (미사용, 삭제 예정)
 │
 ├── 📖 examples/             # 💡 작동 예제
 │   ├── 01_statistics_example.py
