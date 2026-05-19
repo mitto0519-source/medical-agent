@@ -1,0 +1,5 @@
+{
+  "outcome_tracker": 0.97,
+  "knowledge_distiller": 1.05,
+  "finetune_manager": 0.97
+}

@@ -1,5 +1,39 @@
 [
   {
+    "id": "20260519_220646_422851",
+    "timestamp": "2026-05-19 22:06:46",
+    "category": "pattern",
+    "title": "PubMed 트렌드 [2026-05]: C_logistic 최다",
+    "insight": "최근 131편 수집. 상위 개념: C_logistic(130편), C_korean(120편), C_cross_sectional(84편). 그래프: 7731노드.",
+    "why_matters": "최신 연구 트렌드 반영 — 주제 생성 시 우선 참조",
+    "how_to_apply": "주제 생성 시 C_logistic 관련 주제 우선 검토",
+    "confidence": 0.75,
+    "tags": [
+      "pubmed",
+      "trend",
+      "auto_learn"
+    ],
+    "source": "periodic_learning",
+    "status": "active"
+  },
+  {
+    "id": "20260519_214426_075830",
+    "timestamp": "2026-05-19 21:44:26",
+    "category": "pattern",
+    "title": "PubMed 트렌드 [2026-05]: C_logistic 최다",
+    "insight": "최근 313편 수집. 상위 개념: C_logistic(311편), C_korean(296편), C_cross_sectional(149편). 그래프: 776노드.",
+    "why_matters": "최신 연구 트렌드 반영 — 주제 생성 시 우선 참조",
+    "how_to_apply": "주제 생성 시 C_logistic 관련 주제 우선 검토",
+    "confidence": 0.75,
+    "tags": [
+      "pubmed",
+      "trend",
+      "auto_learn"
+    ],
+    "source": "periodic_learning",
+    "status": "active"
+  },
+  {
     "id": "20260519_001929_319535",
     "timestamp": "2026-05-19 00:19:29",
     "category": "pattern",

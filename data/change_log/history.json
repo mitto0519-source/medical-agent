@@ -1,5 +1,78 @@
 [
   {
+    "id": "20260519_220940_740795",
+    "timestamp": "2026-05-19 22:09:40",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "meta_learn",
+    "title": "MetaLearner 사이클 완료: 12개 통합 인사이트",
+    "description": "OutcomeTracker(0.12) + KnowledgeDistiller(0.84) + FineTuner(0.04) 통합",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {},
+    "outputs": {
+      "n_insights": 12,
+      "weights": {
+        "outcome_tracker": 0.12142543672559228,
+        "knowledge_distiller": 0.8380994176992103,
+        "finetune_manager": 0.04047514557519742
+      }
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260519_220646_721407",
+    "timestamp": "2026-05-19 22:06:46",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "auto_learn",
+    "title": "주기적 학습 완료 — 신규 131편 수집",
+    "description": "PubMed 수집: 131편 신규 / 26편 중복 스킵. 그래프 노드: 7731 → 7731. 개념 추출: 910건.",
+    "what_changed": {},
+    "why_better": "지식 베이스 자동 갱신으로 최신 연구 트렌드 반영",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "data/knowledge_graph",
+        "ChromaDB/RAG"
+      ]
+    }
+  },
+  {
+    "id": "20260519_215251_125991",
+    "timestamp": "2026-05-19 21:52:51",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "persona_evolve",
+    "title": "페르소나 자동 진화: 5개 관점 흡수",
+    "description": "periodic_learn 결과 → 페르소나 accumulated_perspectives 갱신. 개념: ['Adolescent', 'Child', 'Adult']",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {},
+    "outputs": {},
+    "impact": {}
+  },
+  {
+    "id": "20260519_214426_396153",
+    "timestamp": "2026-05-19 21:44:26",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "auto_learn",
+    "title": "주기적 학습 완료 — 신규 313편 수집",
+    "description": "PubMed 수집: 313편 신규 / 346편 중복 스킵. 그래프 노드: 462 → 776. 개념 추출: 2020건.",
+    "what_changed": {},
+    "why_better": "지식 베이스 자동 갱신으로 최신 연구 트렌드 반영",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "data/knowledge_graph",
+        "ChromaDB/RAG"
+      ]
+    }
+  },
+  {
     "id": "20260519_025315_592121",
     "timestamp": "2026-05-19 02:53:15",
     "user_email": "",
