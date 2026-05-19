@@ -16,8 +16,42 @@ import time
 import requests
 from typing import Dict, List, Optional
 
+from src.config.logging_config import get_logger
+
+_log = get_logger(__name__)
 
 HEADERS = {"User-Agent": "MedicalAgent/1.0 (research; contact: research@example.com)"}
+
+_SS_KEY = None  # Semantic Scholar API key (optional, set via SEMANTIC_SCHOLAR_API_KEY)
+
+
+def _get_with_retry(url: str, params: dict, headers: dict, timeout: int = 20,
+                    max_retries: int = 3) -> requests.Response:
+    """GET 요청 with 429/503 지수 백오프 재시도."""
+    import os
+    h = dict(headers)
+    ss_key = os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "")
+    if ss_key and "semanticscholar" in url:
+        h["x-api-key"] = ss_key
+
+    delay = 2.0
+    for attempt in range(max_retries):
+        try:
+            resp = requests.get(url, params=params, headers=h, timeout=timeout)
+            if resp.status_code == 429:
+                wait = delay * (2 ** attempt)
+                _log.warning("429 rate limit (%s), %.1fs 후 재시도 (%d/%d)", url, wait, attempt + 1, max_retries)
+                time.sleep(wait)
+                continue
+            if resp.status_code in (503, 502):
+                time.sleep(delay)
+                continue
+            return resp
+        except requests.Timeout:
+            _log.warning("Timeout (%s), 재시도 %d/%d", url, attempt + 1, max_retries)
+            time.sleep(delay)
+    # 마지막 시도
+    return requests.get(url, params=params, headers=h, timeout=timeout)
 
 
 # ---------------------------------------------------------------------------
@@ -67,9 +101,9 @@ def search_pubmed(query: str, max_results: int = 20) -> List[Dict]:
 
 def search_semantic_scholar(query: str, max_results: int = 10,
                             fields: str = "title,authors,year,abstract,openAccessPdf,citationCount,journal") -> List[Dict]:
-    """Semantic Scholar API 검색 (무료, 오픈액세스 PDF 링크 포함)."""
+    """Semantic Scholar API 검색 (무료, 오픈액세스 PDF 링크 포함). 429 자동 재시도."""
     url = "https://api.semanticscholar.org/graph/v1/paper/search"
-    resp = requests.get(url, params={
+    resp = _get_with_retry(url, params={
         "query": query,
         "limit": max_results,
         "fields": fields,
@@ -213,7 +247,7 @@ class EvidenceReader:
                 all_results.extend(results)
                 time.sleep(0.35)
             except Exception as e:
-                print(f"  [PubMed 오류] {e}")
+                _log.warning("[PubMed 오류] %s", e)
 
         if "semantic_scholar" in sources:
             try:
@@ -223,7 +257,7 @@ class EvidenceReader:
                 all_results.extend(results)
                 time.sleep(0.5)
             except Exception as e:
-                print(f"  [Semantic Scholar 오류] {e}")
+                _log.warning("[Semantic Scholar 오류] %s", e)
 
         if "europe_pmc" in sources:
             try:
@@ -232,7 +266,7 @@ class EvidenceReader:
                     results = [r for r in results if r.get("is_open_access")]
                 all_results.extend(results)
             except Exception as e:
-                print(f"  [Europe PMC 오류] {e}")
+                _log.warning("[Europe PMC 오류] %s", e)
 
         # 중복 제거 (제목 기준)
         seen_titles = set()

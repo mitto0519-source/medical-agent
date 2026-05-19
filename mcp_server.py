@@ -23,6 +23,7 @@ Claude Desktop 연결 (~/.config/claude/claude_desktop_config.json):
 from __future__ import annotations
 
 import argparse
+import io
 import os
 import sys
 from pathlib import Path
@@ -32,6 +33,18 @@ from typing import Any, Optional
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT))
 os.chdir(ROOT)
+
+# Windows CP949 → UTF-8 강제 (한글 로그 깨짐 방지)
+os.environ['PYTHONIOENCODING'] = 'utf-8'
+for _s in (sys.stdout, sys.stderr):
+    if _s and hasattr(_s, 'buffer'):
+        try:
+            if _s is sys.stdout:
+                sys.stdout = io.TextIOWrapper(_s.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+            else:
+                sys.stderr = io.TextIOWrapper(_s.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+        except Exception:
+            pass
 
 from src.config.env import bootstrap
 bootstrap()

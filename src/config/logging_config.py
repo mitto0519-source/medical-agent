@@ -41,8 +41,15 @@ def setup_logging(level: int = logging.INFO) -> None:
     root.setLevel(level)
     formatter = logging.Formatter(_FMT, datefmt=_DATE_FMT)
 
-    # 콘솔 핸들러
-    console = logging.StreamHandler()
+    # 콘솔 핸들러 — Windows CP949 환경에서 UTF-8 강제
+    import sys, io
+    stream = sys.stderr
+    if hasattr(stream, "buffer"):
+        try:
+            stream = io.TextIOWrapper(stream.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+        except Exception:
+            pass
+    console = logging.StreamHandler(stream)
     console.setFormatter(formatter)
     console.setLevel(level)
     root.addHandler(console)

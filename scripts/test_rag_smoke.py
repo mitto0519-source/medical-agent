@@ -1,6 +1,15 @@
 """RAG + 전체 스택 smoke test."""
 import sys
 import os
+import io
+# Windows CP949 → UTF-8 강제
+os.environ['PYTHONIOENCODING'] = 'utf-8'
+if hasattr(sys.stdout, 'buffer'):
+    try: sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+    except Exception: pass
+if hasattr(sys.stderr, 'buffer'):
+    try: sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+    except Exception: pass
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from src.config.env import bootstrap
