@@ -1,23 +1,19 @@
-"""Survey Data Loader — KYRBS/KNHANES CSV 로더 + 합성 데모 데이터 생성기.
+"""Survey Data Loader — KYRBS/KNHANES CSV/Excel 로더 + 스키마 표준화.
 
-실제 공공데이터 CSV 업로드 시 자동 스키마 감지 + 표준화.
-데이터 없을 때는 연구 설계와 동일한 구조의 합성 데이터를 생성해
-파이프라인 시연 및 테스트에 사용.
+실제 공공데이터 파일 업로드 시 자동 스키마 감지 + 컬럼명 표준화.
+합성 데이터 생성 기능 없음 — 반드시 실제 원시자료를 사용해야 함.
 
 사용:
     loader = SurveyLoader()
-    df = loader.load_csv("kyrbs_2022.csv")
-    # 또는
-    df = loader.generate_synthetic("KYRBS", n=5000, seed=42)
+    df, dataset = loader.load_csv("kyrbs_2022.csv")
     info = loader.describe(df)
 """
 from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
-import numpy as np
 import pandas as pd
 
 from src.config.logging_config import get_logger
@@ -90,7 +86,7 @@ KNHANES_SCHEMA: Dict[str, Dict] = {
 
 
 class SurveyLoader:
-    """KYRBS/KNHANES 데이터 로더 및 합성 데이터 생성기."""
+    """KYRBS/KNHANES 데이터 로더 — 실제 원시자료 전용."""
 
     SCHEMAS = {"KYRBS": KYRBS_SCHEMA, "KNHANES": KNHANES_SCHEMA}
 
@@ -104,7 +100,6 @@ class SurveyLoader:
         if p.suffix.lower() in (".xlsx", ".xls"):
             df = pd.read_excel(path)
         else:
-            # Try common Korean encodings
             for enc in ("utf-8", "euc-kr", "cp949"):
                 try:
                     df = pd.read_csv(path, encoding=enc)
@@ -120,27 +115,6 @@ class SurveyLoader:
         df = self._standardize(df, dataset)
         _log.info("로드 완료: %d행 × %d열 (%s)", df.shape[0], df.shape[1], dataset)
         return df, dataset
-
-    def generate_synthetic(
-        self,
-        dataset: str = "KYRBS",
-        n: int = 5000,
-        seed: int = 42,
-        study_spec: Optional[Dict] = None,
-    ) -> pd.DataFrame:
-        """연구 설계에 맞는 합성 서베이 데이터 생성.
-
-        실제 KYRBS/KNHANES 통계치를 기반으로 현실적 분포로 생성.
-        """
-        rng = np.random.default_rng(seed)
-        spec = study_spec or {}
-
-        if dataset == "KYRBS":
-            return self._synthetic_kyrbs(rng, n, spec)
-        elif dataset == "KNHANES":
-            return self._synthetic_knhanes(rng, n, spec)
-        else:
-            raise ValueError(f"지원하지 않는 데이터셋: {dataset}")
 
     def describe(self, df: pd.DataFrame) -> Dict:
         """데이터 요약 통계 반환."""
@@ -179,141 +153,3 @@ class SurveyLoader:
         if rename_map:
             df = df.rename(columns=rename_map)
         return df
-
-    def _synthetic_kyrbs(self, rng: np.random.Generator, n: int, spec: Dict) -> pd.DataFrame:
-        """실제 KYRBS 분포 기반 합성 데이터 (2019-2022 통계치 참조)."""
-        sex = rng.choice([1, 2], n, p=[0.51, 0.49])
-        grade = rng.choice([1,2,3,4,5,6], n)
-        school_type = rng.choice([1,2,3], n, p=[0.37, 0.33, 0.30])
-        family_econ = rng.choice([1,2,3,4,5], n, p=[0.06, 0.18, 0.45, 0.22, 0.09])
-        academic_perf = rng.choice([1,2,3,4,5], n, p=[0.11, 0.24, 0.32, 0.23, 0.10])
-
-        # 신체계측 (성별-연령 보정)
-        height_base = np.where(sex==1, 170.5, 158.8)
-        height = height_base + rng.normal(0, 6, n)
-        weight = np.where(sex==1, 64.2, 53.1) + rng.normal(0, 10, n)
-        bmi = weight / ((height / 100) ** 2)
-        obesity = (bmi >= 25).astype(int)
-
-        # 수면
-        sleep_hours = np.clip(rng.normal(6.8, 1.2, n), 3, 12)
-        sleep_satis = (sleep_hours >= 7).astype(int) + 1  # 1=불충족, 2=충족
-
-        # 스마트폰
-        screen_time = np.clip(rng.lognormal(1.5, 0.7, n), 0, 16)
-
-        # 신체활동
-        physical_act = np.clip(rng.normal(3.2, 2.1, n), 0, 7)
-
-        # 흡연/음주 (실제 유병률 반영)
-        smoking_prob = 0.066 + 0.03 * (sex == 1)
-        smoking = rng.binomial(1, smoking_prob, n)
-        alcohol_prob = 0.152 + 0.02 * (sex == 1)
-        alcohol = rng.binomial(1, alcohol_prob, n)
-
-        # 정신건강 (수면, 스마트폰과 상관 반영)
-        stress_base = 0.35 + 0.08 * (sleep_hours < 6) + 0.05 * (screen_time > 4)
-        stress_base = np.clip(stress_base + 0.05 * (sex == 2), 0.1, 0.9)
-        stress = rng.choice([1,2,3,4,5], n,
-                            p=None)  # simplified
-        stress = np.clip(np.round(rng.normal(3.0 + 0.5*(sleep_hours<6) + 0.1*(sex==2), 0.8)), 1, 5).astype(int)
-
-        depr_logit = -2.2 + 0.4*(sex==2) + 0.5*(sleep_hours<6) + 0.3*(screen_time>4) + 0.3*smoking
-        depression = rng.binomial(1, _sigmoid(depr_logit), n)
-
-        suicide_logit = -3.5 + 0.6*depression + 0.3*(sleep_hours<6) + 0.2*(family_econ<=2)
-        suicidal = rng.binomial(1, _sigmoid(suicide_logit), n)
-
-        loneliness_logit = -2.0 + 0.5*(screen_time>5) + 0.3*(physical_act<1) + 0.3*(family_econ<=2)
-        loneliness = rng.binomial(1, _sigmoid(loneliness_logit), n)
-
-        # 식이
-        breakfast = np.clip(rng.normal(4.5, 2.0, n), 0, 7)
-
-        # 가중치 (복합표본설계)
-        weight_var = rng.lognormal(np.log(n/n), 0.3, n)
-        strata = rng.integers(1, 50, n)
-        cluster = rng.integers(1, 200, n)
-
-        df = pd.DataFrame({
-            "sex": sex, "grade": grade, "school_type": school_type,
-            "family_econ": family_econ, "academic_perf": academic_perf,
-            "height": height.round(1), "weight": weight.round(1),
-            "bmi": bmi.round(2), "obesity": obesity,
-            "sleep_hours": sleep_hours.round(1), "sleep_satis": sleep_satis,
-            "screen_time": screen_time.round(1), "physical_act": physical_act.round(1),
-            "smoking": smoking, "alcohol": alcohol,
-            "stress": stress, "depression": depression,
-            "suicidal": suicidal, "loneliness": loneliness,
-            "breakfast": breakfast.round(1),
-            "weight_var": weight_var.round(4),
-            "strata": strata, "cluster": cluster,
-        })
-        return df
-
-    def _synthetic_knhanes(self, rng: np.random.Generator, n: int, spec: Dict) -> pd.DataFrame:
-        """실제 KNHANES 분포 기반 합성 데이터 (7기 2016-2018 통계치 참조)."""
-        sex = rng.choice([1, 2], n, p=[0.49, 0.51])
-        age = np.clip(rng.normal(46.5, 16.2, n), 19, 80).round().astype(int)
-        edu = rng.choice([1,2,3,4], n, p=[0.15, 0.25, 0.38, 0.22])
-        income = rng.choice([1,2,3,4], n, p=[0.25, 0.25, 0.25, 0.25])
-
-        # 신체계측
-        bmi = np.clip(rng.normal(24.2, 3.8, n), 16, 42)
-        waist = np.clip(
-            np.where(sex==1, rng.normal(85.2, 9.5, n), rng.normal(76.5, 9.2, n)),
-            55, 130
-        )
-
-        # 혈압 (나이 상관)
-        sbp = np.clip(rng.normal(119 + 0.4*age, 16, n), 80, 200)
-        dbp = np.clip(rng.normal(76 + 0.15*age, 11, n), 50, 130)
-
-        # 혈액검사
-        glucose = np.clip(rng.lognormal(np.log(98), 0.18, n), 70, 400)
-        hba1c = np.clip(rng.normal(5.7, 0.6, n), 4.5, 14)
-        total_chol = np.clip(rng.normal(196, 38, n), 100, 350)
-        hdl = np.clip(np.where(sex==1, rng.normal(50, 12, n), rng.normal(58, 13, n)), 20, 100)
-        ldl = np.clip(rng.normal(118, 34, n), 40, 280)
-        trigly = np.clip(rng.lognormal(np.log(130), 0.55, n), 30, 600)
-
-        # 질환 유병
-        diab_logit = -4.5 + 0.05*age + 0.4*(bmi>=25) + 0.6*(glucose>=100)
-        diabetes = rng.binomial(1, _sigmoid(diab_logit), n)
-        htn_logit = -3.2 + 0.06*age + 0.5*(bmi>=25) + 0.01*(sbp-120)
-        hypertension = rng.binomial(1, _sigmoid(htn_logit), n)
-        ms_criteria = ((waist >= np.where(sex==1, 90, 85)).astype(int)
-                       + (trigly >= 150).astype(int)
-                       + (hdl < np.where(sex==1, 40, 50)).astype(int)
-                       + (sbp >= 130).astype(int)
-                       + (glucose >= 100).astype(int))
-        metabolic_syn = (ms_criteria >= 3).astype(int)
-
-        smoking = rng.choice([0,1,2], n, p=[0.62, 0.15, 0.23])
-        alcohol = rng.choice([1,2,3,4,5], n, p=[0.18, 0.25, 0.28, 0.20, 0.09])
-        physical_act = rng.binomial(1, 0.45, n)
-        sleep_hours = np.clip(rng.normal(6.9, 1.3, n), 3, 12)
-
-        weight_var = rng.lognormal(np.log(n/n), 0.35, n)
-        strata = rng.integers(1, 100, n)
-        cluster = rng.integers(1, 500, n)
-
-        df = pd.DataFrame({
-            "sex": sex, "age": age, "edu": edu, "income": income,
-            "bmi": bmi.round(2), "waist": waist.round(1),
-            "sbp": sbp.round(1), "dbp": dbp.round(1),
-            "glucose": glucose.round(1), "hba1c": hba1c.round(2),
-            "total_chol": total_chol.round(1), "hdl": hdl.round(1),
-            "ldl": ldl.round(1), "trigly": trigly.round(1),
-            "diabetes": diabetes, "hypertension": hypertension,
-            "metabolic_syn": metabolic_syn,
-            "smoking": smoking, "alcohol": alcohol,
-            "physical_act": physical_act, "sleep_hours": sleep_hours.round(1),
-            "weight_var": weight_var.round(4),
-            "strata": strata, "cluster": cluster,
-        })
-        return df
-
-
-def _sigmoid(x: np.ndarray) -> np.ndarray:
-    return 1 / (1 + np.exp(-np.clip(x, -20, 20)))

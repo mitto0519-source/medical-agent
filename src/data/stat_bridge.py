@@ -615,22 +615,3 @@ class StatBridge:
 def run_analysis(df: pd.DataFrame, spec: dict) -> AnalysisResult:
     """Run statistical analysis and return AnalysisResult."""
     return StatBridge().run(df, spec)
-
-
-def quick_demo() -> AnalysisResult:
-    """Run a quick demo with synthetic KYRBS data."""
-    from src.data.survey_loader import SurveyLoader
-    loader = SurveyLoader()
-    df = loader.generate_synthetic("KYRBS", n=3000, seed=42)
-    spec = {
-        "outcome": "depression",
-        "outcome_label": "우울감 경험",
-        "predictors": ["sex", "sleep_hours", "screen_time", "smoking"],
-        "covariates": ["grade", "family_econ"],
-        "analysis": "logistic",
-        "weight_var": "weight_var",
-        "subgroups": ["sex"],
-    }
-    result = run_analysis(df, spec)
-    _log.info("Demo analysis: n=%d, OR results=%d", result.n_total, len(result.model_vars))
-    return result

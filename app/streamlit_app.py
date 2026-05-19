@@ -1353,13 +1353,14 @@ with main_col:
                 else:
                     with st.spinner("실제 로지스틱 회귀 분석 중..."):
                         try:
-                            from src.data.survey_loader import SurveyLoader
                             from src.data.stat_bridge import StatBridge
                             df_use = sb_df
                             if df_use is None:
-                                loader = SurveyLoader()
-                                df_use = loader.generate_synthetic(sb_dataset, n=sb_n)
-                                st.caption(f"합성 데이터 {sb_n:,}건 사용")
+                                st.error(
+                                    "분석할 데이터가 없습니다. "
+                                    "'원시자료 업로드' 탭에서 실제 KYRBS/KNHANES 파일을 먼저 업로드하세요."
+                                )
+                                st.stop()
                             spec = {
                                 "outcome": sb_outcome,
                                 "outcome_label": sb_outcome_label,
