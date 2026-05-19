@@ -38,8 +38,8 @@ _SAMPLE_QUERIES = [
 _RULE_VIOLATIONS = [
     # (pattern_in_line, exclude_files, severity, type_name, description)
     ("except: pass",    [""],             "high",   "bare_except_pass",   "except: pass — 최소 _log.warning() 추가"),
-    ("load_dotenv()",   ["config/env"],   "medium", "direct_load_dotenv", "load_dotenv() 직접 호출 — bootstrap() 사용"),
-    ("getLogger(",      ["logging_config"], "low",  "direct_getLogger",   "logging.getLogger 직접 사용 — get_logger() 사용"),
+    ("load_dotenv()",   ["config/env", "self_auditor"],   "medium", "direct_load_dotenv", "load_dotenv() 직접 호출 — bootstrap() 사용"),
+    ("getLogger(",      ["logging_config", "self_auditor"], "low",  "direct_getLogger",   "logging.getLogger 직접 사용 — get_logger() 사용"),
 ]
 
 _HARDCODED_MODELS = [
@@ -399,7 +399,7 @@ def _build_arch_summary() -> str:
     try:
         from src.agent.persona import get_persona
         pstatus = get_persona().status()
-        lines.append(f"Persona perspectives: {pstatus.get('perspectives_count', 0)}, evolutions: {pstatus.get('evolution_count', 0)}")
+        lines.append(f"Persona perspectives: {pstatus.get('perspectives', 0)}, evolutions: {pstatus.get('evolution_count', 0)}")
     except Exception:
         pass
 
