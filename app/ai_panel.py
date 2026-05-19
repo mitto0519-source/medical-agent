@@ -119,15 +119,8 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
             ctx_lines.append(f"{k}: {str(v)[:600]}")
     context_str = "\n".join(ctx_lines)
 
-    # ── 페르소나 시스템 프롬프트 (항상 최우선) ────────────────────────────────
-    persona_prompt = ""
-    try:
-        from src.agent.persona import get_system_prompt
-        persona_prompt = get_system_prompt(task="qa")
-    except Exception:
-        pass
-
     # ── Long-term continuity preamble ──────────────────────────────────
+    # (페르소나는 _build_system()이 자동 주입 — 여기서 중복 추가 안 함)
     continuity_preamble = ""
     if user_email:
         try:
@@ -144,11 +137,7 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
     except Exception:
         pass
 
-    SYSTEM = f"""{persona_prompt}
-
----
-
-{continuity_preamble}
+    SYSTEM = f"""{continuity_preamble}
 
 {conv_ctx}
 
@@ -210,7 +199,7 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
 
         st.session_state["ai_messages"].append({"role": "assistant", "content": answer})
 
-        # 대화 기억에 자동 저장 (세션 간 연속성)
+        # 대화 기억에 자동 저장 + 페르소나 record_exchange (세션 간 연속성)
         if "오류" not in answer[:10]:
             try:
                 from src.memory.conversation_memory import record as _record_conv
@@ -219,13 +208,19 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
                     agent_response=answer,
                     topic=current_page,
                     context_type="qa",
+                    quality="neutral",
                 )
             except Exception:
                 pass
+            # 마지막 교환 저장 (👍 피드백용)
+            st.session_state["_last_exchange"] = {
+                "user": prompt,
+                "answer": answer,
+            }
 
         st.rerun()
 
-    col_a, col_b = st.columns(2)
+    col_a, col_b, col_c = st.columns(3)
     with col_a:
         if st.button("🗑️ 초기화", key="_ai_clear", use_container_width=True):
             st.session_state["ai_messages"] = []
@@ -233,6 +228,31 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
     with col_b:
         if st.button("📋 컨텍스트 보기", key="_ai_ctx", use_container_width=True):
             st.session_state["_show_ctx"] = not st.session_state.get("_show_ctx", False)
+    with col_c:
+        last = st.session_state.get("_last_exchange")
+        if last and st.button("👍 유용했어요", key="_ai_thumbsup", use_container_width=True):
+            try:
+                from src.agent.persona import get_persona
+                get_persona().evolve_from_conversation(
+                    user_message=last["user"],
+                    agent_response=last["answer"],
+                    feedback="positive",
+                )
+                try:
+                    from src.memory.conversation_memory import record as _record_conv
+                    _record_conv(
+                        user_message=last["user"],
+                        agent_response=last["answer"],
+                        topic=current_page,
+                        context_type="qa",
+                        quality="positive",
+                    )
+                except Exception:
+                    pass
+                st.toast("페르소나가 이 대화에서 학습했습니다.")
+                st.session_state.pop("_last_exchange", None)
+            except Exception:
+                pass
 
     if st.session_state.get("_show_ctx"):
         with st.expander("현재 컨텍스트", expanded=True):
