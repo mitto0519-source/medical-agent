@@ -75,7 +75,7 @@ class ClaudeClient:
             task: thinking 레벨 결정용 task 이름 (기본: 초기화 시 task)
         """
         effective_task = task or self._task
-        system = self._build_system(system_prompt, context_chunks)
+        system = self._build_system(system_prompt, context_chunks, task=effective_task)
         messages = [{"role": "user", "content": user_message}]
 
         if stream:
@@ -118,7 +118,7 @@ class ClaudeClient:
     ) -> Iterator[str]:
         """토큰 단위 스트리밍 생성기."""
         effective_task = task or self._task
-        system = self._build_system(system_prompt, context_chunks)
+        system = self._build_system(system_prompt, context_chunks, task=effective_task)
         messages = [{"role": "user", "content": user_message}]
 
         kwargs = dict(
@@ -220,19 +220,11 @@ class ClaudeClient:
         except Exception:
             pass
 
-        # 3. MetaLearner 통합 인사이트 (자율 학습 결과)
-        meta_context = ""
-        try:
-            from src.learning.meta_learner import MetaLearner
-            meta_context = MetaLearner().get_learning_context()
-        except Exception:
-            pass
-
-        # 4. 호출별 base_prompt (태스크 특화 지시)
+        # 3. 호출별 base_prompt (태스크 특화 지시)
         base = base_prompt or ""
 
-        # 조합: 페르소나 → seed → meta_context → base
-        parts = [p for p in [persona_prompt, preamble, meta_context, base] if p]
+        # 조합: 페르소나 → seed → base
+        parts = [p for p in [persona_prompt, preamble, base] if p]
         full_base = "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
         if not context_chunks:
