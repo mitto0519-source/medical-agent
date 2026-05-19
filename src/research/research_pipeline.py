@@ -101,8 +101,13 @@ class ResearchPipeline:
         profile_dir: str = "data/author_profiles",
         library_dir: str = "data/libraries",
         api_key: Optional[str] = None,
+        user_email: str = "",
+        session_id: str = "",
     ):
         bootstrap()  # .env 단일 로드
+
+        self.user_email = user_email
+        self.session_id = session_id
 
         self._llm = get_llm_client(api_key=api_key, task="standard")
 
@@ -231,6 +236,8 @@ Return JSON only."""
             title=f"주제 생성: {dataset_name} / {focus[:40]}",
             action_type="topic_generate",
             description=f"{dataset_name} 데이터셋 기반 연구 주제 {len(topics)}개 생성",
+            user_email=self.user_email,
+            session_id=self.session_id,
             inputs={"dataset_name": dataset_name, "focus": focus, "n_topics": n_topics},
             outputs={"topic_count": len(topics), "titles": [t.get("title", "") for t in topics]},
             impact={"affected_modules": ["research_pipeline"]},
@@ -274,6 +281,8 @@ Return JSON only."""
             inputs={"topic_title": topic.get("title", ""), "exposure": topic.get("exposure", "")},
             outputs={"novelty_score": result.get("novelty_score"), "verdict": result.get("verdict", "")[:100]},
             impact={"affected_modules": ["novelty_checker"]},
+            user_email=self.user_email,
+            session_id=self.session_id,
         )
 
         from src.memory.auto_learn import reflect_and_record
@@ -414,6 +423,8 @@ Return JSON only."""
                 "safe_title": safe_title,
             },
             impact={"affected_modules": ["research_pipeline", "paper_writer", "rag"]},
+            user_email=self.user_email,
+            session_id=self.session_id,
         )
 
         return draft
@@ -458,6 +469,8 @@ Return JSON only."""
             inputs={"topic": topic.get("title", ""), "dataset": dataset, "spec": spec},
             outputs={"n_total": result.n_total, "n_sig": len(result.get_significant())},
             impact={"affected_modules": ["stat_bridge", "research_pipeline"]},
+            user_email=self.user_email,
+            session_id=self.session_id,
         )
         return result.to_dict()
 
@@ -534,6 +547,8 @@ Return JSON only."""
             inputs={"topic": topic.get("title", "")},
             outputs={"score": result.total_score, "grade": result.grade, "rec": result.accept_recommendation},
             impact={"affected_modules": ["peer_reviewer", "research_pipeline"]},
+            user_email=self.user_email,
+            session_id=self.session_id,
         )
         return result.to_dict()
 
@@ -592,6 +607,8 @@ Return JSON only."""
             inputs={"topic_title": topic.get("title", ""), "n_total": stat_result.get("n_total", 0)},
             outputs={"draft_word_count": len(draft.split()), "docx_path": docx_path},
             impact={"affected_modules": ["paper_writer", "stat_bridge", "research_pipeline"]},
+            user_email=self.user_email,
+            session_id=self.session_id,
         )
 
         return draft, docx_path
