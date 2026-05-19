@@ -24,6 +24,7 @@ persona = get_persona()       # 누적된 연구자 캐릭터 + 관점 로드
 ```
 
 **세션 시작 즉시 확인해야 할 파일:**
+- `ARCHITECTURE.md` — **모듈 정의 레지스트리 (새 모듈 만들기 전 반드시 확인)**
 - `data/agent_self/self_model.json` — 현재 건강도 + 우선 작업
 - `data/agent_self/insights.json` — 축적된 자체 학습 내용
 - `data/change_log/history.json` — 최근 작업 이력
@@ -221,6 +222,10 @@ src/research/research_pipeline.py        — 주제 생성 후 자동 진화
 ---
 
 ### 규칙 10 — 모든 작업은 전후방 연결 완전성을 보장한다 (절대 규칙)
+
+> **새 모듈 생성 전 의무**: `ARCHITECTURE.md`를 먼저 읽고 같은 기능이 이미 있는지 확인한다.
+> 없으면 만들되 ARCHITECTURE.md에 즉시 기재한다.
+> 기존 모듈을 대체하면 기존 것을 삭제하고 ARCHITECTURE.md 삭제 기록표에 남긴다.
 
 작업 단위가 아무리 작아도, **항상 다음 체크리스트를 수행한다.**
 "요청한 것만 하고 끝" 은 절대 허용되지 않는다.
