@@ -9,6 +9,7 @@ import os
 from typing import Optional
 
 from src.config.env import bootstrap
+from src.config.logging_config import get_logger
 from src.config.models import get_model, list_available_models
 
 
@@ -17,6 +18,7 @@ def get_llm_client(
     provider: Optional[str] = None,
     model: Optional[str] = None,
     task: str = "standard",
+    resilient: bool = True,
 ):
     """task에 맞는 LLM 클라이언트 반환.
 
@@ -25,11 +27,19 @@ def get_llm_client(
         provider: "anthropic" | "openai" | None(자동)
         model: 특정 모델 ID 강제 (None이면 task 기반 자동 선택)
         task: "ocr" | "qa" | "summary" | "paper_writing" | "standard" 등
+        resilient: True이면 다중 모델 페일오버 활성화 (기본값)
 
     Returns:
-        ClaudeClient 또는 OpenAIClient (동일 인터페이스)
+        ClaudeClient 또는 OpenAIClient 또는 ResilientLLMClient
     """
     bootstrap()
+
+    # resilient 모드: 자동 페일오버 (Claude → GPT-4 → Gemini)
+    if resilient and provider is None and not api_key:
+        from src.llm.resilient_client import ResilientLLMClient
+        _log = get_logger(__name__)
+        _log.debug(f"[Factory] 탄력적 모드 활성화 (task={task})")
+        return ResilientLLMClient(task=task)
 
     explicit_provider = (provider or "").strip().lower()
 

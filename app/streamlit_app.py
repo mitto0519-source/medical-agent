@@ -337,6 +337,136 @@ def _next_step_btn(label: str, target: str, key: str):
     if st.button(f"▶ {label}", key=key, type="primary"):
         _nav(target)
 
+
+def _render_topic_card(t: dict, compact: bool = False) -> None:
+    """연구 주제를 깔끔한 HTML 카드로 렌더링."""
+    methods = t.get("suggested_methods", [])
+    method_badges = "".join(
+        f'<span style="display:inline-block;margin:2px 3px;padding:2px 9px;'
+        f'border-radius:12px;font-size:11px;background:#1e3a5f;color:#60a5fa;'
+        f'border:1px solid #2563eb44;">{m}</span>'
+        for m in methods
+    )
+    design = t.get("suggested_design", "")
+    design_html = (
+        f'<span style="padding:2px 10px;border-radius:12px;font-size:11px;'
+        f'background:#14532d44;color:#4ade80;border:1px solid #16a34a44;">{design}</span>'
+        if design else ""
+    )
+    rationale = t.get("rationale", "")
+    rat_html = (
+        f'<div style="margin-top:10px;padding:10px 12px;background:#0f172a;'
+        f'border-left:3px solid #3b82f6;border-radius:4px;'
+        f'font-size:12px;color:#94a3b8;line-height:1.6;">{rationale}</div>'
+        if rationale else ""
+    )
+    methods_html = (
+        f'<div style="margin-top:8px;">'
+        f'<span style="font-size:11px;color:#64748b;margin-right:6px;">분석 방법:</span>'
+        f'{method_badges}</div>'
+        if methods else ""
+    )
+    st.markdown(f"""
+    <div style="background:#0d1b30;border:1px solid #1e3a5f;border-radius:10px;
+                padding:14px 18px;margin:6px 0;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+            <div style="flex:1;min-width:140px;">
+              <div style="font-size:10px;color:#64748b;margin-bottom:2px;">노출변수</div>
+              <div style="font-size:12px;color:#e5e7eb;">{t.get('exposure','-')}</div>
+            </div>
+            <div style="flex:1;min-width:140px;">
+              <div style="font-size:10px;color:#64748b;margin-bottom:2px;">결과변수</div>
+              <div style="font-size:12px;color:#e5e7eb;">{t.get('outcome','-')}</div>
+            </div>
+            <div style="flex:1;min-width:120px;">
+              <div style="font-size:10px;color:#64748b;margin-bottom:2px;">대상</div>
+              <div style="font-size:12px;color:#e5e7eb;">{t.get('population','-')}</div>
+            </div>
+            <div style="min-width:80px;">
+              <div style="font-size:10px;color:#64748b;margin-bottom:4px;">연구 설계</div>
+              {design_html}
+            </div>
+          </div>
+        </div>
+      </div>
+      {rat_html}
+      {methods_html}
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def _render_stat_result(res: dict, test_name: str = "") -> None:
+    """통계 결과 dict를 깔끔한 HTML 카드로 렌더링."""
+    if not res:
+        return
+
+    def _pval_color(p):
+        try:
+            pf = float(p)
+            return "#4ade80" if pf < 0.05 else "#f87171"
+        except Exception:
+            return "#94a3b8"
+
+    def _fmt(v):
+        if isinstance(v, float):
+            return f"{v:.4f}"
+        if isinstance(v, list):
+            return ", ".join(str(x) for x in v[:6]) + ("…" if len(v) > 6 else "")
+        if isinstance(v, dict):
+            return "<br>".join(f"<b>{k}</b>: {_fmt(vv)}" for k, vv in list(v.items())[:6])
+        return str(v)
+
+    LABEL_MAP = {
+        "t_statistic": "t 통계량", "p_value": "p-value", "p_value_two_tailed": "p-value (양측)",
+        "degrees_of_freedom": "자유도", "mean_group1": "그룹1 평균", "mean_group2": "그룹2 평균",
+        "ci_95_lower": "95% CI 하한", "ci_95_upper": "95% CI 상한", "effect_size": "효과크기",
+        "chi2": "χ² 통계량", "chi2_statistic": "χ² 통계량", "dof": "자유도",
+        "cramers_v": "Cramér's V", "f_statistic": "F 통계량", "group_means": "그룹별 평균",
+        "r_squared": "R²", "adj_r_squared": "수정 R²", "coefficients": "회귀계수",
+        "std_errors": "표준오차", "p_values": "p-value (변수별)",
+        "n": "표본 수", "n_total": "총 표본 수",
+    }
+
+    p_keys = {"p_value", "p_value_two_tailed"}
+    highlight_keys = {"t_statistic", "chi2", "chi2_statistic", "f_statistic", "r_squared", "effect_size"}
+
+    rows_html = ""
+    for k, v in res.items():
+        if k in ("error", "traceback"):
+            continue
+        label = LABEL_MAP.get(k, k.replace("_", " ").title())
+        fmt_v = _fmt(v)
+        if k in p_keys:
+            color = _pval_color(v)
+            val_html = (f'<span style="color:{color};font-weight:700;">{fmt_v}</span>'
+                        + (' <span style="font-size:10px;color:#4ade80;">✓ 유의</span>' if _pval_color(v) == "#4ade80" else
+                           ' <span style="font-size:10px;color:#f87171;">✗ 비유의</span>'))
+        elif k in highlight_keys:
+            val_html = f'<span style="color:#60a5fa;font-weight:600;">{fmt_v}</span>'
+        else:
+            val_html = f'<span style="color:#e5e7eb;">{fmt_v}</span>'
+        rows_html += (
+            f'<tr><td style="padding:5px 12px;color:#94a3b8;font-size:12px;'
+            f'border-bottom:1px solid #1e293b;white-space:nowrap;">{label}</td>'
+            f'<td style="padding:5px 12px;font-size:12px;border-bottom:1px solid #1e293b;">{val_html}</td></tr>'
+        )
+
+    title_html = (
+        f'<div style="font-size:12px;font-weight:600;color:#94a3b8;margin-bottom:8px;">{test_name}</div>'
+        if test_name else ""
+    )
+    st.markdown(f"""
+    <div style="background:#0d1b30;border:1px solid #1e3a5f;border-radius:10px;padding:14px 18px;margin:8px 0;">
+      {title_html}
+      <table style="width:100%;border-collapse:collapse;">
+        <tbody>{rows_html}</tbody>
+      </table>
+    </div>
+    """, unsafe_allow_html=True)
+
+
 page = st.session_state["nav"]
 _u = st.session_state.get("user", {})
 
@@ -766,14 +896,7 @@ with main_col:
             st.markdown("<h3 style='color:#e6edf3;'>생성된 주제 목록</h3>", unsafe_allow_html=True)
             for i, t in enumerate(st.session_state["topics"]):
                 with st.expander(f"[{i+1}] {t.get('title','제목 없음')}", expanded=(i == 0)):
-                    c1, c2 = st.columns(2)
-                    with c1:
-                        st.markdown(f"**노출변수:** {t.get('exposure','-')}")
-                        st.markdown(f"**결과변수:** {t.get('outcome','-')}")
-                    with c2:
-                        st.markdown(f"**대상:** {t.get('population','-')}")
-                        st.markdown(f"**설계:** {t.get('suggested_design','-')}")
-                    st.markdown(f"**근거:** {t.get('rationale','-')}")
+                    _render_topic_card(t)
                     ca, cb = st.columns(2)
                     with ca:
                         if st.button("🔍 신규성 확인", key=f"_nov_{i}"):
@@ -1250,7 +1373,7 @@ with main_col:
                         from src.statistics.medical_stats import MedicalStatistics
                         from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.independent_t_test(df, val_col, grp_col)
-                        st.json(res)
+                        _render_stat_result(res, f"독립표본 t검정 — {val_col} by {grp_col}")
                         fig = MedicalVisualizer.auto_figure("ttest", df, result=res,
                                                             val_col=val_col, grp_col=grp_col)
                         _show_figure(fig, f"ttest_{val_col}_by_{grp_col}")
@@ -1263,7 +1386,7 @@ with main_col:
                         from src.statistics.medical_stats import MedicalStatistics
                         from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.chi_square_test(df, var1, var2)
-                        st.json(res)
+                        _render_stat_result(res, f"카이제곱 검정 — {var1} × {var2}")
                         fig = MedicalVisualizer.auto_figure("chi2", df, result=res,
                                                             var1=var1, var2=var2)
                         _show_figure(fig, f"chi2_{var1}_vs_{var2}")
@@ -1276,7 +1399,7 @@ with main_col:
                         from src.statistics.medical_stats import MedicalStatistics
                         from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.one_way_anova(df, val_col, grp_col)
-                        st.json(res)
+                        _render_stat_result(res, f"일원분산분석 (ANOVA) — {val_col} by {grp_col}")
                         fig = MedicalVisualizer.auto_figure("anova", df, result=res,
                                                             val_col=val_col, grp_col=grp_col)
                         _show_figure(fig, f"anova_{val_col}_by_{grp_col}")
@@ -1311,7 +1434,7 @@ with main_col:
                         from src.statistics.medical_stats import MedicalStatistics
                         from src.visualization import MedicalVisualizer
                         res = MedicalStatistics.linear_regression(df, outcome, predictors)
-                        st.json(res)
+                        _render_stat_result(res, f"선형 회귀 — {outcome} ~ {', '.join(predictors[:4])}")
                         fig = MedicalVisualizer.auto_figure("linear", df, result=res,
                                                             outcome=outcome, predictors=predictors)
                         _show_figure(fig, f"linear_{outcome}")

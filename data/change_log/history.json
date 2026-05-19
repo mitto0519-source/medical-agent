@@ -1,5 +1,45 @@
 [
   {
+    "id": "20260519_225639_475624",
+    "timestamp": "2026-05-19 22:56:39",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "meta_learn",
+    "title": "MetaLearner 사이클 완료: 11개 통합 인사이트",
+    "description": "OutcomeTracker(0.04) + KnowledgeDistiller(0.91) + FineTuner(0.04) 통합",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {},
+    "outputs": {
+      "n_insights": 11,
+      "weights": {
+        "outcome_tracker": 0.0440402136962331,
+        "knowledge_distiller": 0.9119195726075338,
+        "finetune_manager": 0.0440402136962331
+      }
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260519_225631_502703",
+    "timestamp": "2026-05-19 22:56:31",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "auto_learn",
+    "title": "주기적 학습 완료 — 신규 248편 수집",
+    "description": "PubMed 수집: 248편 신규 / 4편 중복 스킵. 그래프 노드: 10005 → 10005. 개념 추출: 1726건.",
+    "what_changed": {},
+    "why_better": "지식 베이스 자동 갱신으로 최신 연구 트렌드 반영",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "data/knowledge_graph",
+        "ChromaDB/RAG"
+      ]
+    }
+  },
+  {
     "id": "20260519_220940_740795",
     "timestamp": "2026-05-19 22:09:40",
     "user_email": "",

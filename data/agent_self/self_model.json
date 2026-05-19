@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-19 22:09:41",
+  "updated_at": "2026-05-19 22:56:39",
   "overall_score": 96,
   "smoke_test_status": "passing",
   "smoke_test_score": "7/7",
@@ -29,7 +29,7 @@
       "confidence": 0.8
     }
   ],
-  "active_insights": 21,
+  "active_insights": 22,
   "recent_changes": [],
-  "git_summary": "최근 커밋:\n\n변경사항: M data/agent_self/insights.json\n M data/agent_self/persona.json\n M data/agent_self/self_model.json\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M data/knowledge_graph/graph.json\n M data/knowledge_graph/meta.json\n M data/knowledge_graph/trend_state.json\n M src/llm/claude_client.py\n?? data/agent_self/distilled_insights.json\n?? data/agent_self/finetune_state.json\n?? data/agent_self/meta_insights.json\n?? data/agent_self/meta_weights.json\n?? data/agent_self/outcome_insights.json\n?? scripts/run_learning_cycle.py\n?? src/learning/"
+  "git_summary": "최근 커밋:\n\n변경사항: M data/agent_self/insights.json\n M data/agent_self/self_model.json\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M data/knowledge_graph/meta.json\n M data/knowledge_graph/trend_state.json\n?? data/agent_self/distilled_insights.json\n?? data/agent_self/finetune_state.json\n?? data/agent_self/meta_insights.json\n?? data/agent_self/meta_weights.json\n?? scripts/run_learning_cycle.py\n?? src/learning/"
 }
