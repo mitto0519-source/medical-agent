@@ -1,6 +1,14 @@
 """Medical-Agent Streamlit UI — Dark Theme + AI Panel + Activity History"""
 
-import sys, os
+import sys, os, io
+# Windows CP949 → UTF-8 강제 (한글 로그 깨짐 방지)
+if sys.stdout and hasattr(sys.stdout, 'buffer'):
+    try: sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+    except Exception: pass
+if sys.stderr and hasattr(sys.stderr, 'buffer'):
+    try: sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace', line_buffering=True)
+    except Exception: pass
+os.environ['PYTHONIOENCODING'] = 'utf-8'
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ['HF_HUB_DISABLE_SYMLINKS_WARNING'] = '1'
