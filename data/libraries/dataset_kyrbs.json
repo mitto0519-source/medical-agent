@@ -22,32 +22,22 @@
       "missing_strategy": "결측 제외"
     },
     "sex": {
-      "type": "categorical",
-      "unit": "",
       "label": "성별",
-      "notes": "모든 분석의 기본 층화변수",
-      "cutoffs": {
-        "1": "남자",
-        "2": "여자"
-      },
-      "processing": "그대로 사용",
-      "missing_strategy": "제외"
+      "type": "binary",
+      "unit": "",
+      "processing": "",
+      "cutoffs": {},
+      "missing_strategy": "exclude",
+      "notes": ""
     },
     "grade": {
-      "type": "categorical",
-      "unit": "",
       "label": "학년",
-      "notes": "school_type 변수와 함께 사용",
-      "cutoffs": {
-        "1": "중1",
-        "2": "중2",
-        "3": "중3",
-        "4": "고1",
-        "5": "고2",
-        "6": "고3"
-      },
-      "processing": "중학생(1-3)/고등학생(4-6)으로 이분화 가능",
-      "missing_strategy": "제외"
+      "type": "ordinal",
+      "unit": "",
+      "processing": "",
+      "cutoffs": {},
+      "missing_strategy": "exclude",
+      "notes": ""
     },
     "height": {
       "type": "continuous",
@@ -262,16 +252,13 @@
       "missing_strategy": "제외 불가 (필수 변수)"
     },
     "depression": {
+      "label": "우울감",
       "type": "binary",
       "unit": "",
-      "label": "우울감 경험 (최근 12개월, 2주 이상 연속)",
-      "notes": "우울감 경험률 핵심 지표",
-      "cutoffs": {
-        "1": "있음",
-        "2": "없음"
-      },
-      "processing": "이분형 그대로",
-      "missing_strategy": "결측 제외"
+      "processing": "",
+      "cutoffs": {},
+      "missing_strategy": "exclude",
+      "notes": ""
     },
     "father_edu": {
       "type": "ordinal",
@@ -1160,6 +1147,15 @@
       },
       "processing": "좋음(1-2) vs. 보통이하(3-5) 이분화",
       "missing_strategy": "결측 제외"
+    },
+    "sleep_hours": {
+      "label": "수면시간",
+      "type": "continuous",
+      "unit": "",
+      "processing": "",
+      "cutoffs": {},
+      "missing_strategy": "exclude",
+      "notes": ""
     }
   },
   "analysis_notes": [

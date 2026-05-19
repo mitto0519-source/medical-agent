@@ -39,10 +39,10 @@ class ProjectHealthModel:
 def _run(cmd: str) -> str:
     try:
         result = subprocess.run(
-            cmd, shell=True, capture_output=True, text=True, timeout=10,
+            cmd, shell=True, capture_output=True, timeout=10,
             cwd=Path(__file__).parent.parent.parent,
         )
-        return result.stdout.strip()
+        return result.stdout.decode("utf-8", errors="replace").strip()
     except Exception:
         return ""
 
@@ -64,6 +64,41 @@ def _save_model(model: ProjectHealthModel) -> None:
     )
 
 
+def _incorporate_audit_results(model: ProjectHealthModel) -> None:
+    """마지막 SelfAuditor 결과를 known_weaknesses에 반영한다."""
+    audit_log = Path("data/diagnostics/audit_log.json")
+    if not audit_log.exists():
+        return
+    try:
+        log = json.loads(audit_log.read_text(encoding="utf-8"))
+        if not log:
+            return
+        last = log[0]
+
+        severity_prefix = {"high": "코드[HIGH]", "medium": "코드[MED]"}
+        for issue in last.get("code_issues", []):
+            sev = issue.get("severity", "")
+            if sev in severity_prefix:
+                model.known_weaknesses.append(
+                    f"{severity_prefix[sev]}: {issue.get('text', '')} ({Path(issue.get('file', '')).name}:{issue.get('line', '')})"
+                )
+
+        for iss in last.get("rag_health", {}).get("issues", [])[:2]:
+            model.known_weaknesses.append(f"RAG: {iss}")
+
+        for iss in last.get("pipeline_health", {}).get("issues", [])[:3]:
+            model.known_weaknesses.append(f"파이프라인: {iss}")
+
+        for iss in last.get("llm_health", {}).get("issues", [])[:1]:
+            model.known_weaknesses.append(f"LLM: {iss}")
+
+        for gap in last.get("llm_gaps", [])[:3]:
+            model.known_weaknesses.append(f"아키텍처갭[P{gap.get('priority','')}]: {gap.get('gap', '')[:100]}")
+
+    except Exception as e:
+        _log.debug("audit 결과 반영 실패: %s", e)
+
+
 def refresh() -> ProjectHealthModel:
     """프로젝트 현재 상태를 분석하고 self_model을 갱신한다."""
     model = ProjectHealthModel(updated_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -78,13 +113,18 @@ def refresh() -> ProjectHealthModel:
 
     # ── 모듈 임포트 상태 분석 ────────────────────────────────────────
     module_checks = [
-        ("src.config.models", "list_available_models"),
-        ("src.config.env", "bootstrap"),
-        ("src.memory.change_log", "log"),
-        ("src.memory.agent_insight", "record"),
-        ("src.agent.medical_agent", "MedicalAgent"),
+        ("src.config.models",              "list_available_models"),
+        ("src.config.env",                 "bootstrap"),
+        ("src.config.logging_config",      "get_logger"),
+        ("src.agent.memory",               "AgentMemory"),
+        ("src.llm.factory",                "get_llm_client"),
+        ("src.vectordb.store",             "get_vector_store"),
+        ("src.ingestion.document_reader",  "DocumentReader"),
+        ("src.storage.manager",            "StorageManager"),
         ("src.research.research_pipeline", "ResearchPipeline"),
-        ("src.rag.pipeline", "RAGPipeline"),
+        ("src.research.novelty_checker",   "NoveltyChecker"),
+        ("src.research.paper_writer",      "PaperWriter"),
+        ("src.rag.pipeline",               "RAGPipeline"),
     ]
     passing, failing = [], []
     for mod, attr in module_checks:
@@ -139,11 +179,14 @@ def refresh() -> ProjectHealthModel:
         for a in next_actions
     ]
 
+    # ── 마지막 SelfAuditor 결과 반영 ─────────────────────────────────
+    _incorporate_audit_results(model)
+
     # ── 종합 점수 계산 ───────────────────────────────────────────────
     score = 50
-    score += len(passing) * 4               # 모듈당 4점
-    score += len(model.known_strengths) * 3 # 강점당 3점
-    score -= len(model.known_weaknesses) * 5 # 약점당 -5점
+    score += len(passing) * 3               # 모듈당 3점 (12개 기준)
+    score += len(model.known_strengths) * 2 # 강점당 2점
+    score -= len(model.known_weaknesses) * 4 # 약점당 -4점
     model.overall_score = max(0, min(100, score))
 
     _save_model(model)
