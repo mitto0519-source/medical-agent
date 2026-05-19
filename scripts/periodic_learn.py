@@ -86,6 +86,22 @@ def main():
     if summary.get("errors"):
         print(f"오류: {summary['errors']}")
 
+    # 수집 후 → 페르소나 자동 진화
+    if summary.get("new_papers", 0) > 0:
+        print()
+        print("=== 페르소나 진화 중... ===")
+        try:
+            import importlib.util, os
+            spec = importlib.util.spec_from_file_location(
+                "evolve_persona",
+                os.path.join(os.path.dirname(__file__), "evolve_persona.py")
+            )
+            ep = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(ep)
+            ep.main()
+        except Exception as e:
+            print(f"페르소나 진화 실패 (비중요): {e}")
+
 
 if __name__ == "__main__":
     main()
