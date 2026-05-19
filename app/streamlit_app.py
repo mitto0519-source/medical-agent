@@ -249,6 +249,36 @@ if "_session_id" not in st.session_state:
     import uuid as _uuid
     st.session_state["_session_id"] = _uuid.uuid4().hex[:12]
 
+# ── 세션 시작 시 1회: self_model + 주기적 학습 트리거 (백그라운드) ────────
+if "_bg_init_done" not in st.session_state:
+    st.session_state["_bg_init_done"] = True
+    import threading as _threading
+
+    def _bg_session_init():
+        try:
+            from src.memory.self_model import refresh as _sm_refresh
+            _sm_refresh()
+        except Exception:
+            pass
+        try:
+            import json as _json
+            from pathlib import Path as _Path
+            from datetime import datetime as _dt
+            trend_state_path = _Path("data/knowledge_graph/trend_state.json")
+            if trend_state_path.exists():
+                ts = _json.loads(trend_state_path.read_text(encoding="utf-8"))
+                last_run = ts.get("last_run", "")
+                if last_run:
+                    delta = (_dt.now() - _dt.fromisoformat(last_run)).total_seconds()
+                    if delta < 86400:  # 24h 이내면 skip
+                        return
+            from src.knowledge.trend_learner import run_trend_learn
+            run_trend_learn(days=60, max_per_query=20)
+        except Exception:
+            pass
+
+    _threading.Thread(target=_bg_session_init, daemon=True).start()
+
 def _nav(p):
     st.session_state["nav"] = p
     st.rerun()

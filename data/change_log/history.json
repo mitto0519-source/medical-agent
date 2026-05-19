@@ -1,5 +1,55 @@
 [
   {
+    "id": "20260520_012408_803188",
+    "timestamp": "2026-05-20 01:24:08",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "config_change",
+    "title": "End-to-end headless 수정: 인코딩 + Failover + 재시도 로직",
+    "description": "1. ~/.streamlit/config.toml BOM 제거 → Streamlit 시작 TOML 파싱 오류 수정. 2. src/llm/factory.py Multi-LLM Failover 구현 (Claude 실패 시 OpenAI 자동 전환, _FailoverClient 래퍼). 3. src/ingestion/evidence_reader.py Semantic Scholar 429 지수 백오프 재시도 추가. 4. Windows CP949 UTF-8 인코딩 강제 (streamlit_app.py, mcp_server.py, scripts/test_rag_smoke.py, logging_config.py). 5. smoke test 12/12 PASS 유지. Streamlit + MCP 서버 모두 정상 기동 확인.",
+    "what_changed": {},
+    "why_better": "Claude API 크레딧 고갈/401 에러 시 파이프라인이 OpenAI로 자동 failover되어 서비스 중단 없음. 한글 로그 깨짐 완전 해결.",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "llm.factory",
+        "ingestion.evidence_reader",
+        "config.logging_config",
+        "mcp_server",
+        "app.streamlit_app"
+      ]
+    }
+  },
+  {
+    "id": "20260520_011519_968511",
+    "timestamp": "2026-05-20 01:15:19",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / sleep and depression",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "sleep and depression",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Social Jetlag and Depressive Symptoms Among Korean Adolescents: The Moderating Role of Socioeconomic Status Using the Korea Youth Risk Behavior Survey",
+        "Mukbang Viewing Frequency, Night Snacking, and Depressive Symptoms in Korean Adolescents: A Mediation Analysis with Sleep Duration as an Intermediary Pathway"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
     "id": "20260519_220940_740795",
     "timestamp": "2026-05-19 22:09:40",
     "user_email": "",

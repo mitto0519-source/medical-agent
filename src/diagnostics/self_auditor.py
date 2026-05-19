@@ -106,6 +106,15 @@ class SelfAuditor:
             result.overall_score, len(result.code_issues),
             len(result.llm_gaps), result.duration_sec,
         )
+
+        # ── self_model 자동 갱신 — audit 결과를 known_weaknesses에 반영 ──
+        try:
+            from src.memory.self_model import refresh as _sm_refresh
+            _sm_refresh()
+            _log.debug("self_model refreshed after audit")
+        except Exception as _e:
+            _log.debug("self_model refresh skipped: %s", _e)
+
         return result
 
     def run_quick_audit(self) -> AuditResult:
