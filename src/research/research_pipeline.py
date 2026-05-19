@@ -435,12 +435,11 @@ Return JSON only."""
         self,
         topic: Dict,
         dataset: str = "KYRBS",
-        n_synthetic: int = 5000,
         df=None,
     ) -> dict:
         """StatBridge로 실제 통계 분석 수행.
 
-        df: 실제 데이터프레임이 있으면 사용, 없으면 합성 데이터 생성.
+        df: 실제 데이터프레임. None이면 data/raw/ 에서 자동 탐색.
         Returns: AnalysisResult.to_dict()
         """
         from src.data.stat_bridge import StatBridge

@@ -18,7 +18,6 @@
 |------|----------|------|------|
 | KYRBS .sav 실제 로더 | `src/data/kyrbs_raw_loader.py` → `KYRBSLoader` | ✅ active | 2005~2025 21개 차수 지원 |
 | KNHANES .sav 실제 로더 | `src/data/kyrbs_raw_loader.py` → `KNHANESLoader` | ✅ active | 같은 파일에 동거 |
-| 합성(더미) 데이터 생성 | `src/data/survey_loader.py` → `SurveyLoader.generate_synthetic()` | ⚠️ synthetic only | 실제 데이터 아님. UI 테스트/시연용 |
 | KYRBS 다운로드 자동화 | `scripts/download_kyrbs.py` | ✅ active | KDCA 21개 차수 + 코드북 |
 
 ### 2. 통계 분석
@@ -123,6 +122,8 @@
 | `examples/` (전체) | 2026-05-19 | 삭제된 모듈만 참조, 유지 가치 없음 | — |
 | `src/statistics/auto_analyzer.py` | 2026-05-19 | 미호출 dead code. stat_bridge가 OR/CI 담당 | `src/data/stat_bridge.py` |
 | `src/statistics/results_writer.py` | 2026-05-19 | 미호출 dead code. paper_writer가 직접 처리 | `src/research/paper_writer.py` |
+| `SurveyLoader.generate_synthetic()` | 2026-05-19 | 합성 데이터 생성 전면 금지. 실제 원시자료만 허용 | `src/data/kyrbs_raw_loader.py` |
+| `StatBridge.quick_demo()` | 2026-05-19 | 합성 데이터 기반 demo 함수. 동일 사유 삭제 | — |
 
 ---
 
@@ -140,4 +141,3 @@
 
 | 항목 | 내용 | 계획 |
 |------|------|------|
-| `survey_loader.generate_synthetic()` | 실제 데이터처럼 보이는 합성 데이터 fallback | 명확한 경고 추가 |
