@@ -222,6 +222,14 @@ class RAGPipeline:
         paper_text = "\n\n".join(h["text"] for h in hits)
         return self._llm.summarize_paper(paper_text)
 
+    def search(self, query: str, n_results: int = 5) -> List[Dict]:
+        """벡터 스토어에서 관련 청크를 검색해 반환.
+
+        Returns:
+            List of {text, score, metadata} dicts (빈 리스트 가능)
+        """
+        return self._store.search(query, n_results=n_results) or []
+
     # ------------------------------------------------------------------
     # Status
     # ------------------------------------------------------------------
