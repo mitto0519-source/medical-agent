@@ -265,6 +265,87 @@ mechanisms → strengths/limitations → conclusion.
 """
         return self._generate(system, prompt)
 
+    def write_section(
+        self,
+        section: str,
+        topic: str,
+        study_info: Dict,
+        results: Dict,
+    ) -> str:
+        """Streamlit UI 섹션별 작성용 통합 어댑터.
+
+        section: 'Abstract' | 'Introduction' | 'Methods' | 'Results' | 'Discussion'
+        study_info: dataset, design, sample_size, exposure, outcome, population 등
+        results: summary(필수)
+        """
+        results_text = results.get("summary", "") if isinstance(results, dict) else str(results)
+        dataset = study_info.get("dataset", "KYRBS")
+        design = study_info.get("design", "Cross-sectional")
+        population = study_info.get("population", "Korean adolescents")
+        exposure = study_info.get("exposure", "")
+        outcome = study_info.get("outcome", "")
+        sample_size = study_info.get("sample_size", "")
+        journal = study_info.get("journal", "")
+
+        sys_p = self._profile.get_system_prompt()
+
+        if section == "Abstract":
+            return self.write_abstract(
+                topic=topic,
+                background=f"Korean public health study using {dataset}",
+                objective=f"To examine the association in {population}",
+                methods_summary=f"{design}, {dataset}, n={sample_size}",
+                results_summary=results_text,
+                conclusion="Findings support public health interventions.",
+            )
+        elif section == "Introduction":
+            return self.write_introduction(
+                topic=topic,
+                background_facts=[
+                    f"Study population: {population}",
+                    f"Dataset: {dataset}",
+                    f"Exposure: {exposure}",
+                    f"Outcome: {outcome}",
+                ],
+                knowledge_gap="Gap in Korean adolescent population regarding this association",
+                hypothesis=f"Exposure is associated with outcome in {population}",
+            )
+        elif section == "Methods":
+            dataset_key = None
+            if self._datasets:
+                for ds in self._datasets.list_datasets():
+                    if ds.upper() in dataset.upper():
+                        dataset_key = ds
+                        break
+            dataset_ctx = self._datasets.get_context(dataset_key) if (dataset_key and self._datasets) else ""
+            methods_ctx = self._methods.get_context_for_claude(["logistic_regression", "complex_sampling"]) if self._methods else ""
+            return self._generate(sys_p, f"""Write the Methods section.
+STUDY DESIGN: {design}
+POPULATION: {population}
+DATASET: {dataset} (n={sample_size})
+EXPOSURE: {exposure}
+OUTCOME: {outcome}
+COVARIATES: age, sex, socioeconomic status
+{dataset_ctx}
+{methods_ctx}
+Write the full Methods section: Study Design and Population, Variables, Statistical Analysis.""")
+        elif section == "Results":
+            return self.write_results(
+                descriptive_stats=f"n={sample_size}, {dataset}, {design}",
+                main_findings=[results_text] if results_text else ["Not provided"],
+            )
+        elif section == "Discussion":
+            return self.write_discussion(
+                main_findings=[results_text] if results_text else ["Not provided"],
+                comparison_with_literature="Consistent with existing Korean public health literature",
+                mechanisms="Proposed biological and behavioral mechanisms",
+                strengths=[f"Large nationally representative sample ({dataset})", "Standardized methodology"],
+                limitations=["Cross-sectional design limits causal inference", "Self-reported data"],
+                conclusion_message="These findings support targeted public health interventions.",
+            )
+        else:
+            raise ValueError(f"Unknown section: {section}. Use Abstract/Introduction/Methods/Results/Discussion")
+
     def write_full_paper(
         self,
         topic: str,

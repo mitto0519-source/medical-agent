@@ -246,12 +246,11 @@ Required JSON response format:
 
 Write only the JSON object, no markdown fences."""
 
-        resp = self._client.chat(
-            prompt=prompt,
-            system=system,
-            model=model_id,
-            temperature=0.2,
-            max_tokens=2000,
+        resp = self._client.generate(
+            user_message=prompt,
+            system_prompt=system,
+            max_tokens=4000,
+            task="paper_review",
         )
         return resp if isinstance(resp, str) else str(resp)
 
@@ -279,12 +278,11 @@ REVIEWER'S MAJOR CONCERNS TO ADDRESS:
 Write only the revised abstract text."""
 
         try:
-            return self._client.chat(
-                prompt=prompt,
-                system=system,
-                model=model_id,
-                temperature=0.3,
+            return self._client.generate(
+                user_message=prompt,
+                system_prompt=system,
                 max_tokens=600,
+                task="paper_writing",
             )
         except Exception as e:
             _log.warning("Abstract revision failed: %s", e)
@@ -305,8 +303,14 @@ Write only the revised abstract text."""
             # Try to extract JSON block
             match = re.search(r"\{.*\}", raw, re.DOTALL)
             if match:
-                data = json.loads(match.group())
+                try:
+                    data = json.loads(match.group())
+                except json.JSONDecodeError:
+                    # JSON이 잘린 경우: scores만 추출해서 부분 복구
+                    data = self._extract_partial_json(raw)
             else:
+                data = self._extract_partial_json(raw)
+            if data is None:
                 raise ValueError(f"Cannot parse LLM reviewer output: {raw[:200]}")
 
         scores_raw = data.get("scores", {})
@@ -346,6 +350,31 @@ Write only the revised abstract text."""
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
+
+    @staticmethod
+    def _extract_partial_json(raw: str) -> Optional[dict]:
+        """잘린 JSON에서 scores 블록만 정규식으로 추출해 부분 복구."""
+        data: dict = {}
+        # scores 블록 추출
+        scores_match = re.search(r'"scores"\s*:\s*\{([^}]+)\}', raw, re.DOTALL)
+        if scores_match:
+            try:
+                scores_raw = json.loads("{" + scores_match.group(1) + "}")
+                data["scores"] = scores_raw
+            except Exception:
+                # 개별 점수 추출
+                scores_raw = {}
+                for key in ["originality", "methodology", "results_clarity", "clinical_relevance", "writing_quality"]:
+                    m = re.search(rf'"{key}"\s*:\s*(\d+)', raw)
+                    if m:
+                        scores_raw[key] = int(m.group(1))
+                if scores_raw:
+                    data["scores"] = scores_raw
+        # recommendation 추출
+        rec_m = re.search(r'"accept_recommendation"\s*:\s*"([^"]+)"', raw)
+        if rec_m:
+            data["accept_recommendation"] = rec_m.group(1)
+        return data if data else None
 
     @staticmethod
     def _build_system() -> str:

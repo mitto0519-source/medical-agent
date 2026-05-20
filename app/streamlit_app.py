@@ -1510,9 +1510,7 @@ with main_col:
                             from src.library.methods_library import MethodsLibrary
                             from src.library.dataset_library import DatasetLibrary as DL
                             writer = PaperWriter(AuthorProfile("Yoosun Cho"), MethodsLibrary(), DL(), _get_cached_rag_pipeline())
-                            fn = {"Abstract": writer.write_abstract, "Introduction": writer.write_introduction,
-                                  "Methods": writer.write_methods, "Results": writer.write_results, "Discussion": writer.write_discussion}[section]
-                            draft = fn(topic=topic_title, study_info=study_info, results=results)
+                            draft = writer.write_section(section, topic_title, study_info, results)
 
                         st.session_state["draft"] = draft
                         from datetime import datetime
