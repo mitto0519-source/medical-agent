@@ -408,6 +408,7 @@ with st.sidebar:
     _nb("🟢  논문 설계 & 타당성", "논문 설계 & 타당성")
     _nb("🔴  논문 작성", "논문 작성")
     _nb("🔵  신규성 확인", "신규성 확인")
+    _nb("📄  기존 논문 개선", "기존 논문 개선")
     st.markdown('<div class="nav-section">에이전트</div>', unsafe_allow_html=True)
     _nb("○  Agent Q&A", "Agent Q&A")
     _nb("○  Notebook 에디터", "Notebook 에디터")
@@ -1885,7 +1886,264 @@ with main_col:
                     if pr.get("revised_abstract"):
                         with st.expander("개선된 Abstract 보기"):
                             st.text(pr["revised_abstract"])
+
+                # ── 실 리뷰어 피드백 저장 (붙여넣기) ────────────────────────
+                st.divider()
+                st.markdown("#### 📋 실제 리뷰어 피드백 저장")
+                st.caption("받은 리뷰어 코멘트를 붙여넣으면 다음 논문 작성 시 자동으로 반영됩니다.")
+                with st.expander("리뷰어 피드백 입력", expanded=False):
+                    fb_journal = st.text_input(
+                        "저널명 (선택)",
+                        value=st.session_state.get("journal_id_sel", ""),
+                        key="fb_journal",
+                        placeholder="예: JKMS, IJERPH, BMJ Open",
+                    )
+                    fb_decision = st.selectbox(
+                        "심사 결과",
+                        ["", "major_revision", "minor_revision", "reject", "accept"],
+                        key="fb_decision",
+                    )
+                    fb_keywords = st.text_input(
+                        "연구 키워드 (쉼표 구분)",
+                        value=", ".join([
+                            st.session_state.get("exposure_sel", ""),
+                            st.session_state.get("outcome_sel", ""),
+                        ]).strip(", "),
+                        key="fb_keywords",
+                        placeholder="예: smoking, obesity, adolescents, KYRBS",
+                    )
+                    fb_title = st.text_input(
+                        "논문 제목 (선택)",
+                        value=st.session_state.get("topic_title", ""),
+                        key="fb_title",
+                    )
+                    fb_text = st.text_area(
+                        "리뷰어 코멘트 (전문 붙여넣기)",
+                        height=200,
+                        key="fb_text",
+                        placeholder="Reviewer 1:\n...\n\nReviewer 2:\n...",
+                    )
+                    if st.button("💾 피드백 저장", key="save_feedback_btn"):
+                        if fb_text.strip():
+                            try:
+                                from src.memory.user_feedback_store import add_feedback
+                                fid = add_feedback(
+                                    feedback_text=fb_text,
+                                    journal=fb_journal,
+                                    topic_keywords=fb_keywords,
+                                    paper_title=fb_title,
+                                    decision=fb_decision,
+                                )
+                                st.success(f"피드백 저장 완료 (ID: {fid}). 다음 논문 작성 시 자동 반영됩니다.")
+                            except Exception as _fb_e:
+                                st.error(f"저장 오류: {_fb_e}")
+                        else:
+                            st.warning("리뷰어 코멘트를 입력해주세요.")
+
+                    # 저장된 피드백 목록
+                    try:
+                        from src.memory.user_feedback_store import FeedbackStore
+                        _all_fb = FeedbackStore().list_all()
+                        if _all_fb:
+                            st.markdown(f"**저장된 피드백: {len(_all_fb)}건**")
+                            for _fb in reversed(_all_fb[-5:]):
+                                _j = f"[{_fb.get('journal', '?')}]" if _fb.get("journal") else ""
+                                _dec = f" ({_fb.get('decision', '')})" if _fb.get("decision") else ""
+                                _preview = _fb.get("feedback_text", "")[:80].replace("\n", " ")
+                                st.caption(f"• {_j}{_dec} {_preview}...")
+                    except Exception:
+                        pass
+
         _show_history("논문 작성")
+
+    # ── 기존 논문 개선 ────────────────────────────────────────────────
+    elif page == "기존 논문 개선":
+        st.markdown("<h2 style='color:#e6edf3;'>📄 기존 논문 개선</h2>", unsafe_allow_html=True)
+        st.info(
+            "작성 중이거나 이전에 저장한 논문 파일(DOCX/PDF/TXT)을 업로드하면 "
+            "섹션 파싱 → 개선 도구 연결 → 세션 저장까지 자동으로 처리합니다."
+        )
+
+        uploaded = st.file_uploader(
+            "논문 파일 업로드",
+            type=["txt", "docx", "pdf", "md"],
+            key="improve_upload",
+            help="Word(.docx), PDF, 텍스트 파일 모두 지원",
+        )
+
+        if uploaded is not None:
+            with st.spinner("논문 파싱 중..."):
+                try:
+                    from src.ingestion.paper_ingester import PaperIngester
+                    ingester = PaperIngester()
+                    paper = ingester.ingest_bytes(uploaded.getvalue(), uploaded.name)
+                    st.session_state["improve_paper"] = paper
+                    st.success(
+                        f"파싱 완료: **{paper.file_name}** "
+                        f"({paper.char_count:,}자, 섹션 {len(paper.sections)}개 인식)"
+                    )
+                except Exception as _pe:
+                    st.error(f"파싱 오류: {_pe}")
+
+        paper = st.session_state.get("improve_paper")
+        if paper is None:
+            st.markdown("---")
+            st.caption("파일을 업로드하거나, 아래에서 세션에 저장된 초안을 불러오세요.")
+            if st.session_state.get("draft"):
+                if st.button("현재 세션 초안 불러오기", key="load_session_draft"):
+                    from src.ingestion.paper_ingester import IngestedPaper, _split_into_sections
+                    raw = st.session_state["draft"]
+                    secs = _split_into_sections(raw)
+                    st.session_state["improve_paper"] = IngestedPaper(
+                        raw_text=raw, sections=secs,
+                        title=st.session_state.get("topic_title", ""),
+                        file_name="session_draft.txt",
+                        char_count=len(raw),
+                    )
+                    st.rerun()
+        else:
+            # 메타정보 표시
+            c1, c2, c3 = st.columns(3)
+            c1.metric("파일", paper.file_name)
+            c2.metric("섹션 수", len(paper.sections))
+            c3.metric("글자 수", f"{paper.char_count:,}")
+
+            if paper.title:
+                st.markdown(f"**추출된 제목:** {paper.title}")
+
+            # 섹션 탭으로 표시
+            section_keys = list(paper.sections.keys())
+            if section_keys:
+                tabs = st.tabs([k.upper() for k in section_keys] + ["전문"])
+                for i, key in enumerate(section_keys):
+                    with tabs[i]:
+                        edited = st.text_area(
+                            f"{key.upper()} 편집",
+                            value=paper.sections[key],
+                            height=300,
+                            key=f"improve_sec_{key}",
+                        )
+                        paper.sections[key] = edited
+                with tabs[-1]:
+                    st.text_area("전문", value=paper.to_draft_string(), height=400, key="improve_full", disabled=True)
+            else:
+                edited_full = st.text_area("전문 (섹션 자동 분리 실패)", value=paper.raw_text, height=400, key="improve_raw")
+                paper.raw_text = edited_full
+
+            st.divider()
+            st.markdown("#### 🛠 개선 도구 선택")
+            tool_cols = st.columns(4)
+
+            # 1. 동료 심사
+            with tool_cols[0]:
+                if st.button("👥 동료 심사", key="improve_pr", use_container_width=True):
+                    with st.spinner("동료 심사 중..."):
+                        try:
+                            from src.research.research_pipeline import ResearchPipeline
+                            _rp = ResearchPipeline()
+                            _topic = {"title": paper.title or "Uploaded Paper",
+                                      "exposure": "", "outcome": "", "population": ""}
+                            _pr = _rp.run_peer_review(paper.to_draft_string(), _topic)
+                            st.session_state["improve_peer_review"] = _pr
+                        except Exception as _e:
+                            st.error(f"동료 심사 오류: {_e}")
+
+            # 2. 신규성 확인
+            with tool_cols[1]:
+                if st.button("🔍 신규성 확인", key="improve_nov", use_container_width=True):
+                    with st.spinner("PubMed 신규성 확인 중..."):
+                        try:
+                            from src.research.novelty_checker import NoveltyChecker
+                            _nov = NoveltyChecker().check(topic=paper.title or paper.raw_text[:200])
+                            st.session_state["improve_novelty"] = _nov
+                        except Exception as _e:
+                            st.error(f"신규성 확인 오류: {_e}")
+
+            # 3. 저널 DOCX 내보내기
+            with tool_cols[2]:
+                _imp_journal = st.text_input(
+                    "저널 ID", value="jkms", key="improve_journal_id",
+                    placeholder="jkms / ijerph / bmj_open", label_visibility="collapsed"
+                )
+                if st.button("📄 DOCX 내보내기", key="improve_docx", use_container_width=True):
+                    with st.spinner("DOCX 생성 중..."):
+                        try:
+                            from src.export.journal_docx_exporter import JournalDocxExporter
+                            _exp = JournalDocxExporter(_imp_journal)
+                            _out = str(Path("data/drafts") / f"{Path(paper.file_name).stem}_{_imp_journal}.docx")
+                            _exp.export(
+                                title=paper.title or "Uploaded Paper",
+                                sections=paper.sections,
+                                output_path=_out,
+                            )
+                            st.success(f"DOCX 저장: {_out}")
+                            with open(_out, "rb") as _f:
+                                st.download_button("⬇ DOCX 다운로드", _f.read(),
+                                                   file_name=Path(_out).name,
+                                                   mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                                   key="improve_docx_dl")
+                        except Exception as _e:
+                            st.error(f"DOCX 내보내기 오류: {_e}")
+
+            # 4. 세션 초안에 저장
+            with tool_cols[3]:
+                if st.button("💾 세션 초안으로 저장", key="improve_to_draft", use_container_width=True):
+                    st.session_state["draft"] = paper.to_draft_string()
+                    st.session_state["topic_title"] = paper.title or "Uploaded Paper"
+                    st.success("세션 초안에 저장됨. '논문 작성' 탭에서 이어서 작업 가능.")
+
+            # 동료 심사 결과 표시
+            _ipr = st.session_state.get("improve_peer_review")
+            if _ipr:
+                st.divider()
+                st.markdown("#### 동료 심사 결과")
+                _ic1, _ic2, _ic3 = st.columns(3)
+                _ic1.metric("종합 점수", f"{_ipr.get('total_score', 0)}/100")
+                _ic2.metric("등급", _ipr.get("grade", "-"))
+                _ic3.metric("권고", _ipr.get("accept_recommendation", "-"))
+                if _ipr.get("major_concerns"):
+                    st.markdown("**주요 지적사항**")
+                    for _c in _ipr["major_concerns"]:
+                        st.markdown(f"- {_c}")
+
+                # 섹션별 재작성
+                st.markdown("#### ✏️ 섹션 재작성")
+                _rsec = st.selectbox("재작성할 섹션", list(paper.sections.keys()) or ["introduction"], key="improve_rsec")
+                _rgoal = st.text_input("재작성 목표", key="improve_rgoal",
+                                       placeholder="예: 방법론 한계점 추가, 문헌 비교 보강")
+                if st.button("섹션 재작성 실행", key="improve_rewrite"):
+                    with st.spinner(f"{_rsec} 재작성 중..."):
+                        try:
+                            from src.llm import get_llm_client
+                            _llm = get_llm_client()
+                            _orig = paper.sections.get(_rsec, "")
+                            _prompt = (
+                                f"Rewrite the following {_rsec.upper()} section of a medical research paper.\n"
+                                f"Goal: {_rgoal}\n\n"
+                                f"ORIGINAL:\n{_orig[:3000]}\n\n"
+                                f"Write only the improved section text. Keep all statistics intact."
+                            )
+                            _new = _llm.generate(_prompt, task="paper_writing", max_tokens=2000)
+                            _ic1b, _ic2b = st.columns(2)
+                            with _ic1b:
+                                st.markdown("**원본**")
+                                st.text_area("", _orig[:1500], height=300, disabled=True, key="imp_orig")
+                            with _ic2b:
+                                st.markdown("**재작성**")
+                                st.text_area("", _new[:1500], height=300, key="imp_new")
+                            if st.button("재작성본 적용", key="imp_apply"):
+                                paper.sections[_rsec] = _new
+                                st.success("적용됨.")
+                        except Exception as _e:
+                            st.error(f"재작성 오류: {_e}")
+
+            # 신규성 결과 표시
+            _inov = st.session_state.get("improve_novelty")
+            if _inov:
+                st.divider()
+                st.markdown("#### 신규성 확인 결과")
+                st.metric("신규성 점수", f"{_inov.get('novelty_score', 0)}/10")
+                st.write(_inov.get("verdict", ""))
 
     # ── Agent Q&A ─────────────────────────────────────────────────────
     elif page == "Agent Q&A":

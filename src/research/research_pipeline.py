@@ -821,6 +821,15 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
             f"{topic.get('outcome', '')} "
             f"{topic.get('population', '')}"
         )
+
+        # PMC 오픈액세스 전문 자동 다운로드 + RAG 인덱싱
+        try:
+            from src.ingestion.pmc_downloader import download_pmc_for_topic
+            _pmc_count = download_pmc_for_topic(query, max_papers=6)
+            _log.info("PMC 전문 %d편 준비 완료", _pmc_count)
+        except Exception as _pmc_err:
+            _log.debug("PMC 자동 다운로드 실패(비치명): %s", _pmc_err)
+
         if use_rag_references:
             reference_context, ref_lib = self._build_reference_context(query)
         self.last_ref_lib = ref_lib  # DOCX export에서 접근 가능하도록 보관
@@ -836,6 +845,20 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
         except Exception as _sms_err:
             _log.debug("SemanticMemorySearch 실패: %s", _sms_err)
 
+        # 실 리뷰어 피드백 컨텍스트 빌드 (저장된 피드백 있으면 자동 주입)
+        feedback_context = None
+        try:
+            from src.memory.user_feedback_store import get_feedback_context
+            _fb_ctx = get_feedback_context(
+                query=query,
+                journal=study_info.get("journal", ""),
+            )
+            if _fb_ctx:
+                feedback_context = _fb_ctx
+                _log.info("리뷰어 피드백 컨텍스트 주입 완료 (%d자)", len(_fb_ctx))
+        except Exception as _fb_err:
+            _log.debug("FeedbackStore 조회 실패(비치명): %s", _fb_err)
+
         _log.info("통계 주입 논문 작성 시작: %s", topic.get("title", "")[:60])
         draft = self.writer.write_full_paper_with_stats(
             topic=topic.get("title", "Untitled"),
@@ -843,6 +866,7 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
             stat_result=stat_result,
             reference_context=reference_context,
             ref_lib=ref_lib,
+            feedback_context=feedback_context,
         )
 
         # G3: 인라인 인용 [n] 자동 삽입

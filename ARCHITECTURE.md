@@ -6,7 +6,7 @@
 > **규칙**: 새 모듈을 만들기 전에 반드시 이 파일을 확인한다.
 > 모듈을 추가/변경/삭제할 때마다 이 파일을 업데이트한다.
 >
-> Last updated: 2026-05-19 (status check + zombie cleanup)
+> Last updated: 2026-05-21 (FeedbackStore + PMCDownloader + PaperIngester + 개선 모드 UI)
 
 ---
 
@@ -70,6 +70,7 @@
 | 연속성 관리 | `src/memory/continuity.py` | ✅ active | |
 | 의미론적 기억 검색 | `src/memory/semantic_search.py` | ✅ active | insights.json + 이력 키워드 유사도 검색 → LLM 프롬프트 주입 |
 | **역량 자기평가 벤치마크 (Phase C)** | `src/diagnostics/capability_bench.py` → `CapabilityBench` | ✅ active | 논문 완성 후 7개 차원 자동 평가. 약점 → insights.json 누적 → 프롬프트 자동 반영 |
+| **실 리뷰어 피드백 저장소** | `src/memory/user_feedback_store.py` → `FeedbackStore` | ✅ active | 실제 저널 리뷰어 코멘트 누적. 키워드 오버랩 검색 → `build_context()`/`get_reviewer_patterns()`. `_build_system()` + paper_writer에 자동 주입. data/feedback/feedback_store.json |
 | 페르소나 | `src/agent/persona.py` + `data/agent_self/persona.json` | ✅ active | 절대 비활성화 금지 |
 
 ### 6. RAG / 지식 베이스
@@ -85,6 +86,8 @@
 | 문서 청킹/인제스트 | `src/ingestion/document_reader.py`, `chunker.py` | ✅ active | |
 | **멀티에이전트 병렬 풀 (Phase B)** | `src/agent/agent_pool.py` → `AgentPool` | ✅ active | StatAgent/LitAgent/WritingAgent/ReviewAgent 병렬 실행. ThreadPoolExecutor 기반. 3~5배 속도 향상 |
 | PubMed 검색 | `src/ingestion/evidence_reader.py` | ✅ active | novelty_checker가 호출 |
+| **PMC 오픈액세스 전문 다운로더** | `src/ingestion/pmc_downloader.py` → `PMCDownloader` | ✅ active | PMC 오픈액세스 논문 전문 XML 다운로드 → data/pmc_papers/ 캐시 → RAGPipeline.ingest_file() 자동 인덱싱. write_paper_with_stats() 호출 전 자동 실행. |
+| **기존 논문 파서 (개선 모드)** | `src/ingestion/paper_ingester.py` → `PaperIngester` | ✅ active | DOCX/PDF/TXT 파싱 → IMRAD 섹션 분리 → IngestedPaper. Streamlit "기존 논문 개선" 페이지에서 사용. data/drafts/uploaded/ 캐시. |
 
 ### 7. 클라우드 / 인프라
 
@@ -98,7 +101,7 @@
 
 | 기능 | 정규 모듈 | 상태 | 비고 |
 |------|----------|------|------|
-| 메인 Streamlit 앱 | `app/streamlit_app.py` | ✅ active | 진입점. Before/After 수정 비교 UI + 그림 갤러리 포함 |
+| 메인 Streamlit 앱 | `app/streamlit_app.py` | ✅ active | 진입점. Before/After 수정 비교 UI + 그림 갤러리 + 리뷰어 피드백 저장 + 기존 논문 개선 모드 포함 |
 | AI 패널 | `app/ai_panel.py` | ✅ active | |
 | 워크플로우 페이지 | `app/pages/workflow.py` | ✅ active | ResearchWorkflow 사용 |
 | 시각화 | `src/visualization/medical_plots.py` → `MedicalVisualizer` | ✅ active | |
