@@ -395,7 +395,7 @@ Write the full Methods section: Study Design and Population, Variables, Statisti
         covariates = study_info.get("covariates", "sex, age, grade, family_econ, academic_perf, BMI, depression, physical activity")
 
         # ── Step 1: Introduction (참고문헌 컨텍스트 활용, 독립 생성) ─────────
-        print("[PaperWriter] Introduction 작성 중...")
+        _log.info("[PaperWriter] Introduction 작성 중...")
         sections["introduction"] = self._generate(sys_p, f"""Write the Introduction section for this medical research paper.
 
 TOPIC: {topic}
@@ -408,7 +408,7 @@ Structure: broad public health context → specific problem → knowledge gap �
 Keep strictly to this topic. Do NOT refer to unrelated studies. Write 4–5 paragraphs.""")
 
         # ── Step 2: Methods (데이터셋/통계 컨텍스트 활용) ─────────────────────
-        print("[PaperWriter] Methods 작성 중...")
+        _log.info("[PaperWriter] Methods 작성 중...")
         sections["methods"] = self._generate(sys_p, f"""Write the Methods section for this medical research paper.
 
 TOPIC: {topic}
@@ -425,7 +425,7 @@ Write subsections: Study Design and Population / Exposure / Outcome / Covariates
 Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""")
 
         # ── Step 3: Results (Methods 핵심 내용 전달 → 일관성 확보) ──────────
-        print("[PaperWriter] Results 작성 중...")
+        _log.info("[PaperWriter] Results 작성 중...")
         methods_snippet = sections["methods"][:600]
         sections["results"] = self._generate(sys_p, f"""Write the Results section for this medical research paper.
 
@@ -447,7 +447,7 @@ Write in this author's exact numeric reporting style (aOR, 95% CI, P values).
 Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""")
 
         # ── Step 4: Discussion (Results 텍스트 직접 참조 → 내용 일치 보장) ──
-        print("[PaperWriter] Discussion 작성 중...")
+        _log.info("[PaperWriter] Discussion 작성 중...")
         results_snippet = sections["results"][:800]
         sections["discussion"] = self._generate(sys_p, f"""Write the Discussion section for this medical research paper.
 
@@ -469,7 +469,7 @@ Write in this author's hedging style. Structure:
 3) Proposed mechanisms  4) Strengths and limitations  5) Public health conclusion""")
 
         # ── Step 5: Abstract 마지막 생성 (전 섹션 기반 → 가장 정확) ─────────
-        print("[PaperWriter] Abstract 작성 중 (전 섹션 통합)...")
+        _log.info("[PaperWriter] Abstract 작성 중 (전 섹션 통합)...")
         sections["abstract"] = self._generate(sys_p, f"""Write a structured abstract for this medical research paper.
 Word limit: 300 words. Format: Background / Objective / Methods / Results / Conclusion.
 

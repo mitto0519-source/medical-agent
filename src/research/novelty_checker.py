@@ -6,7 +6,9 @@ from typing import Dict, List, Tuple
 import requests
 import os
 from src.llm import get_llm_client
+from src.config.logging_config import get_logger
 
+_log = get_logger(__name__)
 
 BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 
@@ -330,7 +332,7 @@ class NoveltyChecker:
         query = f'("{exposure}"[Title/Abstract]) AND ("{outcome}"[Title/Abstract])'
         if population:
             query += f' AND ("{population}"[Title/Abstract])'
-        print(f"  PubMed 검색: {query[:80]}...")
+        _log.info("PubMed 검색: %s...", query[:80])
         pmids = _pubmed_search(query, max_results=20)
         time.sleep(0.35)
 

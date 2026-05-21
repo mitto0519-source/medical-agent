@@ -43,7 +43,7 @@
 | 신규성 확인 (PubMed) | `src/research/novelty_checker.py` → `NoveltyChecker` | ✅ active | pipeline이 내부적으로 호출 |
 | 동료 심사 | `src/research/peer_reviewer.py` → `PeerReviewer` | ✅ active | pipeline이 내부적으로 호출 |
 | 연구 프로젝트 관리 | `src/research/project_manager.py` → `ProjectManager` | ✅ active | data/projects/ 영속 추적, 단계별 상태+파일 경로 관리 |
-| **자율 연구 루프 (Phase A)** | `src/research/autonomous_research_loop.py` → `AutonomousResearchLoop` | ✅ active | Google Deep Research 수준. 5라운드 반복 PubMed탐색+가설수정 |
+| **자율 연구 루프 (Phase A)** | `src/research/autonomous_research_loop.py` → `AutonomousResearchLoop` | ✅ active | Google Deep Research 수준. 반복 PubMed탐색+가설수정. **write_paper_with_stats(deep_research=True)로 연결** — 주제 유지(통계 일관성) + 근거만 reference_context에 보강 |
 
 > **research_pipeline vs research_workflow 구분**:
 > - `research_pipeline` = 완전 자동화 백엔드 파이프라인 (코드로 직접 실행)
@@ -69,7 +69,7 @@
 | 세션 간 대화 맥락 | `src/memory/conversation_memory.py` | ✅ active | |
 | 연속성 관리 | `src/memory/continuity.py` | ✅ active | |
 | 의미론적 기억 검색 | `src/memory/semantic_search.py` | ✅ active | insights.json + 이력 키워드 유사도 검색 → LLM 프롬프트 주입 |
-| **역량 자기평가 벤치마크 (Phase C)** | `src/diagnostics/capability_bench.py` → `CapabilityBench` | ✅ active | 논문 완성 후 7개 차원 자동 평가. 약점 → insights.json 누적 → 프롬프트 자동 반영 |
+| **역량 자기평가 벤치마크 (Phase C)** | `src/diagnostics/capability_bench.py` → `CapabilityBench` | ✅ active | 논문 완성 후 7개 차원 자동 평가. 약점 → capability_insights.json 누적. **루프 닫힘**: `get_improvement_context()` → `_build_system()` 주입으로 다음 작성에 자동 반영 |
 | **실 리뷰어 피드백 저장소** | `src/memory/user_feedback_store.py` → `FeedbackStore` | ✅ active | 실제 저널 리뷰어 코멘트 누적. 키워드 오버랩 검색 → `build_context()`/`get_reviewer_patterns()`. `_build_system()` + paper_writer에 자동 주입. data/feedback/feedback_store.json |
 | 페르소나 | `src/agent/persona.py` + `data/agent_self/persona.json` | ✅ active | 절대 비활성화 금지 |
 
@@ -84,7 +84,7 @@
 | 지식 그래프 | `src/knowledge/medical_graph.py` | ✅ active | 10,005 노드 |
 | 의학 온톨로지 | `src/knowledge/medical_ontology.py` | ✅ active | |
 | 문서 청킹/인제스트 | `src/ingestion/document_reader.py`, `chunker.py` | ✅ active | |
-| **멀티에이전트 병렬 풀 (Phase B)** | `src/agent/agent_pool.py` → `AgentPool` | ✅ active | StatAgent/LitAgent/WritingAgent/ReviewAgent 병렬 실행. ThreadPoolExecutor 기반. 3~5배 속도 향상 |
+| **멀티에이전트 병렬 풀 (Phase B)** | `src/agent/agent_pool.py` → `AgentPool` | ✅ active | StatAgent/LitAgent/WritingAgent/ReviewAgent. ThreadPoolExecutor 기반. **write_paper_with_stats(parallel=True)로 연결** — _parallel_pre_collect()가 PMC다운로드(I/O)+신규성(LLM) 동시 실행 |
 | PubMed 검색 | `src/ingestion/evidence_reader.py` | ✅ active | novelty_checker가 호출 |
 | **PMC 오픈액세스 전문 다운로더** | `src/ingestion/pmc_downloader.py` → `PMCDownloader` | ✅ active | PMC 오픈액세스 논문 전문 XML 다운로드 → data/pmc_papers/ 캐시 → RAGPipeline.ingest_file() 자동 인덱싱. write_paper_with_stats() 호출 전 자동 실행. |
 | **기존 논문 파서 (개선 모드)** | `src/ingestion/paper_ingester.py` → `PaperIngester` | ✅ active | DOCX/PDF/TXT 파싱 → IMRAD 섹션 분리 → IngestedPaper. Streamlit "기존 논문 개선" 페이지에서 사용. data/drafts/uploaded/ 캐시. |

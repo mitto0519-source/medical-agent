@@ -5,6 +5,10 @@ import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
+from src.config.logging_config import get_logger
+
+_log = get_logger(__name__)
+
 
 class PDFReader:
     """Extract text and metadata from PDF files"""
@@ -69,6 +73,6 @@ class PDFReader:
             try:
                 results.append(self.read(str(pdf_file)))
             except Exception as exc:
-                print(f"[PDFReader] Skipping {pdf_file.name}: {exc}")
+                _log.warning("[PDFReader] Skipping %s: %s", pdf_file.name, exc)
 
         return results

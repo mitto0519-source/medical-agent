@@ -1,0 +1,13 @@
+{
+  "capability_weaknesses": [
+    {
+      "timestamp": "2026-05-21T23:44:04.469986",
+      "overall_score": 70.5,
+      "weak_areas": [
+        "신규성정렬"
+      ],
+      "improvement_notes": "연구 주제와 기여 차별성 강조 섹션 보강"
+    }
+  ],
+  "latest_bench_score": 70.5
+}

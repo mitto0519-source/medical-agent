@@ -719,6 +719,23 @@ with main_col:
             auto_journal = st.text_input("목표 저널", value="J Korean Med Sci", key="auto_journal")
             auto_docx = st.checkbox("DOCX 저장", value=True, key="auto_docx")
 
+        adv_col1, adv_col2, adv_col3 = st.columns(3)
+        with adv_col1:
+            auto_deep = st.checkbox(
+                "🔬 Deep Research", value=False, key="auto_deep",
+                help="자율 반복 PubMed 탐색으로 근거 보강 (Phase A, 추가 ~2분)",
+            )
+        with adv_col2:
+            auto_parallel = st.checkbox(
+                "⚡ 병렬 처리", value=True, key="auto_parallel",
+                help="PMC 다운로드 + 신규성 확인 동시 실행 (Phase B)",
+            )
+        with adv_col3:
+            auto_revise_full = st.checkbox(
+                "🔄 자동 재작성", value=False, key="auto_revise_full",
+                help="동료 심사 후 약점 섹션 자동 재작성 (추가 ~1분)",
+            )
+
         if st.button("전체 자동 실행 (주제→통계→논문→동료심사)", type="primary", key="auto_run_full"):
             if not auto_focus:
                 st.error("연구 포커스를 입력하세요.")
@@ -735,6 +752,9 @@ with main_col:
                             study_info_template={"journal": auto_journal},
                             df=raw_df_available,
                             export_docx=auto_docx,
+                            deep_research=auto_deep,
+                            parallel=auto_parallel,
+                            auto_revise=auto_revise_full,
                         )
                         st.session_state["draft"] = full_result["draft"]
                         st.session_state["peer_review"] = full_result["review"]
@@ -1506,6 +1526,18 @@ with main_col:
                 help="동료 심사 점수 70점 미만 섹션을 자동으로 재작성합니다 (추가 ~1분)",
             )
 
+        pw_adv1, pw_adv2 = st.columns(2)
+        with pw_adv1:
+            pw_deep = st.checkbox(
+                "🔬 Deep Research (자율 탐색)", value=False, key="pw_deep",
+                help="자율 반복 PubMed 탐색으로 근거 보강 (Phase A, 추가 ~2분)",
+            )
+        with pw_adv2:
+            pw_parallel = st.checkbox(
+                "⚡ 병렬 처리", value=True, key="pw_parallel",
+                help="PMC 다운로드 + 신규성 확인 동시 실행 (Phase B)",
+            )
+
         if st.button("✍️ 논문 작성 시작", type="primary"):
             if not topic_title or not results_text:
                 st.error("연구 제목과 주요 결과를 입력하세요.")
@@ -1522,7 +1554,8 @@ with main_col:
                             draft, docx_path = rp.write_paper_with_stats(
                                 topic, study_info, stat_result_for_paper,
                                 export_docx=export_docx, journal_id=journal_id,
-                                auto_revise=auto_revise
+                                auto_revise=auto_revise,
+                                deep_research=pw_deep, parallel=pw_parallel,
                             )
                             if docx_path:
                                 st.session_state["draft_docx_path"] = docx_path

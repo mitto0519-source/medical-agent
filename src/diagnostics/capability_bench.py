@@ -29,7 +29,7 @@ from src.llm import get_llm_client
 _log = get_logger(__name__)
 
 _BENCH_HISTORY_PATH = Path("data/diagnostics/capability_bench_history.json")
-_CAP_CAP_INSIGHTS_PATH = Path("data/diagnostics/capability_insights.json")  # CapabilityBench 전용 (agent_insight와 충돌 방지)
+_CAP_INSIGHTS_PATH = Path("data/diagnostics/capability_insights.json")  # CapabilityBench 전용 (agent_insight와 충돌 방지)
 
 
 @dataclass
@@ -291,22 +291,47 @@ Return only a number between 0 and 100. No explanation."""
         return [area for area, _ in Counter(all_areas).most_common(3)]
 
     def build_improvement_context(self) -> str:
-        """insights.json의 약점 이력을 LLM 프롬프트 컨텍스트로 변환."""
-        try:
-            if not _CAP_INSIGHTS_PATH.exists():
-                return ""
-            insights = json.loads(_CAP_INSIGHTS_PATH.read_text(encoding="utf-8"))
-            weaknesses = insights.get("capability_weaknesses", [])
-            if not weaknesses:
-                return ""
-            recent = weaknesses[-3:]
-            lines = ["[자가역량개선 컨텍스트]"]
-            for w in recent:
-                if w.get("weak_areas"):
-                    lines.append(f"- 약점: {', '.join(w['weak_areas'])} | {w.get('improvement_notes', '')}")
-            return "\n".join(lines)
-        except Exception:
+        """insights.json의 약점 이력을 LLM 프롬프트 컨텍스트로 변환.
+
+        인스턴스 메서드는 모듈 함수에 위임 (LLM 클라이언트 생성 없이 가볍게 호출 가능).
+        """
+        return get_improvement_context()
+
+
+def get_improvement_context() -> str:
+    """약점 이력 → LLM 프롬프트 컨텍스트 (LLM 클라이언트 생성 없는 경량 함수).
+
+    `_build_system()`이 매 호출마다 부르므로 파일 읽기만 수행한다.
+    Phase C 자기개선 루프를 닫는 핵심 연결점.
+    """
+    try:
+        if not _CAP_INSIGHTS_PATH.exists():
             return ""
+        insights = json.loads(_CAP_INSIGHTS_PATH.read_text(encoding="utf-8"))
+        weaknesses = insights.get("capability_weaknesses", [])
+        if not weaknesses:
+            return ""
+        recent = weaknesses[-3:]
+        # 최근 3회 약점 빈도 집계 → 반복되는 약점 강조
+        from collections import Counter
+        area_counter = Counter()
+        for w in recent:
+            for a in (w.get("weak_areas") or []):
+                area_counter[a] += 1
+        if not area_counter:
+            return ""
+        top_weak = ", ".join(f"{a}(×{c})" for a, c in area_counter.most_common(3))
+        lines = [
+            "SELF-IMPROVEMENT FROM PAST BENCHMARKS (proactively strengthen these weak areas):",
+            f"- 반복 약점: {top_weak}",
+        ]
+        for w in recent:
+            note = w.get("improvement_notes", "")
+            if note:
+                lines.append(f"- {note[:200]}")
+        return "\n".join(lines)
+    except Exception:
+        return ""
 
 
 def run_capability_bench(
