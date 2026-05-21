@@ -564,9 +564,10 @@ Return JSON only."""
         rag_text = ""
 
         # 1. 로컬 RAG 인덱스에서 텍스트 조각 수집
+        #    PMC 전문이 인덱싱되어 있으므로 충분히 활용하도록 8개까지 수집
         try:
             hits = self.rag.ask(query)
-            rag_sources = hits.get("sources", [])[:3]
+            rag_sources = hits.get("sources", [])[:8]
             if rag_sources:
                 rag_text = "\n\n".join(h["text"] for h in rag_sources)
         except Exception as e:
@@ -794,6 +795,74 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
         )
         return result.to_dict()
 
+    # ── Phase A/B 통합 헬퍼 ──────────────────────────────────────────────────
+
+    def _run_deep_research(self, topic: Dict) -> str:
+        """Phase A — AutonomousResearchLoop로 자율 반복 탐색. 근거 컨텍스트 문자열 반환.
+
+        주제(topic)는 변경하지 않고(통계 일관성 유지), 모은 증거만 반환한다.
+        """
+        try:
+            from src.research.autonomous_research_loop import AutonomousResearchLoop
+            _refined, evidence_list, dr_novelty = AutonomousResearchLoop(
+                max_rounds=3, novelty_threshold=7.0,
+            ).run(topic)
+            if not evidence_list:
+                return ""
+            # 중복 제거 (pmid 기준)
+            seen, uniq = set(), []
+            for p in evidence_list:
+                pid = p.get("pmid", "") or p.get("title", "")
+                if pid and pid not in seen:
+                    seen.add(pid)
+                    uniq.append(p)
+            ev_lines = [
+                f"- [{p.get('year', '')}] {p.get('title', '')}: {p.get('abstract', '')[:200]}"
+                for p in uniq[:15]
+            ]
+            self.last_deep_novelty = dr_novelty  # UI/로깅용
+            _log.info("[deep_research] 고유 증거 %d개 수집, novelty=%.1f", len(uniq), dr_novelty)
+            return "AUTONOMOUS RESEARCH EVIDENCE (deep iterative PubMed search):\n" + "\n".join(ev_lines)
+        except Exception as e:
+            _log.warning("[deep_research] 실패(비치명): %s", e)
+            return ""
+
+    def _parallel_pre_collect(self, query: str, topic: Dict) -> None:
+        """Phase B — AgentPool로 PMC 다운로드(I/O) + 신규성 확인(LLM) 동시 실행.
+
+        PMC 전문은 RAG 인덱싱이 목적(부수효과), 신규성 결과는 _novelty_papers에 누적.
+        """
+        try:
+            from src.agent.agent_pool import AgentPool, AgentTask, NoveltyAgent
+            from src.ingestion.pmc_downloader import download_pmc_for_topic
+
+            tasks = [
+                AgentTask(name="pmc", fn=download_pmc_for_topic, args=(query, 6)),
+                AgentTask(name="novelty", fn=NoveltyAgent().run, args=(topic,)),
+            ]
+            results = AgentPool(max_workers=2).run_tasks(tasks)
+
+            pmc_res = results.get("pmc")
+            if pmc_res and pmc_res.ok:
+                _log.info("[parallel] PMC 전문 %s편 준비 (%.1fs)", pmc_res.result, pmc_res.elapsed)
+
+            nov_res = results.get("novelty")
+            if nov_res and nov_res.ok and isinstance(nov_res.result, dict):
+                found = nov_res.result.get("found_papers", [])
+                if found:
+                    if not hasattr(self, "_novelty_papers"):
+                        self._novelty_papers = []
+                    self._novelty_papers = (self._novelty_papers + found)[-30:]
+                _log.info("[parallel] 신규성 %.1f/10 (%.1fs)",
+                          nov_res.result.get("novelty_score", 0), nov_res.elapsed)
+        except Exception as e:
+            _log.warning("[parallel] 병렬 사전수집 실패(비치명) — 순차 폴백: %s", e)
+            try:
+                from src.ingestion.pmc_downloader import download_pmc_for_topic
+                download_pmc_for_topic(query, max_papers=6)
+            except Exception:
+                pass
+
     # ── Step 6c — 통계 주입 논문 작성 + DOCX 저장 ────────────────────────────
 
     def write_paper_with_stats(
@@ -807,11 +876,15 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
         auto_revise: bool = False,
         revise_threshold: int = 70,
         revise_max_iter: int = 2,
+        deep_research: bool = False,
+        parallel: bool = False,
     ) -> tuple[str, str | None]:
         """StatBridge 결과를 주입해 논문 생성 + 저널 스타일 DOCX 저장.
 
         journal_id: 'jkms' | 'kjpm' | 'ijerph' | 'plos_one' | 'bmj_open' | 기타(자동 생성)
         auto_revise: True면 동료 심사 후 score<revise_threshold 섹션 자동 재작성
+        deep_research: True면 AutonomousResearchLoop로 자율 반복 탐색 → 근거 보강 (Phase A)
+        parallel: True면 PMC 다운로드 + 신규성 확인을 AgentPool로 병렬 실행 (Phase B)
         Returns: (paper_text, docx_path_or_None)
         """
         reference_context = None
@@ -822,17 +895,35 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
             f"{topic.get('population', '')}"
         )
 
-        # PMC 오픈액세스 전문 자동 다운로드 + RAG 인덱싱
-        try:
-            from src.ingestion.pmc_downloader import download_pmc_for_topic
-            _pmc_count = download_pmc_for_topic(query, max_papers=6)
-            _log.info("PMC 전문 %d편 준비 완료", _pmc_count)
-        except Exception as _pmc_err:
-            _log.debug("PMC 자동 다운로드 실패(비치명): %s", _pmc_err)
+        # ── Phase A: 자율 연구 루프 (deep_research=True) ─────────────────────
+        # 통계 일관성을 위해 주제(topic)는 유지하고, 자율 탐색으로 모은 근거만 보강
+        deep_evidence_context = ""
+        if deep_research:
+            deep_evidence_context = self._run_deep_research(topic)
+
+        # ── Phase B: 병렬 사전수집 (parallel=True) ───────────────────────────
+        # PMC 전문 다운로드(I/O) + 신규성 확인(LLM)을 AgentPool로 동시 실행
+        if parallel:
+            self._parallel_pre_collect(query, topic)
+        else:
+            # PMC 오픈액세스 전문 자동 다운로드 + RAG 인덱싱 (순차)
+            try:
+                from src.ingestion.pmc_downloader import download_pmc_for_topic
+                _pmc_count = download_pmc_for_topic(query, max_papers=6)
+                _log.info("PMC 전문 %d편 준비 완료", _pmc_count)
+            except Exception as _pmc_err:
+                _log.debug("PMC 자동 다운로드 실패(비치명): %s", _pmc_err)
 
         if use_rag_references:
             reference_context, ref_lib = self._build_reference_context(query)
         self.last_ref_lib = ref_lib  # DOCX export에서 접근 가능하도록 보관
+
+        # Phase A 증거를 reference_context에 보강
+        if deep_evidence_context:
+            reference_context = (
+                (reference_context + "\n\n" + deep_evidence_context)
+                if reference_context else deep_evidence_context
+            )
 
         # P2-2: 의미론적 기억 검색 — 관련 과거 인사이트 컨텍스트 주입
         try:
@@ -1082,10 +1173,16 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
         df=None,
         export_docx: bool = True,
         journal_id: str = "jkms",
+        deep_research: bool = False,
+        parallel: bool = False,
+        auto_revise: bool = False,
     ) -> Dict:
         """완전 자동화 파이프라인: 주제 → 신규성 → 타당성 → 통계 → 논문 → 동료심사.
 
         df: 실제 원시자료 DataFrame (없으면 data/raw/ 자동 탐색).
+        deep_research: Phase A 자율 연구 루프 활성화
+        parallel: Phase B 병렬 사전수집 활성화
+        auto_revise: 동료 심사 후 약점 섹션 자동 재작성
         Returns complete pipeline result with draft + review + stat_result.
         """
         _log.info("Full pipeline 시작: %s / %s", focus, dataset_name)
@@ -1114,7 +1211,8 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
             **si,
         }
         draft, docx_path = self.write_paper_with_stats(
-            topic, study_info, stat_result, export_docx=export_docx, journal_id=journal_id
+            topic, study_info, stat_result, export_docx=export_docx, journal_id=journal_id,
+            deep_research=deep_research, parallel=parallel, auto_revise=auto_revise,
         )
 
         # Step 4: 동료 심사

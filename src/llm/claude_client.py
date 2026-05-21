@@ -244,11 +244,23 @@ class ClaudeClient:
             except Exception:
                 pass
 
-        # 5. 호출별 base_prompt (태스크 특화 지시)
+        # 5. 역량 자기개선 컨텍스트 주입 (Phase C 루프 닫기 — paper_writing에만)
+        improvement_block = ""
+        if task in {"paper_writing", "paper_review"}:
+            try:
+                from src.diagnostics.capability_bench import get_improvement_context
+                imp = get_improvement_context()
+                if imp and len(imp) > 30:
+                    improvement_block = imp
+            except Exception:
+                pass
+
+        # 6. 호출별 base_prompt (태스크 특화 지시)
         base = base_prompt or ""
 
-        # 조합: 페르소나 → seed → 인사이트 → 리뷰어 패턴 → base
-        parts = [p for p in [persona_prompt, preamble, insight_block, reviewer_block, base] if p]
+        # 조합: 페르소나 → seed → 인사이트 → 리뷰어 패턴 → 자기개선 → base
+        parts = [p for p in [persona_prompt, preamble, insight_block,
+                             reviewer_block, improvement_block, base] if p]
         full_base = "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
         if not context_chunks:

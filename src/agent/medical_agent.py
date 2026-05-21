@@ -23,6 +23,9 @@ from src.rag.pipeline import RAGPipeline
 from src.llm import get_llm_client
 from src.agent.memory import AgentMemory
 from src.memory.continuity import ContinuityManager
+from src.config.logging_config import get_logger
+
+_log = get_logger(__name__)
 
 
 class MedicalAgent:
@@ -96,7 +99,7 @@ class MedicalAgent:
         # Auto-summarise newly added papers (skip if already summarised)
         filename = result["filename"]
         if result["chunks_added"] > 0 and not self._memory.get_summary(filename):
-            print(f"[Agent] Summarising '{filename}'...")
+            _log.info("[Agent] Summarising '%s'...", filename)
             summary = self._rag.summarize(filename)
             self._memory.save_summary(filename, summary)
             result["summary"] = summary
@@ -120,7 +123,7 @@ class MedicalAgent:
 
         filename = result["filename"]
         if result["chunks_added"] > 0 and not self._memory.get_summary(filename):
-            print(f"[Agent] Summarising '{result['title']}'...")
+            _log.info("[Agent] Summarising '%s'...", result['title'])
             summary = self._rag.summarize(filename)
             self._memory.save_summary(filename, summary)
             result["summary"] = summary
@@ -143,7 +146,7 @@ class MedicalAgent:
                 result = self.learn(doc["path"])
                 results.append(result)
             except Exception as exc:
-                print(f"[Agent] Failed to learn '{doc['filename']}': {exc}")
+                _log.warning("[Agent] Failed to learn '%s': %s", doc['filename'], exc)
         return results
 
     # ------------------------------------------------------------------
