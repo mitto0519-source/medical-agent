@@ -1,5 +1,6 @@
 """Novelty Checker — PubMed 검색 + 규칙기반 유사도 평가 + LLM 복합 검증"""
 
+import io
 import json
 import time
 from typing import Dict, List, Tuple
@@ -33,6 +34,18 @@ _DATASET_KEYWORDS: Dict[str, List[str]] = {
 # PubMed helpers
 # ──────────────────────────────────────────────────────────────────────
 
+def _normalize_text(value) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value.strip()
+    try:
+        return str(value).strip()
+    except Exception as exc:
+        _log.warning("텍스트 필드 변환 실패: %s", exc, exc_info=True)
+        return ""
+
+
 def _pubmed_request(url: str, params: dict, retries: int = 3) -> requests.Response:
     """PubMed API 요청 — 일시적 오류 시 지수 백오프 재시도."""
     for attempt in range(retries):
@@ -56,31 +69,47 @@ def _pubmed_search(query: str, max_results: int = 30) -> List[str]:
         "db": "pubmed", "term": query,
         "retmax": max_results, "retmode": "json",
     })
-    return resp.json()["esearchresult"]["idlist"]
+    try:
+        return resp.json()["esearchresult"]["idlist"]
+    except Exception as exc:
+        _log.warning("PubMed 검색 결과 파싱 실패: %s", exc, exc_info=True)
+        return []
 
 
 def _fetch_abstracts(pmids: List[str]) -> str:
     if not pmids:
         return ""
-    resp = _pubmed_request(f"{BASE}/efetch.fcgi", {
-        "db": "pubmed", "id": ",".join(pmids),
-        "rettype": "abstract", "retmode": "text",
-    })
-    return resp.text
+    try:
+        resp = _pubmed_request(f"{BASE}/efetch.fcgi", {
+            "db": "pubmed", "id": ",".join(pmids),
+            "rettype": "abstract", "retmode": "text",
+        })
+        return resp.text
+    except Exception as exc:
+        _log.warning("PubMed 초록 조회 실패: %s", exc, exc_info=True)
+        return ""
 
 
 def _fetch_papers_structured(pmids: List[str]) -> List[Dict]:
     """PubMed PMIDs를 구조화된 논문 dict 목록으로 반환."""
     if not pmids:
         return []
-    resp = requests.get(f"{BASE}/efetch.fcgi", params={
-        "db": "pubmed", "id": ",".join(pmids),
-        "rettype": "xml", "retmode": "xml",
-    }, timeout=30)
-    resp.raise_for_status()
+    try:
+        resp = _pubmed_request(f"{BASE}/efetch.fcgi", {
+            "db": "pubmed", "id": ",".join(pmids),
+            "rettype": "xml", "retmode": "xml",
+        })
+    except Exception as exc:
+        _log.warning("PubMed 구조화된 논문 조회 실패: %s", exc, exc_info=True)
+        return []
 
-    import xml.etree.ElementTree as ET
-    root = ET.fromstring(resp.text)
+    try:
+        import xml.etree.ElementTree as ET
+        root = ET.fromstring(resp.text)
+    except Exception as exc:
+        _log.warning("PubMed XML 파싱 실패: %s", exc, exc_info=True)
+        return []
+
     papers = []
     for article in root.findall(".//PubmedArticle"):
         try:
@@ -115,7 +144,8 @@ def _fetch_papers_structured(pmids: List[str]) -> List[Dict]:
                 "pmid": pmid, "title": title, "abstract": abstract,
                 "year": year, "journal": journal, "authors": authors, "doi": doi,
             })
-        except Exception:
+        except Exception as exc:
+            _log.warning("PubMed 논문 파싱 중 하나가 실패했습니다: %s", exc, exc_info=True)
             continue
     return papers
 
@@ -303,8 +333,8 @@ class NoveltyChecker:
     def check(
         self,
         topic: str,
-        exposure: str,
-        outcome: str,
+        exposure: str = "",
+        outcome: str = "",
         population: str = "",
         dataset: str = "KYRBS",
         design: str = "",
@@ -328,17 +358,53 @@ class NoveltyChecker:
           "similar_papers": [titles]
         }
         """
-        # 1. PubMed 검색
-        query = f'("{exposure}"[Title/Abstract]) AND ("{outcome}"[Title/Abstract])'
+        # 1. 입력 타입 확인 및 정규화
+        raw_inputs = {
+            "topic": topic,
+            "exposure": exposure,
+            "outcome": outcome,
+            "population": population,
+            "dataset": dataset,
+            "design": design,
+        }
+        input_types = {k: type(v).__name__ for k, v in raw_inputs.items()}
+        _log.debug("NoveltyChecker.check input types: %s", input_types)
+        if any(isinstance(v, io.IOBase) for v in raw_inputs.values()):
+            _log.warning("NoveltyChecker.check received file-like object in inputs: %s", input_types)
+
+        topic = _normalize_text(topic)
+        exposure = _normalize_text(exposure)
+        outcome = _normalize_text(outcome)
+        population = _normalize_text(population)
+        dataset = _normalize_text(dataset)
+        design = _normalize_text(design)
+
+        query_parts = []
+        if exposure:
+            query_parts.append(f'("{exposure}"[Title/Abstract])')
+        if outcome:
+            query_parts.append(f'("{outcome}"[Title/Abstract])')
         if population:
-            query += f' AND ("{population}"[Title/Abstract])'
+            query_parts.append(f'("{population}"[Title/Abstract])')
+        if not query_parts:
+            query_parts.append(f'("{topic}"[Title/Abstract])')
+
+        query = " AND ".join(query_parts)
         _log.info("PubMed 검색: %s...", query[:80])
-        pmids = _pubmed_search(query, max_results=20)
+        try:
+            pmids = _pubmed_search(query, max_results=20)
+        except Exception as exc:
+            _log.warning("PubMed 검색 중 오류: %s", exc, exc_info=True)
+            pmids = []
         time.sleep(0.35)
 
         papers = []
         if pmids:
-            papers = _fetch_papers_structured(pmids[:15])
+            try:
+                papers = _fetch_papers_structured(pmids[:15])
+            except Exception as exc:
+                _log.warning("PubMed 논문 구조화 실패: %s", exc, exc_info=True)
+                papers = []
             time.sleep(0.35)
 
         # 2. 규칙기반 유사도 매트릭스
