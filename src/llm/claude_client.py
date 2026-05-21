@@ -233,11 +233,22 @@ class ClaudeClient:
             except Exception:
                 pass
 
-        # 4. 호출별 base_prompt (태스크 특화 지시)
+        # 4. 실 리뷰어 피드백 패턴 주입 (paper_writing 태스크에만)
+        reviewer_block = ""
+        if task in {"paper_writing", "paper_review"}:
+            try:
+                from src.memory.user_feedback_store import get_reviewer_patterns
+                patterns = get_reviewer_patterns(top_n=5)
+                if patterns and len(patterns) > 30:
+                    reviewer_block = patterns
+            except Exception:
+                pass
+
+        # 5. 호출별 base_prompt (태스크 특화 지시)
         base = base_prompt or ""
 
-        # 조합: 페르소나 → seed → 인사이트 → base
-        parts = [p for p in [persona_prompt, preamble, insight_block, base] if p]
+        # 조합: 페르소나 → seed → 인사이트 → 리뷰어 패턴 → base
+        parts = [p for p in [persona_prompt, preamble, insight_block, reviewer_block, base] if p]
         full_base = "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
         if not context_chunks:

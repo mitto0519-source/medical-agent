@@ -29,7 +29,7 @@ from src.llm import get_llm_client
 _log = get_logger(__name__)
 
 _BENCH_HISTORY_PATH = Path("data/diagnostics/capability_bench_history.json")
-_INSIGHTS_PATH = Path("data/agent_self/insights.json")
+_CAP_CAP_INSIGHTS_PATH = Path("data/diagnostics/capability_insights.json")  # CapabilityBench 전용 (agent_insight와 충돌 방지)
 
 
 @dataclass
@@ -236,8 +236,8 @@ Return only a number between 0 and 100. No explanation."""
             return
         try:
             insights = {}
-            if _INSIGHTS_PATH.exists():
-                insights = json.loads(_INSIGHTS_PATH.read_text(encoding="utf-8"))
+            if _CAP_INSIGHTS_PATH.exists():
+                insights = json.loads(_CAP_INSIGHTS_PATH.read_text(encoding="utf-8"))
             if "capability_weaknesses" not in insights:
                 insights["capability_weaknesses"] = []
             entry = {
@@ -249,7 +249,7 @@ Return only a number between 0 and 100. No explanation."""
             insights["capability_weaknesses"].append(entry)
             insights["capability_weaknesses"] = insights["capability_weaknesses"][-20:]
             insights["latest_bench_score"] = result.overall
-            _INSIGHTS_PATH.write_text(
+            _CAP_INSIGHTS_PATH.write_text(
                 json.dumps(insights, ensure_ascii=False, indent=2), encoding="utf-8"
             )
             _log.info("[CapabilityBench] insights.json 업데이트 완료")
@@ -293,9 +293,9 @@ Return only a number between 0 and 100. No explanation."""
     def build_improvement_context(self) -> str:
         """insights.json의 약점 이력을 LLM 프롬프트 컨텍스트로 변환."""
         try:
-            if not _INSIGHTS_PATH.exists():
+            if not _CAP_INSIGHTS_PATH.exists():
                 return ""
-            insights = json.loads(_INSIGHTS_PATH.read_text(encoding="utf-8"))
+            insights = json.loads(_CAP_INSIGHTS_PATH.read_text(encoding="utf-8"))
             weaknesses = insights.get("capability_weaknesses", [])
             if not weaknesses:
                 return ""

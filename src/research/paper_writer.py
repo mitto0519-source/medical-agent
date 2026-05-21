@@ -353,6 +353,7 @@ Write the full Methods section: Study Design and Population, Variables, Statisti
         results: Dict,
         reference_context: Optional[str] = None,
         ref_lib=None,
+        feedback_context: Optional[str] = None,
     ) -> str:
         """전체 논문 초안 한번에 생성.
 
@@ -385,6 +386,7 @@ Write the full Methods section: Study Design and Population, Variables, Statisti
 
         sections = {}
         ref_block = f"\n\nREFERENCE CONTEXT FROM LITERATURE:\n{reference_context}" if reference_context else ""
+        feedback_block = f"\n\nPAST REVIEWER LESSONS (apply to avoid known pitfalls):\n{feedback_context}" if feedback_context else ""
         sys_p = self._profile.get_system_prompt()
         dataset_ctx = self._datasets.get_context(dataset_key) if (dataset_key and self._datasets) else ""
         methods_ctx = self._methods.get_context_for_claude(
@@ -400,7 +402,7 @@ TOPIC: {topic}
 EXPOSURE: {exposure}
 OUTCOME: {outcome}
 POPULATION: {population}
-STUDY DESIGN: {design}{ref_block}
+STUDY DESIGN: {design}{ref_block}{feedback_block}
 
 Structure: broad public health context → specific problem → knowledge gap → study aim.
 Keep strictly to this topic. Do NOT refer to unrelated studies. Write 4–5 paragraphs.""")
@@ -460,7 +462,7 @@ COMPARISON WITH LITERATURE: {results.get("literature_comparison", "Discuss in re
 MECHANISMS: {results.get("mechanisms", "Propose biologically plausible mechanisms.")}
 STRENGTHS: nationwide representative sample, large n={sample_size}, validated survey instrument
 LIMITATIONS: cross-sectional design (cannot establish causality), self-reported data, residual confounding
-{ref_block}
+{ref_block}{feedback_block}
 
 Write in this author's hedging style. Structure:
 1) Summary of main findings  2) Comparison with existing literature
@@ -555,13 +557,19 @@ DISCUSSION
         reference_context: Optional[str] = None,
         ref_lib=None,
         review_result: dict | None = None,
+        feedback_context: Optional[str] = None,
     ) -> str:
         """실제 통계 결과(StatBridge)를 주입해 논문 초안 생성.
 
         stat_result: StatBridge.AnalysisResult.to_dict()
         """
         results = self._stat_to_results(stat_result)
-        paper = self.write_full_paper(topic, study_info, results, reference_context, ref_lib=ref_lib)
+        paper = self.write_full_paper(
+            topic, study_info, results,
+            reference_context=reference_context,
+            ref_lib=ref_lib,
+            feedback_context=feedback_context,
+        )
 
         # Append peer review summary if provided
         if review_result:
