@@ -23,7 +23,7 @@
     },
     "sex": {
       "label": "성별",
-      "type": "binary",
+      "type": "categorical",
       "unit": "",
       "processing": "",
       "cutoffs": {},
@@ -32,7 +32,7 @@
     },
     "grade": {
       "label": "학년",
-      "type": "ordinal",
+      "type": "categorical",
       "unit": "",
       "processing": "",
       "cutoffs": {},
@@ -252,13 +252,13 @@
       "missing_strategy": "제외 불가 (필수 변수)"
     },
     "depression": {
-      "label": "우울감",
       "type": "binary",
       "unit": "",
-      "processing": "",
+      "label": "우울감",
+      "notes": "",
       "cutoffs": {},
-      "missing_strategy": "exclude",
-      "notes": ""
+      "processing": "",
+      "missing_strategy": "exclude"
     },
     "father_edu": {
       "type": "ordinal",
@@ -413,6 +413,15 @@
       },
       "processing": "sit_weekday와 동일한 기준 적용",
       "missing_strategy": "결측 제외"
+    },
+    "sleep_hours": {
+      "label": "수면 시간",
+      "type": "continuous",
+      "unit": "",
+      "processing": "",
+      "cutoffs": {},
+      "missing_strategy": "exclude",
+      "notes": ""
     },
     "sports_team": {
       "type": "continuous",
@@ -1148,8 +1157,8 @@
       "processing": "좋음(1-2) vs. 보통이하(3-5) 이분화",
       "missing_strategy": "결측 제외"
     },
-    "sleep_hours": {
-      "label": "수면시간",
+    "smartphone_use": {
+      "label": "스마트폰 사용 시간",
       "type": "continuous",
       "unit": "",
       "processing": "",

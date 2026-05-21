@@ -220,11 +220,24 @@ class ClaudeClient:
         except Exception:
             pass
 
-        # 3. 호출별 base_prompt (태스크 특화 지시)
+        # 3. 축적된 연구 인사이트 주입 (research/paper 관련 태스크에만)
+        insight_block = ""
+        _research_tasks = {"paper_writing", "paper_review", "topic_generation",
+                           "novelty_check", "feasibility", "general"}
+        if task in _research_tasks:
+            try:
+                from src.memory.agent_insight import build_self_context
+                ctx = build_self_context()
+                if ctx and len(ctx) > 20:
+                    insight_block = ctx
+            except Exception:
+                pass
+
+        # 4. 호출별 base_prompt (태스크 특화 지시)
         base = base_prompt or ""
 
-        # 조합: 페르소나 → seed → base
-        parts = [p for p in [persona_prompt, preamble, base] if p]
+        # 조합: 페르소나 → seed → 인사이트 → base
+        parts = [p for p in [persona_prompt, preamble, insight_block, base] if p]
         full_base = "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
         if not context_chunks:

@@ -1,6 +1,6 @@
 """Medical-Agent Streamlit UI — Dark Theme + AI Panel + Activity History"""
 
-import sys, os, io
+import sys, os, io, re
 # Windows CP949 → UTF-8 강제 (한글 로그 깨짐 방지)
 if sys.stdout and hasattr(sys.stdout, 'buffer'):
     try: sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace', line_buffering=True)
@@ -1454,7 +1454,23 @@ with main_col:
         c1, c2 = st.columns(2)
         with c1:
             topic_title = st.text_input("연구 제목", value=prev.get("title", ""))
-            journal = st.text_input("목표 저널", placeholder="예: Nutrients, IJERPH")
+            # ── 저널 선택 (레지스트리 연동) ─────────────────────────────
+            try:
+                from src.export.journal_registry import get_registry as _get_jreg
+                _jreg = _get_jreg()
+                _jlist = _jreg.list_journals()
+                _jnames = [f"{j['name']} ({j['abbreviation']})" for j in _jlist] + ["✏️ 직접 입력"]
+                _jids   = [j["id"] for j in _jlist] + ["__custom__"]
+            except Exception:
+                _jnames, _jids = ["✏️ 직접 입력"], ["__custom__"]
+            _sel_idx = st.selectbox("목표 저널", range(len(_jnames)), format_func=lambda i: _jnames[i], index=0)
+            if _jids[_sel_idx] == "__custom__":
+                journal = st.text_input("저널명 직접 입력", placeholder="예: Nutrients, PLOS Medicine")
+                journal_id = re.sub(r"[^a-z0-9_]", "_", journal.lower())[:40] if journal else "jkms"
+            else:
+                journal = _jlist[_sel_idx]["name"]
+                journal_id = _jids[_sel_idx]
+            # ────────────────────────────────────────────────────────────
             design = st.selectbox("연구 설계", ["Cross-sectional", "Cohort", "Case-control", "RCT"])
         with c2:
             dataset_name = st.text_input("데이터셋", value="KYRBS 2025 (제21차 청소년건강행태조사)")
@@ -1472,7 +1488,7 @@ with main_col:
                 del st.session_state["stat_result_for_paper"]
                 st.rerun()
 
-        pw_col1, pw_col2 = st.columns(2)
+        pw_col1, pw_col2, pw_col3 = st.columns(3)
         with pw_col1:
             use_stat_inject = st.checkbox(
                 "🧬 StatBridge 통계 주입 모드",
@@ -1482,6 +1498,12 @@ with main_col:
             export_docx = st.checkbox("📄 DOCX 파일도 저장", value=True)
         with pw_col2:
             run_peer_review = st.checkbox("👥 작성 후 동료 심사 자동 실행", value=True)
+        with pw_col3:
+            auto_revise = st.checkbox(
+                "🔄 자동 재작성 루프",
+                value=False,
+                help="동료 심사 점수 70점 미만 섹션을 자동으로 재작성합니다 (추가 ~1분)",
+            )
 
         if st.button("✍️ 논문 작성 시작", type="primary"):
             if not topic_title or not results_text:
@@ -1494,9 +1516,12 @@ with main_col:
                         study_info = {"dataset": dataset_name, "design": design, "sample_size": sample_size, "survey_year": survey_year, "journal": journal}
                         rp = ResearchPipeline()
 
+                        st.session_state["draft_journal_id"] = journal_id
                         if use_stat_inject and stat_result_for_paper:
                             draft, docx_path = rp.write_paper_with_stats(
-                                topic, study_info, stat_result_for_paper, export_docx=export_docx
+                                topic, study_info, stat_result_for_paper,
+                                export_docx=export_docx, journal_id=journal_id,
+                                auto_revise=auto_revise
                             )
                             if docx_path:
                                 st.session_state["draft_docx_path"] = docx_path
@@ -1513,6 +1538,22 @@ with main_col:
                             draft = writer.write_section(section, topic_title, study_info, results)
 
                         st.session_state["draft"] = draft
+                        # Before/After 비교 UI — auto_revise 시 수정 전후 저장
+                        if auto_revise and hasattr(rp, "pre_revise_draft") and hasattr(rp, "post_revise_draft"):
+                            pre = rp.pre_revise_draft
+                            post = rp.post_revise_draft
+                            if pre and post and pre != post:
+                                st.session_state["revision_pending"] = True
+                                st.session_state["draft_before_revise"] = pre
+                                st.session_state["draft_after_revise"] = post
+                                st.session_state["draft"] = pre  # 기본값: 원본 유지 (사용자가 선택)
+                            else:
+                                st.session_state.pop("revision_pending", None)
+                        else:
+                            st.session_state.pop("revision_pending", None)
+                        # 생성된 그림 정보 저장
+                        if hasattr(rp, "last_figures") and rp.last_figures:
+                            st.session_state["last_figures"] = rp.last_figures
                         from datetime import datetime
                         rp_list = st.session_state.get("recent_projects", [])
                         rp_list.insert(0, {"title": topic_title, "updated": datetime.now().strftime("%Y.%m.%d %H:%M"), "status": "논문 작성 중"})
@@ -1533,24 +1574,272 @@ with main_col:
             draft_tabs = st.tabs(["📝 논문 초안", "👥 동료 심사 결과"])
             with draft_tabs[0]:
                 st.markdown("<h3 style='color:#e6edf3;'>생성된 논문 초안</h3>", unsafe_allow_html=True)
+
+                # ── Before/After 수정 비교 프리뷰 ──────────────────────────────────
+                if st.session_state.get("revision_pending"):
+                    st.warning("⚠️ 자동 수정안이 생성되었습니다. 원본과 수정본을 비교하고 선택하세요.")
+                    rev_col1, rev_col2 = st.columns(2)
+                    with rev_col1:
+                        st.markdown("**📄 원본 (수정 전)**")
+                        st.text_area(
+                            "원본",
+                            value=st.session_state.get("draft_before_revise", ""),
+                            height=400,
+                            key="before_revise_view",
+                            disabled=True,
+                            label_visibility="collapsed",
+                        )
+                        if st.button("✅ 원본 유지", key="keep_original", use_container_width=True):
+                            st.session_state["draft"] = st.session_state["draft_before_revise"]
+                            st.session_state.pop("revision_pending", None)
+                            st.success("원본이 확정되었습니다.")
+                            st.rerun()
+                    with rev_col2:
+                        st.markdown("**✏️ 수정본 (AI 개선)**")
+                        st.text_area(
+                            "수정본",
+                            value=st.session_state.get("draft_after_revise", ""),
+                            height=400,
+                            key="after_revise_view",
+                            disabled=True,
+                            label_visibility="collapsed",
+                        )
+                        if st.button("🚀 수정본 적용", key="accept_revision", use_container_width=True,
+                                     type="primary"):
+                            st.session_state["draft"] = st.session_state["draft_after_revise"]
+                            st.session_state.pop("revision_pending", None)
+                            st.success("수정본이 확정되었습니다.")
+                            st.rerun()
+                    # 수동 섹션 재작성 요청
+                    st.divider()
+                    st.markdown("**🔧 특정 섹션 수동 수정 요청**")
+                    man_col1, man_col2 = st.columns([1, 2])
+                    with man_col1:
+                        man_section = st.selectbox(
+                            "수정할 섹션",
+                            ["Introduction", "Methods", "Results", "Discussion", "Abstract"],
+                            key="manual_revise_section",
+                        )
+                    with man_col2:
+                        man_goal = st.text_input(
+                            "수정 목표 (예: '방법론 한계점 추가', '통계치 더 구체적으로')",
+                            key="manual_revise_goal",
+                        )
+                    if st.button("✏️ 섹션 재작성 + 비교 프리뷰", key="manual_revise_btn"):
+                        if man_goal.strip():
+                            with st.spinner(f"{man_section} 재작성 중..."):
+                                try:
+                                    from src.llm import get_llm_client
+                                    _llm = get_llm_client()
+                                    _cur = st.session_state.get("draft", "")
+                                    _prompt = (
+                                        f"You are editing the {man_section} section of a medical paper.\n\n"
+                                        f"GOAL: {man_goal}\n\n"
+                                        f"CURRENT PAPER:\n{_cur[:8000]}\n\n"
+                                        f"Rewrite ONLY the {man_section} section based on the goal. "
+                                        f"Return the complete rewritten section only."
+                                    )
+                                    _new_section = _llm.generate(_prompt, task="paper_writing")
+                                    import re as _re
+                                    _new_draft = _re.sub(
+                                        rf"(?i)(## {man_section}|# {man_section})[\s\S]*?(?=\n## |\n# |$)",
+                                        f"## {man_section}\n{_new_section}\n\n",
+                                        _cur, count=1,
+                                    )
+                                    if _new_draft == _cur:  # 섹션 헤더 없으면 뒤에 추가
+                                        _new_draft = _cur + f"\n\n## {man_section} (수정)\n{_new_section}"
+                                    st.session_state["draft_before_revise"] = _cur
+                                    st.session_state["draft_after_revise"] = _new_draft
+                                    st.session_state["revision_pending"] = True
+                                    st.rerun()
+                                except Exception as e:
+                                    st.error(f"재작성 오류: {e}")
+                        else:
+                            st.warning("수정 목표를 입력하세요.")
+                    st.divider()
+
                 draft_val = st.text_area("내용", value=st.session_state["draft"], height=500)
                 if draft_val != st.session_state["draft"]:
                     st.session_state["draft"] = draft_val
-                dl_col1, dl_col2 = st.columns(2)
+                dl_col1, dl_col2, dl_col3, dl_col4, dl_col5 = st.columns(5)
+                _safe_title = topic_title[:30]
+                _dl_jid = st.session_state.get("draft_journal_id", "jkms")
+                _xml_slug = re.sub(r"[^\w]", "_", topic_title)[:60]
                 with dl_col1:
-                    st.download_button("📥 TXT 다운로드", data=st.session_state["draft"].encode("utf-8"),
-                                       file_name=f"draft_{topic_title[:30]}.txt", mime="text/plain")
+                    st.download_button("📥 TXT", data=st.session_state["draft"].encode("utf-8"),
+                                       file_name=f"draft_{_safe_title}.txt", mime="text/plain")
                 with dl_col2:
-                    docx_path = st.session_state.get("draft_docx_path")
-                    if docx_path:
+                    _docx_path = st.session_state.get("draft_docx_path")
+                    if _docx_path:
                         try:
-                            with open(docx_path, "rb") as f:
+                            with open(_docx_path, "rb") as f:
                                 docx_bytes = f.read()
-                            st.download_button("📄 DOCX 다운로드", data=docx_bytes,
-                                               file_name=f"draft_{topic_title[:30]}.docx",
+                            st.download_button("📄 논문 DOCX", data=docx_bytes,
+                                               file_name=f"draft_{_safe_title}_{_dl_jid}.docx",
                                                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
                         except Exception:
-                            st.caption("DOCX 파일을 찾을 수 없습니다.")
+                            st.caption("DOCX 없음")
+                    else:
+                        st.caption("DOCX 없음")
+                with dl_col3:
+                    try:
+                        from pathlib import Path as _Path
+                        _tbl_path = _Path(f"data/drafts/tables/{_safe_title}_tables.docx")
+                        if not _tbl_path.exists():
+                            _tbl_candidates = list(_Path("data/drafts/tables").glob("*.docx"))
+                            if _tbl_candidates:
+                                _tbl_path = sorted(_tbl_candidates, key=lambda p: p.stat().st_mtime)[-1]
+                        if _tbl_path.exists():
+                            st.download_button("📊 Tables DOCX",
+                                               data=_tbl_path.read_bytes(),
+                                               file_name=f"tables_{_safe_title}.docx",
+                                               mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                        else:
+                            st.caption("Tables 없음")
+                    except Exception:
+                        st.caption("Tables 없음")
+                with dl_col4:
+                    try:
+                        _xml_path = _Path(f"data/journals/references/{_xml_slug}.xml")
+                        if _xml_path.exists():
+                            st.download_button("📚 EndNote",
+                                               data=_xml_path.read_bytes(),
+                                               file_name=f"{_safe_title}.xml",
+                                               mime="application/xml")
+                        else:
+                            st.caption("EndNote 없음")
+                    except Exception:
+                        st.caption("EndNote 없음")
+                with dl_col5:
+                    try:
+                        _bib_path = _Path(f"data/journals/references/{_xml_slug}.bib")
+                        if _bib_path.exists():
+                            st.download_button("📖 BibTeX",
+                                               data=_bib_path.read_bytes(),
+                                               file_name=f"{_safe_title}.bib",
+                                               mime="text/plain")
+                        else:
+                            st.caption("BibTeX 없음")
+                    except Exception:
+                        st.caption("BibTeX 없음")
+
+                # ── 출판용 그림/표 갤러리 (FigureLabs 수준) ──────────────────────
+                st.divider()
+                st.markdown("**🖼️ 출판용 그림 & 표**")
+                _last_figs = st.session_state.get("last_figures", {})
+                _fig_names_kr = {
+                    "forest_plot": "Forest Plot",
+                    "roc_curve": "ROC Curve",
+                    "prevalence_bar": "유병률 막대",
+                    "subgroup_forest": "서브그룹 Forest",
+                    "table1_image": "Table 1",
+                    "table2_image": "Table 2",
+                    "coefficient_plot": "계수 플롯",
+                }
+                if _last_figs:
+                    _fig_cols = st.columns(min(4, len(_last_figs)))
+                    for _fci, (_fk, _fmeta) in enumerate(_last_figs.items()):
+                        _col = _fig_cols[_fci % len(_fig_cols)]
+                        with _col:
+                            _fname_kr = _fig_names_kr.get(_fk, _fk)
+                            _png_bytes = _fmeta.get("png_bytes")
+                            if _png_bytes:
+                                st.image(_png_bytes, caption=_fname_kr, use_container_width=True)
+                                st.download_button(
+                                    f"⬇️ {_fname_kr} PNG",
+                                    data=_png_bytes,
+                                    file_name=f"{_fk}_{_safe_title}.png",
+                                    mime="image/png",
+                                    key=f"dl_fig_{_fk}",
+                                )
+                                _svg_path = _fmeta.get("svg_path")
+                                if _svg_path:
+                                    try:
+                                        st.download_button(
+                                            f"⬇️ {_fname_kr} SVG",
+                                            data=_Path(_svg_path).read_bytes(),
+                                            file_name=f"{_fk}_{_safe_title}.svg",
+                                            mime="image/svg+xml",
+                                            key=f"dl_svg_{_fk}",
+                                        )
+                                    except Exception:
+                                        pass
+                else:
+                    # 기존 forest plot 폴백
+                    fg_col1, fg_col2 = st.columns(2)
+                    with fg_col1:
+                        try:
+                            _fig_dir = _Path("data/drafts/figures")
+                            _fig_candidates = list(_fig_dir.glob("*_forest.png")) if _fig_dir.exists() else []
+                            if _fig_candidates:
+                                _fp = sorted(_fig_candidates, key=lambda p: p.stat().st_mtime)[-1]
+                                st.image(_fp.read_bytes(), caption="Forest Plot", use_container_width=True)
+                                st.download_button(
+                                    "🌲 Forest Plot PNG",
+                                    data=_fp.read_bytes(),
+                                    file_name=f"forest_{_safe_title}.png",
+                                    mime="image/png",
+                                )
+                            else:
+                                st.caption("Forest Plot 없음")
+                        except Exception:
+                            st.caption("Forest Plot 없음")
+                    with fg_col2:
+                        try:
+                            _cl_dir = _Path("data/drafts/cover_letters")
+                            _cl_candidates = list(_cl_dir.glob("*.txt")) if _cl_dir.exists() else []
+                            if _cl_candidates:
+                                _clp = sorted(_cl_candidates, key=lambda p: p.stat().st_mtime)[-1]
+                                st.download_button(
+                                    "✉️ Cover Letter",
+                                    data=_clp.read_bytes(),
+                                    file_name=f"cover_{_safe_title}.txt",
+                                    mime="text/plain",
+                                )
+                            else:
+                                st.caption("Cover Letter 없음")
+                        except Exception:
+                            st.caption("Cover Letter 없음")
+
+                # ── STATA do-file ──────────────────────────────────────────
+                st.divider()
+                stata_col1, stata_col2 = st.columns([1, 3])
+                with stata_col1:
+                    try:
+                        _stata_dir = _Path("data/drafts/stata")
+                        _stata_candidates = list(_stata_dir.glob("*.do")) if _stata_dir.exists() else []
+                        if _stata_candidates:
+                            _stata_path = sorted(_stata_candidates, key=lambda p: p.stat().st_mtime)[-1]
+                            st.download_button(
+                                "🔢 STATA do-file",
+                                data=_stata_path.read_bytes(),
+                                file_name=f"{_safe_title}.do",
+                                mime="text/plain",
+                            )
+                        else:
+                            # STATA 코드 즉시 생성 버튼
+                            if st.button("🔢 STATA 코드 생성"):
+                                try:
+                                    from src.export.stata_exporter import generate_stata_code
+                                    _topic_d = {"title": topic_title, "exposure": prev.get("exposure",""), "outcome": prev.get("outcome",""), "population": prev.get("population","")}
+                                    _si_d = {"dataset": dataset_name, "design": design, "sample_size": sample_size}
+                                    _spec = {"outcome": prev.get("outcome", "depression"), "predictors": ["sex", "sleep_hours", "screen_time"], "covariates": ["grade", "family_econ"], "analysis": "logistic"}
+                                    _stata_code = generate_stata_code(_topic_d, _spec, _si_d)
+                                    st.session_state["stata_code"] = _stata_code
+                                except Exception as e:
+                                    st.error(f"STATA 생성 오류: {e}")
+                    except Exception:
+                        st.caption("STATA 없음")
+                with stata_col2:
+                    if st.session_state.get("stata_code"):
+                        st.download_button(
+                            "💾 STATA 코드 다운로드",
+                            data=st.session_state["stata_code"].encode("utf-8"),
+                            file_name=f"{_safe_title}.do",
+                            mime="text/plain",
+                        )
+                        with st.expander("STATA 코드 미리보기"):
+                            st.code(st.session_state["stata_code"][:2000], language="stata")
 
             with draft_tabs[1]:
                 pr = st.session_state.get("peer_review")

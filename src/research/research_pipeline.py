@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -285,6 +286,14 @@ Return JSON only."""
             session_id=self.session_id,
         )
 
+        # found_papers를 인스턴스에 누적 (참고문헌 빌더에서 활용)
+        found = result.get("found_papers", [])
+        if found:
+            if not hasattr(self, "_novelty_papers"):
+                self._novelty_papers = []
+            self._novelty_papers = (self._novelty_papers + found)[-30:]  # 최근 30편만 보관
+            _log.info("NoveltyChecker 논문 %d편 참고문헌 풀에 추가 (누적 %d편)", len(found), len(self._novelty_papers))
+
         from src.memory.auto_learn import reflect_and_record
         reflect_and_record(
             action="check_novelty",
@@ -342,15 +351,14 @@ Return JSON only."""
     ) -> str:
         """조유선 스타일로 논문 초안 생성 및 파일 저장."""
         reference_context = None
+        ref_lib = None
         if use_rag_references:
             query = (
                 f"{topic.get('exposure', '')} "
                 f"{topic.get('outcome', '')} "
                 f"{topic.get('population', '')}"
             )
-            hits = self.rag.ask(query)
-            if hits.get("sources"):
-                reference_context = "\n\n".join(h["text"] for h in hits["sources"][:5])
+            reference_context, ref_lib = self._build_reference_context(query)
 
         _log.info("논문 작성 시작: %s", topic.get("title", "")[:60])
         draft = self.writer.write_full_paper(
@@ -358,6 +366,7 @@ Return JSON only."""
             study_info=study_info,
             results=results,
             reference_context=reference_context,
+            ref_lib=ref_lib,
         )
 
         safe_title = "".join(
@@ -455,7 +464,23 @@ Return JSON only."""
                 )
 
         spec = self._build_stat_spec(topic, dataset)
+        # G1: ColNameResolver — 실제 컬럼명으로 자동 매핑
+        try:
+            from src.data.col_name_resolver import resolve_spec_columns
+            spec = resolve_spec_columns(df, spec)
+        except Exception as _cnr_err:
+            _log.warning("ColNameResolver 실패 (원본 spec 사용): %s", _cnr_err)
         result = StatBridge().run(df, spec)
+
+        # P2-3: 민감도 분석 자동화 — E-value + 역전 임계값 자동 추가
+        try:
+            sens_spec = {**spec, "analysis": "sensitivity"}
+            sens_result = StatBridge().run(df, sens_spec)
+            if not sens_result.error and sens_result.model_metrics.get("sensitivity"):
+                result.model_metrics["sensitivity"] = sens_result.model_metrics["sensitivity"]
+                _log.info("P2-3 민감도 분석 자동 완료")
+        except Exception as _se:
+            _log.debug("P2-3 sensitivity 자동 실행 실패: %s", _se)
 
         _log.info(
             "통계 분석 완료: n=%d, OR변수=%d개, 유의=%d개",
@@ -524,6 +549,224 @@ Return JSON only."""
             "subgroups": ["sex"],
         }
 
+    # ── 참고문헌 컨텍스트 빌더 (RAG + EvidenceReader → ReferenceLibrary) ────────
+
+    def _build_reference_context(self, query: str) -> tuple:
+        """RAG + EvidenceReader로 실제 참고문헌 컨텍스트 생성.
+
+        Returns: (context_str, ReferenceLibrary | None)
+        context_str: LLM 프롬프트에 주입할 문자열 (Vancouver 인용 목록 + RAG 텍스트)
+        """
+        from src.export.reference_library import ReferenceLibrary, Reference
+
+        ref_lib = None
+        formatted_refs = ""
+        rag_text = ""
+
+        # 1. 로컬 RAG 인덱스에서 텍스트 조각 수집
+        try:
+            hits = self.rag.ask(query)
+            rag_sources = hits.get("sources", [])[:3]
+            if rag_sources:
+                rag_text = "\n\n".join(h["text"] for h in rag_sources)
+        except Exception as e:
+            _log.warning("RAG 검색 실패: %s", e)
+
+        # 2. EvidenceReader + NoveltyChecker 누적 논문 → ReferenceLibrary
+        try:
+            papers = [r for r in self.evidence.search(query, max_per_source=6)[:10] if r]
+            # NoveltyChecker가 이미 찾은 논문 병합 (중복 제거)
+            novelty_papers = getattr(self, "_novelty_papers", [])
+            existing_pmids = {p.get("pmid", "") for p in papers if p.get("pmid")}
+            for np_paper in novelty_papers:
+                if np_paper.get("pmid") and np_paper["pmid"] not in existing_pmids:
+                    papers.append(np_paper)
+                    existing_pmids.add(np_paper["pmid"])
+            papers = papers[:15]  # 최대 15편
+            if papers:
+                slug = re.sub(r"[^\w]", "_", query[:40])
+                ref_lib = ReferenceLibrary(slug)
+                for p in papers:
+                    authors = p.get("authors") or []
+                    if not isinstance(authors, list):
+                        authors = [str(authors)]
+                    ref = Reference(
+                        pmid=str(p.get("pmid", "")),
+                        doi=p.get("doi", ""),
+                        title=p.get("title", ""),
+                        authors=authors,
+                        journal=p.get("journal", "") or p.get("source", ""),
+                        year=str(p.get("year", "") or ""),
+                        abstract=p.get("abstract", "") or "",
+                    )
+                    ref_lib.add_manual(ref)
+                formatted_refs = ref_lib.format_list("Vancouver")
+                _log.info("참고문헌 %d개 수집 완료 (RAG+EvidenceReader)", len(papers))
+        except Exception as e:
+            _log.warning("EvidenceReader 참고문헌 구축 실패: %s", e)
+
+        # 3. 텍스트 컨텍스트 조합
+        parts = []
+        if formatted_refs:
+            parts.append(
+                f"CITED REFERENCES — use these Vancouver citations in your text "
+                f"(e.g. [1], [2,3]) where appropriate:\n{formatted_refs}"
+            )
+        if rag_text:
+            parts.append(f"ADDITIONAL CONTEXT FROM KNOWLEDGE BASE:\n{rag_text}")
+
+        ctx = "\n\n".join(parts)
+        return ctx, ref_lib
+
+    # ── P1-1 — 동료 심사 후 자동 재작성 루프 ────────────────────────────────────
+
+    # rubric dimension → 논문 섹션명 매핑
+    _RUBRIC_TO_SECTION = {
+        "originality": "INTRODUCTION",
+        "methodology": "METHODS",
+        "results_clarity": "RESULTS",
+        "clinical_relevance": "DISCUSSION",
+        "writing_quality": "ABSTRACT",
+    }
+
+    def review_and_revise(
+        self,
+        paper_text: str,
+        topic: Dict,
+        study_info: Dict,
+        stat_result: Optional[dict] = None,
+        max_iterations: int = 2,
+        score_threshold: int = 70,
+    ) -> tuple:
+        """동료 심사 → score<threshold면 worst section 자동 재작성 → 재심사.
+
+        Returns: (final_paper_text, final_review_dict)
+        최대 max_iterations회 반복 후 중단.
+        """
+        from src.research.peer_reviewer import PeerReviewer
+        reviewer = PeerReviewer(llm_client=self._llm)
+        topic_title = topic.get("title", "") if isinstance(topic, dict) else str(topic)
+
+        current_paper = paper_text
+        review = reviewer.review(current_paper, topic_title, stat_result=stat_result)
+        _log.info(
+            "초기 동료 심사: %d/100 (%s)", review.total_score, review.accept_recommendation
+        )
+
+        for iteration in range(max_iterations):
+            if review.total_score >= score_threshold:
+                _log.info("점수 %d ≥ %d — 재작성 루프 종료", review.total_score, score_threshold)
+                break
+
+            # 가장 낮은 점수의 rubric 차원 찾기
+            worst_dim = min(
+                review.section_scores,
+                key=lambda k: review.section_scores[k].pct,
+                default=None,
+            )
+            if not worst_dim:
+                break
+
+            worst_fb = review.section_scores[worst_dim]
+            section_name = self._RUBRIC_TO_SECTION.get(worst_dim, "INTRODUCTION")
+            _log.info(
+                "재작성 시도 %d: %s (점수 %d/%d, %.0f%%) → 섹션 %s",
+                iteration + 1, worst_dim, worst_fb.score, worst_fb.max_score,
+                worst_fb.pct, section_name,
+            )
+
+            # 해당 섹션 텍스트 추출
+            current_paper = self._rewrite_section(
+                current_paper, section_name, worst_fb, topic, study_info
+            )
+
+            # 재심사
+            review = reviewer.review(current_paper, topic_title, stat_result=stat_result)
+            _log.info(
+                "재심사 %d 결과: %d/100 (%s)",
+                iteration + 1, review.total_score, review.accept_recommendation,
+            )
+
+        # G4: 방법론 저조 → suggested_analyses 자동 보충 주석
+        meth_fb = review.section_scores.get("methodology")
+        if meth_fb and meth_fb.pct < 50 and review.suggested_analyses:
+            suggested = review.suggested_analyses[:3]
+            method_note = (
+                "\n\n[METHODOLOGICAL NOTE — Reviewer-Suggested Analyses: "
+                + "; ".join(suggested)
+                + "]"
+            )
+            current_paper += method_note
+            _log.info("G4: 방법론 보완 제안 %d개 주석 삽입", len(suggested))
+
+        change_log.log(
+            title=f"동료심사+재작성: {topic_title[:60]}",
+            action_type="peer_review",
+            description=f"최종 점수: {review.total_score}/100 ({review.grade})",
+            inputs={"topic": topic_title, "max_iter": max_iterations},
+            outputs={"final_score": review.total_score, "grade": review.grade},
+            impact={"affected_modules": ["peer_reviewer", "research_pipeline"]},
+        )
+        return current_paper, review.to_dict()
+
+    def _rewrite_section(
+        self,
+        paper_text: str,
+        section_name: str,
+        feedback,
+        topic: Dict,
+        study_info: Dict,
+    ) -> str:
+        """페이퍼 텍스트에서 section_name 섹션을 피드백 기반으로 재작성 후 대체."""
+        sep = "=" * 70
+        # 섹션 경계 파싱
+        pattern = re.compile(
+            rf"({re.escape(sep)}\n{re.escape(section_name)}\n{re.escape(sep)}\n)(.*?)(?={re.escape(sep)}|\Z)",
+            re.DOTALL | re.IGNORECASE,
+        )
+        m = pattern.search(paper_text)
+        if not m:
+            _log.warning("섹션 '%s' 를 텍스트에서 찾을 수 없음 — 재작성 건너뜀", section_name)
+            return paper_text
+
+        old_body = m.group(2).strip()
+        header = m.group(1)
+
+        weaknesses = "\n".join(f"- {w}" for w in (feedback.weaknesses or []))
+        suggestions = "\n".join(f"- {s}" for s in (feedback.suggestions or []))
+
+        prompt = f"""You are revising the {section_name} section of a Korean public health paper.
+
+TOPIC: {topic.get("title", "") if isinstance(topic, dict) else str(topic)}
+DATASET: {study_info.get("dataset", "KYRBS")}
+STUDY DESIGN: {study_info.get("design", "Cross-sectional")}
+
+CURRENT {section_name} SECTION:
+{old_body[:3000]}
+
+REVIEWER WEAKNESSES IDENTIFIED:
+{weaknesses or "(none specified)"}
+
+REVIEWER SUGGESTIONS:
+{suggestions or "(none specified)"}
+
+Rewrite the {section_name} section addressing all weaknesses and implementing all suggestions.
+Keep the same data and statistics. Output ONLY the revised section text, no headers."""
+
+        try:
+            new_body = self._llm.generate(
+                user_message=prompt,
+                max_tokens=2000,
+                task="paper_writing",
+            ).strip()
+        except Exception as e:
+            _log.warning("섹션 재작성 LLM 호출 실패: %s", e)
+            return paper_text
+
+        # 텍스트에서 해당 섹션 대체
+        new_section = f"{header}{new_body}\n\n"
+        return paper_text[:m.start()] + new_section + paper_text[m.end():]
+
     # ── Step 6b — 동료 심사 ──────────────────────────────────────────────────
 
     def run_peer_review(self, paper_text: str, topic: Dict, stat_result: dict | None = None) -> dict:
@@ -560,17 +803,38 @@ Return JSON only."""
         stat_result: dict,
         use_rag_references: bool = True,
         export_docx: bool = True,
+        journal_id: str = "jkms",
+        auto_revise: bool = False,
+        revise_threshold: int = 70,
+        revise_max_iter: int = 2,
     ) -> tuple[str, str | None]:
-        """StatBridge 결과를 주입해 논문 생성 + DOCX 저장.
+        """StatBridge 결과를 주입해 논문 생성 + 저널 스타일 DOCX 저장.
 
+        journal_id: 'jkms' | 'kjpm' | 'ijerph' | 'plos_one' | 'bmj_open' | 기타(자동 생성)
+        auto_revise: True면 동료 심사 후 score<revise_threshold 섹션 자동 재작성
         Returns: (paper_text, docx_path_or_None)
         """
         reference_context = None
+        ref_lib = None
+        query = (
+            f"{topic.get('exposure', '')} "
+            f"{topic.get('outcome', '')} "
+            f"{topic.get('population', '')}"
+        )
         if use_rag_references:
-            query = f"{topic.get('exposure', '')} {topic.get('outcome', '')} {topic.get('population', '')}"
-            hits = self.rag.ask(query)
-            if hits.get("sources"):
-                reference_context = "\n\n".join(h["text"] for h in hits["sources"][:5])
+            reference_context, ref_lib = self._build_reference_context(query)
+        self.last_ref_lib = ref_lib  # DOCX export에서 접근 가능하도록 보관
+
+        # P2-2: 의미론적 기억 검색 — 관련 과거 인사이트 컨텍스트 주입
+        try:
+            from src.memory.semantic_search import SemanticMemorySearch
+            _sms_ctx = SemanticMemorySearch().build_context(query, top_k=3)
+            if _sms_ctx:
+                reference_context = (
+                    (reference_context + "\n\n" + _sms_ctx) if reference_context else _sms_ctx
+                )
+        except Exception as _sms_err:
+            _log.debug("SemanticMemorySearch 실패: %s", _sms_err)
 
         _log.info("통계 주입 논문 작성 시작: %s", topic.get("title", "")[:60])
         draft = self.writer.write_full_paper_with_stats(
@@ -578,7 +842,27 @@ Return JSON only."""
             study_info=study_info,
             stat_result=stat_result,
             reference_context=reference_context,
+            ref_lib=ref_lib,
         )
+
+        # G3: 인라인 인용 [n] 자동 삽입
+        if ref_lib is not None:
+            try:
+                from src.export.reference_library import insert_inline_citations
+                draft = insert_inline_citations(draft, ref_lib)
+            except Exception as _ic_err:
+                _log.debug("인라인 인용 삽입 실패: %s", _ic_err)
+
+        # ── 동료 심사 후 자동 재작성 루프 ──────────────────────────────────
+        if auto_revise:
+            self.pre_revise_draft = draft    # Before/After 비교 UI용
+            draft, _ = self.review_and_revise(
+                draft, topic, study_info,
+                stat_result=stat_result,
+                max_iterations=revise_max_iter,
+                score_threshold=revise_threshold,
+            )
+            self.post_revise_draft = draft   # Before/After 비교 UI용
 
         safe_title = "".join(
             c if c.isalnum() or c in " _-" else "_"
@@ -592,20 +876,133 @@ Return JSON only."""
         docx_path = None
         if export_docx:
             try:
-                out = self.writer.export_docx(draft, self._output_dir / safe_title, title=topic.get("title", ""))
-                docx_path = str(out)
-                _log.info("DOCX 저장: %s", docx_path)
+                from src.export.journal_docx_exporter import JournalDocxExporter
+                sections = getattr(self.writer, "last_sections", None) or {}
+                exporter = JournalDocxExporter(journal_id)
+                docx_out = str(self._output_dir / f"{safe_title}_{journal_id}.docx")
+                exporter.export(
+                    title=topic.get("title", "Untitled"),
+                    sections=sections,
+                    references=getattr(self, "last_ref_lib", None),
+                    authors=[study_info.get("authors", "Yoosun Cho")],
+                    affiliation=study_info.get("affiliation", ""),
+                    keywords=topic.get("keywords", []),
+                    output_path=docx_out,
+                )
+                docx_path = docx_out
+                _log.info("저널 DOCX 저장 (%s): %s", journal_id, docx_path)
             except Exception as e:
                 _log.warning("DOCX export 실패: %s", e)
+
+        # ── STATA do-file 자동 생성 ─────────────────────────────────────────────
+        stata_path = None
+        try:
+            from src.export.stata_exporter import save_stata_do_file
+            stata_spec = self._build_stat_spec(topic, study_info.get("dataset", "KYRBS"))
+            stata_path = save_stata_do_file(
+                topic=topic,
+                stat_spec=stata_spec,
+                study_info=study_info,
+                data_path="",
+                output_path=str(self._output_dir / "stata" / f"{safe_title}.do"),
+                use_complex_survey="kyrbs" in study_info.get("dataset", "").lower(),
+            )
+            _log.info("STATA do-file 저장: %s", stata_path)
+        except Exception as e:
+            _log.warning("STATA do-file 생성 실패: %s", e)
+
+        # ── Table 1 / Table 2 자동 생성 ───────────────────────────────────────
+        tables_docx_path = None
+        try:
+            from src.export.table_builder import (
+                stat_result_to_table1_markdown,
+                stat_result_to_table2_markdown,
+                stat_result_to_tables_docx_bytes,
+            )
+            tables_dir = Path("data/drafts/tables")
+            tables_dir.mkdir(parents=True, exist_ok=True)
+            tables_docx_path = str(tables_dir / f"{safe_title}_tables.docx")
+            tables_bytes = stat_result_to_tables_docx_bytes(stat_result)
+            if tables_bytes:
+                with open(tables_docx_path, "wb") as f:
+                    f.write(tables_bytes)
+                _log.info("Tables DOCX 저장: %s", tables_docx_path)
+
+            # 마크다운 표를 txt 파일 끝에 추가
+            t1_md = stat_result_to_table1_markdown(stat_result)
+            t2_md = stat_result_to_table2_markdown(stat_result)
+            tables_block = f"\n\n{'='*70}\nTABLES\n{'='*70}\n\n{t1_md}\n\n{t2_md}\n"
+            draft += tables_block
+            txt_path.write_text(draft, encoding="utf-8")
+        except Exception as e:
+            _log.warning("Table 생성 실패: %s", e)
+
+        # G2: Forest Plot 자동 생성 + PNG 저장
+        # G2 + FigureLabs: 전체 논문용 그림/표 자동 생성
+        forest_plot_path = None
+        self.last_figures: dict = {}
+        try:
+            from src.export.publication_figure_generator import generate_figures_for_paper
+            self.last_figures = generate_figures_for_paper(
+                stat_result, safe_title=safe_title,
+            )
+            if "forest_plot" in self.last_figures:
+                forest_plot_path = self.last_figures["forest_plot"]["png_path"]
+        except Exception as e:
+            _log.warning("Publication figure generator 실패, 기본 forest plot 시도: %s", e)
+            try:
+                from src.export.figure_builder import stat_result_to_forest_plot
+                figures_dir = Path("data/drafts/figures")
+                fp_out = str(figures_dir / f"{safe_title}_forest.png")
+                fp_bytes = stat_result_to_forest_plot(stat_result, save_path=fp_out)
+                if fp_bytes:
+                    forest_plot_path = fp_out
+            except Exception as e2:
+                _log.warning("Forest plot 생성 실패: %s", e2)
+
+        # G5: Cover Letter 자동 생성
+        cover_letter_path = None
+        try:
+            from src.export.cover_letter_writer import CoverLetterWriter
+            _cl_writer = CoverLetterWriter(llm_client=self._llm)
+            try:
+                from src.export.journal_registry import get_registry as _jreg_fn
+                _jinfo = _jreg_fn().get(journal_id)
+                _journal_name = _jinfo.get("name", journal_id) if isinstance(_jinfo, dict) else journal_id
+            except Exception:
+                _journal_name = journal_id
+            _cl_text = _cl_writer.generate(
+                topic=topic, study_info=study_info, journal_name=_journal_name,
+            )
+            cover_letter_path = _cl_writer.save(_cl_text, safe_title)
+            _log.info("Cover letter 저장: %s", cover_letter_path)
+        except Exception as e:
+            _log.warning("Cover letter 생성 실패: %s", e)
+
+        # Phase C: 역량 자기평가 벤치마크 (비동기 — 파이프라인 블로킹 없음)
+        try:
+            from src.diagnostics.capability_bench import run_capability_bench
+            _novelty_score = getattr(self, "_last_novelty_score", 0.0)
+            _bench = run_capability_bench(
+                draft=draft,
+                stat_result=stat_result,
+                topic=topic,
+                figures=self.last_figures,
+                novelty_score=_novelty_score,
+            )
+            _log.info("[CapabilityBench] 종합 점수: %.1f/100, 약점: %s",
+                      _bench.overall, _bench.weak_areas)
+        except Exception as _bench_e:
+            _log.debug("역량 벤치마크 실패: %s", _bench_e)
 
         change_log.log(
             title=f"통계주입 논문 작성: {topic.get('title', 'Untitled')[:80]}",
             action_type="paper_write",
-            description=f"StatBridge 통계 주입 논문 초안 생성 완료. DOCX: {docx_path is not None}",
+            description=f"StatBridge 통계 주입 논문 초안 생성 완료. DOCX: {docx_path is not None}, Tables: {tables_docx_path is not None}",
             why_better="실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
             inputs={"topic_title": topic.get("title", ""), "n_total": stat_result.get("n_total", 0)},
-            outputs={"draft_word_count": len(draft.split()), "docx_path": docx_path},
-            impact={"affected_modules": ["paper_writer", "stat_bridge", "research_pipeline"]},
+            outputs={"draft_word_count": len(draft.split()), "docx_path": docx_path, "tables_docx_path": tables_docx_path},
+            impact={"affected_modules": ["paper_writer", "stat_bridge", "research_pipeline", "table_builder"]},
             user_email=self.user_email,
             session_id=self.session_id,
         )
@@ -660,6 +1057,7 @@ Return JSON only."""
         study_info_template: Optional[Dict] = None,
         df=None,
         export_docx: bool = True,
+        journal_id: str = "jkms",
     ) -> Dict:
         """완전 자동화 파이프라인: 주제 → 신규성 → 타당성 → 통계 → 논문 → 동료심사.
 
@@ -692,7 +1090,7 @@ Return JSON only."""
             **si,
         }
         draft, docx_path = self.write_paper_with_stats(
-            topic, study_info, stat_result, export_docx=export_docx
+            topic, study_info, stat_result, export_docx=export_docx, journal_id=journal_id
         )
 
         # Step 4: 동료 심사

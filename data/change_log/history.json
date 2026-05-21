@@ -1,5 +1,1209 @@
 [
   {
+    "id": "20260521_223222_602151",
+    "timestamp": "2026-05-21 22:32:22",
+    "user_email": "",
+    "session_id": "20260521_223129_8807ff14",
+    "action_type": "qa",
+    "title": "Q&A: KYRBS 청소년 비만 연구 주의사항",
+    "description": "",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "question": "KYRBS 청소년 비만 연구 주의사항"
+    },
+    "outputs": {
+      "answer": "제공된 컨텍스트부터 솔직하게 짚고 시작하겠습니다.\n\n---\n\n## 컨텍스트 평가\n\n제공된 5개 발췌문 중 **KYRBS 청소년 비만 연구와 직접 관련된 것은 사실상 없습니다.** \"Test: Adolescent obesity and sleep\"는 제목만 있고 내용이 없으며, 나머지 4편은 모두 KNHANES 기반 성인 연구입니다. 따라서 이하 내용은 제 내재화된 전문 지식 기반으로 답변하며, 컨텍스트 문헌 인용은 하지 않습니다.\n\n---\n\n## KYRBS 청소년 비만 연구 — 핵심 주의사항\n\n### 1. 측정 타당도 문제 (가장 근",
+      "summary": "제공된 컨텍스트부터 솔직하게 짚고 시작하겠습니다.\n\n---\n\n## 컨텍스트 평가\n\n제공된 5개 발췌문 중 **KYRBS 청소년 비만 연구와 직접 관련된 것은 사실상 없습니다.** "
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260521_223128_994789",
+    "timestamp": "2026-05-21 22:31:28",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "논문 품질 평가: 22/100 (F) — major_revision",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "outputs": {
+      "score": 22,
+      "grade": "F",
+      "rec": "major_revision"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260521_222955_555396",
+    "timestamp": "2026-05-21 22:29:55",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "통계주입 논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "StatBridge 통계 주입 논문 초안 생성 완료. DOCX: False, Tables: True",
+    "what_changed": {},
+    "why_better": "실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "n_total": 54633
+    },
+    "outputs": {
+      "draft_word_count": 4224,
+      "docx_path": null,
+      "tables_docx_path": "data\\drafts\\tables\\청소년 스마트폰 과사용과 수면 부족_tables.docx"
+    },
+    "impact": {
+      "affected_modules": [
+        "paper_writer",
+        "stat_bridge",
+        "research_pipeline",
+        "table_builder"
+      ]
+    }
+  },
+  {
+    "id": "20260521_222902_252555",
+    "timestamp": "2026-05-21 22:29:02",
+    "user_email": "",
+    "session_id": "20260521_222821_30c1d47a",
+    "action_type": "qa",
+    "title": "Q&A: KYRBS 청소년 비만 연구 주의사항",
+    "description": "",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "question": "KYRBS 청소년 비만 연구 주의사항"
+    },
+    "outputs": {
+      "answer": "제공된 컨텍스트부터 솔직하게 짚고 시작하겠습니다.\n\n---\n\n## 컨텍스트 평가\n\n제공된 5개 발췌문 중 **KYRBS 청소년 비만 연구와 직접 관련된 건 사실상 없습니다.** \"Test: Adolescent obesity and sleep\" 항목은 Korean study using KYRBS라는 한 줄이 전부고, 나머지 4개는 모두 **KNHANES 성인 데이터** 기반입니다. 따라서 아래 내용은 제가 내재화한 방법론적 지식을 바탕으로 답변드리는 것이며, 이 점 명시합니다.\n\n---\n\n## KYRBS 청소년 비만 연구 시 핵심 주",
+      "summary": "제공된 컨텍스트부터 솔직하게 짚고 시작하겠습니다.\n\n---\n\n## 컨텍스트 평가\n\n제공된 5개 발췌문 중 **KYRBS 청소년 비만 연구와 직접 관련된 건 사실상 없습니다.** \""
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260521_222820_312748",
+    "timestamp": "2026-05-21 22:28:20",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "논문 품질 평가: 22/100 (F) — major_revision",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "outputs": {
+      "score": 22,
+      "grade": "F",
+      "rec": "major_revision"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260521_222649_769570",
+    "timestamp": "2026-05-21 22:26:49",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "통계주입 논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "StatBridge 통계 주입 논문 초안 생성 완료. DOCX: False, Tables: True",
+    "what_changed": {},
+    "why_better": "실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "n_total": 54633
+    },
+    "outputs": {
+      "draft_word_count": 3443,
+      "docx_path": null,
+      "tables_docx_path": "data\\drafts\\tables\\청소년 스마트폰 과사용과 수면 부족_tables.docx"
+    },
+    "impact": {
+      "affected_modules": [
+        "paper_writer",
+        "stat_bridge",
+        "research_pipeline",
+        "table_builder"
+      ]
+    }
+  },
+  {
+    "id": "20260521_222642_071075",
+    "timestamp": "2026-05-21 22:26:42",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "조유선 스타일 논문 초안 생성 완료. 파일: data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+    "what_changed": {},
+    "why_better": "RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "exposure": "smartphone overuse",
+      "outcome": "sleep deprivation",
+      "population": "Korean adolescents",
+      "use_rag_references": true,
+      "study_info_keys": [
+        "dataset",
+        "design",
+        "sample_size",
+        "survey_year",
+        "journal"
+      ]
+    },
+    "outputs": {
+      "draft_word_count": 3316,
+      "output_path": "data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+      "safe_title": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "paper_writer",
+        "rag"
+      ]
+    }
+  },
+  {
+    "id": "20260521_222345_456517",
+    "timestamp": "2026-05-21 22:23:45",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "조유선 스타일 논문 초안 생성 완료. 파일: data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+    "what_changed": {},
+    "why_better": "RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "exposure": "smartphone overuse",
+      "outcome": "sleep deprivation",
+      "population": "Korean adolescents",
+      "use_rag_references": true,
+      "study_info_keys": [
+        "dataset",
+        "design",
+        "sample_size",
+        "survey_year",
+        "journal"
+      ]
+    },
+    "outputs": {
+      "draft_word_count": 4289,
+      "output_path": "data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+      "safe_title": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "paper_writer",
+        "rag"
+      ]
+    }
+  },
+  {
+    "id": "20260521_222246_050052",
+    "timestamp": "2026-05-21 22:22:46",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 비만과 수면",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 비만과 수면",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Social Jetlag as a Mediator Between Smartphone Overuse and Obesity Risk in Korean Adolescents: A Cross-Sectional Analysis of the 2025 KYRBS",
+        "Additive Interaction Between Short Sleep Duration and High Sedentary Time on Obesity in Korean Adolescents: Effect Modification by Socioeconomic Status"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260521_221920_803918",
+    "timestamp": "2026-05-21 22:19:20",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 비만과 수면",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 비만과 수면",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Social Jetlag as a Mediator Between Smartphone Use Patterns and Obesity Risk Among Korean Adolescents: A Cross-Sectional Analysis of the 2025 KYRBS",
+        "Additive Interaction Between Insufficient Weekday Sleep and High-Frequency Mukbang Viewing on Overweight/Obesity Risk in Korean Adolescents: Evidence from the 2025 KYRBS"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260521_214549_798637",
+    "timestamp": "2026-05-21 21:45:49",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "feature_add",
+    "title": "G1~G6 + P2-1~P2-3 전체 보강 완료 (2026-05-21)",
+    "description": "G1: ColNameResolver run_stat_analysis 통합. G2: stat_result_to_forest_plot PNG 자동저장. G3: insert_inline_citations 본문 [n] 삽입. G4: methodology 저조시 suggested_analyses 주석 자동삽입. G5: CoverLetterWriter LLM 커버레터 자동생성. G6: ProjectManager data/projects/ 영속 추적. P2-1: StatBridge PSM(1:1 최근접 매칭)+다수준 혼합효과 모형. P2-2: SemanticMemorySearch 키워드 유사도 기반 인사이트 주입. P2-3: run_stat_analysis에 sensitivity(E-value) 자동 추가. Streamlit: Forest plot PNG + Cover letter 다운로드 버튼 추가.",
+    "what_changed": {},
+    "why_better": "AGI 급 파이프라인 완성도 향상 — 컬럼 매핑/포레스트 플롯/인라인 인용/커버레터/PSM 등 연결 컴포넌트 전면 보강",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "stat_bridge",
+        "col_name_resolver",
+        "research_pipeline",
+        "figure_builder",
+        "reference_library",
+        "cover_letter_writer",
+        "project_manager",
+        "semantic_search",
+        "streamlit_app",
+        "peer_reviewer"
+      ]
+    }
+  },
+  {
+    "id": "20260520_225824_638474",
+    "timestamp": "2026-05-20 22:58:24",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: 주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국",
+    "description": "논문 품질 평가: 42/100 (F) — major_revision",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국 학교기반 단면 연구"
+    },
+    "outputs": {
+      "score": 42,
+      "grade": "F",
+      "rec": "major_revision"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_225658_940299",
+    "timestamp": "2026-05-20 22:56:58",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "통계주입 논문 작성: 주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국 학교기반 단면 연구",
+    "description": "StatBridge 통계 주입 논문 초안 생성 완료. DOCX: False",
+    "what_changed": {},
+    "why_better": "실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+    "inputs": {
+      "topic_title": "주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국 학교기반 단면 연구",
+      "n_total": 54653
+    },
+    "outputs": {
+      "draft_word_count": 4175,
+      "docx_path": null
+    },
+    "impact": {
+      "affected_modules": [
+        "paper_writer",
+        "stat_bridge",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_225320_857592",
+    "timestamp": "2026-05-20 22:53:20",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "stat_analysis",
+    "title": "통계분석: 주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국",
+    "description": "LogisticRegression 완료. 유의 변수 0개",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국 학교기반 단면 연구",
+      "dataset": "kyrbs",
+      "spec": {
+        "outcome": "sleep_hours",
+        "outcome_label": "수면 시간",
+        "predictors": [
+          "sex",
+          "sleep_hours",
+          "screen_time",
+          "smoking"
+        ],
+        "covariates": [
+          "grade",
+          "family_econ",
+          "academic_perf"
+        ],
+        "analysis": "logistic",
+        "weight_var": "weight_var",
+        "subgroups": [
+          "sex"
+        ]
+      }
+    },
+    "outputs": {
+      "n_total": 54653,
+      "n_sig": 0
+    },
+    "impact": {
+      "affected_modules": [
+        "stat_bridge",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_225237_573547",
+    "timestamp": "2026-05-20 22:52:37",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "novelty_check",
+    "title": "신규성 확인: 스마트폰 사용 시간, 수면 시간, 신체활동의 3중 건강 행태 프로파일과 청소년 비만 위험: 잠재 프로파일 분",
+    "description": "PubMed 신규성 검증 완료. 점수: 8/10",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic_title": "스마트폰 사용 시간, 수면 시간, 신체활동의 3중 건강 행태 프로파일과 청소년 비만 위험: 잠재 프로파일 분석(LPA) 기반 접근",
+      "exposure": "smartphone_weekday, sleep_weekday, pa_60min의 결합 행태 프로파일 (잠재집단, LPA로 도출)"
+    },
+    "outputs": {
+      "novelty_score": 8,
+      "verdict": ""
+    },
+    "impact": {
+      "affected_modules": [
+        "novelty_checker"
+      ]
+    }
+  },
+  {
+    "id": "20260520_225122_577128",
+    "timestamp": "2026-05-20 22:51:22",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "novelty_check",
+    "title": "신규성 확인: 주말 수면 보충(sleep catch-up)의 청소년 스트레스 및 우울감 완충 효과: 스마트폰 사용 강도에 ",
+    "description": "PubMed 신규성 검증 완료. 점수: 8/10",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic_title": "주말 수면 보충(sleep catch-up)의 청소년 스트레스 및 우울감 완충 효과: 스마트폰 사용 강도에 따른 효과 수정 분석",
+      "exposure": "sleep_weekend - sleep_weekday (주말 수면 보충량, 연속형 파생변수; ≥2시간을 유의미한 보충으로 정의)"
+    },
+    "outputs": {
+      "novelty_score": 8,
+      "verdict": ""
+    },
+    "impact": {
+      "affected_modules": [
+        "novelty_checker"
+      ]
+    }
+  },
+  {
+    "id": "20260520_225006_850763",
+    "timestamp": "2026-05-20 22:50:06",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "novelty_check",
+    "title": "신규성 확인: 고카페인 음료 섭취 빈도가 청소년의 주중 수면 시간에 미치는 영향: 스마트폰 사용 시간의 매개 효과 검토",
+    "description": "PubMed 신규성 검증 완료. 점수: 8/10",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic_title": "고카페인 음료 섭취 빈도가 청소년의 주중 수면 시간에 미치는 영향: 스마트폰 사용 시간의 매개 효과 검토",
+      "exposure": "caffeine_intake (고카페인 음료 섭취 빈도, 주 3회 이상 이분화)"
+    },
+    "outputs": {
+      "novelty_score": 8,
+      "verdict": ""
+    },
+    "impact": {
+      "affected_modules": [
+        "novelty_checker"
+      ]
+    }
+  },
+  {
+    "id": "20260520_224901_193958",
+    "timestamp": "2026-05-20 22:49:01",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "novelty_check",
+    "title": "신규성 확인: 스마트폰 과사용과 수면 부족이 청소년 우울감에 미치는 결합 효과: 상가적(additive) 상호작용 분석",
+    "description": "PubMed 신규성 검증 완료. 점수: 8/10",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic_title": "스마트폰 과사용과 수면 부족이 청소년 우울감에 미치는 결합 효과: 상가적(additive) 상호작용 분석",
+      "exposure": "smartphone_weekday 과사용 (≥4시간, 이분형) × sleep_weekday 부족 (<8시간, 이분형) — 2×2 결합 노출"
+    },
+    "outputs": {
+      "novelty_score": 8,
+      "verdict": ""
+    },
+    "impact": {
+      "affected_modules": [
+        "novelty_checker"
+      ]
+    }
+  },
+  {
+    "id": "20260520_224748_593959",
+    "timestamp": "2026-05-20 22:47:48",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "novelty_check",
+    "title": "신규성 확인: 주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국",
+    "description": "PubMed 신규성 검증 완료. 점수: 9/10",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic_title": "주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국 학교기반 단면 연구",
+      "exposure": "smartphone_weekday와 smartphone_weekend의 사용 시간 차이 (디지털 시차 지표, 파생변수: |smartphone_weekend - smartphone_weekday|)"
+    },
+    "outputs": {
+      "novelty_score": 9,
+      "verdict": ""
+    },
+    "impact": {
+      "affected_modules": [
+        "novelty_checker"
+      ]
+    }
+  },
+  {
+    "id": "20260520_224706_685760",
+    "timestamp": "2026-05-20 22:47:06",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 수면과 스마트폰 사용",
+    "description": "KYRBS 데이터셋 기반 연구 주제 5개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 수면과 스마트폰 사용",
+      "n_topics": 5
+    },
+    "outputs": {
+      "topic_count": 5,
+      "titles": [
+        "주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인지의 연관성: 전국 학교기반 단면 연구",
+        "스마트폰 과사용과 수면 부족이 청소년 우울감에 미치는 결합 효과: 상가적(additive) 상호작용 분석",
+        "고카페인 음료 섭취 빈도가 청소년의 주중 수면 시간에 미치는 영향: 스마트폰 사용 시간의 매개 효과 검토",
+        "주말 수면 보충(sleep catch-up)의 청소년 스트레스 및 우울감 완충 효과: 스마트폰 사용 강도에 따른 효과 수정 분석",
+        "스마트폰 사용 시간, 수면 시간, 신체활동의 3중 건강 행태 프로파일과 청소년 비만 위험: 잠재 프로파일 분석(LPA) 기반 접근"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_224513_509914",
+    "timestamp": "2026-05-20 22:45:13",
+    "user_email": "",
+    "session_id": "20260520_224421_4d2822fe",
+    "action_type": "qa",
+    "title": "Q&A: KYRBS 청소년 비만 연구 시 주의해야 할 편향과 통계 방법을 알려줘",
+    "description": "",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "question": "KYRBS 청소년 비만 연구 시 주의해야 할 편향과 통계 방법을 알려줘"
+    },
+    "outputs": {
+      "answer": "## 컨텍스트 평가부터\n\n제공된 5개 발췌문 중 KYRBS 청소년 비만 방법론에 직접 관련된 것은 COVID-19 전후 비교 연구 하나뿐이고, 나머지는 KNHANES 성인 여성 연구들입니다. 그러니 문헌 기반 답변보다는 **제가 축적해온 방법론적 관점을 중심으로** 이야기하는 게 더 정직하겠습니다.\n\n---\n\n## 1. KYRBS 구조적 편향 — 뭘 놓치고 있는가\n\n### 표집 편향 (Selection Bias)\nKYRBS의 가장 근본적인 한계는 **학교 기반 층화집락표본(stratified cluster sampling)** 구조",
+      "summary": "## 컨텍스트 평가부터\n\n제공된 5개 발췌문 중 KYRBS 청소년 비만 방법론에 직접 관련된 것은 COVID-19 전후 비교 연구 하나뿐이고, 나머지는 KNHANES 성인 여성 연"
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260520_224420_029426",
+    "timestamp": "2026-05-20 22:44:20",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "논문 품질 평가: 52/100 (D) — major_revision",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "outputs": {
+      "score": 52,
+      "grade": "D",
+      "rec": "major_revision"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_224256_352310",
+    "timestamp": "2026-05-20 22:42:56",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "통계주입 논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "StatBridge 통계 주입 논문 초안 생성 완료. DOCX: False",
+    "what_changed": {},
+    "why_better": "실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "n_total": 54633
+    },
+    "outputs": {
+      "draft_word_count": 3632,
+      "docx_path": null
+    },
+    "impact": {
+      "affected_modules": [
+        "paper_writer",
+        "stat_bridge",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_223758_093982",
+    "timestamp": "2026-05-20 22:37:58",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "조유선 스타일 논문 초안 생성 완료. 파일: data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+    "what_changed": {},
+    "why_better": "RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "exposure": "smartphone overuse",
+      "outcome": "sleep deprivation",
+      "population": "Korean adolescents",
+      "use_rag_references": true,
+      "study_info_keys": [
+        "dataset",
+        "design",
+        "sample_size",
+        "survey_year",
+        "journal",
+        "exposure",
+        "outcome",
+        "population"
+      ]
+    },
+    "outputs": {
+      "draft_word_count": 3506,
+      "output_path": "data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+      "safe_title": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "paper_writer",
+        "rag"
+      ]
+    }
+  },
+  {
+    "id": "20260520_222455_314055",
+    "timestamp": "2026-05-20 22:24:55",
+    "user_email": "",
+    "session_id": "20260520_222400_6919383f",
+    "action_type": "qa",
+    "title": "Q&A: KYRBS 청소년 비만 연구 시 주의해야 할 편향과 통계 방법을 알려줘",
+    "description": "",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "question": "KYRBS 청소년 비만 연구 시 주의해야 할 편향과 통계 방법을 알려줘"
+    },
+    "outputs": {
+      "answer": "제공된 컨텍스트 먼저 솔직하게 짚고 시작하죠.\n\n---\n\n## 컨텍스트 평가부터\n\n제공된 5개 발췌문 중 **KYRBS 청소년 비만 연구와 직접 관련된 문헌은 없습니다.** 기후-수면, 또래 피해-우울, 학업 스트레스 관련 논문들이라 이 질문에 대한 RAG 기반 답변은 불가합니다.\n\n다만 이 주제는 제 핵심 연구 영역이기도 하고, 축적된 방법론적 관점에서 실질적으로 유용한 내용을 짚을 수 있어서 — 컨텍스트 외 전문 지식 기반으로 답하겠습니다.\n\n---\n\n## KYRBS 청소년 비만 연구: 편향과 통계 방법론\n\n### 1. 핵심 편",
+      "summary": "제공된 컨텍스트 먼저 솔직하게 짚고 시작하죠.\n\n---\n\n## 컨텍스트 평가부터\n\n제공된 5개 발췌문 중 **KYRBS 청소년 비만 연구와 직접 관련된 문헌은 없습니다.** 기후-"
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260520_222401_379903",
+    "timestamp": "2026-05-20 22:24:01",
+    "user_email": "",
+    "session_id": "20260520_222306_530488bf",
+    "action_type": "qa",
+    "title": "Q&A: KYRBS 청소년 비만 연구 시 주의해야 할 편향과 통계 방법을 알려줘",
+    "description": "",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "question": "KYRBS 청소년 비만 연구 시 주의해야 할 편향과 통계 방법을 알려줘"
+    },
+    "outputs": {
+      "answer": "좋은 타이밍에 나온 질문입니다. 제공된 컨텍스트 먼저 솔직하게 짚고 시작하죠.\n\n---\n\n## 제공된 문헌에 대한 평가\n\n제공된 5개 발췌문 중 **KYRBS 기반 청소년 비만 연구 방법론**에 직접적으로 해당하는 것은 솔직히 제한적입니다.\n\n- COVID-19 전후 KYRBS 건강행태 변화 논문이 가장 관련성 있음\n- KNHANES 기반 논문들(성인 여성 비만, TMD, 건강문해력)은 방법론적 참고는 되지만 KYRBS 특이적 논의는 없음\n\n따라서 아래 내용은 **컨텍스트 + 제 연구 배경 지식을 통합**해서 답하겠습니다. 어느 부",
+      "summary": "좋은 타이밍에 나온 질문입니다. 제공된 컨텍스트 먼저 솔직하게 짚고 시작하죠.\n\n---\n\n## 제공된 문헌에 대한 평가\n\n제공된 5개 발췌문 중 **KYRBS 기반 청소년 비만 연"
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260520_222359_392629",
+    "timestamp": "2026-05-20 22:23:59",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "논문 품질 평가: 52/100 (D) — major_revision",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "outputs": {
+      "score": 52,
+      "grade": "D",
+      "rec": "major_revision"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_222306_045667",
+    "timestamp": "2026-05-20 22:23:06",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "논문 품질 평가: 52/100 (D) — major_revision",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "outputs": {
+      "score": 52,
+      "grade": "D",
+      "rec": "major_revision"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_222239_811960",
+    "timestamp": "2026-05-20 22:22:39",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "통계주입 논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "StatBridge 통계 주입 논문 초안 생성 완료. DOCX: False",
+    "what_changed": {},
+    "why_better": "실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "n_total": 54633
+    },
+    "outputs": {
+      "draft_word_count": 3446,
+      "docx_path": null
+    },
+    "impact": {
+      "affected_modules": [
+        "paper_writer",
+        "stat_bridge",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_222138_595571",
+    "timestamp": "2026-05-20 22:21:38",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "통계주입 논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "StatBridge 통계 주입 논문 초안 생성 완료. DOCX: False",
+    "what_changed": {},
+    "why_better": "실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "n_total": 54633
+    },
+    "outputs": {
+      "draft_word_count": 3667,
+      "docx_path": null
+    },
+    "impact": {
+      "affected_modules": [
+        "paper_writer",
+        "stat_bridge",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_221814_478084",
+    "timestamp": "2026-05-20 22:18:14",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "조유선 스타일 논문 초안 생성 완료. 파일: data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+    "what_changed": {},
+    "why_better": "RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "exposure": "smartphone overuse",
+      "outcome": "sleep deprivation",
+      "population": "Korean adolescents",
+      "use_rag_references": true,
+      "study_info_keys": [
+        "dataset",
+        "design",
+        "sample_size",
+        "survey_year",
+        "journal",
+        "exposure",
+        "outcome",
+        "population"
+      ]
+    },
+    "outputs": {
+      "draft_word_count": 3399,
+      "output_path": "data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+      "safe_title": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "paper_writer",
+        "rag"
+      ]
+    }
+  },
+  {
+    "id": "20260520_221630_301333",
+    "timestamp": "2026-05-20 22:16:30",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "조유선 스타일 논문 초안 생성 완료. 파일: data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+    "what_changed": {},
+    "why_better": "RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "exposure": "smartphone overuse",
+      "outcome": "sleep deprivation",
+      "population": "Korean adolescents",
+      "use_rag_references": true,
+      "study_info_keys": [
+        "dataset",
+        "design",
+        "sample_size",
+        "survey_year",
+        "journal",
+        "exposure",
+        "outcome",
+        "population"
+      ]
+    },
+    "outputs": {
+      "draft_word_count": 3701,
+      "output_path": "data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+      "safe_title": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "paper_writer",
+        "rag"
+      ]
+    }
+  },
+  {
+    "id": "20260520_221447_120801",
+    "timestamp": "2026-05-20 22:14:47",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 비만과 수면",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 비만과 수면",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Social Jetlag and Obesity Risk in Korean Adolescents: The Mediating Role of Night Snacking and Sedentary Behavior",
+        "Cumulative Sleep-Behavior Risk Index and Obesity in Korean Adolescents: A Latent Class Analysis Approach Using KYRBS"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_221219_323903",
+    "timestamp": "2026-05-20 22:12:19",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 비만과 수면",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 비만과 수면",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Social Jetlag as a Mediator Between Smartphone Use Patterns and Obesity Among Korean Adolescents: A Cross-Sectional Analysis of the 2025 KYRBS",
+        "Dose-Response Relationship Between Weekday Sleep Duration and Obesity Risk in Korean Adolescents: Effect Modification by Sedentary Behavior and Socioeconomic Status"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_214926_757679",
+    "timestamp": "2026-05-20 21:49:26",
+    "user_email": "",
+    "session_id": "20260520_214840_1a00210b",
+    "action_type": "qa",
+    "title": "Q&A: KYRBS 청소년 비만 연구 주의사항",
+    "description": "",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "question": "KYRBS 청소년 비만 연구 주의사항"
+    },
+    "outputs": {
+      "answer": "좋은 타이밍에 나온 질문입니다. 제공된 컨텍스트 먼저 솔직하게 짚고 시작하죠.\n\n---\n\n## 컨텍스트 평가부터\n\n제공된 5개 발췌문 중 **KYRBS 청소년 비만에 직접 관련된 것은 사실상 없습니다.** \"Test: Adolescent obesity and sleep\"는 제목뿐이고, 나머지 4편은 모두 **KNHANES 성인 데이터** 기반입니다. 따라서 아래 내용은 제 내재화된 연구 경험과 방법론적 지식 기반으로 답하는 것임을 먼저 밝힙니다.\n\n---\n\n## KYRBS 청소년 비만 연구의 핵심 주의사항\n\n### 1. 비만 지표의",
+      "summary": "좋은 타이밍에 나온 질문입니다. 제공된 컨텍스트 먼저 솔직하게 짚고 시작하죠.\n\n---\n\n## 컨텍스트 평가부터\n\n제공된 5개 발췌문 중 **KYRBS 청소년 비만에 직접 관련된 "
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260520_214839_429459",
+    "timestamp": "2026-05-20 21:48:39",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "논문 품질 평가: 0/100 (N/A) — error",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "outputs": {
+      "score": 0,
+      "grade": "N/A",
+      "rec": "error"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_214757_252163",
+    "timestamp": "2026-05-20 21:47:57",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "통계주입 논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "StatBridge 통계 주입 논문 초안 생성 완료. DOCX: False",
+    "what_changed": {},
+    "why_better": "실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "n_total": 54633
+    },
+    "outputs": {
+      "draft_word_count": 3676,
+      "docx_path": null
+    },
+    "impact": {
+      "affected_modules": [
+        "paper_writer",
+        "stat_bridge",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_214454_187573",
+    "timestamp": "2026-05-20 21:44:54",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "논문 작성: 청소년 스마트폰 과사용과 수면 부족",
+    "description": "조유선 스타일 논문 초안 생성 완료. 파일: data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+    "what_changed": {},
+    "why_better": "RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 과사용과 수면 부족",
+      "exposure": "smartphone overuse",
+      "outcome": "sleep deprivation",
+      "population": "Korean adolescents",
+      "use_rag_references": true,
+      "study_info_keys": [
+        "dataset",
+        "design",
+        "sample_size",
+        "survey_year",
+        "journal"
+      ]
+    },
+    "outputs": {
+      "draft_word_count": 3392,
+      "output_path": "data\\drafts\\청소년 스마트폰 과사용과 수면 부족.txt",
+      "safe_title": "청소년 스마트폰 과사용과 수면 부족"
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "paper_writer",
+        "rag"
+      ]
+    }
+  },
+  {
+    "id": "20260520_214100_989944",
+    "timestamp": "2026-05-20 21:41:00",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / 청소년 비만과 수면",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "청소년 비만과 수면",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Social Jetlag as a Mediator Between Smartphone Use Patterns and Obesity Risk in Korean Adolescents: A Cross-Sectional Analysis of the 2025 KYRBS",
+        "Bidirectional Association Between Subjective Sleep Sufficiency and Body Image Distortion in Korean Adolescents: Sex-Stratified Analysis with Depression as an Effect Modifier"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_212703_911639",
+    "timestamp": "2026-05-20 21:27:03",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "통계주입 논문 작성: 청소년 스마트폰 사용과 수면 부족",
+    "description": "StatBridge 통계 주입 논문 초안 생성 완료. DOCX: True",
+    "what_changed": {},
+    "why_better": "실제 OR/CI 통계값이 논문 본문에 직접 주입되어 정확도 향상",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 사용과 수면 부족",
+      "n_total": 54633
+    },
+    "outputs": {
+      "draft_word_count": 2509,
+      "docx_path": "data\\drafts\\청소년 스마트폰 사용과 수면 부족.docx"
+    },
+    "impact": {
+      "affected_modules": [
+        "paper_writer",
+        "stat_bridge",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_212511_247051",
+    "timestamp": "2026-05-20 21:25:11",
+    "user_email": "",
+    "session_id": "20260520_212453_2b92cdc6",
+    "action_type": "qa",
+    "title": "Q&A: 청소년 스마트폰 사용과 수면 부족의 관계는?",
+    "description": "",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "question": "청소년 스마트폰 사용과 수면 부족의 관계는?"
+    },
+    "outputs": {
+      "answer": "제공된 논문 발췌문들을 먼저 솔직하게 짚고 넘어가야 할 것 같습니다.\n\n---\n\n## 제공된 문헌에 대한 평가\n\n**결론부터 말하면: 제공된 5편의 논문 발췌문 중 스마트폰 사용과 수면 부족의 직접적 연관성을 다룬 논문은 없습니다.**\n\n제공된 문헌들의 실제 주제:\n- 한국 청소년 건강행동 일반 (흡연, 음주, 성경험)\n- 청소년 우울 척도 한국어판 타당화 (RADS-II)\n- 여자 청소년 체중감량 행동 (KYRBS 19차)\n- 국내 전자담배 연구 동향 분석\n- 청소년 신체활동 영향 요인 (KYRBS 13차)\n\n이 발췌문들로는 스마",
+      "summary": "제공된 논문 발췌문들을 먼저 솔직하게 짚고 넘어가야 할 것 같습니다.\n\n---\n\n## 제공된 문헌에 대한 평가\n\n**결론부터 말하면: 제공된 5편의 논문 발췌문 중 스마트폰 사용과"
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260520_212451_959511",
+    "timestamp": "2026-05-20 21:24:51",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: 청소년 스마트폰 사용과 수면 부족",
+    "description": "논문 품질 평가: 0/100 (N/A) — error",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "청소년 스마트폰 사용과 수면 부족"
+    },
+    "outputs": {
+      "score": 0,
+      "grade": "N/A",
+      "rec": "error"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
+    "id": "20260520_212451_586507",
+    "timestamp": "2026-05-20 21:24:51",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "논문 작성: 청소년 스마트폰 사용과 수면 부족",
+    "description": "조유선 스타일 논문 초안 생성 완료. 파일: data\\drafts\\청소년 스마트폰 사용과 수면 부족.txt",
+    "what_changed": {},
+    "why_better": "RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+    "inputs": {
+      "topic_title": "청소년 스마트폰 사용과 수면 부족",
+      "exposure": "smartphone use",
+      "outcome": "sleep deprivation",
+      "population": "Korean adolescents",
+      "use_rag_references": false,
+      "study_info_keys": [
+        "dataset",
+        "design",
+        "sample_size",
+        "survey_year",
+        "journal"
+      ]
+    },
+    "outputs": {
+      "draft_word_count": 2896,
+      "output_path": "data\\drafts\\청소년 스마트폰 사용과 수면 부족.txt",
+      "safe_title": "청소년 스마트폰 사용과 수면 부족"
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "paper_writer",
+        "rag"
+      ]
+    }
+  },
+  {
+    "id": "20260520_212144_380312",
+    "timestamp": "2026-05-20 21:21:44",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "topic_generate",
+    "title": "주제 생성: KYRBS / smartphone use and sleep",
+    "description": "KYRBS 데이터셋 기반 연구 주제 2개 생성",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "dataset_name": "KYRBS",
+      "focus": "smartphone use and sleep",
+      "n_topics": 2
+    },
+    "outputs": {
+      "topic_count": 2,
+      "titles": [
+        "Social Jetlag as a Mediator Between Weekday Smartphone Use and Sleep Insufficiency Among Korean Adolescents: A Cross-Sectional Analysis of the 2025 KYRBS",
+        "Multiplicative Interaction Between Smartphone Overuse and Zero-Calorie Beverage Consumption on Obesity Risk in Korean Adolescents: Effect Modification by Sleep Duration"
+      ]
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline"
+      ]
+    }
+  },
+  {
     "id": "20260520_012408_803188",
     "timestamp": "2026-05-20 01:24:08",
     "user_email": "",
