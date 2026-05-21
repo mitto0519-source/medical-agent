@@ -864,10 +864,40 @@ with main_col:
             else:
                 with st.spinner("PubMed 검색 + 규칙기반 유사도 분석 + Claude 평가 중..."):
                     try:
+                        # 방어적 타입 강제: Streamlit 세션 상태에 파일/객체가 들어올 수 있음
+                        exposure_val = "" if exposure is None else str(exposure)
+                        outcome_val = "" if outcome is None else str(outcome)
+                        population_val = "" if population is None else str(population)
+
                         result = _get_cached_novelty_checker().check(
-                            topic=title, exposure=exposure,
-                            outcome=outcome, population=population,
+                            topic=str(title), exposure=exposure_val,
+                            outcome=outcome_val, population=population_val,
                         )
+                    except Exception as e:
+                        # 특별히 closed-file 관련 ValueError가 올라오면 입력값을 강제 변환하고 재시도
+                        msg = str(e)
+                        if isinstance(e, ValueError) and ("closed file" in msg or "I/O operation on closed file" in msg):
+                            _log.warning("Novelty check failed with closed-file error; coercing session_state fields and retrying")
+                            try:
+                                # coerce possible structured session values
+                                sel = st.session_state.get("selected_topic", {}) or {}
+                                title2 = str(sel.get("title", title)) if sel else str(title)
+                                exposure2 = str(sel.get("exposure", exposure_val) if sel else exposure_val)
+                                outcome2 = str(sel.get("outcome", outcome_val) if sel else outcome_val)
+                                population2 = str(sel.get("population", population_val) if sel else population_val)
+                                result = _get_cached_novelty_checker().check(
+                                    topic=title2, exposure=exposure2, outcome=outcome2, population=population2
+                                )
+                            except Exception as e2:
+                                st.error(f"오류(재시도 실패): {e2}")
+                                import traceback; st.code(traceback.format_exc())
+                                result = None
+                        else:
+                            st.error(f"오류: {e}")
+                            import traceback; st.code(traceback.format_exc())
+                            result = None
+
+                    if result:
                         st.session_state["novelty_result"] = result
                         _log("check_novelty", {"title": title},
                              f"신규성 점수 {result.get('novelty_score',0)}/10: {title}", result)
@@ -875,9 +905,6 @@ with main_col:
                             "novelty_score": result.get("novelty_score", 0),
                             "gap": result.get("gap_identified", ""),
                         })
-                    except Exception as e:
-                        st.error(f"오류: {e}")
-                        import traceback; st.code(traceback.format_exc())
 
         if "novelty_result" in st.session_state:
             result = st.session_state["novelty_result"]
