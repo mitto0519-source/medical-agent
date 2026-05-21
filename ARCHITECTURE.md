@@ -24,7 +24,8 @@
 
 | 기능 | 정규 모듈 | 상태 | 비고 |
 |------|----------|------|------|
-| **논문용 OR/CI 회귀분석** | `src/data/stat_bridge.py` → `StatBridge` | ✅ active | 로지스틱/GEE/Cox/선형. 논문 파이프라인 전용 |
+| **논문용 OR/CI 회귀분석** | `src/data/stat_bridge.py` → `StatBridge` | ✅ active | 로지스틱/GEE/Cox/PSM/다수준/선형/민감도. 논문 파이프라인 전용 |
+| **컬럼명 자동 매핑** | `src/data/col_name_resolver.py` → `ColNameResolver` | ✅ active | 18개 표준변수 패턴매칭 + LLM 폴백 → spec 자동 remapping |
 | **UI 대화형 통계** | `src/statistics/medical_stats.py` → `MedicalStatistics` | ✅ active | 기술통계/t검정/카이제곱/ANOVA. Streamlit UI 전용 |
 
 > **stat_bridge vs medical_stats 구분**:
@@ -41,6 +42,8 @@
 | 단계별 UI 워크플로우 | `src/research/research_workflow.py` → `ResearchWorkflow` | ✅ active | app/pages/workflow.py 전용 상태머신 |
 | 신규성 확인 (PubMed) | `src/research/novelty_checker.py` → `NoveltyChecker` | ✅ active | pipeline이 내부적으로 호출 |
 | 동료 심사 | `src/research/peer_reviewer.py` → `PeerReviewer` | ✅ active | pipeline이 내부적으로 호출 |
+| 연구 프로젝트 관리 | `src/research/project_manager.py` → `ProjectManager` | ✅ active | data/projects/ 영속 추적, 단계별 상태+파일 경로 관리 |
+| **자율 연구 루프 (Phase A)** | `src/research/autonomous_research_loop.py` → `AutonomousResearchLoop` | ✅ active | Google Deep Research 수준. 5라운드 반복 PubMed탐색+가설수정 |
 
 > **research_pipeline vs research_workflow 구분**:
 > - `research_pipeline` = 완전 자동화 백엔드 파이프라인 (코드로 직접 실행)
@@ -65,6 +68,8 @@
 | 자가 반성/기록 | `src/memory/auto_learn.py` | ✅ active | 각 파이프라인 단계 후 자동 호출 |
 | 세션 간 대화 맥락 | `src/memory/conversation_memory.py` | ✅ active | |
 | 연속성 관리 | `src/memory/continuity.py` | ✅ active | |
+| 의미론적 기억 검색 | `src/memory/semantic_search.py` | ✅ active | insights.json + 이력 키워드 유사도 검색 → LLM 프롬프트 주입 |
+| **역량 자기평가 벤치마크 (Phase C)** | `src/diagnostics/capability_bench.py` → `CapabilityBench` | ✅ active | 논문 완성 후 7개 차원 자동 평가. 약점 → insights.json 누적 → 프롬프트 자동 반영 |
 | 페르소나 | `src/agent/persona.py` + `data/agent_self/persona.json` | ✅ active | 절대 비활성화 금지 |
 
 ### 6. RAG / 지식 베이스
@@ -78,6 +83,7 @@
 | 지식 그래프 | `src/knowledge/medical_graph.py` | ✅ active | 10,005 노드 |
 | 의학 온톨로지 | `src/knowledge/medical_ontology.py` | ✅ active | |
 | 문서 청킹/인제스트 | `src/ingestion/document_reader.py`, `chunker.py` | ✅ active | |
+| **멀티에이전트 병렬 풀 (Phase B)** | `src/agent/agent_pool.py` → `AgentPool` | ✅ active | StatAgent/LitAgent/WritingAgent/ReviewAgent 병렬 실행. ThreadPoolExecutor 기반. 3~5배 속도 향상 |
 | PubMed 검색 | `src/ingestion/evidence_reader.py` | ✅ active | novelty_checker가 호출 |
 
 ### 7. 클라우드 / 인프라
@@ -92,7 +98,7 @@
 
 | 기능 | 정규 모듈 | 상태 | 비고 |
 |------|----------|------|------|
-| 메인 Streamlit 앱 | `app/streamlit_app.py` | ✅ active | 진입점 |
+| 메인 Streamlit 앱 | `app/streamlit_app.py` | ✅ active | 진입점. Before/After 수정 비교 UI + 그림 갤러리 포함 |
 | AI 패널 | `app/ai_panel.py` | ✅ active | |
 | 워크플로우 페이지 | `app/pages/workflow.py` | ✅ active | ResearchWorkflow 사용 |
 | 시각화 | `src/visualization/medical_plots.py` → `MedicalVisualizer` | ✅ active | |
@@ -103,8 +109,14 @@
 | 기능 | 정규 모듈 | 상태 | 비고 |
 |------|----------|------|------|
 | DOCX 생성 | `src/export/word_exporter.py` | ✅ active | paper_writer가 호출 |
-| 그림 생성 | `src/export/figure_builder.py` | ✅ active | |
+| 저널 DOCX 생성 | `src/export/journal_docx_exporter.py` | ✅ active | JournalStyle 적용, EndNote XML+BibTeX 동시 생성 |
+| 저널 레지스트리 | `src/export/journal_registry.py` | ✅ active | data/journals/styles/*.json, 미등록 시 LLM 자동 생성 |
+| 참고문헌 라이브러리 | `src/export/reference_library.py` | ✅ active | PubMed API, Vancouver/APA 포맷, EndNote XML, BibTeX |
+| STATA do-file 생성 | `src/export/stata_exporter.py` | ✅ active | 연구 스펙→STATA 분석 코드(svy:logistic+Table1+subgroup+sensitivity) |
+| 그림 생성 + Forest Plot | `src/export/figure_builder.py` | ✅ active | `stat_result_to_forest_plot()` — StatBridge 결과→PNG 자동 저장. Malgun Gothic 한글 폰트 |
+| **출판용 전체 그림/표 생성** | `src/export/publication_figure_generator.py` → `PublicationFigureGenerator` | ✅ active | FigureLabs 수준. Forest/ROC/유병률/서브그룹/Table1/Table2/계수플롯 300dpi PNG+SVG |
 | 표 생성 | `src/export/table_builder.py` | ✅ active | |
+| 커버 레터 생성 | `src/export/cover_letter_writer.py` | ✅ active | 저널+주제+리뷰 결과 기반 영문 커버 레터 LLM 생성 |
 
 ---
 

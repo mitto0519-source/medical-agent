@@ -305,13 +305,13 @@ class EvidenceReader:
 
     def search_and_summarise(self, query: str, n: int = 5) -> str:
         """검색 결과를 텍스트 요약으로 반환 (RAG 컨텍스트 삽입용)."""
-        results = self.search(query, max_per_source=n)[:n*2]
+        results = [r for r in self.search(query, max_per_source=n)[:n*2] if r is not None]
         lines = [f"EVIDENCE SEARCH: '{query}'\n"]
         for i, r in enumerate(results, 1):
             title = r.get("title", "No title")
             year = r.get("year", "")
             journal = r.get("journal", "")
-            abstract = r.get("abstract", "")[:300]
+            abstract = (r.get("abstract") or "")[:300]
             lines.append(f"{i}. {title} ({journal}, {year})")
             if abstract:
                 lines.append(f"   Abstract: {abstract}...")

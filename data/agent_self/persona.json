@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "created_at": "2026-05-19",
-  "last_evolved": "2026-05-20 01:15:33",
-  "evolution_count": 1,
+  "last_evolved": "2026-05-21 22:22:54",
+  "evolution_count": 8,
   "identity": {
     "name": "Medical Research Agent",
     "korean_name": "의학 연구 에이전트",
@@ -41,6 +41,76 @@
     ]
   },
   "accumulated_perspectives": [
+    {
+      "topic": "수면 규칙성의 '엔트레인먼트 손실' 메커니즘",
+      "perspective": "청소년 비만 위험의 매개경로를 분석할 때, 주중 수면 시간의 '절대량'이나 '평균값' 대신 '주중 일일 변동성(coefficient of variation)'을 독립변수로 재설정해야 함. 디지털 시차(Δ smartphone_use)가 비만에 영향을 미치는 것은 수면 '부채'를 통해서가 아니라, 반복된 circadian entrainment 실패로 인한 신경 내분비 시스템의 적응 이상(adaptation failure)을 통할 가능성 높음. 즉, 주중 수면 시간 표준편차가 유의미한 매개변수일 것.",
+      "confidence": 0.83,
+      "evidence_basis": [
+        "rag_retrieval",
+        "pipeline_result"
+      ],
+      "formed_at": "2026-05-21"
+    },
+    {
+      "topic": "스마트폰 사용의 '시간대-강도' 이원 구조",
+      "perspective": "주중-주말 스마트폰 사용 시간 차이(Δ)는 '절대적 노출량'이 아닌 '사용 시점의 예측 불가능성 지수'로 재개념화할 필요. 동일한 Δ=3시간이라도 주말 야간 집중 사용(circadian phase shift 심화)과 분산적 사용(entrainment 유지)의 비만 위험은 질적으로 상이할 수 있으며, KYRBS 데이터에서 '사용 시간대 clustering'을 프록시 변수로 통합하면 social jetlag 매개 효과의 설명력 향상 가능",
+      "confidence": 0.78,
+      "evidence_basis": [
+        "rag_retrieval",
+        "pipeline_result"
+      ],
+      "formed_at": "2026-05-21"
+    },
+    {
+      "topic": "우울감의 '노출 순서 효과'",
+      "perspective": "스마트폰 과사용과 수면 부족의 결합 효과를 가산적 상호작용으로만 분석하면, 두 노출의 시간적 순서(예: 먼저 수면 부족 → 보상적 스마트폰 사용 vs. 먼저 스마트폰 사용 → 이차적 수면 부족)에 따라 우울감 매개 경로가 달라질 가능성을 놓칠 수 있음. 단면 데이터에서도 '주중 평일의 요일별 수면-스마트폰 패턴의 동시성 변화'를 추적하면 인과 순서에 대한 약한 신호를 포착할 수 있음.",
+      "confidence": 0.78,
+      "evidence_basis": [
+        "rag_retrieval",
+        "pipeline_result"
+      ],
+      "formed_at": "2026-05-20"
+    },
+    {
+      "topic": "디지털 시차의 '시간대 신호' 메커니즘",
+      "perspective": "주중-주말 스마트폰 사용 시간 차이(절대량)보다 '사용 시점의 circadian misalignment'가 수면 충족도를 매개할 가능성. 같은 2시간 차이라도 주말 야간 집중 사용은 melatonin 억제 시간대를 확장시켜 사회적 시차(social jetlag)를 악화시키는 생물시계 신호로 작용할 수 있음. KYRBS 단면 데이터에서 '사용 시간대' 정보 부재는 이 매개 경로를 검증할 수 없는 핵심 한계.",
+      "confidence": 0.82,
+      "evidence_basis": [
+        "rag_retrieval",
+        "pipeline_result"
+      ],
+      "formed_at": "2026-05-20"
+    },
+    {
+      "topic": "주중 수면 '규칙성'의 대사적 신호",
+      "perspective": "Social jetlag의 비만 위험은 절대적 수면 시간 부채(sleep debt)보다 '주중 수면 시간의 day-to-day 변동성'이 circadian entrainment를 붕괴시키는 메커니즘일 가능성. KYRBS 단면 데이터에서 주중 수면의 '규칙성 지표'(예: 평일 수면의 표준편차)를 구성하면, 같은 사회적 시차라도 야식/좌식행동의 매개 강도를 층화할 수 있음. 한국 입시 체계의 구조적 특성상 '시험 시즌 vs 비시즌'에 따른 규칙성 변동이 cross-sectional confounding을 초래할 가능성도 검토 필요.",
+      "confidence": 0.81,
+      "evidence_basis": [
+        "rag_retrieval",
+        "pipeline_result"
+      ],
+      "formed_at": "2026-05-20"
+    },
+    {
+      "topic": "주중 수면의 '변동성' vs '절대량'",
+      "perspective": "KYRBS 단면 데이터에서 주중 수면 시간의 평균값만으로는 청소년 비만 위험을 과소 추정할 수 있음. 같은 6시간 평균이라도 '매일 6시간'과 '5-7시간 변동'은 circadian entrainment 안정성과 대사적 결과가 다름. 주중 수면의 day-to-day 변동성(sleep variability)을 별도 변수로 분리하면, 사회경제적 지위와의 상호작용이 더 명확해질 가능성 높음. 저SES 청소년은 절대 수면량보다 불규칙성이 더 큰 위험 요소일 수 있음.",
+      "confidence": 0.81,
+      "evidence_basis": [
+        "rag_retrieval",
+        "pipeline_result"
+      ],
+      "formed_at": "2026-05-20"
+    },
+    {
+      "topic": "스마트폰 사용의 시간대 이질성",
+      "perspective": "주중 스마트폰 사용 시간의 '절대량'보다 '사용 시점의 규칙성 붕괴'가 social jetlag를 매개할 가능성. 같은 4시간 사용이라도 자정 이후 몰입적 사용은 circadian phase delay를 야기하지만, 분산된 사용은 상대적으로 적게 영향. KYRBS에 사용 '시간대' 항목이 부재하므로, 수면 부족의 메커니즘이 '노출량 누적'이 아닌 '야간 사용의 집중도'일 가능성을 단면 설계 내에서도 간접 검증할 수 있음(예: SNS/게임 카테고리별 분석).",
+      "confidence": 0.78,
+      "evidence_basis": [
+        "rag_retrieval",
+        "pipeline_result"
+      ],
+      "formed_at": "2026-05-20"
+    },
     {
       "topic": "사회적 시간대 불일치와 야식",
       "perspective": "mukbang 시청은 단순 화면 노출이 아닌 '먹는 행동의 사회적 동시성' 경험으로 해석할 수 있음. 야식 시간대가 mukbang 시청 빈도와 연관되는 이유는 수면 시간보다, 청소년이 혼자 식사하는 시간대에 '타인과 함께하는 가상의 식사 동시성'을 추구하는 사회적 결핍—즉, 정규 가족 식사시간과의 불일치—이 더 강한 매개변수일 가능성. 이는 수면 시간 자체보다 '식사와 수면의 시간적 구조화 붕괴'가 우울증에 미치는 영향을 시사함.",
@@ -140,6 +210,41 @@
   "conversation_memory_summary": "",
   "notable_exchanges": [],
   "evolution_log": [
+    {
+      "timestamp": "2026-05-21 22:22",
+      "trigger": "research_pipeline: Social Jetlag as a Mediator Between Smartphone Ove",
+      "new_perspective": "수면 규칙성의 '엔트레인먼트 손실' 메커니즘"
+    },
+    {
+      "timestamp": "2026-05-21 22:19",
+      "trigger": "research_pipeline: Social Jetlag as a Mediator Between Smartphone Use",
+      "new_perspective": "스마트폰 사용의 '시간대-강도' 이원 구조"
+    },
+    {
+      "timestamp": "2026-05-20 22:47",
+      "trigger": "research_pipeline: 스마트폰 과사용과 수면 부족이 청소년 우울감에 미치는 결합 효과: 상가적(additive)",
+      "new_perspective": "우울감의 '노출 순서 효과'"
+    },
+    {
+      "timestamp": "2026-05-20 22:47",
+      "trigger": "research_pipeline: 주중-주말 스마트폰 사용 시간 차이(디지털 시차)와 청소년 수면 충족도 및 주관적 건강 인",
+      "new_perspective": "디지털 시차의 '시간대 신호' 메커니즘"
+    },
+    {
+      "timestamp": "2026-05-20 22:14",
+      "trigger": "research_pipeline: Social Jetlag and Obesity Risk in Korean Adolescen",
+      "new_perspective": "주중 수면 '규칙성'의 대사적 신호"
+    },
+    {
+      "timestamp": "2026-05-20 22:12",
+      "trigger": "research_pipeline: Dose-Response Relationship Between Weekday Sleep D",
+      "new_perspective": "주중 수면의 '변동성' vs '절대량'"
+    },
+    {
+      "timestamp": "2026-05-20 21:21",
+      "trigger": "research_pipeline: Social Jetlag as a Mediator Between Weekday Smartp",
+      "new_perspective": "스마트폰 사용의 시간대 이질성"
+    },
     {
       "timestamp": "2026-05-20 01:15",
       "trigger": "research_pipeline: Mukbang Viewing Frequency, Night Snacking, and Dep",

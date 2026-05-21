@@ -142,6 +142,10 @@ class StatBridge:
                 return self._chi2(df, spec, outcome, outcome_label)
             elif analysis == "cox":
                 return self._cox(df, spec, outcome, outcome_label)
+            elif analysis == "psm":
+                return self._psm(df, spec, outcome, outcome_label)
+            elif analysis == "multilevel":
+                return self._multilevel(df, spec, outcome, outcome_label)
             elif analysis == "sensitivity":
                 return self._sensitivity(df, spec, outcome, outcome_label)
             else:
@@ -180,9 +184,13 @@ class StatBridge:
             if v and v in df.columns:
                 cols_needed.append(v)
 
-        clean = df[[c for c in cols_needed if c in df.columns]].dropna()
+        clean = df[[c for c in cols_needed if c in df.columns]].copy()
+        # outcome을 수치형으로 강제 변환 (비수치 → NaN)
+        import pandas as _pd
+        clean[outcome] = _pd.to_numeric(clean[outcome], errors="coerce")
+        clean = clean.dropna(subset=[outcome])
         n_total = len(clean)
-        n_outcome = int(clean[outcome].sum())
+        n_outcome = int(clean[outcome].fillna(0).astype(float).sum())
         outcome_rate = n_outcome / n_total * 100 if n_total else 0.0
 
         X = self._build_X(clean, all_vars)
@@ -233,6 +241,19 @@ class StatBridge:
             "weighted": weights is not None,
             "complex_sample": bool(strata_var or cluster_var),
         }
+        # ROC curve data for figure generator
+        try:
+            from sklearn.metrics import roc_curve, roc_auc_score
+            y_pred = fit.predict(X_const)
+            fpr, tpr, _ = roc_curve(y.values, y_pred)
+            auc = float(roc_auc_score(y.values, y_pred))
+            metrics["roc"] = {
+                "fpr": fpr.tolist(),
+                "tpr": tpr.tolist(),
+                "auc": round(auc, 3),
+            }
+        except Exception as _roc_e:
+            _log.debug("ROC 계산 실패: %s", _roc_e)
         desc = self._describe(clean, outcome, all_vars)
 
         # 층화 서브그룹 분석
@@ -388,6 +409,157 @@ class StatBridge:
         }
         main_result.analysis_type = "logistic+sensitivity"
         return main_result
+
+    # ------------------------------------------------------------------
+    # Propensity Score Matching (PSM)
+    # ------------------------------------------------------------------
+
+    def _psm(self, df: pd.DataFrame, spec: dict, outcome: str, label: str) -> AnalysisResult:
+        """Propensity Score Matching 1:1 최근접 이웃 매칭.
+
+        spec 추가 필드:
+            treatment_var: str — 처치 변수 (binary 0/1). 없으면 predictors[0] 사용.
+            n_neighbors: int = 1 — 매칭 비율 (현재 1:1만 지원)
+        """
+        try:
+            from sklearn.linear_model import LogisticRegression
+            from sklearn.preprocessing import StandardScaler
+        except ImportError:
+            _log.warning("scikit-learn 미설치 — logistic으로 폴백")
+            return self._logistic(df, spec, outcome, label)
+
+        treatment_var = spec.get("treatment_var") or (spec.get("predictors", ["sex"]) or ["sex"])[0]
+        all_vars = spec.get("predictors", []) + spec.get("covariates", [])
+        covars = [v for v in all_vars if v != treatment_var and v in df.columns]
+
+        cols = [outcome, treatment_var] + covars
+        clean = df[[c for c in cols if c in df.columns]].dropna()
+        n_total = len(df)
+
+        if treatment_var not in clean.columns or len(clean) < 30:
+            return self._logistic(df, spec, outcome, label)
+
+        t = clean[treatment_var].astype(float)
+        y = clean[outcome].astype(float)
+        X = clean[covars].fillna(0).astype(float) if covars else pd.DataFrame(index=clean.index)
+
+        # Step 1: 성향 점수 추정
+        scaler = StandardScaler()
+        if not X.empty:
+            X_scaled = scaler.fit_transform(X)
+            lr = LogisticRegression(max_iter=1000, random_state=42, C=1.0)
+            lr.fit(X_scaled, t)
+            ps = lr.predict_proba(X_scaled)[:, 1]
+        else:
+            ps = np.full(len(clean), 0.5)
+
+        # Step 2: 1:1 최근접 이웃 매칭
+        treated_idx = np.where(t.values == 1)[0]
+        control_idx = np.where(t.values == 0)[0]
+        used_ctrl: set = set()
+        matched_rows = []
+        for ti in treated_idx:
+            ps_t = ps[ti]
+            avail = [ci for ci in control_idx if ci not in used_ctrl]
+            if not avail:
+                break
+            best_ci = avail[int(np.argmin(np.abs(ps[avail] - ps_t)))]
+            matched_rows.extend([ti, best_ci])
+            used_ctrl.add(best_ci)
+
+        if len(matched_rows) < 10:
+            return AnalysisResult(
+                analysis_type="psm",
+                outcome=outcome, outcome_label=label,
+                n_total=n_total, n_outcome=0, outcome_rate=0.0,
+                error="PSM 매칭 실패: 처치 변수 또는 매칭 조건을 확인하세요.",
+            )
+
+        matched_df = clean.iloc[matched_rows].copy()
+        n_pairs = len(matched_rows) // 2
+
+        # Step 3: 매칭 표본에 대한 회귀 분석
+        main_result = self._logistic(matched_df, spec, outcome, label)
+        main_result.analysis_type = "psm_logistic"
+        main_result.n_total = n_total
+        main_result.model_metrics["n_matched"] = len(matched_rows)
+        main_result.model_metrics["n_pairs"] = n_pairs
+        main_result.model_metrics["n_treated"] = len(treated_idx)
+        _log.info("PSM 완료: %d쌍 매칭 (처치군 %d)", n_pairs, len(treated_idx))
+        return main_result
+
+    # ------------------------------------------------------------------
+    # Multilevel (Mixed Effects) regression
+    # ------------------------------------------------------------------
+
+    def _multilevel(self, df: pd.DataFrame, spec: dict, outcome: str, label: str) -> AnalysisResult:
+        """선형 혼합 효과 모형 (Mixed Effects / Multilevel Model).
+
+        spec 추가 필드:
+            group_var: str — 군집 변수 (학교, 지역 등). 없으면 logistic으로 폴백.
+        """
+        import statsmodels.formula.api as smf
+
+        group_var = spec.get("group_var")
+        if not group_var or group_var not in df.columns:
+            _log.warning("multilevel: group_var 없음 — logistic으로 폴백")
+            return self._logistic(df, spec, outcome, label)
+
+        predictors = spec.get("predictors", [])
+        covariates = spec.get("covariates", [])
+        all_vars = [v for v in predictors + covariates if v in df.columns]
+
+        cols = [outcome, group_var] + all_vars
+        clean = df[[c for c in cols if c in df.columns]].dropna()
+        n_total = len(clean)
+
+        # 포뮬라 구성
+        rhs = " + ".join(all_vars) if all_vars else "1"
+        formula = f"{outcome} ~ {rhs}"
+
+        try:
+            model = smf.mixedlm(formula, clean, groups=clean[group_var])
+            fit = model.fit(reml=False, disp=False)
+        except Exception as e:
+            _log.warning("Multilevel 모형 실패, logistic으로 폴백: %s", e)
+            return self._logistic(df, spec, outcome, label)
+
+        model_vars = []
+        ci = fit.conf_int()
+        for var in fit.params.index:
+            if var in ("Intercept", "Group Var"):
+                continue
+            try:
+                model_vars.append(VariableResult(
+                    variable=var,
+                    label=self._prettify(var),
+                    or_value=round(float(fit.params[var]), 4),
+                    ci_lower=round(float(ci.loc[var, 0]), 4),
+                    ci_upper=round(float(ci.loc[var, 1]), 4),
+                    p_value=round(float(fit.pvalues[var]), 4),
+                    n=n_total,
+                ))
+            except Exception:
+                pass
+
+        metrics = {
+            "log_likelihood": round(float(fit.llf), 4) if hasattr(fit, "llf") else None,
+            "aic": round(float(fit.aic), 4) if hasattr(fit, "aic") else None,
+            "group_var": group_var,
+            "n_groups": int(clean[group_var].nunique()),
+        }
+
+        return AnalysisResult(
+            analysis_type="multilevel",
+            outcome=outcome,
+            outcome_label=label,
+            n_total=n_total,
+            n_outcome=int(clean[outcome].sum()) if clean[outcome].dtype in [float, int] else 0,
+            outcome_rate=float(clean[outcome].mean() * 100) if clean[outcome].dtype in [float, int] else 0.0,
+            model_vars=model_vars,
+            model_metrics=metrics,
+            descriptive_stats=self._describe(clean, outcome, all_vars),
+        )
 
     # ------------------------------------------------------------------
     # Linear regression (continuous outcome)

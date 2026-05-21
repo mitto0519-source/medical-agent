@@ -352,6 +352,7 @@ Write the full Methods section: Study Design and Population, Variables, Statisti
         study_info: Dict,
         results: Dict,
         reference_context: Optional[str] = None,
+        ref_lib=None,
     ) -> str:
         """전체 논문 초안 한번에 생성.
 
@@ -383,31 +384,17 @@ Write the full Methods section: Study Design and Population, Variables, Statisti
                     break
 
         sections = {}
+        ref_block = f"\n\nREFERENCE CONTEXT FROM LITERATURE:\n{reference_context}" if reference_context else ""
+        sys_p = self._profile.get_system_prompt()
+        dataset_ctx = self._datasets.get_context(dataset_key) if (dataset_key and self._datasets) else ""
+        methods_ctx = self._methods.get_context_for_claude(
+            study_info.get("methods_list", ["logistic_regression"])
+        ) if self._methods else ""
+        covariates = study_info.get("covariates", "sex, age, grade, family_econ, academic_perf, BMI, depression, physical activity")
 
-        print("[PaperWriter] Abstract 작성 중...")
-        sections["abstract"] = self._generate(
-            self._profile.get_system_prompt(),
-            f"""Write a structured abstract for this medical research paper.
-Word limit: 300 words. Use Background / Objective / Methods / Results / Conclusion format.
-
-TOPIC: {topic}
-STUDY DESIGN: {design}
-DATASET: {dataset_name} (n={sample_size})
-EXPOSURE: {exposure}
-OUTCOME: {outcome}
-POPULATION: {population}
-KEY RESULTS: {results_summary}
-TARGET JOURNAL: {journal}
-
-Write the complete abstract now. Base all content strictly on the information provided above.
-Do NOT substitute content from other studies.""",
-        )
-
+        # ── Step 1: Introduction (참고문헌 컨텍스트 활용, 독립 생성) ─────────
         print("[PaperWriter] Introduction 작성 중...")
-        ref_block = f"\n\nREFERENCE CONTEXT:\n{reference_context}" if reference_context else ""
-        sections["introduction"] = self._generate(
-            self._profile.get_system_prompt(),
-            f"""Write the Introduction section for this medical research paper.
+        sections["introduction"] = self._generate(sys_p, f"""Write the Introduction section for this medical research paper.
 
 TOPIC: {topic}
 EXPOSURE: {exposure}
@@ -416,65 +403,58 @@ POPULATION: {population}
 STUDY DESIGN: {design}{ref_block}
 
 Structure: broad public health context → specific problem → knowledge gap → study aim.
-Keep strictly to this topic. Do NOT refer to other unrelated studies.
-Write 4–5 paragraphs.""",
-        )
+Keep strictly to this topic. Do NOT refer to unrelated studies. Write 4–5 paragraphs.""")
 
+        # ── Step 2: Methods (데이터셋/통계 컨텍스트 활용) ─────────────────────
         print("[PaperWriter] Methods 작성 중...")
-        dataset_ctx = self._datasets.get_context(dataset_key) if (dataset_key and self._datasets) else ""
-        methods_ctx = self._methods.get_context_for_claude(
-            study_info.get("methods_list", ["logistic_regression"])
-        ) if self._methods else ""
-        sections["methods"] = self._generate(
-            self._profile.get_system_prompt(),
-            f"""Write the Methods section for this medical research paper.
+        sections["methods"] = self._generate(sys_p, f"""Write the Methods section for this medical research paper.
 
 TOPIC: {topic}
 STUDY DESIGN: {design}
 DATASET: {dataset_name} (n={sample_size})
 EXPOSURE: {exposure}
 OUTCOME: {outcome}
-COVARIATES: {study_info.get("covariates", "sex, age, grade, family_econ, academic_perf, BMI, depression, physical activity")}
+COVARIATES: {covariates}
 
 {dataset_ctx}
 {methods_ctx}
 
 Write subsections: Study Design and Population / Exposure / Outcome / Covariates / Statistical Analysis.
-Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""",
-        )
+Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""")
 
+        # ── Step 3: Results (Methods 핵심 내용 전달 → 일관성 확보) ──────────
         print("[PaperWriter] Results 작성 중...")
-        sections["results"] = self._generate(
-            self._profile.get_system_prompt(),
-            f"""Write the Results section for this medical research paper.
+        methods_snippet = sections["methods"][:600]
+        sections["results"] = self._generate(sys_p, f"""Write the Results section for this medical research paper.
 
 TOPIC: {topic}
 EXPOSURE: {exposure}
 OUTCOME: {outcome}
 DATASET: {dataset_name} (n={sample_size})
 
-KEY FINDINGS (use these exact numbers):
+METHODS USED (for consistency):
+{methods_snippet}
+
+KEY FINDINGS (use these exact numbers, do NOT invent statistics):
 {chr(10).join(f'- {f}' for f in main_findings)}
 
 Additional subgroup findings: {results.get("subgroup", "Not provided")}
 Sensitivity analyses: {results.get("sensitivity", "Not provided")}
 
-IMPORTANT: Base the Results ONLY on the numbers above. Do NOT invent statistics.
 Write in this author's exact numeric reporting style (aOR, 95% CI, P values).
-Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""",
-        )
+Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""")
 
+        # ── Step 4: Discussion (Results 텍스트 직접 참조 → 내용 일치 보장) ──
         print("[PaperWriter] Discussion 작성 중...")
-        sections["discussion"] = self._generate(
-            self._profile.get_system_prompt(),
-            f"""Write the Discussion section for this medical research paper.
+        results_snippet = sections["results"][:800]
+        sections["discussion"] = self._generate(sys_p, f"""Write the Discussion section for this medical research paper.
 
 TOPIC: {topic}
 EXPOSURE: {exposure}
 OUTCOME: {outcome}
 
-KEY FINDINGS TO DISCUSS:
-{chr(10).join(f'- {f}' for f in main_findings)}
+ACTUAL RESULTS SECTION (refer to these exact findings):
+{results_snippet}
 
 COMPARISON WITH LITERATURE: {results.get("literature_comparison", "Discuss in relation to prior studies on this topic.")}
 MECHANISMS: {results.get("mechanisms", "Propose biologically plausible mechanisms.")}
@@ -483,14 +463,39 @@ LIMITATIONS: cross-sectional design (cannot establish causality), self-reported 
 {ref_block}
 
 Write in this author's hedging style. Structure:
-1) Summary of main findings
-2) Comparison with existing literature
-3) Proposed mechanisms
-4) Strengths and limitations
-5) Conclusion with public health implications""",
-        )
+1) Summary of main findings  2) Comparison with existing literature
+3) Proposed mechanisms  4) Strengths and limitations  5) Public health conclusion""")
 
-        # Assemble
+        # ── Step 5: Abstract 마지막 생성 (전 섹션 기반 → 가장 정확) ─────────
+        print("[PaperWriter] Abstract 작성 중 (전 섹션 통합)...")
+        sections["abstract"] = self._generate(sys_p, f"""Write a structured abstract for this medical research paper.
+Word limit: 300 words. Format: Background / Objective / Methods / Results / Conclusion.
+
+TOPIC: {topic}
+TARGET JOURNAL: {journal}
+
+METHODS SUMMARY:
+{sections["methods"][:500]}
+
+RESULTS SUMMARY:
+{sections["results"][:500]}
+
+CONCLUSION FROM DISCUSSION:
+{sections["discussion"][-400:]}
+
+Base the abstract STRICTLY on the sections above. Do NOT invent numbers.
+Write the complete abstract now.""")
+
+        # 섹션 dict를 인스턴스에 보관 (JournalDocxExporter가 접근할 수 있도록)
+        self.last_sections = {
+            "Abstract": sections["abstract"],
+            "Introduction": sections["introduction"],
+            "Methods": sections["methods"],
+            "Results": sections["results"],
+            "Discussion": sections["discussion"],
+        }
+
+        # Assemble (표준 논문 순서: Abstract → Introduction → Methods → Results → Discussion)
         author = self._profile.author_name
         separator = "=" * 70
         paper = f"""{separator}
@@ -523,6 +528,19 @@ DISCUSSION
 {separator}
 {sections['discussion']}
 """
+        # ── References 섹션 추가 (ref_lib이 있을 때만) ────────────────────
+        if ref_lib is not None:
+            try:
+                refs = ref_lib.get_refs() if hasattr(ref_lib, "get_refs") else []
+                if refs:
+                    from src.export.reference_library import format_reference
+                    ref_lines = [format_reference(r, "Vancouver", i + 1) for i, r in enumerate(refs)]
+                    paper += f"\n{separator}\nREFERENCES\n{separator}\n"
+                    paper += "\n".join(ref_lines) + "\n"
+                    self.last_sections["References"] = "\n".join(ref_lines)
+            except Exception as e:
+                _log.warning("References 섹션 추가 실패: %s", e)
+
         return paper
 
     # ------------------------------------------------------------------
@@ -535,6 +553,7 @@ DISCUSSION
         study_info: Dict,
         stat_result: dict,
         reference_context: Optional[str] = None,
+        ref_lib=None,
         review_result: dict | None = None,
     ) -> str:
         """실제 통계 결과(StatBridge)를 주입해 논문 초안 생성.
@@ -542,7 +561,7 @@ DISCUSSION
         stat_result: StatBridge.AnalysisResult.to_dict()
         """
         results = self._stat_to_results(stat_result)
-        paper = self.write_full_paper(topic, study_info, results, reference_context)
+        paper = self.write_full_paper(topic, study_info, results, reference_context, ref_lib=ref_lib)
 
         # Append peer review summary if provided
         if review_result:

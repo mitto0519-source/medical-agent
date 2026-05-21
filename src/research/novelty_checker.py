@@ -465,6 +465,7 @@ Evaluate novelty. Your score must be consistent with the rule-based score ({rule
             "similarity_stats": stats,
             "overall_similar_aspects": llm_result.get("overall_similar_aspects", agg_similar),
             "overall_different_aspects": llm_result.get("overall_different_aspects", agg_different),
+            "found_papers": papers,  # 실제 PubMed 논문 dicts (pmid/title/authors/journal/year/doi 포함)
         }
 
     def search_papers(self, query: str, max_results: int = 10) -> List[Dict]:

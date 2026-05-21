@@ -1,5 +1,199 @@
 [
   {
+    "id": "20260521_221927_009936",
+    "timestamp": "2026-05-21 22:19:27",
+    "category": "pattern",
+    "title": "Mechanism-first framing × interaction design = KYRBS novelty",
+    "insight": "두 주제 모두 '절대량' 노출(수면시간, 스마트폰 사용량)보다 '시간-메커니즘'(social jetlag, circadian misalignment) 또는 '상호작용'(additive interaction) 프레이밍으로 구성. 단순 노출-결과 연관성은 피하고, 시간대 신호나 복합 노출의 초가성(synergy) 강조.",
+    "why_matters": "KYRBS 주제 생성의 반복성공 패턴 확인. 메커니즘(circadian) + 상호작용(additive) 조합이 KYRBS 데이터의 단면 한계를 우회하고 실제 공중보건 함의를 강화하는 프레이밍 틀.",
+    "how_to_apply": "향후 KYRBS 주제 생성 시: (1) 노출 변수의 '시간적 차원'(주중-주말, 사용 시점) 먼저 탐색 (2) 단순 선형 연관성 대신 상호작용/매개 구조 설계 (3) 생물학적 메커니즘(circadian disruption, sleep homeostasis) 명시화",
+    "confidence": 0.78,
+    "tags": [
+      "KYRBS_novelty",
+      "mechanism_framing",
+      "temporal_signal",
+      "adolescent_sleep",
+      "interaction_design"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_225242_734393",
+    "timestamp": "2026-05-20 22:52:42",
+    "category": "pattern",
+    "title": "LPA-based behavioral profiling unlocks KYRBS novelty in multi-exposure clusters",
+    "insight": "LPA (latent profile analysis) reframes independent exposures (smartphone, sleep, PA) into joint behavioral phenotypes, revealing interaction patterns invisible in traditional multivariable models. This clustering approach is systematically underexplored in KYRBS-based adolescent obesity research.",
+    "why_matters": "Identifies a methodological leverage point: moving from 'exposure A + exposure B + exposure C' (additive) to 'phenotypic profile of A∩B∩C' (emergent) ",
+    "how_to_apply": "For future KYRBS topics: prioritize LPA/latent class/mixture modeling when exposure involves 3+ behavioral variables with suspected synergistic or buf",
+    "confidence": 0.88,
+    "tags": [
+      "behavioral_clustering",
+      "LPA_methodology",
+      "KYRBS_novelty_multiplier",
+      "multi_exposure_interaction",
+      "methodological_leverage",
+      "adolescent_health_behavior"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_225129_132079",
+    "timestamp": "2026-05-20 22:51:29",
+    "category": "pattern",
+    "title": "Stratification + Derived Index + Effect Modification = KYRBS Novelty Multiplier",
+    "insight": "주중 수면 부족층 층화 + 파생변수(weekend-weekday 차이) + 효과 수정자(스마트폰 강도)의 3중 구조가 KYRBS 단면 데이터에서 8점대 이상 독창성을 생성. 절대값 노출보다 상대적 변화량의 임상적 의미화(≥2시간 의미 설정)가 핵심.",
+    "why_matters": "KYRBS 주제 포화도가 높아지는 상황에서, 메커니즘 프레이밍만으로는 부족. 층화-파생-상호작용 다층 결합이 차별화의 최소 단위임을 재확인. 향후 주제 개발 시 이 3중 구조를 체크리스트화 필요.",
+    "how_to_apply": "새로운 KYRBS 주제 제안 전, (1)취약집단 층화 존재? (2)절대값 대신 파생지수/시간대 변화량 사용? (3)조절변수로 강도 또는 용량-반응 상호작용 검토? 이 3가지 모두 충족하면 novelty 점수 상향 예상.",
+    "confidence": 0.87,
+    "tags": [
+      "KYRBS_novelty_architecture",
+      "effect_modification_strategy",
+      "derived_variable_pattern",
+      "stratification_multiplier",
+      "청소년수면역학",
+      "재사용가능_주제전략"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_225013_101791",
+    "timestamp": "2026-05-20 22:50:13",
+    "category": "pattern",
+    "title": "Caffeine→Smartphone→Sleep mediation novelty in KYRBS",
+    "insight": "카페인 섭취 → 스마트폰 사용 → 수면 단축의 매개 경로는 KYRBS 단면 데이터에서 미개척 영역. 기존 수면 논문들이 개별 노출만 다루므로, 메커니즘-기반 매개 분석(mediation analysis) 프레이밍이 높은 novelty 점수(8/10) 달성 가능.",
+    "why_matters": "KYRBS 주제 포화도가 높은 수면 영역에서도 '상호작용+매개' 프레이밍으로 차별성 확보 가능함을 재확인. 단순 노출 추가보다 메커니즘 경로 설정이 novelty 스코어 상향 드라이버임.",
+    "how_to_apply": "향후 KYRBS 주제 생성 시, 기존 노출-결과 쌍이 연구된 경우라도 '중간 변수(mediator)' 추가로 경로 구조화. 특히 행동 역학(behavioral epidemiology)에서 생물학적 가설보다 행동-환경-결과의 3단 경로 설정이 유효.",
+    "confidence": 0.82,
+    "tags": [
+      "KYRBS_novelty_strategy",
+      "mediation_analysis_framing",
+      "sleep_epidemiology",
+      "caffeine_behavioral_pathway",
+      "mechanism_over_exposure"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_224907_383228",
+    "timestamp": "2026-05-20 22:49:07",
+    "category": "pattern",
+    "title": "Additive interaction framing unlocks KYRBS novelty in combined exposures",
+    "insight": "2×2 결합 노출을 상가적 상호작용(additive interaction)으로 프레이밍하면, 기존 단독 노출 분석과 차별화되어 novelty_score 상승. 특히 smartphone×sleep 같은 '생활시간 경쟁' 주제에서 mechanistic framing + interaction structure 조합이 고유성 확보.",
+    "why_matters": "KYRBS 대규모 표본의 강점을 '메커니즘 해석' 레벨에서 활용하는 전략. 단순 OR 누적이 아닌 상호작용 구조 분석이 편집진의 차별성 인정을 높임.",
+    "how_to_apply": "향후 KYRBS 2요인 노출 주제 생성 시: (1) 각 노출 독립 효과 확인 → (2) 상가적/곱셈적 상호작용 선택 → (3) 메커니즘 글 구성 (시간대 신호, 생리적 경로 명시)",
+    "confidence": 0.82,
+    "tags": [
+      "KYRBS",
+      "interaction_design",
+      "novelty_scoring",
+      "smartphone_sleep",
+      "additive_interaction",
+      "combined_exposure"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_224754_150556",
+    "timestamp": "2026-05-20 22:47:54",
+    "category": "pattern",
+    "title": "Derived index novelty > absolute exposure in KYRBS sleep topics",
+    "insight": "스마트폰 절대 사용 시간보다 주중-주말 차이(파생지표)를 circadian mechanism의 행동적 대리 지표로 구성할 때 novelty score 9 달성. 메커니즘-기반 파생변수가 isolated exposure보다 우월.",
+    "why_matters": "KYRBS 주제 개발 시 절대량 노출만으로는 novelty 천장이 존재. 시간대 격차·사회적 시차 같은 파생 지표 구성이 기존 연구 갭 발굴의 핵심 전략.",
+    "how_to_apply": "향후 KYRBS 주제 프레이밍 시 '|주말-주중| 차이' 형태의 deviation/lag/misalignment 지표 우선 검토. 단순 노출량보다 시간 구조 또는 패턴 차이에 주목.",
+    "confidence": 0.88,
+    "tags": [
+      "KYRBS_topic_generation",
+      "derived_indicator",
+      "circadian_mechanism",
+      "novelty_gap",
+      "sleep_epidemiology"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_224712_404742",
+    "timestamp": "2026-05-20 22:47:12",
+    "category": "pattern",
+    "title": "KYRBS 주제 생성: 메커니즘-시간 프레이밍 × 상호작용 구조",
+    "insight": "KYRBS 단면 데이터 주제에서 '시간 차이(jetlag/temporal variance)' + '결합 효과(interaction)' 프레이밍이 일관되게 높은 학술성을 생성. 3개 주제 모두 circadian disruption의 메커니즘을 강조.",
+    "why_matters": "단면 설계의 인과 추론 한계를 프레이밍으로 보완하는 패턴. 향후 KYRBS 주제 생성 시 social jetlag, variability-centered framing, additive/multiplicative interaction을 기본 구조로 삼을 수 있음.",
+    "how_to_apply": "다음 KYRBS 주제 생성 시: (1) 노출 변수를 '절대값'이 아닌 '시간-시간 변동성'으로 재해석, (2) 결과를 단일 노출이 아닌 '결합/상호작용' 프레이밍으로 설정할 것.",
+    "confidence": 0.78,
+    "tags": [
+      "KYRBS_topic_generation",
+      "social_jetlag_framing",
+      "circadian_mechanism",
+      "cross_sectional_strategy",
+      "interaction_analysis",
+      "adolescent_sleep"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_214106_108391",
+    "timestamp": "2026-05-20 21:41:06",
+    "category": "pattern",
+    "title": "Mechanistic framing beats isolated exposure in KYRBS topics",
+    "insight": "Topic 1 (social jetlag as mediator) outperforms isolated smartphone-sleep associations by introducing circadian rhythm mechanism. Topic 2 adds effect modification (depression) to strengthen bidirectional framing. Mechanism + interaction structure drives engagement over simple exposure-outcome pairs.",
+    "why_matters": "Guides future KYRBS topic generation toward mechanistic hypotheses and effect modifier discovery rather than descriptive associations. Aligns with Kor",
+    "how_to_apply": "When generating KYRBS topics: prioritize (1) mediator/mechanism candidates, (2) effect modifiers, (3) bidirectional hypotheses. Avoid pure exposure-ou",
+    "confidence": 0.78,
+    "tags": [
+      "KYRBS_topic_generation",
+      "mechanistic_framing",
+      "mediator_pattern",
+      "circadian_rhythm",
+      "effect_modification"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_212451_233397",
+    "timestamp": "2026-05-20 21:24:51",
+    "category": "optimization",
+    "title": "RAG 미사용 단면 설계 논문의 메커니즘 프레이밍 전략",
+    "insight": "스마트폰-수면 노출-결과 구조에서 RAG 없이도 사회적 시차(social jetlag) 매개 모델로 프레이밍하면 KYRBS 단면 데이터의 인과 추론 한계를 명시적으로 다루면서 학문적 깊이 확보 가능",
+    "why_matters": "RAG 의존 없이 도메인 지식(circadian rhythm × 한국 교육 시스템)으로 단순 노출-결과 분석을 메커니즘 중심으로 상향할 수 있음. 반복 가능한 프레임",
+    "how_to_apply": "청소년 행동 역학 주제에서 절대량(스크린 시간)보다 시간대 패턴의 규칙성 붕괴를 먼저 검토하는 것을 기본 체크리스트에 추가",
+    "confidence": 0.81,
+    "tags": [
+      "KYRBS_methodology",
+      "circadian_framing",
+      "adolescent_sleep",
+      "single_study_depth",
+      "mediation_strategy"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
+    "id": "20260520_212150_825873",
+    "timestamp": "2026-05-20 21:21:50",
+    "category": "pattern",
+    "title": "KYRBS smartphone-sleep: social jetlag framing outperforms isolated exposure",
+    "insight": "Topic generation consistently prioritizes social jetlag and circadian misalignment as primary mediators over raw screen time exposure when analyzing KYRBS smartphone-sleep associations. This reflects actual adolescent chronobiology better than usage hours alone.",
+    "why_matters": "Prevents shallow 'more screen = less sleep' framing. Guides topic generation toward mechanistically valid mediators—social jetlag, school schedule-sle",
+    "how_to_apply": "When generating KYRBS sleep topics: prioritize temporal mismatch patterns (weekday-weekend jetlag, school-circadian conflict) and social-behavioral me",
+    "confidence": 0.81,
+    "tags": [
+      "KYRBS_sleep_heuristic",
+      "social_jetlag_primacy",
+      "adolescent_chronobiology",
+      "mediation_mechanism",
+      "topic_generation_pattern"
+    ],
+    "source": "llm_reflection",
+    "status": "active"
+  },
+  {
     "id": "20260519_220646_422851",
     "timestamp": "2026-05-19 22:06:46",
     "category": "pattern",

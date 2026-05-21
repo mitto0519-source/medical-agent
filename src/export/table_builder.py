@@ -160,3 +160,154 @@ def cross_table(doc, contingency: List[List], row_labels: List[str],
 
     doc.add_paragraph()
     return table
+
+
+# ---------------------------------------------------------------------------
+# StatBridge 결과 → Table 1 / Table 2 자동 변환
+# ---------------------------------------------------------------------------
+
+_VAR_LABELS: Dict[str, str] = {
+    "sex": "Sex, female", "sex_2": "Sex, female",
+    "sleep_hours": "Sleep duration (h/d)", "screen_time": "Screen time (h/d)",
+    "smoking": "Current smoking", "alcohol": "Alcohol use",
+    "physical_act": "Physical activity (d/wk)", "bmi": "BMI (kg/m²)",
+    "grade": "School grade", "family_econ": "Socioeconomic status (low)",
+    "academic_perf": "Academic performance (low)", "stress": "Perceived stress (high)",
+    "depression": "Depressive mood", "suicidal": "Suicidal ideation",
+    "obesity": "Obesity (BMI ≥ 25)", "hypertension": "Hypertension",
+    "diabetes": "Diabetes", "metabolic_syn": "Metabolic syndrome",
+}
+
+
+def _prettify_var(col: str) -> str:
+    if col in _VAR_LABELS:
+        return _VAR_LABELS[col]
+    return col.replace("_", " ").title()
+
+
+def stat_result_to_table1_markdown(stat_result: dict) -> str:
+    """StatBridge stat_result → Table 1 마크다운 문자열."""
+    n_total = stat_result.get("n_total", 0)
+    desc = stat_result.get("descriptive_stats", {})
+    outcome_lbl = stat_result.get("outcome_label", stat_result.get("outcome", "Outcome"))
+
+    lines = [
+        f"**Table 1. Characteristics of Study Participants (N = {n_total:,})**",
+        "",
+        "| Variable | Value |",
+        "|----------|-------|",
+        f"| Total N | {n_total:,} |",
+        f"| {outcome_lbl}, n (%) | "
+        f"{stat_result.get('n_outcome', 0):,} ({stat_result.get('outcome_rate', 0.0):.1f}%) |",
+    ]
+
+    for col, stats in desc.items():
+        label = _prettify_var(col)
+        if "mean" in stats:
+            m, s = stats["mean"], stats["std"]
+            lines.append(f"| {label}, mean ± SD | {m:.2f} ± {s:.2f} |")
+        elif "categories" in stats:
+            cats = stats["categories"]
+            first = True
+            for cat_val, pct in cats.items():
+                if first:
+                    lines.append(f"| {label} |  |")
+                    first = False
+                lines.append(f"|   — {cat_val} | {pct * 100:.1f}% |")
+
+    return "\n".join(lines)
+
+
+def stat_result_to_table2_markdown(stat_result: dict) -> str:
+    """StatBridge stat_result → Table 2 마크다운 문자열."""
+    outcome_lbl = stat_result.get("outcome_label", stat_result.get("outcome", "Outcome"))
+    model_vars = stat_result.get("model_vars", [])
+
+    lines = [
+        f"**Table 2. Logistic Regression Results — Odds Ratios for {outcome_lbl}**",
+        "",
+        "| Variable | aOR | 95% CI | p-value |",
+        "|----------|-----|--------|---------|",
+    ]
+
+    for v in model_vars:
+        label = v.get("label") or _prettify_var(v.get("variable", ""))
+        or_f = v.get("or_formatted", "")
+        ci_f = v.get("ci_formatted", "")
+        if not ci_f and v.get("ci_lower") is not None:
+            ci_f = f"{v['ci_lower']:.2f} – {v['ci_upper']:.2f}"
+        p_f = v.get("p_formatted", "")
+        sig = " *" if v.get("significant") else ""
+        lines.append(f"| {label}{sig} | {or_f} | {ci_f} | {p_f} |")
+
+    lines += ["", "*p < 0.05; aOR, adjusted odds ratio; CI, confidence interval"]
+    return "\n".join(lines)
+
+
+def stat_result_to_tables_docx_bytes(stat_result: dict) -> bytes:
+    """StatBridge stat_result → Tables DOCX 바이트 반환 (Streamlit 다운로드용).
+
+    Table 1: 기술통계, Table 2: 로지스틱 회귀 결과
+    """
+    import io
+    try:
+        from docx import Document
+    except ImportError:
+        _log.error("python-docx 미설치")
+        return b""
+
+    doc = Document()
+    n_total = stat_result.get("n_total", 0)
+    outcome_lbl = stat_result.get("outcome_label", stat_result.get("outcome", "Outcome"))
+    desc = stat_result.get("descriptive_stats", {})
+    outcome_key = stat_result.get("outcome", "")
+
+    # ── Table 1 ─────────────────────────────────────────────────────────
+    table1_data = [
+        {"variable": "Total N", "n": n_total, "pct": None, "mean": None, "sd": None},
+        {"variable": outcome_lbl,
+         "n": stat_result.get("n_outcome", 0),
+         "pct": stat_result.get("outcome_rate", 0.0),
+         "mean": None, "sd": None},
+    ]
+    for col, stats in desc.items():
+        if col == outcome_key:
+            continue
+        label = _prettify_var(col)
+        if "mean" in stats:
+            table1_data.append({"variable": label, "n": n_total,
+                                 "pct": None, "mean": stats["mean"], "sd": stats["std"]})
+        elif "categories" in stats:
+            for cat_val, pct in list(stats["categories"].items())[:3]:
+                table1_data.append({"variable": f"  {label} — {cat_val}",
+                                     "n": round(pct * n_total),
+                                     "pct": pct * 100, "mean": None, "sd": None})
+
+    baseline_characteristics_table(
+        doc, table1_data,
+        caption=f"Table 1. Characteristics of Study Participants (N = {n_total:,})"
+    )
+    doc.add_paragraph()
+
+    # ── Table 2 ─────────────────────────────────────────────────────────
+    model_vars = stat_result.get("model_vars", [])
+    table2_data = []
+    for v in model_vars:
+        label = v.get("label") or _prettify_var(v.get("variable", ""))
+        table2_data.append({
+            "variable": label,
+            "or": v.get("or_value"),
+            "ci_low": v.get("ci_lower"),
+            "ci_high": v.get("ci_upper"),
+            "p_value": v.get("p_value"),
+        })
+
+    if table2_data:
+        regression_table(
+            doc, table2_data,
+            caption=f"Table 2. Logistic Regression Results — Adjusted Odds Ratios for {outcome_lbl}"
+        )
+
+    buf = io.BytesIO()
+    doc.save(buf)
+    return buf.getvalue()

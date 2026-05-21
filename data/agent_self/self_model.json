@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-05-19 22:09:41",
-  "overall_score": 96,
+  "updated_at": "2026-05-21 22:32:46",
+  "overall_score": 98,
   "smoke_test_status": "passing",
-  "smoke_test_score": "7/7",
+  "smoke_test_score": "12/12",
   "known_strengths": [
     "작업 표준 규칙 자동 로드 (CLAUDE.md)",
     "장기기억 시스템 (src/memory/change_log.py)",
@@ -29,7 +29,13 @@
       "confidence": 0.8
     }
   ],
-  "active_insights": 21,
-  "recent_changes": [],
-  "git_summary": "최근 커밋:\n\n변경사항: M data/agent_self/insights.json\n M data/agent_self/persona.json\n M data/agent_self/self_model.json\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M data/knowledge_graph/graph.json\n M data/knowledge_graph/meta.json\n M data/knowledge_graph/trend_state.json\n M src/llm/claude_client.py\n?? data/agent_self/distilled_insights.json\n?? data/agent_self/finetune_state.json\n?? data/agent_self/meta_insights.json\n?? data/agent_self/meta_weights.json\n?? data/agent_self/outcome_insights.json\n?? scripts/run_learning_cycle.py\n?? src/learning/"
+  "active_insights": 32,
+  "recent_changes": [
+    "fix: Streamlit 전 기능 헤드리스 테스트 6개 FAIL 수정",
+    "fix: 자가진단 3대 결함 수정",
+    "fix: SelfAuditor→self_model 연결 + Streamlit 백그라운드 학습 트리거",
+    "fix: headless end-to-end — encoding + Multi-LLM failover + retry logic",
+    "refactor: remove all synthetic data generation — real data only"
+  ],
+  "git_summary": "최근 커밋:\n9c0ccf7 fix: Streamlit 전 기능 헤드리스 테스트 6개 FAIL 수정\n104822c fix: 자가진단 3대 결함 수정\n037cdf4 fix: SelfAuditor→self_model 연결 + Streamlit 백그라운드 학습 트리거\n4bb57d9 fix: headless end-to-end — encoding + Multi-LLM failover + retry logic\n8909fb9 refactor: remove all synthetic data generation — real data only\n6d10b98 refactor: zombie file cleanup + dead statistics modules removed\ne42709a fix: persona double-injection, dead meta_learner import, task forwarding\ncba4bda refactor: 고아 모듈 전체 삭제 + ARCHITECTURE.md 아키텍처 레지스트리 도입\n변경사항: M ARCHITECTURE.md\n M app/streamlit_app.py\n M data/agent_self/insights.json\n M data/agent_self/persona.json\n M data/agent_self/self_model.json\n M data/change_log/history.json\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/data_level0.bin\n M data/chromadb_test/c7287496-2011-4518-a6b8-8ab35f891efe/length.bin\n M data/chromadb_test/chroma.sqlite3\n M data/diagnostics/audit_log.json\n M data/libraries/dataset_kyrbs.json\n M src/data/stat_bridge.py\n M src/export/__init__.py\n M src/export/figure_builder.py\n M src/export/table_builder.py\n M src/ingestion/evidence_reader.py\n M src/llm/claude_client.py\n M src/research/novelty_checker.py\n M src/research/paper_writer.py\n M src/research/research_pipeline.py\n?? data/journals/\n?? data/projects/\n?? scripts/e2e_full_test.py\n?? scripts/headless_ai_test.py\n?? src/agent/agent_pool.py\n?? src/data/col_name_resolver.py\n?? src/diagnostics/capability_bench.py\n?? src/export/cover_letter_writer.py\n?? src/export/journal_docx_exporter.py\n?? src/export/journal_registry.py\n?? src/export/publication_figure_generator.py\n?? src/export/reference_library.py\n?? src/export/stata_exporter.py\n?? src/memory/semantic_search.py\n?? src/research/autonomous_research_loop.py\n?? src/research/project_manager.py"
 }

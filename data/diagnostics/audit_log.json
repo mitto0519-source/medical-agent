@@ -1,5 +1,322 @@
 [
   {
+    "timestamp": "2026-05-21 22:32:40",
+    "overall_score": 100,
+    "duration_sec": 6.2,
+    "code_issues": [],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.2615,
+      "doc_count": 1038,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 817,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
+    "timestamp": "2026-05-21 22:29:17",
+    "overall_score": 100,
+    "duration_sec": 6.7,
+    "code_issues": [],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.2615,
+      "doc_count": 1038,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 1079,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
+    "timestamp": "2026-05-20 22:45:34",
+    "overall_score": 100,
+    "duration_sec": 6.4,
+    "code_issues": [],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.2615,
+      "doc_count": 1038,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 778,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
+    "timestamp": "2026-05-20 22:25:15",
+    "overall_score": 100,
+    "duration_sec": 6.5,
+    "code_issues": [],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.1489,
+      "doc_count": 1038,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 767,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
+    "timestamp": "2026-05-20 22:24:22",
+    "overall_score": 100,
+    "duration_sec": 6.6,
+    "code_issues": [],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.2615,
+      "doc_count": 1038,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 777,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
+    "timestamp": "2026-05-20 21:49:41",
+    "overall_score": 100,
+    "duration_sec": 7.3,
+    "code_issues": [],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.2615,
+      "doc_count": 1019,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 747,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
+    "timestamp": "2026-05-20 01:47:00",
+    "overall_score": 100,
+    "duration_sec": 36.3,
+    "code_issues": [],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.2615,
+      "doc_count": 1019,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 1824,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
+    "timestamp": "2026-05-20 01:43:32",
+    "overall_score": 97,
+    "duration_sec": 34.4,
+    "code_issues": [
+      {
+        "file": "src/diagnostics/self_auditor.py",
+        "line": 41,
+        "severity": "medium",
+        "type": "direct_load_dotenv",
+        "text": "load_dotenv() 직접 호출 — bootstrap() 사용"
+      },
+      {
+        "file": "src/diagnostics/self_auditor.py",
+        "line": 42,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      },
+      {
+        "file": "src/notebooklm/client.py",
+        "line": 13,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      },
+      {
+        "file": "src/notebooklm/paper_sync.py",
+        "line": 20,
+        "severity": "low",
+        "type": "direct_getLogger",
+        "text": "logging.getLogger 직접 사용 — get_logger() 사용"
+      }
+    ],
+    "rag_health": {
+      "status": "excellent",
+      "avg_score": 0.2615,
+      "doc_count": 1019,
+      "issues": []
+    },
+    "pipeline_health": {
+      "status": "ok",
+      "checks": {
+        "dataset_library": "ok",
+        "methods_library": "ok",
+        "novelty_checker": "ok",
+        "paper_writer": "ok",
+        "rag_pipeline": "ok",
+        "persona": "ok",
+        "conversation_memory": "ok",
+        "medical_ontology": "ok",
+        "medical_graph": "ok"
+      },
+      "issues": []
+    },
+    "llm_health": {
+      "status": "ok",
+      "response_ms": 931,
+      "model": "claude-haiku-4-5-20251001",
+      "issues": []
+    },
+    "llm_gaps": [],
+    "auto_fixes_applied": [],
+    "needs_approval": []
+  },
+  {
     "timestamp": "2026-05-19 02:42:48",
     "overall_score": 97,
     "duration_sec": 33.6,
