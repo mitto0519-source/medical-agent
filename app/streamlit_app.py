@@ -461,6 +461,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
     st.markdown('<div style="padding:4px 4px 2px;">', unsafe_allow_html=True)
     _nb("🏠  홈 (대시보드)", "홈")
+    _nb("📝  논문 작업실", "논문 작업실")
     _nb("⚡  원스톱 자동 파이프라인", "논문 생산 파이프라인")
     # ── 연구 플로우 (RESEARCH_FLOW 정의 순서 그대로 — 번호 = 진행 순서) ──
     st.markdown('<div class="nav-section">🔬 연구 플로우</div>', unsafe_allow_html=True)
@@ -768,6 +769,165 @@ with main_col:
         </div>""", unsafe_allow_html=True)
 
         page_context.update({"recent_projects": len(recent), "학습된_논문수": "14편"})
+
+    # ── 논문 작업실 (좌: 작업 패널 / 우: 논문 프리뷰) ──────────────────────
+    elif page == "논문 작업실":
+        st.markdown("<h2 style='color:#e6edf3;'>📝 논문 작업실</h2>", unsafe_allow_html=True)
+
+        _WS_KEYS = [
+            ("title", "제목"), ("abstract", "Abstract"), ("introduction", "Introduction"),
+            ("methods", "Methods"), ("results", "Results"), ("discussion", "Discussion"),
+        ]
+        # 섹션 초기화 — 기존 draft 있으면 파싱해 채움 (1회)
+        if "ws_init" not in st.session_state:
+            st.session_state["ws_init"] = True
+            _existing = st.session_state.get("draft", "")
+            _secs = {}
+            if _existing:
+                try:
+                    from src.ingestion.paper_ingester import _split_into_sections
+                    _secs = _split_into_sections(_existing)
+                except Exception:
+                    _secs = {}
+            for _k, _ in _WS_KEYS:
+                st.session_state.setdefault(f"ws_{_k}", _secs.get(_k, ""))
+            if not st.session_state.get("ws_title"):
+                _seltop = st.session_state.get("selected_topic", {}) or {}
+                st.session_state["ws_title"] = st.session_state.get("topic_title", "") or _seltop.get("title", "")
+
+        def _ws_preview():
+            parts = []
+            for _k, _label in _WS_KEYS:
+                _v = (st.session_state.get(f"ws_{_k}") or "").strip()
+                if not _v:
+                    continue
+                parts.append(f"# {_v}" if _k == "title" else f"## {_label}\n\n{_v}")
+            return "\n\n".join(parts) if parts else "_아직 작성된 내용이 없습니다. 좌측에서 직접 입력하거나 🤖 AI 작성을 누르세요._"
+
+        col_work, col_preview = st.columns([55, 45], gap="large")
+
+        # ═══════════ 좌측: 작업 패널 ═══════════
+        with col_work:
+            ws_tabs = st.tabs(["✍️ 작성", "📄 기존논문", "📤 업로드", "🤖 Q&A", "📓 Notebook"])
+
+            # ── 작성 탭 ──
+            with ws_tabs[0]:
+                with st.expander("📋 연구 정보 (AI 작성용 컨텍스트)", expanded=False):
+                    _sel = st.session_state.get("selected_topic", {}) or {}
+                    st.text_input("노출변수", value=st.session_state.get("ws_exposure", _sel.get("exposure", "")), key="ws_exposure")
+                    st.text_input("결과변수", value=st.session_state.get("ws_outcome", _sel.get("outcome", "")), key="ws_outcome")
+                    st.text_input("대상", value=st.session_state.get("ws_population", _sel.get("population", "Korean adolescents")), key="ws_population")
+                    st.text_input("데이터셋", value=st.session_state.get("ws_dataset", "KYRBS"), key="ws_dataset")
+                    st.text_area("핵심 결과 요약", value=st.session_state.get("ws_summary", ""), key="ws_summary", height=70)
+
+                st.caption("각 섹션을 직접 입력하거나 🤖로 AI 작성. 순서 자유 — 아무거나 먼저 해도 됩니다.")
+                for _k, _label in _WS_KEYS:
+                    hc1, hc2 = st.columns([5, 1])
+                    with hc1:
+                        st.markdown(f"<span style='font-size:13px;font-weight:700;color:#E5E7EB;'>{_label}</span>", unsafe_allow_html=True)
+                    with hc2:
+                        if _k != "title":
+                            if st.button("🤖", key=f"ws_gen_{_k}", help=f"{_label} AI 작성"):
+                                try:
+                                    from src.research.paper_writer import PaperWriter
+                                    from src.profile.author_profile import AuthorProfile
+                                    from src.library.methods_library import MethodsLibrary
+                                    from src.library.dataset_library import DatasetLibrary
+                                    from src.rag.pipeline import RAGPipeline
+                                    _w = PaperWriter(AuthorProfile("Yoosun Cho"), MethodsLibrary(), DatasetLibrary(), RAGPipeline())
+                                    _study = {
+                                        "dataset": st.session_state.get("ws_dataset", "KYRBS"),
+                                        "exposure": st.session_state.get("ws_exposure", ""),
+                                        "outcome": st.session_state.get("ws_outcome", ""),
+                                        "population": st.session_state.get("ws_population", ""),
+                                    }
+                                    with st.spinner(f"{_label} AI 작성 중..."):
+                                        _txt = _w.write_section(
+                                            _label, st.session_state.get("ws_title", "Untitled"),
+                                            _study, {"summary": st.session_state.get("ws_summary", "")},
+                                        )
+                                    st.session_state[f"ws_{_k}"] = _txt
+                                    st.rerun()
+                                except Exception as _e:
+                                    st.error(f"AI 작성 실패: {_e}")
+                    st.text_area(_label, key=f"ws_{_k}", height=60 if _k == "title" else 120, label_visibility="collapsed")
+
+                st.divider()
+                wsd1, wsd2 = st.columns(2)
+                with wsd1:
+                    if st.button("💾 세션 초안으로 저장", use_container_width=True, key="ws_save_draft"):
+                        st.session_state["draft"] = _ws_preview()
+                        st.success("'논문 작성' 초안에 저장됨")
+                with wsd2:
+                    st.download_button("⬇ TXT 다운로드", _ws_preview(), file_name="paper_draft.txt",
+                                       use_container_width=True, key="ws_dl_txt")
+
+            # ── 기존논문 탭 (업로드 → 작성 탭 섹션 채움) ──
+            with ws_tabs[1]:
+                st.caption("기존 논문 파일을 올리면 IMRAD 섹션이 '작성' 탭에 채워져 바로 편집할 수 있습니다.")
+                _wsup = st.file_uploader("DOCX / PDF / TXT", type=["txt", "docx", "pdf", "md"], key="ws_existing_up")
+                if _wsup is not None and st.button("📥 작성 탭에 불러오기", key="ws_load_existing"):
+                    try:
+                        from src.ingestion.paper_ingester import PaperIngester
+                        _paper = PaperIngester().ingest_bytes(_wsup.getvalue(), _wsup.name)
+                        _loaded = 0
+                        for _k, _ in _WS_KEYS:
+                            if _k in _paper.sections:
+                                st.session_state[f"ws_{_k}"] = _paper.sections[_k]
+                                _loaded += 1
+                        if _paper.title:
+                            st.session_state["ws_title"] = _paper.title
+                        st.success(f"{_loaded}개 섹션 로드 완료 — '작성' 탭에서 편집/개선하세요")
+                        st.rerun()
+                    except Exception as _e:
+                        st.error(f"파싱 오류: {_e}")
+
+            # ── 업로드(RAG 인제스트) 탭 ──
+            with ws_tabs[2]:
+                st.caption("논문 PDF를 RAG 지식베이스에 학습시켜 이후 작성/Q&A에 활용합니다.")
+                _wsig = st.file_uploader("PDF", type=["pdf"], key="ws_ingest_up")
+                if _wsig is not None and st.button("📚 RAG 학습", key="ws_ingest_btn"):
+                    try:
+                        from src.rag.pipeline import RAGPipeline
+                        _tmp = Path("data/pmc_papers") / _wsig.name
+                        _tmp.parent.mkdir(parents=True, exist_ok=True)
+                        _tmp.write_bytes(_wsig.getvalue())
+                        with st.spinner("RAG 인제스트 중..."):
+                            RAGPipeline().ingest_file(str(_tmp))
+                        st.success("학습 완료")
+                    except Exception as _e:
+                        st.error(f"인제스트 오류: {_e}")
+
+            # ── Q&A 탭 ──
+            with ws_tabs[3]:
+                st.caption("학습된 논문/데이터 기반 질의응답")
+                _wsq = st.text_input("질문", key="ws_qa_input")
+                if st.button("질문하기", key="ws_qa_btn") and _wsq:
+                    try:
+                        from src.agent.medical_agent import MedicalAgent
+                        with st.spinner("답변 생성 중..."):
+                            _ans = MedicalAgent().ask(_wsq)
+                        st.markdown(_ans.get("answer", "") if isinstance(_ans, dict) else str(_ans))
+                    except Exception as _e:
+                        st.error(f"Q&A 오류: {_e}")
+
+            # ── Notebook 탭 ──
+            with ws_tabs[4]:
+                st.caption("NotebookLM 연동")
+                if st.button("📓 Notebook 에디터 열기", key="ws_nb_open"):
+                    _nav("Notebook 에디터")
+
+        # ═══════════ 우측: 논문 프리뷰 (전용) ═══════════
+        with col_preview:
+            st.markdown(
+                "<div style='font-size:13px;color:#94A3B8;font-weight:700;"
+                "text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;'>📑 논문 프리뷰</div>",
+                unsafe_allow_html=True,
+            )
+            _filled = sum(1 for _k, _ in _WS_KEYS if (st.session_state.get(f"ws_{_k}") or "").strip())
+            st.caption(f"{_filled}/{len(_WS_KEYS)} 섹션 작성됨 · 좌측 입력이 실시간 반영됩니다")
+            with st.container(height=620, border=True):
+                st.markdown(_ws_preview())
 
     # ── WORKFLOW ──────────────────────────────────────────────────────
     elif page == "워크플로우":
