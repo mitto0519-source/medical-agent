@@ -58,8 +58,13 @@ def _pubmed_request(url: str, params: dict, retries: int = 3) -> requests.Respon
                 raise
             time.sleep(2 ** attempt)
         except requests.HTTPError as e:
-            if resp.status_code == 429:  # rate limit
-                time.sleep(5 * (attempt + 1))
+            if e.response.status_code == 429:  # rate limit
+                if attempt == retries - 1:
+                    _log.warning("PubMed rate limit exceeded after %d attempts", retries)
+                    raise
+                wait_time = min(10 * (2 ** attempt), 60)  # max 60s
+                _log.info("PubMed rate limit (429) — waiting %.1fs before retry", wait_time)
+                time.sleep(wait_time)
             else:
                 raise
 
@@ -396,7 +401,7 @@ class NoveltyChecker:
         except Exception as exc:
             _log.warning("PubMed 검색 중 오류: %s", exc, exc_info=True)
             pmids = []
-        time.sleep(0.35)
+        time.sleep(1.0)
 
         # 단계적 폴백: population을 Title/Abstract로 강제하면 "Korean adolescents" 같은
         # 복합 문구가 초록에 정확히 없어 0편이 나오기 쉽다. 그러면 핵심(exposure+outcome)
@@ -415,7 +420,7 @@ class NoveltyChecker:
                     query = fallback_query  # LLM 프롬프트에도 실제 사용된 쿼리 반영
             except Exception as exc:
                 _log.warning("폴백 PubMed 검색 중 오류: %s", exc, exc_info=True)
-            time.sleep(0.35)
+            time.sleep(1.0)
 
         papers = []
         if pmids:
@@ -424,7 +429,7 @@ class NoveltyChecker:
             except Exception as exc:
                 _log.warning("PubMed 논문 구조화 실패: %s", exc, exc_info=True)
                 papers = []
-            time.sleep(0.35)
+            time.sleep(1.0)
 
         # 2. 규칙기반 유사도 매트릭스
         similarity_matrix = [
@@ -559,9 +564,9 @@ Evaluate novelty. Your score must be consistent with the rule-based score ({rule
     def search_papers(self, query: str, max_results: int = 10) -> List[Dict]:
         """PubMed 검색 → 구조화된 논문 dict 목록."""
         pmids = _pubmed_search(query, max_results=max_results)
-        time.sleep(0.35)
+        time.sleep(1.0)
         if not pmids:
             return []
         papers = _fetch_papers_structured(pmids)
-        time.sleep(0.35)
+        time.sleep(1.0)
         return papers
