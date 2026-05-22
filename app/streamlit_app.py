@@ -460,11 +460,10 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     st.markdown('<div style="padding:4px 4px 2px;">', unsafe_allow_html=True)
-    _nb("🏠  홈 (대시보드)", "홈")
-    _nb("📝  논문 작업실", "논문 작업실")
-    _nb("⚡  원스톱 자동 파이프라인", "논문 생산 파이프라인")
-    # ── 연구 플로우 (RESEARCH_FLOW 정의 순서 그대로 — 번호 = 진행 순서) ──
-    st.markdown('<div class="nav-section">🔬 연구 플로우</div>', unsafe_allow_html=True)
+    _nb("🏠  홈", "홈")
+    _nb("📝  논문 작업실", "논문 작업실")          # ★ 메인 무대 (바이브 논문)
+    # ── 연구 보조 (논문 쓸 때 쓰는 재료) ──
+    st.markdown('<div class="nav-section">연구 보조 (작업 재료)</div>', unsafe_allow_html=True)
     for _n, _label, _target, _done_fn in RESEARCH_FLOW:
         try:
             _done = bool(_done_fn(st.session_state))
@@ -472,19 +471,15 @@ with st.sidebar:
             _done = False
         _mark = "✓" if _done else _n
         _nb(f"{_mark}  {_label}", _target)
-    # ── 기존 논문 ──
-    st.markdown('<div class="nav-section">📄 기존 논문</div>', unsafe_allow_html=True)
-    _nb("○  기존 논문 개선", "기존 논문 개선")
-    _nb("○  논문 업로드 & 인제스트", "논문 업로드 & 인제스트")
-    # ── 에이전트 ──
-    st.markdown('<div class="nav-section">🤖 에이전트</div>', unsafe_allow_html=True)
-    _nb("○  Agent Q&A", "Agent Q&A")
-    _nb("○  Notebook 에디터", "Notebook 에디터")
-    # ── 도구 ──
-    st.markdown('<div class="nav-section">🛠 도구</div>', unsafe_allow_html=True)
-    _nb("○  지식베이스 관리", "지식베이스 관리")
-    _nb("○  자동 학습 루프", "자동 학습 루프")
-    _nb("🧬  자가 진단 & 자가발전", "자가 진단")
+    # ── 고급 · 옵션 (자동/전체화면) ──
+    st.markdown('<div class="nav-section">고급 · 옵션</div>', unsafe_allow_html=True)
+    _nb("⚡  원스톱 자동 (초안 시드)", "논문 생산 파이프라인")
+    _nb("📄  기존 논문 개선 (전체화면)", "기존 논문 개선")
+    _nb("📓  Notebook 에디터", "Notebook 에디터")
+    # ── 시스템 ──
+    st.markdown('<div class="nav-section">시스템</div>', unsafe_allow_html=True)
+    _nb("🧬  자가 진단", "자가 진단")
+    _nb("📚  지식베이스", "지식베이스 관리")
     _nb("📜  작업 타임라인", "작업 타임라인")
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -591,8 +586,8 @@ with main_col:
             """, unsafe_allow_html=True)
         with col_btn:
             st.markdown('<div style="margin-top:6px;"></div>', unsafe_allow_html=True)
-            if st.button("＋ 새 프로젝트 만들기", type="primary", use_container_width=True):
-                _nav("연구 주제 생성")
+            if st.button("✍️ 논문 작업실 열기", type="primary", use_container_width=True):
+                _nav("논문 작업실")
 
         # ── 현재 연구 진행 대시보드 (플로우 중심) ───────────────────────────
         st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
@@ -665,10 +660,10 @@ with main_col:
                 <p style="color:#64748B;font-size:12px;margin-bottom:14px;">원하는 작업을 선택하세요</p>
             </div>""", unsafe_allow_html=True)
             for icon, lbl, dsc, tgt in [
-                ("📝", "연구 주제 생성",  "새로운 연구 아이디어 발굴",   "연구 주제 생성"),
-                ("🔍", "연구 설계",       "방법론 및 타당성 검토",       "논문 설계 & 타당성"),
-                ("✍️", "논문 초안 생성",  "AI 기반 논문 초안 자동 작성", "논문 작성"),
+                ("✍️", "논문 작업실",     "직접 쓰고 AI가 거든다 · 우측 실시간 프리뷰", "논문 작업실"),
+                ("📝", "연구 주제 탐색",  "새로운 연구 아이디어 발굴",   "연구 주제 생성"),
                 ("📊", "데이터 분석",     "통계 분석 및 변수 탐색",      "데이터 분석"),
+                ("⚡", "원스톱 자동",     "초안 시드를 한번에 (보조)",   "논문 생산 파이프라인"),
             ]:
                 if st.button(f"{icon}  {lbl}  —  {dsc}", key=f"_qs_{tgt}",
                              use_container_width=True):
@@ -820,37 +815,72 @@ with main_col:
                     st.text_input("데이터셋", value=st.session_state.get("ws_dataset", "KYRBS"), key="ws_dataset")
                     st.text_area("핵심 결과 요약", value=st.session_state.get("ws_summary", ""), key="ws_summary", height=70)
 
-                st.caption("각 섹션을 직접 입력하거나 🤖로 AI 작성. 순서 자유 — 아무거나 먼저 해도 됩니다.")
+                # 작성/다듬기 공용 헬퍼 (중복 제거)
+                def _ws_writer():
+                    from src.research.paper_writer import PaperWriter
+                    from src.profile.author_profile import AuthorProfile
+                    from src.library.methods_library import MethodsLibrary
+                    from src.library.dataset_library import DatasetLibrary
+                    from src.rag.pipeline import RAGPipeline
+                    return PaperWriter(AuthorProfile("Yoosun Cho"), MethodsLibrary(), DatasetLibrary(), RAGPipeline())
+
+                def _ws_study_info():
+                    return {
+                        "dataset": st.session_state.get("ws_dataset", "KYRBS"),
+                        "exposure": st.session_state.get("ws_exposure", ""),
+                        "outcome": st.session_state.get("ws_outcome", ""),
+                        "population": st.session_state.get("ws_population", ""),
+                    }
+
+                st.caption("직접 쓰거나 · 🤖 AI 초안 · ✨ 다듬기로 개선. 순서 자유 — 아무거나 먼저 해도 됩니다.")
                 for _k, _label in _WS_KEYS:
                     hc1, hc2 = st.columns([5, 1])
                     with hc1:
                         st.markdown(f"<span style='font-size:13px;font-weight:700;color:#E5E7EB;'>{_label}</span>", unsafe_allow_html=True)
                     with hc2:
                         if _k != "title":
-                            if st.button("🤖", key=f"ws_gen_{_k}", help=f"{_label} AI 작성"):
+                            if st.button("🤖", key=f"ws_gen_{_k}", help=f"{_label} AI 초안 작성"):
                                 try:
-                                    from src.research.paper_writer import PaperWriter
-                                    from src.profile.author_profile import AuthorProfile
-                                    from src.library.methods_library import MethodsLibrary
-                                    from src.library.dataset_library import DatasetLibrary
-                                    from src.rag.pipeline import RAGPipeline
-                                    _w = PaperWriter(AuthorProfile("Yoosun Cho"), MethodsLibrary(), DatasetLibrary(), RAGPipeline())
-                                    _study = {
-                                        "dataset": st.session_state.get("ws_dataset", "KYRBS"),
-                                        "exposure": st.session_state.get("ws_exposure", ""),
-                                        "outcome": st.session_state.get("ws_outcome", ""),
-                                        "population": st.session_state.get("ws_population", ""),
-                                    }
                                     with st.spinner(f"{_label} AI 작성 중..."):
-                                        _txt = _w.write_section(
+                                        _txt = _ws_writer().write_section(
                                             _label, st.session_state.get("ws_title", "Untitled"),
-                                            _study, {"summary": st.session_state.get("ws_summary", "")},
+                                            _ws_study_info(), {"summary": st.session_state.get("ws_summary", "")},
                                         )
                                     st.session_state[f"ws_{_k}"] = _txt
                                     st.rerun()
                                 except Exception as _e:
-                                    st.error(f"AI 작성 실패: {_e}")
+                                    st.error(f"AI 작성 실패(크레딧/오류): {_e}")
                     st.text_area(_label, key=f"ws_{_k}", height=60 if _k == "title" else 120, label_visibility="collapsed")
+                    # ✨ 다듬기 — 사람이 쓴 걸 AI가 거든다 (바이브 논문 핵심)
+                    if _k != "title":
+                        with st.expander(f"✨ {_label} 다듬기 (AI)", expanded=False):
+                            _trig = None
+                            _pcols = st.columns(4)
+                            for _pc, (_pl, _pi) in zip(_pcols, [
+                                ("간결하게", "더 간결하고 명확하게 다듬어"),
+                                ("학술체", "학술 논문 문체로 다듬어"),
+                                ("근거 보강", "관련 근거와 인용을 보강해"),
+                                ("통계 표현", "통계 수치 표현을 자연스럽고 정확하게 다듬어"),
+                            ]):
+                                with _pc:
+                                    if st.button(_pl, key=f"ws_ps_{_k}_{_pl}", use_container_width=True):
+                                        _trig = _pi
+                            _cust = st.text_input("또는 직접 요청", key=f"ws_ref_{_k}",
+                                                  placeholder="예: 첫 문단을 더 강하게, 한계점 한 줄 추가")
+                            if st.button("✨ 다듬기 적용", key=f"ws_refbtn_{_k}", type="primary"):
+                                _trig = _cust.strip() or "명확성·문체·흐름을 개선해"
+                            if _trig:
+                                _cur = st.session_state.get(f"ws_{_k}", "")
+                                if not _cur.strip():
+                                    st.warning("먼저 이 섹션에 내용을 입력하거나 🤖 AI 작성을 사용하세요.")
+                                else:
+                                    try:
+                                        with st.spinner(f"{_label} 다듬는 중..."):
+                                            _ref = _ws_writer().refine_section(_label, _cur, _trig, _ws_study_info())
+                                        st.session_state[f"ws_{_k}"] = _ref
+                                        st.rerun()
+                                    except Exception as _e:
+                                        st.error(f"다듬기 실패(크레딧/오류): {_e}")
 
                 st.divider()
                 wsd1, wsd2 = st.columns(2)

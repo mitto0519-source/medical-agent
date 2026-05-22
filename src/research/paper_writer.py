@@ -346,6 +346,41 @@ Write the full Methods section: Study Design and Population, Variables, Statisti
         else:
             raise ValueError(f"Unknown section: {section}. Use Abstract/Introduction/Methods/Results/Discussion")
 
+    def refine_section(
+        self,
+        section: str,
+        current_text: str,
+        instruction: str,
+        study_info: Optional[Dict] = None,
+    ) -> str:
+        """기존 섹션 텍스트를 사용자 지시에 따라 개선 — '바이브 논문' 핵심.
+
+        AI가 새로 쓰는 게 아니라, 사람이 쓴(또는 기존) 텍스트를 instruction대로 다듬어
+        사람의 작업을 거든다. 통계·데이터·사실은 보존.
+        """
+        if not current_text or not current_text.strip():
+            raise ValueError("개선할 텍스트가 비어 있습니다. 먼저 내용을 입력하거나 AI 작성을 사용하세요.")
+        if not instruction or not instruction.strip():
+            instruction = "Improve clarity, academic tone, and flow."
+        sys_p = self._profile.get_system_prompt()
+        ctx = ""
+        if study_info:
+            ctx = (
+                f"\nSTUDY CONTEXT: dataset={study_info.get('dataset', '')}, "
+                f"exposure={study_info.get('exposure', '')}, outcome={study_info.get('outcome', '')}, "
+                f"population={study_info.get('population', '')}"
+            )
+        prompt = f"""Improve the following {section} section of a medical research paper.
+
+USER REQUEST: {instruction}{ctx}
+
+CURRENT TEXT:
+{current_text}
+
+Apply the user's request while preserving all data, statistics, and factual claims.
+Keep the author's academic writing style. Output ONLY the improved section text — no headers, no commentary."""
+        return self._generate(sys_p, prompt)
+
     def write_full_paper(
         self,
         topic: str,
