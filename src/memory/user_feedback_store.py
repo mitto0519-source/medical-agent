@@ -125,19 +125,30 @@ class FeedbackStore:
         return "\n".join(lines)
 
     def get_reviewer_patterns(self, top_n: int = 5) -> str:
-        """_build_system() 주입용 — 자주 지적되는 패턴 요약."""
+        """_build_system() 주입용 — 자주 지적되는 패턴 요약.
+
+        실 리뷰어 피드백(source != 'ai_reviewer')을 우선하고, 남는 자리를 AI 동료심사로 채운다.
+        AI 심사가 대량 누적돼도 실제 저널 피드백이 밀려나지 않도록 보장.
+        """
         records = _load()
         if not records:
             return ""
 
-        # 최근 top_n개 피드백에서 핵심 패턴 추출
-        recent = records[-top_n:]
+        human = [r for r in records if r.get("source") != "ai_reviewer"]
+        ai = [r for r in records if r.get("source") == "ai_reviewer"]
+
+        # 실 리뷰어 우선 → 부족분을 최근 AI 심사로 채움
+        selected = human[-top_n:]
+        if len(selected) < top_n:
+            selected = selected + ai[-(top_n - len(selected)):]
+
         snippets = []
-        for r in recent:
+        for r in selected:
             j = f"[{r['journal']}]" if r["journal"] else "[unknown journal]"
+            src = "AI심사" if r.get("source") == "ai_reviewer" else "리뷰어"
             dec = f" ({r['decision']})" if r["decision"] else ""
             snippet = r["feedback_text"][:300].replace("\n", " ").strip()
-            snippets.append(f"• {j}{dec}: {snippet}")
+            snippets.append(f"• [{src}]{j}{dec}: {snippet}")
 
         return (
             "REVIEWER PATTERN MEMORY (lessons from past submissions — apply proactively):\n"

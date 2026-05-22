@@ -259,8 +259,8 @@ Return JSON only."""
                 rag_hits = [{"text": rag_ctx[:500]}]
             for t in topics[:2]:
                 get_persona().evolve_from_research(topic=t, rag_hits=rag_hits)
-        except Exception:
-            pass
+        except Exception as exc:
+            _log.warning("Persona 진화 실패: %s", exc, exc_info=True)
 
         return topics
 
@@ -793,6 +793,29 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
             user_email=self.user_email,
             session_id=self.session_id,
         )
+
+        # AI 동료심사 약점을 FeedbackStore에 누적 → 다음 논문 작성 프롬프트에 자동 학습
+        # (실 리뷰어 피드백과 같은 루프에 합류 — 심사→약점학습→개선 루프 완성)
+        try:
+            if result.major_concerns or result.suggested_analyses:
+                from src.memory.user_feedback_store import FeedbackStore
+                fb_lines = []
+                if result.major_concerns:
+                    fb_lines.append("Major concerns:\n" + "\n".join(f"- {c}" for c in result.major_concerns))
+                if result.suggested_analyses:
+                    fb_lines.append("Suggested analyses:\n" + "\n".join(f"- {s}" for s in result.suggested_analyses))
+                FeedbackStore().add(
+                    feedback_text="\n\n".join(fb_lines),
+                    journal=topic.get("journal", ""),
+                    topic_keywords=f"{topic.get('exposure', '')} {topic.get('outcome', '')} {topic.get('population', '')}".strip(),
+                    source="ai_reviewer",
+                    paper_title=topic.get("title", ""),
+                    decision=result.accept_recommendation,
+                )
+                _log.info("동료심사 약점 FeedbackStore 누적 — 다음 작성에 학습됨")
+        except Exception as _fb_e:
+            _log.debug("동료심사 FeedbackStore 누적 실패(비치명): %s", _fb_e)
+
         return result.to_dict()
 
     # ── Phase A/B 통합 헬퍼 ──────────────────────────────────────────────────
@@ -856,12 +879,12 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
                 _log.info("[parallel] 신규성 %.1f/10 (%.1fs)",
                           nov_res.result.get("novelty_score", 0), nov_res.elapsed)
         except Exception as e:
-            _log.warning("[parallel] 병렬 사전수집 실패(비치명) — 순차 폴백: %s", e)
+            _log.warning("[parallel] 병렬 사전수집 실패(비치명) — 순차 폴백: %s", e, exc_info=True)
             try:
                 from src.ingestion.pmc_downloader import download_pmc_for_topic
                 download_pmc_for_topic(query, max_papers=6)
-            except Exception:
-                pass
+            except Exception as fallback_exc:
+                _log.error("[parallel] PMC 자동 다운로드 순차 폴백 실패: %s", fallback_exc, exc_info=True)
 
     # ── Step 6c — 통계 주입 논문 작성 + DOCX 저장 ────────────────────────────
 

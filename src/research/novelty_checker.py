@@ -398,6 +398,25 @@ class NoveltyChecker:
             pmids = []
         time.sleep(0.35)
 
+        # 단계적 폴백: population을 Title/Abstract로 강제하면 "Korean adolescents" 같은
+        # 복합 문구가 초록에 정확히 없어 0편이 나오기 쉽다. 그러면 핵심(exposure+outcome)
+        # 으로 재검색해 실제 유사 논문을 찾는다. (검색 0편 → 무조건 9점 버그 방지)
+        if not pmids and population and (exposure or outcome):
+            core_parts = []
+            if exposure:
+                core_parts.append(f'("{exposure}"[Title/Abstract])')
+            if outcome:
+                core_parts.append(f'("{outcome}"[Title/Abstract])')
+            fallback_query = " AND ".join(core_parts)
+            _log.info("신규성 검색 0편 → population 제외 폴백: %s...", fallback_query[:80])
+            try:
+                pmids = _pubmed_search(fallback_query, max_results=20)
+                if pmids:
+                    query = fallback_query  # LLM 프롬프트에도 실제 사용된 쿼리 반영
+            except Exception as exc:
+                _log.warning("폴백 PubMed 검색 중 오류: %s", exc, exc_info=True)
+            time.sleep(0.35)
+
         papers = []
         if pmids:
             try:
@@ -501,9 +520,10 @@ Evaluate novelty. Your score must be consistent with the rule-based score ({rule
                 "llm_justification": f"LLM 호출 실패 — 규칙기반 점수 사용: {e}",
                 "overall_similar_aspects": agg_similar,
                 "overall_different_aspects": agg_different,
-                "similar_papers": [],
+                "similar_papers": [p.get("paper_title", "") for p in similarity_matrix[:5]],
                 "similarity_matrix": similarity_matrix,
                 "similarity_stats": stats,
+                "found_papers": papers,
             }
         if raw.startswith("```"):
             raw = raw.split("```")[1]
