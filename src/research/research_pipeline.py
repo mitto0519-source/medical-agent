@@ -1002,6 +1002,19 @@ Keep the same data and statistics. Output ONLY the revised section text, no head
             )
             self.post_revise_draft = draft   # Before/After 비교 UI용
 
+        # 통계 자기검증: 본문 OR 값이 실제 분석결과와 일치하는지 (환각/누락 탐지)
+        self.last_stat_consistency = None
+        try:
+            from src.diagnostics.stat_consistency import verify_stat_consistency
+            self.last_stat_consistency = verify_stat_consistency(draft, stat_result)
+            _sc = self.last_stat_consistency
+            if _sc["missing"] or _sc["hallucinated"]:
+                _log.warning("[통계검증] 일치율 %.0f%% — %s", _sc["score"], _sc["note"])
+            else:
+                _log.info("[통계검증] 본문 통계값이 실제 분석결과와 일치 (%.0f%%)", _sc["score"])
+        except Exception as _sc_e:
+            _log.debug("통계 일치 검증 실패(비치명): %s", _sc_e)
+
         safe_title = "".join(
             c if c.isalnum() or c in " _-" else "_"
             for c in topic.get("title", "draft")

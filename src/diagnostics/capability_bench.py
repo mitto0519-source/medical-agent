@@ -127,23 +127,27 @@ class CapabilityBench:
         return min(100.0, density * 20)  # 5개/1000단어 = 100점
 
     def _score_stats(self, draft: str, stat_result: dict) -> float:
-        """OR, CI, p값이 논문에 포함됐는지 확인."""
+        """통계 보고 완성도 — 형식(OR/CI/p/n 존재) + 실제 값 일치도(자기검증)."""
+        # 1. 형식: OR/CI/p/n 패턴이 본문에 있는가
         has_or = bool(re.search(r'OR\s*=?\s*[\d.]+', draft, re.IGNORECASE)
                       or re.search(r'odds ratio', draft, re.IGNORECASE))
         has_ci = bool(re.search(r'95%\s*CI', draft, re.IGNORECASE)
                       or re.search(r'confidence interval', draft, re.IGNORECASE))
         has_p = bool(re.search(r'p\s*[<>=]\s*0\.\d+', draft, re.IGNORECASE))
         has_n = bool(re.search(r'n\s*=\s*[\d,]+', draft))
-        score = (has_or + has_ci + has_p + has_n) / 4 * 100
+        format_score = (has_or + has_ci + has_p + has_n) / 4 * 100
 
-        # 통계 결과와 논문 내용 일치도 확인
-        if stat_result.get("model_vars"):
-            sig_vars = [v for v in stat_result["model_vars"] if v.get("significant")]
-            if sig_vars:
-                first_or = str(round(float(sig_vars[0].get("or_value", 0)), 1))
-                if first_or in draft:
-                    score = min(100.0, score + 10)
-        return round(score, 1)
+        # 2. 자기검증: 본문 OR 값이 실제 분석결과와 일치하는가 (환각/누락 탐지)
+        try:
+            from src.diagnostics.stat_consistency import verify_stat_consistency
+            consistency = verify_stat_consistency(draft, stat_result)
+            consistency_score = consistency["score"]
+        except Exception as e:
+            _log.debug("[CapabilityBench] 통계 일치 검증 실패: %s", e)
+            consistency_score = format_score  # 폴백: 형식 점수만
+
+        # 형식 40% + 실제 값 일치 60% (값 일치가 신뢰성에 더 중요)
+        return round(format_score * 0.4 + consistency_score * 0.6, 1)
 
     def _score_methodology(self, draft: str) -> float:
         """방법론 완성도 평가."""
