@@ -375,6 +375,69 @@ def _next_step_btn(label: str, target: str, key: str):
     if st.button(f"▶ {label}", key=key, type="primary"):
         _nav(target)
 
+# ══════════════════════════════════════════════════════════════════════
+# 연구 플로우 — 중앙 정의 (사이드바·스텝바·다음단계 안내가 모두 이걸 참조)
+# (단계번호, 표시라벨, 페이지키, 완료판정 함수)
+# ══════════════════════════════════════════════════════════════════════
+RESEARCH_FLOW = [
+    ("1", "원시자료 업로드", "원시자료 업로드", lambda s: s.get("raw_df") is not None),
+    ("2", "연구 주제 생성", "연구 주제 생성", lambda s: bool(s.get("topics") or s.get("selected_topic"))),
+    ("3", "신규성 확인", "신규성 확인", lambda s: "novelty_result" in s),
+    ("4", "타당성 검증", "논문 설계 & 타당성", lambda s: "feasibility_result" in s),
+    ("5", "데이터 분석", "데이터 분석", lambda s: s.get("stat_result_for_paper") is not None),
+    ("6", "논문 작성", "논문 작성", lambda s: "draft" in s),
+]
+_FLOW_TARGETS = [t for _, _, t, _ in RESEARCH_FLOW]
+
+
+def _flow_stepbar(current_target: str):
+    """플로우 단계 진행 바 — 완료(초록)/현재(파랑)/대기(회색)를 상단에 일관 표시."""
+    chips = []
+    for n, label, target, done_fn in RESEARCH_FLOW:
+        try:
+            done = bool(done_fn(st.session_state))
+        except Exception:
+            done = False
+        is_cur = (target == current_target)
+        if is_cur:
+            bg, fg, bd, mark = "rgba(59,130,246,.20)", "#60A5FA", "rgba(59,130,246,.45)", "▸"
+        elif done:
+            bg, fg, bd, mark = "rgba(34,197,94,.16)", "#4ADE80", "rgba(34,197,94,.35)", "✓"
+        else:
+            bg, fg, bd, mark = "rgba(255,255,255,.05)", "#64748B", "rgba(255,255,255,.08)", n
+        chips.append(
+            f'<span style="padding:3px 11px;border-radius:20px;font-size:11px;font-weight:700;'
+            f'background:{bg};color:{fg};border:1px solid {bd};white-space:nowrap;">{mark} {label}</span>'
+        )
+    arrow = '<span style="color:#334155;font-size:11px;">→</span>'
+    html = (
+        '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;'
+        'margin-bottom:14px;padding:8px 0;">' + arrow.join(chips) + '</div>'
+    )
+    st.markdown(html, unsafe_allow_html=True)
+
+
+def _flow_next(current_target: str):
+    """현재 플로우 단계의 다음 단계로 가는 안내 버튼 자동 생성."""
+    if current_target not in _FLOW_TARGETS:
+        return
+    idx = _FLOW_TARGETS.index(current_target)
+    if idx + 1 >= len(RESEARCH_FLOW):
+        return
+    n, label, target, _ = RESEARCH_FLOW[idx + 1]
+    st.divider()
+    c1, c2 = st.columns([3, 1])
+    with c1:
+        st.markdown(
+            f"<div style='padding-top:6px;color:#94A3B8;font-size:13px;'>"
+            f"다음 단계: <b style='color:#E5E7EB;'>STEP {n}. {label}</b></div>",
+            unsafe_allow_html=True,
+        )
+    with c2:
+        if st.button(f"{label} →", key=f"_flownext_{target}", type="primary", use_container_width=True):
+            _nav(target)
+
+
 page = st.session_state["nav"]
 _u = st.session_state.get("user", {})
 
@@ -397,26 +460,31 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     st.markdown('<div style="padding:4px 4px 2px;">', unsafe_allow_html=True)
-    _nb("🏠  홈", "홈")
-    _nb("⚡  워크플로우", "워크플로우")
-    _nb("📜  작업 타임라인", "작업 타임라인")
-    st.markdown('<div class="nav-section">프로젝트</div>', unsafe_allow_html=True)
-    _nb("🔴  논문 생산 파이프라인", "논문 생산 파이프라인")
-    _nb("🔴  연구 주제 생성", "연구 주제 생성")
-    _nb("📂  원시자료 업로드", "원시자료 업로드")
-    _nb("🔵  데이터 분석", "데이터 분석")
-    _nb("🟢  논문 설계 & 타당성", "논문 설계 & 타당성")
-    _nb("🔴  논문 작성", "논문 작성")
-    _nb("🔵  신규성 확인", "신규성 확인")
-    _nb("📄  기존 논문 개선", "기존 논문 개선")
-    st.markdown('<div class="nav-section">에이전트</div>', unsafe_allow_html=True)
+    _nb("🏠  홈 (대시보드)", "홈")
+    _nb("⚡  원스톱 자동 파이프라인", "논문 생산 파이프라인")
+    # ── 연구 플로우 (RESEARCH_FLOW 정의 순서 그대로 — 번호 = 진행 순서) ──
+    st.markdown('<div class="nav-section">🔬 연구 플로우</div>', unsafe_allow_html=True)
+    for _n, _label, _target, _done_fn in RESEARCH_FLOW:
+        try:
+            _done = bool(_done_fn(st.session_state))
+        except Exception:
+            _done = False
+        _mark = "✓" if _done else _n
+        _nb(f"{_mark}  {_label}", _target)
+    # ── 기존 논문 ──
+    st.markdown('<div class="nav-section">📄 기존 논문</div>', unsafe_allow_html=True)
+    _nb("○  기존 논문 개선", "기존 논문 개선")
+    _nb("○  논문 업로드 & 인제스트", "논문 업로드 & 인제스트")
+    # ── 에이전트 ──
+    st.markdown('<div class="nav-section">🤖 에이전트</div>', unsafe_allow_html=True)
     _nb("○  Agent Q&A", "Agent Q&A")
     _nb("○  Notebook 에디터", "Notebook 에디터")
-    st.markdown('<div class="nav-section">도구</div>', unsafe_allow_html=True)
-    _nb("○  논문 업로드 & 인제스트", "논문 업로드 & 인제스트")
+    # ── 도구 ──
+    st.markdown('<div class="nav-section">🛠 도구</div>', unsafe_allow_html=True)
     _nb("○  지식베이스 관리", "지식베이스 관리")
     _nb("○  자동 학습 루프", "자동 학습 루프")
     _nb("🧬  자가 진단 & 자가발전", "자가 진단")
+    _nb("📜  작업 타임라인", "작업 타임라인")
     st.markdown('</div>', unsafe_allow_html=True)
 
     # ── LLM Provider 설정 ──────────────────────────────────────────
@@ -524,6 +592,52 @@ with main_col:
             st.markdown('<div style="margin-top:6px;"></div>', unsafe_allow_html=True)
             if st.button("＋ 새 프로젝트 만들기", type="primary", use_container_width=True):
                 _nav("연구 주제 생성")
+
+        # ── 현재 연구 진행 대시보드 (플로우 중심) ───────────────────────────
+        st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
+        _done_flags = []
+        for _fn in (f for *_, f in RESEARCH_FLOW):
+            try:
+                _done_flags.append(bool(_fn(st.session_state)))
+            except Exception:
+                _done_flags.append(False)
+        _done_cnt = sum(_done_flags)
+        _next_step = next(
+            (RESEARCH_FLOW[i] for i, fl in enumerate(_done_flags) if not fl), None
+        )
+        _cur_title = st.session_state.get("selected_topic", {}).get("title", "") if st.session_state.get("selected_topic") else ""
+
+        dash_l, dash_r = st.columns([3, 2])
+        with dash_l:
+            st.markdown(
+                f"<div style='font-size:13px;color:#94A3B8;font-weight:700;"
+                f"text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;'>"
+                f"현재 연구 진행 — {_done_cnt}/{len(RESEARCH_FLOW)} 단계</div>",
+                unsafe_allow_html=True,
+            )
+            if _cur_title:
+                st.markdown(
+                    f"<div style='font-size:14px;color:#E5E7EB;font-weight:600;margin-bottom:8px;'>📌 {_cur_title[:70]}</div>",
+                    unsafe_allow_html=True,
+                )
+            st.progress(_done_cnt / len(RESEARCH_FLOW))
+            _flow_stepbar(_next_step[2] if _next_step else "")
+        with dash_r:
+            st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
+            if _next_step:
+                _n, _label, _target, _ = _next_step
+                st.markdown(
+                    f"<div style='color:#94A3B8;font-size:12px;margin-bottom:6px;'>다음 할 일</div>",
+                    unsafe_allow_html=True,
+                )
+                if st.button(f"▶ STEP {_n}. {_label}", type="primary", use_container_width=True, key="_dash_next"):
+                    _nav(_target)
+                if st.button("⚡ 원스톱 자동 (전체 한번에)", use_container_width=True, key="_dash_auto"):
+                    _nav("논문 생산 파이프라인")
+            else:
+                st.success("✅ 모든 단계 완료 — 논문 초안까지 생성됨")
+                if st.button("📝 논문 작성 결과 보기", type="primary", use_container_width=True, key="_dash_done"):
+                    _nav("논문 작성")
 
         st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
         c1, c2, c3 = st.columns(3)
@@ -778,6 +892,7 @@ with main_col:
     # ── 연구 주제 생성 ────────────────────────────────────────────────
     elif page == "연구 주제 생성":
         st.markdown("<h2 style='color:#e6edf3;'>📚 연구 주제 생성</h2>", unsafe_allow_html=True)
+        _flow_stepbar("연구 주제 생성")
         _show_topic_banner()
 
         # Replay support
@@ -841,11 +956,13 @@ with main_col:
                         if st.button("📝 논문 작성", key=f"_wr_{i}"):
                             st.session_state["selected_topic"] = t; _nav("논문 작성")
 
+        _flow_next("연구 주제 생성")
         _show_history("연구 주제 생성")
 
     # ── 신규성 확인 ───────────────────────────────────────────────────
     elif page == "신규성 확인":
         st.markdown("<h2 style='color:#e6edf3;'>🔍 신규성 확인 (PubMed)</h2>", unsafe_allow_html=True)
+        _flow_stepbar("신규성 확인")
         _show_topic_banner()
         prev = st.session_state.get("selected_topic", {})
         title = st.text_input("연구 제목", value=prev.get("title", ""))
@@ -1009,11 +1126,13 @@ with main_col:
                         st.session_state.pop(k, None)
                     st.rerun()
 
+        _flow_next("신규성 확인")
         _show_history("신규성 확인")
 
     # ── 논문 설계 & 타당성 ────────────────────────────────────────────
     elif page == "논문 설계 & 타당성":
         st.markdown("<h2 style='color:#e6edf3;'>🟢 논문 설계 & 타당성 검증</h2>", unsafe_allow_html=True)
+        _flow_stepbar("논문 설계 & 타당성")
         _show_topic_banner()
         prev = st.session_state.get("selected_topic", {})
         topic_json = st.text_area("주제 JSON",
@@ -1053,11 +1172,13 @@ with main_col:
             with fc2:
                 _next_step_btn("데이터 분석 도구", "데이터 분석", "_feas_to_data")
 
+        _flow_next("논문 설계 & 타당성")
         _show_history("논문 설계 & 타당성")
 
     # ── 원시자료 업로드 ───────────────────────────────────────────────
     elif page == "원시자료 업로드":
         st.markdown("<h2 style='color:#e6edf3;'>📂 KYRBS / KNHANES 원시자료 업로드</h2>", unsafe_allow_html=True)
+        _flow_stepbar("원시자료 업로드")
         st.info("질병관리청 공식 원시자료(.sav) 또는 CSV를 업로드하면 표준 스키마로 자동 변환해 분석에 사용합니다.")
 
         # 다운로드 안내
@@ -1232,12 +1353,12 @@ with main_col:
 
             st.divider()
             if st.button("🔬 이 데이터로 StatBridge 통계 분석 시작", type="primary", key="raw_to_stat"):
-                st.session_state["page"] = "데이터 분석"
-                st.info("데이터 분석 페이지의 'StatBridge 논문통계' 탭에서 분석을 실행하세요.")
+                _nav("데이터 분석")
 
     # ── 데이터 분석 ───────────────────────────────────────────────────
     elif page == "데이터 분석":
         st.markdown("<h2 style='color:#e6edf3;'>🔵 데이터 분석</h2>", unsafe_allow_html=True)
+        _flow_stepbar("데이터 분석")
         tab_lib, tab_run, tab_statbridge = st.tabs(["📚 데이터셋 라이브러리", "📊 통계 분석 실행", "🧬 StatBridge 논문통계"])
 
         with tab_lib:
@@ -1490,12 +1611,12 @@ with main_col:
                 st.text_area("논문 삽입 텍스트", value=r.get("paper_summary", ""), height=100, key="sb_summary_text")
                 if st.button("📋 이 통계 결과를 '논문 작성'에 사용", key="sb_to_writer"):
                     st.session_state["stat_result_for_paper"] = r
-                    st.session_state["page"] = "논문 작성"
-                    st.success("✅ 통계 결과가 '논문 작성' 페이지로 전달되었습니다.")
+                    _nav("논문 작성")
 
     # ── 논문 작성 ─────────────────────────────────────────────────────
     elif page == "논문 작성":
         st.markdown("<h2 style='color:#e6edf3;'>📝 조유선 스타일 논문 작성</h2>", unsafe_allow_html=True)
+        _flow_stepbar("논문 작성")
         _show_topic_banner()
         st.info("조유선 교수 논문 스타일 시드를 기반으로 논문 초안을 생성합니다.")
         prev = st.session_state.get("selected_topic", {})
