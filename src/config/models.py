@@ -32,6 +32,13 @@ OPENAI: dict[str, str] = {
     "fast":     "gpt-4o-mini",
 }
 
+# ── Gemini fallback model IDs ─────────────────────────────────────────────────
+GEMINI: dict[str, str] = {
+    "premium":  "gemini-2.0-flash-exp",
+    "standard": "gemini-2.0-flash",
+    "fast":     "gemini-2.0-flash",
+}
+
 # ── 임베딩 모델 ───────────────────────────────────────────────────────────────
 _DEFAULT_EMBEDDING = "all-MiniLM-L6-v2"  # 384-dim, sentence-transformers
 
@@ -88,10 +95,12 @@ def get_model(task: str = "standard") -> tuple[str, str]:
         return "anthropic", CLAUDE[tier]
     if os.environ.get("OPENAI_API_KEY"):
         return "openai", OPENAI[tier]
+    if os.environ.get("GOOGLE_API_KEY"):
+        return "google", GEMINI[tier]
 
     raise ValueError(
         "LLM API 키가 없습니다.\n"
-        ".env 파일에 ANTHROPIC_API_KEY 또는 OPENAI_API_KEY를 설정하세요."
+        ".env 파일에 ANTHROPIC_API_KEY, OPENAI_API_KEY, 또는 GOOGLE_API_KEY를 설정하세요."
     )
 
 
@@ -147,14 +156,17 @@ def list_available_models() -> dict:
     """현재 API 키 기준 사용 가능한 모델 정보 반환."""
     has_anthropic = bool(os.environ.get("ANTHROPIC_API_KEY"))
     has_openai = bool(os.environ.get("OPENAI_API_KEY"))
+    has_google = bool(os.environ.get("GOOGLE_API_KEY"))
 
     available: dict = {}
     if has_anthropic:
         available["anthropic"] = CLAUDE.copy()
     if has_openai:
         available["openai"] = OPENAI.copy()
+    if has_google:
+        available["google"] = GEMINI.copy()
     if not available:
-        available["status"] = "API 키 없음 — .env에 ANTHROPIC_API_KEY 또는 OPENAI_API_KEY 설정 필요"
+        available["status"] = "API 키 없음 — .env에 API 키 설정 필요"
 
     active_provider, active_model = "none", "none"
     try:
