@@ -905,7 +905,8 @@ with main_col:
             }
 
         def _ws_parse_json(raw: str):
-            import json as _json
+            """LLM JSON 파싱 — Gemini 등이 산문/마크다운을 섞어도 첫 {...} 블록을 추출."""
+            import json as _json, re as _re
             raw = (raw or "").strip()
             if raw.startswith("```"):
                 raw = raw.split("```")[1]
@@ -915,7 +916,47 @@ with main_col:
             try:
                 return _json.loads(raw)
             except Exception:
-                return None
+                pass
+            # 산문 속 첫 균형 잡힌 JSON 객체 추출
+            m = _re.search(r"\{.*\}", raw, _re.DOTALL)
+            if m:
+                try:
+                    return _json.loads(m.group(0))
+                except Exception:
+                    return None
+            return None
+
+        # 의도/섹션 휴리스틱 — LLM JSON 분류가 실패해도 한국어 키워드로 라우팅 (폴백)
+        _WS_SEC_KW = {
+            "title": ["제목", "title"],
+            "abstract": ["초록", "요약", "abstract"],
+            "introduction": ["서론", "introduction", "intro", "배경", "도입"],
+            "methods": ["방법", "method", "methods", "분석방법", "연구방법"],
+            "results": ["결과", "result", "results"],
+            "discussion": ["고찰", "논의", "discussion", "결론", "conclusion"],
+        }
+
+        def _ws_classify_heuristic(msg: str) -> tuple:
+            m = (msg or "").lower()
+            sec = next((k for k, kws in _WS_SEC_KW.items() if any(w in m for w in kws)), None)
+            def has(*ws): return any(w in m for w in ws)
+            if has("신규성", "novelty", "독창"):
+                intent = "novelty"
+            elif has("검색", "찾아", "관련 논문", "레퍼런스", "참고문헌"):
+                intent = "search"
+            elif has("심사", "리뷰", "review", "평가받", "피드백"):
+                intent = "review"
+            elif has("주제 추천", "주제추천", "토픽", "아이디어", "주제 제안"):
+                intent = "topics"
+            elif has("다듬", "간결", "수정", "고쳐", "줄여", "늘려", "바꿔", "고치", "refine"):
+                intent = "refine"
+            elif has("써줘", "써 줘", "작성", "써보", "초안", "만들어", "추가", "넣어", "쓰자", "write"):
+                intent = "write"
+            elif sec:  # 섹션을 명시했으면 작성으로 간주
+                intent = "write"
+            else:
+                intent = "chat"
+            return intent, sec
 
         def _ws_agent(user_msg: str) -> dict:
             """채팅 메시지 → 의도 분류 → 기존 단위 기능을 채팅으로 호출 (전 기능 바이브).
@@ -938,8 +979,15 @@ with main_col:
                 f"request: {user_msg}"
             )
             _ic = _ws_parse_json(llm.generate(_cls, task="fast", max_tokens=200)) or {}
-            _intent = _ic.get("intent", "chat")
-            _sec = _ic.get("section") if _ic.get("section") in _keys else None
+            _h_intent, _h_sec = _ws_classify_heuristic(user_msg)
+            # LLM 분류가 파싱되면 사용, 아니면 휴리스틱으로 폴백 (chat 오분류 방지)
+            _intent = _ic.get("intent") or _h_intent
+            if _intent not in ("write", "refine", "novelty", "search", "review", "topics", "chat"):
+                _intent = _h_intent
+            # LLM이 chat이라 했지만 휴리스틱이 작성/수정이면 휴리스틱 우선 (서론 써줘 → write)
+            if _intent == "chat" and _h_intent in ("write", "refine"):
+                _intent = _h_intent
+            _sec = _ic.get("section") if _ic.get("section") in _keys else _h_sec
             _detail = _ic.get("detail") or user_msg
 
             # 2) 의도별 핸들러 — 미리 만들어둔 단위 기능 호출
@@ -955,9 +1003,18 @@ with main_col:
                         "Return ONLY JSON: {\"section\":\"<key>\",\"content\":\"<FULL new section text>\","
                         "\"reply\":\"<short Korean reply>\"}. Preserve statistics/facts."
                     )
-                    _d = _ws_parse_json(llm.generate(_wp, task="paper_writing", max_tokens=3000)) or {}
-                    _s = _d.get("section") if _d.get("section") in _keys else _sec
-                    return {"section": _s, "content": _d.get("content", ""), "reply": _d.get("reply", "반영했습니다.")}
+                    _raw = llm.generate(_wp, task="paper_writing", max_tokens=3000)
+                    _d = _ws_parse_json(_raw) or {}
+                    _s = _d.get("section") if _d.get("section") in _keys else (_sec or "introduction")
+                    _content = _d.get("content", "")
+                    # JSON 파싱 실패 시에도 본문을 잃지 않도록 원문 텍스트를 섹션에 반영 (핵심)
+                    if not _content:
+                        _content = (_raw or "").strip()
+                    if not _content:
+                        return {"section": None, "content": "", "reply": "내용 생성에 실패했습니다. 다시 시도해 주세요."}
+                    _label = next((lbl for k, lbl in _WS_KEYS if k == _s), _s)
+                    return {"section": _s, "content": _content,
+                            "reply": _d.get("reply") or f"✍️ **{_label}**에 반영했습니다."}
 
                 if _intent == "novelty":
                     from src.research.novelty_checker import NoveltyChecker
