@@ -20,10 +20,10 @@ services:
     env_file:
       - .env                         # ANTHROPIC/OPENAI/GOOGLE 키 (admin 전역)
     volumes:
-      - ./data:/app/data             # 원시자료·ChromaDB·agent_self·change_log 영속
+      - ./data:/app/data             # 원시자료·ChromaDB·agent_self·change_log·working_papers 영속
       - ./.streamlit:/app/.streamlit:ro
-      # 개발 편의: 소스 변경을 재빌드 없이 반영 (배포 이미지는 COPY로 이미 코드 포함).
-      # 순수 이미지 격리가 필요하면 아래 두 줄을 주석 처리하고 `docker compose build`.
-      - ./app:/app/app
-      - ./src:/app/src
+      # 순수 이미지 모드: 소스는 이미지에 COPY로 고정 → OneDrive 동기화에 완전 면역.
+      # 빠른 코드 반복이 필요하면 아래 두 줄(개발용 바인드 마운트)을 잠시 활성화:
+      #   - ./app:/app/app
+      #   - ./src:/app/src
     restart: unless-stopped
