@@ -71,15 +71,53 @@ class GeminiClient:
             model_name=self.model,
             system_instruction=full_system or None,
         )
-        gen_config = {"max_output_tokens": max_tokens}
+        # gemini-flash-latest 등 사고형 모델은 출력 예산을 추론에 먼저 소비한다.
+        # max_tokens가 너무 작으면 finish_reason=MAX_TOKENS로 text가 비어버리므로
+        # 최소 256 토큰을 보장하고, 비면 더 큰 예산으로 1회 재시도한다.
+        budget = max(int(max_tokens), 256)
+        text = self._generate_once(model, user_message, budget)
+        if text:
+            return text
+        text = self._generate_once(model, user_message, max(budget * 2, 2048))
+        if text:
+            return text
+        # 끝까지 텍스트가 없으면 폴백이 동작하도록 명확히 예외 발생 (규칙 11)
+        raise RuntimeError(
+            f"Gemini({self.model}) 응답에 텍스트가 없습니다 "
+            "(finish_reason=MAX_TOKENS 또는 SAFETY 추정) — 다른 provider로 폴백 필요"
+        )
+
+    def _generate_once(self, model, user_message: str, budget: int) -> str:
         try:
-            resp = model.generate_content(user_message, generation_config=gen_config)
-            return (resp.text or "").strip()
+            resp = model.generate_content(
+                user_message,
+                generation_config={"max_output_tokens": int(budget)},
+            )
         except Exception as e:
             _log.warning("Gemini generate 실패: %s", e)
             raise
+        return self._extract_text(resp)
 
-    def stream(
+    @staticmethod
+    def _extract_text(resp) -> str:
+        """response.text quick accessor가 finish_reason=MAX_TOKENS 등에서 던지므로
+        candidates→parts를 수동 조립해 부분 텍스트라도 안전하게 회수한다."""
+        try:
+            t = resp.text
+            if t and t.strip():
+                return t.strip()
+        except Exception:
+            pass
+        out = []
+        for cand in (getattr(resp, "candidates", None) or []):
+            content = getattr(cand, "content", None)
+            for part in (getattr(content, "parts", None) or []):
+                t = getattr(part, "text", None)
+                if t:
+                    out.append(t)
+        return "".join(out).strip()
+
+    def generate_streamed(
         self,
         user_message: str,
         system_prompt: str = "",
@@ -87,6 +125,7 @@ class GeminiClient:
         max_tokens: int = 4096,
         task: Optional[str] = None,
     ) -> Iterator[str]:
+        """ClaudeClient.generate_streamed와 동일 시그니처 (Failover 호환)."""
         task = task or self._task
         full_system = build_base_system(system_prompt, task)
         if context_chunks:
@@ -99,11 +138,25 @@ class GeminiClient:
         try:
             for chunk in model.generate_content(
                 user_message,
-                generation_config={"max_output_tokens": max_tokens},
+                generation_config={"max_output_tokens": max(int(max_tokens), 256)},
                 stream=True,
             ):
-                if getattr(chunk, "text", None):
-                    yield chunk.text
+                txt = self._extract_text(chunk)
+                if txt:
+                    yield txt
         except Exception as e:
             _log.warning("Gemini stream 실패: %s", e)
             raise
+
+    # 하위호환 별칭
+    def stream(self, *args, **kwargs) -> Iterator[str]:
+        yield from self.generate_streamed(*args, **kwargs)
+
+    # ClaudeClient 호환용 보조 메서드 (RAG/요약 경로) ─────────────────────────
+    def answer_from_papers(self, question: str, context_chunks: List[str], context_prefix: str = "") -> str:
+        base = (
+            "You are a medical research assistant. Answer using ONLY the provided excerpts. "
+            "If the answer is absent, say so. Cite the source filename when available."
+        )
+        system = f"{context_prefix}\n\n{base}" if context_prefix else base
+        return self.generate(question, system_prompt=system, context_chunks=context_chunks, task="qa")

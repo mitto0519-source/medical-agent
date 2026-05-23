@@ -115,38 +115,53 @@ class _FailoverClient:
         return any(k in msg.lower() for k in keywords)
 
     def generate(self, user_message: str, **kwargs) -> str:
+        """작동하는 provider를 찾을 때까지 연쇄 시도.
+
+        크레딧 소진/레이트리밋뿐 아니라 '빈 응답'·예상 못한 오류도 실패로 보고
+        다음 provider(무료 Gemini 등)로 자동 전환한다 — 사용자 개입 불필요(규칙 11).
+        """
         from src.llm.health import record_success, record_failure
+        errors: list[str] = []
+
         # 1. 현재 active 시도
         try:
             result = self._active.generate(user_message, **kwargs)
-            record_success(_provider_of(self._active))
-            return result
+            if result and result.strip():
+                record_success(_provider_of(self._active))
+                return result
+            errors.append(f"{_provider_of(self._active)}(빈 응답)")
+            record_failure(_provider_of(self._active), "empty response")
         except Exception as e:
-            last_err = e
+            errors.append(f"{_provider_of(self._active)}({str(e)[:80]})")
             record_failure(_provider_of(self._active), str(e))
-            if not self._is_failover_trigger(e):
-                raise
-        # 2. 모든 fallback을 순차 연쇄 시도 (작동하는 provider까지)
+
+        # 2. 모든 fallback을 순차 연쇄 시도 (실제로 텍스트를 주는 provider까지)
+        active_prov = _provider_of(self._active)
         for provider, api_key, model in self._fallbacks:
+            if provider == active_prov:
+                continue  # 방금 실패한 active는 건너뜀
             try:
                 client = _make_client(provider, api_key, model, self._task)
             except Exception as ce:
                 _log.warning("Failover %s 초기화 실패: %s", provider, ce)
+                errors.append(f"{provider}(init:{str(ce)[:60]})")
                 record_failure(provider, str(ce))
                 continue
-            _log.warning("LLM Failover → %s 전환. 원인: %s", provider, last_err)
+            _log.warning("LLM Failover → %s 전환", provider)
             self._active = client
+            self.model = getattr(client, "model", "unknown")
             try:
                 result = client.generate(user_message, **kwargs)
-                record_success(provider)
-                return result
+                if result and result.strip():
+                    record_success(provider)
+                    return result
+                errors.append(f"{provider}(빈 응답)")
+                record_failure(provider, "empty response")
             except Exception as e:
-                last_err = e
+                errors.append(f"{provider}({str(e)[:80]})")
                 record_failure(provider, str(e))
-                if not self._is_failover_trigger(e):
-                    raise
                 continue  # 다음 fallback으로
-        raise last_err
+        raise RuntimeError("모든 LLM provider 실패 — " + "; ".join(errors))
 
     def generate_streamed(self, user_message: str, **kwargs) -> Iterator[str]:
         try:
