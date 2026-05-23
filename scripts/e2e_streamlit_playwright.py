@@ -26,7 +26,8 @@ results = {"pages": []}
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
-    context = browser.new_context()
+    # use wide viewport so Streamlit sidebar is visible
+    context = browser.new_context(viewport={"width":1600, "height":900})
     page = context.new_page()
 
     console_msgs = []
@@ -37,7 +38,11 @@ with sync_playwright() as p:
 
     try:
         page.goto(BASE, timeout=20000)
-        time.sleep(1)
+        # give client JS time to render sidebar
+        try:
+            page.wait_for_selector('[data-testid="stSidebar"]', timeout=10000)
+        except Exception:
+            time.sleep(1)
     except Exception as e:
         results['error_on_open'] = str(e)
 
@@ -57,6 +62,18 @@ with sync_playwright() as p:
 
     # initial snapshot
     save_state('home_loaded')
+
+    # try to list sidebar buttons (if present)
+    try:
+        sb_count = page.locator('[data-testid="stSidebar"]').count()
+        results['sidebar_present'] = bool(sb_count)
+        if sb_count:
+            btns = page.locator('[data-testid="stSidebar"] button')
+            results['sidebar_buttons'] = btns.all_inner_texts()
+        else:
+            results['sidebar_buttons'] = []
+    except Exception as e:
+        results['sidebar_list_error'] = str(e)
 
     for kw in TARGET_KEYWORDS:
         entry = {"keyword": kw, "clicked": False, "console": [], "page_errors": [], "html_file": None, "screenshot": None}

@@ -1,0 +1,32 @@
+# ── 환경/캐시 (이미지에서 새로 설치) ──────────────────────────────
+.venv/
+venv/
+env/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── 비밀/환경 (런타임에 env_file로 주입 — 이미지에 굽지 않음) ──────
+.env
+.env.*
+.streamlit/secrets.toml
+
+# ── 대용량 데이터 (2.8GB — 런타임 볼륨 마운트) ────────────────────
+data/
+
+# ── git/IDE ──────────────────────────────────────────────────────
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# ── 로그/임시/OS ─────────────────────────────────────────────────
+*.log
+.DS_Store
+Thumbs.db
+node_modules/

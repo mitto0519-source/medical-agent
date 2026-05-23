@@ -16,6 +16,7 @@ plotly>=5.15.0
 
 # ── Data Processing ───────────────────────────────────────────────────
 openpyxl>=3.1.0
+pyreadstat>=1.2.0   # KYRBS/KNHANES .sav(SPSS) 원시자료 로더 (필수 — 누락 시 데이터 로드 실패)
 
 # ── NLP / Embedding ───────────────────────────────────────────────────
 sentence-transformers>=2.2.0

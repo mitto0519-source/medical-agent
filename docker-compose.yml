@@ -1,0 +1,25 @@
+# Medical-Agent — 컨테이너 실행 정의
+#
+# 사용법:
+#   docker compose up -d --build      # 빌드 + 백그라운드 실행
+#   http://localhost:8501             # 브라우저 접속
+#   docker compose logs -f            # 로그 확인
+#   docker compose down               # 중지
+#
+# 핵심 설계:
+#   - 의존성/소스는 이미지에 고정 → OneDrive 동기화 무관 (패키지 증발/소스 되돌림 차단)
+#   - .env API 키는 env_file로 주입 → admin 전역 키 그대로 동작 (블로그의 -e 방식과 동일)
+#   - data/ (2.8GB 원시자료 + RAG + 장기기억)는 볼륨 마운트 → 이미지 밖에서 영속
+services:
+  medical-agent:
+    build: .
+    image: medical-agent:latest
+    container_name: medical-agent
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env                         # ANTHROPIC/OPENAI/GOOGLE 키 (admin 전역)
+    volumes:
+      - ./data:/app/data             # 원시자료·ChromaDB·agent_self·change_log 영속
+      - ./.streamlit:/app/.streamlit:ro
+    restart: unless-stopped
