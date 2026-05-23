@@ -23,6 +23,10 @@ _log = get_logger(__name__)
 _PATH = Path("data/diagnostics/llm_health.json")
 _COOLDOWN_SEC = 600  # 실패 후 10분간 후순위 (크레딧 소진/레이트리밋 회피)
 
+# 품질 우선순위 (낮을수록 우선). seed/스타일/근거는 모든 LLM에 동일 주입되지만,
+# 그 기준을 재현하는 문체·정밀도는 모델 급차가 있어 작동하는 것 중 고품질을 우선.
+_QUALITY_RANK = {"anthropic": 0, "openai": 1, "google": 2}
+
 
 def _load() -> Dict[str, dict]:
     if not _PATH.exists():
@@ -85,8 +89,9 @@ def order_by_health(providers: List[str]) -> List[str]:
         last_success = e.get("last_success", 0)
         fail_count = e.get("fail_count", 0)
         in_cooldown = (now - last_fail) < _COOLDOWN_SEC if last_fail else False
-        # 1차: 쿨다운 여부 (False가 먼저). 2차: 실패횟수. 3차: 최근 성공 우선(음수)
-        return (1 if in_cooldown else 0, fail_count, -last_success)
+        # 1차: 쿨다운 여부(작동하는 것 먼저). 2차: 실패횟수.
+        # 3차: 품질 우선순위(작동하는 것 중 고품질 모델 우선). 4차: 최근 성공.
+        return (1 if in_cooldown else 0, fail_count, _QUALITY_RANK.get(p, 9), -last_success)
 
     ordered = sorted(providers, key=sort_key)
     if ordered != providers:
