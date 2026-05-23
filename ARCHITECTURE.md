@@ -98,8 +98,10 @@
 | 기능 | 정규 모듈 | 상태 | 비고 |
 |------|----------|------|------|
 | Supabase 연결 | `src/cloud/db.py` → `cloud_available()`, `get_engine()` | ✅ active | |
-| 사용자 인증 | `src/auth/users.py` | ✅ active | |
-| 스토리지 매니저 | `src/storage/manager.py` | ✅ active | |
+| 사용자 인증 | `src/auth/users.py` | ✅ active | `is_admin()` super_admin 2명+admin role = full access |
+| 스토리지 매니저(참고문헌 RAG) | `src/storage/manager.py` | ✅ active | NotebookLM/RAG 적재 |
+| **작성 논문 영속 저장** | `src/storage/working_paper_store.py` | ✅ active | 작업실 6섹션을 계정 귀속 저장/불러오기(data/working_papers, 로컬+클라우드 best-effort). manager.py와 별개 |
+| 컨테이너화 | `Dockerfile`, `docker-compose.yml`, `.dockerignore` | ✅ active | code-in-image + data/ 볼륨. OneDrive 환경함정 근본차단. `docker compose up -d --build` |
 
 ### 8. UI
 
@@ -124,6 +126,17 @@
 | **출판용 전체 그림/표 생성** | `src/export/publication_figure_generator.py` → `PublicationFigureGenerator` | ✅ active | FigureLabs 수준. Forest/ROC/유병률/서브그룹/Table1/Table2/계수플롯 300dpi PNG+SVG |
 | 표 생성 | `src/export/table_builder.py` | ✅ active | |
 | 커버 레터 생성 | `src/export/cover_letter_writer.py` | ✅ active | 저널+주제+리뷰 결과 기반 영문 커버 레터 LLM 생성 |
+
+### 10. 검증 / 자가진단 (Eval — 다층)
+
+> Anthropic 'evals for AI agents' 방식의 다층 검증. 코드 무결성(LLM무관) + 실통계 회귀 + 실브라우저 회귀.
+
+| 기능 | 정규 모듈 | 상태 | 비고 |
+|------|----------|------|------|
+| 코드 무결성 진단 | `scripts/e2e_diagnose.py` | ✅ active | import전수+심볼+self_model+code_graph (LLM무관) |
+| 통계엔진 회귀(실데이터) | `scripts/prove_stata_e2e.py` | ✅ active | 실 KYRBS→StatBridge→표/그림. ZCB aOR 재현 |
+| **UI 회귀 eval(브라우저)** | `scripts/ui_eval.py` | ✅ active | Playwright admin 로그인→페이지별 grader+워크플로 outcome(채팅→섹션, 저장→복원). 45 assertions |
+| RAG/모듈 스모크 | `scripts/test_rag_smoke.py` | ✅ active | 임포트+ChromaDB 절대기준 |
 
 ---
 
