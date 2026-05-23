@@ -1,0 +1,214 @@
+"""UI Eval Harness — browser-agent 회귀 eval (Anthropic 'evals for AI agents' 방식).
+
+각 task = (페이지/워크플로) + graders(assertions). 실 브라우저로 admin 로그인 후
+모든 task를 돌리고 assertion별 PASS/FAIL을 구조화 리포트로 남긴다.
+회귀 eval(목표 ~100%): 점수 하락 = 무언가 깨짐. 거짓양성 방지를 위해 채팅 버블 내
+에러 텍스트, 섹션 실제 반영, 영속 복원까지 '결과(outcome)'를 검증한다.
+
+전제: 컨테이너/앱이 BASE_URL에서 healthy.
+실행: python scripts/ui_eval.py
+결과: scripts/ui_eval_outputs/{report.json, report.md, *.png}
+"""
+from __future__ import annotations
+
+import io
+import json
+import re
+import sys
+import time
+from pathlib import Path
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+from playwright.sync_api import Page, sync_playwright
+
+BASE = "http://localhost:8501"
+ADMIN = "mitto0519@gmail.com"
+OUT = Path("scripts/ui_eval_outputs")
+OUT.mkdir(parents=True, exist_ok=True)
+
+_ERR_KW = ["Traceback", "오류:", "Error code", "Exception", "찾을 수 없",
+           "AttributeError", "KeyError", "ModuleNotFound", "is not defined",
+           "credit balance", "I/O operation"]
+
+
+# ── 공통 ──────────────────────────────────────────────────────────────────
+def wait_idle(page: Page, ms: int = 2200):
+    try:
+        page.wait_for_selector('[data-testid="stStatusWidget"]', state="detached", timeout=ms)
+    except Exception:
+        pass
+    page.wait_for_timeout(ms)
+
+
+def nav(page: Page, label: str) -> bool:
+    try:
+        page.get_by_role("button", name=re.compile(re.escape(label))).first.click(timeout=6000)
+        wait_idle(page)
+        return True
+    except Exception:
+        return False
+
+
+# ── Graders (page -> (passed, detail)) ─────────────────────────────────────
+def g_no_exception(page: Page):
+    n = len(page.query_selector_all('[data-testid="stException"]'))
+    return n == 0, f"stException={n}"
+
+
+def g_no_error_text(page: Page):
+    hits = []
+    for sel in ['[data-testid="stAlert"]', '[data-testid="stChatMessage"]']:
+        for el in page.query_selector_all(sel):
+            try:
+                t = el.inner_text()
+            except Exception:
+                continue
+            if any(k in t for k in _ERR_KW):
+                hits.append(t[:120])
+    return len(hits) == 0, ("; ".join(hits)[:200] if hits else "no error text")
+
+
+def g_text_present(text: str):
+    def _g(page: Page):
+        n = page.get_by_text(re.compile(re.escape(text))).count()
+        return n > 0, f"'{text}' x{n}"
+    return _g
+
+
+# ── Tasks ──────────────────────────────────────────────────────────────────
+def task_render(label: str, marker: str):
+    """페이지 클릭 → 렌더 마커 + 무에러 검증."""
+    def _run(page: Page) -> list:
+        ok_nav = nav(page, label) if label != "홈" else (wait_idle(page) or True)
+        page.screenshot(path=str(OUT / f"render_{label}.png"))
+        res = [("navigated", ok_nav, label)]
+        res.append(("marker:" + marker, *g_text_present(marker)(page)))
+        res.append(("no_exception", *g_no_exception(page)))
+        res.append(("no_error_text", *g_no_error_text(page)))
+        return res
+    return (f"render:{label}", _run)
+
+
+def task_chat_write(page: Page) -> list:
+    """워크플로 — 채팅으로 서론 작성 시 우측 Introduction 섹션에 실제 반영(outcome)."""
+    nav(page, "논문 작업실")
+    chat = page.locator('[data-testid="stChatInput"] textarea, textarea[placeholder*="요청"]').first
+    chat.fill("청소년 스마트폰 과사용과 수면부족 연구로 서론 한 단락 써줘")
+    chat.press("Enter")
+    filled = ""
+    for _ in range(30):
+        page.wait_for_timeout(3000)
+        # 에러가 채팅에 떴으면 즉시 실패 판정 위해 수집
+        err_ok, err_d = g_no_error_text(page)
+        try:
+            filled = page.get_by_label("Introduction", exact=True).input_value(timeout=2000)
+        except Exception:
+            filled = ""
+        if (filled and len(filled.strip()) > 40) or not err_ok:
+            break
+    page.screenshot(path=str(OUT / "flow_chat_write.png"))
+    err_ok, err_d = g_no_error_text(page)
+    return [
+        ("chat_no_error", err_ok, err_d),
+        ("introduction_filled(outcome)", bool(filled and len(filled.strip()) > 40), f"len={len(filled)}"),
+    ]
+
+
+def task_save_restore(page, browser) -> list:
+    """워크플로 — 저장 후 새 세션에서 복원(영속성, outcome)."""
+    res = []
+    try:
+        page.get_by_role("button", name=re.compile("💾 저장")).first.click(timeout=5000)
+        wait_idle(page, 2000)
+        res.append(("save_clicked", page.get_by_text(re.compile("저장됨")).count() > 0, ""))
+    except Exception as e:
+        res.append(("save_clicked", False, str(e)[:100]))
+        return res
+    # 새 세션
+    ctx = browser.new_context()
+    p2 = ctx.new_page()
+    p2.set_viewport_size({"width": 1500, "height": 1000})
+    p2.goto(f"{BASE}/?email={ADMIN}&auto=1", wait_until="domcontentloaded", timeout=30000)
+    wait_idle(p2, 5000)
+    nav(p2, "논문 작업실")
+    restored = ""
+    try:
+        p2.locator('[data-testid="stSelectbox"]').first.click(timeout=6000)
+        p2.wait_for_timeout(800)
+        p2.get_by_role("option").nth(1).click(timeout=4000)
+        wait_idle(p2, 1200)
+        p2.get_by_role("button", name=re.compile("열기")).first.click(timeout=6000)
+        wait_idle(p2, 2500)
+        restored = p2.get_by_label("Introduction", exact=True).input_value(timeout=3000)
+    except Exception as e:
+        restored = ""
+        res.append(("restore_exec", False, str(e)[:100]))
+    p2.screenshot(path=str(OUT / "flow_save_restore.png"))
+    res.append(("restored_in_new_session(outcome)", bool(restored and len(restored.strip()) > 40), f"len={len(restored)}"))
+    ctx.close()
+    return res
+
+
+def main() -> int:
+    suite = []
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(viewport={"width": 1500, "height": 1000})
+        page.goto(f"{BASE}/?email={ADMIN}&auto=1", wait_until="domcontentloaded", timeout=30000)
+        wait_idle(page, 5000)
+        login_ok = page.get_by_role("button", name=re.compile("접속하기")).count() == 0
+        suite.append(("login:admin", [("logged_in", login_ok, ADMIN)]))
+
+        # 기본(바이브) 페이지 렌더 회귀
+        for label, marker in [("홈", "Medical-Agent"), ("논문 작업실", "논문 작업실"),
+                              ("글쓰기 스타일", "글쓰기 스타일"), ("작업 타임라인", "타임라인")]:
+            name, fn = task_render(label, marker)
+            suite.append((name, fn(page)))
+
+        # 핵심 워크플로 (outcome 검증)
+        suite.append(("flow:chat_write", task_chat_write(page)))
+        suite.append(("flow:save_restore", task_save_restore(page, browser)))
+
+        # 관리자 단위 페이지 렌더 회귀 (관리자 모드 ON)
+        for sel in ['[data-testid="stCheckbox"]', 'label:has-text("관리자 모드")']:
+            try:
+                page.locator(sel).first.click(timeout=3000); wait_idle(page); break
+            except Exception:
+                continue
+        for label, marker in [("연구 주제 생성", "주제"), ("신규성 확인", "신규성"),
+                              ("데이터 분석", "분석"), ("논문 작성", "논문"),
+                              ("자가 진단", "진단"), ("지식베이스 관리", "지식")]:
+            name, fn = task_render(label, marker)
+            suite.append((name, fn(page)))
+
+        browser.close()
+
+    # 집계
+    total = passed = 0
+    lines = ["# UI Eval 리포트", ""]
+    for tname, assertions in suite:
+        t_ok = all(a[1] for a in assertions)
+        lines.append(f"## {'✅' if t_ok else '❌'} {tname}")
+        for aname, ok, detail in assertions:
+            total += 1
+            passed += 1 if ok else 0
+            lines.append(f"- {'PASS' if ok else 'FAIL'} `{aname}` — {detail}")
+        lines.append("")
+    header = f"**{passed}/{total} assertions PASS** · {time.strftime('%Y-%m-%d %H:%M')}"
+    (OUT / "report.md").write_text(header + "\n\n" + "\n".join(lines), encoding="utf-8")
+    (OUT / "report.json").write_text(json.dumps(
+        [{"task": t, "assertions": [{"name": a, "ok": o, "detail": d} for a, o, d in al]} for t, al in suite],
+        ensure_ascii=False, indent=2), encoding="utf-8")
+    print(header)
+    for tname, assertions in suite:
+        t_ok = all(a[1] for a in assertions)
+        print(f"  {'✅' if t_ok else '❌'} {tname}")
+        for aname, ok, detail in assertions:
+            if not ok:
+                print(f"      FAIL {aname} — {detail}")
+    print(f"\n=== {passed}/{total} assertions PASS — scripts/ui_eval_outputs/report.md ===")
+    return 0 if passed == total else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
