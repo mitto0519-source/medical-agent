@@ -229,14 +229,72 @@ def _login_gate():
 if not _login_gate():
     st.stop()
 
-# API 키 확인 — 누락 시 경고
-if not os.environ.get("ANTHROPIC_API_KEY") and not os.environ.get("OPENAI_API_KEY"):
-    st.warning(
-        "⚠️ **LLM API 키가 설정되지 않았습니다.**  \n"
-        f"`{str(_root / '.env')}` 파일에 `ANTHROPIC_API_KEY=sk-ant-...` 또는 `OPENAI_API_KEY=sk-...` 를 추가하거나 "
-        "Streamlit Cloud Secrets를 설정하세요.",
-        icon="🔑",
+# ══════════════════════════════════════════════════════════════════════
+# 권한별 LLM 키 활성화 — admin 2명은 전역 모든 API full access,
+# 일반 user는 본인 키 필수 (각 계정 귀속). [규칙: 데이터/API 계정 귀속]
+# 주의: 단일 프로세스 동시 멀티유저 시 마지막 로그인 user 키가 전역에 남을 수 있음
+#       (실사용 1인 세션 기준 안전). 진짜 동시 멀티테넌시는 별도 프로세스 분리 필요.
+# ══════════════════════════════════════════════════════════════════════
+_cur_email = st.session_state.get("user", {}).get("email", "")
+try:
+    from src.auth.users import is_admin as _is_admin_fn
+    st.session_state["_is_admin"] = _is_admin_fn(_cur_email)
+except Exception:
+    st.session_state["_is_admin"] = False
+
+if st.session_state.get("_is_admin"):
+    # admin: 전역 .env/secrets 키 (모든 API) 그대로 사용 — full access
+    st.session_state["_llm_ready"] = bool(
+        os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY")
+        or os.environ.get("GOOGLE_API_KEY")
     )
+else:
+    # 일반 user: 전역(admin) 키 격리 — 본인 키만 사용 (API 사용량 본인 귀속)
+    # 매 rerun 상단 load_dotenv가 전역 키를 다시 넣으므로 여기서 제거 후 본인 키만 세팅
+    for _gk in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "GOOGLE_API_KEY"):
+        os.environ.pop(_gk, None)
+    try:
+        from src.auth.users import get_llm_settings
+        _us = get_llm_settings(_cur_email)
+        _uk = (_us.get("api_key") or "").strip()
+        _prov = (_us.get("provider") or "").lower()
+        if _uk:
+            if "anthro" in _prov or "claude" in _prov:
+                os.environ["ANTHROPIC_API_KEY"] = _uk
+            elif "openai" in _prov or "gpt" in _prov:
+                os.environ["OPENAI_API_KEY"] = _uk
+            elif "gemini" in _prov or "google" in _prov:
+                os.environ["GOOGLE_API_KEY"] = _uk
+            else:
+                # provider 미지정이면 키 접두어로 추정
+                if _uk.startswith("sk-ant"):
+                    os.environ["ANTHROPIC_API_KEY"] = _uk
+                elif _uk.startswith("sk-"):
+                    os.environ["OPENAI_API_KEY"] = _uk
+                else:
+                    os.environ["GOOGLE_API_KEY"] = _uk
+            st.session_state["_llm_ready"] = True
+        else:
+            st.session_state["_llm_ready"] = False
+    except Exception:
+        st.session_state["_llm_ready"] = False
+
+# API 키 확인 — 권한별 안내
+if not st.session_state.get("_llm_ready"):
+    if st.session_state.get("_is_admin"):
+        st.warning(
+            "⚠️ **전역 LLM API 키가 설정되지 않았습니다.**  \n"
+            f"`{str(_root / '.env')}` 또는 Streamlit Cloud Secrets에 "
+            "`ANTHROPIC_API_KEY` / `OPENAI_API_KEY` / `GOOGLE_API_KEY` 중 하나를 추가하세요.",
+            icon="🔑",
+        )
+    else:
+        st.warning(
+            "🔑 **본인 LLM API 키를 등록해야 AI 기능을 사용할 수 있습니다.**  \n"
+            "사이드바 하단 **AI 어시스턴트 설정**에서 본인 API 키를 입력하세요. "
+            "(API 사용량은 본인 계정에 귀속됩니다.)",
+            icon="🔑",
+        )
 
 # ══════════════════════════════════════════════════════════════════════
 # Helpers
@@ -2778,8 +2836,9 @@ with main_col:
                 _n_filter = st.slider("최근 N개", 10, 200, 50, key="_tl_n")
             with col_f3:
                 st.markdown("<div style='margin-top:28px;'></div>", unsafe_allow_html=True)
-                _show_all = st.checkbox("전체 사용자", value=False, key="_tl_all",
-                                        disabled=(_u.get("role") != "super_admin"))
+                _show_all = st.checkbox("전체 사용자 (admin)", value=False, key="_tl_all",
+                                        disabled=(not st.session_state.get("_is_admin")),
+                                        help="admin은 모든 사용자의 작업을 조회할 수 있습니다 (full access)")
 
             atype_arg = None if _atype_filter == "전체" else _atype_filter
             email_arg = None if _show_all else user_email

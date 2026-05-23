@@ -188,6 +188,21 @@ def is_super_admin(email: str) -> bool:
     return user.get("role") == "super_admin" or email in SUPER_ADMIN_EMAILS
 
 
+def is_admin(email: str) -> bool:
+    """full access 권한 여부 — super_admin(고정 2명) 또는 admin role.
+
+    full access = 모든 user 작업물 조회 + 전역 모든 API 사용 + 전 기능 개방.
+    super_admin과 admin은 '권한'이 동일하다. 차이는 super_admin은 고정·제거불가,
+    admin은 부여/회수 가능한 계정이라는 점뿐이다. viewer는 본인 데이터만.
+    """
+    if not email:
+        return False
+    if email in SUPER_ADMIN_EMAILS:
+        return True
+    user = get_user_by_email(email)
+    return bool(user and user.get("role") in ("super_admin", "admin"))
+
+
 def list_users() -> list[dict]:
     users = _load()
     if isinstance(users, dict):

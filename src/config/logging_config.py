@@ -26,6 +26,20 @@ _LOG_FILE = _LOG_DIR / "app.log"
 _FMT = "%(asctime)s %(levelname)-8s [%(name)s] %(message)s"
 _DATE_FMT = "%Y-%m-%d %H:%M:%S"
 
+# Streamlit Cloud/ScriptRunner는 재실행 시 stdout/stderr를 닫는다.
+# 닫힌 stream에 로그를 쓰면 "I/O operation on closed file"가 호출부로 전파돼
+# 엉뚱한 화면(예: LLM 설정 저장)에서 에러로 표시된다. 이를 조용히 무시한다.
+logging.raiseExceptions = False
+
+
+class _SafeStreamHandler(logging.StreamHandler):
+    """닫힌 stream(I/O error)을 무시하는 콘솔 핸들러."""
+    def emit(self, record):
+        try:
+            super().emit(record)
+        except (ValueError, OSError):
+            pass  # 닫힌 stdout/stderr — 무시 (앱 동작에 영향 없음)
+
 
 def setup_logging(level: int = logging.INFO) -> None:
     """루트 로거 설정. 앱 시작 시 1회만 호출."""
@@ -49,7 +63,7 @@ def setup_logging(level: int = logging.INFO) -> None:
             stream = io.TextIOWrapper(stream.buffer, encoding="utf-8", errors="replace", line_buffering=True)
         except Exception:
             pass
-    console = logging.StreamHandler(stream)
+    console = _SafeStreamHandler(stream)
     console.setFormatter(formatter)
     console.setLevel(level)
     root.addHandler(console)

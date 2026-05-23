@@ -41,6 +41,7 @@ def log_activity(
     entry = {
         "id": entry_id,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "user_email": user_email,          # admin 전체조회 시 소유자 식별
         "page": page,
         "action": action,
         "input": input_data,
@@ -126,3 +127,54 @@ def get_user_log(user_email: str, page: Optional[str] = None, limit: int = 20) -
         return entries[:limit]
     except Exception:
         return []
+
+
+def get_all_logs(page: Optional[str] = None, limit: int = 100) -> list:
+    """admin 전용 — 전체 user의 활동 로그 (각 entry에 user_email 포함).
+
+    일반 user는 get_user_log(본인)만, admin은 이 함수로 모두 조회 (full access).
+    """
+    if _cloud():
+        try:
+            from sqlalchemy import text
+            where = "1=1"
+            params: dict = {}
+            if page:
+                where = "page = :p"
+                params["p"] = page
+            with _engine().connect() as conn:
+                rows = conn.execute(
+                    text(f"SELECT * FROM ma_activity WHERE {where} ORDER BY timestamp DESC LIMIT :lim"),
+                    {**params, "lim": limit},
+                ).mappings().all()
+            return [
+                {
+                    "id": r["id"],
+                    "timestamp": str(r.get("timestamp", ""))[:19],
+                    "user_email": r.get("user_email", ""),
+                    "page": r.get("page", ""),
+                    "action": r.get("action", ""),
+                    "input": r.get("input_data") or {},
+                    "output_summary": r.get("output_summary", ""),
+                    "output": r.get("output_data") or {},
+                }
+                for r in rows
+            ]
+        except Exception as e:
+            _log.warning("Cloud get_all_logs failed: %s", e)
+
+    # local: 모든 user 로그 파일 병합
+    results = []
+    if LOG_DIR.exists():
+        for f in LOG_DIR.glob("*.json"):
+            try:
+                entries = json.loads(f.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            for e in entries:
+                if page and e.get("page") != page:
+                    continue
+                e.setdefault("user_email", f.stem)  # 구 로그 폴백(파일명)
+                results.append(e)
+    results.sort(key=lambda e: e.get("timestamp", ""), reverse=True)
+    return results[:limit]
