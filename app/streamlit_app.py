@@ -559,6 +559,7 @@ with st.sidebar:
     st.markdown('<div style="padding:0 8px 8px;">', unsafe_allow_html=True)
 
     _PROVIDERS = {
+        "🔄 자동": "🔄 자동 (무료 우선)",
         "🟠 Claude": "Claude (Anthropic)",
         "🟢 GPT-4": "GPT-4 (OpenAI)",
         "🔵 Gemini": "Gemini (Google)",
@@ -570,10 +571,10 @@ with st.sidebar:
             from src.auth.users import get_llm_settings
             st.session_state["llm_settings"] = get_llm_settings(_email)
         except Exception:
-            st.session_state["llm_settings"] = {"provider": "Claude (Anthropic)", "api_key": ""}
+            st.session_state["llm_settings"] = {"provider": "🔄 자동 (무료 우선)", "api_key": ""}
 
     _saved = st.session_state["llm_settings"]
-    _cur_icon = next((k for k, v in _PROVIDERS.items() if v == _saved["provider"]), "🟠 Claude")
+    _cur_icon = next((k for k, v in _PROVIDERS.items() if v == _saved["provider"]), "🔄 자동")
 
     _sel_icon = st.radio(
         "LLM 선택",

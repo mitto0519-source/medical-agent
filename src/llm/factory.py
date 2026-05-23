@@ -37,6 +37,9 @@ def _make_client(provider: str, api_key: Optional[str], model: Optional[str], ta
     if provider in ("google", "gemini"):
         from src.llm.gemini_client import GeminiClient
         return GeminiClient(api_key=api_key, model=model, task=task)
+    if provider == "mock":
+        from src.llm.mock_client import MockClient
+        return MockClient(api_key=api_key, model=model, task=task)
     raise ValueError(f"알 수 없는 provider: {provider}")
 
 
@@ -299,6 +302,14 @@ def _build_fallbacks(primary_provider: str, task: str) -> list:
         key = os.environ.get(_key_env.get(p, ""))
         if key:
             fallbacks.append((p, key, None))
+    # If no real fallbacks available, provide a local mock fallback so UI/tests can run without paid API keys.
+    if not fallbacks:
+        try:
+            # Always allow enabling/disabling via env var in case user dislikes auto-mock.
+            if os.environ.get("ENABLE_MOCK_LLM", "1") == "1":
+                fallbacks.append(("mock", None, None))
+        except Exception:
+            fallbacks.append(("mock", None, None))
     return fallbacks
 
 

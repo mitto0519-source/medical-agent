@@ -8,7 +8,7 @@ import streamlit as st
 
 from src.llm import get_llm_client
 
-_PROVIDERS = ["Claude (Anthropic)", "GPT-4 (OpenAI)", "Gemini (Google)"]
+_PROVIDERS = ["🔄 자동 (무료 우선)", "Claude (Anthropic)", "GPT-4 (OpenAI)", "Gemini (Google)"]
 
 PANEL_CSS = """
 <style>
@@ -38,35 +38,31 @@ def _flatten_messages(messages: list) -> str:
 
 
 def _call_llm(provider: str, messages: list, system: str, api_key: str) -> str:
-    provider_key = provider.split()[0].lower()
-    if provider_key == "claude":
-        client = get_llm_client(api_key=api_key or None, provider="anthropic")
-    elif provider_key == "gpt-4":
-        client = get_llm_client(api_key=api_key or None, provider="openai")
-    else:
-        raise ValueError(f"Unsupported LLM provider: {provider}")
+    """모든 provider를 통합 failover 클라이언트(get_llm_client)로 처리.
 
+    - '🔄 자동' → provider 미지정. 건강도 우선순위로 작동하는(무료 Gemini 포함)
+      provider를 자동 선택하고, 실패하면 나머지로 연쇄 폴백.
+    - 특정 provider 지정 → 그 provider를 1순위로 두되 실패 시 나머지로 자동 폴백.
+    페르소나/seed 주입은 build_base_system()을 공유하므로 어떤 provider로 가도 일관(규칙 9).
+    """
+    pk = provider.split()[0].lower()
+    explicit = {
+        "claude": "anthropic",
+        "gpt-4": "openai", "gpt": "openai",
+        "gemini": "google",
+    }.get(pk)  # None이면 자동 (환경변수 기반 + 무료 우선 폴백)
+
+    client = get_llm_client(
+        api_key=api_key or None,
+        provider=explicit,
+        task="qa",
+        with_failover=True,
+    )
     return client.generate(
         _flatten_messages(messages),
         system_prompt=system,
         max_tokens=2048,
     )
-
-
-def _call_gemini(messages: list, system: str, api_key: str) -> str:
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-1.5-pro", system_instruction=system)
-        history = []
-        for m in messages[:-1]:
-            role = "user" if m["role"] == "user" else "model"
-            history.append({"role": role, "parts": [m["content"]]})
-        chat = model.start_chat(history=history)
-        resp = chat.send_message(messages[-1]["content"])
-        return resp.text
-    except ImportError:
-        return "⚠️ google-generativeai 패키지가 설치되지 않았습니다."
 
 
 def render_ai_panel(current_page: str, page_context: dict | None = None, user_email: str = ""):
@@ -103,12 +99,8 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
                     st.success("저장됨")
 
     if "_ai_provider" not in st.session_state:
-        if os.environ.get("OPENAI_API_KEY") and not os.environ.get("ANTHROPIC_API_KEY"):
-            st.session_state["_ai_provider"] = _PROVIDERS[1]
-        elif os.environ.get("ANTHROPIC_API_KEY"):
-            st.session_state["_ai_provider"] = _PROVIDERS[0]
-        else:
-            st.session_state["_ai_provider"] = _PROVIDERS[1]
+        # 기본은 '🔄 자동 (무료 우선)' — Claude 고정 아님. 작동하는 provider 자동 폴백.
+        st.session_state["_ai_provider"] = _PROVIDERS[0]
 
     provider = st.session_state.get("_ai_provider", _PROVIDERS[0])
 
@@ -188,12 +180,8 @@ def render_ai_panel(current_page: str, page_context: dict | None = None, user_em
 
         with st.spinner("생각 중..."):
             try:
-                if "Claude" in provider:
-                    answer = _call_llm(provider, msgs_for_api, SYSTEM, api_key)
-                elif "GPT" in provider:
-                    answer = _call_llm(provider, msgs_for_api, SYSTEM, api_key)
-                else:
-                    answer = _call_gemini(msgs_for_api, SYSTEM, api_key)
+                # 모든 provider(자동 포함)를 통합 failover 클라이언트로 처리
+                answer = _call_llm(provider, msgs_for_api, SYSTEM, api_key)
             except Exception as e:
                 answer = f"⚠️ 오류: {e}"
 

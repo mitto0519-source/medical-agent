@@ -18,6 +18,14 @@ try:
 except Exception:
     OpenAIClient = None
 
+# Standard logger
+try:
+    from src.config.logging_config import get_logger
+    _log = get_logger(__name__)
+except Exception:
+    import logging as _logging
+    _log = _logging.getLogger(__name__)
+
 
 class RAGPipeline:
     """Full RAG pipeline for medical research papers.

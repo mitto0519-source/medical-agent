@@ -309,7 +309,7 @@ def get_llm_settings(email: str) -> dict:
                 ).mappings().first()
             if row:
                 return {
-                    "provider": row["llm_provider"] or "Claude (Anthropic)",
+                    "provider": row["llm_provider"] or "🔄 자동 (무료 우선)",
                     "api_key": row["llm_api_key"] or "",
                 }
         except Exception as e:
@@ -317,6 +317,6 @@ def get_llm_settings(email: str) -> dict:
     users = _load_local()
     info = users.get(email, {})
     return {
-        "provider": info.get("llm_provider", "Claude (Anthropic)"),
+        "provider": info.get("llm_provider", "🔄 자동 (무료 우선)"),
         "api_key": info.get("llm_api_key", ""),
     }
