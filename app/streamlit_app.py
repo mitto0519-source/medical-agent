@@ -518,28 +518,34 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     st.markdown('<div style="padding:4px 4px 2px;">', unsafe_allow_html=True)
+    # ── 모든 사용자 공통: 바이브 중심 (깔끔) ──
     _nb("🏠  홈", "홈")
-    _nb("📝  논문 작업실", "논문 작업실")          # ★ 메인 무대 (바이브 논문)
+    _nb("📝  논문 작업실", "논문 작업실")          # ★ 바이브 — AI 채팅으로 논문 작성
     _nb("✍️  글쓰기 스타일", "글쓰기 스타일")       # 스타일 학습 + 선택
-    # ── 연구 보조 (논문 쓸 때 쓰는 재료) ──
-    st.markdown('<div class="nav-section">연구 보조 (작업 재료)</div>', unsafe_allow_html=True)
-    for _n, _label, _target, _done_fn in RESEARCH_FLOW:
-        try:
-            _done = bool(_done_fn(st.session_state))
-        except Exception:
-            _done = False
-        _mark = "✓" if _done else _n
-        _nb(f"{_mark}  {_label}", _target)
-    # ── 고급 · 옵션 (자동/전체화면) ──
-    st.markdown('<div class="nav-section">고급 · 옵션</div>', unsafe_allow_html=True)
-    _nb("⚡  원스톱 자동 (초안 시드)", "논문 생산 파이프라인")
-    _nb("📄  기존 논문 개선 (전체화면)", "기존 논문 개선")
-    _nb("📓  Notebook 에디터", "Notebook 에디터")
-    # ── 시스템 ──
-    st.markdown('<div class="nav-section">시스템</div>', unsafe_allow_html=True)
-    _nb("🧬  자가 진단", "자가 진단")
-    _nb("📚  지식베이스", "지식베이스 관리")
-    _nb("📜  작업 타임라인", "작업 타임라인")
+    _nb("📜  작업 타임라인", "작업 타임라인")       # 본인 작업 이력
+
+    # ── 관리자 전용: 기존 단위 기능 화면 (테스트/개발용) ──
+    # 일반 사용자는 바이브(작업실)만 보고, admin은 단위 기능을 직접 호출해 테스트한다.
+    if st.session_state.get("_is_admin"):
+        st.markdown('<div class="nav-section">🔧 관리자 — 연구 단계 (테스트)</div>', unsafe_allow_html=True)
+        _nb("⚡  원스톱 자동 파이프라인", "논문 생산 파이프라인")
+        for _n, _label, _target, _done_fn in RESEARCH_FLOW:
+            try:
+                _done = bool(_done_fn(st.session_state))
+            except Exception:
+                _done = False
+            _mark = "✓" if _done else _n
+            _nb(f"{_mark}  {_label}", _target)
+        st.markdown('<div class="nav-section">🔧 관리자 — 도구/단위</div>', unsafe_allow_html=True)
+        _nb("📄  기존 논문 개선", "기존 논문 개선")
+        _nb("📤  논문 업로드 & 인제스트", "논문 업로드 & 인제스트")
+        _nb("🤖  Agent Q&A", "Agent Q&A")
+        _nb("⚡  워크플로우", "워크플로우")
+        _nb("📓  Notebook 에디터", "Notebook 에디터")
+        _nb("🔁  자동 학습 루프", "자동 학습 루프")
+        st.markdown('<div class="nav-section">🔧 관리자 — 시스템</div>', unsafe_allow_html=True)
+        _nb("🧬  자가 진단", "자가 진단")
+        _nb("📚  지식베이스 관리", "지식베이스 관리")
     st.markdown('</div>', unsafe_allow_html=True)
 
     # ── LLM Provider 설정 ──────────────────────────────────────────
@@ -884,43 +890,107 @@ with main_col:
                 "summary": st.session_state.get("ws_summary", ""),
             }
 
-        def _ws_agent(user_msg: str) -> dict:
-            """채팅 메시지 → LLM이 의도 파악 → 해당 섹션 작성/수정 (러버블식 바이브 논문).
-            반환: {section(key 또는 None), content, reply}"""
+        def _ws_parse_json(raw: str):
             import json as _json
-            from src.llm import get_llm_client
-            _cur = {k: (st.session_state.get(f"ws_{k}") or "")[:1200] for k, _ in _WS_KEYS}
-            _study = _ws_study_info()
-            _keys = [k for k, _ in _WS_KEYS]
-            _prompt = (
-                "You are a medical research paper writing copilot. The user builds a paper by chatting.\n"
-                f"STUDY INFO: {_json.dumps(_study, ensure_ascii=False)}\n"
-                f"CURRENT SECTIONS (key: text): {_json.dumps(_cur, ensure_ascii=False)[:2500]}\n\n"
-                f"USER REQUEST: {user_msg}\n\n"
-                "Decide the action and return ONLY a JSON object:\n"
-                '{"section": "<one of ' + str(_keys) + ' or null>", '
-                '"content": "<the FULL new text for that section in the author\'s academic style; '
-                'empty if just chatting>", '
-                '"reply": "<short reply to the user in Korean — what you did>"}\n'
-                "Rules: if the user asks to write/revise a section, fill section+content with the COMPLETE "
-                "updated section. Preserve all statistics and facts. If it is a question or chat, set "
-                "section=null and answer in reply. Output JSON only, no markdown fences."
-            )
-            llm = get_llm_client(task="paper_writing")
-            raw = (llm.generate(_prompt, task="paper_writing", max_tokens=3000) or "").strip()
+            raw = (raw or "").strip()
             if raw.startswith("```"):
                 raw = raw.split("```")[1]
                 if raw.lstrip().lower().startswith("json"):
                     raw = raw.lstrip()[4:]
             raw = raw.strip().rstrip("`").strip()
             try:
-                d = _json.loads(raw)
+                return _json.loads(raw)
             except Exception:
-                return {"section": None, "content": "", "reply": raw[:400] or "응답을 이해하지 못했습니다."}
-            _sec = d.get("section")
-            if _sec not in _keys:
-                _sec = None
-            return {"section": _sec, "content": d.get("content", ""), "reply": d.get("reply", "반영했습니다.")}
+                return None
+
+        def _ws_agent(user_msg: str) -> dict:
+            """채팅 메시지 → 의도 분류 → 기존 단위 기능을 채팅으로 호출 (전 기능 바이브).
+            반환: {section(key 또는 None), content, reply}"""
+            import json as _json
+            from src.llm import get_llm_client
+            _keys = [k for k, _ in _WS_KEYS]
+            _study = _ws_study_info()
+            _filled = {k: bool((st.session_state.get(f"ws_{k}") or "").strip()) for k in _keys}
+            llm = get_llm_client(task="paper_writing")
+
+            # 1) 의도 분류 — 어떤 기존 기능을 부를지
+            _cls = (
+                "Classify the user's request in a medical paper workspace. JSON only:\n"
+                '{"intent":"write|refine|novelty|search|review|topics|chat",'
+                '"section":"<key or null>","detail":"<key instruction>"}\n'
+                "- write: 새 섹션 작성. refine: 기존 섹션 수정/다듬기. novelty: 신규성 확인(PubMed).\n"
+                "- search: 관련 논문 검색. review: 동료심사. topics: 연구주제 추천. chat: 일반 질문/대화.\n"
+                f"sections={_keys}, filled={_json.dumps(_filled)}, study={_json.dumps(_study, ensure_ascii=False)}\n"
+                f"request: {user_msg}"
+            )
+            _ic = _ws_parse_json(llm.generate(_cls, task="fast", max_tokens=200)) or {}
+            _intent = _ic.get("intent", "chat")
+            _sec = _ic.get("section") if _ic.get("section") in _keys else None
+            _detail = _ic.get("detail") or user_msg
+
+            # 2) 의도별 핸들러 — 미리 만들어둔 단위 기능 호출
+            try:
+                if _intent in ("write", "refine"):
+                    _cur = {k: (st.session_state.get(f"ws_{k}") or "")[:1500] for k in _keys}
+                    _wp = (
+                        "You write a section of a Korean medical research paper.\n"
+                        f"STUDY: {_json.dumps(_study, ensure_ascii=False)}\n"
+                        f"CURRENT SECTIONS: {_json.dumps(_cur, ensure_ascii=False)[:2000]}\n"
+                        f"REQUEST: {user_msg}\n"
+                        f"Target section: {_sec or '(infer the most relevant)'}\n"
+                        "Return ONLY JSON: {\"section\":\"<key>\",\"content\":\"<FULL new section text>\","
+                        "\"reply\":\"<short Korean reply>\"}. Preserve statistics/facts."
+                    )
+                    _d = _ws_parse_json(llm.generate(_wp, task="paper_writing", max_tokens=3000)) or {}
+                    _s = _d.get("section") if _d.get("section") in _keys else _sec
+                    return {"section": _s, "content": _d.get("content", ""), "reply": _d.get("reply", "반영했습니다.")}
+
+                if _intent == "novelty":
+                    from src.research.novelty_checker import NoveltyChecker
+                    _r = NoveltyChecker().check(
+                        topic=_study["title"] or _detail, exposure=_study["exposure"],
+                        outcome=_study["outcome"], population=_study["population"],
+                    )
+                    st.session_state["novelty_result"] = _r
+                    return {"section": None, "content": "",
+                            "reply": f"🔍 **신규성 {_r.get('novelty_score','?')}/10** (규칙기반 {_r.get('rule_based_score','?')})\n\n"
+                                     f"{str(_r.get('llm_justification',''))[:400]}"}
+
+                if _intent == "search":
+                    from src.ingestion.evidence_reader import EvidenceReader
+                    _ps = [p for p in EvidenceReader().search(_detail or _study["title"], max_per_source=5)[:6] if p]
+                    _lines = [f"- {p.get('title','')} ({p.get('year','')}, {p.get('journal','')})" for p in _ps]
+                    return {"section": None, "content": "",
+                            "reply": "📚 **관련 논문**\n" + ("\n".join(_lines) if _lines else "검색 결과가 없습니다.")}
+
+                if _intent == "review":
+                    _draft = _ws_preview()
+                    if not _draft.strip():
+                        return {"section": None, "content": "", "reply": "먼저 논문 내용을 작성한 뒤 심사를 요청하세요."}
+                    from src.research.peer_reviewer import PeerReviewer
+                    _rv = PeerReviewer().review(_draft, _study["title"] or "Untitled",
+                                                stat_result=st.session_state.get("stat_result_for_paper"))
+                    _mc = "\n".join(f"- {c}" for c in (_rv.major_concerns or [])[:4])
+                    return {"section": None, "content": "",
+                            "reply": f"👥 **동료심사 {_rv.total_score}/100 ({_rv.grade})** — {_rv.accept_recommendation}\n\n"
+                                     f"주요 지적:\n{_mc or '(없음)'}"}
+
+                if _intent == "topics":
+                    from src.research.research_pipeline import ResearchPipeline
+                    _ts = ResearchPipeline(author_name=st.session_state.get("ws_style", "Yoosun Cho")).generate_topics(
+                        _study["dataset"], focus=_detail, n_topics=3)
+                    _lines = [f"- **{t.get('title','')}** ({t.get('exposure','')}→{t.get('outcome','')})" for t in _ts[:3]]
+                    return {"section": None, "content": "", "reply": "💡 **추천 주제**\n" + "\n".join(_lines)}
+
+                # chat — 일반 질문/대화
+                _reply = llm.generate(
+                    f"의학 논문 작성을 돕는 어시스턴트다. 현재 연구: {_json.dumps(_study, ensure_ascii=False)}.\n"
+                    f"사용자: {user_msg}\n한국어로 간결히 답하라.",
+                    task="fast", max_tokens=700,
+                )
+                return {"section": None, "content": "", "reply": (_reply or "").strip()[:1000]}
+            except Exception as _e:
+                return {"section": None, "content": "", "reply": f"기능 실행 중 오류: {str(_e)[:200]}"}
 
         # ── 상단: 연구 정보 · 스타일 (접이식) ──
         with st.expander("📋 연구 정보 · 글쓰기 스타일 (AI 컨텍스트)", expanded=False):
