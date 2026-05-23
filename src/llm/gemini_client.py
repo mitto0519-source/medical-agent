@@ -15,7 +15,9 @@ from src.llm.claude_client import build_base_system
 
 _log = get_logger(__name__)
 
-_DEFAULT_GEMINI = "gemini-2.0-flash"
+# gemini-flash-latest = 무료 티어로 실제 작동 확인됨 (gemini-2.0-flash는 일부 키에서 limit:0).
+# 환경변수 GEMINI_MODEL로 오버라이드 가능 (예: gemini-2.5-flash, gemma-4-31b-it).
+_DEFAULT_GEMINI = "gemini-flash-latest"
 
 
 class GeminiClient:
