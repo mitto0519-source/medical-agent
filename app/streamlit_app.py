@@ -189,7 +189,7 @@ def _login_gate():
                 box-shadow:0 16px 48px rgba(0,0,0,0.5);text-align:center;">
         <div style="font-size:2.5rem;margin-bottom:0.5rem;">🔬</div>
         <h2 style="color:#e6edf3;margin:0;font-size:1.4rem;">Medical-Agent</h2>
-        <p style="color:#8b949e;margin-top:.4rem;font-size:.85rem;">조유선 스타일 의학 논문 자동 생산 파이프라인</p>
+        <p style="color:#8b949e;margin-top:.4rem;font-size:.85rem;">의학 논문 자동 생산 파이프라인</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -640,7 +640,7 @@ with main_col:
                 <span style="font-size:27px;font-weight:800;color:#E5E7EB;letter-spacing:-0.02em;">Medical-Agent</span>
                 <span style="font-size:20px;">✨</span>
             </div>
-            <p style="color:#64748B;font-size:14px;margin:0;">조유선 스타일 의학 논문 자동 생산 파이프라인</p>
+            <p style="color:#64748B;font-size:14px;margin:0;">의학 논문 자동 생산 파이프라인</p>
             """, unsafe_allow_html=True)
         with col_btn:
             st.markdown('<div style="margin-top:6px;"></div>', unsafe_allow_html=True)
