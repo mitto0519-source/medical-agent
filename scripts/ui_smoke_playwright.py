@@ -55,6 +55,14 @@ def capture_errors(page) -> list[dict]:
             continue
         if any(k in txt for k in _ERR_KW):
             errs.append({"kind": "alert", "text": txt[:500]})
+    # 채팅 버블 안에 렌더된 에러도 잡는다 (false positive 방지 — '오류:...'가 메시지로 옴)
+    for el in page.query_selector_all('[data-testid="stChatMessage"]'):
+        try:
+            txt = el.inner_text()
+        except Exception:
+            continue
+        if any(k in txt for k in _ERR_KW):
+            errs.append({"kind": "chat_error", "text": txt[:500]})
     return errs
 
 
@@ -117,12 +125,12 @@ def main() -> int:
             for _ in range(30):
                 page.wait_for_timeout(3000)
                 errs = capture_errors(page)
-                # assistant 메시지(채팅 버블) 개수
-                msgs = page.query_selector_all('[data-testid="stChatMessage"]')
-                if errs:
+                if errs:  # 에러(채팅버블 포함)가 보이면 즉시 실패
                     chat_result["errors"] = errs
                     break
-                if len(msgs) >= 2:  # user + assistant
+                # assistant 응답이 실제 텍스트로 도착했는지 (마지막 버블이 user가 아님)
+                msgs = page.query_selector_all('[data-testid="stChatMessage"]')
+                if len(msgs) >= 2:
                     got = True
                     break
             chat_result["ok"] = got and not chat_result["errors"]
