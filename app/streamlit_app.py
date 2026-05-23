@@ -1122,6 +1122,45 @@ with main_col:
             return {"result": _result, "spec": _spec}
 
         # ── 상단: 연구 정보 · 스타일 (접이식) ──
+        # ── 내 논문 (영속 저장/불러오기) — 세션·재시작에도 유지, 계정 귀속 ──
+        from src.storage import working_paper_store as _wps
+        _is_adm = st.session_state.get("_is_admin", False)
+        _my_papers = _wps.list_papers(_u.get("email", ""), all_papers=_is_adm)
+        _paper_opts = {"🆕 새 논문": None}
+        for _pp in _my_papers:
+            _lbl = (_pp["title"][:42] or "제목 없음")
+            if _is_adm and _pp.get("owner_email"):
+                _lbl += f"  · {_pp['owner_email']}"
+            _paper_opts[_lbl] = _pp["id"]
+        pcol1, pcol2, pcol3 = st.columns([4, 1, 1])
+        with pcol1:
+            _pick = st.selectbox("내 논문", list(_paper_opts.keys()), key="ws_paper_pick",
+                                 label_visibility="collapsed")
+        with pcol2:
+            if st.button("📂 열기", key="ws_load_saved", use_container_width=True):
+                _pid = _paper_opts.get(_pick)
+                if _pid:
+                    _rec = _wps.load_paper(_u.get("email", ""), _pid, all_papers=_is_adm)
+                    if _rec:
+                        for _k, _ in _WS_KEYS:
+                            st.session_state[f"ws_{_k}"] = _rec["sections"].get(_k, "")
+                        st.session_state["ws_paper_id"] = _pid
+                        st.toast(f"불러옴: {_rec.get('title', '')[:30]}")
+                        st.rerun()
+                else:
+                    for _k, _ in _WS_KEYS:
+                        st.session_state[f"ws_{_k}"] = ""
+                    st.session_state["ws_paper_id"] = None
+                    st.toast("새 논문 시작")
+                    st.rerun()
+        with pcol3:
+            if st.button("🗑 삭제", key="ws_del_saved", use_container_width=True):
+                _pid = _paper_opts.get(_pick)
+                if _pid and _wps.delete_paper(_u.get("email", ""), _pid, all_papers=_is_adm):
+                    st.session_state["ws_paper_id"] = None
+                    st.toast("삭제됨")
+                    st.rerun()
+
         with st.expander("📋 연구 정보 · 글쓰기 스타일 (AI 컨텍스트)", expanded=False):
             _sel = st.session_state.get("selected_topic", {}) or {}
             ci1, ci2 = st.columns(2)
@@ -1253,9 +1292,14 @@ with main_col:
                         st.text_area(_label, key=f"ws_{_k}", height=55 if _k == "title" else 110)
             wsd1, wsd2, wsd3 = st.columns(3)
             with wsd1:
-                if st.button("💾 초안 저장", use_container_width=True, key="ws_save_draft"):
+                if st.button("💾 저장", use_container_width=True, key="ws_save_draft",
+                             help="계정에 영속 저장 — 다음 접속/재시작에도 유지"):
+                    _secs = {_k: st.session_state.get(f"ws_{_k}", "") for _k, _ in _WS_KEYS}
+                    _pid = _wps.save_paper(_u.get("email", ""), _secs, meta=_ws_study_info(),
+                                           paper_id=st.session_state.get("ws_paper_id"))
+                    st.session_state["ws_paper_id"] = _pid
                     st.session_state["draft"] = _ws_preview()
-                    st.success("저장됨")
+                    st.success("저장됨 (다음 접속에도 유지)")
             with wsd2:
                 st.download_button("⬇ 논문 TXT", _ws_preview() or " ", file_name="paper_draft.txt",
                                    use_container_width=True, key="ws_dl_txt")
