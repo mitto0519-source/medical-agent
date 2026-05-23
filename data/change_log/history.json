@@ -1,5 +1,30 @@
 [
   {
+    "id": "20260524_003718_196723",
+    "timestamp": "2026-05-24 00:37:18",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "작업실 채팅→섹션 자동반영+논문 영속성(A) + 브라우저 회귀 eval(B) + 통합/Gemini-Streamlit버그 수정(C)",
+    "description": "A: _ws_parse_json 정규식추출+한국어 휴리스틱 폴백으로 채팅→섹션 라우팅 견고화(내용유실 방지), working_paper_store.py 신설(계정귀속 저장/불러오기/삭제, 로컬+클라우드), 작업실 내논문 picker+영속 저장. B: scripts/ui_eval.py 신설(Playwright admin 로그인→페이지별 grader+워크플로 outcome검증, 45 assertions). C: ui_smoke/verify_a 통폐합 삭제, Gemini import를 redirect_stderr로 감싸 Streamlit 닫힌stderr init버그 수정, Docker 순수이미지(마운트제거)로 OneDrive 완전면역, ARCHITECTURE/메모리/CLAUDE.md 최신화.",
+    "what_changed": {},
+    "why_better": "사용자 핵심불만(채팅 죽음·논문 영속성 없음·메뉴 혼재)을 실제 해결하고 Playwright로 라이브 증명. CLI통과≠앱동작 교훈을 eval 하베스트로 제도화. 다층 검증(코드무결성+통계회귀+UI회귀)으로 거짓보고 구조적 차단.",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "app/streamlit_app.py",
+        "src/storage/working_paper_store.py",
+        "src/llm/gemini_client.py",
+        "scripts/ui_eval.py",
+        "scripts/prove_stata_e2e.py",
+        "docker-compose.yml",
+        "ARCHITECTURE.md",
+        "CLAUDE.md"
+      ]
+    }
+  },
+  {
     "id": "20260524_001511_155311",
     "timestamp": "2026-05-24 00:15:11",
     "user_email": "",
