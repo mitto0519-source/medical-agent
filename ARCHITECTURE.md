@@ -54,9 +54,11 @@
 
 | 기능 | 정규 모듈 | 상태 | 비고 |
 |------|----------|------|------|
-| Claude API 호출 | `src/llm/claude_client.py` → `ClaudeClient` | ✅ active | 페르소나 주입 포함 |
+| Claude API 호출 | `src/llm/claude_client.py` → `ClaudeClient` | ✅ active | 페르소나 주입. `build_base_system()` 공유함수(전 LLM 일관 주입) |
 | OpenAI API 호출 | `src/llm/openai_client.py` → `OpenAIClient` | ✅ active | fallback용 |
-| LLM 팩토리 (자동선택) | `src/llm/factory.py` → `get_llm_client()` | ✅ active | 항상 이걸 통해서 호출 |
+| Gemini API 호출 | `src/llm/gemini_client.py` → `GeminiClient` | ✅ active | 무료티어 폴백. ClaudeClient와 동일 generate() 시그니처 |
+| LLM 팩토리 (자동선택) | `src/llm/factory.py` → `get_llm_client()` | ✅ active | 항상 이걸 통해서 호출. 3중 연쇄폴백(Claude→OpenAI→Gemini) + 건강도 자동 우선순위 |
+| LLM 건강도 추적 | `src/llm/health.py` → `order_by_health()` | ✅ active | 작동하는 provider 자동 우선 + 품질순위. data/diagnostics/llm_health.json |
 
 ### 5. 메모리 / 장기기억
 
@@ -81,7 +83,8 @@
 | 벡터 스토어 (로컬) | `src/vectordb/store.py` → `VectorStore` | ✅ active | ChromaDB wrapper |
 | 벡터 스토어 (클라우드) | `src/vectordb/supabase_store.py` → `SupabaseVectorStore` | ✅ active | Supabase pgvector |
 | PubMed 수집 + 그래프 | `src/knowledge/trend_learner.py` | ✅ active | periodic_learn.py가 호출 |
-| 지식 그래프 | `src/knowledge/medical_graph.py` | ✅ active | 10,005 노드 |
+| 지식 그래프 (의학) | `src/knowledge/medical_graph.py` | ✅ active | 10,005 노드. NetworkX. PubMed 자동수집 자가발전 |
+| 지식 그래프 (코드) | `src/knowledge/code_graph.py` → `CodeGraph` | ✅ active | 코드 구조 자산화(ast, NetworkX). 981노드. 고아/끊긴import/ARCHITECTURE대조 자가진단 → e2e_diagnose 연계. 규칙10 자동화 |
 | 의학 온톨로지 | `src/knowledge/medical_ontology.py` | ✅ active | |
 | 문서 청킹/인제스트 | `src/ingestion/document_reader.py`, `chunker.py` | ✅ active | |
 | **멀티에이전트 병렬 풀 (Phase B)** | `src/agent/agent_pool.py` → `AgentPool` | ✅ active | StatAgent/LitAgent/WritingAgent/ReviewAgent. ThreadPoolExecutor 기반. **write_paper_with_stats(parallel=True)로 연결** — _parallel_pre_collect()가 PMC다운로드(I/O)+신규성(LLM) 동시 실행 |
