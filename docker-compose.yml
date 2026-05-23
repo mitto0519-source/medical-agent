@@ -22,4 +22,8 @@ services:
     volumes:
       - ./data:/app/data             # 원시자료·ChromaDB·agent_self·change_log 영속
       - ./.streamlit:/app/.streamlit:ro
+      # 개발 편의: 소스 변경을 재빌드 없이 반영 (배포 이미지는 COPY로 이미 코드 포함).
+      # 순수 이미지 격리가 필요하면 아래 두 줄을 주석 처리하고 `docker compose build`.
+      - ./app:/app/app
+      - ./src:/app/src
     restart: unless-stopped

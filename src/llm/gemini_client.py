@@ -36,8 +36,18 @@ class GeminiClient:
                 "GOOGLE_API_KEY가 설정되지 않았습니다.\n"
                 "Medical-Agent/.env 파일에 GOOGLE_API_KEY=... 를 추가하세요."
             )
+        # google.generativeai(deprecated)는 import 시 FutureWarning을 stderr로 쓴다.
+        # Streamlit ScriptRunner 스레드에선 stderr가 닫혀 있어 "I/O operation on closed file"로
+        # 초기화가 통째로 실패 → 무료 폴백이 막힌다. 경고 출력을 차단하고 닫힌 스트림도 무시한다.
+        import warnings as _warnings
+        import contextlib as _contextlib
+        import io as _io
         try:
-            import google.generativeai as genai
+            with _warnings.catch_warnings():
+                _warnings.simplefilter("ignore")
+                # 일부 하위 라이브러리가 import 중 stderr/stdout에 직접 쓰는 경우까지 흡수
+                with _contextlib.redirect_stderr(_io.StringIO()), _contextlib.redirect_stdout(_io.StringIO()):
+                    import google.generativeai as genai
         except ImportError as e:
             raise ImportError(
                 "google-generativeai 패키지가 설치되어 있지 않습니다.\n  pip install google-generativeai"
