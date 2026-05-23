@@ -231,18 +231,37 @@ def get_llm_client(
             "ANTHROPIC_API_KEY 또는 OPENAI_API_KEY를 .env 또는 환경변수에 추가하세요."
         )
 
-    # 1순위 client 생성 (건강도 최적화로 정렬된 order[0] = 작동하는 provider 우선)
-    primary_provider = order[0]
+    # 1순위 client 생성 (건강도 최적화로 정렬된 order = 작동하는 provider 우선)
+    # 패키지 미설치/키 문제로 생성 자체가 실패하면 다음 provider로 폴백 (죽지 않게).
     _key_env = {
         "anthropic": "ANTHROPIC_API_KEY",
         "openai": "OPENAI_API_KEY",
         "google": "GOOGLE_API_KEY",
     }
-    primary_key = os.environ.get(_key_env.get(primary_provider, ""))
     _detected_provider, _detected_model = get_model(task)
-    # claude/openai 모델명을 Gemini에 넘기면 안 됨 — google이면 자체 기본 모델 사용
-    _model = model or (_detected_model if primary_provider in ("anthropic", "openai") else None)
-    primary = _make_client(primary_provider, primary_key, _model, task)
+    primary = None
+    primary_provider = None
+    for _prov in order:
+        _key = os.environ.get(_key_env.get(_prov, ""))
+        # claude/openai 모델명을 Gemini에 넘기면 안 됨 — google이면 자체 기본 모델 사용
+        _mdl = model or (_detected_model if _prov in ("anthropic", "openai") else None)
+        try:
+            primary = _make_client(_prov, _key, _mdl, task)
+            primary_provider = _prov
+            break
+        except Exception as e:
+            _log.warning("LLM provider '%s' 생성 실패(패키지/키) → 다음 시도: %s", _prov, str(e)[:120])
+            try:
+                from src.llm.health import record_failure
+                record_failure(_prov, str(e))
+            except Exception:
+                pass
+            continue
+    if primary is None:
+        raise ValueError(
+            "사용 가능한 LLM provider가 없습니다. 패키지 설치(pip install anthropic openai "
+            "google-generativeai) 또는 API 키를 확인하세요."
+        )
 
     if not with_failover or len(order) < 2:
         return primary

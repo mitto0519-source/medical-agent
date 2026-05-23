@@ -92,36 +92,45 @@ def _read_image(path: Path, api_key: Optional[str] = None) -> tuple[str, dict]:
     _, vision_model = get_vision_model()
     _log.debug(f"이미지 OCR 모델: {vision_model}")
 
-    client = anthropic.Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
-    response = client.messages.create(
-        model=vision_model,
-        max_tokens=2048,
-        messages=[{
-            "role": "user",
-            "content": [
-                {
-                    "type": "image",
-                    "source": {
-                        "type": "base64",
-                        "media_type": media_type,
-                        "data": image_data,
+    # 이미지 OCR은 Claude Vision 전용 (텍스트 LLM 폴백과 별개). 크레딧/키 문제로
+    # 실패해도 업로드 흐름이 죽지 않도록 graceful 처리 — 빈 텍스트 + 경고 반환. (규칙10)
+    try:
+        client = anthropic.Anthropic(api_key=api_key or os.environ.get("ANTHROPIC_API_KEY"))
+        response = client.messages.create(
+            model=vision_model,
+            max_tokens=2048,
+            messages=[{
+                "role": "user",
+                "content": [
+                    {
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": media_type,
+                            "data": image_data,
+                        },
                     },
-                },
-                {
-                    "type": "text",
-                    "text": (
-                        "Please extract ALL text visible in this image (OCR). "
-                        "Then provide a concise interpretation of what the image shows "
-                        "(charts, diagrams, tables, figures, etc.). "
-                        "Format: first the extracted text, then '--- Interpretation ---', "
-                        "then your interpretation."
-                    ),
-                },
-            ],
-        }],
-    )
-    text = response.content[0].text if response.content else ""
-    return text, {"vision_processed": True, "vision_model": vision_model}
+                    {
+                        "type": "text",
+                        "text": (
+                            "Please extract ALL text visible in this image (OCR). "
+                            "Then provide a concise interpretation of what the image shows "
+                            "(charts, diagrams, tables, figures, etc.). "
+                            "Format: first the extracted text, then '--- Interpretation ---', "
+                            "then your interpretation."
+                        ),
+                    },
+                ],
+            }],
+        )
+        text = response.content[0].text if response.content else ""
+        return text, {"vision_processed": True, "vision_model": vision_model}
+    except Exception as e:
+        _log.warning(
+            "이미지 OCR 실패 (Claude Vision 전용 — 크레딧/키 필요). "
+            "텍스트 논문/PDF/붙여넣기는 무료 작동: %s", str(e)[:120],
+        )
+        return "", {"vision_processed": False, "ocr_error": str(e)[:120]}
 
 
 # ── Constants ─────────────────────────────────────────────────────────────────

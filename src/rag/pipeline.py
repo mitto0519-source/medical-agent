@@ -57,18 +57,17 @@ class RAGPipeline:
         self._web_reader = WebReader()
         self._chunker = TextChunker(chunk_size=chunk_size, overlap=overlap)
 
-        # LLM client selection: prefer explicit injection, then Claude, then OpenAI.
+        # LLM client: 명시 주입이 없으면 get_llm_client로 — 자동 최적화 + 3중 폴백
+        # (Claude→OpenAI→Gemini)을 모든 RAG LLM 호출(summarize/ask)에 일관 적용.
         if llm_client is not None:
             self._llm = llm_client
         else:
             try:
-                self._llm = ClaudeClient(api_key=api_key)
+                from src.llm import get_llm_client
+                self._llm = get_llm_client(api_key=api_key, task="standard")
             except Exception:
-                if OpenAIClient is not None and os.environ.get("OPENAI_API_KEY"):
-                    self._llm = OpenAIClient(api_key=os.environ.get("OPENAI_API_KEY"))
-                else:
-                    # last resort: instantiate ClaudeClient and let it raise for visibility
-                    self._llm = ClaudeClient(api_key=api_key)
+                # 폴백: 팩토리 실패 시 직접 ClaudeClient (가시성 위해 raise 허용)
+                self._llm = ClaudeClient(api_key=api_key)
 
     @property
     def _store(self):
@@ -191,9 +190,16 @@ class RAGPipeline:
             }
 
         context_chunks = [h["text"] for h in hits]
-        answer = self._llm.answer_from_papers(
-            question, context_chunks, context_prefix=context_prefix
-        )
+        try:
+            answer = self._llm.answer_from_papers(
+                question, context_chunks, context_prefix=context_prefix
+            )
+        except Exception as exc:
+            _log.warning("RAG answer_from_papers 실패: %s", exc, exc_info=True)
+            return {
+                "answer": "RAG 기반 응답 생성 중 오류가 발생했습니다. 인덱스 또는 LLM 상태를 확인하세요.",
+                "sources": hits,
+            }
 
         return {"answer": answer, "sources": hits}
 
