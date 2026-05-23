@@ -1,5 +1,24 @@
 [
   {
+    "id": "20260524_001511_155311",
+    "timestamp": "2026-05-24 00:15:11",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "auto_learn",
+    "title": "주기적 학습 완료 — 신규 430편 수집",
+    "description": "PubMed 수집: 430편 신규 / 1편 중복 스킵. 그래프 노드: 10013 → 10014. 개념 추출: 3012건.",
+    "what_changed": {},
+    "why_better": "지식 베이스 자동 갱신으로 최신 연구 트렌드 반영",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "data/knowledge_graph",
+        "ChromaDB/RAG"
+      ]
+    }
+  },
+  {
     "id": "20260523_233455_205123",
     "timestamp": "2026-05-23 23:34:55",
     "user_email": "",
