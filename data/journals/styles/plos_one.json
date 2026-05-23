@@ -1,0 +1,29 @@
+{
+  "id": "plos_one",
+  "name": "PLOS ONE",
+  "abbreviation": "PLoS One",
+  "publisher": "Public Library of Science",
+  "impact_factor": 3.7,
+  "reference_style": "Vancouver",
+  "max_abstract_words": 300,
+  "max_references": 0,
+  "language": "English",
+  "formatting": {
+    "font_name": "Arial",
+    "font_size_pt": 12,
+    "line_spacing": 2.0,
+    "margin_top_cm": 2.54,
+    "margin_bottom_cm": 2.54,
+    "margin_left_cm": 2.54,
+    "margin_right_cm": 2.54,
+    "abstract_structure": ["Background", "Methodology/Principal Findings", "Conclusions/Significance"],
+    "section_order": ["Abstract", "Introduction", "Methods", "Results", "Discussion", "References"],
+    "page_numbers": true,
+    "double_blind": false,
+    "keywords_max": 0,
+    "title_max_words": 0,
+    "running_title_max_chars": 0
+  },
+  "submission_url": "https://journals.plos.org/plosone/",
+  "author_guidelines_url": "https://journals.plos.org/plosone/s/submission-guidelines"
+}

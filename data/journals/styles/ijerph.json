@@ -1,0 +1,31 @@
+{
+  "id": "ijerph",
+  "name": "International Journal of Environmental Research and Public Health",
+  "abbreviation": "Int J Environ Res Public Health",
+  "publisher": "MDPI",
+  "impact_factor": 3.4,
+  "reference_style": "APA",
+  "max_abstract_words": 200,
+  "max_references": 60,
+  "language": "English",
+  "formatting": {
+    "font_name": "Times New Roman",
+    "font_size_pt": 11,
+    "line_spacing": 1.5,
+    "margin_top_cm": 2.0,
+    "margin_bottom_cm": 2.0,
+    "margin_left_cm": 2.0,
+    "margin_right_cm": 2.0,
+    "abstract_structure": ["Background", "Methods", "Results", "Conclusions"],
+    "section_order": ["Abstract", "Introduction", "Materials and Methods", "Results", "Discussion", "Conclusions", "References"],
+    "page_numbers": true,
+    "double_blind": false,
+    "keywords_max": 8,
+    "title_max_words": 30,
+    "running_title_max_chars": 70,
+    "methods_section_name": "Materials and Methods",
+    "conclusions_required": true
+  },
+  "submission_url": "https://www.mdpi.com/journal/ijerph",
+  "author_guidelines_url": "https://www.mdpi.com/journal/ijerph/instructions"
+}

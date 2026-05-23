@@ -280,5 +280,5 @@ class MedicalAgent:
                 line = line.strip()
                 if line:
                     self._memory.add_follow_up(line, reason=f"Derived from: {question[:80]}")
-        except Exception:
-            pass  # Follow-up generation is best-effort
+        except Exception as exc:
+            _log.warning("Follow-up generation 실패: %s", exc, exc_info=True)

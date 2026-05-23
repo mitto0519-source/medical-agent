@@ -180,8 +180,8 @@ def get_open_access_pdf(doi: str, email: str = "research@example.com") -> Option
             data = resp.json()
             best = data.get("best_oa_location") or {}
             return best.get("url_for_pdf") or best.get("url")
-    except Exception:
-        pass
+    except Exception as exc:
+        _log.warning("Unpaywall 조회 실패: %s", exc, exc_info=True)
     return None
 
 
@@ -206,8 +206,8 @@ def get_crossref_metadata(doi: str) -> Dict:
                 "url": msg.get("URL", ""),
                 "abstract": msg.get("abstract", ""),
             }
-    except Exception:
-        pass
+    except Exception as exc:
+        _log.warning("CrossRef 메타데이터 조회 실패: %s", exc, exc_info=True)
     return {}
 
 

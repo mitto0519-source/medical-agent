@@ -187,10 +187,23 @@ class StatBridge:
         clean = df[[c for c in cols_needed if c in df.columns]].copy()
         # outcome을 수치형으로 강제 변환 (비수치 → NaN)
         import pandas as _pd
+        import numpy as _np
         clean[outcome] = _pd.to_numeric(clean[outcome], errors="coerce")
-        clean = clean.dropna(subset=[outcome])
+        clean = clean.replace([_np.inf, -_np.inf], _np.nan)
+        # ── 완전사례 분석(listwise deletion) ──
+        # 실제 설문데이터는 공변량·가중/설계변수 결측이 흔하다. 결측을 제거하지 않으면
+        # statsmodels가 'exog contains inf or nans'로 실패한다. 복합표본 분석 표준 방식.
+        cc_cols = [outcome] + [v for v in all_vars if v in clean.columns]
+        for v in (weight_var, strata_var, cluster_var):
+            if v and v in clean.columns:
+                cc_cols.append(v)
+        _before_n = len(clean)
+        clean = clean.dropna(subset=cc_cols)
+        _dropped = _before_n - len(clean)
+        if _dropped:
+            _log.info("완전사례 분석: 결측 %d행 제외 (%d→%d)", _dropped, _before_n, len(clean))
         n_total = len(clean)
-        n_outcome = int(clean[outcome].fillna(0).astype(float).sum())
+        n_outcome = int(clean[outcome].astype(float).sum())
         outcome_rate = n_outcome / n_total * 100 if n_total else 0.0
 
         X = self._build_X(clean, all_vars)

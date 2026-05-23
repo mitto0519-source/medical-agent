@@ -993,35 +993,24 @@ with main_col:
                 return {"section": None, "content": "", "reply": f"기능 실행 중 오류: {str(_e)[:200]}"}
 
         def _ws_stata(stata_code: str) -> dict:
-            """통계 분석 코드(STATA/SPSS/SAS/R 등) → 분석 스펙 추출(LLM) → StatBridge 동등 분석 → Table/Figure.
-            원천 언어 무관 — 통계 로직을 해석해 SW 실행 없이 같은 OR/CI/p-trend/forest 결과 생성.
-            데이터는 이미 자산화된 data/raw에서 자동 로드. 반환: {error} 또는 {result, spec}"""
+            """STATA do 코드 → 분석 스펙 추출(LLM) → StatBridge(Python 동등 분석) → Table/Figure.
+            STATA SW가 없는 환경에서도 같은 OR/CI/p-trend/forest 결과를 논문용으로 생성.
+            반환: {error} 또는 {result, spec}"""
             _df = st.session_state.get("raw_df")
             if _df is None:
-                # 이미 자산화된 원시자료(data/raw) 자동 로드 — 업로드 재요구하지 않음
-                try:
-                    from src.research.research_pipeline import _find_real_data
-                    _df = _find_real_data(st.session_state.get("ws_dataset", "kyrbs"))
-                    if _df is not None:
-                        st.session_state["raw_df"] = _df
-                        st.session_state["raw_dataset"] = st.session_state.get("ws_dataset", "KYRBS")
-                except Exception:
-                    pass
-            if _df is None:
-                return {"error": "data/raw에 원시자료가 없습니다 (KYRBS/KNHANES는 이미 자산화돼 있어야 합니다)."}
+                return {"error": "원시자료가 없습니다. 관리자 메뉴 '원시자료 업로드'에서 KYRBS/KNHANES를 먼저 올리세요."}
             if not stata_code.strip():
-                return {"error": "분석 코드를 입력하세요."}
+                return {"error": "STATA 코드를 입력하세요."}
             from src.llm import get_llm_client
             _cols = list(_df.columns)[:60]
             _sp = (
-                "Extract a statistical analysis spec from this analysis code. The code may be in "
-                "STATA, SPSS, SAS, or R — interpret the statistical logic regardless of source language. "
+                "Extract a statistical analysis spec from this STATA do-file. "
                 f"Available data columns: {_cols}.\n"
                 'Return ONLY JSON: {"outcome":"col","predictors":["col"],"covariates":["col"],'
                 '"analysis":"logistic|linear|chi2","weight_var":"col or null",'
                 '"strata_var":"col or null","cluster_var":"col or null","subgroups":["col"]}\n'
-                "Map variable names to the closest actual data columns above. "
-                "Analysis code:\n" + stata_code[:2500]
+                "Map STATA variable names to the closest actual data columns above. "
+                "STATA code:\n" + stata_code[:2500]
             )
             try:
                 _spec = _ws_parse_json(get_llm_client(task="fast").generate(_sp, task="fast", max_tokens=400)) or {}
@@ -1084,121 +1073,53 @@ with main_col:
 
         col_chat, col_paper = st.columns([45, 55], gap="large")
 
-        # ═══════════ 좌측: AI 에이전트 채팅 + 통계 코드 (러버블식) ═══════════
+        # ═══════════ 좌측: AI 에이전트 채팅 (러버블식) ═══════════
         with col_chat:
-            _ws_mode = st.radio(
-                "작업 모드", ["💬 AI 채팅", "📊 통계 코드"], horizontal=True,
-                key="ws_mode", label_visibility="collapsed",
-            )
-            if _ws_mode == "💬 AI 채팅":
-                st.markdown("<div style='font-size:13px;font-weight:700;color:#E5E7EB;margin-bottom:6px;'>🤖 AI 에이전트</div>", unsafe_allow_html=True)
-                _chatbox = st.container(height=400, border=True)
-                with _chatbox:
-                    for _m in st.session_state["ws_chat"]:
-                        with st.chat_message(_m["role"]):
-                            st.markdown(_m["content"])
-                _p = st.chat_input("논문에게 요청하세요 — 예: 서론 써줘 / 결과 더 간결하게")
-                if _p:
-                    st.session_state["ws_chat"].append({"role": "user", "content": _p})
-                    if not st.session_state.get("_llm_ready"):
-                        st.session_state["ws_chat"].append({"role": "assistant", "content": "⚠️ AI 사용을 위해 API 키가 필요합니다 (사이드바 설정 또는 admin 전역 키)."})
-                        st.rerun()
-                    try:
-                        with st.spinner("AI가 작업 중..."):
-                            _res = _ws_agent(_p)
-                        if _res.get("section") and _res.get("content"):
-                            st.session_state[f"ws_{_res['section']}"] = _res["content"]
-                        st.session_state["ws_chat"].append({"role": "assistant", "content": _res.get("reply", "반영했습니다.")})
-                    except Exception as _e:
-                        st.session_state["ws_chat"].append({"role": "assistant", "content": f"오류: {str(_e)[:200]}"})
+            st.markdown("<div style='font-size:13px;font-weight:700;color:#E5E7EB;margin-bottom:6px;'>🤖 AI 에이전트</div>", unsafe_allow_html=True)
+            _chatbox = st.container(height=440, border=True)
+            with _chatbox:
+                for _m in st.session_state["ws_chat"]:
+                    with st.chat_message(_m["role"]):
+                        st.markdown(_m["content"])
+            _p = st.chat_input("논문에게 요청하세요 — 예: 서론 써줘 / 결과 더 간결하게")
+            if _p:
+                st.session_state["ws_chat"].append({"role": "user", "content": _p})
+                if not st.session_state.get("_llm_ready"):
+                    st.session_state["ws_chat"].append({"role": "assistant", "content": "⚠️ AI 사용을 위해 API 키가 필요합니다 (사이드바 설정 또는 admin 전역 키)."})
                     st.rerun()
-            else:
-                # ── 📊 통계 코드 모드 (STATA/SPSS/SAS/R → 동등 분석 → 논문 표·그림) ──
-                st.markdown("<div style='font-size:13px;font-weight:700;color:#E5E7EB;margin-bottom:6px;'>📊 통계 코드 → 논문 표·그림</div>", unsafe_allow_html=True)
-                st.caption("STATA·SPSS·SAS·R 코드를 붙여넣고 Run하면 동일 통계 로직을 Python으로 해석해 OR/95%CI/p-trend·forest를 계산합니다. 데이터는 자산화된 data/raw에서 자동 로드(업로드 불필요).")
-                _code = st.text_area(
-                    "분석 코드", height=300, key="ws_stata_code",
-                    placeholder=("* 예 (STATA)\n"
-                                 "svyset psu [pweight=w], strata(strata)\n"
-                                 "svy: logistic depression i.zcb_freq4 i.sex i.age_cat i.bmi_cat ..."),
-                    label_visibility="collapsed",
-                )
-                if st.button("▶ Run — 코드 해석 후 분석 실행", type="primary", use_container_width=True, key="ws_stata_run"):
-                    if not _code.strip():
-                        st.warning("분석 코드를 입력하세요.")
-                    elif not st.session_state.get("_llm_ready"):
-                        st.warning("코드 해석에 LLM API 키가 필요합니다 (사이드바 설정 또는 admin 전역 키).")
-                    else:
-                        with st.spinner("코드 해석 → 동등 분석 실행 중 (실 데이터)..."):
-                            _sr = _ws_stata(_code)
-                        if _sr.get("error"):
-                            st.error(_sr["error"])
-                        else:
-                            _spec = _sr.get("spec", {})
-                            st.session_state["ws_paper_view"] = "📊 통계 결과"
-                            st.success(f"✅ 분석 완료 — outcome={_spec.get('outcome')}, analysis={_spec.get('analysis')}. 오른쪽 '📊 통계 결과'에서 확인·복사·워드 저장하세요.")
-                            st.rerun()
+                try:
+                    with st.spinner("AI가 작업 중..."):
+                        _res = _ws_agent(_p)
+                    if _res.get("section") and _res.get("content"):
+                        st.session_state[f"ws_{_res['section']}"] = _res["content"]
+                    st.session_state["ws_chat"].append({"role": "assistant", "content": _res.get("reply", "반영했습니다.")})
+                except Exception as _e:
+                    st.session_state["ws_chat"].append({"role": "assistant", "content": f"오류: {str(_e)[:200]}"})
+                st.rerun()
 
-        # ═══════════ 우측: 논문 (편집/미리보기/통계 결과) ═══════════
+        # ═══════════ 우측: 논문 (직접 편집 가능) ═══════════
         with col_paper:
             _filled = sum(1 for _k, _ in _WS_KEYS if (st.session_state.get(f"ws_{_k}") or "").strip())
-            ph1, ph2 = st.columns([2, 3])
+            ph1, ph2 = st.columns([3, 1])
             with ph1:
-                st.markdown(f"<div style='font-size:13px;font-weight:700;color:#E5E7EB;'>📑 논문 <span style='color:#64748B;font-weight:400;'>({_filled}/{len(_WS_KEYS)})</span></div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='font-size:13px;font-weight:700;color:#E5E7EB;'>📑 논문 <span style='color:#64748B;font-weight:400;'>({_filled}/{len(_WS_KEYS)} 섹션 · 직접 편집 가능)</span></div>", unsafe_allow_html=True)
             with ph2:
-                _paper_view = st.radio(
-                    "뷰", ["📝 편집", "👁 미리보기", "📊 통계 결과"], horizontal=True,
-                    key="ws_paper_view", label_visibility="collapsed",
-                )
+                _ws_view = st.toggle("미리보기", value=False, key="ws_view_mode", help="끄면 편집, 켜면 조립 미리보기")
             with st.container(height=440, border=True):
-                if _paper_view == "👁 미리보기":
+                if _ws_view:
                     _pv = _ws_preview()
                     st.markdown(_pv if _pv else "_아직 내용이 없습니다. 왼쪽 AI에게 요청하세요._")
-                elif _paper_view == "📊 통계 결과":
-                    _sr = st.session_state.get("stat_result_for_paper")
-                    if not _sr:
-                        st.markdown("_아직 통계 결과가 없습니다. 왼쪽 **📊 통계 코드** 모드에서 코드를 붙여넣고 Run 하세요._")
-                    else:
-                        try:
-                            from src.export.table_builder import (
-                                stat_result_to_table1_markdown,
-                                stat_result_to_table2_markdown,
-                            )
-                            _t1 = stat_result_to_table1_markdown(_sr)
-                            _t2 = stat_result_to_table2_markdown(_sr)
-                            st.markdown(_t1)
-                            st.markdown("")
-                            st.markdown(_t2)
-                            _figs = st.session_state.get("ws_figures") or {}
-                            for _name, _fd in _figs.items():
-                                if isinstance(_fd, dict) and _fd.get("png_bytes"):
-                                    st.image(_fd["png_bytes"], caption=_fd.get("caption", _name), use_container_width=True)
-                            with st.expander("📋 표 마크다운 복사 (논문 붙여넣기용)"):
-                                st.code(_t1 + "\n\n" + _t2, language="markdown")
-                        except Exception as _e:
-                            st.error(f"표 생성 오류: {_e}")
-                else:  # 📝 편집
+                else:
                     for _k, _label in _WS_KEYS:
                         st.text_area(_label, key=f"ws_{_k}", height=55 if _k == "title" else 110)
-            wsd1, wsd2, wsd3 = st.columns(3)
+            wsd1, wsd2 = st.columns(2)
             with wsd1:
-                if st.button("💾 초안 저장", use_container_width=True, key="ws_save_draft"):
+                if st.button("💾 세션 초안 저장", use_container_width=True, key="ws_save_draft"):
                     st.session_state["draft"] = _ws_preview()
                     st.success("저장됨")
             with wsd2:
-                st.download_button("⬇ 논문 TXT", _ws_preview() or " ", file_name="paper_draft.txt",
+                st.download_button("⬇ TXT 다운로드", _ws_preview() or " ", file_name="paper_draft.txt",
                                    use_container_width=True, key="ws_dl_txt")
-            with wsd3:
-                _sr2 = st.session_state.get("stat_result_for_paper")
-                _docx_bytes = b""
-                if _sr2:
-                    try:
-                        from src.export.table_builder import stat_result_to_tables_docx_bytes
-                        _docx_bytes = stat_result_to_tables_docx_bytes(_sr2)
-                    except Exception:
-                        _docx_bytes = b""
-                st.download_button("⬇ 표 워드(DOCX)", _docx_bytes or b" ", file_name="tables.docx",
-                                   use_container_width=True, disabled=not _docx_bytes, key="ws_dl_docx")
 
     # ── 글쓰기 스타일 (학습 + 관리) ───────────────────────────────────
     elif page == "글쓰기 스타일":

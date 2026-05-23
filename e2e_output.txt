@@ -1,0 +1,265 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-05-22 02:13:27 WARNING  [huggingface_hub.utils._http] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+============================================================
+  Medical-Agent 전 기능 E2E 테스트
+============================================================
+
+[T01] 연구 주제 생성
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3748.42it/s]2026-05-22 02:13:54 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 2.0s 후 재시도 (1/3)
+2026-05-22 02:13:57 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 4.0s 후 재시도 (2/3)
+2026-05-22 02:14:02 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 8.0s 후 재시도 (3/3)
+2026-05-22 02:14:11 WARNING  [src.ingestion.evidence_reader] [Semantic Scholar 오류] 429 Client Error:  for url: https://api.semanticscholar.org/graph/v1/paper/search?query=%EC%B2%AD%EC%86%8C%EB%85%84+%EB%B9%84%EB%A7%8C%EA%B3%BC+%EC%88%98%EB%A9%B4&limit=5&fields=title%2Cauthors%2Cyear%2Cabstract%2CopenAccessPdf%2CcitationCount%2Cjournal
+2026-05-22 02:14:44 INFO     [src.research.research_pipeline] 주제 2개 생성 완료.
+2026-05-22 02:14:50 INFO     [src.memory.agent_insight] [insight/pattern] Circadian mechanism + mediator specificity = KYRBS topic novelty
+2026-05-22 02:14:50 INFO     [src.memory.auto_learn] [auto_learn] recorded: [pattern] Circadian mechanism + mediator specificity = KYRBS topic novelty
+2026-05-22 02:14:59 INFO     [src.agent.persona] [persona] 새 관점 추가: LPA 프로필의 '시간적 궤적' 편향
+2026-05-22 02:14:59 INFO     [src.agent.persona] [persona] 자동 진화 완료: LPA 프로필의 '시간적 궤적' 편향
+2026-05-22 02:15:00 INFO     [src.research.novelty_checker] PubMed 검색: ("smartphone overuse"[Title/Abstract]) AND ("sleep deprivation"[Title/Abstract])...
+2026-05-22 02:16:02 WARNING  [src.research.research_pipeline] RAG 검색 실패: name '_log' is not defined
+2026-05-22 02:16:05 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 2.0s 후 재시도 (1/3)
+2026-05-22 02:16:08 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 4.0s 후 재시도 (2/3)
+2026-05-22 02:16:13 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 8.0s 후 재시도 (3/3)
+2026-05-22 02:16:22 WARNING  [src.ingestion.evidence_reader] [Semantic Scholar 오류] 429 Client Error:  for url: https://api.semanticscholar.org/graph/v1/paper/search?query=smartphone+overuse+sleep+deprivation+Korean+adolescents&limit=6&fields=title%2Cauthors%2Cyear%2Cabstract%2CopenAccessPdf%2CcitationCount%2Cjournal
+2026-05-22 02:16:24 INFO     [src.research.research_pipeline] 참고문헌 1개 수집 완료 (RAG+EvidenceReader)
+2026-05-22 02:16:24 INFO     [src.research.research_pipeline] 논문 작성 시작: 청소년 스마트폰 과사용과 수면 부족
+2026-05-22 02:16:24 INFO     [src.research.paper_writer] [PaperWriter] Introduction 작성 중...
+2026-05-22 02:16:43 INFO     [src.ingestion.pmc_downloader] PMC 검색 'smartphone overuse sleep deprivation Korean adoles': 12편 발견
+2026-05-22 02:16:45 INFO     [src.ingestion.pmc_downloader] PMC 자동 다운로드 완료: 'smartphone overuse sleep deprivation Korean adoles' → 6편 준비
+2026-05-22 02:16:45 INFO     [src.research.research_pipeline] PMC 전문 6편 준비 완료
+2026-05-22 02:16:49 WARNING  [src.research.research_pipeline] RAG 검색 실패: name '_log' is not defined
+2026-05-22 02:16:52 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 2.0s 후 재시도 (1/3)
+2026-05-22 02:16:56 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 4.0s 후 재시도 (2/3)
+2026-05-22 02:17:01 WARNING  [src.ingestion.evidence_reader] 429 rate limit (https://api.semanticscholar.org/graph/v1/paper/search), 8.0s 후 재시도 (3/3)
+2026-05-22 02:17:10 WARNING  [src.ingestion.evidence_reader] [Semantic Scholar 오류] 429 Client Error:  for url: https://api.semanticscholar.org/graph/v1/paper/search?query=smartphone+overuse+sleep+deprivation+Korean+adolescents&limit=6&fields=title%2Cauthors%2Cyear%2Cabstract%2CopenAccessPdf%2CcitationCount%2Cjournal
+2026-05-22 02:17:11 INFO     [src.research.research_pipeline] 참고문헌 1개 수집 완료 (RAG+EvidenceReader)
+2026-05-22 02:17:11 INFO     [src.research.research_pipeline] 통계 주입 논문 작성 시작: 청소년 스마트폰 과사용과 수면 부족
+2026-05-22 02:17:11 INFO     [src.research.paper_writer] [PaperWriter] Introduction 작성 중...
+2026-05-22 02:17:15 ERROR    [src.research.peer_reviewer] PeerReviewer.review failed: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6PyahEUgfcsF88mfYs'}
+Traceback (most recent call last):
+  File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\research\peer_reviewer.py", line 166, in review
+    raw = self._call_reviewer(paper_text, topic, dataset, stat_result)
+  File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\research\peer_reviewer.py", line 249, in _call_reviewer
+    resp = self._client.generate(
+        user_message=prompt,
+    ...<2 lines>...
+        task="paper_review",
+    )
+  File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\llm\claude_client.py", line 99, in generate
+    response = self._client.messages.create(**kwargs)
+  File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_utils\_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\resources\messages\messages.py", line 1003, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages",
+        ^^^^^^^^^^^^^^^
+    ...<30 lines>...
+        stream_cls=Stream[RawMessageStreamEvent],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1374, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6PyahEUgfcsF88mfYs'}
+2026-05-22 02:17:15 INFO     [src.research.research_pipeline] 동료 심사 완료: 0/100 (N/A) — error
+2026-05-22 02:17:27 WARNING  [src.notebooklm.client] [NLM] Not available: No module named 'notebooklm_tools'
+2026-05-22 02:17:27 INFO     [src.diagnostics.self_auditor] 자가 진단 시작 (llm_eval=False)...
+2026-05-22 02:17:34 INFO     [src.diagnostics.self_auditor] 자가 진단 완료: score=80, issues=0, gaps=0, 6.6s
+2026-05-22 02:17:35 INFO     [src.memory.self_model] Self-model refreshed: score=94, smoke=12/12
+2026-05-22 02:17:38 INFO     [src.research.research_pipeline] Full pipeline 시작: 청소년 수면과 스마트폰 사용 / KYRBS
+2026-05-22 02:17:38 INFO     [src.research.research_pipeline] Research Pipeline 시작: 청소년 수면과 스마트폰 사용 / KYRBS
+
+  [PASS] generate_topics (118.6s) -> 2개: Social Jetlag and Obesity Risk in Korean Adolescents: The Me
+
+[T02] 신규성 확인
+  [PASS] check_novelty (27.0s) -> 점수 5/10  권고:modify
+
+[T03] 타당성 검증
+  [PASS] validate_feasibility (27.9s) -> feasible=True  변수=0개
+
+[T04] 논문 전체 작성 (write_paper)
+  [FAIL] write_paper (29.9s)
+         Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LEFsvAQpQtRJ2snVG'}
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+         raise self._make_status_error_from_response(err.response) from None
+         anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LEFsvAQpQtRJ2snVG'}
+
+[T05] 섹션별 작성 (write_section 어댑터)
+  [FAIL] write_section:Abstract (3.2s)
+         Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LUQBWYjfx6pE4dQ5y'}
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+         raise self._make_status_error_from_response(err.response) from None
+         anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LUQBWYjfx6pE4dQ5y'}
+  [FAIL] write_section:Introduction (2.9s)
+         Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LgafYcHgrPthV84cx'}
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+         raise self._make_status_error_from_response(err.response) from None
+         anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LgafYcHgrPthV84cx'}
+  [FAIL] write_section:Methods (2.7s)
+         Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LtZzBxLUxNo4eEfvm'}
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+         raise self._make_status_error_from_response(err.response) from None
+         anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LtZzBxLUxNo4eEfvm'}
+  [FAIL] write_section:Results (3.1s)
+         Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6M75ocMJAuvoz9PWgx'}
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+         raise self._make_status_error_from_response(err.response) from None
+         anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6M75ocMJAuvoz9PWgx'}
+  [FAIL] write_section:Discussion (2.8s)
+         Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6MKjZWa2DsPaAvziQT'}
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+         raise self._make_status_error_from_response(err.response) from None
+         anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6MKjZWa2DsPaAvziQT'}
+
+[T06] 통계 주입 논문 (write_paper_with_stats)
+  [FAIL] write_paper_with_stats (32.6s)
+         Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6PjFjPYX38UhAvtWKS'}
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+         raise self._make_status_error_from_response(err.response) from None
+         anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6PjFjPYX38UhAvtWKS'}
+
+[T07] 동료 심사 (peer_review)
+  [FAIL] run_peer_review (3.6s)
+         점수가 0 — JSON 파싱 실패 가능성
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\scripts\e2e_full_test.py", line 195, in t07
+         assert score > 0, f"점수가 0 — JSON 파싱 실패 가능성"
+         ^^^^^^^^^
+         AssertionError: 점수가 0 — JSON 파싱 실패 가능성
+
+[T08] Agent Q&A
+  [FAIL] MedicalAgent.ask (4.5s)
+         name '_log' is not defined
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\rag\pipeline.py", line 199, in ask
+         _log.warning("RAG answer_from_papers 실패: %s", exc, exc_info=True)
+         ^^^^
+         NameError: name '_log' is not defined
+
+[T09] RAG 수집 (ingest_file)
+  [FAIL] RAGPipeline.ingest_file (0.6s)
+         No module named 'docx'
+         ~~~~~~~~~~^^^^^^
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\ingestion\document_reader.py", line 36, in _read_docx
+         from docx import Document
+         ModuleNotFoundError: No module named 'docx'
+
+[T10] RAG 검색
+  [PASS] RAGPipeline.search (3.7s) -> 5개 청크 반환
+
+[T11] StorageManager 상태
+  [PASS] StorageManager.status (2.8s) -> {'notebooklm': 'offline', 'supabase': 'online', 'vector_chunks': 1142, 'active_storage': 'Local Only
+
+[T12] 자가 진단
+  [PASS] SelfAuditor.run_quick_audit (7.6s) -> 점수 80  code_issues 0개
+
+[T13] run_full() E2E — KYRBS 2025 실제 원시자료
+  [FAIL] run_full (E2E) (6.7s)
+         name '_log' is not defined
+         File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\rag\pipeline.py", line 199, in ask
+         _log.warning("RAG answer_from_papers 실패: %s", exc, exc_info=True)
+         ^^^^
+         NameError: name '_log' is not defined
+
+============================================================
+  결과: 6 PASS / 11 FAIL  (총 17개)
+============================================================
+
+[실패 목록]
+
+  FAIL: write_paper
+  -> Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LEFsvAQpQtRJ2snVG'}
+     return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+     raise self._make_status_error_from_response(err.response) from None
+     anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LEFsvAQpQtRJ2snVG'}
+
+  FAIL: write_section:Abstract
+  -> Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LUQBWYjfx6pE4dQ5y'}
+     return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+     raise self._make_status_error_from_response(err.response) from None
+     anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LUQBWYjfx6pE4dQ5y'}
+
+  FAIL: write_section:Introduction
+  -> Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LgafYcHgrPthV84cx'}
+     return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+     raise self._make_status_error_from_response(err.response) from None
+     anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LgafYcHgrPthV84cx'}
+
+  FAIL: write_section:Methods
+  -> Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LtZzBxLUxNo4eEfvm'}
+     return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+     raise self._make_status_error_from_response(err.response) from None
+     anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6LtZzBxLUxNo4eEfvm'}
+
+  FAIL: write_section:Results
+  -> Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6M75ocMJAuvoz9PWgx'}
+     return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+     raise self._make_status_error_from_response(err.response) from None
+     anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6M75ocMJAuvoz9PWgx'}
+
+  FAIL: write_section:Discussion
+  -> Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6MKjZWa2DsPaAvziQT'}
+     return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+     raise self._make_status_error_from_response(err.response) from None
+     anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6MKjZWa2DsPaAvziQT'}
+
+  FAIL: write_paper_with_stats
+  -> Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6PjFjPYX38UhAvtWKS'}
+     return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\.venv\Lib\site-packages\anthropic\_base_client.py", line 1147, in request
+     raise self._make_status_error_from_response(err.response) from None
+     anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CbG6PjFjPYX38UhAvtWKS'}
+
+  FAIL: run_peer_review
+  -> 점수가 0 — JSON 파싱 실패 가능성
+     r = fn()
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\scripts\e2e_full_test.py", line 195, in t07
+     assert score > 0, f"점수가 0 — JSON 파싱 실패 가능성"
+     ^^^^^^^^^
+     AssertionError: 점수가 0 — JSON 파싱 실패 가능성
+
+  FAIL: MedicalAgent.ask
+  -> name '_log' is not defined
+     result = self._rag.ask(question, filename_filter=filename_filter, context_prefix=preamble)
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\rag\pipeline.py", line 199, in ask
+     _log.warning("RAG answer_from_papers 실패: %s", exc, exc_info=True)
+     ^^^^
+     NameError: name '_log' is not defined
+
+  FAIL: RAGPipeline.ingest_file
+  -> No module named 'docx'
+     full_text, meta = _read_docx(path)
+     ~~~~~~~~~~^^^^^^
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\ingestion\document_reader.py", line 36, in _read_docx
+     from docx import Document
+     ModuleNotFoundError: No module named 'docx'
+
+  FAIL: run_full (E2E)
+  -> name '_log' is not defined
+     hits = self.rag.ask(reference_query or focus)
+     File "C:\Users\mitto\OneDrive\Desktop\Medical-Agent\src\rag\pipeline.py", line 199, in ask
+     _log.warning("RAG answer_from_papers 실패: %s", exc, exc_info=True)
+     ^^^^
+     NameError: name '_log' is not defined

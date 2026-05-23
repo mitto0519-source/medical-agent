@@ -1,0 +1,29 @@
+{
+  "id": "kjpm",
+  "name": "Epidemiology and Health",
+  "abbreviation": "Epidemiol Health",
+  "publisher": "Korean Society of Epidemiology",
+  "impact_factor": 3.1,
+  "reference_style": "Vancouver",
+  "max_abstract_words": 250,
+  "max_references": 40,
+  "language": "English",
+  "formatting": {
+    "font_name": "Times New Roman",
+    "font_size_pt": 12,
+    "line_spacing": 2.0,
+    "margin_top_cm": 2.54,
+    "margin_bottom_cm": 2.54,
+    "margin_left_cm": 3.0,
+    "margin_right_cm": 2.54,
+    "abstract_structure": ["Objectives", "Methods", "Results", "Conclusion"],
+    "section_order": ["Abstract", "Introduction", "Methods", "Results", "Discussion", "Acknowledgements", "References"],
+    "page_numbers": true,
+    "double_blind": true,
+    "keywords_max": 6,
+    "title_max_words": 25,
+    "running_title_max_chars": 60
+  },
+  "submission_url": "https://e-epih.org/",
+  "author_guidelines_url": "https://e-epih.org/authors/authors.php"
+}

@@ -189,7 +189,7 @@ def _login_gate():
                 box-shadow:0 16px 48px rgba(0,0,0,0.5);text-align:center;">
         <div style="font-size:2.5rem;margin-bottom:0.5rem;">🔬</div>
         <h2 style="color:#e6edf3;margin:0;font-size:1.4rem;">Medical-Agent</h2>
-        <p style="color:#8b949e;margin-top:.4rem;font-size:.85rem;">의학 논문 자동 생산 파이프라인</p>
+        <p style="color:#8b949e;margin-top:.4rem;font-size:.85rem;">조유선 스타일 의학 논문 자동 생산 파이프라인</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -249,10 +249,7 @@ if st.session_state.get("_is_admin"):
         or os.environ.get("GOOGLE_API_KEY")
     )
 else:
-    # 일반 user: 전역(admin) 키 격리 — 본인 키만 사용 (API 사용량 본인 귀속)
-    # 매 rerun 상단 load_dotenv가 전역 키를 다시 넣으므로 여기서 제거 후 본인 키만 세팅
-    for _gk in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "GOOGLE_API_KEY"):
-        os.environ.pop(_gk, None)
+    # 일반 user: 본인 API 키 필수 — 본인 키를 이 세션에 활성화
     try:
         from src.auth.users import get_llm_settings
         _us = get_llm_settings(_cur_email)
@@ -265,14 +262,6 @@ else:
                 os.environ["OPENAI_API_KEY"] = _uk
             elif "gemini" in _prov or "google" in _prov:
                 os.environ["GOOGLE_API_KEY"] = _uk
-            else:
-                # provider 미지정이면 키 접두어로 추정
-                if _uk.startswith("sk-ant"):
-                    os.environ["ANTHROPIC_API_KEY"] = _uk
-                elif _uk.startswith("sk-"):
-                    os.environ["OPENAI_API_KEY"] = _uk
-                else:
-                    os.environ["GOOGLE_API_KEY"] = _uk
             st.session_state["_llm_ready"] = True
         else:
             st.session_state["_llm_ready"] = False
@@ -518,34 +507,27 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     st.markdown('<div style="padding:4px 4px 2px;">', unsafe_allow_html=True)
-    # ── 모든 사용자 공통: 바이브 중심 (깔끔) ──
     _nb("🏠  홈", "홈")
-    _nb("📝  논문 작업실", "논문 작업실")          # ★ 바이브 — AI 채팅으로 논문 작성
-    _nb("✍️  글쓰기 스타일", "글쓰기 스타일")       # 스타일 학습 + 선택
-    _nb("📜  작업 타임라인", "작업 타임라인")       # 본인 작업 이력
-
-    # ── 관리자 전용: 기존 단위 기능 화면 (테스트/개발용) ──
-    # 일반 사용자는 바이브(작업실)만 보고, admin은 단위 기능을 직접 호출해 테스트한다.
-    if st.session_state.get("_is_admin"):
-        st.markdown('<div class="nav-section">🔧 관리자 — 연구 단계 (테스트)</div>', unsafe_allow_html=True)
-        _nb("⚡  원스톱 자동 파이프라인", "논문 생산 파이프라인")
-        for _n, _label, _target, _done_fn in RESEARCH_FLOW:
-            try:
-                _done = bool(_done_fn(st.session_state))
-            except Exception:
-                _done = False
-            _mark = "✓" if _done else _n
-            _nb(f"{_mark}  {_label}", _target)
-        st.markdown('<div class="nav-section">🔧 관리자 — 도구/단위</div>', unsafe_allow_html=True)
-        _nb("📄  기존 논문 개선", "기존 논문 개선")
-        _nb("📤  논문 업로드 & 인제스트", "논문 업로드 & 인제스트")
-        _nb("🤖  Agent Q&A", "Agent Q&A")
-        _nb("⚡  워크플로우", "워크플로우")
-        _nb("📓  Notebook 에디터", "Notebook 에디터")
-        _nb("🔁  자동 학습 루프", "자동 학습 루프")
-        st.markdown('<div class="nav-section">🔧 관리자 — 시스템</div>', unsafe_allow_html=True)
-        _nb("🧬  자가 진단", "자가 진단")
-        _nb("📚  지식베이스 관리", "지식베이스 관리")
+    _nb("📝  논문 작업실", "논문 작업실")          # ★ 메인 무대 (바이브 논문)
+    # ── 연구 보조 (논문 쓸 때 쓰는 재료) ──
+    st.markdown('<div class="nav-section">연구 보조 (작업 재료)</div>', unsafe_allow_html=True)
+    for _n, _label, _target, _done_fn in RESEARCH_FLOW:
+        try:
+            _done = bool(_done_fn(st.session_state))
+        except Exception:
+            _done = False
+        _mark = "✓" if _done else _n
+        _nb(f"{_mark}  {_label}", _target)
+    # ── 고급 · 옵션 (자동/전체화면) ──
+    st.markdown('<div class="nav-section">고급 · 옵션</div>', unsafe_allow_html=True)
+    _nb("⚡  원스톱 자동 (초안 시드)", "논문 생산 파이프라인")
+    _nb("📄  기존 논문 개선 (전체화면)", "기존 논문 개선")
+    _nb("📓  Notebook 에디터", "Notebook 에디터")
+    # ── 시스템 ──
+    st.markdown('<div class="nav-section">시스템</div>', unsafe_allow_html=True)
+    _nb("🧬  자가 진단", "자가 진단")
+    _nb("📚  지식베이스", "지식베이스 관리")
+    _nb("📜  작업 타임라인", "작업 타임라인")
     st.markdown('</div>', unsafe_allow_html=True)
 
     # ── LLM Provider 설정 ──────────────────────────────────────────
@@ -647,7 +629,7 @@ with main_col:
                 <span style="font-size:27px;font-weight:800;color:#E5E7EB;letter-spacing:-0.02em;">Medical-Agent</span>
                 <span style="font-size:20px;">✨</span>
             </div>
-            <p style="color:#64748B;font-size:14px;margin:0;">의학 논문 자동 생산 파이프라인</p>
+            <p style="color:#64748B;font-size:14px;margin:0;">조유선 스타일 의학 논문 자동 생산 파이프라인</p>
             """, unsafe_allow_html=True)
         with col_btn:
             st.markdown('<div style="margin-top:6px;"></div>', unsafe_allow_html=True)
@@ -832,18 +814,12 @@ with main_col:
 
     # ── 논문 작업실 (좌: 작업 패널 / 우: 논문 프리뷰) ──────────────────────
     elif page == "논문 작업실":
-        st.markdown(
-            "<h2 style='color:#e6edf3;'>📝 논문 작업실 "
-            "<span style='font-size:13px;color:#64748B;font-weight:400;'>— 왼쪽 AI와 대화하면 오른쪽 논문이 채워집니다</span></h2>",
-            unsafe_allow_html=True,
-        )
+        st.markdown("<h2 style='color:#e6edf3;'>📝 논문 작업실</h2>", unsafe_allow_html=True)
 
         _WS_KEYS = [
             ("title", "제목"), ("abstract", "Abstract"), ("introduction", "Introduction"),
             ("methods", "Methods"), ("results", "Results"), ("discussion", "Discussion"),
         ]
-        _WS_LABEL2KEY = {lbl.lower(): k for k, lbl in _WS_KEYS}
-        _WS_LABEL2KEY.update({k: k for k, _ in _WS_KEYS})  # key 자체도 허용
         # 섹션 초기화 — 기존 draft 있으면 파싱해 채움 (1회)
         if "ws_init" not in st.session_state:
             st.session_state["ws_init"] = True
@@ -860,15 +836,6 @@ with main_col:
             if not st.session_state.get("ws_title"):
                 _seltop = st.session_state.get("selected_topic", {}) or {}
                 st.session_state["ws_title"] = st.session_state.get("topic_title", "") or _seltop.get("title", "")
-        if "ws_chat" not in st.session_state:
-            st.session_state["ws_chat"] = [{
-                "role": "assistant",
-                "content": "어떤 논문을 쓸까요? 예를 들어:\n\n"
-                           "- *\"청소년 스마트폰 과사용과 수면부족 연구로 서론 써줘\"*\n"
-                           "- *\"방법 섹션에 KYRBS 복합표본 분석 추가해\"*\n"
-                           "- *\"결과를 더 간결하게 다듬어\"*\n\n"
-                           "라고 말하면 오른쪽 논문에 바로 반영됩니다.",
-            }]
 
         def _ws_preview():
             parts = []
@@ -877,406 +844,167 @@ with main_col:
                 if not _v:
                     continue
                 parts.append(f"# {_v}" if _k == "title" else f"## {_label}\n\n{_v}")
-            return "\n\n".join(parts)
+            return "\n\n".join(parts) if parts else "_아직 작성된 내용이 없습니다. 좌측에서 직접 입력하거나 🤖 AI 작성을 누르세요._"
 
-        def _ws_study_info():
-            _sel = st.session_state.get("selected_topic", {}) or {}
-            return {
-                "title": st.session_state.get("ws_title", ""),
-                "dataset": st.session_state.get("ws_dataset", "KYRBS"),
-                "exposure": st.session_state.get("ws_exposure", _sel.get("exposure", "")),
-                "outcome": st.session_state.get("ws_outcome", _sel.get("outcome", "")),
-                "population": st.session_state.get("ws_population", _sel.get("population", "")),
-                "summary": st.session_state.get("ws_summary", ""),
-            }
+        col_work, col_preview = st.columns([55, 45], gap="large")
 
-        def _ws_parse_json(raw: str):
-            import json as _json
-            raw = (raw or "").strip()
-            if raw.startswith("```"):
-                raw = raw.split("```")[1]
-                if raw.lstrip().lower().startswith("json"):
-                    raw = raw.lstrip()[4:]
-            raw = raw.strip().rstrip("`").strip()
-            try:
-                return _json.loads(raw)
-            except Exception:
-                return None
+        # ═══════════ 좌측: 작업 패널 ═══════════
+        with col_work:
+            ws_tabs = st.tabs(["✍️ 작성", "📄 기존논문", "📤 업로드", "🤖 Q&A", "📓 Notebook"])
 
-        def _ws_agent(user_msg: str) -> dict:
-            """채팅 메시지 → 의도 분류 → 기존 단위 기능을 채팅으로 호출 (전 기능 바이브).
-            반환: {section(key 또는 None), content, reply}"""
-            import json as _json
-            from src.llm import get_llm_client
-            _keys = [k for k, _ in _WS_KEYS]
-            _study = _ws_study_info()
-            _filled = {k: bool((st.session_state.get(f"ws_{k}") or "").strip()) for k in _keys}
-            llm = get_llm_client(task="paper_writing")
+            # ── 작성 탭 ──
+            with ws_tabs[0]:
+                with st.expander("📋 연구 정보 (AI 작성용 컨텍스트)", expanded=False):
+                    _sel = st.session_state.get("selected_topic", {}) or {}
+                    st.text_input("노출변수", value=st.session_state.get("ws_exposure", _sel.get("exposure", "")), key="ws_exposure")
+                    st.text_input("결과변수", value=st.session_state.get("ws_outcome", _sel.get("outcome", "")), key="ws_outcome")
+                    st.text_input("대상", value=st.session_state.get("ws_population", _sel.get("population", "Korean adolescents")), key="ws_population")
+                    st.text_input("데이터셋", value=st.session_state.get("ws_dataset", "KYRBS"), key="ws_dataset")
+                    st.text_area("핵심 결과 요약", value=st.session_state.get("ws_summary", ""), key="ws_summary", height=70)
 
-            # 1) 의도 분류 — 어떤 기존 기능을 부를지
-            _cls = (
-                "Classify the user's request in a medical paper workspace. JSON only:\n"
-                '{"intent":"write|refine|novelty|search|review|topics|chat",'
-                '"section":"<key or null>","detail":"<key instruction>"}\n'
-                "- write: 새 섹션 작성. refine: 기존 섹션 수정/다듬기. novelty: 신규성 확인(PubMed).\n"
-                "- search: 관련 논문 검색. review: 동료심사. topics: 연구주제 추천. chat: 일반 질문/대화.\n"
-                f"sections={_keys}, filled={_json.dumps(_filled)}, study={_json.dumps(_study, ensure_ascii=False)}\n"
-                f"request: {user_msg}"
-            )
-            _ic = _ws_parse_json(llm.generate(_cls, task="fast", max_tokens=200)) or {}
-            _intent = _ic.get("intent", "chat")
-            _sec = _ic.get("section") if _ic.get("section") in _keys else None
-            _detail = _ic.get("detail") or user_msg
+                # 작성/다듬기 공용 헬퍼 (중복 제거)
+                def _ws_writer():
+                    from src.research.paper_writer import PaperWriter
+                    from src.profile.author_profile import AuthorProfile
+                    from src.library.methods_library import MethodsLibrary
+                    from src.library.dataset_library import DatasetLibrary
+                    from src.rag.pipeline import RAGPipeline
+                    return PaperWriter(AuthorProfile("Yoosun Cho"), MethodsLibrary(), DatasetLibrary(), RAGPipeline())
 
-            # 2) 의도별 핸들러 — 미리 만들어둔 단위 기능 호출
-            try:
-                if _intent in ("write", "refine"):
-                    _cur = {k: (st.session_state.get(f"ws_{k}") or "")[:1500] for k in _keys}
-                    _wp = (
-                        "You write a section of a Korean medical research paper.\n"
-                        f"STUDY: {_json.dumps(_study, ensure_ascii=False)}\n"
-                        f"CURRENT SECTIONS: {_json.dumps(_cur, ensure_ascii=False)[:2000]}\n"
-                        f"REQUEST: {user_msg}\n"
-                        f"Target section: {_sec or '(infer the most relevant)'}\n"
-                        "Return ONLY JSON: {\"section\":\"<key>\",\"content\":\"<FULL new section text>\","
-                        "\"reply\":\"<short Korean reply>\"}. Preserve statistics/facts."
-                    )
-                    _d = _ws_parse_json(llm.generate(_wp, task="paper_writing", max_tokens=3000)) or {}
-                    _s = _d.get("section") if _d.get("section") in _keys else _sec
-                    return {"section": _s, "content": _d.get("content", ""), "reply": _d.get("reply", "반영했습니다.")}
+                def _ws_study_info():
+                    return {
+                        "dataset": st.session_state.get("ws_dataset", "KYRBS"),
+                        "exposure": st.session_state.get("ws_exposure", ""),
+                        "outcome": st.session_state.get("ws_outcome", ""),
+                        "population": st.session_state.get("ws_population", ""),
+                    }
 
-                if _intent == "novelty":
-                    from src.research.novelty_checker import NoveltyChecker
-                    _r = NoveltyChecker().check(
-                        topic=_study["title"] or _detail, exposure=_study["exposure"],
-                        outcome=_study["outcome"], population=_study["population"],
-                    )
-                    st.session_state["novelty_result"] = _r
-                    return {"section": None, "content": "",
-                            "reply": f"🔍 **신규성 {_r.get('novelty_score','?')}/10** (규칙기반 {_r.get('rule_based_score','?')})\n\n"
-                                     f"{str(_r.get('llm_justification',''))[:400]}"}
+                st.caption("직접 쓰거나 · 🤖 AI 초안 · ✨ 다듬기로 개선. 순서 자유 — 아무거나 먼저 해도 됩니다.")
+                for _k, _label in _WS_KEYS:
+                    hc1, hc2 = st.columns([5, 1])
+                    with hc1:
+                        st.markdown(f"<span style='font-size:13px;font-weight:700;color:#E5E7EB;'>{_label}</span>", unsafe_allow_html=True)
+                    with hc2:
+                        if _k != "title":
+                            if st.button("🤖", key=f"ws_gen_{_k}", help=f"{_label} AI 초안 작성"):
+                                try:
+                                    with st.spinner(f"{_label} AI 작성 중..."):
+                                        _txt = _ws_writer().write_section(
+                                            _label, st.session_state.get("ws_title", "Untitled"),
+                                            _ws_study_info(), {"summary": st.session_state.get("ws_summary", "")},
+                                        )
+                                    st.session_state[f"ws_{_k}"] = _txt
+                                    st.rerun()
+                                except Exception as _e:
+                                    st.error(f"AI 작성 실패(크레딧/오류): {_e}")
+                    st.text_area(_label, key=f"ws_{_k}", height=60 if _k == "title" else 120, label_visibility="collapsed")
+                    # ✨ 다듬기 — 사람이 쓴 걸 AI가 거든다 (바이브 논문 핵심)
+                    if _k != "title":
+                        with st.expander(f"✨ {_label} 다듬기 (AI)", expanded=False):
+                            _trig = None
+                            _pcols = st.columns(4)
+                            for _pc, (_pl, _pi) in zip(_pcols, [
+                                ("간결하게", "더 간결하고 명확하게 다듬어"),
+                                ("학술체", "학술 논문 문체로 다듬어"),
+                                ("근거 보강", "관련 근거와 인용을 보강해"),
+                                ("통계 표현", "통계 수치 표현을 자연스럽고 정확하게 다듬어"),
+                            ]):
+                                with _pc:
+                                    if st.button(_pl, key=f"ws_ps_{_k}_{_pl}", use_container_width=True):
+                                        _trig = _pi
+                            _cust = st.text_input("또는 직접 요청", key=f"ws_ref_{_k}",
+                                                  placeholder="예: 첫 문단을 더 강하게, 한계점 한 줄 추가")
+                            if st.button("✨ 다듬기 적용", key=f"ws_refbtn_{_k}", type="primary"):
+                                _trig = _cust.strip() or "명확성·문체·흐름을 개선해"
+                            if _trig:
+                                _cur = st.session_state.get(f"ws_{_k}", "")
+                                if not _cur.strip():
+                                    st.warning("먼저 이 섹션에 내용을 입력하거나 🤖 AI 작성을 사용하세요.")
+                                else:
+                                    try:
+                                        with st.spinner(f"{_label} 다듬는 중..."):
+                                            _ref = _ws_writer().refine_section(_label, _cur, _trig, _ws_study_info())
+                                        st.session_state[f"ws_{_k}"] = _ref
+                                        st.rerun()
+                                    except Exception as _e:
+                                        st.error(f"다듬기 실패(크레딧/오류): {_e}")
 
-                if _intent == "search":
-                    from src.ingestion.evidence_reader import EvidenceReader
-                    _ps = [p for p in EvidenceReader().search(_detail or _study["title"], max_per_source=5)[:6] if p]
-                    _lines = [f"- {p.get('title','')} ({p.get('year','')}, {p.get('journal','')})" for p in _ps]
-                    return {"section": None, "content": "",
-                            "reply": "📚 **관련 논문**\n" + ("\n".join(_lines) if _lines else "검색 결과가 없습니다.")}
+                st.divider()
+                wsd1, wsd2 = st.columns(2)
+                with wsd1:
+                    if st.button("💾 세션 초안으로 저장", use_container_width=True, key="ws_save_draft"):
+                        st.session_state["draft"] = _ws_preview()
+                        st.success("'논문 작성' 초안에 저장됨")
+                with wsd2:
+                    st.download_button("⬇ TXT 다운로드", _ws_preview(), file_name="paper_draft.txt",
+                                       use_container_width=True, key="ws_dl_txt")
 
-                if _intent == "review":
-                    _draft = _ws_preview()
-                    if not _draft.strip():
-                        return {"section": None, "content": "", "reply": "먼저 논문 내용을 작성한 뒤 심사를 요청하세요."}
-                    from src.research.peer_reviewer import PeerReviewer
-                    _rv = PeerReviewer().review(_draft, _study["title"] or "Untitled",
-                                                stat_result=st.session_state.get("stat_result_for_paper"))
-                    _mc = "\n".join(f"- {c}" for c in (_rv.major_concerns or [])[:4])
-                    return {"section": None, "content": "",
-                            "reply": f"👥 **동료심사 {_rv.total_score}/100 ({_rv.grade})** — {_rv.accept_recommendation}\n\n"
-                                     f"주요 지적:\n{_mc or '(없음)'}"}
-
-                if _intent == "topics":
-                    from src.research.research_pipeline import ResearchPipeline
-                    _ts = ResearchPipeline(author_name=st.session_state.get("ws_style", "Yoosun Cho")).generate_topics(
-                        _study["dataset"], focus=_detail, n_topics=3)
-                    _lines = [f"- **{t.get('title','')}** ({t.get('exposure','')}→{t.get('outcome','')})" for t in _ts[:3]]
-                    return {"section": None, "content": "", "reply": "💡 **추천 주제**\n" + "\n".join(_lines)}
-
-                # chat — 일반 질문/대화
-                _reply = llm.generate(
-                    f"의학 논문 작성을 돕는 어시스턴트다. 현재 연구: {_json.dumps(_study, ensure_ascii=False)}.\n"
-                    f"사용자: {user_msg}\n한국어로 간결히 답하라.",
-                    task="fast", max_tokens=700,
-                )
-                return {"section": None, "content": "", "reply": (_reply or "").strip()[:1000]}
-            except Exception as _e:
-                return {"section": None, "content": "", "reply": f"기능 실행 중 오류: {str(_e)[:200]}"}
-
-        def _ws_stata(stata_code: str) -> dict:
-            """통계 분석 코드(STATA/SPSS/SAS/R 등) → 분석 스펙 추출(LLM) → StatBridge 동등 분석 → Table/Figure.
-            원천 언어 무관 — 통계 로직을 해석해 SW 실행 없이 같은 OR/CI/p-trend/forest 결과 생성.
-            데이터는 이미 자산화된 data/raw에서 자동 로드. 반환: {error} 또는 {result, spec}"""
-            _df = st.session_state.get("raw_df")
-            if _df is None:
-                # 이미 자산화된 원시자료(data/raw) 자동 로드 — 업로드 재요구하지 않음
-                try:
-                    from src.research.research_pipeline import _find_real_data
-                    _df = _find_real_data(st.session_state.get("ws_dataset", "kyrbs"))
-                    if _df is not None:
-                        st.session_state["raw_df"] = _df
-                        st.session_state["raw_dataset"] = st.session_state.get("ws_dataset", "KYRBS")
-                except Exception:
-                    pass
-            if _df is None:
-                return {"error": "data/raw에 원시자료가 없습니다 (KYRBS/KNHANES는 이미 자산화돼 있어야 합니다)."}
-            if not stata_code.strip():
-                return {"error": "분석 코드를 입력하세요."}
-            from src.llm import get_llm_client
-            _cols = list(_df.columns)[:60]
-            _sp = (
-                "Extract a statistical analysis spec from this analysis code. The code may be in "
-                "STATA, SPSS, SAS, or R — interpret the statistical logic regardless of source language. "
-                f"Available data columns: {_cols}.\n"
-                'Return ONLY JSON: {"outcome":"col","predictors":["col"],"covariates":["col"],'
-                '"analysis":"logistic|linear|chi2","weight_var":"col or null",'
-                '"strata_var":"col or null","cluster_var":"col or null","subgroups":["col"]}\n'
-                "Map variable names to the closest actual data columns above. "
-                "Analysis code:\n" + stata_code[:2500]
-            )
-            try:
-                _spec = _ws_parse_json(get_llm_client(task="fast").generate(_sp, task="fast", max_tokens=400)) or {}
-            except Exception as _e:
-                return {"error": f"스펙 추출 실패(크레딧/오류): {_e}"}
-            if not _spec.get("outcome"):
-                return {"error": "STATA 코드에서 결과변수(outcome)를 찾지 못했습니다."}
-            # 데이터에 실제 존재하는 컬럼만 (graceful)
-            for _f in ("predictors", "covariates", "subgroups"):
-                _spec[_f] = [c for c in (_spec.get(_f) or []) if c in _df.columns]
-            if _spec["outcome"] not in _df.columns:
-                return {"error": f"결과변수 '{_spec['outcome']}'가 데이터에 없습니다. 사용 가능 컬럼: {_cols[:15]}"}
-            for _f in ("weight_var", "strata_var", "cluster_var"):
-                if _spec.get(_f) and _spec[_f] not in _df.columns:
-                    _spec[_f] = None
-            try:
-                from src.data.stat_bridge import StatBridge
-                _result = StatBridge().run(_df, _spec).to_dict()
-            except Exception as _e:
-                return {"error": f"통계 분석 실패: {_e}"}
-            st.session_state["stat_result_for_paper"] = _result
-            try:
-                from src.export.publication_figure_generator import generate_figures_for_paper
-                st.session_state["ws_figures"] = generate_figures_for_paper(_result, safe_title="workspace_stata")
-            except Exception:
-                st.session_state["ws_figures"] = {}
-            return {"result": _result, "spec": _spec}
-
-        # ── 상단: 연구 정보 · 스타일 (접이식) ──
-        with st.expander("📋 연구 정보 · 글쓰기 스타일 (AI 컨텍스트)", expanded=False):
-            _sel = st.session_state.get("selected_topic", {}) or {}
-            ci1, ci2 = st.columns(2)
-            with ci1:
-                st.text_input("노출변수", value=st.session_state.get("ws_exposure", _sel.get("exposure", "")), key="ws_exposure")
-                st.text_input("결과변수", value=st.session_state.get("ws_outcome", _sel.get("outcome", "")), key="ws_outcome")
-                st.text_input("대상", value=st.session_state.get("ws_population", _sel.get("population", "Korean adolescents")), key="ws_population")
-            with ci2:
-                st.text_input("데이터셋", value=st.session_state.get("ws_dataset", "KYRBS"), key="ws_dataset")
-                try:
-                    from src.profile.author_profile import list_styles as _ls
-                    _stopts = [s["name"] for s in _ls(owner_email=_u.get("email", ""), all_styles=st.session_state.get("_is_admin", False))] or ["Yoosun Cho"]
-                except Exception:
-                    _stopts = ["Yoosun Cho"]
-                st.selectbox("글쓰기 스타일", _stopts, key="ws_style")
-            st.text_area("핵심 결과 요약 (통계 등)", value=st.session_state.get("ws_summary", ""), key="ws_summary", height=60)
-            _exup = st.file_uploader("기존 논문 불러오기 (DOCX/PDF/TXT)", type=["txt", "docx", "pdf", "md"], key="ws_existing_up")
-            if _exup is not None and st.button("📥 불러오기", key="ws_load_existing"):
-                try:
-                    from src.ingestion.paper_ingester import PaperIngester
-                    _paper = PaperIngester().ingest_bytes(_exup.getvalue(), _exup.name)
-                    for _k, _ in _WS_KEYS:
-                        if _k in _paper.sections:
-                            st.session_state[f"ws_{_k}"] = _paper.sections[_k]
-                    if _paper.title:
-                        st.session_state["ws_title"] = _paper.title
-                    st.success(f"{len(_paper.sections)}개 섹션 로드 — 채팅으로 개선하거나 오른쪽에서 편집하세요")
-                    st.rerun()
-                except Exception as _e:
-                    st.error(f"파싱 오류: {_e}")
-
-        col_chat, col_paper = st.columns([45, 55], gap="large")
-
-        # ═══════════ 좌측: AI 에이전트 채팅 + 통계 코드 (러버블식) ═══════════
-        with col_chat:
-            _ws_mode = st.radio(
-                "작업 모드", ["💬 AI 채팅", "📊 통계 코드"], horizontal=True,
-                key="ws_mode", label_visibility="collapsed",
-            )
-            if _ws_mode == "💬 AI 채팅":
-                st.markdown("<div style='font-size:13px;font-weight:700;color:#E5E7EB;margin-bottom:6px;'>🤖 AI 에이전트</div>", unsafe_allow_html=True)
-                _chatbox = st.container(height=400, border=True)
-                with _chatbox:
-                    for _m in st.session_state["ws_chat"]:
-                        with st.chat_message(_m["role"]):
-                            st.markdown(_m["content"])
-                _p = st.chat_input("논문에게 요청하세요 — 예: 서론 써줘 / 결과 더 간결하게")
-                if _p:
-                    st.session_state["ws_chat"].append({"role": "user", "content": _p})
-                    if not st.session_state.get("_llm_ready"):
-                        st.session_state["ws_chat"].append({"role": "assistant", "content": "⚠️ AI 사용을 위해 API 키가 필요합니다 (사이드바 설정 또는 admin 전역 키)."})
-                        st.rerun()
-                    try:
-                        with st.spinner("AI가 작업 중..."):
-                            _res = _ws_agent(_p)
-                        if _res.get("section") and _res.get("content"):
-                            st.session_state[f"ws_{_res['section']}"] = _res["content"]
-                        st.session_state["ws_chat"].append({"role": "assistant", "content": _res.get("reply", "반영했습니다.")})
-                    except Exception as _e:
-                        st.session_state["ws_chat"].append({"role": "assistant", "content": f"오류: {str(_e)[:200]}"})
-                    st.rerun()
-            else:
-                # ── 📊 통계 코드 모드 (STATA/SPSS/SAS/R → 동등 분석 → 논문 표·그림) ──
-                st.markdown("<div style='font-size:13px;font-weight:700;color:#E5E7EB;margin-bottom:6px;'>📊 통계 코드 → 논문 표·그림</div>", unsafe_allow_html=True)
-                st.caption("STATA·SPSS·SAS·R 코드를 붙여넣고 Run하면 동일 통계 로직을 Python으로 해석해 OR/95%CI/p-trend·forest를 계산합니다. 데이터는 자산화된 data/raw에서 자동 로드(업로드 불필요).")
-                _code = st.text_area(
-                    "분석 코드", height=300, key="ws_stata_code",
-                    placeholder=("* 예 (STATA)\n"
-                                 "svyset psu [pweight=w], strata(strata)\n"
-                                 "svy: logistic depression i.zcb_freq4 i.sex i.age_cat i.bmi_cat ..."),
-                    label_visibility="collapsed",
-                )
-                if st.button("▶ Run — 코드 해석 후 분석 실행", type="primary", use_container_width=True, key="ws_stata_run"):
-                    if not _code.strip():
-                        st.warning("분석 코드를 입력하세요.")
-                    elif not st.session_state.get("_llm_ready"):
-                        st.warning("코드 해석에 LLM API 키가 필요합니다 (사이드바 설정 또는 admin 전역 키).")
-                    else:
-                        with st.spinner("코드 해석 → 동등 분석 실행 중 (실 데이터)..."):
-                            _sr = _ws_stata(_code)
-                        if _sr.get("error"):
-                            st.error(_sr["error"])
-                        else:
-                            _spec = _sr.get("spec", {})
-                            st.session_state["ws_paper_view"] = "📊 통계 결과"
-                            st.success(f"✅ 분석 완료 — outcome={_spec.get('outcome')}, analysis={_spec.get('analysis')}. 오른쪽 '📊 통계 결과'에서 확인·복사·워드 저장하세요.")
-                            st.rerun()
-
-        # ═══════════ 우측: 논문 (편집/미리보기/통계 결과) ═══════════
-        with col_paper:
-            _filled = sum(1 for _k, _ in _WS_KEYS if (st.session_state.get(f"ws_{_k}") or "").strip())
-            ph1, ph2 = st.columns([2, 3])
-            with ph1:
-                st.markdown(f"<div style='font-size:13px;font-weight:700;color:#E5E7EB;'>📑 논문 <span style='color:#64748B;font-weight:400;'>({_filled}/{len(_WS_KEYS)})</span></div>", unsafe_allow_html=True)
-            with ph2:
-                _paper_view = st.radio(
-                    "뷰", ["📝 편집", "👁 미리보기", "📊 통계 결과"], horizontal=True,
-                    key="ws_paper_view", label_visibility="collapsed",
-                )
-            with st.container(height=440, border=True):
-                if _paper_view == "👁 미리보기":
-                    _pv = _ws_preview()
-                    st.markdown(_pv if _pv else "_아직 내용이 없습니다. 왼쪽 AI에게 요청하세요._")
-                elif _paper_view == "📊 통계 결과":
-                    _sr = st.session_state.get("stat_result_for_paper")
-                    if not _sr:
-                        st.markdown("_아직 통계 결과가 없습니다. 왼쪽 **📊 통계 코드** 모드에서 코드를 붙여넣고 Run 하세요._")
-                    else:
-                        try:
-                            from src.export.table_builder import (
-                                stat_result_to_table1_markdown,
-                                stat_result_to_table2_markdown,
-                            )
-                            _t1 = stat_result_to_table1_markdown(_sr)
-                            _t2 = stat_result_to_table2_markdown(_sr)
-                            st.markdown(_t1)
-                            st.markdown("")
-                            st.markdown(_t2)
-                            _figs = st.session_state.get("ws_figures") or {}
-                            for _name, _fd in _figs.items():
-                                if isinstance(_fd, dict) and _fd.get("png_bytes"):
-                                    st.image(_fd["png_bytes"], caption=_fd.get("caption", _name), use_container_width=True)
-                            with st.expander("📋 표 마크다운 복사 (논문 붙여넣기용)"):
-                                st.code(_t1 + "\n\n" + _t2, language="markdown")
-                        except Exception as _e:
-                            st.error(f"표 생성 오류: {_e}")
-                else:  # 📝 편집
-                    for _k, _label in _WS_KEYS:
-                        st.text_area(_label, key=f"ws_{_k}", height=55 if _k == "title" else 110)
-            wsd1, wsd2, wsd3 = st.columns(3)
-            with wsd1:
-                if st.button("💾 초안 저장", use_container_width=True, key="ws_save_draft"):
-                    st.session_state["draft"] = _ws_preview()
-                    st.success("저장됨")
-            with wsd2:
-                st.download_button("⬇ 논문 TXT", _ws_preview() or " ", file_name="paper_draft.txt",
-                                   use_container_width=True, key="ws_dl_txt")
-            with wsd3:
-                _sr2 = st.session_state.get("stat_result_for_paper")
-                _docx_bytes = b""
-                if _sr2:
-                    try:
-                        from src.export.table_builder import stat_result_to_tables_docx_bytes
-                        _docx_bytes = stat_result_to_tables_docx_bytes(_sr2)
-                    except Exception:
-                        _docx_bytes = b""
-                st.download_button("⬇ 표 워드(DOCX)", _docx_bytes or b" ", file_name="tables.docx",
-                                   use_container_width=True, disabled=not _docx_bytes, key="ws_dl_docx")
-
-    # ── 글쓰기 스타일 (학습 + 관리) ───────────────────────────────────
-    elif page == "글쓰기 스타일":
-        st.markdown("<h2 style='color:#e6edf3;'>✍️ 글쓰기 스타일</h2>", unsafe_allow_html=True)
-        st.info(
-            "AI가 정해진 스타일로만 쓰는 게 아니라, **본인 논문을 학습시켜 본인 스타일**로 쓸 수 있습니다. "
-            "조유선 스타일은 기본 제공(공용)이고, 본인 논문을 올리면 글쓰기 구조·문체·어휘를 추출해 "
-            "'내 스타일'로 저장됩니다. (학습 = 추출/구조화, 적용 = 작성 시 템플릿 선택 — 분리 구조)"
-        )
-        _email = _u.get("email", "")
-        _is_adm = st.session_state.get("_is_admin", False)
-
-        from src.profile.author_profile import list_styles
-        _tab_learn, _tab_manage = st.tabs(["🧠 내 스타일 학습", "📚 스타일 목록"])
-
-        # ── A. 스타일 학습 (추출/구조화) ──
-        with _tab_learn:
-            st.markdown("#### 본인 논문으로 스타일 학습")
-            _style_name = st.text_input(
-                "스타일 이름", value=f"{_u.get('name','내') } 스타일",
-                key="style_learn_name", help="이 이름으로 스타일이 저장됩니다 (예: '홍길동 스타일')",
-            )
-            _src_tab1, _src_tab2 = st.tabs(["파일 업로드", "텍스트 붙여넣기"])
-            _paper_text = ""
-            _paper_title = ""
-            with _src_tab1:
-                _sup = st.file_uploader("논문 파일 (DOCX/PDF/TXT)", type=["txt", "docx", "pdf", "md"], key="style_up")
-                if _sup is not None:
+            # ── 기존논문 탭 (업로드 → 작성 탭 섹션 채움) ──
+            with ws_tabs[1]:
+                st.caption("기존 논문 파일을 올리면 IMRAD 섹션이 '작성' 탭에 채워져 바로 편집할 수 있습니다.")
+                _wsup = st.file_uploader("DOCX / PDF / TXT", type=["txt", "docx", "pdf", "md"], key="ws_existing_up")
+                if _wsup is not None and st.button("📥 작성 탭에 불러오기", key="ws_load_existing"):
                     try:
                         from src.ingestion.paper_ingester import PaperIngester
-                        _p = PaperIngester().ingest_bytes(_sup.getvalue(), _sup.name)
-                        _paper_text = _p.raw_text
-                        _paper_title = _p.title or _sup.name
-                        st.caption(f"불러옴: {_sup.name} ({len(_paper_text):,}자)")
+                        _paper = PaperIngester().ingest_bytes(_wsup.getvalue(), _wsup.name)
+                        _loaded = 0
+                        for _k, _ in _WS_KEYS:
+                            if _k in _paper.sections:
+                                st.session_state[f"ws_{_k}"] = _paper.sections[_k]
+                                _loaded += 1
+                        if _paper.title:
+                            st.session_state["ws_title"] = _paper.title
+                        st.success(f"{_loaded}개 섹션 로드 완료 — '작성' 탭에서 편집/개선하세요")
+                        st.rerun()
                     except Exception as _e:
                         st.error(f"파싱 오류: {_e}")
-            with _src_tab2:
-                _pt = st.text_area("논문 전문 붙여넣기", height=220, key="style_paste")
-                if _pt.strip():
-                    _paper_text = _pt
-                    _paper_title = _pt[:40]
 
-            if st.button("🧠 이 논문으로 스타일 학습", type="primary", key="style_learn_btn"):
-                if not _paper_text.strip():
-                    st.warning("학습할 논문 내용을 입력하세요.")
-                elif not st.session_state.get("_llm_ready"):
-                    st.warning("LLM API 키가 필요합니다 (스타일 분석에 사용).")
-                else:
+            # ── 업로드(RAG 인제스트) 탭 ──
+            with ws_tabs[2]:
+                st.caption("논문 PDF를 RAG 지식베이스에 학습시켜 이후 작성/Q&A에 활용합니다.")
+                _wsig = st.file_uploader("PDF", type=["pdf"], key="ws_ingest_up")
+                if _wsig is not None and st.button("📚 RAG 학습", key="ws_ingest_btn"):
                     try:
-                        from src.profile.author_profile import AuthorProfile
-                        with st.spinner("글쓰기 스타일 분석 중 (문체·방법론·구조·어휘 추출)..."):
-                            _ap = AuthorProfile(_style_name, owner_email=_email)
-                            _res = _ap.analyse_paper(_paper_text, paper_title=_paper_title)
-                        st.success(f"✅ '{_style_name}' 스타일 학습 완료! 작성 시 선택할 수 있습니다.")
-                        _prof = _ap.get_profile()
-                        _an = _res.get("analysis", {})
-                        cws, cme = st.columns(2)
-                        with cws:
-                            st.markdown("**문체 (writing_style)**")
-                            st.json(_prof.get("writing_style", {}))
-                        with cme:
-                            st.markdown("**방법론 (methodology)**")
-                            st.json(_prof.get("methodology", {}))
-                        st.caption(f"학습 논문 누적: {len(_prof.get('papers_analysed', []))}편 (많을수록 정확)")
+                        from src.rag.pipeline import RAGPipeline
+                        _tmp = Path("data/pmc_papers") / _wsig.name
+                        _tmp.parent.mkdir(parents=True, exist_ok=True)
+                        _tmp.write_bytes(_wsig.getvalue())
+                        with st.spinner("RAG 인제스트 중..."):
+                            RAGPipeline().ingest_file(str(_tmp))
+                        st.success("학습 완료")
                     except Exception as _e:
-                        st.error(f"스타일 학습 오류: {_e}")
+                        st.error(f"인제스트 오류: {_e}")
 
-        # ── 스타일 목록 ──
-        with _tab_manage:
-            st.markdown("#### 사용 가능한 스타일")
-            _styles = list_styles(owner_email=_email, all_styles=_is_adm)
-            if not _styles:
-                st.caption("아직 스타일이 없습니다. '내 스타일 학습'에서 논문을 올려보세요.")
-            for _s in _styles:
-                _tag = "🌐 공용" if _s["shared"] else f"👤 {_s['owner']}"
-                st.markdown(
-                    f"- **{_s['name']}** ({_tag}) — 학습 논문 {_s['papers_analysed']}편"
-                )
+            # ── Q&A 탭 ──
+            with ws_tabs[3]:
+                st.caption("학습된 논문/데이터 기반 질의응답")
+                _wsq = st.text_input("질문", key="ws_qa_input")
+                if st.button("질문하기", key="ws_qa_btn") and _wsq:
+                    try:
+                        from src.agent.medical_agent import MedicalAgent
+                        with st.spinner("답변 생성 중..."):
+                            _ans = MedicalAgent().ask(_wsq)
+                        st.markdown(_ans.get("answer", "") if isinstance(_ans, dict) else str(_ans))
+                    except Exception as _e:
+                        st.error(f"Q&A 오류: {_e}")
+
+            # ── Notebook 탭 ──
+            with ws_tabs[4]:
+                st.caption("NotebookLM 연동")
+                if st.button("📓 Notebook 에디터 열기", key="ws_nb_open"):
+                    _nav("Notebook 에디터")
+
+        # ═══════════ 우측: 논문 프리뷰 (전용) ═══════════
+        with col_preview:
+            st.markdown(
+                "<div style='font-size:13px;color:#94A3B8;font-weight:700;"
+                "text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;'>📑 논문 프리뷰</div>",
+                unsafe_allow_html=True,
+            )
+            _filled = sum(1 for _k, _ in _WS_KEYS if (st.session_state.get(f"ws_{_k}") or "").strip())
+            st.caption(f"{_filled}/{len(_WS_KEYS)} 섹션 작성됨 · 좌측 입력이 실시간 반영됩니다")
+            with st.container(height=620, border=True):
+                st.markdown(_ws_preview())
 
     # ── WORKFLOW ──────────────────────────────────────────────────────
     elif page == "워크플로우":
@@ -2194,28 +1922,17 @@ with main_col:
                 "⚡ 병렬 처리", value=True, key="pw_parallel",
                 help="PMC 다운로드 + 신규성 확인 동시 실행 (Phase B)",
             )
-        # ── 글쓰기 스타일 선택 (B: 템플릿 적용) ──
-        try:
-            from src.profile.author_profile import list_styles as _ls
-            _avail = _ls(owner_email=_u.get("email", ""), all_styles=st.session_state.get("_is_admin", False))
-            _style_opts = [s["name"] for s in _avail] or ["Yoosun Cho"]
-        except Exception:
-            _style_opts = ["Yoosun Cho"]
-        pw_style = st.selectbox(
-            "✍️ 글쓰기 스타일", _style_opts, key="pw_style",
-            help="조유선(공용) 또는 본인이 학습시킨 스타일로 작성. '글쓰기 스타일'에서 본인 논문 학습 가능.",
-        )
 
         if st.button("✍️ 논문 작성 시작", type="primary"):
             if not topic_title or not results_text:
                 st.error("연구 제목과 주요 결과를 입력하세요.")
             else:
-                with st.spinner(f"{pw_style} 스타일로 논문 작성 중... (1~2분 소요)"):
+                with st.spinner("조유선 스타일로 논문 작성 중... (1~2분 소요)"):
                     try:
                         from src.research.research_pipeline import ResearchPipeline
                         topic = {"title": topic_title, "exposure": prev.get("exposure",""), "outcome": prev.get("outcome",""), "population": prev.get("population","")}
                         study_info = {"dataset": dataset_name, "design": design, "sample_size": sample_size, "survey_year": survey_year, "journal": journal}
-                        rp = ResearchPipeline(author_name=pw_style)
+                        rp = ResearchPipeline()
 
                         st.session_state["draft_journal_id"] = journal_id
                         if use_stat_inject and stat_result_for_paper:
@@ -3108,9 +2825,8 @@ with main_col:
                 _n_filter = st.slider("최근 N개", 10, 200, 50, key="_tl_n")
             with col_f3:
                 st.markdown("<div style='margin-top:28px;'></div>", unsafe_allow_html=True)
-                _show_all = st.checkbox("전체 사용자 (admin)", value=False, key="_tl_all",
-                                        disabled=(not st.session_state.get("_is_admin")),
-                                        help="admin은 모든 사용자의 작업을 조회할 수 있습니다 (full access)")
+                _show_all = st.checkbox("전체 사용자", value=False, key="_tl_all",
+                                        disabled=(_u.get("role") != "super_admin"))
 
             atype_arg = None if _atype_filter == "전체" else _atype_filter
             email_arg = None if _show_all else user_email

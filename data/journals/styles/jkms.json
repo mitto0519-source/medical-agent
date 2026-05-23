@@ -1,0 +1,29 @@
+{
+  "id": "jkms",
+  "name": "Journal of Korean Medical Science",
+  "abbreviation": "J Korean Med Sci",
+  "publisher": "Korean Academy of Medical Sciences",
+  "impact_factor": 3.4,
+  "reference_style": "Vancouver",
+  "max_abstract_words": 250,
+  "max_references": 50,
+  "language": "English",
+  "formatting": {
+    "font_name": "Times New Roman",
+    "font_size_pt": 12,
+    "line_spacing": 2.0,
+    "margin_top_cm": 2.54,
+    "margin_bottom_cm": 2.54,
+    "margin_left_cm": 2.54,
+    "margin_right_cm": 2.54,
+    "abstract_structure": ["Background", "Methods", "Results", "Conclusion"],
+    "section_order": ["Abstract", "Introduction", "Methods", "Results", "Discussion", "References"],
+    "page_numbers": true,
+    "double_blind": false,
+    "keywords_max": 5,
+    "title_max_words": 20,
+    "running_title_max_chars": 50
+  },
+  "submission_url": "https://jkms.org/",
+  "author_guidelines_url": "https://jkms.org/authors/authors.php"
+}
