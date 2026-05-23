@@ -524,28 +524,34 @@ with st.sidebar:
     _nb("✍️  글쓰기 스타일", "글쓰기 스타일")       # 스타일 학습 + 선택
     _nb("📜  작업 타임라인", "작업 타임라인")       # 본인 작업 이력
 
-    # ── 관리자 전용: 기존 단위 기능 화면 (테스트/개발용) ──
-    # 일반 사용자는 바이브(작업실)만 보고, admin은 단위 기능을 직접 호출해 테스트한다.
+    # ── 관리자 전용: 기존 단위 기능은 토글로 접어둔다 (기본 OFF) ──
+    # 기본 화면은 admin도 바이브(작업실) 중심으로 깔끔하게. 단위 기능 테스트가
+    # 필요할 때만 '관리자 모드'를 켜서 옛 화면을 노출 → old/new 메뉴 혼재 해소.
     if st.session_state.get("_is_admin"):
-        st.markdown('<div class="nav-section">🔧 관리자 — 연구 단계 (테스트)</div>', unsafe_allow_html=True)
-        _nb("⚡  원스톱 자동 파이프라인", "논문 생산 파이프라인")
-        for _n, _label, _target, _done_fn in RESEARCH_FLOW:
-            try:
-                _done = bool(_done_fn(st.session_state))
-            except Exception:
-                _done = False
-            _mark = "✓" if _done else _n
-            _nb(f"{_mark}  {_label}", _target)
-        st.markdown('<div class="nav-section">🔧 관리자 — 도구/단위</div>', unsafe_allow_html=True)
-        _nb("📄  기존 논문 개선", "기존 논문 개선")
-        _nb("📤  논문 업로드 & 인제스트", "논문 업로드 & 인제스트")
-        _nb("🤖  Agent Q&A", "Agent Q&A")
-        _nb("⚡  워크플로우", "워크플로우")
-        _nb("📓  Notebook 에디터", "Notebook 에디터")
-        _nb("🔁  자동 학습 루프", "자동 학습 루프")
-        st.markdown('<div class="nav-section">🔧 관리자 — 시스템</div>', unsafe_allow_html=True)
-        _nb("🧬  자가 진단", "자가 진단")
-        _nb("📚  지식베이스 관리", "지식베이스 관리")
+        st.markdown('<div style="padding:8px 8px 2px;">', unsafe_allow_html=True)
+        _admin_mode = st.toggle("🔧 관리자 모드 (단위 기능)", key="_admin_mode",
+                                help="끄면 바이브 화면만(메인). 켜면 옛 단위 기능 화면을 테스트용으로 노출.")
+        st.markdown('</div>', unsafe_allow_html=True)
+        if _admin_mode:
+            st.markdown('<div class="nav-section">연구 단계 (테스트)</div>', unsafe_allow_html=True)
+            _nb("⚡  원스톱 자동 파이프라인", "논문 생산 파이프라인")
+            for _n, _label, _target, _done_fn in RESEARCH_FLOW:
+                try:
+                    _done = bool(_done_fn(st.session_state))
+                except Exception:
+                    _done = False
+                _mark = "✓" if _done else _n
+                _nb(f"{_mark}  {_label}", _target)
+            st.markdown('<div class="nav-section">도구 / 단위</div>', unsafe_allow_html=True)
+            _nb("📄  기존 논문 개선", "기존 논문 개선")
+            _nb("📤  논문 업로드 & 인제스트", "논문 업로드 & 인제스트")
+            _nb("🤖  Agent Q&A", "Agent Q&A")
+            _nb("⚡  워크플로우", "워크플로우")
+            _nb("📓  Notebook 에디터", "Notebook 에디터")
+            _nb("🔁  자동 학습 루프", "자동 학습 루프")
+            st.markdown('<div class="nav-section">시스템</div>', unsafe_allow_html=True)
+            _nb("🧬  자가 진단", "자가 진단")
+            _nb("📚  지식베이스 관리", "지식베이스 관리")
     st.markdown('</div>', unsafe_allow_html=True)
 
     # ── LLM Provider 설정 ──────────────────────────────────────────
@@ -631,7 +637,14 @@ with st.sidebar:
 # Main layout: content col (left) + AI panel col (right)
 # ══════════════════════════════════════════════════════════════════════
 page_context: dict = {"current_page": page}
-main_col, ai_col = st.columns([13, 7])
+# 논문 작업실은 자체 좌(채팅)/우(논문) 레이아웃이 있어 전역 AI 패널이 중복·충돌한다.
+# 해당 페이지만 전체폭으로 쓰고, 나머지 페이지는 본문[13] + AI 패널[7] 분할 유지.
+_FULL_WIDTH_PAGES = {"논문 작업실"}
+if page in _FULL_WIDTH_PAGES:
+    main_col = st.container()
+    ai_col = None
+else:
+    main_col, ai_col = st.columns([13, 7])
 
 # ══════════════════════════════════════════════════════════════════════
 # PAGE CONTENT
@@ -3367,8 +3380,9 @@ with main_col:
 # ══════════════════════════════════════════════════════════════════════
 # AI PANEL (right column)
 # ══════════════════════════════════════════════════════════════════════
-with ai_col:
-    st.markdown('<div class="ai-panel-wrap">', unsafe_allow_html=True)
-    from app.ai_panel import render_ai_panel
-    render_ai_panel(page, page_context, user_email=_u.get("email", ""))
-    st.markdown('</div>', unsafe_allow_html=True)
+if ai_col is not None:
+    with ai_col:
+        st.markdown('<div class="ai-panel-wrap">', unsafe_allow_html=True)
+        from app.ai_panel import render_ai_panel
+        render_ai_panel(page, page_context, user_email=_u.get("email", ""))
+        st.markdown('</div>', unsafe_allow_html=True)
