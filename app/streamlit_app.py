@@ -967,6 +967,10 @@ with main_col:
             _study = _ws_study_info()
             _filled = {k: bool((st.session_state.get(f"ws_{k}") or "").strip()) for k in _keys}
             llm = get_llm_client(task="paper_writing")
+            # 최근 대화 맥락 — 직전 턴들을 모든 프롬프트에 주입 (컨텍스트 유지)
+            _recent = [m for m in st.session_state.get("ws_chat", [])[-7:-1]
+                       if m.get("role") in ("user", "assistant")]
+            _hist = "\n".join(f"{m['role']}: {str(m['content'])[:280]}" for m in _recent)
 
             # 1) 의도 분류 — 어떤 기존 기능을 부를지
             _cls = (
@@ -975,7 +979,9 @@ with main_col:
                 '"section":"<key or null>","detail":"<key instruction>"}\n'
                 "- write: 새 섹션 작성. refine: 기존 섹션 수정/다듬기. novelty: 신규성 확인(PubMed).\n"
                 "- search: 관련 논문 검색. review: 동료심사. topics: 연구주제 추천. chat: 일반 질문/대화.\n"
+                "이전 대화에서 사용자가 쓰자고 한 주제를 '오른쪽에 써줘'라고 하면 write로 분류.\n"
                 f"sections={_keys}, filled={_json.dumps(_filled)}, study={_json.dumps(_study, ensure_ascii=False)}\n"
+                f"RECENT CONVERSATION:\n{_hist}\n"
                 f"request: {user_msg}"
             )
             _ic = _ws_parse_json(llm.generate(_cls, task="fast", max_tokens=200)) or {}
@@ -998,6 +1004,7 @@ with main_col:
                         "You write a section of a Korean medical research paper.\n"
                         f"STUDY: {_json.dumps(_study, ensure_ascii=False)}\n"
                         f"CURRENT SECTIONS: {_json.dumps(_cur, ensure_ascii=False)[:2000]}\n"
+                        f"RECENT CONVERSATION (이 맥락의 주제를 이어서 작성):\n{_hist}\n"
                         f"REQUEST: {user_msg}\n"
                         f"Target section: {_sec or '(infer the most relevant)'}\n"
                         "Return ONLY JSON: {\"section\":\"<key>\",\"content\":\"<FULL new section text>\","
@@ -1053,10 +1060,12 @@ with main_col:
                     _lines = [f"- **{t.get('title','')}** ({t.get('exposure','')}→{t.get('outcome','')})" for t in _ts[:3]]
                     return {"section": None, "content": "", "reply": "💡 **추천 주제**\n" + "\n".join(_lines)}
 
-                # chat — 일반 질문/대화
+                # chat — 일반 질문/대화 (대화 맥락 유지)
                 _reply = llm.generate(
                     f"의학 논문 작성을 돕는 어시스턴트다. 현재 연구: {_json.dumps(_study, ensure_ascii=False)}.\n"
-                    f"사용자: {user_msg}\n한국어로 간결히 답하라.",
+                    f"이전 대화:\n{_hist}\n"
+                    f"사용자: {user_msg}\n한국어로 간결히 답하라. "
+                    "사용자가 직전에 쓰자고 한 내용을 '오른쪽에 써줘'라고 하면 그 주제로 섹션을 작성하라.",
                     task="fast", max_tokens=700,
                 )
                 return {"section": None, "content": "", "reply": (_reply or "").strip()[:1000]}

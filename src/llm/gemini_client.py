@@ -19,6 +19,21 @@ _log = get_logger(__name__)
 # 환경변수 GEMINI_MODEL로 오버라이드 가능 (예: gemini-2.5-flash, gemma-4-31b-it).
 _DEFAULT_GEMINI = "gemini-flash-latest"
 
+# 무료 티어 쿼터는 모델별 분당(RPM)/일일(RPD)로 따로 잡힌다. 한 모델이 429나도
+# 다른 모델은 멀쩡한 경우가 많으므로 여러 무료 모델을 순환해 가용성을 크게 높인다.
+_FREE_MODEL_ROTATION = [
+    "gemini-flash-latest",
+    "gemini-2.5-flash-lite",
+    "gemini-flash-lite-latest",
+    "gemini-2.5-flash",
+]
+
+
+def _is_quota_error(err: Exception) -> bool:
+    s = str(err).lower()
+    return ("429" in s or "exceeded your current quota" in s or "resourceexhausted" in s
+            or "rate" in s and "limit" in s)
+
 
 class GeminiClient:
     """google-generativeai SDK 래퍼. ClaudeClient와 같은 generate() 시그니처."""
@@ -77,25 +92,35 @@ class GeminiClient:
             ctx = "\n\n---\n\n".join(context_chunks)
             full_system = f"{full_system}\n\n<context>\n{ctx}\n</context>"
 
-        model = self._genai.GenerativeModel(
-            model_name=self.model,
-            system_instruction=full_system or None,
-        )
         # gemini-flash-latest 등 사고형 모델은 출력 예산을 추론에 먼저 소비한다.
-        # max_tokens가 너무 작으면 finish_reason=MAX_TOKENS로 text가 비어버리므로
-        # 최소 256 토큰을 보장하고, 비면 더 큰 예산으로 1회 재시도한다.
+        # max_tokens가 너무 작으면 finish_reason=MAX_TOKENS로 text가 비어버리므로 최소 256 보장.
         budget = max(int(max_tokens), 256)
-        text = self._generate_once(model, user_message, budget)
-        if text:
-            return text
-        text = self._generate_once(model, user_message, max(budget * 2, 2048))
-        if text:
-            return text
-        # 끝까지 텍스트가 없으면 폴백이 동작하도록 명확히 예외 발생 (규칙 11)
+        # 무료 모델 순환: 설정 모델 우선 → 나머지 무료 모델. 한 모델 429면 다음 모델로.
+        models = [self.model] + [m for m in _FREE_MODEL_ROTATION if m != self.model]
+        last_err = None
+        for mname in models:
+            try:
+                gm = self._genai.GenerativeModel(
+                    model_name=mname, system_instruction=full_system or None)
+                text = self._generate_once(gm, user_message, budget)
+                if not text:  # 빈 응답이면 더 큰 예산으로 같은 모델 1회 재시도
+                    text = self._generate_once(gm, user_message, max(budget * 2, 2048))
+                if text:
+                    if mname != self.model:
+                        _log.info("Gemini 모델 순환: %s → %s (쿼터/오류 회피)", self.model, mname)
+                    self.model = mname  # 다음 호출은 성공한 모델 우선
+                    return text
+            except Exception as e:
+                last_err = e
+                if _is_quota_error(e):
+                    _log.warning("Gemini %s 쿼터(429) → 다음 무료 모델 시도", mname)
+                    continue
+                _log.warning("Gemini %s 오류 → 다음 무료 모델 시도: %s", mname, str(e)[:80])
+                continue
+        # 모든 무료 모델 실패 → 명확한 예외(상위 failover가 다른 provider 시도)
         raise RuntimeError(
-            f"Gemini({self.model}) 응답에 텍스트가 없습니다 "
-            "(finish_reason=MAX_TOKENS 또는 SAFETY 추정) — 다른 provider로 폴백 필요"
-        )
+            "Gemini 무료 모델 전부 실패(쿼터/오류). "
+            f"마지막 오류: {str(last_err)[:120]}" if last_err else "Gemini 응답 없음")
 
     def _generate_once(self, model, user_message: str, budget: int) -> str:
         try:

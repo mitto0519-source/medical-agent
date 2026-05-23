@@ -22,8 +22,8 @@ services:
     volumes:
       - ./data:/app/data             # 원시자료·ChromaDB·agent_self·change_log·working_papers 영속
       - ./.streamlit:/app/.streamlit:ro
-      # 순수 이미지 모드: 소스는 이미지에 COPY로 고정 → OneDrive 동기화에 완전 면역.
-      # 빠른 코드 반복이 필요하면 아래 두 줄(개발용 바인드 마운트)을 잠시 활성화:
-      #   - ./app:/app/app
-      #   - ./src:/app/src
+      # 개발 반복용 소스 마운트 (활성). 최종 배포 시 주석 처리 후 `docker compose build`로
+      # 이미지에 고정하면 OneDrive 동기화에 완전 면역.
+      - ./app:/app/app
+      - ./src:/app/src
     restart: unless-stopped
