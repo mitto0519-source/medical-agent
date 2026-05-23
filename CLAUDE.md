@@ -4,6 +4,21 @@
 
 ## 세션 시작 루틴 (매번 실행)
 
+### 0. 환경 무결성 체크 (★최우선 — 코드보다 환경부터)
+> 이 프로젝트는 **OneDrive 안**에 있어 `.venv` 패키지가 증발/소스가 되돌려진다.
+> "전부 에러"의 단일 루트원인이 환경인 경우가 많다. 코드 의심 전에 환경부터 확인한다.
+
+```bash
+python -c "import sys;print(sys.executable)"   # .venv 경로
+python -c "
+for m in ['anthropic','openai','google.generativeai','pyreadstat','streamlit','statsmodels','chromadb','docx']:
+    try: __import__(m); print('OK  ',m)
+    except Exception: print('MISS',m)
+"
+# MISS 있으면 즉시: python -m pip install <누락>   (추측 금지, 실제 import로 확인 — 규칙7)
+```
+근본해결은 Docker(`docker compose up -d --build`). 자세히: 메모리 `feedback-onedrive-env-trap`, `project-docker-setup`.
+
 ```python
 # 1. 장기기억 읽기
 from src.memory.change_log import build_context_summary
@@ -328,6 +343,21 @@ model = "claude-opus-4-7"
 from src.config.models import get_model
 provider, model_id = get_model(task="paper_writing")
 ```
+
+### LLM 호출 — 반드시 get_llm_client(with_failover) 경유
+
+```python
+# 금지 (직접 client 생성 → 크레딧0이면 그냥 죽음, 무료 폴백 안 됨, 페르소나 누락)
+from src.llm.claude_client import ClaudeClient; ClaudeClient(...).generate(...)
+
+# 정석 (Claude→OpenAI→무료 Gemini 자동 연쇄폴백 + 페르소나/seed 일관 주입)
+from src.llm import get_llm_client
+client = get_llm_client(task="qa")            # provider 미지정 = 무료우선 자동선택
+answer = client.generate(prompt, system_prompt=sys, max_tokens=2048)
+```
+> 새 LLM 경로를 만들면 **반드시 이 경로로** 통합한다(규칙10 전수적용). 직접 client 생성·
+> 특정 모델 직접호출(예: gemini-1.5-pro)은 폴백/페르소나를 우회하는 죽은 경로다.
+> **"폴백 된다/된다"는 실제 generate 호출(라이브)로 확인한 뒤에만 보고**한다(규칙11).
 
 ### 로깅 — 표준 로거만 사용
 
