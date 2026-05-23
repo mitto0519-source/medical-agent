@@ -145,18 +145,25 @@ data/change_log/history.json                          — 작업 이력
 
 ---
 
-### 규칙 5 — 모든 변경 후 smoke test로 검증한다
+### 규칙 5 — 모든 변경 후 다층 검증한다 (CLI 통과 ≠ 앱에서 동작)
 
 ```bash
-python scripts/test_rag_smoke.py
+python scripts/test_rag_smoke.py        # ① 임포트+RAG 스모크 (절대기준)
+python scripts/e2e_diagnose.py          # ② 코드 무결성 (LLM무관)
+python scripts/prove_stata_e2e.py       # ③ 통계엔진 회귀 (실 KYRBS→표/그림)
+docker compose up -d && python scripts/ui_eval.py   # ④ 실브라우저 UI 회귀(45 assertions)
 ```
 
-**12/12 PASS는 절대 기준이다. 낮아지면 즉시 복구 후 다음 작업.**
+**smoke 절대기준은 깨지면 즉시 복구. UI/LLM 변경은 반드시 ④로 실앱 검증.**
+
+> ★교훈(2026-05-24): LLM/외부의존 기능은 **CLI 테스트만으로 "된다" 보고 금지**.
+> Gemini가 CLI(PONG)는 통과하나 Streamlit 스레드(닫힌 stderr)에서 init 실패해 채팅이 죽었던 사례.
+> `scripts/ui_eval.py`(Playwright)로 실앱에서 outcome(채팅→섹션 반영, 저장→복원)까지 확인 후 보고.
 
 추가 검증:
 - 새 모듈: `python -c "from src.xxx import Xxx; print('OK')"`
 - Supabase: cloud_available() 확인
-- Streamlit: 실제 UI에서 동작 확인 (가능할 때)
+- 환경 의심 시: [[feedback-onedrive-env-trap]] import 체크 먼저
 
 ---
 
