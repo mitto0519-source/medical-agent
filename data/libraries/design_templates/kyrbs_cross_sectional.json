@@ -1,0 +1,74 @@
+{
+  "name": "조유선식 KYRBS 단면연구 (용량-반응 + 효과수정 + 서브그룹 일관성)",
+  "source_paper": "Zero-Calorie Beverage Consumption and Depressive Symptoms in Korean Adolescents — KYRBS 2025",
+  "author": "Yoosun Cho",
+  "design": "Cross-sectional, complex survey design (svyset: strata/PSU/weight)",
+  "dataset": "KYRBS",
+  "exposure_modeling": {
+    "continuous": "frequency 1–7 (선형 용량-반응)",
+    "categorical": "4-level 범주 + p-trend (범주 중간값을 연속 취급)"
+  },
+  "outcomes": {
+    "primary": "Depressive symptoms (binary)",
+    "secondary": [
+      "High perceived stress",
+      "Poor sleep recovery"
+    ]
+  },
+  "modeling_strategy": [
+    "Crude (무조정)",
+    "M1 (부분 조정: 인구학적)",
+    "M2 (완전 조정: 12개 공변량)",
+    "p-trend (용량-반응 경향성)"
+  ],
+  "covariate_classification": {
+    "confounders (조정)": "진성 교란변수 — 결과에 직접 영향 (흡연=니코틴, 음주=알코올). 모델에 포함.",
+    "effect_modifiers (성층화)": "효과수정자 — 성별은 Table3+상호작용, 나머지(나이/BMI/SES/학업/스마트폰/신체활동/아침결식)는 서브그룹 일관성.",
+    "co_exposures (공변량만)": "공노출 — ZCB와 공선성(SSB/카페인). 조정만, 성층화/주노출 아님."
+  },
+  "primary_covariate_set": [
+    "sex",
+    "age_cat",
+    "bmi_cat",
+    "ses3",
+    "school_n",
+    "academic3",
+    "ever_smoker",
+    "ever_drinker",
+    "swd_freq3",
+    "caff_freq3",
+    "pa_cat",
+    "br_skip"
+  ],
+  "tables": {
+    "Table 2": "전체 분석 (Crude/M1/M2 OR+95%CI + p-trend)",
+    "Table 3": "성별 성층화 + 상호작용항 (핵심 효과수정자)",
+    "Supp Table 1": "이차 결과 (high stress, poor sleep)"
+  },
+  "figures": {
+    "Figure 2": "예측확률 marginsplot (2A 전체 + 2B 성별 성층화)",
+    "Figure 3": "서브그룹 일관성 forest plot (7개 성층화자, 성별 제외)"
+  },
+  "figure3_stratifiers": [
+    "Age category (발달단계)",
+    "BMI category (체성분/다이어트 문화)",
+    "Household SES (건강형평성)",
+    "Academic performance (심리사회 스트레스)",
+    "Smartphone use (생활습관 형제노출)",
+    "Physical activity (생활습관)",
+    "Breakfast skip (식이패턴 지표)"
+  ],
+  "exclusion_rationale": {
+    "Sex": "Table3+Figure2B에서 다룸 (효과수정자, 일관성 아님)",
+    "Ever smoker/drinker": "진성 교란변수 (기분에 직접 효과)",
+    "SSB/Caffeine": "공노출 (ZCB와 공선성, 공변량만)"
+  },
+  "sample_flow": "Raw N=54,170 → 3,198 제외 → 최종 분석표본 N=50,972",
+  "structure_principles": [
+    "용량-반응을 연속+범주(p-trend) 양쪽으로 제시해 견고성 확보",
+    "공변량을 '교란/효과수정/공노출' 3분류해 각각 다르게 처리 (조정 vs 성층화 vs 공변량)",
+    "효과수정자(성별)는 상호작용으로 입증, 나머지는 서브그룹 일관성으로 견고성 입증",
+    "marginsplot으로 예측확률 시각화 → 임상적 해석 용이",
+    "forest plot 서브그룹 일관성 → 결과의 일반화가능성 입증"
+  ]
+}

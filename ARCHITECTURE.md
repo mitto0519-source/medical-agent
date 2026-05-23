@@ -27,6 +27,7 @@
 | **논문용 OR/CI 회귀분석** | `src/data/stat_bridge.py` → `StatBridge` | ✅ active | 로지스틱/GEE/Cox/PSM/다수준/선형/민감도. 논문 파이프라인 전용 |
 | **컬럼명 자동 매핑** | `src/data/col_name_resolver.py` → `ColNameResolver` | ✅ active | 18개 표준변수 패턴매칭 + LLM 폴백 → spec 자동 remapping |
 | **UI 대화형 통계** | `src/statistics/medical_stats.py` → `MedicalStatistics` | ✅ active | 기술통계/t검정/카이제곱/ANOVA. Streamlit UI 전용 |
+| **연구 설계 패턴 자산** | `src/library/design_template.py` → `DesignTemplate` | ✅ active | 논문 설계 패턴(모델링 전략/공변량 분류/Table·Figure 구조) 자산화. 조유선 KYRBS 단면연구 시드. build_context로 논문 작성 시 '구조 라인' 주입 |
 
 > **stat_bridge vs medical_stats 구분**:
 > - `stat_bridge` = 논문 파이프라인 (run_full → 실 데이터 → OR/CI → 논문 본문 자동 주입)

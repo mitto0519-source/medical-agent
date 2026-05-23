@@ -68,8 +68,19 @@ def build_base_system(base_prompt: str, task: str = "general") -> str:
                 improvement_block = imp
         except Exception:
             pass
+    # 6. 연구 설계 패턴 주입 (논문 작성 시 — '논문 구조 라인' 학습)
+    design_block = ""
+    if task == "paper_writing":
+        try:
+            from src.library.design_template import DesignTemplate
+            d = DesignTemplate().build_context("kyrbs_cross_sectional")
+            if d and len(d) > 50:
+                design_block = d
+        except Exception:
+            pass
+
     parts = [p for p in [persona_prompt, preamble, insight_block,
-                         reviewer_block, improvement_block, base_prompt or ""] if p]
+                         reviewer_block, improvement_block, design_block, base_prompt or ""] if p]
     return "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
 
