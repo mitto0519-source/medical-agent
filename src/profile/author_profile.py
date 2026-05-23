@@ -47,6 +47,7 @@ class AuthorProfile:
         author_name: str,
         profile_dir: str = "data/author_profiles",
         api_key: Optional[str] = None,
+        owner_email: str = "",
     ):
         self.author_name = author_name
         self._slug = author_name.lower().replace(" ", "_")
@@ -54,6 +55,9 @@ class AuthorProfile:
         self._path.parent.mkdir(parents=True, exist_ok=True)
         self._client = get_llm_client(api_key=api_key)
         self._profile = self._load()
+        # 스타일 소유자 — 비어있으면 공용(조유선 시드 등 모두 사용 가능)
+        if owner_email and not self._profile.get("owner_email"):
+            self._profile["owner_email"] = owner_email
 
     # ------------------------------------------------------------------
     # Persistence
@@ -94,6 +98,7 @@ class AuthorProfile:
 
         return {
             "author_name": self.author_name,
+            "owner_email": "",          # 비어있으면 공용 스타일 (조유선 시드 등)
             "writing_style": {},
             "methodology": {},
             "paper_structure": {},
@@ -324,3 +329,46 @@ RULES:
             self._profile["study_focus"] = list(
                 dict.fromkeys(self._profile.get("study_focus", []) + analysis["study_focus"])
             )[:30]
+
+
+# ──────────────────────────────────────────────────────────────────────
+# 스타일 레지스트리 — 사용 가능한 스타일 목록 (B: 템플릿 선택용)
+# ──────────────────────────────────────────────────────────────────────
+
+def list_styles(
+    owner_email: str = "",
+    include_shared: bool = True,
+    all_styles: bool = False,
+    profile_dir: str = "data/author_profiles",
+) -> List[Dict]:
+    """선택 가능한 저자 스타일 목록.
+
+    - all_styles=True (admin): 전체 스타일
+    - 그 외: 공용 스타일(owner 없음, 조유선 시드 등) + owner_email 본인 스타일
+    각 항목: {name, slug, owner, shared, papers_analysed}
+    """
+    styles: List[Dict] = []
+    d = Path(profile_dir)
+    if not d.exists():
+        return styles
+    for f in sorted(d.glob("*.json")):
+        try:
+            p = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        owner = p.get("owner_email", "")
+        shared = not owner
+        if not all_styles:
+            if shared:
+                if not include_shared:
+                    continue
+            elif owner != owner_email:
+                continue
+        styles.append({
+            "name": p.get("author_name", f.stem),
+            "slug": f.stem,
+            "owner": owner,
+            "shared": shared,
+            "papers_analysed": len(p.get("papers_analysed", [])),
+        })
+    return styles
