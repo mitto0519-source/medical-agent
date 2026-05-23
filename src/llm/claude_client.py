@@ -18,6 +18,61 @@ from src.config.models import get_model, thinking_config
 _log = get_logger(__name__)
 
 
+def build_base_system(base_prompt: str, task: str = "general") -> str:
+    """페르소나 + medical seed + 인사이트 + 리뷰어 패턴 + 자기개선 + base를 합친
+    시스템 프롬프트 문자열. ClaudeClient와 GeminiClient/OpenAIClient가 공유해
+    어떤 LLM으로 폴백돼도 페르소나 일관성을 유지한다 (규칙 9)."""
+    # 1. 페르소나 (항상 최우선)
+    persona_prompt = ""
+    try:
+        from src.agent.persona import get_system_prompt
+        persona_prompt = get_system_prompt(task=task)
+    except Exception:
+        pass
+    # 2. 의학 지식 프리앰블
+    preamble = ""
+    try:
+        from src.knowledge.medical_seed import get_medical_preamble
+        preamble = get_medical_preamble()
+    except Exception:
+        pass
+    # 3. 축적 연구 인사이트 (research/paper 태스크)
+    insight_block = ""
+    _research_tasks = {"paper_writing", "paper_review", "topic_generation",
+                       "novelty_check", "feasibility", "general"}
+    if task in _research_tasks:
+        try:
+            from src.memory.agent_insight import build_self_context
+            ctx = build_self_context()
+            if ctx and len(ctx) > 20:
+                insight_block = ctx
+        except Exception:
+            pass
+    # 4. 실 리뷰어 피드백 패턴 (paper_writing)
+    reviewer_block = ""
+    if task in {"paper_writing", "paper_review"}:
+        try:
+            from src.memory.user_feedback_store import get_reviewer_patterns
+            patterns = get_reviewer_patterns(top_n=5)
+            if patterns and len(patterns) > 30:
+                reviewer_block = patterns
+        except Exception:
+            pass
+    # 5. 역량 자기개선 컨텍스트 (Phase C 루프)
+    improvement_block = ""
+    if task in {"paper_writing", "paper_review"}:
+        try:
+            from src.diagnostics.capability_bench import get_improvement_context
+            imp = get_improvement_context()
+            if imp and len(imp) > 30:
+                improvement_block = imp
+        except Exception:
+            pass
+    parts = [p for p in [persona_prompt, preamble, insight_block,
+                         reviewer_block, improvement_block, base_prompt or ""] if p]
+    return "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
+
+
 class ClaudeClient:
     """Anthropic Python SDK 래퍼.
 
@@ -204,64 +259,8 @@ class ClaudeClient:
         task: str = "general",
     ):
         """시스템 프롬프트 구성. 페르소나 + medical seed + context 순서로 조립."""
-        # 1. 페르소나 시스템 프롬프트 (항상 최우선)
-        persona_prompt = ""
-        try:
-            from src.agent.persona import get_system_prompt
-            persona_prompt = get_system_prompt(task=task)
-        except Exception:
-            pass
-
-        # 2. 의학 지식 프리앰블 (PubMed seed)
-        preamble = ""
-        try:
-            from src.knowledge.medical_seed import get_medical_preamble
-            preamble = get_medical_preamble()
-        except Exception:
-            pass
-
-        # 3. 축적된 연구 인사이트 주입 (research/paper 관련 태스크에만)
-        insight_block = ""
-        _research_tasks = {"paper_writing", "paper_review", "topic_generation",
-                           "novelty_check", "feasibility", "general"}
-        if task in _research_tasks:
-            try:
-                from src.memory.agent_insight import build_self_context
-                ctx = build_self_context()
-                if ctx and len(ctx) > 20:
-                    insight_block = ctx
-            except Exception:
-                pass
-
-        # 4. 실 리뷰어 피드백 패턴 주입 (paper_writing 태스크에만)
-        reviewer_block = ""
-        if task in {"paper_writing", "paper_review"}:
-            try:
-                from src.memory.user_feedback_store import get_reviewer_patterns
-                patterns = get_reviewer_patterns(top_n=5)
-                if patterns and len(patterns) > 30:
-                    reviewer_block = patterns
-            except Exception:
-                pass
-
-        # 5. 역량 자기개선 컨텍스트 주입 (Phase C 루프 닫기 — paper_writing에만)
-        improvement_block = ""
-        if task in {"paper_writing", "paper_review"}:
-            try:
-                from src.diagnostics.capability_bench import get_improvement_context
-                imp = get_improvement_context()
-                if imp and len(imp) > 30:
-                    improvement_block = imp
-            except Exception:
-                pass
-
-        # 6. 호출별 base_prompt (태스크 특화 지시)
-        base = base_prompt or ""
-
-        # 조합: 페르소나 → seed → 인사이트 → 리뷰어 패턴 → 자기개선 → base
-        parts = [p for p in [persona_prompt, preamble, insight_block,
-                             reviewer_block, improvement_block, base] if p]
-        full_base = "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
+        # 페르소나/seed/인사이트/리뷰어/자기개선 조립 — 공유 함수 사용 (전 LLM 일관)
+        full_base = build_base_system(base_prompt, task)
 
         if not context_chunks:
             return full_base

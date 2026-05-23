@@ -34,6 +34,9 @@ def _make_client(provider: str, api_key: Optional[str], model: Optional[str], ta
     if provider == "openai":
         from src.llm.openai_client import OpenAIClient
         return OpenAIClient(api_key=api_key, model=model, task=task)
+    if provider in ("google", "gemini"):
+        from src.llm.gemini_client import GeminiClient
+        return GeminiClient(api_key=api_key, model=model, task=task)
     raise ValueError(f"알 수 없는 provider: {provider}")
 
 
@@ -53,7 +56,24 @@ def _resolve_provider_order() -> list[str]:
         order.append("anthropic")
     if os.environ.get("OPENAI_API_KEY"):
         order.append("openai")
+    if os.environ.get("GOOGLE_API_KEY"):
+        order.append("google")
+    # 자동 검색 최적화: 실제로 작동하는 provider를 우선 (죽은 것은 쿨다운 후순위)
+    try:
+        from src.llm.health import order_by_health
+        order = order_by_health(order)
+    except Exception:
+        pass
     return order
+
+
+def _provider_of(client) -> str:
+    """client 객체 → provider 문자열 (건강도 기록용)."""
+    return {
+        "ClaudeClient": "anthropic",
+        "OpenAIClient": "openai",
+        "GeminiClient": "google",
+    }.get(type(client).__name__, "unknown")
 
 
 # ── Failover Wrapper ──────────────────────────────────────────────────────────
@@ -95,12 +115,38 @@ class _FailoverClient:
         return any(k in msg.lower() for k in keywords)
 
     def generate(self, user_message: str, **kwargs) -> str:
+        from src.llm.health import record_success, record_failure
+        # 1. 현재 active 시도
         try:
-            return self._active.generate(user_message, **kwargs)
+            result = self._active.generate(user_message, **kwargs)
+            record_success(_provider_of(self._active))
+            return result
         except Exception as e:
-            if self._is_failover_trigger(e) and self._switch_to_fallback(e):
-                return self._active.generate(user_message, **kwargs)
-            raise
+            last_err = e
+            record_failure(_provider_of(self._active), str(e))
+            if not self._is_failover_trigger(e):
+                raise
+        # 2. 모든 fallback을 순차 연쇄 시도 (작동하는 provider까지)
+        for provider, api_key, model in self._fallbacks:
+            try:
+                client = _make_client(provider, api_key, model, self._task)
+            except Exception as ce:
+                _log.warning("Failover %s 초기화 실패: %s", provider, ce)
+                record_failure(provider, str(ce))
+                continue
+            _log.warning("LLM Failover → %s 전환. 원인: %s", provider, last_err)
+            self._active = client
+            try:
+                result = client.generate(user_message, **kwargs)
+                record_success(provider)
+                return result
+            except Exception as e:
+                last_err = e
+                record_failure(provider, str(e))
+                if not self._is_failover_trigger(e):
+                    raise
+                continue  # 다음 fallback으로
+        raise last_err
 
     def generate_streamed(self, user_message: str, **kwargs) -> Iterator[str]:
         try:
@@ -185,14 +231,18 @@ def get_llm_client(
             "ANTHROPIC_API_KEY 또는 OPENAI_API_KEY를 .env 또는 환경변수에 추가하세요."
         )
 
-    # 1순위 client 생성
+    # 1순위 client 생성 (건강도 최적화로 정렬된 order[0] = 작동하는 provider 우선)
     primary_provider = order[0]
-    primary_key = (
-        os.environ.get("ANTHROPIC_API_KEY") if primary_provider == "anthropic"
-        else os.environ.get("OPENAI_API_KEY")
-    )
-    detected_provider, detected_model = get_model(task)
-    primary = _make_client(primary_provider, primary_key, model or detected_model, task)
+    _key_env = {
+        "anthropic": "ANTHROPIC_API_KEY",
+        "openai": "OPENAI_API_KEY",
+        "google": "GOOGLE_API_KEY",
+    }
+    primary_key = os.environ.get(_key_env.get(primary_provider, ""))
+    _detected_provider, _detected_model = get_model(task)
+    # claude/openai 모델명을 Gemini에 넘기면 안 됨 — google이면 자체 기본 모델 사용
+    _model = model or (_detected_model if primary_provider in ("anthropic", "openai") else None)
+    primary = _make_client(primary_provider, primary_key, _model, task)
 
     if not with_failover or len(order) < 2:
         return primary
@@ -206,11 +256,13 @@ def _build_fallbacks(primary_provider: str, task: str) -> list:
     bootstrap()
     fallbacks = []
     providers = [p for p in _resolve_provider_order() if p != primary_provider]
+    _key_env = {
+        "anthropic": "ANTHROPIC_API_KEY",
+        "openai": "OPENAI_API_KEY",
+        "google": "GOOGLE_API_KEY",
+    }
     for p in providers:
-        key = (
-            os.environ.get("ANTHROPIC_API_KEY") if p == "anthropic"
-            else os.environ.get("OPENAI_API_KEY")
-        )
+        key = os.environ.get(_key_env.get(p, ""))
         if key:
             fallbacks.append((p, key, None))
     return fallbacks

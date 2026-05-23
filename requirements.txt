@@ -46,9 +46,10 @@ pgvector>=0.3.0
 flupy>=1.0.0
 deprecated>=1.2.0
 
-# ── LLM ──────────────────────────────────────────────────────────────
+# ── LLM (3중 자동 폴백: Claude → OpenAI → Gemini) ────────────────────
 anthropic>=0.40.0
 openai>=1.0.0
+google-generativeai>=0.8.0   # Gemini 폴백 (무료 티어). protobuf 5.x 요구 — chromadb와 호환 확인됨
 
 # ── MCP Server ───────────────────────────────────────────────────────
 fastmcp>=3.0.0
