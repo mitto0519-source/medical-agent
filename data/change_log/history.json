@@ -1,5 +1,33 @@
 [
   {
+    "id": "20260523_233455_205123",
+    "timestamp": "2026-05-23 23:34:55",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "config_change",
+    "title": "환경 루트원인(OneDrive) 진단+Docker화 + 무료LLM폴백/통계엔진 실검증 + UX분리",
+    "description": "OneDrive .venv 패키지증발이 전부에러의 루트원인 확인·복구(openai/google-generativeai/pyreadstat). Docker(code-in-image+data볼륨+.env env_file) 추가. Gemini min토큰/추출+factory 연쇄폴백으로 무료폴백 라이브검증(PONG). ai_panel/사이드바 자동(무료우선) 기본+전호출 통합 get_llm_client. StatBridge 완전사례+로더 ZCB노출매핑+연도 3버그 수정→실KYRBS2025 ZCB aOR 1.046 재현. 작업실 STATA모드 UI+admin 메뉴 토글분리+전체폭(중복AI패널제거).",
+    "what_changed": {},
+    "why_better": "코드만 헛고치던 것을 환경 루트원인부터 잡아 구조적 해결(Docker). 무료폴백/통계가 실제 라이브로 동작 검증됨(거짓보고 방지). 교훈을 CLAUDE.md+메모리 표준규칙으로 자산화.",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "Dockerfile",
+        "docker-compose.yml",
+        "src/llm/gemini_client.py",
+        "src/llm/factory.py",
+        "app/ai_panel.py",
+        "app/streamlit_app.py",
+        "src/data/stat_bridge.py",
+        "src/data/kyrbs_raw_loader.py",
+        "src/auth/users.py",
+        "requirements.txt",
+        "CLAUDE.md"
+      ]
+    }
+  },
+  {
     "id": "20260523_104251_301105",
     "timestamp": "2026-05-23 10:42:51",
     "user_email": "",
