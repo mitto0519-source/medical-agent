@@ -49,3 +49,6 @@ Thumbs.db
 # 임시
 *.tmp
 *.log
+
+# CodeGraph MCP (외부 코드 탐색 도구 — 로컬 인덱스)
+.codegraph/

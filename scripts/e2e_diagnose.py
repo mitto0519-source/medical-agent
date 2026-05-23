@@ -107,9 +107,29 @@ def main():
     except Exception as e:
         line(f"  [WARN] self_model 실패(비치명): {type(e).__name__} {str(e)[:80]}")
 
+    # ── 5. 코드 구조 그래프 자가진단 (code_graph 자산화 — 규칙10 자동화) ──
+    line("\n[5] 코드 구조 그래프 (code_graph 자산화 + 자가진단)")
+    arch_missing = []
+    try:
+        from src.knowledge.code_graph import build_code_graph
+        cg = build_code_graph("src", save=True)
+        st = cg.stats()
+        arch = cg.check_architecture()
+        arch_missing = arch.get("missing", [])
+        orphans = cg.find_orphan_symbols()
+        broken_imp = cg.find_broken_imports()
+        line(f"  [PASS] {st['nodes']}노드 (모듈{st['modules']}/함수{st['functions']}/클래스{st['classes']})")
+        line(f"         끊긴 import {len(broken_imp)} · ARCHITECTURE 누락 {len(arch_missing)} · 고아후보 {len(orphans)}(ast 신호)")
+        if arch_missing:
+            line(f"  [WARN] ARCHITECTURE.md 인용 누락: {arch_missing[:5]}")
+        if broken_imp:
+            line(f"  [WARN] 끊긴 import: {broken_imp[:5]}")
+    except Exception as e:
+        line(f"  [WARN] code_graph 실패(비치명): {type(e).__name__} {str(e)[:80]}")
+
     # ── 요약 ────────────────────────────────────────────────────────
     line("\n" + "=" * 60)
-    ok = not broken and not sym_fail
+    ok = not broken and not sym_fail and not arch_missing
     line(f"  결과: {'무결성 OK — 연결고리 정상' if ok else '⚠️ 문제 발견 — 위 항목 확인'}")
     line("=" * 60)
 
