@@ -91,8 +91,8 @@ def main() -> int:
         page.goto(f"{BASE_URL}/?email={ADMIN_EMAIL}&auto=1", wait_until="domcontentloaded", timeout=30000)
         wait_idle(page, 6000)
 
-        # 로그인 성공 확인 (사이드바 로고 또는 네비)
-        logged_in = page.get_by_text("Medical-Agent").count() > 0 and page.get_by_text("논문 작업실").count() > 0
+        # 로그인 성공 확인 — 로그인 폼('접속하기' 버튼)이 사라졌는지로 판정
+        logged_in = page.get_by_role("button", name=re.compile("접속하기")).count() == 0
         page.screenshot(path=str(OUT / "00_landing.png"), full_page=True)
         if not logged_in:
             print("✗ 로그인 실패 — 랜딩이 로그인 폼일 수 있음. 00_landing.png 확인")
@@ -142,13 +142,23 @@ def main() -> int:
         report.append(chat_result)
 
         # ── 관리자 모드 토글 ON 후 단위 페이지들 ──
-        try:
-            toggle = page.get_by_text(re.compile("관리자 모드")).first
-            toggle.click(timeout=4000)
+        toggled = False
+        for sel in ['[data-testid="stCheckbox"]', 'label:has-text("관리자 모드")']:
+            try:
+                page.locator(sel).first.click(timeout=4000)
+                toggled = True
+                break
+            except Exception:
+                continue
+        if not toggled:
+            try:
+                page.get_by_text(re.compile("관리자 모드")).first.click(timeout=4000)
+                toggled = True
+            except Exception as e:
+                print(f"  관리자 모드 토글 실패: {str(e)[:100]}")
+        if toggled:
             wait_idle(page)
             print("✓ 관리자 모드 ON")
-        except Exception as e:
-            print(f"  관리자 모드 토글 실패: {str(e)[:100]}")
 
         admin_pages = ["연구 주제 생성", "신규성 확인", "데이터 분석", "논문 작성",
                        "기존 논문 개선", "Agent Q&A", "자가 진단", "지식베이스 관리"]
