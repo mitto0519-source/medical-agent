@@ -979,6 +979,13 @@ with main_col:
                 _relevant = ""
             if _relevant:
                 _hist = (_relevant + "\n" + _hist) if _hist else _relevant
+            # OpenKB식 누적 지식 위키 — 축적된 연구 개념을 글쓰기에 주입 ("쓸수록 더 잘 씀")
+            try:
+                from src.knowledge.research_wiki import ResearchWiki
+                _wiki_ctx = ResearchWiki(owner_email=_u.get("email", "")).build_context(
+                    f"{user_msg} {st.session_state.get('ws_title', '')}", n=3)
+            except Exception:
+                _wiki_ctx = ""
 
             # 1) 의도 분류 — 어떤 기존 기능을 부를지
             _cls = (
@@ -1012,6 +1019,7 @@ with main_col:
                         "You write a section of a Korean medical research paper.\n"
                         f"STUDY: {_json.dumps(_study, ensure_ascii=False)}\n"
                         f"CURRENT SECTIONS: {_json.dumps(_cur, ensure_ascii=False)[:2000]}\n"
+                        f"{(_wiki_ctx + chr(10)) if _wiki_ctx else ''}"
                         f"RECENT CONVERSATION (이 맥락의 주제를 이어서 작성):\n{_hist}\n"
                         f"REQUEST: {user_msg}\n"
                         f"Target section: {_sec or '(infer the most relevant)'}\n"
@@ -1325,7 +1333,17 @@ with main_col:
                                            paper_id=st.session_state.get("ws_paper_id"))
                     st.session_state["ws_paper_id"] = _pid
                     st.session_state["draft"] = _ws_preview()
-                    st.success("저장됨 (다음 접속에도 유지)")
+                    # OpenKB식 누적 위키에 흡수 — 연구 지식이 쌓여 다음 글쓰기에 반영됨
+                    try:
+                        _wtext = _ws_preview()
+                        if len(_wtext) > 150:
+                            from src.knowledge.research_wiki import ResearchWiki
+                            ResearchWiki(owner_email=_u.get("email", "")).add_source(
+                                _wtext, title=st.session_state.get("ws_title", "") or "논문 초안",
+                                source_type="draft")
+                    except Exception:
+                        pass
+                    st.success("저장됨 (다음 접속에도 유지 · 지식 위키에 누적)")
             with wsd2:
                 st.download_button("⬇ 논문 TXT", _ws_preview() or " ", file_name="paper_draft.txt",
                                    use_container_width=True, key="ws_dl_txt")
