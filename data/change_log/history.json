@@ -1,5 +1,29 @@
 [
   {
+    "id": "20260524_194637_777568",
+    "timestamp": "2026-05-24 19:46:37",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "config_change",
+    "title": "구조 수렴 1차: State Registry(논문 JSON AST)+섹션잠금 + data/raw 전페이지 자동로드 + 자동학습 스케줄러/가시화 + 검증스크립트 통폐합",
+    "description": "조언(research OS)의 #1 State Registry 채택: research_state.py(ResearchState — 섹션 content+status(empty/draft/verified/locked), 잠금 섹션은 자동생성 덮어쓰기 금지=drift차단, study/stat/citation 포함, JSON AST, 하위호환 from_dict). 작업실에 섹션별 🔒 잠금토글+상태배지, 채팅생성이 잠금 존중, 저장/불러오기 status 영속(meta._status). data/raw 자동로드 _ensure_raw_df로 전페이지 통일(데이터분석/원스톱파이프라인 업로드강요 제거). 자동학습: learner 컨테이너(상주+PC재시작시 24h 캐치업), 지식위키에 가시화 탭(누적2000편)+즉시학습버튼, except:pass→로그. 검증스크립트 5개 중복 삭제(ui_eval로 통폐합). .gitignore 런타임부산물 추적해제.",
+    "what_changed": {},
+    "why_better": "조언대로 기능추가 중단하고 구조 수렴. 단일 상태원본으로 agent 덮어쓰기/drift 차단(가장 큰 지적 해결). 통계외부화는 이미 됨(StatBridge). 전면재작성 없이 제자리 진화. 데이터 자산 전페이지 자동활용. 자가발전 가시화+무인 스케줄러.",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "src/research/research_state.py",
+        "app/streamlit_app.py",
+        "src/storage/working_paper_store.py",
+        "scripts/learn_scheduler.py",
+        "docker-compose.yml",
+        ".gitignore",
+        "ARCHITECTURE.md"
+      ]
+    }
+  },
+  {
     "id": "20260524_073218_959895",
     "timestamp": "2026-05-24 07:32:18",
     "user_email": "",
