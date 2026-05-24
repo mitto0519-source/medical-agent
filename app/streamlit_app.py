@@ -1215,6 +1215,8 @@ with main_col:
                     if _rec:
                         for _k, _ in _WS_KEYS:
                             st.session_state[f"ws_{_k}"] = _rec["sections"].get(_k, "")
+                        # State Registry: 섹션 잠금/검증 상태 복원 (meta._status)
+                        st.session_state["ws_status"] = (_rec.get("meta", {}) or {}).get("_status", {}) or {}
                         st.session_state["ws_paper_id"] = _pid
                         st.toast(f"불러옴: {_rec.get('title', '')[:30]}")
                         st.rerun()
@@ -1399,7 +1401,9 @@ with main_col:
                 if st.button("💾 저장", use_container_width=True, key="ws_save_draft",
                              help="계정에 영속 저장 — 다음 접속/재시작에도 유지"):
                     _secs = {_k: st.session_state.get(f"ws_{_k}", "") for _k, _ in _WS_KEYS}
-                    _pid = _wps.save_paper(_u.get("email", ""), _secs, meta=_ws_study_info(),
+                    # State Registry: 섹션 잠금/검증 상태도 함께 영속화 (meta._status)
+                    _meta = {**_ws_study_info(), "_status": st.session_state.get("ws_status", {})}
+                    _pid = _wps.save_paper(_u.get("email", ""), _secs, meta=_meta,
                                            paper_id=st.session_state.get("ws_paper_id"))
                     st.session_state["ws_paper_id"] = _pid
                     st.session_state["draft"] = _ws_preview()
