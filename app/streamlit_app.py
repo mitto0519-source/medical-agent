@@ -1334,17 +1334,23 @@ with main_col:
                                            paper_id=st.session_state.get("ws_paper_id"))
                     st.session_state["ws_paper_id"] = _pid
                     st.session_state["draft"] = _ws_preview()
-                    # OpenKB식 누적 위키에 흡수 — 연구 지식이 쌓여 다음 글쓰기에 반영됨
+                    # OpenKB식 누적 위키 흡수 — LLM 호출이라 저장을 막지 않게 백그라운드 스레드로.
                     try:
                         _wtext = _ws_preview()
                         if len(_wtext) > 150:
-                            from src.knowledge.research_wiki import ResearchWiki
-                            ResearchWiki(owner_email=_u.get("email", "")).add_source(
-                                _wtext, title=st.session_state.get("ws_title", "") or "논문 초안",
-                                source_type="draft")
+                            import threading as _th
+                            _w_email = _u.get("email", "")
+                            _w_title = st.session_state.get("ws_title", "") or "논문 초안"
+                            def _bg_wiki(_t=_wtext, _ti=_w_title, _e=_w_email):
+                                try:
+                                    from src.knowledge.research_wiki import ResearchWiki
+                                    ResearchWiki(owner_email=_e).add_source(_t, title=_ti, source_type="draft")
+                                except Exception:
+                                    pass
+                            _th.Thread(target=_bg_wiki, daemon=True).start()
                     except Exception:
                         pass
-                    st.success("저장됨 (다음 접속에도 유지 · 지식 위키에 누적)")
+                    st.success("저장됨 (다음 접속에도 유지 · 지식 위키에 백그라운드 누적)")
             with wsd2:
                 st.download_button("⬇ 논문 TXT", _ws_preview() or " ", file_name="paper_draft.txt",
                                    use_container_width=True, key="ws_dl_txt")
