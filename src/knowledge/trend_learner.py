@@ -307,15 +307,14 @@ def _ingest_to_rag(papers: List[Dict]) -> int:
         return 0
     try:
         from src.vectordb.store import get_vector_store
-        from src.ingestion.chunker import TextChunker
+        from src.ingestion.hierarchical_chunker import chunk_paper
         store = get_vector_store()
-        chunker = TextChunker(chunk_size=400, overlap=50)
         total_chunks = 0
         count = 0
         for p in papers:
             title = p.get("title", "")
             abstract = p.get("abstract", "")
-            text = f"Title: {title}\n\nAbstract: {abstract}" if abstract else f"Title: {title}"
+            text = abstract if abstract else title
             if len(text.strip()) < 30:
                 continue
             meta = {
@@ -325,10 +324,12 @@ def _ingest_to_rag(papers: List[Dict]) -> int:
                 "year": str(p.get("year", "")),
                 "journal": p.get("journal", ""),
                 "topic": "periodic_learn",
+                "tier": "auto",  # 자동수집 = 미검증 표식 (메모리 위생)
                 "datasets": ",".join(p.get("datasets", [])),
                 "concepts": ",".join(c["concept_id"] for c in p.get("concepts", [])),
             }
-            chunks = chunker.chunk(text, metadata=meta)
+            # 계층 청킹: 구조화 초록을 섹션/role/citation/stat 메타로 분해 (조언 #1 RAG 재설계)
+            chunks = chunk_paper(text, base_meta=meta)
             added = store.add_chunks(chunks)
             total_chunks += added
             count += 1
