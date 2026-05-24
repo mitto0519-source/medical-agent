@@ -159,8 +159,20 @@ class PersonaManager:
         confidence: float = 0.75,
         evidence_basis: Optional[List[str]] = None,
     ) -> None:
-        """새 연구 관점을 페르소나에 추가하거나 기존 관점의 신뢰도를 높임."""
+        """새 연구 관점을 페르소나에 추가하거나 기존 관점의 신뢰도를 높임.
+        memory_gate로 오염 차단 — 너무 짧음/중복/환각마커 관점은 누적하지 않음(self-pollution 방지)."""
         perspectives = self._data.setdefault("accumulated_perspectives", [])
+
+        # 메모리 위생 게이트: 환각/너무짧음 관점은 페르소나에 누적 금지
+        try:
+            from src.memory.memory_gate import assess as _assess
+            _g = _assess(perspective, source="auto_learn",
+                         existing=[p.get("perspective", "") for p in perspectives])
+            if not _g["ok"]:
+                _log.warning("[persona] 게이트 거부(%s) — 관점 미누적: %s", _g["reason"], topic)
+                return
+        except Exception:
+            pass
 
         # 동일 주제 존재 확인
         for p in perspectives:
