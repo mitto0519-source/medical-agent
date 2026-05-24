@@ -707,6 +707,48 @@ with main_col:
             if st.button("✍️ 논문 작업실 열기", type="primary", use_container_width=True):
                 _nav("논문 작업실")
 
+        # ── chat-first 단일 진입 (조언 UX: 첫 화면 = "무슨 연구를 하고 싶나요?") ──
+        st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div style='font-size:23px;font-weight:800;color:#E5E7EB;text-align:center;margin:16px 0 4px;'>"
+            "무슨 연구를 하고 싶으세요?</div>"
+            "<div style='text-align:center;color:#64748B;font-size:13px;margin-bottom:12px;'>"
+            "주제를 한 줄로 적으면 작업실에서 AI가 연구질문·변수·분석법을 제안하고 같이 써내려갑니다.</div>",
+            unsafe_allow_html=True)
+        _hq1, _hq2 = st.columns([5, 1])
+        with _hq1:
+            _home_q = st.text_input("연구 주제", key="home_research_q", label_visibility="collapsed",
+                                    placeholder="예: 청소년 제로칼로리 음료 섭취와 우울 증상의 연관성")
+        with _hq2:
+            _home_go = st.button("→ 시작", type="primary", use_container_width=True, key="home_go")
+
+        def _start_research(_q: str):
+            _q = (_q or "").strip()
+            if not _q:
+                return
+            st.session_state["ws_title"] = _q
+            st.session_state["ws_chat"] = [{
+                "role": "assistant",
+                "content": f"**\"{_q}\"** 연구를 시작합니다.\n\n무엇부터 도와드릴까요? — "
+                           "*\"서론 써줘\"*, *\"방법 KYRBS 복합표본으로\"*, *\"신규성 확인\"*, "
+                           "*\"이 주제 연구질문·변수·분석법 제안해줘\"* 처럼 말하면 오른쪽 논문에 반영됩니다.",
+            }]
+            _nav("논문 작업실")
+
+        if _home_go:
+            _start_research(_home_q)
+        # 빠른 예시 (클릭 시 바로 시작)
+        _ex1, _ex2, _ex3 = st.columns(3)
+        for _col, _ex in zip([_ex1, _ex2, _ex3], [
+            "청소년 스마트폰 과사용과 수면부족",
+            "제로칼로리 음료와 청소년 우울",
+            "아침결식과 학업스트레스·우울",
+        ]):
+            with _col:
+                if st.button(f"💡 {_ex}", use_container_width=True, key=f"home_ex_{_ex[:6]}"):
+                    _start_research(_ex)
+        st.divider()
+
         # ── 현재 연구 진행 대시보드 (플로우 중심) ───────────────────────────
         st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
         _done_flags = []
