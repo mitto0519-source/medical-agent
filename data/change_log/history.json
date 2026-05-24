@@ -1,5 +1,30 @@
 [
   {
+    "id": "20260524_073218_959895",
+    "timestamp": "2026-05-24 07:32:18",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "peer_review",
+    "title": "동료심사: Association Between Weekday Smartphone Overuse and Objective",
+    "description": "논문 품질 평가: 53/100 (D) — major_revision",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": "Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study"
+    },
+    "outputs": {
+      "score": 53,
+      "grade": "D",
+      "rec": "major_revision"
+    },
+    "impact": {
+      "affected_modules": [
+        "peer_reviewer",
+        "research_pipeline"
+      ]
+    }
+  },
+  {
     "id": "20260524_073100_102175",
     "timestamp": "2026-05-24 07:31:00",
     "user_email": "mitto0519@gmail.com",
