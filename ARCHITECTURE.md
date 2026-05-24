@@ -104,6 +104,8 @@
 | **State Registry (논문 JSON AST)** | `src/research/research_state.py` → `ResearchState` | ✅ active | 논문 단일 진실원본: 섹션별 content+status(empty/draft/verified/locked) + study + stat + citations. 잠긴 섹션은 자동생성이 덮어쓰기 금지(drift 차단). 작업실 🔒 토글, 저장 시 meta._status 영속 |
 | **데이터 단일 해결** | `app/streamlit_app.py` → `_ensure_raw_df()`, `_raw_data_available()` | ✅ active | 전 페이지 공유: 세션→data/raw 자동로드(_find_real_data). 업로드 강요 제거 |
 | **대화 영속 메모리(MemPalace식)** | `src/memory/conversation_memory.py` → `record()`, `recall_relevant()` | ✅ active | verbatim 저장 + ChromaDB 의미검색 회수(계정격리). 요약/최근만이 아니라 '관련 과거'를 회수 |
+| **메모리 위생 게이트** | `src/memory/memory_gate.py` → `assess()` | ✅ active | self-pollution 차단: 너무짧음/중복/환각마커=quarantine(저장거부), tier(verified/auto) 부여. agent_insight·persona가 commit 전 호출. LLM무관 |
+| **계층 RAG 청킹** | `src/ingestion/hierarchical_chunker.py` → `chunk_paper()` | ✅ active | 섹션 인식 청킹 + 메타(section/rhetorical_role/citation_density/statistical_method/evidence_level). trend_learner 인제스트가 사용. 일반 token chunk 대체 |
 | **누적 지식 위키(OpenKB식)** | `src/knowledge/research_wiki.py` → `ResearchWiki` | ✅ active | 개념 페이지 누적(생성/추가)+[[링크]]+lint. add_source/build_context/query. 작업실 글쓰기에 주입+저장시 백그라운드 흡수. data/wiki/{owner}/ |
 | 컨테이너화 | `Dockerfile`, `docker-compose.yml`, `.dockerignore` | ✅ active | code-in-image + data/ 볼륨. OneDrive 환경함정 근본차단. `docker compose up -d --build` |
 
