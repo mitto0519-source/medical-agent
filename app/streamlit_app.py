@@ -552,6 +552,7 @@ with st.sidebar:
             st.markdown('<div class="nav-section">시스템</div>', unsafe_allow_html=True)
             _nb("🧬  자가 진단", "자가 진단")
             _nb("📚  지식베이스 관리", "지식베이스 관리")
+            _nb("🧠  지식 위키 (누적)", "지식 위키")
     st.markdown('</div>', unsafe_allow_html=True)
 
     # ── LLM Provider 설정 ──────────────────────────────────────────
@@ -3519,6 +3520,53 @@ with main_col:
                         </div>""", unsafe_allow_html=True)
 
         _show_history("자가 진단")
+
+    # ── 지식 위키 (OpenKB식 누적) ──────────────────────────────────────
+    elif page == "지식 위키":
+        st.markdown("<h2 style='color:#e6edf3;'>🧠 지식 위키 (누적)</h2>", unsafe_allow_html=True)
+        st.info("논문을 쓰고 자료를 흡수할수록 연구 개념이 **누적**됩니다(OpenKB/Karpathy식). "
+                "축적된 지식은 작업실 글쓰기에 자동 주입돼 '쓸수록 더 잘 쓰는' 흐름을 만듭니다.")
+        from src.knowledge.research_wiki import ResearchWiki
+        _rw = ResearchWiki(owner_email=_u.get("email", ""))
+        _wt1, _wt2, _wt3 = st.tabs(["📑 개념 목록", "➕ 자료 흡수", "🩺 건강검사(lint)"])
+        with _wt1:
+            _pages = _rw.list_pages()
+            if not _pages:
+                st.caption("아직 누적된 개념이 없습니다. 작업실에서 논문을 저장하거나 '자료 흡수'로 추가하세요.")
+            else:
+                st.caption(f"누적 개념 {len(_pages)}개")
+                _sel = st.selectbox("개념 선택", [p["slug"] for p in _pages],
+                                    format_func=lambda s: next((p["title"] for p in _pages if p["slug"] == s), s),
+                                    key="wiki_sel")
+                if _sel:
+                    st.markdown(_rw.get_page(_sel))
+        with _wt2:
+            _src = st.text_area("자료 텍스트 (논문 단락/노트/초록 등)", height=180, key="wiki_src")
+            _stitle = st.text_input("제목", key="wiki_src_title")
+            if st.button("➕ 위키에 흡수", type="primary", key="wiki_add_btn"):
+                if not _src.strip():
+                    st.warning("자료 텍스트를 입력하세요.")
+                elif not st.session_state.get("_llm_ready"):
+                    st.warning("개념 추출에 LLM 키가 필요합니다.")
+                else:
+                    with st.spinner("개념 추출 → 누적 중..."):
+                        _r = _rw.add_source(_src, title=_stitle or _src[:40])
+                    if _r.get("error"):
+                        st.error(_r["error"])
+                    else:
+                        st.success(f"흡수 완료 — 개념 {len(_r.get('concepts_updated', []))}개 갱신")
+                        st.rerun()
+        with _wt3:
+            _lint = _rw.lint()
+            c1, c2 = st.columns(2)
+            c1.metric("누적 개념", _lint["n_concepts"])
+            c2.metric("요약 페이지", _lint["n_summaries"])
+            if _lint["orphans"]:
+                st.warning(f"고립 개념(피링크 0): {', '.join(_lint['orphans'][:10])}")
+            if _lint["stale"]:
+                st.info(f"오래된 개념(60일+): {', '.join(_lint['stale'][:10])}")
+            if not _lint["orphans"] and not _lint["stale"]:
+                st.success("건강 양호 — 고립/노화 개념 없음")
 
     else:
         st.info(f"페이지를 찾을 수 없습니다: {page}")
