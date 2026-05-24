@@ -967,10 +967,18 @@ with main_col:
             _study = _ws_study_info()
             _filled = {k: bool((st.session_state.get(f"ws_{k}") or "").strip()) for k in _keys}
             llm = get_llm_client(task="paper_writing")
-            # 최근 대화 맥락 — 직전 턴들을 모든 프롬프트에 주입 (컨텍스트 유지)
+            # 최근 대화 맥락 — 직전 턴들을 모든 프롬프트에 주입 (단기 컨텍스트)
             _recent = [m for m in st.session_state.get("ws_chat", [])[-7:-1]
                        if m.get("role") in ("user", "assistant")]
             _hist = "\n".join(f"{m['role']}: {str(m['content'])[:280]}" for m in _recent)
+            # MemPalace식 의미 메모리 — 지금 질문과 관련된 '과거' 대화를 회수 (장기 컨텍스트)
+            try:
+                from src.memory.conversation_memory import recall_relevant as _recall
+                _relevant = _recall(user_msg, n=3, owner_email=_u.get("email", ""))
+            except Exception:
+                _relevant = ""
+            if _relevant:
+                _hist = (_relevant + "\n" + _hist) if _hist else _relevant
 
             # 1) 의도 분류 — 어떤 기존 기능을 부를지
             _cls = (
@@ -1227,7 +1235,16 @@ with main_col:
                             _res = _ws_agent(_p)
                         if _res.get("section") and _res.get("content"):
                             st.session_state[f"ws_{_res['section']}"] = _res["content"]
-                        st.session_state["ws_chat"].append({"role": "assistant", "content": _res.get("reply", "반영했습니다.")})
+                        _reply = _res.get("reply", "반영했습니다.")
+                        st.session_state["ws_chat"].append({"role": "assistant", "content": _reply})
+                        # MemPalace식 의미 메모리에 이번 교환 저장 (다음에 의미검색으로 회수)
+                        try:
+                            from src.memory import conversation_memory as _cm
+                            _cm.record(_p, _res.get("content") or _reply,
+                                       topic=st.session_state.get("ws_title", "")[:50],
+                                       context_type="paper_write", owner_email=_u.get("email", ""))
+                        except Exception:
+                            pass
                     except Exception as _e:
                         st.session_state["ws_chat"].append({"role": "assistant", "content": f"오류: {str(_e)[:200]}"})
                     st.rerun()
