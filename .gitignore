@@ -34,9 +34,23 @@ data/notebooklm_notebooks.json
 data/auto_learn_config.json
 data/notebooklm_auth.json
 
-# 라이브러리와 프로필은 동기화 (JSON만)
+# 라이브러리와 프로필은 동기화 (JSON만 — 지식 자산이라 git 유지)
 # data/libraries/ → 동기화 O
 # data/author_profiles/ → 동기화 O
+
+# ── 런타임 상태/테스트 산출물 (코드 아님 — 로컬 data 볼륨에 영속, git 노이즈 제외) ──
+data/chromadb_test/
+data/diagnostics/
+data/agent_self/
+data/change_log/
+data/working_papers/
+data/wiki/
+data/logs/
+# 검증/스크립트 출력 (스크린샷·리포트 — 재생성됨)
+scripts/ui_eval_outputs/
+scripts/ui_smoke_outputs/
+scripts/e2e_outputs/
+scripts/screenshots/
 
 # IDE
 .vscode/settings.json
