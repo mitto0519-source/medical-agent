@@ -1087,6 +1087,13 @@ with main_col:
                 )
                 return {"section": None, "content": "", "reply": (_reply or "").strip()[:1000]}
             except Exception as _e:
+                _es = str(_e).lower()
+                if any(k in _es for k in ("429", "quota", "exceeded", "provider 실패", "rate", "resourceexhausted")):
+                    return {"section": None, "content": "",
+                            "reply": "⏳ **오늘 무료 LLM 쿼터가 소진됐습니다.**\n\n"
+                                     "무료 Gemini는 모델당 하루 20요청(순환 포함 ~80/일)이 한도입니다. "
+                                     "내일 리셋되거나, 사이드바에 **유료 API 키**(Gemini 유료는 매우 저렴)를 넣으면 "
+                                     "바로 무제한에 가깝게 쓸 수 있습니다.\n\n_원문 오류: " + str(_e)[:120] + "_"}
                 return {"section": None, "content": "", "reply": f"기능 실행 중 오류: {str(_e)[:200]}"}
 
         def _ws_stata(stata_code: str) -> dict:
