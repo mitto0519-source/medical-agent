@@ -1,5 +1,71 @@
 [
   {
+    "id": "20260524_064440_591349",
+    "timestamp": "2026-05-24 06:44:40",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "f78db2470f09",
+    "action_type": "general",
+    "title": "[논문 설계 & 타당성] validate_feasibility",
+    "description": "타당성: 가능",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "topic": {
+        "title": "Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+        "outcome": "sleep_weekday (주중 평균 수면 시간 < 8시간 수면 부족)",
+        "exposure": "smartphone_weekday (주중 스마트폰 사용 시간, 4시간 이상 과사용 vs. 적정)",
+        "rationale": "스마트폰 과사용과 수면 부족은 청소년 건강의 핵심 공중보건 과제이나, 국내 대규모 대표 표본에서 주중 스마트폰 사용 시간과 실제 수면 시간(파생변수) 간의 용량-반응 관계를 복합표본 설계를 적용하여 정밀 추정한 연구는 드물다. KYRBS 2025는 smartphone_weekday, sleep_weekday, sleep_sufficient, stress, depression 등 핵심 변수를 동시에 포함하며, 성별·학교급별 층화 분석이 가능하다.",
+        "population": "전국 중·고등학생 (KYRBS 2025, 약 6만 명)",
+        "suggested_design": "cross-sectional (복합표본 반복 횡단)",
+        "suggested_methods": [
+          "complex_survey_logistic_regression (svyglm, binomial)",
+          "dose_response_trend_analysis (for_trend, ordinal_smartphone_categories)",
+          "sex_stratified_analysis",
+          "school_type_stratified_analysis (중학교 vs. 고등학교)",
+          "mediation_analysis (stress/depression as mediator)",
+          "multivariate_adjustment (sex, grade, region, family_econ, academic_perf, pa_60min, sit_weekday)"
+        ]
+      }
+    },
+    "outputs": {
+      "summary": "타당성: 가능",
+      "is_feasible": true,
+      "confidence": "high",
+      "available_variables": [
+        "smartphone_weekday",
+        "sleep_weekday",
+        "sex",
+        "grade",
+        "school_type",
+        "region",
+        "family_econ",
+        "academic_perf",
+        "stress",
+        "depression",
+        "pa_60min",
+        "sit_weekday",
+        "wt",
+        "strata_id",
+        "cluster_id"
+      ],
+      "missing_variables": [],
+      "sample_size_concern": false,
+      "confounding_concern": "The proposed analysis plan includes adjustment for common confounders such as sex, grade, school_type, region, family_econ, academic_perf, stress, depression, pa_60min, and sit_weekday. Further consideration should be given to potential unmeasured confounding, particularly related to individual differences in sleep regulation mechanisms not captured by self-reported smartphone use.",
+      "verdict": "The research topic is feasible with the available KYRBS dataset, possessing all necessary variables and adequate sample size for the proposed cross-sectional analysis.",
+      "modifications_needed": [
+        "Define 'weekday smartphone overuse' precisely using the 'smartphone_weekday' variable (e.g., >= 4 hours).",
+        "Define 'short sleep duration' using the 'sleep_weekday' variable (e.g., < 8 hours).",
+        "Ensure appropriate application of complex survey analysis (`svydesign`, `svyglm`) due to the stratified cluster sampling design.",
+        "Conduct dose-response analysis using the categorical nature of 'smartphone_weekday' and assess trends.",
+        "Perform stratified analyses by 'sex' and 'school_type' as planned.",
+        "Implement mediation analysis for 'stress' and 'depression' as mediators, carefully considering the assumptions of mediation analysis in a cross-sectional design.",
+        "Report measurement bias for self-reported sleep and smartphone use.",
+        "Given the sensitive nature of depression and stress, confirm IRB approval and data handling protocols."
+      ]
+    },
+    "impact": {}
+  },
+  {
     "id": "20260524_151106_363981",
     "timestamp": "2026-05-24 15:11:06",
     "user_email": "",

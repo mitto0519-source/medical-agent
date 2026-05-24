@@ -27,3 +27,20 @@ services:
       - ./app:/app/app
       - ./src:/app/src
     restart: unless-stopped
+
+  # 자동학습 스케줄러 — 앱 접속과 무관하게 상주하며 매일 최신논문 학습 + 캐치업.
+  # PC가 꺼져 배치를 놓쳐도 PC 켜서 컨테이너가 뜨면 시작 즉시 '24h 경과?' 체크 후 실행.
+  learner:
+    image: medical-agent:latest
+    build: .
+    container_name: medical-agent-learner
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data             # 메인 앱과 동일 data 공유 (그래프·RAG·trend_state)
+      - ./src:/app/src
+      - ./scripts:/app/scripts       # learn_scheduler.py 등 스크립트
+    command: ["python", "scripts/learn_scheduler.py"]
+    restart: unless-stopped           # PC/Docker 재시작 시 자동 복귀 → 시작 즉시 캐치업
+    depends_on:
+      - medical-agent
