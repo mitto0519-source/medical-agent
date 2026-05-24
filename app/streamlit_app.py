@@ -331,9 +331,16 @@ if "_bg_init_done" not in st.session_state:
                     if delta < 86400:  # 24h 이내면 skip
                         return
             from src.knowledge.trend_learner import run_trend_learn
-            run_trend_learn(days=60, max_per_query=20)
-        except Exception:
-            pass
+            from src.config.logging_config import get_logger as _gl
+            _gl(__name__).info("[자동학습] 백그라운드 최신논문 학습 시작")
+            _res = run_trend_learn(days=60, max_per_query=20)
+            _gl(__name__).info("[자동학습] 완료: %s", _res)
+        except Exception as _bge:
+            try:
+                from src.config.logging_config import get_logger as _gl
+                _gl(__name__).warning("[자동학습] 실패(침묵 금지): %s", _bge)
+            except Exception:
+                pass
 
     _threading.Thread(target=_bg_session_init, daemon=True).start()
 
@@ -3541,7 +3548,7 @@ with main_col:
                 "축적된 지식은 작업실 글쓰기에 자동 주입돼 '쓸수록 더 잘 쓰는' 흐름을 만듭니다.")
         from src.knowledge.research_wiki import ResearchWiki
         _rw = ResearchWiki(owner_email=_u.get("email", ""))
-        _wt1, _wt2, _wt3 = st.tabs(["📑 개념 목록", "➕ 자료 흡수", "🩺 건강검사(lint)"])
+        _wt1, _wt2, _wt3, _wt4 = st.tabs(["📑 개념 목록", "➕ 자료 흡수", "🩺 건강검사(lint)", "🔬 최신논문 자동학습"])
         with _wt1:
             _pages = _rw.list_pages()
             if not _pages:
@@ -3580,6 +3587,42 @@ with main_col:
                 st.info(f"오래된 개념(60일+): {', '.join(_lint['stale'][:10])}")
             if not _lint["orphans"] and not _lint["stale"]:
                 st.success("건강 양호 — 고립/노화 개념 없음")
+
+        with _wt4:
+            st.caption("PubMed 최신논문(60일)을 KYRBS/KNHANES 온톨로지로 크롤링 → RAG·그래프·인사이트로 "
+                       "자동 학습합니다(LLM-무관, 쿼터와 무관). 백그라운드로 하루 1회 + 아래 버튼으로 즉시 실행.")
+            try:
+                from src.knowledge.trend_learner import get_last_run_info, run_trend_learn
+                _info = get_last_run_info()
+            except Exception as _e:
+                _info = {"last_run": "오류", "run_count": 0, "ingested_count": 0}
+                st.error(f"자동학습 모듈 로드 실패: {_e}")
+            a1, a2, a3 = st.columns(3)
+            a1.metric("누적 학습 논문", f"{_info['ingested_count']:,}")
+            a2.metric("실행 횟수", _info["run_count"])
+            a3.metric("마지막 실행", str(_info["last_run"])[:16])
+            # 최근 자동학습 인사이트
+            try:
+                import json as _j
+                from pathlib import Path as _PathL
+                _ins = _j.loads(_PathL("data/agent_self/insights.json").read_text(encoding="utf-8")) if _PathL("data/agent_self/insights.json").exists() else []
+                _ins = _ins if isinstance(_ins, list) else _ins.get("insights", [])
+                _auto = [i for i in _ins if "auto_learn" in str(i.get("tags", []))][-3:]
+                if _auto:
+                    st.markdown("**최근 자동학습 인사이트:**")
+                    for _i in reversed(_auto):
+                        st.markdown(f"- {str(_i.get('insight',''))[:200]}")
+            except Exception:
+                pass
+            if st.button("🔄 지금 최신논문 학습 (1~2분)", type="primary", key="trend_now"):
+                with st.spinner("PubMed 크롤링 → RAG·그래프·인사이트 학습 중..."):
+                    try:
+                        _r = run_trend_learn(days=30, max_per_query=10)
+                        st.success(f"학습 완료 — 신규 {_r.get('new_papers', _r.get('added', '?'))}편 흡수. "
+                                   f"누적 {get_last_run_info()['ingested_count']:,}편")
+                        st.rerun()
+                    except Exception as _e:
+                        st.error(f"학습 실패: {str(_e)[:200]}")
 
     else:
         st.info(f"페이지를 찾을 수 없습니다: {page}")
