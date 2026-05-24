@@ -348,6 +348,37 @@ def _nav(p):
     st.session_state["nav"] = p
     st.rerun()
 
+
+def _raw_data_available() -> bool:
+    """data/raw에 자산화된 원시자료(.sav/.csv)가 있는지 (가벼운 체크, 로딩 안 함)."""
+    from pathlib import Path as _P
+    d = _P("data/raw")
+    if not d.exists():
+        return False
+    for ext in ("*.sav", "*.csv", "*.xlsx"):
+        if any(d.glob(ext)):
+            return True
+    return False
+
+
+def _ensure_raw_df(dataset: str = "KYRBS"):
+    """데이터프레임 단일 해결 경로 (전 페이지 공유) — 업로드 강요 금지.
+    세션 raw_df/analysis_df 우선 → 없으면 자산화된 data/raw에서 자동 로드(_find_real_data).
+    반환: DataFrame 또는 None(data/raw에도 없을 때만)."""
+    df = st.session_state.get("analysis_df")
+    if df is None:
+        df = st.session_state.get("raw_df")
+    if df is None:
+        try:
+            from src.research.research_pipeline import _find_real_data
+            df = _find_real_data(dataset)
+            if df is not None:
+                st.session_state["raw_df"] = df
+                st.session_state["raw_dataset"] = dataset
+        except Exception:
+            df = None
+    return df
+
 def _log(action, inp, summary, out=None, action_type: str = "general", why_better: str = ""):
     user_email = st.session_state.get("user", {}).get("email", "anonymous")
     page = st.session_state["nav"]
@@ -445,7 +476,7 @@ def _next_step_btn(label: str, target: str, key: str):
 # (단계번호, 표시라벨, 페이지키, 완료판정 함수)
 # ══════════════════════════════════════════════════════════════════════
 RESEARCH_FLOW = [
-    ("1", "원시자료 업로드", "원시자료 업로드", lambda s: s.get("raw_df") is not None),
+    ("1", "원시자료 업로드", "원시자료 업로드", lambda s: s.get("raw_df") is not None or _raw_data_available()),
     ("2", "연구 주제 생성", "연구 주제 생성", lambda s: bool(s.get("topics") or s.get("selected_topic"))),
     ("3", "신규성 확인", "신규성 확인", lambda s: "novelty_result" in s),
     ("4", "타당성 검증", "논문 설계 & 타당성", lambda s: "feasibility_result" in s),
@@ -1507,12 +1538,13 @@ with main_col:
         st.divider()
         st.markdown("### 원스톱 자동 파이프라인")
 
-        raw_df_available = st.session_state.get("raw_df")
+        # 자산화된 data/raw에서 자동 로드 (업로드 강요 금지 — 데이터 이미 있음)
+        raw_df_available = _ensure_raw_df(st.session_state.get("auto_dataset", "KYRBS"))
         if raw_df_available is not None:
             ds_loaded = st.session_state.get("raw_dataset", "원시자료")
-            st.success(f"실제 원시자료 준비됨: {ds_loaded} ({len(raw_df_available):,}명)")
+            st.success(f"실제 원시자료 준비됨: {ds_loaded} ({len(raw_df_available):,}명) — data/raw 자동로드")
         else:
-            st.warning("실제 원시자료가 없습니다. **'📂 원시자료 업로드'** 페이지에서 먼저 업로드하세요.")
+            st.warning("data/raw에 원시자료가 없습니다 (scripts/download_kyrbs.py로 다운로드).")
 
         auto_col1, auto_col2 = st.columns(2)
         with auto_col1:
