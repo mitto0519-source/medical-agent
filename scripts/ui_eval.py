@@ -42,7 +42,12 @@ def wait_idle(page: Page, ms: int = 2200):
 
 def nav(page: Page, label: str) -> bool:
     try:
-        page.get_by_role("button", name=re.compile(re.escape(label))).first.click(timeout=6000)
+        btn = page.get_by_role("button", name=re.compile(re.escape(label))).first
+        try:
+            btn.scroll_into_view_if_needed(timeout=3000)
+        except Exception:
+            pass
+        btn.click(timeout=6000)
         wait_idle(page)
         return True
     except Exception:
