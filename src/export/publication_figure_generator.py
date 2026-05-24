@@ -27,10 +27,18 @@ _log = get_logger(__name__)
 
 
 def _setup_korean_font():
+    """한글 폰트 등록 (크로스플랫폼). Docker(리눅스)엔 NanumGothic 필요 — 없으면 한글이 □□□로 깨짐."""
     try:
         from pathlib import Path as _Path
         import matplotlib.font_manager as fm
-        for p in ["C:/Windows/Fonts/malgun.ttf", "C:/Windows/Fonts/gulim.ttc"]:
+        for p in [
+            "C:/Windows/Fonts/malgun.ttf", "C:/Windows/Fonts/gulim.ttc",     # Windows
+            "/usr/share/fonts/truetype/nanum/NanumGothic.ttf",               # Linux (fonts-nanum)
+            "/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf",
+            "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",        # Linux (noto-cjk)
+            "/usr/share/fonts/opentype/noto/NotoSansCJKkr-Regular.otf",
+            "/System/Library/Fonts/AppleSDGothicNeo.ttc",                    # macOS
+        ]:
             if _Path(p).exists():
                 fm.fontManager.addfont(p)
                 import matplotlib.pyplot as plt
@@ -38,6 +46,7 @@ def _setup_korean_font():
                 plt.rcParams["font.family"] = prop.get_name()
                 plt.rcParams["axes.unicode_minus"] = False
                 return
+        _log.warning("한글 폰트 미발견 — 그래프 한글이 깨질 수 있음 (Docker: apt fonts-nanum)")
     except Exception:
         pass
 

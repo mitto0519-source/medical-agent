@@ -2325,45 +2325,39 @@ with main_col:
 
         with tab_statbridge:
             st.markdown("**StatBridge** — KYRBS/KNHANES 데이터를 로지스틱 회귀로 분석해 논문에 바로 주입할 수 있는 OR/CI를 생성합니다.")
+            sb_dataset = st.selectbox("데이터셋", ["KYRBS", "KNHANES"], key="sb_dataset")
+            # 데이터 먼저 자동로드 → 변수 옵션을 '실제 데이터 컬럼'에서 생성 (의미있는 설정값)
+            sb_df = _ensure_raw_df(sb_dataset)
+            if sb_df is not None:
+                st.info(f"데이터 준비됨: {sb_df.shape[0]:,}행 × {sb_df.shape[1]}열 (data/raw 자동로드)")
+                _all_cols = sorted([c for c in sb_df.columns if c not in ("weight_var", "strata", "cluster")])
+            else:
+                st.warning("data/raw에 원시자료가 없습니다 (scripts/download_kyrbs.py).")
+                _all_cols = ["sex", "sleep_hours", "screen_time", "smoking", "depression", "grade", "family_econ"]
+            _outcome_label_map = {
+                "depression": "우울감 경험", "suicidal": "자살 생각", "obesity": "비만",
+                "smoking": "흡연", "alcohol": "음주", "sleep_hours": "수면 시간",
+                "zcb_freq": "제로음료 섭취", "stress": "스트레스",
+            }
             sb_col1, sb_col2 = st.columns([1, 1])
             with sb_col1:
-                sb_dataset = st.selectbox("데이터셋", ["KYRBS", "KNHANES"], key="sb_dataset")
-                sb_n = st.slider("합성 데이터 크기 (실제 데이터 미업로드 시)", 1000, 10000, 5000, step=500)
-                sb_outcome = st.selectbox("결과변수 (Outcome)", [
-                    "depression", "suicidal", "obesity", "smoking", "alcohol", "sleep_hours",
-                    "diabetes", "hypertension", "metabolic_syn",
-                ], key="sb_outcome")
-                sb_outcome_label = st.text_input("결과변수 한글명", value={
-                    "depression": "우울감 경험", "suicidal": "자살 생각", "obesity": "비만",
-                    "smoking": "흡연", "alcohol": "음주", "sleep_hours": "수면 시간",
-                    "diabetes": "당뇨", "hypertension": "고혈압", "metabolic_syn": "대사 증후군",
-                }.get(sb_outcome, sb_outcome))
+                _out_default = _all_cols.index("depression") if "depression" in _all_cols else 0
+                sb_outcome = st.selectbox("결과변수 (Outcome)", _all_cols, index=_out_default, key="sb_outcome")
+                sb_outcome_label = st.text_input("결과변수 한글명",
+                                                 value=_outcome_label_map.get(sb_outcome, sb_outcome))
             with sb_col2:
-                if sb_dataset == "KYRBS":
-                    all_preds = ["sex", "sleep_hours", "screen_time", "smoking", "alcohol", "stress", "physical_act", "bmi"]
-                    all_covs = ["grade", "family_econ", "academic_perf"]
-                else:
-                    all_preds = ["sex", "age", "bmi", "smoking", "physical_act", "alcohol"]
-                    all_covs = ["edu", "income"]
-                sb_preds = st.multiselect("예측변수 (Predictors)", all_preds, default=all_preds[:4], key="sb_preds")
-                sb_covs = st.multiselect("교란변수 (Covariates)", all_covs, default=all_covs[:2], key="sb_covs")
-                sb_subgroup = st.multiselect("층화 분석 변수", ["sex", "grade"] if sb_dataset == "KYRBS" else ["sex", "age"], key="sb_subgroup")
-
-            sb_df = st.session_state.get("analysis_df")
-            if sb_df is None:
-                sb_df = st.session_state.get("raw_df")
-            # 세션 데이터 없으면 자산화된 data/raw에서 자동 로드 (업로드 불필요 — 데이터 이미 있음)
-            if sb_df is None:
-                try:
-                    from src.research.research_pipeline import _find_real_data
-                    sb_df = _find_real_data(sb_dataset)
-                    if sb_df is not None:
-                        st.session_state["raw_df"] = sb_df
-                except Exception as _e:
-                    st.caption(f"(data/raw 자동로드 시도 실패: {str(_e)[:80]})")
-            if sb_df is not None:
-                st.info(f"데이터 준비됨: {sb_df.shape[0]:,}행 × {sb_df.shape[1]}열 "
-                        f"(data/raw 자동로드 — 업로드 불필요)")
+                # 예측/교란 후보 = 실제 데이터 컬럼 (결과변수 제외) — 전부 선택 가능
+                _opts = [c for c in _all_cols if c != sb_outcome]
+                _pref = [c for c in ["zcb_freq", "sex", "sleep_hours", "screen_time", "smoking"] if c in _opts]
+                sb_preds = st.multiselect("예측변수 (Predictors)", _opts,
+                                          default=_pref[:4] or _opts[:4], key="sb_preds")
+                _covopts = [c for c in _opts if c not in sb_preds]
+                _cpref = [c for c in ["grade", "family_econ", "bmi", "academic_perf"] if c in _covopts]
+                sb_covs = st.multiselect("교란변수 (Covariates)", _covopts,
+                                         default=_cpref[:3], key="sb_covs")
+                sb_subgroup = st.multiselect("층화 분석 변수", [c for c in ["sex", "grade", "age"] if c in _all_cols],
+                                             key="sb_subgroup")
+            sb_n = 0  # 합성데이터 미사용 (실데이터 자동로드)
 
             if st.button("🔬 StatBridge 분석 실행", type="primary", key="sb_run"):
                 if not sb_preds:

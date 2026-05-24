@@ -21,6 +21,10 @@ def _setup_korean_font():
             "C:/Windows/Fonts/malgun.ttf",
             "C:/Windows/Fonts/malgunbd.ttf",
             "C:/Windows/Fonts/gulim.ttc",
+            "/usr/share/fonts/truetype/nanum/NanumGothic.ttf",          # Linux/Docker
+            "/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf",
+            "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+            "/System/Library/Fonts/AppleSDGothicNeo.ttc",               # macOS
         ]
         for path in _candidates:
             if Path(path).exists():
