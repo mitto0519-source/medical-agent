@@ -1,5 +1,20 @@
 [
   {
+    "id": "20260524_073059_787938",
+    "timestamp": "2026-05-24 07:30:59",
+    "user_email": "mitto0519@gmail.com",
+    "page": "논문 작성",
+    "action": "write_paper",
+    "input": {
+      "title": "Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+      "section": "전체 논문"
+    },
+    "output_summary": "전체 논문 작성 완료: Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+    "output": {
+      "draft_len": 28145
+    }
+  },
+  {
     "id": "20260524_064440_257342",
     "timestamp": "2026-05-24 06:44:40",
     "user_email": "mitto0519@gmail.com",

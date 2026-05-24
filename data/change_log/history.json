@@ -1,5 +1,62 @@
 [
   {
+    "id": "20260524_073100_102175",
+    "timestamp": "2026-05-24 07:31:00",
+    "user_email": "mitto0519@gmail.com",
+    "session_id": "ef7648b28c29",
+    "action_type": "general",
+    "title": "[논문 작성] write_paper",
+    "description": "전체 논문 작성 완료: Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+    "what_changed": {},
+    "why_better": "",
+    "inputs": {
+      "title": "Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+      "section": "전체 논문"
+    },
+    "outputs": {
+      "summary": "전체 논문 작성 완료: Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+      "draft_len": 28145
+    },
+    "impact": {}
+  },
+  {
+    "id": "20260524_073059_442083",
+    "timestamp": "2026-05-24 07:30:59",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "paper_write",
+    "title": "논문 작성: Association Between Weekday Smartphone Overuse and Objectively Defined Short Sle",
+    "description": "조유선 스타일 논문 초안 생성 완료. 파일: data/drafts/Association Between Weekday Smartphone Overuse and Objective.txt",
+    "what_changed": {},
+    "why_better": "RAG 참조 컨텍스트 + 저자 프로파일 적용으로 일관된 스타일 유지",
+    "inputs": {
+      "topic_title": "Association Between Weekday Smartphone Overuse and Objectively Defined Short Sleep Duration Among Korean Adolescents: A Nationally Representative Cross-Sectional Study",
+      "exposure": "smartphone_weekday (주중 스마트폰 사용 시간, 4시간 이상 과사용 vs. 적정)",
+      "outcome": "sleep_weekday (주중 평균 수면 시간 < 8시간 수면 부족)",
+      "population": "전국 중·고등학생 (KYRBS 2025, 약 6만 명)",
+      "use_rag_references": true,
+      "study_info_keys": [
+        "dataset",
+        "design",
+        "sample_size",
+        "survey_year",
+        "journal"
+      ]
+    },
+    "outputs": {
+      "draft_word_count": 3554,
+      "output_path": "data/drafts/Association Between Weekday Smartphone Overuse and Objective.txt",
+      "safe_title": "Association Between Weekday Smartphone Overuse and Objective"
+    },
+    "impact": {
+      "affected_modules": [
+        "research_pipeline",
+        "paper_writer",
+        "rag"
+      ]
+    }
+  },
+  {
     "id": "20260524_064440_591349",
     "timestamp": "2026-05-24 06:44:40",
     "user_email": "mitto0519@gmail.com",
