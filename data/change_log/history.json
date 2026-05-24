@@ -1,5 +1,30 @@
 [
   {
+    "id": "20260524_201337_987543",
+    "timestamp": "2026-05-24 20:13:37",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "config_change",
+    "title": "구조 수렴 2차: 메모리 위생 게이트(②) + 계층 RAG 청킹(③) + State Registry 배선(고아 제거)",
+    "description": "②메모리위생: memory_gate.py(결정론적 LLM무관 게이트 — 짧음/중복/환각마커=quarantine 저장거부, verified/auto tier). agent_insight.record와 persona.add_perspective가 commit 전 게이트 통과해야만 저장→self-pollution/citation poisoning 차단. ③계층RAG: hierarchical_chunker.py(섹션인식 청킹+section/rhetorical_role/citation_density/statistical_method/evidence_level 메타) — trend_learner 인제스트가 일반 TextChunker 대신 사용(auto tier 표식). 검증: 구조화초록→4섹션청크, Methods=logistic+cross-sectional 자동탐지. +research_state.py 고아 제거(save/load를 ResearchState 캐노니컬 AST 경유로 배선).",
+    "what_changed": {},
+    "why_better": "조언(research OS)대로: RAG가 문장검색기→구조인식(섹션/통계방법 필터 가능), 자가메모리 오염 차단(검증된 것만 commit). 통계외부화는 이미 됨. 전면재작성 없이 제자리 진화. 새 모듈 전부 실배선(고아 0).",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "src/memory/memory_gate.py",
+        "src/memory/agent_insight.py",
+        "src/agent/persona.py",
+        "src/ingestion/hierarchical_chunker.py",
+        "src/knowledge/trend_learner.py",
+        "src/research/research_state.py",
+        "app/streamlit_app.py",
+        "ARCHITECTURE.md"
+      ]
+    }
+  },
+  {
     "id": "20260524_194637_777568",
     "timestamp": "2026-05-24 19:46:37",
     "user_email": "",
