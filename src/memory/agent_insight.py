@@ -87,9 +87,21 @@ def record(
     tags: Optional[List[str]] = None,
     source: str = "observation",
 ) -> Insight:
-    """새 인사이트를 기록한다."""
+    """새 인사이트를 기록한다 (memory_gate로 오염 차단 — verified-only)."""
     if category not in CATEGORIES:
         category = "pattern"
+    # 메모리 위생 게이트: 너무 짧음/중복/환각마커면 거부, 통과 시 tier 부여 (self-pollution 차단)
+    try:
+        from src.memory.memory_gate import assess as _assess
+        _recent = [e.get("insight", "") for e in _load()[:50]]
+        _g = _assess(insight, source=source, existing=_recent)
+        if not _g["ok"]:
+            _log.warning("[insight] 게이트 거부(%s) — 미저장: %s", _g["reason"], str(insight)[:60])
+            return None  # 오염 차단: 저장 안 함
+        tags = list(tags or []) + [f"tier:{_g['tier']}"]
+        confidence = _g["confidence"]
+    except Exception as _ge:
+        _log.debug("[insight] 게이트 스킵(%s)", _ge)
     now = datetime.now()
     entry = Insight(
         id=now.strftime("%Y%m%d_%H%M%S_%f"),
