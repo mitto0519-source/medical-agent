@@ -1976,14 +1976,34 @@ with main_col:
 
     # ── 원시자료 업로드 ───────────────────────────────────────────────
     elif page == "원시자료 업로드":
-        st.markdown("<h2 style='color:#e6edf3;'>📂 KYRBS / KNHANES 원시자료 업로드</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color:#e6edf3;'>📂 원시자료 (KYRBS / KNHANES)</h2>", unsafe_allow_html=True)
         _flow_stepbar("원시자료 업로드")
-        st.info("질병관리청 공식 원시자료(.sav) 또는 CSV를 업로드하면 표준 스키마로 자동 변환해 분석에 사용합니다.")
 
-        # 다운로드 안내
-        with st.expander("📋 원시자료 다운로드 방법 (클릭하여 열기)", expanded=False):
-            from src.data.kyrbs_raw_loader import download_instructions
-            st.markdown(download_instructions())
+        # 자산화된 data/raw 인식 — 데이터 이미 있으면 업로드 강요하지 않음
+        from pathlib import Path as _P_raw
+        _raw_files = []
+        if _P_raw("data/raw").exists():
+            for _ext in ("*.sav", "*.csv", "*.xlsx"):
+                _raw_files += [f.name for f in _P_raw("data/raw").glob(_ext)]
+        _raw_files = sorted(_raw_files)
+        if _raw_files:
+            st.success(f"✅ 원시자료 {len(_raw_files)}개 자산화 완료 (data/raw) — **업로드 불필요**, 분석·작성에 자동 사용됩니다.")
+            with st.expander(f"📁 자산화된 파일 {len(_raw_files)}개 보기", expanded=False):
+                st.write(", ".join(_raw_files[:40]))
+            _ld1, _ld2 = st.columns(2)
+            with _ld1:
+                if st.button("🔬 데이터 분석으로", type="primary", use_container_width=True, key="raw_to_analysis"):
+                    _ensure_raw_df("KYRBS"); _nav("데이터 분석")
+            with _ld2:
+                if st.button("📝 논문 작업실로", use_container_width=True, key="raw_to_ws"):
+                    _ensure_raw_df("KYRBS"); _nav("논문 작업실")
+            st.divider()
+            st.caption("추가 파일을 올리려면 아래에서 (선택사항).")
+        else:
+            st.info("질병관리청 공식 원시자료(.sav)를 업로드하면 표준 스키마로 자동 변환합니다.")
+            with st.expander("📋 원시자료 다운로드 방법 (클릭하여 열기)", expanded=False):
+                from src.data.kyrbs_raw_loader import download_instructions
+                st.markdown(download_instructions())
 
         st.divider()
 
