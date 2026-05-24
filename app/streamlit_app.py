@@ -1287,9 +1287,18 @@ with main_col:
                     try:
                         with st.spinner("AI가 작업 중..."):
                             _res = _ws_agent(_p)
-                        if _res.get("section") and _res.get("content"):
-                            st.session_state[f"ws_{_res['section']}"] = _res["content"]
                         _reply = _res.get("reply", "반영했습니다.")
+                        if _res.get("section") and _res.get("content"):
+                            _sk = _res["section"]
+                            _st_map = st.session_state.setdefault("ws_status", {})
+                            # State Registry 규칙: verified/locked 섹션은 자동 생성이 덮어쓰지 못함 (drift 차단)
+                            if _st_map.get(_sk) in ("verified", "locked"):
+                                _lbl = next((l for k, l in _WS_KEYS if k == _sk), _sk)
+                                _reply = (f"🔒 **{_lbl}**은(는) 잠금/검증 상태라 덮어쓰지 않았습니다. "
+                                          f"수정하려면 우측 편집뷰에서 잠금을 해제하세요.\n\n_(생성된 초안은 폐기됨)_")
+                            else:
+                                st.session_state[f"ws_{_sk}"] = _res["content"]
+                                _st_map[_sk] = "draft"
                         st.session_state["ws_chat"].append({"role": "assistant", "content": _reply})
                         # MemPalace식 의미 메모리에 이번 교환 저장 (다음에 의미검색으로 회수)
                         try:
@@ -1368,8 +1377,23 @@ with main_col:
                         except Exception as _e:
                             st.error(f"표 생성 오류: {_e}")
                 else:  # 📝 편집
+                    _stmap = st.session_state.setdefault("ws_status", {})
                     for _k, _label in _WS_KEYS:
-                        st.text_area(_label, key=f"ws_{_k}", height=55 if _k == "title" else 110)
+                        _cur_st = _stmap.get(_k, "draft" if (st.session_state.get(f"ws_{_k}") or "").strip() else "empty")
+                        _badge = {"empty": "", "draft": "🟡 초안", "verified": "🟢 검증", "locked": "🔒 잠금"}.get(_cur_st, "")
+                        _lc1, _lc2 = st.columns([4, 1])
+                        with _lc1:
+                            st.text_area(f"{_label} {_badge}", key=f"ws_{_k}", height=55 if _k == "title" else 110)
+                        with _lc2:
+                            # 잠금/검증 토글 — verified/locked면 자동생성이 못 덮어씀 (drift 차단)
+                            _locked_now = _cur_st in ("verified", "locked")
+                            if st.toggle("🔒", value=_locked_now, key=f"ws_lock_{_k}",
+                                         help="켜면 잠금(자동생성이 못 덮어씀). 끄면 초안."):
+                                if not _locked_now:
+                                    _stmap[_k] = "locked"
+                            else:
+                                if _locked_now:
+                                    _stmap[_k] = "draft" if (st.session_state.get(f"ws_{_k}") or "").strip() else "empty"
             wsd1, wsd2, wsd3 = st.columns(3)
             with wsd1:
                 if st.button("💾 저장", use_container_width=True, key="ws_save_draft",
