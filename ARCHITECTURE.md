@@ -101,6 +101,8 @@
 | 사용자 인증 | `src/auth/users.py` | ✅ active | `is_admin()` super_admin 2명+admin role = full access |
 | 스토리지 매니저(참고문헌 RAG) | `src/storage/manager.py` | ✅ active | NotebookLM/RAG 적재 |
 | **작성 논문 영속 저장** | `src/storage/working_paper_store.py` | ✅ active | 작업실 6섹션을 계정 귀속 저장/불러오기(data/working_papers, 로컬+클라우드 best-effort). manager.py와 별개 |
+| **대화 영속 메모리(MemPalace식)** | `src/memory/conversation_memory.py` → `record()`, `recall_relevant()` | ✅ active | verbatim 저장 + ChromaDB 의미검색 회수(계정격리). 요약/최근만이 아니라 '관련 과거'를 회수 |
+| **누적 지식 위키(OpenKB식)** | `src/knowledge/research_wiki.py` → `ResearchWiki` | ✅ active | 개념 페이지 누적(생성/추가)+[[링크]]+lint. add_source/build_context/query. 작업실 글쓰기에 주입+저장시 백그라운드 흡수. data/wiki/{owner}/ |
 | 컨테이너화 | `Dockerfile`, `docker-compose.yml`, `.dockerignore` | ✅ active | code-in-image + data/ 볼륨. OneDrive 환경함정 근본차단. `docker compose up -d --build` |
 
 ### 8. UI
