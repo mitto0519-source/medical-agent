@@ -1215,8 +1215,11 @@ with main_col:
                     if _rec:
                         for _k, _ in _WS_KEYS:
                             st.session_state[f"ws_{_k}"] = _rec["sections"].get(_k, "")
-                        # State Registry: 섹션 잠금/검증 상태 복원 (meta._status)
-                        st.session_state["ws_status"] = (_rec.get("meta", {}) or {}).get("_status", {}) or {}
+                        # State Registry: 섹션 잠금 상태 복원 (meta._status → 토글 키)
+                        _saved_status = (_rec.get("meta", {}) or {}).get("_status", {}) or {}
+                        st.session_state["ws_status"] = _saved_status
+                        for _k, _ in _WS_KEYS:
+                            st.session_state[f"ws_lock_{_k}"] = _saved_status.get(_k) in ("verified", "locked")
                         st.session_state["ws_paper_id"] = _pid
                         st.toast(f"불러옴: {_rec.get('title', '')[:30]}")
                         st.rerun()
@@ -1292,15 +1295,13 @@ with main_col:
                         _reply = _res.get("reply", "반영했습니다.")
                         if _res.get("section") and _res.get("content"):
                             _sk = _res["section"]
-                            _st_map = st.session_state.setdefault("ws_status", {})
-                            # State Registry 규칙: verified/locked 섹션은 자동 생성이 덮어쓰지 못함 (drift 차단)
-                            if _st_map.get(_sk) in ("verified", "locked"):
+                            # State Registry 규칙: 잠긴 섹션은 자동 생성이 덮어쓰지 못함 (drift 차단)
+                            if bool(st.session_state.get(f"ws_lock_{_sk}", False)):
                                 _lbl = next((l for k, l in _WS_KEYS if k == _sk), _sk)
-                                _reply = (f"🔒 **{_lbl}**은(는) 잠금/검증 상태라 덮어쓰지 않았습니다. "
-                                          f"수정하려면 우측 편집뷰에서 잠금을 해제하세요.\n\n_(생성된 초안은 폐기됨)_")
+                                _reply = (f"🔒 **{_lbl}**은(는) 잠금 상태라 덮어쓰지 않았습니다. "
+                                          f"수정하려면 우측 편집뷰에서 잠금(🔒)을 해제하세요.")
                             else:
                                 st.session_state[f"ws_{_sk}"] = _res["content"]
-                                _st_map[_sk] = "draft"
                         st.session_state["ws_chat"].append({"role": "assistant", "content": _reply})
                         # MemPalace식 의미 메모리에 이번 교환 저장 (다음에 의미검색으로 회수)
                         try:
@@ -1379,23 +1380,20 @@ with main_col:
                         except Exception as _e:
                             st.error(f"표 생성 오류: {_e}")
                 else:  # 📝 편집
+                    # State Registry: 토글 키(ws_lock_*)가 잠금 진실원본. ws_status는 거기서 파생.
                     _stmap = st.session_state.setdefault("ws_status", {})
                     for _k, _label in _WS_KEYS:
-                        _cur_st = _stmap.get(_k, "draft" if (st.session_state.get(f"ws_{_k}") or "").strip() else "empty")
-                        _badge = {"empty": "", "draft": "🟡 초안", "verified": "🟢 검증", "locked": "🔒 잠금"}.get(_cur_st, "")
-                        _lc1, _lc2 = st.columns([4, 1])
+                        _has = bool((st.session_state.get(f"ws_{_k}") or "").strip())
+                        _locked = bool(st.session_state.get(f"ws_lock_{_k}", False))
+                        _badge = "🔒 잠금" if _locked else ("🟡 초안" if _has else "")
+                        _lc1, _lc2 = st.columns([5, 1])
                         with _lc1:
                             st.text_area(f"{_label} {_badge}", key=f"ws_{_k}", height=55 if _k == "title" else 110)
                         with _lc2:
-                            # 잠금/검증 토글 — verified/locked면 자동생성이 못 덮어씀 (drift 차단)
-                            _locked_now = _cur_st in ("verified", "locked")
-                            if st.toggle("🔒", value=_locked_now, key=f"ws_lock_{_k}",
-                                         help="켜면 잠금(자동생성이 못 덮어씀). 끄면 초안."):
-                                if not _locked_now:
-                                    _stmap[_k] = "locked"
-                            else:
-                                if _locked_now:
-                                    _stmap[_k] = "draft" if (st.session_state.get(f"ws_{_k}") or "").strip() else "empty"
+                            st.markdown("<div style='height:26px;'></div>", unsafe_allow_html=True)
+                            _locked = st.toggle("🔒", key=f"ws_lock_{_k}",
+                                                help="켜면 잠금: 자동 생성이 이 섹션을 못 덮어씀 (drift 차단)")
+                        _stmap[_k] = "locked" if _locked else ("draft" if _has else "empty")
             wsd1, wsd2, wsd3 = st.columns(3)
             with wsd1:
                 if st.button("💾 저장", use_container_width=True, key="ws_save_draft",
