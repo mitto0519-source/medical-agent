@@ -1,5 +1,28 @@
 [
   {
+    "id": "20260524_205117_363688",
+    "timestamp": "2026-05-24 20:51:17",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "config_change",
+    "title": "구조 수렴 3차(완): UX chat-first 홈(⑤) + Agent 책임맵/생성·검증 분리 공식화(④)",
+    "description": "⑤UX: 홈을 chat-first 단일 진입으로 — \"무슨 연구를 하고 싶으세요?\" 입력+예시칩 → ws_title 시드+스타터챗 생성 후 작업실 자동 진입(funnel 라이브검증). 관리자/단계는 이미 토글로 숨김. ④책임맵: AGENTS.md 신설 — 생성(writer/pipeline)↔검증(PeerReviewer/stat_consistency/memory_gate/novelty) 완전분리 원칙, 모듈별 단일책임 맵, 통계=StatBridge전용/메모리=게이트통과만/상태=ResearchState단일원본, 책임침범 금지목록. 조언 5대 우선순위 전부 대응 완료(통계외부화는 기존).",
+    "what_changed": {},
+    "why_better": "조언(research OS)의 구조 수렴 완료: 생성/검증 분리 명문화, 단일 상태원본, 메모리 위생, 계층 RAG, chat-first UX. 전면재작성 없이 제자리 진화. 새 모듈 전부 실배선(고아0). 책임맵으로 향후 책임 중복 증식 방지.",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "app/streamlit_app.py",
+        "AGENTS.md",
+        "ARCHITECTURE.md",
+        "src/research/research_state.py",
+        "src/memory/memory_gate.py",
+        "src/ingestion/hierarchical_chunker.py"
+      ]
+    }
+  },
+  {
     "id": "20260524_201337_987543",
     "timestamp": "2026-05-24 20:13:37",
     "user_email": "",
