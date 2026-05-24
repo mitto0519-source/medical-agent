@@ -177,7 +177,8 @@ def main() -> int:
                 continue
         for label, marker in [("연구 주제 생성", "주제"), ("신규성 확인", "신규성"),
                               ("데이터 분석", "분석"), ("논문 작성", "논문"),
-                              ("자가 진단", "진단"), ("지식베이스 관리", "지식")]:
+                              ("자가 진단", "진단"), ("지식베이스 관리", "지식"),
+                              ("지식 위키", "위키")]:
             name, fn = task_render(label, marker)
             suite.append((name, fn(page)))
 
