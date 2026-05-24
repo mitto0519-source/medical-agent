@@ -1213,14 +1213,19 @@ with main_col:
                 if _pid:
                     _rec = _wps.load_paper(_u.get("email", ""), _pid, all_papers=_is_adm)
                     if _rec:
-                        for _k, _ in _WS_KEYS:
-                            st.session_state[f"ws_{_k}"] = _rec["sections"].get(_k, "")
-                        # State Registry: 섹션 잠금 상태 복원 (meta._status → 토글 키)
-                        _saved_status = (_rec.get("meta", {}) or {}).get("_status", {}) or {}
-                        st.session_state["ws_status"] = _saved_status
-                        for _k, _ in _WS_KEYS:
-                            st.session_state[f"ws_lock_{_k}"] = _saved_status.get(_k) in ("verified", "locked")
-                        st.session_state["ws_paper_id"] = _pid
+                        from src.research.research_state import ResearchState as _RS, SECTION_KEYS as _SK
+                        # 캐노니컬 AST(_state) 우선, 없으면 flat 섹션 + meta._status로 재구성(하위호환)
+                        _state = (_rec.get("meta", {}) or {}).get("_state")
+                        if _state:
+                            _rs = _RS.from_dict(_state)
+                        else:
+                            _rs = _RS.from_dict({"sections": _rec.get("sections", {})})
+                            for _k, _v in ((_rec.get("meta", {}) or {}).get("_status", {}) or {}).items():
+                                _rs.set_status(_k, _v)
+                        _rs.paper_id = _pid
+                        _rs.to_session(st.session_state)   # ws_* + ws_status + stat 복원
+                        for _k in _SK:
+                            st.session_state[f"ws_lock_{_k}"] = _rs.status_of(_k) in ("verified", "locked")
                         st.toast(f"불러옴: {_rec.get('title', '')[:30]}")
                         st.rerun()
                 else:
@@ -1398,11 +1403,16 @@ with main_col:
             with wsd1:
                 if st.button("💾 저장", use_container_width=True, key="ws_save_draft",
                              help="계정에 영속 저장 — 다음 접속/재시작에도 유지"):
-                    _secs = {_k: st.session_state.get(f"ws_{_k}", "") for _k, _ in _WS_KEYS}
-                    # State Registry: 섹션 잠금/검증 상태도 함께 영속화 (meta._status)
-                    _meta = {**_ws_study_info(), "_status": st.session_state.get("ws_status", {})}
+                    # State Registry를 단일 상태원본으로 사용 (JSON AST 영속화)
+                    from src.research.research_state import ResearchState as _RS, SECTION_KEYS as _SK
+                    _rs = _RS.from_session(st.session_state, owner_email=_u.get("email", ""))
+                    _rs.paper_id = st.session_state.get("ws_paper_id")
+                    _secs = {_k: _rs.get_section(_k) for _k in _SK}
+                    _meta = {**_ws_study_info(),
+                             "_status": {_k: _rs.status_of(_k) for _k in _SK},
+                             "_state": _rs.to_dict()}  # 캐노니컬 AST
                     _pid = _wps.save_paper(_u.get("email", ""), _secs, meta=_meta,
-                                           paper_id=st.session_state.get("ws_paper_id"))
+                                           paper_id=_rs.paper_id)
                     st.session_state["ws_paper_id"] = _pid
                     st.session_state["draft"] = _ws_preview()
                     # OpenKB식 누적 위키 흡수 — LLM 호출이라 저장을 막지 않게 백그라운드 스레드로.
