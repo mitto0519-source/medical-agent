@@ -1,5 +1,28 @@
 [
   {
+    "id": "20260524_151106_363981",
+    "timestamp": "2026-05-24 15:11:06",
+    "user_email": "",
+    "session_id": "",
+    "action_type": "config_change",
+    "title": "OpenKB식 누적 지식위키 + MemPalace 대화메모리 + Gemini 모델순환 (메모리/KB 고도화)",
+    "description": "사용자가 SOTA 메모리/KB 시스템들(MemPalace/OpenKB/Cognee/seCall) 참조 → 안겹치는 것만 흡수(규칙10). (1)MemPalace식: conversation_memory에 verbatim+ChromaDB 의미검색 recall_relevant(계정격리). (2)OpenKB식: research_wiki.py 신설—개념페이지 누적+[[링크]]+lint, 글쓰기에 build_context 주입, 저장시 백그라운드 흡수, admin 지식위키 페이지. (3)무료무중단: gemini_client 모델순환(flash-latest→lite류, 429폴백). (4)작업실 컨텍스트(최근턴+의미회수). 라이브 검증 ui_eval 49/49.",
+    "what_changed": {},
+    "why_better": "컨텍스트 유지/지식 누적이라는 사용자 핵심불만을 SOTA 패턴으로 근본해결. 쓸수록 지식이 쌓여 글쓰기 품질↑(바이브 논문). 무료 LLM이 429에도 안 끊김. 모두 실앱(Playwright)으로 증명.",
+    "inputs": {},
+    "outputs": {},
+    "impact": {
+      "affected_modules": [
+        "src/memory/conversation_memory.py",
+        "src/knowledge/research_wiki.py",
+        "src/llm/gemini_client.py",
+        "app/streamlit_app.py",
+        "scripts/ui_eval.py",
+        "ARCHITECTURE.md"
+      ]
+    }
+  },
+  {
     "id": "20260524_003718_196723",
     "timestamp": "2026-05-24 00:37:18",
     "user_email": "",
