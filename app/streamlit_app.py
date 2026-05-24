@@ -2240,8 +2240,20 @@ with main_col:
                 sb_subgroup = st.multiselect("층화 분석 변수", ["sex", "grade"] if sb_dataset == "KYRBS" else ["sex", "age"], key="sb_subgroup")
 
             sb_df = st.session_state.get("analysis_df")
+            if sb_df is None:
+                sb_df = st.session_state.get("raw_df")
+            # 세션 데이터 없으면 자산화된 data/raw에서 자동 로드 (업로드 불필요 — 데이터 이미 있음)
+            if sb_df is None:
+                try:
+                    from src.research.research_pipeline import _find_real_data
+                    sb_df = _find_real_data(sb_dataset)
+                    if sb_df is not None:
+                        st.session_state["raw_df"] = sb_df
+                except Exception as _e:
+                    st.caption(f"(data/raw 자동로드 시도 실패: {str(_e)[:80]})")
             if sb_df is not None:
-                st.info(f"세션 데이터 사용: {sb_df.shape[0]:,}행 × {sb_df.shape[1]}열")
+                st.info(f"데이터 준비됨: {sb_df.shape[0]:,}행 × {sb_df.shape[1]}열 "
+                        f"(data/raw 자동로드 — 업로드 불필요)")
 
             if st.button("🔬 StatBridge 분석 실행", type="primary", key="sb_run"):
                 if not sb_preds:
@@ -2253,8 +2265,9 @@ with main_col:
                             df_use = sb_df
                             if df_use is None:
                                 st.error(
-                                    "분석할 데이터가 없습니다. "
-                                    "'원시자료 업로드' 탭에서 실제 KYRBS/KNHANES 파일을 먼저 업로드하세요."
+                                    "data/raw에서 원시자료를 찾지 못했습니다. "
+                                    "KYRBS/KNHANES .sav가 data/raw에 있는지 확인하세요 "
+                                    "(scripts/download_kyrbs.py로 재다운로드 가능)."
                                 )
                                 st.stop()
                             spec = {
