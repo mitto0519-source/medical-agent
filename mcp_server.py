@@ -763,6 +763,138 @@ def _background_self_evolution_loop():
 
 
 # ════════════════════════════════════════════════════════════════════════
+# Runtime Layer Exposure (memory router + tasks + events + budget + lifecycle)
+# Added 2026-05-27 — VS Code agent ↔ Streamlit ↔ MCP 공통 runtime backend
+# ════════════════════════════════════════════════════════════════════════
+
+# ── 메모리 ────────────────────────────────────────────────────────────────────
+
+@mcp.tool
+def memory_write(text: str, type: str = "episodic", source: str = "user",
+                 related_to: list = None, extra_meta: dict = None,
+                 ctx=None) -> dict:
+    """타입형 메모리 쓰기 단일 진입(router 경유). gate + scorer + lifecycle audit 통과.
+
+    type: 'episodic' | 'semantic' | 'procedural' | 'goal'
+    source: 'user' | 'observation' | 'reflection' | 'auto_learn' | 'llm' | 'pubmed' | ...
+    """
+    try:
+        from src.memory import router
+        owner = _caller_email(ctx)
+        r = router.write(text, type=type, source=source, owner_email=owner,
+                         related_to=related_to or [], extra_meta=extra_meta)
+        _log_tool(ctx, "memory_write", {"type": type, "source": source, "len": len(text)},
+                  f"decision={r.get('decision')}")
+        return r
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def memory_recall(query: str, n: int = 5, ctx=None) -> dict:
+    """의미적 회수 — conversation_memory + research_wiki 의미검색 통합."""
+    try:
+        from src.memory import conversation_memory as cm
+        owner = _caller_email(ctx)
+        out = cm.recall_relevant(query, n=n, owner_email=owner)
+        return {"query": query, "n": n, "results": out[:5000]}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def memory_lifecycle_tick(ctx=None) -> dict:
+    """수동 lifecycle 트리거(decay/expire/archive). 정기 실행은 heartbeat에서."""
+    _require_admin(ctx)
+    try:
+        from src.memory.lifecycle import tick, stats
+        out = tick()
+        out["stats_after"] = stats()
+        return out
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+# ── 작업 ─────────────────────────────────────────────────────────────────────
+
+@mcp.tool
+def task_list_unfinished(ctx=None) -> dict:
+    """미완료 작업 목록(crash 후 이어쓰기 후보)."""
+    try:
+        from src.runtime.tasks import TaskRun
+        owner = _caller_email(ctx)
+        runs = TaskRun.list_unfinished(owner_email=owner, limit=20)
+        return {"runs": [{"id": r.id, "type": r.task_type, "status": r.status,
+                          "created_at": r.created_at, "updated_at": r.updated_at,
+                          "input": r.input} for r in runs]}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def task_status(task_id: str, ctx=None) -> dict:
+    """단일 작업의 상태 + steps 조회."""
+    try:
+        from src.runtime.tasks import TaskRun
+        run = TaskRun.get_by_id(task_id)
+        return {"id": run.id, "type": run.task_type, "status": run.status,
+                "input": run.input, "output": run.output, "error": run.error,
+                "created_at": run.created_at, "updated_at": run.updated_at,
+                "steps": run.steps()}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+# ── 이벤트 / 감사 ────────────────────────────────────────────────────────────
+
+@mcp.tool
+def events_recent(type: str = None, n: int = 50, ctx=None) -> dict:
+    """최근 이벤트(LLM 호출/메모리쓰기/작업전이/cache 히트 등) 감사 조회."""
+    try:
+        from src.runtime import events
+        return {"events": events.recent(n=n, type=type)}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def events_replay(task_id: str, ctx=None) -> dict:
+    """특정 작업의 전체 이벤트 replay (환각 추적·디버깅용)."""
+    try:
+        from src.runtime import events
+        return {"task_id": task_id, "events": events.replay(task_id)}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+# ── 예산 / 비용 ──────────────────────────────────────────────────────────────
+
+@mcp.tool
+def budget_status(window: str = "day", ctx=None) -> dict:
+    """LLM 비용 사용량 + 남은 한도."""
+    try:
+        from src.llm import budget
+        return {"snapshot": budget.snapshot(),
+                "remaining": budget.remaining(window),
+                "recommended_anthropic": budget.recommended_provider("paper_writing", requested="anthropic")}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def budget_set_caps(day_cost_usd: float = None, week_cost_usd: float = None,
+                    ctx=None) -> dict:
+    """일/주 cap 조정(admin). cap 도달 시 자동 google 다운그레이드 발동."""
+    _require_admin(ctx)
+    try:
+        from src.llm import budget
+        return {"new_caps": budget.set_caps(day_cost_usd=day_cost_usd,
+                                            week_cost_usd=week_cost_usd)}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+# ════════════════════════════════════════════════════════════════════════
 # Entry point
 # ════════════════════════════════════════════════════════════════════════
 
