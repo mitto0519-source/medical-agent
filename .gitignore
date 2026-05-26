@@ -68,6 +68,8 @@ data/knowledge_graph/
 Thumbs.db
 # MS Office 락 파일 (Word/Excel 열고 있을 때 생성, 닫으면 자동 삭제)
 ~$*
+# auto_sync 데몬 lockfile
+.auto_sync.lock
 
 # 임시
 *.tmp
