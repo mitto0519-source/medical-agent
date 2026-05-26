@@ -1,18 +1,25 @@
 """
-auto_sync.py — Medical-Agent Git 자동 동기화 데몬 (v2, 2026-05-26 hardening)
+auto_sync.py — Medical-Agent Git 자동 동기화 데몬 (v3, 2026-05-27)
 ================================================
-시작 시: lockfile 확인 → git pull
-변경 감지 시: git add -A → commit → push (디바운스)
-충돌 방지: pull --rebase + stash, stash pop 실패 시 작업 보존(silent 무시 금지)
+★ commit-first 패턴 (stash 0 의존, worktree 불필요)
 
-★ v2 변경 (이전 stash 누적 버그·중복 실행 사고 대응):
-  - lockfile(.auto_sync.lock): PID 기반 중복 실행 차단(stale lock 자동 정리)
-  - stash 누적 모니터: 5개 이상이면 동기화 중단(사용자에게 알림 후 수동 정리 요구)
-  - stash pop 실패 시 명시적 로그 + stash 보존(작업 손실 방지)
-  - 자기-생성 stash에 'auto_sync_' 라벨 → 식별 가능
-  - 디바운스 60초(편집 활발 중 push 안 함)
+동작:
+  변경 감지 → 60초 디바운스 → git add -A → git commit → pull --rebase → push
+                                                ↑ 트리가 이미 clean이라 stash 불필요
+
+v2(stash) → v3 차이:
+  - stash push/pop 완전 제거 (누적·pop 실패·작업 손실 위험 0)
+  - "commit-first": 항상 local WIP를 먼저 commit한 뒤 pull. 트리가 clean이라 rebase 안전
+  - rebase conflict 발생 시 abort + 다음 cycle 재시도 (현재 commit 보존)
+  - push 실패 시 한 번 더 pull--rebase + push (commit 이미 있어 trivial)
+  - lockfile / 자기 살아있는 PID 확인 / catchup pull은 그대로
+
+쓸 만한가:
+  - stash 안 쓰니 worktree 같은 우회 메커니즘도 불필요
+  - 사용자가 편집 중인 파일은 60초 idle 후 commit → 부분 저장 위험 낮음
+  - rebase는 항상 clean 트리에서 일어남 → stash pop 실패 같은 상황 원천 차단
 """
-
+from __future__ import annotations
 import os
 import subprocess
 import sys
@@ -23,9 +30,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent.parent.resolve()
 LOG_FILE = BASE_DIR / "scripts" / "sync.log"
 LOCK_FILE = BASE_DIR / ".auto_sync.lock"
-DEBOUNCE_SECONDS = 60   # 마지막 변경 후 60초간 가만히면 동기화
+DEBOUNCE_SECONDS = 60
 POLL_SECONDS = 10
-MAX_STASH = 5           # 자기-생성 stash 누적 한도
 
 
 def log(msg: str):
@@ -40,30 +46,25 @@ def log(msg: str):
 
 
 def git(args: list) -> tuple:
-    result = subprocess.run(
-        ["git"] + args,
-        capture_output=True, text=True, cwd=BASE_DIR, encoding="utf-8"
-    )
-    return result.stdout.strip(), result.stderr.strip(), result.returncode
+    r = subprocess.run(["git"] + args, capture_output=True, text=True,
+                       cwd=BASE_DIR, encoding="utf-8")
+    return r.stdout.strip(), r.stderr.strip(), r.returncode
 
 
-# ── Lock 처리 ────────────────────────────────────────────────────────────────
+# ── lockfile (multi-instance 차단) ────────────────────────────────────────────
 
 def acquire_lock() -> bool:
-    """다중 실행 방지. stale lock(죽은 PID)은 자동 정리. False면 종료."""
     if LOCK_FILE.exists():
         try:
             pid = int((LOCK_FILE.read_text(encoding="utf-8").strip() or "0"))
         except Exception:
             pid = 0
+        alive = False
         if pid > 0:
-            # 살아있는지 확인 — Windows/POSIX 모두 동작
-            alive = False
             try:
                 if os.name == "nt":
                     import ctypes
-                    PROCESS_QUERY_LIMITED = 0x1000
-                    h = ctypes.windll.kernel32.OpenProcess(PROCESS_QUERY_LIMITED, False, pid)
+                    h = ctypes.windll.kernel32.OpenProcess(0x1000, False, pid)
                     if h:
                         ctypes.windll.kernel32.CloseHandle(h)
                         alive = True
@@ -71,9 +72,9 @@ def acquire_lock() -> bool:
                     os.kill(pid, 0); alive = True
             except Exception:
                 alive = False
-            if alive:
-                log(f"이미 실행 중 (PID={pid}). 새 인스턴스 종료.")
-                return False
+        if alive:
+            log(f"이미 실행 중 (PID={pid}) — 새 인스턴스 종료")
+            return False
         log(f"stale lock 정리 (PID={pid})")
         try: LOCK_FILE.unlink()
         except Exception: pass
@@ -83,133 +84,121 @@ def acquire_lock() -> bool:
 
 def release_lock():
     try:
-        if LOCK_FILE.exists() and (LOCK_FILE.read_text(encoding="utf-8").strip() == str(os.getpid())):
+        if LOCK_FILE.exists() and LOCK_FILE.read_text(encoding="utf-8").strip() == str(os.getpid()):
             LOCK_FILE.unlink()
     except Exception:
         pass
 
 
-# ── git 상태 헬퍼 ─────────────────────────────────────────────────────────────
+# ── 상태 헬퍼 ────────────────────────────────────────────────────────────────
 
 def has_changes() -> bool:
-    stdout, _, _ = git(["status", "--porcelain"])
-    return bool(stdout.strip())
-
-
-def stash_count() -> int:
-    out, _, _ = git(["stash", "list"])
-    return len([l for l in out.splitlines() if l.strip()])
+    out, _, _ = git(["status", "--porcelain"])
+    return bool(out.strip())
 
 
 def get_changed_files() -> list:
-    stdout, _, _ = git(["status", "--porcelain"])
-    return [l[3:].strip() for l in stdout.splitlines() if l.strip()]
+    out, _, _ = git(["status", "--porcelain"])
+    return [l[3:].strip() for l in out.splitlines() if l.strip()]
 
 
-# ── 동기화 ────────────────────────────────────────────────────────────────────
-
-def pull() -> bool:
-    """변경사항 stash 후 pull --rebase. pop 실패 시 stash 보존(작업 손실 방지)."""
-    # 누적 stash 안전장치
-    sc = stash_count()
-    if sc >= MAX_STASH:
-        log(f"  ⚠ stash 누적 {sc}개 (한도 {MAX_STASH}) — pull 중단. `git stash list` 확인 후 수동 정리 필요.")
-        return False
-
-    label = f"auto_sync_{datetime.now().strftime('%m%d_%H%M%S')}"
-    stashed = False
-    if has_changes():
-        _, err, code = git(["stash", "push", "-u", "-m", label])
-        if code == 0 and "No local changes" not in err:
-            stashed = True
-
-    out, err, code = git(["pull", "--rebase", "origin", "master"])
+def ahead_behind() -> tuple:
+    """origin/master 대비 (ahead, behind) — fetch 후 사용."""
+    out, _, code = git(["rev-list", "--left-right", "--count", "HEAD...origin/master"])
     if code != 0:
-        log(f"  ✗ PULL 실패: {err}")
-        if stashed:
-            _, perr, pcode = git(["stash", "pop"])
-            if pcode != 0:
-                log(f"  ⚠ pull 실패 후 stash pop도 실패 — stash 보존: {perr}")
-        return False
-
-    log(f"  ✓ PULL: {out or '최신'}")
-    if stashed:
-        _, perr, pcode = git(["stash", "pop"])
-        if pcode != 0:
-            log(f"  ⚠ stash pop 실패 — 작업 보존(stash list에 남음): {perr}")
-            log(f"     수동 복원: git stash pop  (또는 git stash apply --index)")
-            return False
-    return True
+        return (0, 0)
+    parts = out.split()
+    return (int(parts[0]), int(parts[1])) if len(parts) >= 2 else (0, 0)
 
 
-def push(changed_files: list) -> bool:
-    summary = ", ".join(changed_files[:5])
-    if len(changed_files) > 5:
-        summary += f" 외 {len(changed_files)-5}개"
-    ts = datetime.now().strftime("%m/%d %H:%M")
-    commit_msg = f"Auto-sync [{ts}]: {summary}"
+# ── 핵심: commit-first 동기화 ────────────────────────────────────────────────
 
-    git(["add", "-A"])
-    _, err, code = git(["commit", "-m", commit_msg])
-    if code != 0:
-        log(f"  커밋 스킵 (변경 없음): {err}")
-        return True
+def sync_cycle():
+    """변경이 있으면 add+commit. 그 다음 fetch → behind면 pull --rebase → push."""
+    changed = get_changed_files() if has_changes() else []
 
-    log(f"  ✓ 커밋: {commit_msg}")
-    _, err, code = git(["push", "origin", "master"])
-    if code == 0:
-        log("  ✓ PUSH 완료")
-        return True
+    # 1) local WIP가 있으면 먼저 commit
+    if changed:
+        summary = ", ".join(changed[:5])
+        if len(changed) > 5:
+            summary += f" 외 {len(changed)-5}개"
+        ts = datetime.now().strftime("%m/%d %H:%M")
+        msg = f"Auto-sync [{ts}]: {summary}"
+        git(["add", "-A"])
+        out, err, code = git(["commit", "-m", msg])
+        if code != 0:
+            log(f"  커밋 스킵 (no diff/hook): {err or out}")
+        else:
+            log(f"  ✓ 커밋: {msg[:90]}")
 
-    log(f"  ✗ PUSH 실패: {err} — pull --rebase 후 1회 재시도")
-    if not pull():
-        return False
-    _, err2, code2 = git(["push", "origin", "master"])
-    if code2 == 0:
-        log("  ✓ PUSH 재시도 성공")
-        return True
-    log(f"  ✗ PUSH 재시도도 실패: {err2}")
-    return False
+    # 2) fetch — 원격 변경 여부 확인 (commit 후 트리는 clean)
+    _, ferr, fcode = git(["fetch", "origin", "master"])
+    if fcode != 0:
+        log(f"  ✗ FETCH 실패 (네트워크?): {ferr[:80]}")
+        return
 
+    ahead, behind = ahead_behind()
 
-# ── 메인 루프 ─────────────────────────────────────────────────────────────────
+    # 3) 원격이 앞서면 rebase (clean 트리이므로 stash 불필요)
+    if behind > 0:
+        log(f"  원격 {behind}개 앞섬 → pull --rebase")
+        out, err, code = git(["pull", "--rebase", "origin", "master"])
+        if code != 0:
+            # rebase conflict — abort 후 다음 cycle 재시도 (현재 commit은 보존됨)
+            git(["rebase", "--abort"])
+            log(f"  ✗ REBASE conflict → abort, 다음 cycle 재시도: {err[:80]}")
+            return
+        log(f"  ✓ PULL --rebase: {out[:80] or 'ok'}")
+        ahead, behind = ahead_behind()
+
+    # 4) push (ahead가 있을 때만)
+    if ahead > 0:
+        out, err, code = git(["push", "origin", "master"])
+        if code == 0:
+            log(f"  ✓ PUSH ({ahead}개 commit)")
+            return
+        # push 실패: 원격이 사이에 또 앞서갔을 수 있음 — 한 번 더 시도
+        log(f"  ✗ PUSH 1차 실패 (race?) → fetch+rebase+retry: {err[:80]}")
+        git(["fetch", "origin", "master"])
+        _, err2, code2 = git(["pull", "--rebase", "origin", "master"])
+        if code2 != 0:
+            git(["rebase", "--abort"])
+            log(f"  ✗ 2차 rebase 실패 → 다음 cycle: {err2[:80]}")
+            return
+        _, err3, code3 = git(["push", "origin", "master"])
+        log(f"  {'✓ PUSH 재시도 성공' if code3 == 0 else f'✗ PUSH 재시도 실패: {err3[:80]}'}")
+
 
 def main():
     log("=" * 50)
-    log("Medical-Agent 자동 동기화 시작 (v2)")
+    log("Medical-Agent 자동 동기화 시작 (v3 commit-first)")
     log(f"  base: {BASE_DIR}")
-    log(f"  디바운스: {DEBOUNCE_SECONDS}초 | 폴링: {POLL_SECONDS}초 | stash 한도: {MAX_STASH}")
+    log(f"  디바운스: {DEBOUNCE_SECONDS}초 | 폴링: {POLL_SECONDS}초 | stash 0 의존")
     log("=" * 50)
 
     if not acquire_lock():
         sys.exit(0)
 
-    log(f"현재 stash {stash_count()}개 (한도 {MAX_STASH})")
-    pull()
+    # 부팅 catchup
+    sync_cycle()
 
     last_change_time = None
     last_known_status = ""
-
     try:
         while True:
             time.sleep(POLL_SECONDS)
             try:
-                stdout, _, _ = git(["status", "--porcelain"])
-                current = stdout.strip()
-
+                out, _, _ = git(["status", "--porcelain"])
+                current = out.strip()
                 if current != last_known_status:
                     if current:
                         log(f"  변경 감지 ({len(current.splitlines())}개) — {DEBOUNCE_SECONDS}초 후 동기화")
                         last_change_time = time.time()
                     last_known_status = current
-
                 if last_change_time and (time.time() - last_change_time >= DEBOUNCE_SECONDS):
-                    if has_changes():
-                        changed = get_changed_files()
-                        if pull():
-                            push(changed)
-                        last_known_status = ""
+                    sync_cycle()
                     last_change_time = None
+                    last_known_status = ""
             except Exception as e:
                 log(f"  loop 오류: {e}")
     finally:
