@@ -154,6 +154,61 @@ def task_save_restore(page, browser) -> list:
     return res
 
 
+def task_citation_fullset(page: Page) -> list:
+    """워크플로 — 인용/레퍼런스 모드: PMID 검수 → 풀셋(Word/EndNote) 생성(outcome)."""
+    res = []
+    nav(page, "논문 작업실")
+    # 모드 전환: 📚 인용/레퍼런스
+    try:
+        page.get_by_text(re.compile("인용/레퍼런스")).first.click(timeout=6000)
+        wait_idle(page, 1500)
+        res.append(("mode_switched", True, "인용/레퍼런스"))
+    except Exception as e:
+        res.append(("mode_switched", False, str(e)[:100]))
+        return res
+    # 레퍼런스(실 PMID 2개) 입력
+    try:
+        ta = page.locator('textarea[aria-label="레퍼런스 목록"], textarea[placeholder*="한 줄에 하나씩"]').first
+        ta.fill("33069327\n29186274")
+        page.get_by_role("button", name=re.compile("차용 가능성 검수")).first.click(timeout=6000)
+    except Exception as e:
+        res.append(("screen_clicked", False, str(e)[:100]))
+        return res
+    # 검수 결과 테이블 대기
+    screened = False
+    for _ in range(20):
+        page.wait_for_timeout(3000)
+        if page.get_by_text(re.compile("검수 결과")).count() > 0:
+            screened = True
+            break
+        if not g_no_error_text(page)[0]:
+            break
+    page.screenshot(path=str(OUT / "flow_citation_screen.png"))
+    res.append(("screen_result_shown(outcome)", screened, ""))
+    res.append(("screen_no_error", *g_no_error_text(page)))
+    if not screened:
+        return res
+    # 풀셋 생성
+    try:
+        page.get_by_role("button", name=re.compile("본문에 인용 삽입")).first.click(timeout=6000)
+    except Exception as e:
+        res.append(("build_clicked", False, str(e)[:100]))
+        return res
+    built = False
+    for _ in range(20):
+        page.wait_for_timeout(3000)
+        if page.get_by_role("button", name=re.compile(r"Word \(\.docx\)")).count() > 0:
+            built = True
+            break
+        if not g_no_error_text(page)[0]:
+            break
+    page.screenshot(path=str(OUT / "flow_citation_fullset.png"))
+    res.append(("fullset_word_btn(outcome)", built, ""))
+    res.append(("fullset_endnote_btn", page.get_by_role("button", name=re.compile("EndNote")).count() > 0, ""))
+    res.append(("fullset_no_error", *g_no_error_text(page)))
+    return res
+
+
 def main() -> int:
     suite = []
     with sync_playwright() as p:
@@ -173,6 +228,7 @@ def main() -> int:
         # 핵심 워크플로 (outcome 검증)
         suite.append(("flow:chat_write", task_chat_write(page)))
         suite.append(("flow:save_restore", task_save_restore(page, browser)))
+        suite.append(("flow:citation_fullset", task_citation_fullset(page)))
 
         # 관리자 단위 페이지 렌더 회귀 (관리자 모드 ON)
         for sel in ['[data-testid="stCheckbox"]', 'label:has-text("관리자 모드")']:

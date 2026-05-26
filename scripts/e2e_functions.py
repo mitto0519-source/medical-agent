@@ -126,7 +126,12 @@ def main():
     # ── 9. 계층 청킹 ──────────────────────────────────────────────────
     def _t_chunk():
         from src.ingestion.hierarchical_chunker import chunk_paper
-        ab = "Background: x. Methods: logistic regression with survey weights. Results: aOR 1.05. Conclusion: y."
+        ab = ("Background: Zero-calorie beverage consumption is rising rapidly among Korean "
+              "adolescents amid sugar-tax debates. Methods: We analyzed KYRBS 2025 nationwide "
+              "cross-sectional data using complex survey logistic regression with sampling weights, "
+              "strata and clusters to estimate adjusted odds ratios. Results: ZCB intake showed a "
+              "significant dose-response association with depressive symptoms (aOR 1.05, 95% CI 1.03-1.07). "
+              "Conclusion: Policy attention to artificial-sweetener beverages among adolescents is warranted.")
         cs = chunk_paper(ab, base_meta={"pmid": "1"})
         secs = {c["metadata"]["section"] for c in cs}
         stat = any(c["metadata"]["statistical_method"] for c in cs)
