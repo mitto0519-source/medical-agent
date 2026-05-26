@@ -26,6 +26,7 @@ services:
       # 이미지에 고정하면 OneDrive 동기화에 완전 면역.
       - ./app:/app/app
       - ./src:/app/src
+      - ./prompts:/app/prompts       # 공통 system prompt 소스
     restart: unless-stopped
 
   # Heartbeat — 운영 런타임의 정기 작업 단일 진입점.
@@ -42,6 +43,7 @@ services:
       - ./data:/app/data             # 메인 앱과 동일 data 공유 (그래프·RAG·trend_state·runtime DBs)
       - ./src:/app/src
       - ./scripts:/app/scripts
+      - ./prompts:/app/prompts       # 공통 system prompt 소스 (medical_core/safety/yoosun)
     command: ["python", "-m", "src.runtime.heartbeat"]
     restart: unless-stopped           # PC/Docker 재시작 시 자동 복귀 → 부팅 즉시 catchup
     depends_on:
