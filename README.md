@@ -1,461 +1,219 @@
-# 의료 연구 논문 자동화 분석 환경
+# Medical-Agent
 
-## 📁 프로젝트 구조
+> **바이브 논문**(vibe paper) 코파일럿 — 사람이 의학 논문을 써내려가는 흐름을 AI가 실시간으로 거든다.
+> KYRBS/KNHANES 공중보건 데이터 → StatBridge 통계 → Figure → Word/EndNote 풀셋.
 
-```
-Medical-Agent/
-│
-├── 📚 learning/              # 🎓 학습 및 탐색 영역
-│   ├── notebooks/
-│   │   ├── 01_data_exploration.ipynb
-│   │   ├── 02_statistical_analysis.ipynb
-│   │   ├── 03_visualization.ipynb
-│   │   └── 04_manuscript_generation.ipynb
-│   └── tutorials/            # 튜토리얼 및 가이드
-│
-├── 🚀 app/                   # 💼 프로덕션 애플리케이션 영역
-│   ├── streamlit_app.py      # Streamlit 메인 애플리케이션 (현재 진입점)
-│   ├── ai_panel.py           # AI 패널 모듈
-│   ├── api/                  # REST API 엔드포인트
-│   ├── config/               # 설정 파일
-│   │   └── settings.py
-│   ├── pages/                # Streamlit 페이지
-│   ├── templates/            # HTML 템플릿
-│   └── ⚠️ main.py            # [DEPRECATED] Flask 레거시 코드 (미사용, 삭제 예정)
-│
-├── 📖 examples/             # 💡 작동 예제
-│   ├── 01_statistics_example.py
-│   ├── 02_data_management_example.py
-│   └── 03_novelty_detection_example.py
-│
-├── 📚 docs/                 # 문서
-│   ├── PROJECT_STRUCTURE.md
-│   └── ARCHITECTURE.md
-│
-├── 📂 data/                 # 연구 데이터 및 데이터셋
-│
-├── 📦 src/                  # 핵심 라이브러리 코드
-│   ├── statistics/          # 의료 통계 분석
-│   ├── visualization/       # 그래프 및 시각화
-│   ├── database/            # 데이터 관리
-│   ├── nlp/                 # NLP 및 참신성 감지
-│   └── papergen/            # 논문 생성 도구
-│
-├── requirements.txt         # Python 의존성
-└── README.md               # 프로젝트 문서
-```
-
-## 🎯 두 가지 사용 영역
-
-### 🎓 학습 영역 (`/learning`)
-
-**목적**: 대화형 탐색, 실험, 학습
-
-**포함 내용**:
-- Jupyter 노트북 (`/notebooks/`)
-- 데이터 탐색 및 시각화
-- 통계 분석 시연
-- 새로운 분석 파이프라인 개발
-
-**사용 방법**:
-```bash
-jupyter lab --notebook-dir=learning/notebooks
-```
-
-**장점**:
-- ✅ 대화형 코드 실행
-- ✅ 즉시 시각화
-- ✅ 점진적 실험
-- ✅ 마크다운 문서화
-- ✅ 결과 재현 가능
+[![Tests](https://img.shields.io/badge/smoke-13%2F13-brightgreen)](scripts/test_rag_smoke.py)
+[![UI Eval](https://img.shields.io/badge/Playwright-49%2F49-brightgreen)](scripts/ui_eval.py)
+[![Function E2E](https://img.shields.io/badge/E2E-10%2F10-brightgreen)](scripts/e2e_functions.py)
 
 ---
 
-### 💼 프로덕션 영역 (`/app`)
-
-**목적**: 안정적이고 즉시 배포 가능한 애플리케이션
-
-**포함 내용**:
-- Flask 웹 애플리케이션
-- REST API 엔드포인트
-- 환경별 설정
-- HTML UI 템플릿
-
-**사용 방법**:
-```bash
-cd app
-python main.py
-```
-
-**API 엔드포인트**:
-- `POST /api/statistics` - 통계 계산
-- `POST /api/analysis/novelty` - 연구 참신성 분석
-- `POST /api/manuscript/generate` - 논문 섹션 생성
-- `GET /health` - 상태 확인
-
-**장점**:
-- ✅ 웹 인터페이스 제공
-- ✅ REST API로 통합 가능
-- ✅ 자동화 및 배치 처리 지원
-- ✅ 안정적이고 테스트된 코드
-
----
-
-## 💡 작동 예제 (`/examples`)
-
-**목적**: 각 모듈의 실제 사용 예제
-
-**예제들**:
-1. `01_statistics_example.py` - 의료 통계 사용법
-2. `02_data_management_example.py` - 데이터 정제 및 데이터베이스
-3. `03_novelty_detection_example.py` - 연구 참신성 분석
-
-**사용 방법**:
-```bash
-# 예제 실행
-python examples/01_statistics_example.py
-```
-
----
-
-## 🔄 워크플로우
-
-### 학습 및 실험 시:
-```
-1. 학습 영역 열기
-2. Jupyter Lab 시작
-3. 노트북에서 대화형 작업
-4. 새로운 아이디어 테스트
-5. 결과 시각화
-```
-
-### 프로덕션 사용 시:
-```
-1. 앱 영역 열기
-2. Flask 서버 실행
-3. 웹 인터페이스 또는 API 사용
-4. 자동화 및 배치 처리
-```
-
-### 예제 학습 시:
-```
-1. 예제 폴더 열기
-2. 해당 예제 실행
-3. 코드 패턴 학습
-4. 자신의 코드에 적용
-```
-
----
-
-## 📚 핵심 라이브러리 모듈
-
-모두 `/src/` 디렉토리에 있으며, 학습 영역과 프로덕션 영역 모두에서 사용 가능합니다.
-
-### 통계 분석 (`statistics/`)
-```python
-from src.statistics import MedicalStatistics
-
-stats = MedicalStatistics()
-# t-검정, ANOVA, 카이제곱, 만-휘트니 등
-result = stats.t_test(group1, group2)
-```
-
-### 시각화 (`visualization/`)
-```python
-from src.visualization import MedicalVisualizer
-
-visualizer = MedicalVisualizer()
-fig = visualizer.box_plot(data, x="treatment", y="outcome")
-```
-
-### 데이터 관리 (`database/`)
-```python
-from src.database import MedicalDatabase, DataCleaner
-
-db = MedicalDatabase("research.db")
-cleaner = DataCleaner()
-clean_data = cleaner.handle_missing_values(df)
-```
-
-### NLP 및 참신성 감지 (`nlp/`)
-```python
-from src.nlp import NoveltyDetector
-
-detector = NoveltyDetector()
-gap = detector.detect_research_gaps(existing, new_research)
-```
-
-### 논문 생성 (`papergen/`)
-```python
-from src.papergen import ManuscriptGenerator
-
-gen = ManuscriptGenerator(title, authors, institution)
-abstract = gen.generate_abstract(...)
-```
-
----
-
-## 🎯 어떤 영역을 선택할까?
-
-### 학습 영역 사용:
-- 🔬 새로운 데이터셋 탐색
-- 📊 새로운 통계 방법 테스트
-- 📈 시각화 및 그래프 생성
-- 🧪 새로운 분석 파이프라인 프로토타이핑
-- 🎓 통계 방법 학습 및 이해
-
-### 프로덕션 영역 사용:
-- 🌐 웹 인터페이스 필요
-- 🔌 REST API 통합
-- 🤖 자동화 및 배치 처리
-- 📦 다른 애플리케이션과 연동
-- 🚀 배포 및 프로덕션 실행
-
----
-
-## 🚀 빠른 시작
-
-### 설치
-```bash
-pip install -r requirements.txt
-```
-
-### 학습 시작 (노트북)
-```bash
-jupyter lab --notebook-dir=learning/notebooks
-```
-
-### 애플리케이션 시작 (프로덕션)
-```bash
-cd app
-python main.py
-```
-
-### 예제 실행
-```bash
-python examples/01_statistics_example.py
-```
-
----
-
-## � 상세 문서 & 가이드
-
-### 🎯 시작하기 (선택)
-
-| 문서 | 대상 | 내용 |
-|------|------|------|
-| **[📖 LEARNING_GUIDE.md](docs/LEARNING_GUIDE.md)** | 모든 사용자 | 3단계 학습 경로, Reference Library 완벽 가이드 |
-| **[💻 VSCODE_WORKFLOW.md](docs/VSCODE_WORKFLOW.md)** | 개발자 | 창 분리 워크플로우, 일일 작업 예제 |
-| **[🚀 QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md)** | 빠른 참조 | 메서드별 사용법, 5분 시작 가이드 |
-
-### 📐 기술 문서
-
-| 문서 | 내용 |
-|------|------|
-| **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** | 시스템 아키텍처, 데이터 플로우, 배포 전략 |
-| **[PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)** | 폴더 구조, 각 영역 설명, 파일 조직 |
-
----
-
-## 🚀 5분 빠른 시작
-
-### 1️⃣ Jupyter에서 학습 (권장)
-```bash
-jupyter lab --notebook-dir=learning/notebooks
-```
-그 후 브라우저에서 `01_data_exploration.ipynb` 열기
-
-### 2️⃣ 예제 실행
-```bash
-python examples/01_statistics_example.py
-```
-
-### 3️⃣ 웹 서버 시작
-```bash
-cd app
-python main.py
-# http://localhost:5000 접속
-```
-
----
-
-## 📚 Reference Library 한눈에
-
-### 🎓 학습 영역 (`/learning`)
-**여기서 배웁니다:**
-- `/notebooks/01_data_exploration.ipynb` - 기초 (데이터 탐색)
-- `/notebooks/02_statistical_analysis.ipynb` - 중급 (통계 검정)
-- `/notebooks/03_visualization.ipynb` - 시각화 (그래프)
-- `/notebooks/04_manuscript_generation.ipynb` - 논문 작성
-
-**방법:**
-```bash
-jupyter lab --notebook-dir=learning/notebooks
-# 셀을 하나씩 실행하면서 학습
-```
-
-### 💡 예제 영역 (`/examples`)
-**여기서 참고합니다:**
-- `01_statistics_example.py` - 기본 통계 사용법
-- `02_data_management_example.py` - 데이터 관리
-- `03_novelty_detection_example.py` - 참신성 분석
-
-**방법:**
-```bash
-python examples/01_statistics_example.py
-# 코드를 분석하고 자신의 노트북에서 응용
-```
-
-### 📦 Reference Library (`/src/statistics`)
-**가져갈 수 있는 것들:**
-
-```python
-from src.statistics import (
-    MedicalStatistics,      # t-test, ANOVA, 회귀분석 등
-    SurvivalAnalysis,       # Kaplan-Meier, Cox 모델
-    CategoricalAnalysis,    # 카이제곱, McNemar
-    MultipleComparison      # Bonferroni, FDR 보정
-)
-
-# 기본 사용법
-stats = MedicalStatistics()
-result = stats.t_test(group1, group2)
-print(f"p-value: {result['p_value']}")
-```
-
-**모든 메서드:**
-- 기술통계: `descriptive_stats()`, `grouped_descriptive()`
-- 비교검정: `t_test()`, `anova()`, `mann_whitney_u()`, `chi_square()`
-- 상관분석: `correlation()`, `correlation_matrix()`
-- 회귀분석: `regression_analysis()`, `logistic_regression()`
-- 생존분석: `kaplan_meier()`, `cox_regression()`, `log_rank_test()`
-- 기타: `handle_missing_values()`, `detect_normality()`
-
-### 🚀 프로덕션 영역 (`/app`)
-**여기서 배포합니다:**
-- `/app/main.py` - Flask 웹 서버
-- `/app/api/` - REST API 엔드포인트
-- `/app/config/settings.py` - 설정 관리
-
-**시작:**
-```bash
-cd app && python main.py
-```
-
----
-
-## 🎯 어디서 뭘 할까?
-
-### "t-test 배우고 싶어"
-```
-1. /docs/QUICK_REFERENCE.md 에서 t_test 찾기
-2. /src/statistics/medical_stats.py 에서 정의 읽기
-3. /examples/01_statistics_example.py 에서 예제 실행
-4. /learning/notebooks/02_*.ipynb 에서 실습
-```
-
-### "내 데이터 분석하고 싶어"
-```
-1. /learning/notebooks/05_my_analysis.ipynb 생성
-2. /src/statistics/medical_stats.py 참고하면서 작성
-3. Reference Library 메서드 사용
-4. 완성 후 /app/main.py 에서 API로 배포
-```
-
-### "새로운 분석 방법 개발하고 싶어"
-```
-1. /docs/LEARNING_GUIDE.md 에서 3단계 학습 따르기
-2. /examples/ 에서 유사 예제 찾기
-3. 자신의 노트북에서 구현
-4. 완성 후 라이브러리에 추가 고려
-```
-
----
-
-## 📍 창 분리 작업 (추천)
-
-**좌측(Reference) vs 우측(실습):**
+## 🚀 빠른 시작 (Docker · 권장)
 
 ```bash
-# VS Code에서
-Ctrl+\ (또는 Cmd+\)  # 창 분리
-
-좌측:  /src/statistics/medical_stats.py
-우측:  /learning/notebooks/02_statistical_analysis.ipynb
-하단:  Terminal
+docker compose up -d --build
+# 브라우저: http://localhost:8501
+# 로그: docker compose logs -f
 ```
 
-자세한 내용은 [💻 VSCODE_WORKFLOW.md](docs/VSCODE_WORKFLOW.md) 참조
-
----
-
-## ✅ 다음 단계
-
-- [ ] [📖 LEARNING_GUIDE.md](docs/LEARNING_GUIDE.md) 읽기
-- [ ] Jupyter Lab에서 첫 번째 노트북 실행
-- [ ] `/examples/` 의 예제 코드 실행
-- [ ] 자신의 데이터로 분석 시도
-- [ ] REST API를 통한 자동화 구축
-- [ ] 프로덕션 배포
-
----
-
-## 📞 주요 경로 맵
-
-```
-🎓 학습 중심          💡 참고 중심           🚀 프로덕션 중심
-├─ /learning/         ├─ /examples/          ├─ /app/
-├─ notebooks/         ├─ *_example.py        ├─ main.py
-├─ Jupyter Lab        ├─ 실행 가능한 코드    └─ REST API
-└─ 대화형 학습        └─ 패턴 참고           
-
-📚 문서 가이드
-├─ LEARNING_GUIDE.md (상세 학습 경로)
-├─ VSCODE_WORKFLOW.md (개발 환경 설정)
-├─ QUICK_REFERENCE.md (메서드 빠른 참조)
-└─ ARCHITECTURE.md (기술 설계)
+API 키는 `.env`에 (admin 전역 키로 모든 사용자에 적용):
+```env
+ANTHROPIC_API_KEY=sk-ant-...
+OPENAI_API_KEY=sk-proj-...
+GOOGLE_API_KEY=AIzaSy...   # Gemini (무료 폴백)
 ```
 
----
-
-## 📋 체크리스트
-
-### 프로젝트 설정
-- [x] 학습/프로덕션 영역 분리
-- [x] 핵심 라이브러리 모듈 생성
-- [x] Jupyter 노트북 생성
-- [x] Flask 애플리케이션 생성
-- [x] 예제 코드 작성
-- [x] 상세 문서 작성
-- [x] Learning Guide 작성
-- [ ] 의존성 설치
-- [ ] 애플리케이션 테스트
+3중 자동 폴백 (Claude → OpenAI → Gemini), 예산 80% 도달 시 Gemini로 강제 다운그레이드.
 
 ---
 
-## 📚 모든 가이드 목록
+## 🏗️ 아키텍처 (한눈에)
 
-1. **[📖 LEARNING_GUIDE.md](docs/LEARNING_GUIDE.md)** - ⭐ 가장 먼저 읽기
-   - 3단계 학습 경로 (기초→중급→고급)
-   - Reference Library 완벽 가이드
-   - 실제 시나리오별 워크플로우
+```
+┌─────────────────────────────────────────────────────────────┐
+│  UI Layer        app/streamlit_app.py                       │
+│                  ↳ 논문 작업실 · 통계 코드 · 인용/레퍼런스   │
+├─────────────────────────────────────────────────────────────┤
+│  Tool Registry   src/tools/__init__.py                      │
+│                  ↳ TOOLS dict + render_result(st.dialog)    │
+├─────────────────────────────────────────────────────────────┤
+│  Domain Logic    src/data/      ↳ KYRBS/KNHANES loader      │
+│                  src/research/  ↳ paper_writer, peer review │
+│                  src/export/    ↳ figure/table/citation     │
+│                  src/llm/       ↳ failover client + budget  │
+├─────────────────────────────────────────────────────────────┤
+│  Runtime Layer   src/runtime/   ↳ events/tasks/idempotency/ │
+│                                   heartbeat (SQLite WAL)    │
+│                  src/memory/    ↳ router/scorer/lifecycle/  │
+│                                   gate/conversation         │
+├─────────────────────────────────────────────────────────────┤
+│  Persistence     data/raw/      ↳ KYRBS 2005~2025 .sav      │
+│                  data/runtime/  ↳ events.db/tasks.db/...    │
+│                  data/exports/  ↳ Figure*.png/.docx/.xml    │
+│                  data/chromadb/ ↳ 10k+ paper chunks (RAG)   │
+├─────────────────────────────────────────────────────────────┤
+│  MCP Server      mcp_server.py — Claude Desktop·외부 agent  │
+│                  공통 backend (memory/task/events/budget)   │
+└─────────────────────────────────────────────────────────────┘
+```
 
-2. **[💻 VSCODE_WORKFLOW.md](docs/VSCODE_WORKFLOW.md)** - ⭐ 개발자 필독
-   - VS Code 창 분리 레이아웃
-   - 일일 작업 패턴
-   - 단축키 및 팁
+자세한 모듈 레지스트리 → [ARCHITECTURE.md](ARCHITECTURE.md)
+디자인 토큰 (색·폰트·spacing) → [DESIGN.md](DESIGN.md)
 
-3. **[🚀 QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md)** - ⭐ 빠른 참조
-   - 메서드별 사용법
-   - 상황별 검색 맵
-   - 5분 시작 가이드
+---
 
-4. **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - 기술 설계서
-   - 시스템 아키텍처
-   - 데이터 플로우
-   - 배포 전략
+## 📐 핵심 원칙 (CLAUDE.md 규칙)
 
-5. **[PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)** - 구조 설명서
-   - 폴더별 역할
-   - 파일 조직
-   - 사용 권장사항
+1. **사람이 주인공** — AI 자동 생성은 보조, 메인은 직접 쓰는 흐름
+2. **장기 메모리 자가 진화** — `src/memory/router.py`가 단일 진입점, lifecycle decay/충돌해결 자동
+3. **모델 하드코딩 금지** — `src/config/models.py` 경유
+4. **LLM 호출은 failover 경유** — `get_llm_client()` 만 사용, 직접 client 생성 금지
+5. **로컬 + 클라우드** — 항상 로컬 먼저, Supabase는 선택
+6. **데이터 무결성 잠금** — 환각 차단 (`memory_gate.assess`), 숫자/통계 토큰 보존
+
+전체 11 규칙 → [CLAUDE.md](CLAUDE.md)
+
+---
+
+## 🧪 검증 (다층)
+
+| 레이어 | 명령 | 무엇 |
+|---|---|---|
+| ① 임포트 + RAG | `python scripts/test_rag_smoke.py` | 모든 모듈 import + ChromaDB 절대기준 |
+| ② 코드 무결성 | `python scripts/e2e_diagnose.py` | LLM 무관 정적 분석 + code_graph |
+| ③ 함수 E2E | `python scripts/e2e_functions.py` | 10/10 핵심 함수 실데이터 검증 |
+| ④ 통계 회귀 | `python scripts/prove_stata_e2e.py` | 실 KYRBS → StatBridge → ZCB aOR 재현 |
+| ⑤ UI 회귀 | `python scripts/ui_eval.py` | Playwright 49 assertion · 실 브라우저 |
+| ⑥ 인용 워크플로 | `python scripts/e2e_citation.py` | 9/9 PubMed + EndNote 풀셋 |
+
+---
+
+## 📊 ZCB ↔ 우울 논문 재현 (대표 사례)
+
+```bash
+# 1. 실 KYRBS 2025 → 모든 분석 데이터 계산
+docker compose exec learner python scripts/compute_all_figure_data.py
+
+# 2. 4 figure 생성 (Stata v2.4 캐노니컬 매칭)
+docker compose exec learner python scripts/build_paper_figures.py
+
+# 3. EndNote CWYW 필드 임베드 Word docx
+docker compose exec learner python scripts/build_endnote_docx.py \
+    data/exports/ZCB_paper_v2.4_FINAL.md ZCB_paper_endnote
+```
+
+산출 → `data/exports/`:
+- `Figure{1,2,3}_*.{png,pdf}` — 13단계 sample flow / 성별 예측확률 / forest plot
+- `ZCB_paper_v2.4_FINAL.md` — 논문 본문 (paired with `ZCB_v2.4_canonical.do`)
+- `ZCB_paper_v2.4_yoosun_deep_endnote.docx` — EN.CITE 필드 28개 임베드
+
+---
+
+## 🤖 외부 agent 연동 (MCP)
+
+`mcp_server.py`로 Claude Desktop / Cursor / 다른 AI agent가 같은 backend 사용:
+
+```bash
+python mcp_server.py --port 8765
+```
+
+Claude Desktop 설정 (`~/.config/claude/claude_desktop_config.json`):
+```json
+{
+  "mcpServers": {
+    "medical-agent": {
+      "url": "http://localhost:8765/mcp",
+      "headers": { "Authorization": "Bearer ma-YOUR_API_KEY" }
+    }
+  }
+}
+```
+
+노출 도구 (15+):
+- 분석: `search_papers`, `check_novelty`, `generate_research_topics`
+- 메모리: `memory_write`, `memory_recall`, `memory_lifecycle_tick`
+- 작업: `task_list_unfinished`, `task_status`
+- 감사: `events_recent`, `events_replay`
+- 예산: `budget_status`, `budget_set_caps`
+
+---
+
+## 🔄 자동 동기화 (선택)
+
+```bash
+python scripts/auto_sync.py
+# 또는 Windows hidden: wscript scripts/run_sync_hidden.vbs
+```
+
+v3 commit-first 패턴 — stash 0 의존, 60초 디바운스, 분 단위 polling.
+
+---
+
+## 📁 디렉토리
+
+```
+.
+├── app/                    Streamlit UI (단일 진입점)
+├── src/
+│   ├── data/               KYRBS/KNHANES loader, StatBridge
+│   ├── research/           paper_writer, peer_reviewer, pipeline
+│   ├── export/             figure_builder, citation_workflow, table_builder
+│   ├── llm/                failover client (Claude/OpenAI/Gemini), budget
+│   ├── memory/             router, scorer, lifecycle, gate, conversation
+│   ├── runtime/            events, tasks, idempotency, heartbeat
+│   ├── tools/              TOOLS registry + render_result
+│   ├── agent/              persona, MedicalAgent
+│   ├── knowledge/          medical_seed, trend_learner, research_wiki
+│   ├── rag/                ChromaDB pipeline
+│   └── config/             models, env, logging
+├── scripts/
+│   ├── test_rag_smoke.py   ① 임포트 + RAG
+│   ├── e2e_diagnose.py     ② 코드 무결성
+│   ├── e2e_functions.py    ③ 함수 E2E
+│   ├── prove_stata_e2e.py  ④ 통계 회귀
+│   ├── ui_eval.py          ⑤ Playwright
+│   ├── compute_all_figure_data.py  KYRBS → 모든 figure 수치
+│   ├── build_paper_figures.py      → PNG/PDF
+│   └── auto_sync.py        v3 commit-first 데몬
+├── data/
+│   ├── raw/                KYRBS/KNHANES .sav (gitignore)
+│   ├── runtime/            SQLite (events/tasks/idempotency/lifecycle)
+│   ├── exports/            논문 산출물
+│   ├── chromadb/           RAG 벡터 인덱스
+│   ├── agent_self/         persona, insights, change_log
+│   └── author_profiles/    yoosun_cho.json 등
+├── mcp_server.py           MCP backend (공통)
+├── docker-compose.yml      medical-agent + learner 서비스
+├── ARCHITECTURE.md         모듈 레지스트리 (★새 모듈 만들기 전 필독)
+├── DESIGN.md               디자인 토큰 (★figure/UI 색·폰트 변경 전 필독)
+└── CLAUDE.md               작업 표준 11 규칙
+```
+
+---
+
+## 🛠️ 기술 스택
+
+- **UI**: Streamlit 1.30+
+- **LLM**: Anthropic Claude · OpenAI GPT · Google Gemini (3중 failover)
+- **통계**: statsmodels, pingouin, lifelines, pyreadstat (KYRBS .sav)
+- **시각화**: matplotlib, seaborn, plotly (논문 figure는 matplotlib)
+- **RAG**: sentence-transformers + ChromaDB (or Supabase pgvector)
+- **문서**: python-docx, mammoth (DOCX), reportlab (PDF), python-pptx
+- **인프라**: Docker, SQLite WAL, FastMCP
+
+---
+
+## 📚 자세한 문서
+
+- [CLAUDE.md](CLAUDE.md) — 작업 표준 11 규칙
+- [ARCHITECTURE.md](ARCHITECTURE.md) — 모듈 레지스트리 (11 섹션)
+- [DESIGN.md](DESIGN.md) — 디자인 토큰 (YAML + body)
+- `memory/` — 세션 간 영속 컨텍스트
+- `data/change_log/history.json` — 모든 의미있는 변경 이력
+
+---
+
+## 라이선스 / 사용자
+
+연구용 · 환자 진료 결정에 직접 사용 금지 (의료 안전 레이어는 별도 검토 필요).
