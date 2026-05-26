@@ -55,6 +55,9 @@ scripts/ui_eval_outputs/
 scripts/ui_smoke_outputs/
 scripts/e2e_outputs/
 scripts/screenshots/
+scripts/real_session_out/
+# 자동학습 산출(주기적 변동, 재생성 가능)
+data/knowledge_graph/
 
 # IDE
 .vscode/settings.json
