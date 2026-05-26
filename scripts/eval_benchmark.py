@@ -106,13 +106,22 @@ def eval_hallucination_gate() -> dict:
 # ── ③ Statistical Analysis Correctness ───────────────────────────────────────
 
 def eval_stat_correctness() -> dict:
-    """StatBridge가 실 KYRBS 2025에서 ZCB aOR을 재현 (paper 값과 일치)."""
+    """StatBridge가 실 KYRBS 2025에서 ZCB aOR을 재현 (paper 값과 일치).
+
+    2025 전용: F_ZERO(ZCB 노출 컬럼)는 21차(2025) 신규이므로 다른 연도엔 없음.
+    _find_real_data가 mtime으로 다른 해를 골라 zcb_freq=None이 되면 metric 의미 상실.
+    """
     try:
-        from src.research.research_pipeline import _find_real_data
+        from pathlib import Path as _P
+        from src.data.kyrbs_raw_loader import KYRBSLoader
         from src.data.stat_bridge import StatBridge
-        df = _find_real_data("kyrbs")
-        if df is None or "depression" not in df.columns and "M_SAD" not in df.columns:
-            return metric("stat_zcb_aOR_within_0.05", 0.0, 0.9, "KYRBS df 없음")
+        sav = _P("data/raw/kyrbs2025.sav")
+        if not sav.exists():
+            return metric("stat_zcb_aOR_within_0.05", 0.0, 0.9, "kyrbs2025.sav 없음 (ZCB 변수는 2025 전용)")
+        df, _meta = KYRBSLoader().load(sav)
+        if "zcb_freq" not in df.columns:
+            return metric("stat_zcb_aOR_within_0.05", 0.0, 0.9,
+                          f"loader가 zcb_freq 노출 실패 (cols={list(df.columns)[:8]})")
         # 비교 기준: paper aOR ~1.27 for ≥1/day vs none (Model 2)
         # 여기는 간단히 per-1-level continuous: paper 1.04
         spec = {"outcome": "depression",
