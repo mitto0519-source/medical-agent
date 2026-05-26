@@ -105,6 +105,19 @@ def record(
     except Exception:
         pass
 
+    # 라우터 감사(events trail) — JSON/ChromaDB 저장은 위에서 끝, 여기선 audit-only
+    try:
+        from src.memory import router as _router
+        _router.write(
+            f"User: {user_message[:200]}\nAssistant: {agent_response[:400]}",
+            type="episodic", source="user",
+            owner_email=owner_email or None,
+            extra_meta={"topic": topic, "context_type": context_type, "quality": quality},
+            record_only=True,
+        )
+    except Exception:
+        pass
+
 
 def recall_relevant(query: str, n: int = 4, owner_email: Optional[str] = None,
                     min_score: float = 0.25) -> str:

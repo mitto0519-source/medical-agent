@@ -201,6 +201,19 @@ class PersonaManager:
         self._data["accumulated_perspectives"] = perspectives[:_MAX_PERSPECTIVES]
         self._save()
         _log.info("[persona] 새 관점 추가: %s", topic)
+        # 라우터 감사(events) — persona.json은 위에서 저장됨, 여기선 audit + scoring만
+        try:
+            from src.memory import router as _router
+            _router.write(
+                f"{topic}: {perspective}",
+                type="semantic", source="reflection",
+                extra_meta={"persona_topic": topic, "confidence": confidence,
+                            "evidence_basis": evidence_basis or []},
+                candidates_nearby=[p.get("perspective", "") for p in perspectives[1:6]],
+                record_only=True,
+            )
+        except Exception:
+            pass
 
     # ── 대화 기억 ────────────────────────────────────────────────────────────
 

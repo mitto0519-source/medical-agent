@@ -133,7 +133,20 @@ def format_reference(ref: Reference, style: str = "Vancouver", index: int = 1) -
 # ─── PubMed 조회 ─────────────────────────────────────────────────────────────
 
 def _fetch_pubmed_xml(pmids: List[str]) -> str:
-    """PubMed EFetch API로 XML 반환."""
+    """PubMed EFetch API로 XML 반환. idempotency 캐시 24h(같은 PMID 세트 → 동일 응답)."""
+    if not pmids:
+        return ""
+    try:
+        from src.runtime.idempotency import cached_call
+        key = "pmids:" + ",".join(sorted(pmids))
+        return cached_call(key, lambda: _fetch_pubmed_xml_raw(pmids),
+                           ttl_sec=24 * 3600, namespace="pubmed_efetch")
+    except Exception:
+        return _fetch_pubmed_xml_raw(pmids)
+
+
+def _fetch_pubmed_xml_raw(pmids: List[str]) -> str:
+    """PubMed EFetch — 캐시 미경유 원본 호출."""
     import urllib.request, urllib.parse
     params = urllib.parse.urlencode({
         "db": "pubmed", "id": ",".join(pmids),
@@ -209,11 +222,20 @@ def _parse_pubmed_xml(xml_str: str) -> List[Reference]:
                     abstract_texts.append(text)
             abstract = " ".join(abstract_texts)
 
-            # DOI
+            # DOI — 반드시 '이 논문 자신의' ArticleIdList만. `.//`로 descendant 검색하면
+            # 인용목록(ReferenceList) 안 다른 논문의 DOI를 주워 와 엉뚱한 DOI가 박힌다(버그 수정).
             doi = ""
-            for loc in article.findall(".//ArticleId"):
-                if loc.get("IdType") == "doi":
-                    doi = loc.text.strip() if loc.text else ""
+            id_list = article.find("PubmedData/ArticleIdList")
+            if id_list is not None:
+                for loc in id_list.findall("ArticleId"):
+                    if loc.get("IdType") == "doi" and loc.text:
+                        doi = loc.text.strip()
+                        break
+            if not doi and art is not None:  # 폴백: Article/ELocationID[@EIdType=doi]
+                for el in art.findall("ELocationID"):
+                    if el.get("EIdType") == "doi" and el.text:
+                        doi = el.text.strip()
+                        break
 
             refs.append(Reference(
                 pmid=pmid, doi=doi, title=title, authors=authors,
@@ -227,7 +249,19 @@ def _parse_pubmed_xml(xml_str: str) -> List[Reference]:
 
 
 def search_pubmed(query: str, max_results: int = 10) -> List[str]:
-    """PubMed ESearch로 PMID 목록 반환."""
+    """PubMed ESearch로 PMID 목록 반환. idempotency 캐시 6h(쿼리+limit 동일 → 동일 응답)."""
+    if not (query or "").strip():
+        return []
+    try:
+        from src.runtime.idempotency import cached_call
+        key = f"{(query or '').lower().strip()}|{max_results}"
+        return cached_call(key, lambda: _search_pubmed_raw(query, max_results),
+                           ttl_sec=6 * 3600, namespace="pubmed_esearch")
+    except Exception:
+        return _search_pubmed_raw(query, max_results)
+
+
+def _search_pubmed_raw(query: str, max_results: int) -> List[str]:
     import urllib.request, urllib.parse
     params = urllib.parse.urlencode({
         "db": "pubmed", "term": query,

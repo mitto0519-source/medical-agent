@@ -122,21 +122,37 @@ class _FailoverClient:
 
         크레딧 소진/레이트리밋뿐 아니라 '빈 응답'·예상 못한 오류도 실패로 보고
         다음 provider(무료 Gemini 등)로 자동 전환한다 — 사용자 개입 불필요(규칙 11).
+        성공 시 budget.record로 사용량 누적(추정 토큰).
         """
         from src.llm.health import record_success, record_failure
         errors: list[str] = []
+
+        def _record_budget(client, success: bool, response_text: str = ""):
+            """토큰 추정(4chars/token) + budget.record로 비용 누적."""
+            try:
+                from src.llm import budget
+                prov = _provider_of(client)
+                model = getattr(client, "model", "?") or "?"
+                t_in = max(1, len(user_message) // 4 + len(str(kwargs.get("system_prompt", ""))) // 4)
+                t_out = max(0, len(response_text) // 4)
+                budget.record(prov, model, t_in, t_out, task=self._task, success=success)
+            except Exception:
+                pass
 
         # 1. 현재 active 시도
         try:
             result = self._active.generate(user_message, **kwargs)
             if result and result.strip():
                 record_success(_provider_of(self._active))
+                _record_budget(self._active, True, result)
                 return result
             errors.append(f"{_provider_of(self._active)}(빈 응답)")
             record_failure(_provider_of(self._active), "empty response")
+            _record_budget(self._active, False, "")
         except Exception as e:
             errors.append(f"{_provider_of(self._active)}({str(e)[:80]})")
             record_failure(_provider_of(self._active), str(e))
+            _record_budget(self._active, False, "")
 
         # 2. 모든 fallback을 순차 연쇄 시도 (실제로 텍스트를 주는 provider까지)
         active_prov = _provider_of(self._active)
@@ -157,12 +173,15 @@ class _FailoverClient:
                 result = client.generate(user_message, **kwargs)
                 if result and result.strip():
                     record_success(provider)
+                    _record_budget(client, True, result)
                     return result
                 errors.append(f"{provider}(빈 응답)")
                 record_failure(provider, "empty response")
+                _record_budget(client, False, "")
             except Exception as e:
                 errors.append(f"{provider}({str(e)[:80]})")
                 record_failure(provider, str(e))
+                _record_budget(client, False, "")
                 continue  # 다음 fallback으로
         raise RuntimeError("모든 LLM provider 실패 — " + "; ".join(errors))
 
@@ -216,6 +235,18 @@ def get_llm_client(
 
     explicit_provider = (provider or "").strip().lower()
 
+    # ── Budget 가드: 명시 provider 없을 때만, 일일 비용 80%+ 도달 시 google로 강제 다운그레이드 ──
+    if not explicit_provider and not api_key:
+        try:
+            from src.llm import budget as _budget
+            rec = _budget.recommended_provider(task=task, requested=None)
+            if rec.get("reason") in ("budget_warning_downgrade", "budget_exhausted"):
+                explicit_provider = rec["provider"]
+                _log.info("Budget 가드: %s → %s (pct=%s%%)",
+                          task, explicit_provider, rec.get("pct_used"))
+        except Exception:
+            pass  # budget 모듈 없으면 기존 경로
+
     # ── 명시적 provider 지정 ─────────────────────────────────────────────
     if explicit_provider in ("anthropic", "claude"):
         primary = _make_client("anthropic", api_key, model, task)
@@ -229,6 +260,15 @@ def get_llm_client(
         if not with_failover:
             return primary
         fallbacks = _build_fallbacks("openai", task)
+        return _FailoverClient(primary, fallbacks, task) if fallbacks else primary
+
+    if explicit_provider in ("google", "gemini"):
+        # google은 task별 모델 매핑이 없을 수 있으니 model 강제 안 함(gemini_client 기본값)
+        _key = api_key or os.environ.get("GOOGLE_API_KEY")
+        primary = _make_client("google", _key, None, task)
+        if not with_failover:
+            return primary
+        fallbacks = _build_fallbacks("google", task)
         return _FailoverClient(primary, fallbacks, task) if fallbacks else primary
 
     # ── api_key 접두어로 자동 감지 ──────────────────────────────────────

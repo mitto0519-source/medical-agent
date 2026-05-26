@@ -32,8 +32,9 @@ tqdm>=4.65.0
 pymupdf>=1.23.0
 
 # ── Document Processing (Word/PPT) ────────────────────────────────────
-python-docx>=1.0.0
+python-docx>=1.0.0          # 구조적 파싱(단락/표) + DOCX 쓰기
 python-pptx>=0.6.0
+mammoth>=1.6.0              # DOCX→텍스트(구조/heading 보존 우수) — 논문 첨삭 ingestion 1순위
 
 # ── Vector DB — local (ChromaDB) ──────────────────────────────────────
 # protobuf 충돌 시: pip install "chromadb>=0.5.0" --no-deps 후 수동 설치

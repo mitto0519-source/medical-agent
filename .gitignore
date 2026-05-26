@@ -46,6 +46,10 @@ data/change_log/
 data/working_papers/
 data/wiki/
 data/logs/
+# 신규 운영 런타임 SQLite DB (events/tasks/idempotency/lifecycle) — 영속 상태, git 부적합
+data/runtime/
+# HuggingFace 모델 캐시 (재다운로드 가능, 수십MB)
+data/.hf_cache/
 # 검증/스크립트 출력 (스크린샷·리포트 — 재생성됨)
 scripts/ui_eval_outputs/
 scripts/ui_smoke_outputs/

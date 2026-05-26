@@ -974,6 +974,37 @@ with main_col:
                 parts.append(f"# {_v}" if _k == "title" else f"## {_label}\n\n{_v}")
             return "\n\n".join(parts)
 
+        def _ws_fulltext():
+            """섹션들을 한 편의 연속 전문으로 직렬화 (제목 + '## Label' 헤더). 전체 드래그/복사용."""
+            parts = []
+            _t = (st.session_state.get("ws_title") or "").strip()
+            if _t:
+                parts.append(_t)
+            for _k, _label in _WS_KEYS:
+                if _k == "title":
+                    continue
+                _v = (st.session_state.get(f"ws_{_k}") or "").strip()
+                if _v:
+                    parts.append(f"## {_label}\n{_v}")
+            return "\n\n".join(parts)
+
+        def _ws_split_fulltext(_text: str) -> dict:
+            """전문 편집 결과 → 섹션 dict. '## Label' 헤더로 분리, 첫 헤더 앞 텍스트=제목."""
+            import re as _re
+            _lab2key = {lbl.lower(): k for k, lbl in _WS_KEYS}
+            _out = {}
+            _parts = _re.split(r"(?m)^##[ \t]*(.+?)[ \t]*$", _text or "")
+            _head = (_parts[0] or "").strip()
+            if _head:
+                _out["title"] = _head.splitlines()[0].strip()
+            for _i in range(1, len(_parts) - 1, 2):
+                _lbl = _parts[_i].strip().lower()
+                _body = (_parts[_i + 1] or "").strip()
+                _k = _lab2key.get(_lbl)
+                if _k and _body:
+                    _out[_k] = _body
+            return _out
+
         def _ws_study_info():
             _sel = st.session_state.get("selected_topic", {}) or {}
             return {
@@ -1080,7 +1111,13 @@ with main_col:
                 f"RECENT CONVERSATION:\n{_hist}\n"
                 f"request: {user_msg}"
             )
-            _ic = _ws_parse_json(llm.generate(_cls, task="fast", max_tokens=200)) or {}
+            # 분류 호출도 LLM이라 폴백 소진/오류 가능 → 절대 raw 에러가 새지 않게 보호.
+            # 실패해도 휴리스틱으로 진행(아래 실제 생성은 try로 보호되어 친절 메시지 처리됨).
+            try:
+                _ic = _ws_parse_json(llm.generate(_cls, task="fast", max_tokens=200)) or {}
+            except Exception as _ce:
+                _log.warning("의도 분류 LLM 실패 → 휴리스틱 폴백: %s", str(_ce)[:120])
+                _ic = {}
             _h_intent, _h_sec = _ws_classify_heuristic(user_msg)
             # LLM 분류가 파싱되면 사용, 아니면 휴리스틱으로 폴백 (chat 오분류 방지)
             _intent = _ic.get("intent") or _h_intent
@@ -1168,12 +1205,18 @@ with main_col:
                 return {"section": None, "content": "", "reply": (_reply or "").strip()[:1000]}
             except Exception as _e:
                 _es = str(_e).lower()
-                if any(k in _es for k in ("429", "quota", "exceeded", "provider 실패", "rate", "resourceexhausted")):
+                # 모든 provider 소진(무료 쿼터 + 유료 크레딧) → 친절 안내. credit/400/401/403도 포함.
+                if any(k in _es for k in ("429", "quota", "exceeded", "provider 실패", "rate",
+                                          "resourceexhausted", "credit", "insufficient", "balance",
+                                          "error code: 400", "error code: 401", "error code: 403",
+                                          "authentication")):
                     return {"section": None, "content": "",
-                            "reply": "⏳ **오늘 무료 LLM 쿼터가 소진됐습니다.**\n\n"
-                                     "무료 Gemini는 모델당 하루 20요청(순환 포함 ~80/일)이 한도입니다. "
-                                     "내일 리셋되거나, 사이드바에 **유료 API 키**(Gemini 유료는 매우 저렴)를 넣으면 "
-                                     "바로 무제한에 가깝게 쓸 수 있습니다.\n\n_원문 오류: " + str(_e)[:120] + "_"}
+                            "reply": "⏳ **모든 LLM 연결이 막혔습니다 (무료 쿼터 소진 또는 유료 크레딧 부족).**\n\n"
+                                     "이 앱은 Gemini(무료)→Claude→OpenAI 순으로 자동 전환합니다. 지금은 셋 다 거부됐습니다:\n"
+                                     "- 무료 Gemini: 모델당 하루 20요청(순환 ~80/일) 한도 → 내일 리셋\n"
+                                     "- Claude/OpenAI: 크레딧 잔액 부족\n\n"
+                                     "**크레딧이 남은 API 키**를 사이드바에 넣거나(Gemini 유료는 매우 저렴), "
+                                     "내일 무료 쿼터 리셋 후 다시 시도하세요.\n\n_원문: " + str(_e)[:140] + "_"}
                 return {"section": None, "content": "", "reply": f"기능 실행 중 오류: {str(_e)[:200]}"}
 
         def _ws_stata(stata_code: str) -> dict:
@@ -1300,27 +1343,63 @@ with main_col:
                     _stopts = ["Yoosun Cho"]
                 st.selectbox("글쓰기 스타일", _stopts, key="ws_style")
             st.text_area("핵심 결과 요약 (통계 등)", value=st.session_state.get("ws_summary", ""), key="ws_summary", height=60)
-            _exup = st.file_uploader("기존 논문 불러오기 (DOCX/PDF/TXT)", type=["txt", "docx", "pdf", "md"], key="ws_existing_up")
-            if _exup is not None and st.button("📥 불러오기", key="ws_load_existing"):
-                try:
-                    from src.ingestion.paper_ingester import PaperIngester
-                    _paper = PaperIngester().ingest_bytes(_exup.getvalue(), _exup.name)
-                    for _k, _ in _WS_KEYS:
-                        if _k in _paper.sections:
-                            st.session_state[f"ws_{_k}"] = _paper.sections[_k]
-                    if _paper.title:
-                        st.session_state["ws_title"] = _paper.title
-                    st.success(f"{len(_paper.sections)}개 섹션 로드 — 채팅으로 개선하거나 오른쪽에서 편집하세요")
-                    st.rerun()
-                except Exception as _e:
-                    st.error(f"파싱 오류: {_e}")
+            st.caption("논문 파일 업로드 / 전체 텍스트 붙여넣기는 아래 **📂 기존 논문 불러오기** 패널에 있습니다.")
+
+        # ── 📂 기존 논문 불러오기 / 전체 텍스트 붙여넣기 (검수·인용용, 눈에 띄게 분리) ──
+        with st.expander("📂 기존 논문 불러오기 · 전체 텍스트 붙여넣기 (파일 또는 풀텍스트)", expanded=False):
+            _lc1, _lc2 = st.columns(2)
+            with _lc1:
+                st.markdown("**① 파일 업로드** (DOCX / PDF / TXT / MD)")
+                _exup = st.file_uploader("파일", type=["txt", "docx", "pdf", "md"],
+                                         key="ws_existing_up", label_visibility="collapsed")
+                if _exup is not None and st.button("📥 파일에서 불러오기", key="ws_load_existing", use_container_width=True):
+                    try:
+                        from src.ingestion.paper_ingester import PaperIngester
+                        _paper = PaperIngester().ingest_bytes(_exup.getvalue(), _exup.name)
+                        _n = 0
+                        for _k, _ in _WS_KEYS:
+                            if _k in _paper.sections:
+                                st.session_state[f"ws_{_k}"] = _paper.sections[_k]; _n += 1
+                        if _paper.title:
+                            st.session_state["ws_title"] = _paper.title
+                        st.session_state["_ws_ft_refresh"] = True
+                        st.success(f"{_n}개 섹션 로드 — 오른쪽 '📄 전문'에서 전체 확인/편집, 채팅으로 개선하세요.")
+                        st.rerun()
+                    except Exception as _e:
+                        st.error(f"파싱 오류: {_e}")
+            with _lc2:
+                st.markdown("**② 전체 텍스트 붙여넣기** (논문 전문)")
+                _paste = st.text_area("전문붙여넣기", height=150, key="ws_paste_full",
+                                      placeholder="논문 전체 텍스트를 붙여넣으세요. Abstract/Introduction/Methods/Results/Discussion 머리말이 있으면 자동 분리됩니다.",
+                                      label_visibility="collapsed")
+                if st.button("📥 텍스트에서 불러오기", key="ws_load_paste", use_container_width=True):
+                    if not (_paste or "").strip():
+                        st.warning("붙여넣을 텍스트를 입력하세요.")
+                    else:
+                        from src.ingestion.paper_ingester import _split_into_sections as _spl, _extract_metadata as _meta
+                        _secs = _spl(_paste)
+                        if _secs:
+                            _n = 0
+                            for _k, _ in _WS_KEYS:
+                                if _secs.get(_k):
+                                    st.session_state[f"ws_{_k}"] = _secs[_k]; _n += 1
+                            _m = _meta(_paste)
+                            if _m.get("title") and not st.session_state.get("ws_title"):
+                                st.session_state["ws_title"] = _m["title"]
+                            st.session_state["_ws_ft_refresh"] = True
+                            st.success(f"{_n}개 섹션으로 분리 로드 — 오른쪽 '📄 전문'에서 확인하세요.")
+                        else:
+                            st.session_state["ws_introduction"] = _paste.strip()
+                            st.session_state["_ws_ft_refresh"] = True
+                            st.info("섹션 머리말을 못 찾아 전체를 Introduction에 넣었습니다. '📄 전문'에서 직접 나눌 수 있어요.")
+                        st.rerun()
 
         col_chat, col_paper = st.columns([45, 55], gap="large")
 
         # ═══════════ 좌측: AI 에이전트 채팅 + 통계 코드 (러버블식) ═══════════
         with col_chat:
             _ws_mode = st.radio(
-                "작업 모드", ["💬 AI 채팅", "📊 통계 코드"], horizontal=True,
+                "작업 모드", ["💬 AI 채팅", "📊 통계 코드", "📚 인용/레퍼런스"], horizontal=True,
                 key="ws_mode", label_visibility="collapsed",
             )
             if _ws_mode == "💬 AI 채팅":
@@ -1337,8 +1416,19 @@ with main_col:
                         st.session_state["ws_chat"].append({"role": "assistant", "content": "⚠️ AI 사용을 위해 API 키가 필요합니다 (사이드바 설정 또는 admin 전역 키)."})
                         st.rerun()
                     try:
+                        # Durable task wrap — 분단위 idempotency(이중클릭 방지) + events 감사 + 크래시 복구
+                        import time as _t
+                        from src.runtime.tasks import task_run as _task_run
+                        _task_input = {"msg": _p, "title": st.session_state.get("ws_title", "")[:80],
+                                       "ts_min": int(_t.time() // 60)}
                         with st.spinner("AI가 작업 중..."):
-                            _res = _ws_agent(_p)
+                            with _task_run("paper_write_chat", _task_input,
+                                           owner_email=_u.get("email", "")) as _run:
+                                if _run.cached:
+                                    _res = _run.output
+                                else:
+                                    _res = _ws_agent(_p)
+                                    _run.set_output(_res)
                         _reply = _res.get("reply", "반영했습니다.")
                         if _res.get("section") and _res.get("content"):
                             _sk = _res["section"]
@@ -1361,7 +1451,7 @@ with main_col:
                     except Exception as _e:
                         st.session_state["ws_chat"].append({"role": "assistant", "content": f"오류: {str(_e)[:200]}"})
                     st.rerun()
-            else:
+            elif _ws_mode == "📊 통계 코드":
                 # ── 📊 통계 코드 모드 (STATA/SPSS/SAS/R → 동등 분석 → 논문 표·그림) ──
                 st.markdown("<div style='font-size:13px;font-weight:700;color:#E5E7EB;margin-bottom:6px;'>📊 통계 코드 → 논문 표·그림</div>", unsafe_allow_html=True)
                 st.caption("STATA·SPSS·SAS·R 코드를 붙여넣고 Run하면 동일 통계 로직을 Python으로 해석해 OR/95%CI/p-trend·forest를 계산합니다. 데이터는 자산화된 data/raw에서 자동 로드(업로드 불필요).")
@@ -1388,6 +1478,179 @@ with main_col:
                             st.success(f"✅ 분석 완료 — outcome={_spec.get('outcome')}, analysis={_spec.get('analysis')}. 오른쪽 '📊 통계 결과'에서 확인·복사·워드 저장하세요.")
                             st.rerun()
 
+            else:
+                # ── 📚 인용/레퍼런스 모드 (레퍼런스 N개 → 차용 검수 → 본문 [n] → Word+EndNote 풀셋) ──
+                st.markdown("<div style='font-size:13px;font-weight:700;color:#E5E7EB;margin-bottom:6px;'>📚 레퍼런스 풀셋 — DOCX 첨삭 · 차용 검수 · 본문 넘버링 · Word/EndNote</div>", unsafe_allow_html=True)
+
+                # ── 📄 DOCX 첨삭 라운드트립 (조유선 스타일 + 기존 레퍼런스/넘버링 EndNote 재구성) ──
+                with st.expander("📄 DOCX 첨삭 — 조유선 스타일 + 기존 레퍼런스/넘버링 EndNote 재구성", expanded=True):
+                    st.caption("작성된 논문 .docx를 올리면 ① mammoth로 본문 추출 → ② 조유선 스타일 첨삭 → "
+                               "③ 문서 안의 참고문헌·[n] 넘버링을 보존해 EndNote 호환 구조로 재구성 → "
+                               "첨삭본 Word + EndNote 파일로 돌려줍니다.")
+                    _dx = st.file_uploader("논문 DOCX", type=["docx"], key="cite_docx_up", label_visibility="collapsed")
+                    _restyle = st.checkbox("조유선 스타일 첨삭 적용 (LLM — 쿼터 소진 시 원문 보존)", value=True, key="cite_restyle")
+                    if st.button("▶ DOCX 첨삭 + EndNote 재구성", type="primary", use_container_width=True, key="cite_docx_btn"):
+                        if _dx is None:
+                            st.warning("DOCX 파일을 올리세요.")
+                        else:
+                            from src.export import citation_workflow as _cwf
+                            with st.spinner("mammoth 추출 → 첨삭 → 레퍼런스 재구성 중..."):
+                                _rr = _cwf.revise_docx_fullset(
+                                    _dx.getvalue(), style_name=st.session_state.get("ws_style", "Yoosun Cho"),
+                                    study=_ws_study_info(), restyle=_restyle)
+                            if _rr.get("error"):
+                                st.error(_rr["error"])
+                            else:
+                                st.session_state["cite_revdocx"] = _rr["docx"]
+                                st.session_state["cite_reven"] = _rr["endnote"]
+                                st.session_state["cite_revbib"] = _rr["bibtex"]
+                                st.session_state["cite_revbody"] = _rr["body"]
+                                st.success(f"✅ 완료 — 레퍼런스 {_rr['n_refs']}개, 본문 넘버링 {_rr['markers']}. {_rr['note']}")
+                                st.rerun()
+                    if st.session_state.get("cite_revdocx"):
+                        _rd1, _rd2, _rd3 = st.columns(3)
+                        with _rd1:
+                            st.download_button("📄 첨삭본 Word", st.session_state["cite_revdocx"],
+                                               file_name="revised_paper.docx",
+                                               mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                               use_container_width=True, key="cite_rev_dl_docx")
+                        with _rd2:
+                            st.download_button("🔖 EndNote (.xml)", st.session_state["cite_reven"] or b"",
+                                               file_name="references.xml", mime="application/xml",
+                                               use_container_width=True, key="cite_rev_dl_en",
+                                               disabled=not st.session_state.get("cite_reven"))
+                        with _rd3:
+                            st.download_button("📚 BibTeX (.bib)", st.session_state["cite_revbib"] or b"",
+                                               file_name="references.bib", mime="text/plain",
+                                               use_container_width=True, key="cite_rev_dl_bib",
+                                               disabled=not st.session_state.get("cite_revbib"))
+                        with st.expander("👁 첨삭 본문 미리보기", expanded=False):
+                            st.text((st.session_state.get("cite_revbody", "") or "")[:6000])
+
+                st.markdown("---")
+                st.markdown("<div style='font-size:13px;font-weight:700;color:#E5E7EB;margin:6px 0;'>📚 또는 — 레퍼런스 목록으로 차용 검수 후 내 논문에 인용 삽입</div>", unsafe_allow_html=True)
+                st.caption("레퍼런스 목록(PMID·DOI·제목 혼재 가능)을 붙여넣으면 ① 내 논문에 차용 가능한지 임베딩으로 검수 → ② 본문 정확한 위치에 [n] 삽입 → ③ 번호순 참고문헌 + Word + EndNote 풀셋을 만듭니다. (LLM 쿼터 무관)")
+                _ref_txt = st.text_area(
+                    "레퍼런스 목록", height=200, key="cite_input",
+                    placeholder=("한 줄에 하나씩 — 예:\n"
+                                 "33069327\n"
+                                 "10.1016/j.jad.2024.01.001\n"
+                                 "Artificial sweetener intake and depression in adolescents"),
+                    label_visibility="collapsed",
+                )
+                _thr = st.slider("차용 판정 임계값 (높을수록 엄격)", 0.10, 0.60, 0.30, 0.05, key="cite_thr")
+                if st.button("① 차용 가능성 검수", type="primary", use_container_width=True, key="cite_screen_btn"):
+                    _entries = []
+                    try:
+                        from src.export import citation_workflow as _cwf
+                        _entries = _cwf.parse_reference_input(_ref_txt)
+                    except Exception as _e:
+                        st.error(f"파싱 오류: {_e}")
+                    if not _entries:
+                        st.warning("레퍼런스를 한 줄에 하나씩 입력하세요.")
+                    else:
+                        with st.spinner(f"{len(_entries)}개 레퍼런스 메타 조회(PubMed) + 차용 검수 중..."):
+                            try:
+                                _resolved = _cwf.resolve_references(_entries)
+                                _paper_text = " ".join(
+                                    (st.session_state.get(f"ws_{_k}") or "")
+                                    for _k in ("introduction", "results", "discussion", "methods", "abstract")
+                                ).strip()
+                                if not _paper_text:
+                                    _paper_text = st.session_state.get("ws_title", "") or " ".join(_entries)
+                                _scr = _cwf.screen_applicability(_resolved, _paper_text, threshold=_thr)
+                                st.session_state["cite_screen"] = [
+                                    {"title": s["ref"].title, "journal": s["ref"].journal,
+                                     "year": s["ref"].year, "score": s["score"],
+                                     "usable": s["usable"], "reason": s["reason"],
+                                     "_ref": s["ref"].to_dict()}
+                                    for s in _scr
+                                ]
+                                # 직전 풀셋 결과는 무효화
+                                for _kk in ("cite_docx", "cite_endnote", "cite_bibtex", "cite_reflist", "cite_marked"):
+                                    st.session_state.pop(_kk, None)
+                            except Exception as _e:
+                                st.error(f"검수 오류: {str(_e)[:200]}")
+                        st.rerun()
+
+                _scr_rows = st.session_state.get("cite_screen")
+                if _scr_rows:
+                    import pandas as _pd
+                    _n_use = sum(1 for r in _scr_rows if r["usable"])
+                    st.markdown(f"**검수 결과** — {len(_scr_rows)}개 중 차용 가능 {_n_use}개 (포함 체크 직접 조정 가능)")
+                    _df_edit = _pd.DataFrame([
+                        {"포함": r["usable"], "점수": r["score"],
+                         "제목": (r["title"] or "(제목 없음)")[:70],
+                         "저널": r["journal"], "판정": r["reason"]}
+                        for r in _scr_rows
+                    ])
+                    _edited = st.data_editor(
+                        _df_edit, hide_index=True, use_container_width=True, height=240,
+                        disabled=["점수", "제목", "저널", "판정"], key="cite_editor",
+                    )
+                    if st.button("② 본문에 인용 삽입 + 풀셋 생성", type="primary", use_container_width=True, key="cite_build_btn"):
+                        from src.export import citation_workflow as _cwf
+                        from src.export.reference_library import Reference as _Ref
+                        _chosen = [
+                            _Ref.from_dict(_scr_rows[i]["_ref"])
+                            for i in range(len(_scr_rows)) if bool(_edited.iloc[i]["포함"])
+                        ]
+                        if not _chosen:
+                            st.warning("포함할 레퍼런스를 1개 이상 선택하세요.")
+                        else:
+                            _body = {_k: (st.session_state.get(f"ws_{_k}") or "")
+                                     for _k in ("abstract", "introduction", "methods", "results", "discussion")}
+                            _has_body = any(v.strip() for v in _body.values())
+                            with st.spinner("본문에 [n] 인용 삽입 + Word/EndNote 생성 중..."):
+                                _new_secs, _ordered = _cwf.place_citations(_body, _chosen)
+                                if not _ordered:  # 본문이 없으면 선택 순서대로 목록만
+                                    _ordered = _chosen
+                                    _new_secs = _body
+                                _title = st.session_state.get("ws_title", "") or "논문 초안"
+                                st.session_state["cite_marked"] = _new_secs
+                                st.session_state["cite_ordered_meta"] = [r.to_dict() for r in _ordered]
+                                st.session_state["cite_reflist"] = _cwf.reference_list_markdown(_ordered)
+                                st.session_state["cite_docx"] = _cwf.build_cited_docx(_title, _new_secs, _ordered)
+                                st.session_state["cite_endnote"] = _cwf.endnote_bytes(_ordered)
+                                st.session_state["cite_bibtex"] = _cwf.bibtex_bytes(_ordered)
+                            if not _has_body:
+                                st.info("작업실 본문이 비어 있어 [n] 위치 삽입은 생략하고 참고문헌 목록/EndNote만 생성했습니다. 본문을 쓴 뒤 다시 실행하면 정확한 위치에 인용됩니다.")
+                            else:
+                                st.success(f"✅ 풀셋 생성 완료 — 본문 인용 {len(_ordered)}개. 아래에서 Word·EndNote 다운로드.")
+                            st.rerun()
+
+                if st.session_state.get("cite_docx") is not None:
+                    st.markdown("---")
+                    _reflist = st.session_state.get("cite_reflist", "")
+                    if _reflist:
+                        with st.expander(f"📑 참고문헌 목록 ({len(_reflist.splitlines())}개) 미리보기", expanded=False):
+                            st.markdown("\n".join(_reflist.splitlines()))
+                    _dc1, _dc2, _dc3 = st.columns(3)
+                    with _dc1:
+                        st.download_button("📄 Word (.docx)", st.session_state["cite_docx"],
+                                           file_name="paper_with_citations.docx",
+                                           mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                           use_container_width=True, key="cite_dl_docx")
+                    with _dc2:
+                        st.download_button("🔖 EndNote (.xml)", st.session_state["cite_endnote"],
+                                           file_name="references.xml", mime="application/xml",
+                                           use_container_width=True, key="cite_dl_en")
+                    with _dc3:
+                        st.download_button("📚 BibTeX (.bib)", st.session_state["cite_bibtex"],
+                                           file_name="references.bib", mime="text/plain",
+                                           use_container_width=True, key="cite_dl_bib")
+                    if st.button("↩ 작업실 본문에도 인용 마커 반영 (잠긴 섹션 제외)", use_container_width=True, key="cite_apply_btn"):
+                        _marked = st.session_state.get("cite_marked", {})
+                        _applied = []
+                        for _k, _v in _marked.items():
+                            if bool(st.session_state.get(f"ws_lock_{_k}", False)):
+                                continue
+                            if _v != st.session_state.get(f"ws_{_k}"):
+                                st.session_state[f"ws_{_k}"] = _v
+                                _applied.append(_k)
+                        st.success(f"본문 반영: {', '.join(_applied) if _applied else '변경 없음(잠금 또는 동일)'}")
+                        st.rerun()
+
         # ═══════════ 우측: 논문 (편집/미리보기/통계 결과) ═══════════
         with col_paper:
             _filled = sum(1 for _k, _ in _WS_KEYS if (st.session_state.get(f"ws_{_k}") or "").strip())
@@ -1396,11 +1659,39 @@ with main_col:
                 st.markdown(f"<div style='font-size:13px;font-weight:700;color:#E5E7EB;'>📑 논문 <span style='color:#64748B;font-weight:400;'>({_filled}/{len(_WS_KEYS)})</span></div>", unsafe_allow_html=True)
             with ph2:
                 _paper_view = st.radio(
-                    "뷰", ["📝 편집", "👁 미리보기", "📊 통계 결과"], horizontal=True,
+                    "뷰", ["📄 전문", "📝 편집", "👁 미리보기", "📊 통계 결과"], horizontal=True,
                     key="ws_paper_view", label_visibility="collapsed",
                 )
             with st.container(height=440, border=True):
-                if _paper_view == "👁 미리보기":
+                if _paper_view == "📄 전문":
+                    # 논문 전체를 한 편으로 — 전체 드래그/복사 가능. 편집 후 '섹션 반영'으로 기능 연결.
+                    if "ws_fulltext_buf" not in st.session_state or st.session_state.get("_ws_ft_refresh"):
+                        st.session_state["ws_fulltext_buf"] = _ws_fulltext()
+                        st.session_state["_ws_ft_refresh"] = False
+                    st.caption("논문 전체가 한 편으로 보입니다 — 드래그·복사 가능. 편집 후 **전문→섹션 반영**을 누르면 통계·인용 기능과 연결됩니다.")
+                    st.text_area("전문", key="ws_fulltext_buf", height=320, label_visibility="collapsed")
+                    _fc1, _fc2, _fc3 = st.columns(3)
+                    with _fc1:
+                        if st.button("⟳ 섹션→전문 새로고침", use_container_width=True, key="ws_ft_refresh_btn"):
+                            st.session_state["_ws_ft_refresh"] = True
+                            st.rerun()
+                    with _fc2:
+                        if st.button("✅ 전문→섹션 반영", use_container_width=True, key="ws_ft_apply_btn"):
+                            _secs = _ws_split_fulltext(st.session_state.get("ws_fulltext_buf", ""))
+                            _applied = []
+                            for _k, _ in _WS_KEYS:
+                                if bool(st.session_state.get(f"ws_lock_{_k}", False)):
+                                    continue
+                                if _secs.get(_k) and _secs[_k] != st.session_state.get(f"ws_{_k}"):
+                                    st.session_state[f"ws_{_k}"] = _secs[_k]
+                                    _applied.append(_k)
+                            st.toast(f"반영: {', '.join(_applied) if _applied else '변경 없음(잠금 또는 동일)'}")
+                            st.rerun()
+                    with _fc3:
+                        st.download_button("⬇ 전문 TXT", (st.session_state.get("ws_fulltext_buf") or "").encode("utf-8"),
+                                           file_name="paper_fulltext.txt", mime="text/plain",
+                                           use_container_width=True, key="ws_ft_dl")
+                elif _paper_view == "👁 미리보기":
                     _pv = _ws_preview()
                     st.markdown(_pv if _pv else "_아직 내용이 없습니다. 왼쪽 AI에게 요청하세요._")
                 elif _paper_view == "📊 통계 결과":

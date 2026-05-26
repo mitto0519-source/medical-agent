@@ -28,8 +28,10 @@ services:
       - ./src:/app/src
     restart: unless-stopped
 
-  # 자동학습 스케줄러 — 앱 접속과 무관하게 상주하며 매일 최신논문 학습 + 캐치업.
-  # PC가 꺼져 배치를 놓쳐도 PC 켜서 컨테이너가 뜨면 시작 즉시 '24h 경과?' 체크 후 실행.
+  # Heartbeat — 운영 런타임의 정기 작업 단일 진입점.
+  # 부팅 시 catchup(task_recover/lifecycle_tick/idempotency_gc/budget_snapshot/trend_learn)
+  # + 분단위 polling. 기존 learn_scheduler는 trend_learn job으로 흡수됨.
+  # PC가 꺼져 배치를 놓쳐도 컨테이너 뜨면 즉시 last_run 체크 → 지연된 job 실행.
   learner:
     image: medical-agent:latest
     build: .
@@ -37,10 +39,10 @@ services:
     env_file:
       - .env
     volumes:
-      - ./data:/app/data             # 메인 앱과 동일 data 공유 (그래프·RAG·trend_state)
+      - ./data:/app/data             # 메인 앱과 동일 data 공유 (그래프·RAG·trend_state·runtime DBs)
       - ./src:/app/src
-      - ./scripts:/app/scripts       # learn_scheduler.py 등 스크립트
-    command: ["python", "scripts/learn_scheduler.py"]
-    restart: unless-stopped           # PC/Docker 재시작 시 자동 복귀 → 시작 즉시 캐치업
+      - ./scripts:/app/scripts
+    command: ["python", "-m", "src.runtime.heartbeat"]
+    restart: unless-stopped           # PC/Docker 재시작 시 자동 복귀 → 부팅 즉시 catchup
     depends_on:
       - medical-agent

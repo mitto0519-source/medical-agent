@@ -144,6 +144,24 @@
 | **UI 회귀 eval(브라우저)** | `scripts/ui_eval.py` | ✅ active | Playwright admin 로그인→페이지별 grader+워크플로 outcome(채팅→섹션, 저장→복원). 45 assertions |
 | RAG/모듈 스모크 | `scripts/test_rag_smoke.py` | ✅ active | 임포트+ChromaDB 절대기준 |
 
+### 11. 운영 런타임 (Operational Runtime) — 2026-05-25 신규
+
+> 24/7 안정 운영을 위한 인프라 레이어. SQLite + asyncio 기반 — 외부 의존(Redis/Temporal) 없음.
+
+| 기능 | 정규 모듈 | 상태 | 비고 |
+|------|----------|------|------|
+| **Event Sourcing** (append-only 감사로그) | `src/runtime/events.py` | ✅ active | SQLite WAL, replay/find/span. LLM·메모리쓰기·작업전이 전부 기록. 환각 추적 핵심 |
+| **TaskRun State Machine** (durable workflow) | `src/runtime/tasks.py` | ✅ active | CREATED→RUNNING→...→COMPLETED/FAILED, idempotency_key 캐시 24h, stale recover, steps 누적 |
+| **Idempotency Cache** | `src/runtime/idempotency.py` | ✅ active | PubMed/CrossRef/LLM 같은 입력 재호출 캐시. `@idempotent(ns, key_fn)` 데코레이터 |
+| **Reasoning Budget** | `src/llm/budget.py` | ✅ active | 일/주 비용 ceiling + 80% 도달 시 google 자동 다운그레이드. events 기반 집계 |
+| **Memory Router** (typed write) | `src/memory/router.py` | ✅ active | episodic/semantic/procedural/goal 라우팅. memory_gate + scorer 통과 후 저장 |
+| **Memory Scorer** | `src/memory/scorer.py` | ✅ active | importance/novelty/recurrence/trust 산출 → gate 결정(store/review/quarantine/skip) |
+| **Memory Lifecycle** (TTL/decay/충돌) | `src/memory/lifecycle.py` | ✅ active | 일별 confidence decay, 만료 archive, 천단위콤마/소수/% 충돌 감지+supersede |
+| **Heartbeat** (정기 작업 단일 진입) | `src/runtime/heartbeat.py` | ✅ active | 부팅 catch-up + 분단위 polling. task_recover/lifecycle_tick/idempotency_gc/budget_snapshot/trend_learn 흡수 |
+| EndNote CWYW docx 빌더 | `scripts/build_endnote_docx.py` | ✅ active | EN.CITE 필드(travelling library 임베드) Word docx 생성 |
+
+> **연결 흐름**: heartbeat가 lifecycle/budget/task를 정기 실행 · 모든 LLM/메모리/도구 호출은 events로 감사 · TaskRun이 작업 중복방지+크래시 복구 · 라우터가 메모리 쓰기 단일 진입.
+
 ---
 
 ## 삭제된 모듈 (왜 없는지 기록)

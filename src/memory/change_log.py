@@ -256,3 +256,15 @@ def log(
         **kwargs,
     )
     append(entry)
+    # 라우터 감사(events trail) — 자체 저장은 위에서 이미 함(record_only).
+    try:
+        from src.memory import router as _router
+        _router.write(
+            f"{title}\n{description}".strip(),
+            type="episodic", source="observation",
+            owner_email=user_email or None,
+            extra_meta={"action_type": action_type, "session_id": session_id, **{k: v for k, v in kwargs.items() if isinstance(v, (str, int, float, bool, list, dict))}},
+            record_only=True,
+        )
+    except Exception:
+        pass
