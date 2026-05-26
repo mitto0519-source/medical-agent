@@ -122,11 +122,19 @@ def eval_stat_correctness() -> dict:
         if "zcb_freq" not in df.columns:
             return metric("stat_zcb_aOR_within_0.05", 0.0, 0.9,
                           f"loader가 zcb_freq 노출 실패 (cols={list(df.columns)[:8]})")
-        # 비교 기준: paper aOR ~1.27 for ≥1/day vs none (Model 2)
-        # 여기는 간단히 per-1-level continuous: paper 1.04
+        # Paper v2.4 Model 2 fully-adjusted continuous aOR per 1-level = 1.046 (95% CI 1.026-1.066).
+        # 복합표본설계: pweight + cluster (KYRBS school cluster). StatBridge는 GEE로 근사.
+        # 공변량은 paper와 동일한 11개를 모두 투입 (loader가 노출하는 표준명).
+        present_cov = [c for c in ["sex", "age", "school_type", "academic_perf", "family_econ",
+                                    "bmi", "smoking", "alcohol", "physical_act",
+                                    "screen_time", "breakfast", "ssb_freq", "caffeine_freq",
+                                    "sleep_hours"] if c in df.columns]
         spec = {"outcome": "depression",
                 "predictors": ["zcb_freq"],
-                "covariates": ["sex", "smoking", "grade"],
+                "covariates": present_cov,
+                "weight_var": "weight_var" if "weight_var" in df.columns else None,
+                "strata_var": "strata"     if "strata"     in df.columns else None,
+                "cluster_var": "cluster"   if "cluster"    in df.columns else None,
                 "analysis": "logistic"}
         r = StatBridge().run(df, spec).to_dict()
         if r.get("error"):
@@ -137,12 +145,14 @@ def eval_stat_correctness() -> dict:
         if zcb_or is None:
             return metric("stat_zcb_aOR_within_0.05", 0.0, 0.9,
                           f"zcb_freq OR 미산출 (vars={[v.get('variable') for v in vars_[:5]]})")
-        # 점추정이 1.00~1.15 범위 (paper continuous 1.04 ± 폭) → score = 1.0 if abs<=0.05 else 점진
-        target = 1.04
+        # 점추정 paper continuous 1.046. score = 1.0 if |diff|≤0.05 then linear decay.
+        target = 1.046
         diff = abs(zcb_or - target)
         score = max(0.0, 1.0 - diff * 4)  # diff 0.05 → 0.8 / 0.10 → 0.6
+        complex_flag = "+pw+cluster" if (spec.get("weight_var") and spec.get("cluster_var")) else "+plain"
         return metric("stat_zcb_aOR_within_0.05", score, 0.7,
-                      f"OR={zcb_or:.3f} (target {target}, |diff|={diff:.3f})")
+                      f"OR={zcb_or:.3f} (target {target}, |diff|={diff:.3f}, "
+                      f"n_cov={len(present_cov)}{complex_flag})")
     except Exception as e:
         return metric("stat_zcb_aOR_within_0.05", 0.0, 0.7, f"ERROR: {str(e)[:100]}")
 
