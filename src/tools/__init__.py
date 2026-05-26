@@ -132,9 +132,34 @@ def export_citations(refs_text: str, paper_sections: dict = None, **kwargs) -> d
                            payload={"screened": [(s["ref"].title[:60], s["score"]) for s in screened]})
     new_secs, ordered = place_citations(paper_sections or {}, usable)
     docx = build_cited_docx("Paper", new_secs, ordered)
+
+    # safety wiring: citation grounding + physician review
+    safety_notes = []
+    try:
+        from src.safety import verify_citation_integrity, queue_for_review, record_safety_event
+        # ref dict {n: vancouver_line}
+        from src.export.reference_library import format_vancouver as _fv
+        ref_dict = {i: _fv(r, i) for i, r in enumerate(ordered, 1)}
+        body_combined = " ".join(new_secs.values())
+        report = verify_citation_integrity(body_combined, ref_dict, check_dois=False)
+        if not report.ok:
+            safety_notes.append(f"citation 검증: {report.summary}")
+            record_safety_event("citation_grounding_failed",
+                                {"summary": report.summary,
+                                 "orphan_cites": report.orphan_citations})
+        # 임상 키워드 자동 큐
+        qr = queue_for_review(body_combined[:4000], source="llm",
+                              owner_email=kwargs.get("owner_email", ""))
+        if qr.get("queued"):
+            safety_notes.append(f"physician review 큐 등록 (triggers={qr.get('triggers', [])})")
+    except Exception as _e:
+        safety_notes.append(f"safety 검증 건너뜀: {str(_e)[:80]}")
+
     return tool_result(
-        "export", summary=f"인용 풀셋: 차용 {len(usable)}개 / {len(refs)} 후보 · Word + EndNote 생성",
-        payload={"ordered_count": len(ordered)},
+        "export",
+        summary=(f"인용 풀셋: 차용 {len(usable)}개 / {len(refs)} 후보 · Word + EndNote 생성"
+                 + ((" · " + " · ".join(safety_notes)) if safety_notes else "")),
+        payload={"ordered_count": len(ordered), "safety_notes": safety_notes},
         downloads=[
             {"label": "Word", "data": docx, "filename": "paper_with_citations.docx",
              "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},

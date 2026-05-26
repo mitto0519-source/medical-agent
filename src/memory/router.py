@@ -184,10 +184,26 @@ def write(
         _events.append("memory_store_error", {"type": type, "error": str(e)[:200]}, actor="memory_router")
         return {"decision": "error", "id": None, "scores": scores, "gate_reason": str(e)[:120]}
 
+    # truth_hierarchy 자동 부착 — 다른 LLM 호출에 컨텍스트 주입 가능 여부 미리 결정
+    try:
+        from src.safety.truth_hierarchy import classify, can_inject_to_context
+        _verified = source in ("user", "human", "verified", "rule")
+        _grounded = bool(extra_meta and (extra_meta.get("grounded_in_data") or
+                                          extra_meta.get("stat_result") or
+                                          extra_meta.get("ref_pmid")))
+        _level = classify(source, verified=_verified, grounded_in_data=_grounded)
+        _injectable = can_inject_to_context(_level)
+    except Exception:
+        _level = None; _injectable = False
+
     _events.append(
         "memory_write",
         {"type": type, "source": source, "decision": decision, "id": mem_id,
-         "scores": scores, "owner": owner_email, "len": len(text)},
+         "scores": scores, "owner": owner_email, "len": len(text),
+         "truth_level": _level.name if _level else None,
+         "injectable_to_context": _injectable},
         actor="memory_router", task_id=task_id,
     )
-    return {"decision": decision, "id": mem_id, "scores": scores, "gate_reason": None}
+    return {"decision": decision, "id": mem_id, "scores": scores, "gate_reason": None,
+            "truth_level": _level.name if _level else None,
+            "injectable_to_context": _injectable}

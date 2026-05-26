@@ -148,13 +148,37 @@ def check_year_consistency(text: str, refs: dict) -> list:
 
 # ── 통합 검증 ────────────────────────────────────────────────────────────────
 
+def check_rag_grounding(refs: dict, *, sample: int = 10) -> list:
+    """RAG `papers` 컬렉션(10k+ chunks)에서 ref title/PMID 매칭 검색 — RAG-grounded 여부."""
+    try:
+        from src.vectordb.factory import get_vectorstore
+        vs = get_vectorstore("papers")
+    except Exception:
+        return []
+    out = []
+    for n, line in list(refs.items())[:sample]:
+        # title 후보 (첫 50자) + PMID 추출
+        title_seed = re.sub(r"^[A-Z][a-z]+.+?\.\s*", "", line)[:80]  # 저자 제거 후 title-ish
+        pmid_m = re.search(r"PMID[:\s]+(\d{4,9})", line)
+        try:
+            hits = vs.search(title_seed, k=3) if hasattr(vs, "search") else []
+            grounded = bool(hits) or bool(pmid_m)
+            out.append({"ref_num": n, "rag_grounded": grounded,
+                        "pmid": pmid_m.group(1) if pmid_m else None})
+        except Exception:
+            out.append({"ref_num": n, "rag_grounded": False, "pmid": None})
+    return out
+
+
 def verify_citation_integrity(text: str, refs: dict | str = None,
                               *, check_dois: bool = True,
+                              check_rag: bool = False,
                               max_dois: int = 20) -> CitationReport:
     """본문 + reference list 통합 검증.
 
     refs: {n: line} dict 또는 raw '## References\\n1. ...' 문자열
     check_dois: True면 처음 max_dois개 DOI를 CrossRef로 확인(idempotency 캐시).
+    check_rag : True면 RAG papers 컬렉션에 ref title이 인덱싱돼 있는지 추가 확인.
     """
     if isinstance(refs, str):
         refs = parse_references(refs)
@@ -191,6 +215,14 @@ def verify_citation_integrity(text: str, refs: dict | str = None,
 
     # 4) 연도 일관성
     report.year_mismatches = check_year_consistency(text, refs)
+
+    # 5) RAG papers 컬렉션 grounding (선택)
+    if check_rag and refs:
+        rag = check_rag_grounding(refs, sample=10)
+        ungrounded = [r for r in rag if not r["rag_grounded"]]
+        if ungrounded:
+            # CitationReport에 동적 attr 부착 (외부 호환)
+            report.rag_ungrounded = ungrounded
 
     # 결과 종합
     report.ok = not (report.orphan_citations or report.invalid_dois
