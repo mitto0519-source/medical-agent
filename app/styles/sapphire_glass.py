@@ -62,12 +62,15 @@ def inject_sapphire_glass(*, hide_streamlit_chrome: bool = True) -> None:
 
 html, body, [data-testid="stApp"] {{
   background:
-    radial-gradient(1100px 700px at 18% 8%, rgba(124, 58, 237, 0.28), transparent 60%),
-    radial-gradient(1000px 700px at 88% 92%, rgba(236, 72, 153, 0.18), transparent 60%),
-    linear-gradient(135deg, #0A0A1F 0%, #14143C 40%, #0F0F23 100%) !important;
+    radial-gradient(900px 700px at 18% 10%, rgba(244, 114, 182, 0.55), transparent 60%),
+    radial-gradient(900px 700px at 85% 12%, rgba(251, 191, 36, 0.35), transparent 60%),
+    radial-gradient(1000px 800px at 50% 95%, rgba(167, 139, 250, 0.50), transparent 65%),
+    radial-gradient(700px 600px at 92% 90%, rgba(236, 72, 153, 0.45), transparent 60%),
+    linear-gradient(135deg, #4C1D80 0%, #7C2D8A 35%, #B83A8E 65%, #E85A8E 100%) !important;
   color: var(--sg-text) !important;
   font-family: "Inter", "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif !important;
   letter-spacing: -0.01em;
+  background-attachment: fixed !important;
 }}
 
 {chrome_hide}
