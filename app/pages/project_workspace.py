@@ -494,12 +494,14 @@ def _wire_memory(user_msg: str, assistant_text: str, project: dict) -> None:
     title = str(project.get("title") or "")[:80]
     try:
         from src.memory import conversation_memory as cm
-        if user_msg:
-            cm.record(f"[paper.user] ({title}) {user_msg[:600]}",
-                       account=owner, role="user")
-        if assistant_text:
-            cm.record(f"[paper.assistant] ({title}) {assistant_text[:600]}",
-                       account=owner, role="assistant")
+        if user_msg or assistant_text:
+            cm.record(
+                user_message=(user_msg or "")[:600],
+                agent_response=(assistant_text or "")[:1500],
+                topic=title or "paper",
+                context_type="research",
+                owner_email=owner,
+            )
     except Exception:
         pass
     try:

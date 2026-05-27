@@ -197,9 +197,11 @@ def _h_patch_preview(inputs, get_project, set_project, append_chat_event):
     try:
         from src.memory import conversation_memory as cm
         cm.record(
-            f"[paper.patch] target={target} added={content[:300]}",
-            account=str(proj.get("owner", "")) or "anonymous",
-            role="system",
+            user_message=f"patch_preview({target})",
+            agent_response=f"[patched] {content[:400]}",
+            topic=target,
+            context_type="research",
+            owner_email=str(proj.get("owner", "")) or "",
         )
     except Exception:
         pass
@@ -332,17 +334,12 @@ def build_system_with_preview(base_prompt: str, project: dict,
     # ★ 공유 코어 — VS Code/Streamlit 어디서 호출되든 같은 메모리/이력 보게 함
     try:
         from src.memory import conversation_memory as cm
-        recalled = cm.recall_relevant(user_msg or "이전 작업", account=owner, n=5) \
-            if user_msg else []
-        if recalled:
-            parts.append("")
-            parts.append("# CROSS-SESSION MEMORY (VS Code · Streamlit 공유 — recall_relevant)")
-            for i, mem in enumerate(recalled[:5], 1):
-                if isinstance(mem, dict):
-                    txt = mem.get("text") or mem.get("content") or str(mem)
-                else:
-                    txt = str(mem)
-                parts.append(f"{i}. {txt[:200]}")
+        if user_msg:
+            recalled_str = cm.recall_relevant(user_msg, n=5, owner_email=owner) or ""
+            if recalled_str.strip():
+                parts.append("")
+                parts.append("# CROSS-SESSION MEMORY (VS Code · Streamlit 공유 — recall_relevant)")
+                parts.append(recalled_str[:1500])
     except Exception:
         pass
 
