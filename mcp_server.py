@@ -989,6 +989,37 @@ def consistency_check_paper(paper_text: str, ctx=None) -> dict:
 
 
 @mcp.tool
+def list_agent_roles(ctx=None) -> dict:
+    """multi-agent roles 레지스트리 + action→role mapping."""
+    try:
+        from src.agent.roles import role_stats
+        return role_stats()
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def plan_section_dag(section: str, goal: str = "", outcome: str = "depression",
+                       exposure: str = "zcb_freq", ctx=None) -> dict:
+    """Planner DAG 생성 (실행은 안 함) — 어떤 노드/엣지가 만들어지는지 미리보기."""
+    try:
+        from src.agent.planner import get_planner
+        g = get_planner().plan(goal or section,
+                                  context={"section": section, "outcome": outcome,
+                                            "exposure": exposure})
+        return {
+            "graph_id": g.id, "goal": g.goal,
+            "n_nodes": len(g.nodes),
+            "topological_order": g.topological_order(),
+            "nodes": {nid: {"action": n.action, "deps": n.deps,
+                              "rationale": n.rationale}
+                       for nid, n in g.nodes.items()},
+        }
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
 def reporting_checklist_strobe(sections_json: str, ctx=None) -> dict:
     """STROBE 22항목 자동 체크 — sections_json은 {"Introduction": "...", ...} dict."""
     try:
