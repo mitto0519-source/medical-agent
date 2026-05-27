@@ -112,25 +112,47 @@ def _figures_list() -> list[dict]:
     return items
 
 
-def _render_chat_event(m: dict):
+def _render_chat_event(m: dict, *, idx: int = 0):
     """user/assistant/tool_use/tool_result/system — rich content 양식 분기 렌더.
-    VS Code 양식 + before/after diff + figure thumbnail + metric card 등."""
+    VS Code less/more 양식: 긴 콘텐츠는 collapsible <details>로 접고 펴기.
+    짧은 것(<300자, default tool_use)은 그대로 표시."""
     role = m.get("role", "system")
     if role == "user":
-        message_bubble("user", m.get("content", ""))
+        _collapsible_bubble("user", m.get("content", ""), idx=idx, threshold=400)
         return
     if role == "assistant":
         if m.get("content"):
-            message_bubble("assistant", m["content"])
+            _collapsible_bubble("assistant", m["content"], idx=idx, threshold=400)
         return
     if role == "tool_use":
-        _render_tool_use(m)
+        _render_tool_use(m)   # 자체로 짧음 — 그대로
         return
     if role == "tool_result":
-        _render_tool_result(m)
+        _render_tool_result(m, idx=idx)
         return
     if role == "system":
-        _render_system_event(m)
+        _render_system_event(m, idx=idx)
+
+
+def _collapsible_bubble(role: str, text: str, *, idx: int, threshold: int = 400):
+    """긴 메시지는 <details> 양식으로 접기 (less/more 토글)."""
+    import html as _html
+    if not text:
+        return
+    cls = "sg-msg-user" if role == "user" else "sg-msg-assistant"
+    safe = _html.escape(text).replace("\n", "<br/>")
+    if len(text) <= threshold:
+        st.markdown(f"<div class='{cls}'>{safe}</div>", unsafe_allow_html=True)
+        return
+    head = _html.escape(text[:threshold].rstrip()).replace("\n", "<br/>")
+    body = _html.escape(text[threshold:]).replace("\n", "<br/>")
+    st.markdown(
+        f"<div class='{cls}'>"
+        f"<details><summary style='cursor:pointer;list-style:none;'>"
+        f"{head}<span style='color:#A78BFA;font-size:0.78rem;'> …more ▾</span>"
+        f"</summary>"
+        f"<div style='margin-top:6px;'>{body}</div>"
+        f"</details></div>", unsafe_allow_html=True)
 
 
 def _render_tool_use(m: dict):
@@ -164,11 +186,12 @@ def _render_tool_use(m: dict):
         f"</div></div>", unsafe_allow_html=True)
 
 
-def _render_tool_result(m: dict):
-    """tool 종류별 rich 시각화 — metric card / figure thumb / paper list / raw."""
+def _render_tool_result(m: dict, *, idx: int = 0):
+    """tool 종류별 rich 시각화 — metric card / figure thumb / paper list / raw.
+    raw fallback은 collapsible (긴 결과 less/more)."""
+    import html as _html
     tool = m.get("tool", "")
     raw = m.get("content", "") or ""
-    # JSON 파싱 시도
     parsed = None
     try:
         parsed = json.loads(raw)
@@ -184,15 +207,26 @@ def _render_tool_result(m: dict):
     if tool == "rag_search" and isinstance(parsed, list):
         _render_rag_hits(parsed)
         return
-    # default
-    preview = raw[:400]
+
+    # default — collapsible if long
+    head = raw[:300]
+    tail = raw[300:1500]
+    body_html = (
+        f"<div class='sg-sub' style='white-space:pre-wrap;'>{_html.escape(head)}</div>"
+        if len(raw) <= 300 else
+        f"<div class='sg-sub' style='white-space:pre-wrap;'>"
+        f"<details><summary style='cursor:pointer;list-style:none;color:#10B981;'>"
+        f"{_html.escape(head)}<span style='color:#A78BFA;font-size:0.78rem;'> …more ▾</span>"
+        f"</summary><div style='margin-top:6px;'>{_html.escape(tail)}</div></details>"
+        f"</div>"
+    )
     st.markdown(
         f"<div class='sg-action-card' style='border-color:rgba(16,185,129,0.40);"
         f"background:rgba(16,185,129,0.08);margin:6px 0;'>"
         f"<div class='sg-icon'>📥</div>"
         f"<div class='sg-detail'>"
         f"<div class='sg-title'>tool_result · <code style='color:#10B981;'>{tool or '?'}</code></div>"
-        f"<div class='sg-sub' style='white-space:pre-wrap;'>{preview}</div>"
+        f"{body_html}"
         f"</div></div>", unsafe_allow_html=True)
 
 
@@ -260,11 +294,11 @@ def _render_rag_hits(hits: list):
         f"{rows}</div>", unsafe_allow_html=True)
 
 
-def _render_system_event(m: dict):
-    """system event — preview_patched 시 before/after diff 시각화."""
+def _render_system_event(m: dict, *, idx: int = 0):
+    """system event — preview_patched 시 before/after diff (이미 collapsible 내장)."""
+    import html as _html
     event = m.get("event", "system")
     detail = m.get("detail", "")
-    # detail이 JSON string이면 파싱 → patch diff 렌더
     parsed = None
     if isinstance(detail, str):
         try:
@@ -276,13 +310,21 @@ def _render_system_event(m: dict):
         _render_patch_diff(parsed)
         return
 
+    s = str(detail or "")
+    body = (f"<div class='sg-sub' style='white-space:pre-wrap;'>{_html.escape(s[:300])}</div>"
+             if len(s) <= 300 else
+             f"<div class='sg-sub' style='white-space:pre-wrap;'>"
+             f"<details><summary style='cursor:pointer;list-style:none;color:#A78BFA;'>"
+             f"{_html.escape(s[:300])}<span style='font-size:0.78rem;'> …more ▾</span>"
+             f"</summary><div style='margin-top:6px;'>{_html.escape(s[300:2000])}</div>"
+             f"</details></div>")
     st.markdown(
         f"<div class='sg-action-card' style='border-color:rgba(124,58,237,0.40);"
         f"background:rgba(124,58,237,0.08);margin:6px 0;'>"
         f"<div class='sg-icon'>⚙️</div>"
         f"<div class='sg-detail'>"
         f"<div class='sg-title'>{event}</div>"
-        f"<div class='sg-sub' style='white-space:pre-wrap;'>{str(detail)[:300]}</div>"
+        f"{body}"
         f"</div></div>", unsafe_allow_html=True)
 
 
@@ -337,8 +379,8 @@ def _render_chat_left(project: dict, pid: str):
     if initial and not messages:
         messages.append({"role": "user", "content": initial})
 
-    for m in messages:
-        _render_chat_event(m)
+    for i, m in enumerate(messages):
+        _render_chat_event(m, idx=i)
 
     # 입력 form — 파일 첨부 포함
     with st.form(key="ws_form", clear_on_submit=True):
