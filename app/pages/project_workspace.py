@@ -113,7 +113,8 @@ def _figures_list() -> list[dict]:
 
 
 def _render_chat_event(m: dict):
-    """user/assistant/tool_use/tool_result/system 모두 시각 양식 분기 렌더."""
+    """user/assistant/tool_use/tool_result/system — rich content 양식 분기 렌더.
+    VS Code 양식 + before/after diff + figure thumbnail + metric card 등."""
     role = m.get("role", "system")
     if role == "user":
         message_bubble("user", m.get("content", ""))
@@ -123,35 +124,206 @@ def _render_chat_event(m: dict):
             message_bubble("assistant", m["content"])
         return
     if role == "tool_use":
-        st.markdown(
-            f"<div class='sg-action-card' style='border-color:rgba(6,182,212,0.45);"
-            f"background:rgba(6,182,212,0.10);'>"
-            f"<div class='sg-icon'>🛠️</div>"
-            f"<div class='sg-detail'>"
-            f"<div class='sg-title'>{m.get('tool', '?')}</div>"
-            f"<div class='sg-sub'>input: <code>{json.dumps(m.get('input', {}), ensure_ascii=False)[:200]}</code></div>"
-            f"</div></div>", unsafe_allow_html=True)
+        _render_tool_use(m)
         return
     if role == "tool_result":
-        preview = (m.get("content") or "")[:280]
-        st.markdown(
-            f"<div class='sg-action-card' style='border-color:rgba(16,185,129,0.40);"
-            f"background:rgba(16,185,129,0.08);'>"
-            f"<div class='sg-icon'>📥</div>"
-            f"<div class='sg-detail'>"
-            f"<div class='sg-title'>tool_result</div>"
-            f"<div class='sg-sub'>{preview}…</div>"
-            f"</div></div>", unsafe_allow_html=True)
+        _render_tool_result(m)
         return
     if role == "system":
-        st.markdown(
-            f"<div class='sg-action-card' style='border-color:rgba(124,58,237,0.40);"
-            f"background:rgba(124,58,237,0.08);'>"
-            f"<div class='sg-icon'>⚙️</div>"
-            f"<div class='sg-detail'>"
-            f"<div class='sg-title'>{m.get('event', 'system')}</div>"
-            f"<div class='sg-sub'>{m.get('detail', '')}</div>"
-            f"</div></div>", unsafe_allow_html=True)
+        _render_system_event(m)
+
+
+def _render_tool_use(m: dict):
+    tool = m.get("tool", "?")
+    inputs = m.get("input", {}) or {}
+    icon_map = {"patch_preview": "📝", "kyrbs_stat": "📊",
+                 "pubmed_search": "🔬", "strobe_check": "📑",
+                 "consistency_check": "🔍", "rag_search": "🧠"}
+    icon = icon_map.get(tool, "🛠️")
+    # 짧은 핵심 input만 헤더에
+    head = ""
+    if tool == "patch_preview":
+        tgt = (inputs.get("section") or inputs.get("abstract_field")
+                or inputs.get("supplement_block") or "?")
+        head = f"→ {tgt}"
+    elif tool == "kyrbs_stat":
+        head = f"{inputs.get('exposure', '?')} → {inputs.get('outcome', '?')}"
+    elif tool == "pubmed_search":
+        head = inputs.get("query", "")[:60]
+    elif tool == "rag_search":
+        head = inputs.get("query", "")[:60]
+    st.markdown(
+        f"<div class='sg-action-card' style='border-color:rgba(6,182,212,0.45);"
+        f"background:rgba(6,182,212,0.10);margin:6px 0;'>"
+        f"<div class='sg-icon'>{icon}</div>"
+        f"<div class='sg-detail'>"
+        f"<div class='sg-title'>tool_use · <code style='color:#06B6D4;'>{tool}</code> "
+        f"<span style='color:#A3A3B8;font-weight:400;'>{head}</span></div>"
+        f"<div class='sg-sub'><code style='font-size:0.74rem;color:#6B6B7E;'>"
+        f"{json.dumps(inputs, ensure_ascii=False)[:260]}</code></div>"
+        f"</div></div>", unsafe_allow_html=True)
+
+
+def _render_tool_result(m: dict):
+    """tool 종류별 rich 시각화 — metric card / figure thumb / paper list / raw."""
+    tool = m.get("tool", "")
+    raw = m.get("content", "") or ""
+    # JSON 파싱 시도
+    parsed = None
+    try:
+        parsed = json.loads(raw)
+    except Exception:
+        pass
+
+    if tool == "kyrbs_stat" and isinstance(parsed, dict) and parsed.get("aOR") is not None:
+        _render_metric_stat(parsed)
+        return
+    if tool == "pubmed_search" and isinstance(parsed, dict) and parsed.get("similar_papers"):
+        _render_paper_list(parsed)
+        return
+    if tool == "rag_search" and isinstance(parsed, list):
+        _render_rag_hits(parsed)
+        return
+    # default
+    preview = raw[:400]
+    st.markdown(
+        f"<div class='sg-action-card' style='border-color:rgba(16,185,129,0.40);"
+        f"background:rgba(16,185,129,0.08);margin:6px 0;'>"
+        f"<div class='sg-icon'>📥</div>"
+        f"<div class='sg-detail'>"
+        f"<div class='sg-title'>tool_result · <code style='color:#10B981;'>{tool or '?'}</code></div>"
+        f"<div class='sg-sub' style='white-space:pre-wrap;'>{preview}</div>"
+        f"</div></div>", unsafe_allow_html=True)
+
+
+def _render_metric_stat(d: dict):
+    """kyrbs_stat 결과 — 메트릭 카드 (aOR + 95% CI + P)."""
+    aor = d.get("aOR")
+    lo = d.get("ci_low")
+    hi = d.get("ci_high")
+    p = d.get("p_value")
+    n = d.get("n", 0)
+    exposure = d.get("exposure", "?")
+    outcome = d.get("outcome", "?")
+    design = d.get("design", "")
+    p_fmt = "< 0.001" if (p is not None and p < 0.001) else (f"= {p:.3f}" if p is not None else "?")
+    st.markdown(
+        f"<div class='sg-card' style='border:1px solid rgba(59,130,246,0.50);"
+        f"background:linear-gradient(135deg, rgba(59,130,246,0.10), rgba(139,92,246,0.10));'>"
+        f"<div style='display:flex;justify-content:space-between;align-items:baseline;'>"
+        f"<div style='color:#A3A3B8;font-size:0.78rem;'>📊 KYRBS stat — {exposure} → {outcome}</div>"
+        f"<div style='color:#6B6B7E;font-size:0.72rem;'>n={n:,} · {design}</div></div>"
+        f"<div style='margin-top:10px;color:#F5F5FA;font-size:1.6rem;font-weight:700;'>"
+        f"aOR {aor:.3f} "
+        f"<span style='color:#A78BFA;font-size:0.85rem;font-weight:500;'>"
+        f"(95% CI {lo:.3f}–{hi:.3f}; <i>P</i> {p_fmt})</span></div>"
+        f"</div>", unsafe_allow_html=True)
+
+
+def _render_paper_list(d: dict):
+    """pubmed_search 결과 — 논문 카드 리스트."""
+    score = d.get("novelty_score", "?")
+    summary = (d.get("summary") or "")[:300]
+    papers = d.get("similar_papers", [])[:6]
+    rows = "".join(
+        f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
+        f"<div style='font-weight:600;color:#F5F5FA;font-size:0.88rem;'>"
+        f"{p.get('title', '?')[:120]}</div>"
+        f"<div style='color:#A3A3B8;font-size:0.76rem;'>"
+        f"{p.get('year', '?')} · {(p.get('authors') or '')[:80]}</div>"
+        f"</div>" for p in papers)
+    st.markdown(
+        f"<div class='sg-card' style='border:1px solid rgba(167,139,250,0.40);'>"
+        f"<div style='display:flex;justify-content:space-between;'>"
+        f"<div style='font-weight:600;color:#F5F5FA;'>🔬 PubMed novelty</div>"
+        f"<div style='color:#A78BFA;font-weight:600;'>score: {score}</div></div>"
+        f"<div style='color:#A3A3B8;font-size:0.86rem;margin:8px 0;'>{summary}</div>"
+        f"{rows}</div>", unsafe_allow_html=True)
+
+
+def _render_rag_hits(hits: list):
+    """rag_search 결과 — 상위 hit 미니 카드."""
+    rows = ""
+    for h in hits[:5]:
+        text = (h.get("text") or "")[:180]
+        score = h.get("score") or h.get("final_score") or 0
+        md = h.get("metadata") or {}
+        src = md.get("source") or md.get("doi") or md.get("pmid") or "—"
+        rows += (
+            f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
+            f"<div style='font-size:0.84rem;color:#F5F5FA;'>{text}…</div>"
+            f"<div style='color:#A3A3B8;font-size:0.72rem;'>score={score:.3f} · {src}</div>"
+            f"</div>")
+    st.markdown(
+        f"<div class='sg-card' style='border:1px solid rgba(6,182,212,0.40);'>"
+        f"<div style='font-weight:600;color:#F5F5FA;'>🧠 RAG retrieval (top {len(hits)})</div>"
+        f"{rows}</div>", unsafe_allow_html=True)
+
+
+def _render_system_event(m: dict):
+    """system event — preview_patched 시 before/after diff 시각화."""
+    event = m.get("event", "system")
+    detail = m.get("detail", "")
+    # detail이 JSON string이면 파싱 → patch diff 렌더
+    parsed = None
+    if isinstance(detail, str):
+        try:
+            parsed = json.loads(detail)
+        except Exception:
+            parsed = None
+
+    if event == "preview_patched" and isinstance(parsed, dict):
+        _render_patch_diff(parsed)
+        return
+
+    st.markdown(
+        f"<div class='sg-action-card' style='border-color:rgba(124,58,237,0.40);"
+        f"background:rgba(124,58,237,0.08);margin:6px 0;'>"
+        f"<div class='sg-icon'>⚙️</div>"
+        f"<div class='sg-detail'>"
+        f"<div class='sg-title'>{event}</div>"
+        f"<div class='sg-sub' style='white-space:pre-wrap;'>{str(detail)[:300]}</div>"
+        f"</div></div>", unsafe_allow_html=True)
+
+
+def _render_patch_diff(d: dict):
+    """patch_preview의 before/after diff — VS Code 양식 (added 강조)."""
+    import html as _html
+    target = d.get("target", "?")
+    before = (d.get("before") or "").strip()
+    after = (d.get("after") or "").strip()
+    added = (d.get("added") or "").strip()
+    head = (
+        f"<div style='display:flex;justify-content:space-between;align-items:baseline;'>"
+        f"<div style='font-weight:600;color:#F5F5FA;'>📝 Preview patched · "
+        f"<code style='color:#A78BFA;'>{target}</code></div>"
+        f"<div style='color:#A3A3B8;font-size:0.74rem;'>"
+        f"before {len(before)} → after {len(after)} chars</div></div>")
+
+    body = ""
+    if added:
+        body += (
+            f"<div style='margin-top:8px;background:rgba(16,185,129,0.10);"
+            f"border-left:3px solid #10B981;padding:8px 12px;border-radius:6px;"
+            f"font-family:Consolas,monospace;font-size:0.80rem;color:#A7F3D0;"
+            f"white-space:pre-wrap;'>+ {_html.escape(added[:600])}</div>")
+    if before and before != after:
+        body += (
+            f"<details style='margin-top:6px;'><summary style='cursor:pointer;color:#A3A3B8;"
+            f"font-size:0.78rem;'>Before/After 전체 보기</summary>"
+            f"<div style='margin-top:6px;background:rgba(244,63,94,0.06);"
+            f"border-left:3px solid #FB7185;padding:8px 12px;border-radius:6px;"
+            f"font-family:Consolas,monospace;font-size:0.76rem;color:#FECDD3;"
+            f"white-space:pre-wrap;'>- {_html.escape(before[-500:])}</div>"
+            f"<div style='margin-top:4px;background:rgba(16,185,129,0.06);"
+            f"border-left:3px solid #10B981;padding:8px 12px;border-radius:6px;"
+            f"font-family:Consolas,monospace;font-size:0.76rem;color:#A7F3D0;"
+            f"white-space:pre-wrap;'>+ {_html.escape(after[-500:])}</div>"
+            f"</details>")
+
+    st.markdown(
+        f"<div class='sg-card' style='border:1px solid rgba(124,58,237,0.40);'>"
+        f"{head}{body}</div>", unsafe_allow_html=True)
 
 
 def _render_chat_left(project: dict, pid: str):
@@ -292,6 +464,7 @@ def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
                               "tool": step.get("tool"),
                               "input": step.get("input", {})})
             messages.append({"role": "tool_result",
+                              "tool": step.get("tool"),
                               "content": step.get("result_preview", "")})
         # 최종 assistant text
         text = (result.get("text") or "").strip()
@@ -302,11 +475,46 @@ def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
                               "detail": f"stop_reason={result.get('stop_reason')} iters={result.get('iters')}"})
         project["messages"] = messages
         _save_project(pid, project)
+
+        # ★ 자가학습 — chat의 user/assistant 교환을 memory.router로 흘려보냄
+        _wire_memory(prompt, text, project)
     except Exception as e:
         import traceback
         project["messages"].append({"role": "system", "event": "agentic_error",
                                       "detail": f"{e}\n\n{traceback.format_exc()[:500]}"})
         _save_project(pid, project)
+
+
+def _wire_memory(user_msg: str, assistant_text: str, project: dict) -> None:
+    """chat 교환을 자가학습 파이프라인에 연결:
+    1) `conversation_memory.record` — ChromaDB 의미검색 색인 (recall_relevant)
+    2) `memory.router.write` — typed memory (gate + scorer + lifecycle)
+    """
+    owner = str(project.get("owner") or "anonymous")
+    title = str(project.get("title") or "")[:80]
+    try:
+        from src.memory import conversation_memory as cm
+        if user_msg:
+            cm.record(f"[paper.user] ({title}) {user_msg[:600]}",
+                       account=owner, role="user")
+        if assistant_text:
+            cm.record(f"[paper.assistant] ({title}) {assistant_text[:600]}",
+                       account=owner, role="assistant")
+    except Exception:
+        pass
+    try:
+        from src.memory.router import write as mem_write
+        if assistant_text and len(assistant_text) > 60:
+            mem_write(
+                text=assistant_text[:1500],
+                kind="episodic",
+                source="paper_agentic",
+                owner=owner,
+                extra_meta={"project_title": title,
+                             "grounded_in_data": True},
+            )
+    except Exception:
+        pass
 
 
 def _delegate_to_writer(prompt: str, project: dict, mode: str) -> dict:

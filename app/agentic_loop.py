@@ -134,6 +134,7 @@ def make_tool_handler(get_project: Callable[[], dict],
 
 
 def _h_patch_preview(inputs, get_project, set_project, append_chat_event):
+    """patch_preview — before/after 메타도 함께 저장해서 chat에 diff 렌더 가능하게."""
     proj = get_project()
     sections = proj.setdefault("sections", {})
     content = inputs.get("content", "")
@@ -144,13 +145,16 @@ def _h_patch_preview(inputs, get_project, set_project, append_chat_event):
     supplement_block = inputs.get("supplement_block") or ""
 
     target = ""
+    before = ""
+    after = ""
     if abstract_field:
         ab = sections.setdefault("Abstract", {})
         if not isinstance(ab, dict):
             ab = {"Background": str(ab)}
             sections["Abstract"] = ab
-        old = ab.get(abstract_field, "")
-        ab[abstract_field] = (old + "\n\n" + content).strip() if append and old else content
+        before = str(ab.get(abstract_field, "") or "")
+        after = (before + "\n\n" + content).strip() if append and before else content
+        ab[abstract_field] = after
         target = f"Abstract.{abstract_field}"
     elif section:
         if subsection:
@@ -158,28 +162,50 @@ def _h_patch_preview(inputs, get_project, set_project, append_chat_event):
             if not isinstance(sec, dict):
                 sec = {"_intro": str(sec)}
                 sections[section] = sec
-            old = sec.get(subsection, "")
-            sec[subsection] = (old + "\n\n" + content).strip() if append and old else content
+            before = str(sec.get(subsection, "") or "")
+            after = (before + "\n\n" + content).strip() if append and before else content
+            sec[subsection] = after
             target = f"{section}.{subsection}"
         else:
-            old = sections.get(section, "")
-            if isinstance(old, dict):
-                old["_appended"] = (old.get("_appended", "") + "\n\n" + content).strip()
+            raw = sections.get(section)
+            if isinstance(raw, dict):
+                before = str(raw.get("_appended", "") or "")
+                after = (before + "\n\n" + content).strip() if append and before else content
+                raw["_appended"] = after
             else:
-                sections[section] = (old + "\n\n" + content).strip() if append and old else content
+                before = str(raw or "")
+                after = (before + "\n\n" + content).strip() if append and before else content
+                sections[section] = after
             target = section
     elif supplement_block:
         supp = proj.setdefault("supplement", {})
-        old = supp.get(supplement_block, "")
-        supp[supplement_block] = (old + "\n\n" + content).strip() if append and old else content
+        before = str(supp.get(supplement_block, "") or "")
+        after = (before + "\n\n" + content).strip() if append and before else content
+        supp[supplement_block] = after
         target = f"Supplement.{supplement_block}"
 
     set_project(proj)
+    # before/after 메타를 chat event에 저장 → rich diff 렌더 가능
     append_chat_event("preview_patched",
-                       {"target": target, "len": len(content),
-                        "preview": content[:120]})
+                       {"target": target,
+                        "before": before[-800:],
+                        "after": after[-800:],
+                        "added": content[:600],
+                        "append": append})
+
+    # 자가학습 — 검증된 patch는 conversation_memory에 PROJECT_FACT 등급으로 저장
+    try:
+        from src.memory import conversation_memory as cm
+        cm.record(
+            f"[paper.patch] target={target} added={content[:300]}",
+            account=str(proj.get("owner", "")) or "anonymous",
+            role="system",
+        )
+    except Exception:
+        pass
+
     return (f"OK — patched {target} ({len(content)} chars). "
-            f"Preview docx 갱신됨.")
+            f"Preview docx 갱신됨. before_len={len(before)} after_len={len(after)}.")
 
 
 def _h_kyrbs_stat(inputs):
