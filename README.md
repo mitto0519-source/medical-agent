@@ -139,6 +139,56 @@ Claude Desktop 설정 (`~/.config/claude/claude_desktop_config.json`):
 
 ---
 
+## 🛡️ 안전 + 품질 레이어 (12번 섹션 of ARCHITECTURE.md)
+
+모든 LLM 출력은 다음을 자동 통과:
+
+| 단계 | 모듈 | 차단/검증 |
+|---|---|---|
+| Prompt 합성 | `prompts/*.md` + `prompt_loader` + `build_base_system` | medical_core/safety/yoosun v1.0.0 자동 주입 |
+| Truth 분류 | `safety/truth_hierarchy` + `memory/router` | PROJECT_FACT 이상만 LLM 컨텍스트 주입 가능 |
+| 환각 차단 | `memory/memory_gate.assess` | quarantine 자동 + audit_trail 기록 |
+| 임상 키워드 | `safety/physician_review` | 처방/진단/복용량 → 검토 큐 자동 격리 |
+| 인용 grounding | `safety/citation_grounding` | DOI CrossRef 검증 + orphan ref 감지 |
+| 본문 일관성 | `safety/consistency_checker` | n/OR-CI/p값/연도 모순 정규식 검출 |
+| Figure 검증 | `safety/figure_validator` | Claude Vision으로 axis/CI/legend 재확인 |
+| Reporting | `research/reporting_checklist` | STROBE 22항목 자동 체크 → peer_reviewer 흡수 |
+| Tool-use loop | `llm/claude_client.generate_with_tools` | function calling agentic loop (events 기록) |
+| Multi-stage RAG | `rag/pipeline.search_multistage` | dense + Jaccard rerank + recency_boost |
+| Citation graph | `knowledge/citation_graph` | PubMed eLink co-citation/bridging/missing seminal |
+| Self-consistency | `llm/self_consistency` | n-sample 다수결 (critical output에서) |
+| Cost/latency | `llm/budget.latency_summary` | p50/p95 provider별 + events 기반 |
+| Prompt A/B | `diagnostics/prompt_ab` | epsilon-greedy variant 선택 + eval 점수 누적 |
+| Eval→Prompt | `eval_benchmark` + `capability_bench.get_improvement_context` | 5축 점수의 fail 항목이 다음 LLM에 자동 주입 |
+| Replay | `scripts/replay_task.py` | events.db 사후 시간순 재구성 |
+| Wiring audit | `scripts/audit_wiring.py` | 새 심볼 호출부 검증 — dead code 차단 |
+
+---
+
+## 📄 Word 표준 양식 (zcb_dep_v5)
+
+모든 논문 docx는 동일 양식으로 출력 — `data/templates/manuscript_template.json` 단일 진실원본.
+
+```python
+from src.export.word_exporter import WordExporter
+WordExporter().export(
+    topic={"title": "...", "authors": [...], "affiliations": [...]},
+    sections={"Abstract": {"Background": "...", "Methods": "...", ...},
+              "Introduction": "...", "Methods": {...subsection...}, ...},
+    keywords=["zero-calorie beverage", "depression", ...],
+    figures=[{"bytes": ..., "caption": "...", "n": 1}, ...],
+    tables=[{"type": "baseline", "data": [...], "caption": "...", "n": 1}],
+    references=[{"authors": "...", "title": "...", "journal": "...",
+                 "year": "2025", "volume": "385", "pages": "445-449"}],
+    back_matter={"Ethics approval": "...", "Funding": "...", ...},
+)
+```
+
+자동 적용: Times New Roman / double-spaced / Abstract inline label /
+**Vancouver [1]** 인라인 / *italic P* / 학술지 세 줄 표 (NEJM 양식).
+
+---
+
 ## 🔄 자동 동기화 (선택)
 
 ```bash
