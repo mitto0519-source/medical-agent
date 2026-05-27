@@ -1,4 +1,4 @@
-"""프로젝트 워크스페이스 — Lovable 양식의 split 화면.
+"""프로젝트 워크스페이스 — EZ 양식의 split 화면.
 
 좌측 (38%): chat
   · 과거 대화 + 현재 어시스턴트 응답
@@ -664,13 +664,13 @@ try:
             "<div style='font-weight:600;font-size:1.1rem;margin:8px 0;'>"
             "활성 프로젝트가 없습니다</div>"
             "<div style='color:#A3A3B8;font-size:0.92rem;margin-bottom:18px;'>"
-            "Lovable home에서 프로젝트를 먼저 선택해주세요.</div>"
+            "EZ home에서 프로젝트를 먼저 선택해주세요.</div>"
             "</div>", unsafe_allow_html=True)
-        if st.button("✨  Lovable home으로", type="primary", use_container_width=False):
+        if st.button("✨  EZ home으로", type="primary", use_container_width=False):
             try:
-                st.switch_page("pages/lovable_home.py")
+                st.switch_page("pages/ez_home.py")
             except Exception:
-                st.info("좌측 사이드바에서 `lovable home`을 클릭해 주세요.")
+                st.info("좌측 사이드바에서 `ez home`을 클릭해 주세요.")
     else:
         render(pid)
 except Exception as _e:

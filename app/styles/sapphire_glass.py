@@ -1,4 +1,4 @@
-"""Sapphire Glass theme — Lovable-style glassmorphism CSS for Streamlit.
+"""Sapphire Glass theme — EZ-style glassmorphism CSS for Streamlit.
 
 DESIGN.md Section 9의 토큰을 Streamlit에 1회 주입. 새 페이지 진입 시 호출:
     from app.styles.sapphire_glass import inject_sapphire_glass
@@ -6,7 +6,7 @@ DESIGN.md Section 9의 토큰을 Streamlit에 1회 주입. 새 페이지 진입 
 
 UI 컴포넌트 helpers:
     glass_card(html_body, *, key=None)  → 글래스 액션 카드
-    big_input(placeholder, key)         → Lovable 양식 큰 입력바
+    big_input(placeholder, key)         → EZ 양식 큰 입력바
     project_card(title, edited, image, status)  → 프로젝트 카드 (홈 그리드)
     workspace_tabs(...)                 → Manuscript/Figures/Tables/Supplement chip tabs
 """

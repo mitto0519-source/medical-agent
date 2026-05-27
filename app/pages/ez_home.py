@@ -1,7 +1,7 @@
-"""Lovable-style 홈 — sapphire glass theme.
+"""EZ-style 홈 — sapphire glass theme.
 
 Streamlit **자동 멀티페이지**: 파일이 `app/pages/`에 있으면 사이드바에 자동 노출되고
-URL `/lovable_home`로 직접 접근 가능 (Streamlit Cloud 포함).
+URL `/ez_home`로 직접 접근 가능 (Streamlit Cloud 포함).
 
 좌측 사이드바: Home / Search / Resources / Projects / Recents (커스텀)
 중앙: 큰 입력바 ("논문 아이디어를 입력하세요…")
@@ -17,7 +17,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-# pages/lovable_home.py에서 직접 `import app.styles...`를 하려면 repo root가 sys.path에 있어야 함
+# pages/ez_home.py에서 직접 `import app.styles...`를 하려면 repo root가 sys.path에 있어야 함
 _root = Path(__file__).resolve().parent.parent.parent
 if str(_root) not in sys.path:
     sys.path.insert(0, str(_root))
@@ -279,6 +279,6 @@ try:
     render()
 except Exception as _e:
     import traceback
-    st.error(f"Lovable home 렌더 실패: {_e}")
+    st.error(f"EZ home 렌더 실패: {_e}")
     st.code(traceback.format_exc())
     st.info("기존 단위 기능 UI는 메인(/) 페이지에서 정상 동작합니다.")

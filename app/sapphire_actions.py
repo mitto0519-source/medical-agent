@@ -1,7 +1,7 @@
 """Sapphire action dialogs — 러버블 양식 부가기능 모달.
 
 기존 단위 기능(신규성 확인 / 통계 / STROBE / Figure / 인용 등)을 **페이지 이동 없이**
-현재 lovable_home/workspace 위에 `st.dialog`로 팝업한다. 결과를 inline 표시 +
+현재 ez_home/workspace 위에 `st.dialog`로 팝업한다. 결과를 inline 표시 +
 "chat에 결과 삽입" 버튼으로 현재 흐름에 흡수.
 
 호출 양식 (러버블 양식):

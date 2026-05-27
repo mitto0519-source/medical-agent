@@ -38,7 +38,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# NOTE: Sapphire Glass (Lovable-style) UI는 별도 entry `app/sapphire_app.py`로 완전 분리됨
+# NOTE: Sapphire Glass (EZ-style) UI는 별도 entry `app/sapphire_app.py`로 완전 분리됨
 # (2026-05-27, 사용자 요청). 본 streamlit_app.py는 기존 단위 기능 UI만 담당.
 # 새 UI 접속: http://localhost:8502 (docker-compose의 sapphire-ui 서비스)
 

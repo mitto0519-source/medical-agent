@@ -36,7 +36,7 @@ _log = get_logger(__name__)
 _OUT_DIR = Path("data/oa_papers")
 _MANIFEST_DB = _OUT_DIR / "manifest.sqlite"
 _EPMC_SEARCH = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
-_EPMC_FULLTEXT = "https://www.ebi.ac.uk/europepmc/webservices/rest/{src}/{eid}/fullTextXML"
+_EPMC_FULLTEXT = "https://www.ebi.ac.uk/europepmc/webservices/rest/{eid}/fullTextXML"
 
 
 def _ua() -> dict:
@@ -100,13 +100,9 @@ def _search_oa(query: str, *, n_target: int = 100, page_size: int = 25,
 
 def _fetch_fulltext(pmcid: str, source: str = "PMC") -> Optional[str]:
     """XML 본문 fetch → 텍스트만 추출. 실패 시 None.
-    Europe PMC URL: /webservices/rest/PMC/PMC1234567/fullTextXML (prefix 유지)"""
-    # PMC source는 PMC prefix 포함 ID 필요. MED source는 PMID 숫자.
-    if source == "PMC":
-        eid = pmcid if pmcid.startswith("PMC") else f"PMC{pmcid}"
-    else:
-        eid = pmcid.replace("PMC", "") if pmcid.startswith("PMC") else pmcid
-    url = _EPMC_FULLTEXT.format(src=source, eid=eid)
+    Europe PMC URL: /webservices/rest/{PMCID}/fullTextXML (src 없이 PMC prefix 유지)."""
+    eid = pmcid if pmcid.startswith("PMC") else f"PMC{pmcid}"
+    url = _EPMC_FULLTEXT.format(eid=eid)
     try:
         req = urllib.request.Request(url, headers=_ua())
         with urllib.request.urlopen(req, timeout=60) as resp:
