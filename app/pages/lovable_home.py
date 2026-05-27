@@ -181,12 +181,12 @@ def render() -> None:
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-# Streamlit 멀티페이지: 모듈 로드 시 자동 실행
-# (URL /lovable_home 또는 사이드바 자동 메뉴에서 진입 시 호출됨)
-if __name__ != "__main__":
-    # streamlit이 페이지 파일을 import-execute할 때 자동 렌더
-    try:
-        render()
-    except Exception as _e:
-        st.error(f"Lovable home 렌더 실패: {_e}")
-        st.info("기존 단위 기능 UI는 사이드바의 '🔬 Medical-Agent' 메인 페이지에서 정상 동작합니다.")
+# Streamlit 멀티페이지: 페이지 파일을 runpy로 실행하므로 무조건 render() 호출
+# (Streamlit은 `runpy.run_path(...,run_name='__main__')` 으로 page를 실행)
+try:
+    render()
+except Exception as _e:
+    import traceback
+    st.error(f"Lovable home 렌더 실패: {_e}")
+    st.code(traceback.format_exc())
+    st.info("기존 단위 기능 UI는 메인(/) 페이지에서 정상 동작합니다.")
