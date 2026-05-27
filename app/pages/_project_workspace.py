@@ -1,0 +1,302 @@
+"""프로젝트 워크스페이스 — Lovable 양식의 split 화면.
+
+좌측 (38%): chat
+  · 과거 대화 + 현재 어시스턴트 응답
+  · 하단 입력바 (sg-big-input 글래스 양식)
+
+우측 (62%): preview tab bar (chip 양식)
+  · Manuscript  — Word 양식 1:1 사파이어 글라스 위 화이트 페이퍼
+  · Figures     — 생성된 figure (썸네일 그리드)
+  · Tables      — 학술지 세 줄 표 (HTML 미리보기)
+  · Supplement  — 부록 / Stata do-file / raw stats
+
+기존 working_paper_store + paper_writer + StatBridge를 그대로 사용,
+새 UI는 표면 — 핵심 로직은 침범 안 함.
+"""
+from __future__ import annotations
+
+import io
+import json
+from pathlib import Path
+from typing import Optional
+
+import streamlit as st
+
+from app.styles.sapphire_glass import (
+    inject_sapphire_glass, message_bubble, manuscript_preview_html, action_card,
+)
+
+
+_WP_DIR = Path("data/working_papers")
+_FIG_DIR = Path("data/exports")
+
+
+def _load_project(pid: str) -> dict:
+    """working_papers/{pid}.json 또는 new 빈 프로젝트."""
+    if pid == "new":
+        return {"title": "New manuscript",
+                "topic": {}, "sections": {}, "messages": [], "figures": [], "tables": []}
+    p = _WP_DIR / f"{pid}.json"
+    if not p.exists():
+        return {"title": pid, "sections": {}, "messages": [], "figures": [], "tables": []}
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {"title": pid, "sections": {}, "messages": [], "figures": [], "tables": []}
+
+
+def _save_project(pid: str, data: dict) -> None:
+    if pid == "new":
+        return
+    _WP_DIR.mkdir(parents=True, exist_ok=True)
+    p = _WP_DIR / f"{pid}.json"
+    try:
+        p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def _render_topbar(project: dict):
+    title = project.get("title", "Untitled")
+    cols = st.columns([5, 1, 1, 1])
+    with cols[0]:
+        st.markdown(
+            f"<div style='display:flex;align-items:center;gap:12px;padding:6px 0;'>"
+            f"<div style='width:32px;height:32px;border-radius:10px;"
+            f"background:linear-gradient(135deg,#3B82F6,#8B5CF6);'></div>"
+            f"<div><div style='font-weight:600;font-size:1.0rem;'>{title}</div>"
+            f"<div style='color:#A3A3B8;font-size:0.78rem;'>Previewing last saved version</div>"
+            f"</div></div>", unsafe_allow_html=True)
+    with cols[1]:
+        if st.button("💬 Comments", use_container_width=True, key="ws_comments"):
+            st.toast("Comments: 곧 활성화", icon="💬")
+    with cols[2]:
+        if st.button("🔗 Share", use_container_width=True, key="ws_share"):
+            st.toast("Share link: 곧 활성화", icon="🔗")
+    with cols[3]:
+        if st.button("⬇ Export", use_container_width=True, key="ws_export", type="primary"):
+            _export_docx(project)
+
+
+def _export_docx(project: dict):
+    try:
+        from src.export.word_exporter import WordExporter
+        sections = project.get("sections", {})
+        topic = project.get("topic") or {"title": project.get("title", "Untitled")}
+        path = WordExporter().export(
+            topic=topic, sections=sections,
+            references=project.get("references", []),
+            back_matter=project.get("back_matter", {}),
+            keywords=project.get("keywords", []),
+            figures=project.get("figures_bin", []),
+            tables=project.get("tables", []),
+        )
+        st.session_state["sg_last_export"] = path
+        st.toast(f"docx 저장: {Path(path).name}", icon="✅")
+    except Exception as e:
+        st.error(f"Export 실패: {e}")
+
+
+def _figures_list() -> list[dict]:
+    """data/exports의 Figure*.png 자동 수집."""
+    items = []
+    if not _FIG_DIR.exists():
+        return items
+    for p in sorted(_FIG_DIR.glob("Figure*.png")):
+        items.append({"path": str(p), "name": p.name})
+    return items
+
+
+def _render_chat_left(project: dict, pid: str):
+    """좌측 chat panel."""
+    st.markdown("<div style='font-size:0.78rem;color:#A3A3B8;margin:4px 0 8px 4px;'>"
+                f"{project.get('updated', 'today')}</div>", unsafe_allow_html=True)
+
+    messages = project.get("messages", [])
+    initial = st.session_state.pop("sg_initial_prompt", None)
+    if initial and not messages:
+        messages.append({"role": "user", "content": initial})
+
+    for m in messages:
+        message_bubble(m["role"], m.get("content", ""))
+
+    # 마지막 assistant action card 양식 (Lovable의 "Details / Preview")
+    if messages and messages[-1]["role"] == "assistant":
+        last = messages[-1]
+        title = last.get("title", "응답")
+        st.markdown(
+            f"<div class='sg-card' style='border:1px solid rgba(124,58,237,0.5);'>"
+            f"<div style='font-weight:600;margin-bottom:8px;'>{title}</div>"
+            f"<div style='color:#A3A3B8;font-size:0.85rem;'>{last.get('summary', '')[:180]}</div>"
+            f"</div>", unsafe_allow_html=True)
+        cdetail, cpreview = st.columns(2)
+        with cdetail:
+            st.button("Details", use_container_width=True, key=f"ws_details_{len(messages)}")
+        with cpreview:
+            if st.button("Preview", use_container_width=True, key=f"ws_preview_{len(messages)}",
+                          type="primary"):
+                st.session_state["sg_active_tab"] = "Manuscript"
+
+    # 입력
+    with st.form(key="ws_form", clear_on_submit=True):
+        prompt = st.text_area("ask", placeholder="Ask Medical-Agent…",
+                               label_visibility="collapsed", height=80)
+        c1, c2 = st.columns([5, 1])
+        with c1:
+            mode = st.selectbox("mode",
+                                 ["✨ Build (자유 작성)",
+                                  "🔬 Yoosun 스타일 재작성",
+                                  "📊 KYRBS 통계 보강",
+                                  "📑 STROBE 체크"],
+                                 label_visibility="collapsed")
+        with c2:
+            sent = st.form_submit_button("➤", use_container_width=True, type="primary")
+
+    if sent and prompt:
+        messages.append({"role": "user", "content": prompt})
+        # 실제 LLM 호출은 기존 PaperWriter/ResearchPipeline에 위임 (간단 stub)
+        reply = _delegate_to_writer(prompt, project, mode)
+        messages.append({"role": "assistant",
+                          "content": reply.get("content", ""),
+                          "title": reply.get("title", "응답"),
+                          "summary": reply.get("summary", "")})
+        project["messages"] = messages
+        _save_project(pid, project)
+        st.rerun()
+
+
+def _delegate_to_writer(prompt: str, project: dict, mode: str) -> dict:
+    """LLM 호출 위임. 실패해도 UX는 살아있게 stub."""
+    try:
+        from src.llm import get_llm_client
+        from src.agent.prompt_loader import load_prompt
+        sys_prompt = load_prompt("paper_write")
+        client = get_llm_client(task="paper_writing")
+        body = f"Mode: {mode}\nProject: {project.get('title')}\nUser: {prompt}"
+        out = client.generate(body, system_prompt=sys_prompt, max_tokens=1500)
+        return {"content": out[:1200],
+                "title": f"{mode} 결과",
+                "summary": out[:200]}
+    except Exception as e:
+        return {"content": f"(임시 응답) {prompt[:120]}",
+                "title": "응답",
+                "summary": f"LLM 호출 실패: {e}"[:200]}
+
+
+def _render_preview_right(project: dict):
+    """우측 preview tab bar + 내용."""
+    tab = st.session_state.get("sg_active_tab", "Manuscript")
+    tabs = st.tabs(["📄 Manuscript", "📊 Figures", "🧮 Tables", "📎 Supplement"])
+
+    with tabs[0]:
+        sections = project.get("sections") or _demo_sections()
+        topic = project.get("topic") or {"title": project.get("title", "Manuscript draft")}
+        html = manuscript_preview_html(
+            title=topic.get("title", "Untitled"),
+            authors=topic.get("authors", ["Yoosun Cho"]),
+            abstract=sections.get("Abstract", ""),
+            keywords=project.get("keywords", []),
+            sections=sections,
+        )
+        st.markdown(html, unsafe_allow_html=True)
+
+    with tabs[1]:
+        figures = _figures_list()
+        if not figures:
+            st.markdown("<div class='sg-card' style='text-align:center;color:#A3A3B8;'>"
+                         "data/exports/Figure*.png 없음 — `scripts/build_paper_figures.py` 실행 후 표시"
+                         "</div>", unsafe_allow_html=True)
+        else:
+            cols = st.columns(2)
+            for i, f in enumerate(figures):
+                with cols[i % 2]:
+                    st.markdown(f"<div class='sg-card'>", unsafe_allow_html=True)
+                    st.image(f["path"], caption=f["name"], use_container_width=True)
+                    st.markdown("</div>", unsafe_allow_html=True)
+
+    with tabs[2]:
+        tables = project.get("tables", [])
+        if not tables:
+            st.markdown("<div class='sg-card' style='color:#A3A3B8;'>"
+                         "Table 데이터 없음 — Chat에서 'KYRBS 통계 보강'으로 생성"
+                         "</div>", unsafe_allow_html=True)
+        else:
+            for t in tables:
+                st.markdown(
+                    f"<div class='sg-card'><div style='font-weight:600;margin-bottom:8px;'>"
+                    f"Table {t.get('n', '')}. {t.get('caption', '')}</div></div>",
+                    unsafe_allow_html=True)
+                st.json(t.get("data", []))
+
+    with tabs[3]:
+        # Supplement: STROBE 체크리스트 + Stata do-file + consistency report
+        st.markdown("<div class='sg-card'>", unsafe_allow_html=True)
+        st.markdown("**STROBE Reporting Checklist**")
+        try:
+            from src.research.reporting_checklist import check_strobe, format_checklist_report
+            checklist = check_strobe(project.get("sections") or _demo_sections())
+            st.code(format_checklist_report(checklist, verbose=True), language=None)
+        except Exception as e:
+            st.warning(f"STROBE 체크 실패: {e}")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        st.markdown("<div class='sg-card' style='margin-top:12px;'>", unsafe_allow_html=True)
+        st.markdown("**Internal consistency**")
+        try:
+            from src.safety.consistency_checker import check_consistency
+            rep = check_consistency(project.get("sections") or _demo_sections())
+            color = {"ok": "#10B981", "warn": "#F59E0B", "fail": "#F43F5E"}[rep.severity]
+            st.markdown(f"<span style='color:{color};font-weight:600;'>severity = {rep.severity}</span> "
+                         f"({len(rep.issues)} issues)", unsafe_allow_html=True)
+            if rep.issues:
+                for it in rep.issues[:5]:
+                    st.markdown(f"- {it.type}: {it.detail}")
+        except Exception as e:
+            st.warning(f"consistency 실패: {e}")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+
+def _demo_sections() -> dict:
+    return {
+        "Abstract": {
+            "Background": "Zero-calorie beverages (ZCB) are increasingly consumed by adolescents.",
+            "Methods": "Cross-sectional analysis of KYRBS 2025 (n = 50,972).",
+            "Results": "Daily ZCB associated with depressive symptoms (aOR 1.27; 95% CI 1.03-1.56).",
+            "Conclusion": "Higher ZCB intake independently associated with depression in adolescents.",
+        },
+        "Introduction": "Depression is a leading cause of disability in adolescence [1, 2]. "
+                          "ZCB consumption has risen, with unclear mental health implications.",
+        "Methods": {
+            "Study population": "We used 2025 KYRBS data (n = 50,972 aged 12-18).",
+            "Measurements": "ZCB ascertained on 7-point scale, collapsed into 4 categories.",
+            "Statistical analysis": "Survey-weighted logistic regression with 95% CI.",
+        },
+        "Results": "Daily ZCB consumption ≥1/day showed aOR 1.27 (95% CI 1.03-1.56, "
+                    "P = 0.026). Significant interaction by sex (P for interaction < 0.001).",
+        "Discussion": "Key finding: female-predominant dose-response association. "
+                       "Limitation: cross-sectional design precludes causal inference.",
+    }
+
+
+def render(pid: str) -> None:
+    """진입점. `app/streamlit_app.py`에서 호출."""
+    inject_sapphire_glass()
+    project = _load_project(pid)
+
+    # back button + topbar
+    cback, ctop = st.columns([1, 11])
+    with cback:
+        if st.button("← Home", key="ws_back", use_container_width=True):
+            st.session_state["sg_view"] = "home"
+            st.rerun()
+    with ctop:
+        _render_topbar(project)
+
+    st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+
+    # split: 좌 chat / 우 preview
+    left, right = st.columns([4, 6])
+    with left:
+        _render_chat_left(project, pid)
+    with right:
+        _render_preview_right(project)
