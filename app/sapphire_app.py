@@ -57,8 +57,8 @@ except Exception:
     pass
 
 # Router
-from app.pages._lovable_home import render as render_home  # noqa: E402
-from app.pages._project_workspace import render as render_workspace  # noqa: E402
+from app.sapphire_pages.lovable_home import render as render_home  # noqa: E402
+from app.sapphire_pages.project_workspace import render as render_workspace  # noqa: E402
 
 view = st.session_state.get("sg_view", "home")
 if view == "workspace":
