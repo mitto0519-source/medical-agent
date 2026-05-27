@@ -166,6 +166,27 @@ def write(
 
     # 3) 저장 (decision == "store" or "review")
     meta_full = {**meta, "scores": scores, "tier1": tier1, "decision": decision}
+
+    # ★ Pydantic schema 검증 — drift 차단 (외부 진단 'memory schema stabilization')
+    try:
+        import time as _time
+        from src.memory.schemas import validate_record, migrate
+        candidate = migrate({
+            "id": meta_full.get("id") or f"pending_{int(_time.time()*1000)}",
+            "type": type,
+            "text": text,
+            "tier": tier1 if tier1 in ("verified", "session", "temp", "quarantine") else "session",
+            "meta": {k: v for k, v in meta_full.items() if k != "scores"},
+            "scores": scores if isinstance(scores, dict) else None,
+        })
+        v = validate_record(candidate)
+        if "_schema_invalid" in v:
+            _events.append("memory_schema_invalid",
+                            {"reason": v["_schema_invalid"][:160],
+                             "type": type, "source": source},
+                            actor="memory_router")
+    except Exception:
+        pass
     if record_only:
         # 호출자(change_log/conversation_memory 등)가 이미 저장 → 감사만
         _events.append(

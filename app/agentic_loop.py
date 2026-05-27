@@ -151,6 +151,52 @@ TOOL_SCHEMAS: List[dict] = [
             "required": ["text"],
         },
     },
+    {
+        "name": "run_plan",
+        "description": "★ Planner DAG 실행 — section 단위 multi-step 자동 처리. "
+                        "section 지정 시 evidence→components→compose→style→patch→verify DAG "
+                        "자동 생성·실행. roles(researcher/writer/stylist/critic)로 dispatch.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "section": {"type": "string",
+                             "description": "Introduction|Methods|Results|Discussion"},
+                "goal": {"type": "string",
+                          "description": "이 section의 작성 목표 (예: ZCB-depression intro)"},
+                "outcome": {"type": "string", "description": "Results/Methods용 (depression 등)"},
+                "exposure": {"type": "string", "description": "zcb_freq 등"},
+            },
+            "required": ["section", "goal"],
+        },
+    },
+    {
+        "name": "dispatch_role",
+        "description": "Multi-agent role에 직접 위임 — researcher/writer/stylist/critic/"
+                        "statistician/citation_auditor. specialized prompt + 도구 제한.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "role": {"type": "string",
+                          "description": "planner|researcher|writer|stylist|critic|statistician|citation_auditor"},
+                "message": {"type": "string", "description": "role에 전달할 본문"},
+            },
+            "required": ["role", "message"],
+        },
+    },
+    {
+        "name": "procedural_recall",
+        "description": "행동 전략 메모리 회수 — 'reviewer는 X를 본다' 같은 누적 규칙. "
+                        "context를 주면 trigger 매칭된 rule 반환. 적용 후 report_outcome 호출.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "context": {"type": "string"},
+                "domain": {"type": "string",
+                            "description": "journal_review|stat_method|figure_style|... 선택"},
+            },
+            "required": ["context"],
+        },
+    },
 ]
 
 
@@ -186,6 +232,12 @@ def make_tool_handler(get_project: Callable[[], dict],
                 return _h_cross_modal(inputs)
             if name == "apply_author_style":
                 return _h_apply_style(inputs)
+            if name == "run_plan":
+                return _h_run_plan(inputs, get_project, set_project, append_chat_event)
+            if name == "dispatch_role":
+                return _h_dispatch_role(inputs, get_project)
+            if name == "procedural_recall":
+                return _h_procedural(inputs)
             return f"unknown tool: {name}"
         except Exception as e:
             return f"ERROR in {name}: {e}"
@@ -392,6 +444,62 @@ def _h_apply_style(inputs):
         author_style=inputs.get("author_style", "yoosun_cho"),
     )
     return styled[:4000]
+
+
+def _h_run_plan(inputs, get_project, set_project, append_chat_event):
+    """Planner DAG 생성 + 실행 — node action을 roles.dispatch_role로 위임."""
+    from src.agent.planner import get_planner
+    from src.agent.roles import role_for_action, dispatch_role
+    section = inputs.get("section", "Introduction")
+    goal = inputs.get("goal", section)
+    ctx = {"section": section,
+           "outcome": inputs.get("outcome"), "exposure": inputs.get("exposure")}
+    proj = get_project()
+
+    planner = get_planner()
+    graph = planner.plan(goal, context=ctx)
+
+    def _exec_node(node):
+        # node.action → role → 실 호출
+        role = role_for_action(node.action)
+        # role에 필요한 메시지 합성
+        msg = (f"DAG node {node.id} action={node.action} args={json.dumps(node.args, ensure_ascii=False)} "
+                f"rationale={node.rationale}. Use the allowed tools to produce the expected output.")
+        result = dispatch_role(role, {"message": msg, "project": proj})
+        return {"role": role, "node_action": node.action,
+                "text": (result.get("text") or "")[:600],
+                "tools_used": result.get("tools_used", [])}
+
+    executed = planner.execute(graph, executor=_exec_node)
+    summary = {
+        "graph_id": executed.id, "state": executed.state,
+        "n_nodes": len(executed.nodes),
+        "n_done": sum(1 for n in executed.nodes.values() if n.state == "done"),
+        "n_failed": sum(1 for n in executed.nodes.values() if n.state == "failed"),
+        "steps": [{"id": n.id, "action": n.action, "state": n.state,
+                    "role": role_for_action(n.action),
+                    "output_preview": str(n.output)[:200] if n.output else ""}
+                   for n in executed.nodes.values()],
+    }
+    return json.dumps(summary, ensure_ascii=False)[:6000]
+
+
+def _h_dispatch_role(inputs, get_project):
+    from src.agent.roles import dispatch_role
+    r = dispatch_role(inputs["role"], {"message": inputs.get("message", ""),
+                                          "project": get_project()})
+    return json.dumps({"role": r.get("role"),
+                        "text": (r.get("text") or "")[:1500],
+                        "tools_used": r.get("tools_used", []),
+                        "error": r.get("error", "")}, ensure_ascii=False)
+
+
+def _h_procedural(inputs):
+    from src.memory.procedural import find_applicable
+    rules = find_applicable(inputs.get("context", ""),
+                              domain=inputs.get("domain"),
+                              limit=5)
+    return json.dumps({"n": len(rules), "rules": rules}, ensure_ascii=False)
 
 
 # ── System prompt — preview snapshot 포함 ────────────────────────────────────
