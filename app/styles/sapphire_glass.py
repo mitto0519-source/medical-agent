@@ -482,5 +482,6 @@ def manuscript_preview_html(*, title: str, authors: list[str] | str,
     return "<div class='sg-manuscript'>" + "".join(parts) + "</div>"
 
 
-def manuscript_preview(**kwargs) -> None:
-    st.markdown(manuscript_preview_html(**kwargs), unsafe_allow_html=True)
+# NOTE: 과거에 있던 `manuscript_preview()` wrapper는 제거 (2026-05-27).
+# 호출자 0건이었고, `_project_workspace.py`가 manuscript_preview_html()을
+# 직접 st.markdown(...)으로 출력하는 한 줄이라 wrapper의 가치가 없음. dead code 차단.
