@@ -13,13 +13,19 @@
 
 ```bash
 docker compose up -d --build
-# 기존 단위 기능 UI:        http://localhost:8501
-# Sapphire Glass UI (Lovable):  http://localhost:8502
+# 메인:                            http://localhost:8501
+# Lovable 양식 (Sapphire Glass):  http://localhost:8501/lovable_home
+# 프로젝트 워크스페이스:           http://localhost:8501/project_workspace
 # 로그: docker compose logs -f
 ```
 
-**두 UI는 완전 분리 운영** (2026-05-27 사용자 요청). 8501은 기존 단위 기능 화면,
-8502는 글래스모피즘 Lovable 양식. 동일 backend(같은 data/, 같은 src/) 공유.
+**두 모드 단일 entry 동거** (2026-05-27): Streamlit 자동 멀티페이지로 `/lovable_home`
+및 `/project_workspace` URL 라우팅. 기존 단위 기능 화면(메인)은 그대로 유지되며
+Lovable 모드 개발 시 참고/폴백용으로 살아있음. Streamlit Cloud 배포도 동일 URL 양식
+(`/lovable_home`)으로 접근.
+
+⚠️ Lovable 모드는 현재 **UX/UI 디테일 + e2e 기능 미완성** — 점진 개선 중. 안정 동작이
+필요한 작업은 메인 페이지 사용 권장.
 
 API 키는 `.env`에 (admin 전역 키로 모든 사용자에 적용):
 ```env

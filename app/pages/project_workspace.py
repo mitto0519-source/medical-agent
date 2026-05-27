@@ -17,8 +17,13 @@ from __future__ import annotations
 
 import io
 import json
+import sys
 from pathlib import Path
 from typing import Optional
+
+_root = Path(__file__).resolve().parent.parent.parent
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
 
 import streamlit as st
 
@@ -300,3 +305,30 @@ def render(pid: str) -> None:
         _render_chat_left(project, pid)
     with right:
         _render_preview_right(project)
+
+
+# Streamlit 멀티페이지: 모듈 로드 시 자동 실행
+# 사용자가 /project_workspace로 직접 진입했을 때 active_project가 없으면
+# "프로젝트를 먼저 선택하세요" 안내 + 홈으로 가는 버튼.
+if __name__ != "__main__":
+    try:
+        pid = st.session_state.get("sg_active_project")
+        if not pid:
+            inject_sapphire_glass()
+            st.markdown(
+                "<div class='sg-card' style='max-width:560px;margin:120px auto;text-align:center;'>"
+                "<div style='font-size:2.0rem;'>📂</div>"
+                "<div style='font-weight:600;font-size:1.1rem;margin:8px 0;'>"
+                "활성 프로젝트가 없습니다</div>"
+                "<div style='color:#A3A3B8;font-size:0.92rem;margin-bottom:18px;'>"
+                "Lovable home에서 프로젝트를 먼저 선택해주세요.</div>"
+                "</div>", unsafe_allow_html=True)
+            if st.button("✨  Lovable home으로", type="primary", use_container_width=False):
+                try:
+                    st.switch_page("pages/lovable_home.py")
+                except Exception:
+                    st.info("좌측 사이드바에서 `lovable home`을 클릭해 주세요.")
+        else:
+            render(pid)
+    except Exception as _e:
+        st.error(f"Project workspace 렌더 실패: {_e}")

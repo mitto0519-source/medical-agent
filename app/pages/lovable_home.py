@@ -1,16 +1,26 @@
 """Lovable-style 홈 — sapphire glass theme.
 
-좌측 사이드바: Home / Search / Resources / Projects / Recents
+Streamlit **자동 멀티페이지**: 파일이 `app/pages/`에 있으면 사이드바에 자동 노출되고
+URL `/lovable_home`로 직접 접근 가능 (Streamlit Cloud 포함).
+
+좌측 사이드바: Home / Search / Resources / Projects / Recents (커스텀)
 중앙: 큰 입력바 ("논문 아이디어를 입력하세요…")
 하단: 프로젝트 카드 그리드 (My projects / Recently viewed / Starred / Templates)
 
-진입은 `app/streamlit_app.py`에서 토글로 활성화.
+⚠️ 현재 상태(2026-05-27): UX/UI 디테일 미완 + e2e 기능 미연결. 기존 8501 단위
+기능 UI(streamlit_app.py)는 작동하는 참고용으로 살아있음. 점진 개선 중.
 """
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
+
+# pages/lovable_home.py에서 직접 `import app.styles...`를 하려면 repo root가 sys.path에 있어야 함
+_root = Path(__file__).resolve().parent.parent.parent
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
 
 import streamlit as st
 
@@ -169,3 +179,14 @@ def render() -> None:
         st.markdown(tpl_html, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+
+# Streamlit 멀티페이지: 모듈 로드 시 자동 실행
+# (URL /lovable_home 또는 사이드바 자동 메뉴에서 진입 시 호출됨)
+if __name__ != "__main__":
+    # streamlit이 페이지 파일을 import-execute할 때 자동 렌더
+    try:
+        render()
+    except Exception as _e:
+        st.error(f"Lovable home 렌더 실패: {_e}")
+        st.info("기존 단위 기능 UI는 사이드바의 '🔬 Medical-Agent' 메인 페이지에서 정상 동작합니다.")

@@ -29,30 +29,6 @@ services:
       - ./prompts:/app/prompts       # 공통 system prompt 소스
     restart: unless-stopped
 
-  # Sapphire Glass UI — Lovable-style 새 UI (port 8502, 기존 8501과 완전 분리).
-  # 사용자 요청(2026-05-27): 기존 단위 기능 UI와 새 UI는 분리 운영.
-  # 동일 image 재사용 (의존성/소스 동일), entry만 app/sapphire_app.py로 변경.
-  sapphire-ui:
-    image: medical-agent:latest
-    build: .
-    container_name: medical-agent-sapphire
-    ports:
-      - "8502:8502"
-    env_file:
-      - .env
-    volumes:
-      - ./data:/app/data
-      - ./.streamlit:/app/.streamlit:ro
-      - ./app:/app/app
-      - ./src:/app/src
-      - ./prompts:/app/prompts
-    command: ["streamlit", "run", "app/sapphire_app.py",
-              "--server.port=8502", "--server.address=0.0.0.0",
-              "--server.headless=true", "--browser.gatherUsageStats=false"]
-    restart: unless-stopped
-    depends_on:
-      - medical-agent
-
   # Heartbeat — 운영 런타임의 정기 작업 단일 진입점.
   # 부팅 시 catchup(task_recover/lifecycle_tick/idempotency_gc/budget_snapshot/trend_learn)
   # + 분단위 polling. 기존 learn_scheduler는 trend_learn job으로 흡수됨.
