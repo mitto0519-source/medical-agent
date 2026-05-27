@@ -13,9 +13,13 @@
 
 ```bash
 docker compose up -d --build
-# 브라우저: http://localhost:8501
+# 기존 단위 기능 UI:        http://localhost:8501
+# Sapphire Glass UI (Lovable):  http://localhost:8502
 # 로그: docker compose logs -f
 ```
+
+**두 UI는 완전 분리 운영** (2026-05-27 사용자 요청). 8501은 기존 단위 기능 화면,
+8502는 글래스모피즘 Lovable 양식. 동일 backend(같은 data/, 같은 src/) 공유.
 
 API 키는 `.env`에 (admin 전역 키로 모든 사용자에 적용):
 ```env

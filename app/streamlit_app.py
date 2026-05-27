@@ -38,29 +38,9 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── Sapphire Glass (Lovable-style) 진입 ─────────────────────────────────────
-# `?sg=1` 또는 session_state["sg_view"] 토글로 새 UI 활성. 기존 화면은 그대로 유지 —
-# 사용자 워크플로 보존을 위한 점진 마이그레이션 (DESIGN.md Section 9 참조).
-try:
-    qp = st.query_params
-    if qp.get("sg") in ("1", "true", "yes"):
-        st.session_state.setdefault("sg_view", "home")
-except Exception:
-    pass
-
-if st.session_state.get("sg_view") in ("home", "workspace"):
-    try:
-        from app.pages._lovable_home import render as _sg_render_home
-        from app.pages._project_workspace import render as _sg_render_workspace
-        view = st.session_state["sg_view"]
-        if view == "workspace":
-            pid = st.session_state.get("sg_active_project", "new")
-            _sg_render_workspace(pid)
-        else:
-            _sg_render_home()
-        st.stop()
-    except Exception as _sg_err:
-        st.warning(f"Sapphire Glass UI 로드 실패: {_sg_err}. 옛 UI로 폴백.")
+# NOTE: Sapphire Glass (Lovable-style) UI는 별도 entry `app/sapphire_app.py`로 완전 분리됨
+# (2026-05-27, 사용자 요청). 본 streamlit_app.py는 기존 단위 기능 UI만 담당.
+# 새 UI 접속: http://localhost:8502 (docker-compose의 sapphire-ui 서비스)
 
 # ══════════════════════════════════════════════════════════════════════
 # CSS — Dark Theme
@@ -579,11 +559,6 @@ with st.sidebar:
         <span style="font-size:15px;font-weight:800;color:#E5E7EB;letter-spacing:-0.01em;">Medical-Agent</span>
     </div>
     """, unsafe_allow_html=True)
-    # ★ Sapphire Glass (Lovable-style) 새 UI 진입 — 점진 마이그레이션
-    if st.button("✨  새 UI (Sapphire Glass)", use_container_width=True,
-                  key="_sg_enter", help="Lovable 양식 새 UI — 글래스 액션 카드 + Word 양식 프리뷰"):
-        st.session_state["sg_view"] = "home"
-        st.rerun()
     st.markdown('<div style="padding:4px 4px 2px;">', unsafe_allow_html=True)
     # ── 모든 사용자 공통: 바이브 중심 (깔끔) ──
     _nb("🏠  홈", "홈")
