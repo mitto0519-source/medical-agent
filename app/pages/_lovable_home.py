@@ -1,0 +1,171 @@
+"""Lovable-style 홈 — sapphire glass theme.
+
+좌측 사이드바: Home / Search / Resources / Projects / Recents
+중앙: 큰 입력바 ("논문 아이디어를 입력하세요…")
+하단: 프로젝트 카드 그리드 (My projects / Recently viewed / Starred / Templates)
+
+진입은 `app/streamlit_app.py`에서 토글로 활성화.
+"""
+from __future__ import annotations
+
+import json
+from datetime import datetime
+from pathlib import Path
+
+import streamlit as st
+
+from app.styles.sapphire_glass import (
+    inject_sapphire_glass, hero_title, glass_card, chip_row,
+    project_grid, action_card,
+)
+
+
+_PROJECTS_DIR = Path("data/working_papers")
+
+
+def _load_projects() -> list[dict]:
+    """data/working_papers/*.json 스캔 → 카드용 dict 리스트."""
+    out: list[dict] = []
+    if not _PROJECTS_DIR.exists():
+        return out
+    for jp in sorted(_PROJECTS_DIR.glob("*.json"),
+                      key=lambda p: p.stat().st_mtime, reverse=True):
+        try:
+            data = json.loads(jp.read_text(encoding="utf-8"))
+            title = data.get("title") or data.get("topic", {}).get("title") or jp.stem
+            edited = datetime.fromtimestamp(jp.stat().st_mtime).strftime("Edited %Y-%m-%d")
+            status = "Published" if data.get("status") == "published" else ""
+            grads = [
+                "linear-gradient(135deg, #1E1B4B, #312E81)",
+                "linear-gradient(135deg, #312E81, #7C3AED)",
+                "linear-gradient(135deg, #581C87, #EC4899)",
+                "linear-gradient(135deg, #1E3A8A, #06B6D4)",
+            ]
+            out.append({"title": title[:60], "edited": edited, "status": status,
+                         "gradient": grads[len(out) % len(grads)],
+                         "id": jp.stem})
+        except Exception:
+            continue
+    return out
+
+
+def _sidebar():
+    st.sidebar.markdown(
+        "<div style='padding:8px 4px 16px 4px;font-weight:700;font-size:1.1rem;'>"
+        "<span style='background:linear-gradient(135deg,#3B82F6,#8B5CF6);"
+        "-webkit-background-clip:text;-webkit-text-fill-color:transparent;'>"
+        "Medical-Agent</span>"
+        "</div>", unsafe_allow_html=True)
+
+    nav = st.sidebar.radio("nav", ["🏠 Home", "🔍 Search", "📚 Resources", "🔌 Connectors"],
+                            label_visibility="collapsed", key="sg_nav")
+    st.sidebar.markdown("<div style='margin:18px 0 6px 0;color:#A3A3B8;"
+                         "font-size:0.78rem;letter-spacing:0.08em;'>PROJECTS</div>",
+                         unsafe_allow_html=True)
+    sub = st.sidebar.radio("subnav", ["▦ All projects", "★ Starred",
+                                       "👤 Created by me", "👥 Shared with me"],
+                            label_visibility="collapsed", key="sg_subnav")
+    st.sidebar.markdown("<div style='margin:18px 0 6px 0;color:#A3A3B8;"
+                         "font-size:0.78rem;letter-spacing:0.08em;'>RECENTS</div>",
+                         unsafe_allow_html=True)
+    projects = _load_projects()
+    for p in projects[:5]:
+        if st.sidebar.button(p["title"][:24], key=f"sg_recent_{p['id']}",
+                              use_container_width=True):
+            st.session_state["sg_active_project"] = p["id"]
+            st.session_state["sg_view"] = "workspace"
+            st.rerun()
+    return nav, sub, projects
+
+
+def render() -> None:
+    """홈 렌더링 — `app/streamlit_app.py`에서 호출."""
+    inject_sapphire_glass()
+    _, _, projects = _sidebar()
+
+    # Top notice
+    st.markdown(
+        "<div style='display:flex;justify-content:center;margin-top:24px;'>"
+        "<div class='sg-chip active'>⚡ Powered by Claude · OpenAI · Gemini · 3중 자동 폴백</div>"
+        "</div>", unsafe_allow_html=True)
+
+    # Hero
+    user_name = st.session_state.get("user_name", "Researcher")
+    hero_title(f"좋은 아이디어 있으세요, {user_name}?")
+
+    # Big input
+    with st.container():
+        c1, c2 = st.columns([6, 1])
+        with c1:
+            prompt = st.text_area(
+                "prompt", placeholder="논문 아이디어 / KYRBS 분석 / Yoosun 스타일 재작성 요청…",
+                label_visibility="collapsed", height=110, key="sg_home_prompt")
+        with c2:
+            st.markdown("<div style='height:40px;'></div>", unsafe_allow_html=True)
+            send = st.button("✨ Build", use_container_width=True, type="primary",
+                              key="sg_home_send")
+
+    if send and prompt:
+        st.session_state["sg_active_project"] = "new"
+        st.session_state["sg_initial_prompt"] = prompt
+        st.session_state["sg_view"] = "workspace"
+        st.rerun()
+
+    # Quick actions
+    st.markdown("<div style='max-width:760px;margin:8px auto 24px auto;'>"
+                "<div class='sg-chip-row' style='justify-content:center;'>"
+                "<span class='sg-chip'>📊 KYRBS 2025 빠른 분석</span>"
+                "<span class='sg-chip'>📝 Yoosun 스타일 재작성</span>"
+                "<span class='sg-chip'>🔬 신규성 확인 (PubMed)</span>"
+                "<span class='sg-chip'>📑 STROBE 체크리스트</span>"
+                "</div></div>", unsafe_allow_html=True)
+
+    # Tabs
+    st.markdown("<div style='max-width:1080px;margin:24px auto 0 auto;'>",
+                 unsafe_allow_html=True)
+    tab_my, tab_recent, tab_star, tab_template = st.tabs(
+        ["My projects", "Recently viewed", "Starred", "Templates"])
+
+    with tab_my:
+        if projects:
+            project_grid(projects)
+        else:
+            st.markdown(
+                "<div class='sg-card' style='text-align:center;color:#A3A3B8;'>"
+                "아직 프로젝트가 없습니다. 위 입력바에 아이디어를 적어 첫 논문을 시작하세요."
+                "</div>", unsafe_allow_html=True)
+    with tab_recent:
+        project_grid(projects[:3])
+    with tab_star:
+        st.markdown("<div class='sg-card' style='color:#A3A3B8;'>"
+                     "★ 표시한 프로젝트가 여기 나타납니다.</div>", unsafe_allow_html=True)
+    with tab_template:
+        # 템플릿 — Lovable처럼 시드된 양식
+        tpl_html = (
+            "<div class='sg-project-grid'>"
+            "<div class='sg-project-card'>"
+            "<div class='sg-project-thumb' style='background:linear-gradient(135deg,#1E3A8A,#06B6D4);'>"
+            "<div style='position:absolute;bottom:8px;left:8px;'>"
+            "<span class='sg-badge'>Template</span></div></div>"
+            "<div class='sg-project-meta'><div class='sg-project-title'>"
+            "Cross-sectional · STROBE (Yoosun 양식)</div>"
+            "<div class='sg-project-date'>KYRBS 2025 / IMRAD 기본</div></div></div>"
+            "<div class='sg-project-card'>"
+            "<div class='sg-project-thumb' style='background:linear-gradient(135deg,#581C87,#EC4899);'>"
+            "<div style='position:absolute;bottom:8px;left:8px;'>"
+            "<span class='sg-badge'>Template</span></div></div>"
+            "<div class='sg-project-meta'><div class='sg-project-title'>"
+            "Cohort · STROBE 코호트</div>"
+            "<div class='sg-project-date'>KNHANES 다년 추적 / 생존분석</div></div></div>"
+            "<div class='sg-project-card'>"
+            "<div class='sg-project-thumb' style='background:linear-gradient(135deg,#312E81,#7C3AED);'>"
+            "<div style='position:absolute;bottom:8px;left:8px;'>"
+            "<span class='sg-badge'>Template</span></div></div>"
+            "<div class='sg-project-meta'><div class='sg-project-title'>"
+            "Systematic review · PRISMA</div>"
+            "<div class='sg-project-date'>PubMed 자동 수집 + 평가</div></div></div>"
+            "</div>"
+        )
+        st.markdown(tpl_html, unsafe_allow_html=True)
+
+    st.markdown("</div>", unsafe_allow_html=True)
