@@ -37,11 +37,12 @@ _HEDGING_VOCAB = [
 ]
 _HEDGING_RE = re.compile("|".join(_HEDGING_VOCAB), re.IGNORECASE)
 
-# aOR 1.27 (95% CI 1.03-1.56; P = 0.026)
+# aOR 1.27 (95% CI 1.03-1.56; P = 0.026) — 간소화 (escape 안전)
 _STAT_REPORT_RE = re.compile(
-    r"\b(?:a?OR|RR|HR|β)\s*[=:]?\s*[01]\.\d{2,3}"
-    r"\s*[\(;,]\s*(?:95%?\s*CI[:\s]?\s*)?[01]\.\d{2,3}\s*[-–to]+\s*[01]\.\d{2,3}"
-    r"(?:[;,)]\s*(?:P\s*(?:for\s*(?:trend|interaction)\s*)?[<=]\s*0?\.\d+)?\)?",
+    r"\b(?:a?OR|RR|HR|β)\s*[=:]?\s*[01]\.\d{2,3}"           # aOR 1.27
+    r"[\s\(;,]+(?:95%?\s*CI[:\s]+)?"                              # ; 또는 (95% CI:
+    r"[01]\.\d{2,3}\s*[-–to]+\s*[01]\.\d{2,3}"               # 1.03-1.56
+    r"(?:[\s;,\)]+P\s*(?:for\s+(?:trend|interaction)\s+)?[<=]\s*0?\.\d+)?",  # ; P = 0.026
     re.IGNORECASE,
 )
 

@@ -345,18 +345,30 @@ def _h_rag(inputs):
 
 
 def _h_find_components(inputs):
-    """ComponentLibrary 검색 — WritingOrchestrator.gather_components 위임."""
+    """ComponentLibrary 검색 — WritingOrchestrator.gather_components 위임.
+    layer 정보(content/style) 함께 반환해서 LLM이 pipeline 단계 인식."""
     from src.agent.writing_orchestrator import get_writing_orchestrator
+    from src.library.components import kind_layer
+    kind = inputs["kind"]
     hits = get_writing_orchestrator().gather_components(
-        kind=inputs["kind"],
+        kind=kind,
         n=int(inputs.get("n", 5)),
         author_style=inputs.get("author_style"),
         contains=inputs.get("contains"),
     )
-    return json.dumps([{"id": h["id"], "text": h["text"][:400],
-                         "kind": h["kind"], "source_pmid": h.get("source_pmid", ""),
+    layer = kind_layer(kind)
+    return json.dumps({
+        "layer": layer,
+        "kind": kind,
+        "n": len(hits),
+        "hint": ("content layer — substance/내용. draft 작성에 활용." if layer == "content"
+                  else ("style layer — author voice. draft 합성 후 입힐 양식 풀."
+                          if layer == "style" else "unknown kind")),
+        "components": [{"id": h["id"], "text": h["text"][:400],
+                         "source_pmid": h.get("source_pmid", ""),
                          "n_uses": h.get("n_uses", 0)}
-                        for h in hits], ensure_ascii=False)
+                        for h in hits],
+    }, ensure_ascii=False)
 
 
 def _h_cross_modal(inputs):
