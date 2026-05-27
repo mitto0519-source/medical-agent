@@ -6,7 +6,7 @@
 > **규칙**: 새 모듈을 만들기 전에 반드시 이 파일을 확인한다.
 > 모듈을 추가/변경/삭제할 때마다 이 파일을 업데이트한다.
 >
-> Last updated: 2026-05-21 (FeedbackStore + PMCDownloader + PaperIngester + 개선 모드 UI)
+> Last updated: 2026-05-27 (Safety+Prompt 레이어 12번 섹션 + B 그룹 11모듈 + Word 표준 템플릿)
 
 ---
 
@@ -162,6 +162,37 @@
 
 > **연결 흐름**: heartbeat가 lifecycle/budget/task를 정기 실행 · 모든 LLM/메모리/도구 호출은 events로 감사 · TaskRun이 작업 중복방지+크래시 복구 · 라우터가 메모리 쓰기 단일 진입.
 
+### 12. Safety + Prompt + Eval 레이어 — 2026-05-27 신규
+
+> LLM 출력의 환각/임상의사결정/모순/품질을 자동 차단·검증·개선하는 레이어.
+
+| 기능 | 정규 모듈 | 상태 | 비고 |
+|------|----------|------|------|
+| **Versioned prompts** (medical_core / safety / yoosun) | `prompts/*.md` + `src/agent/prompt_loader.py` | ✅ active | YAML frontmatter md 3종 v1.0.0. **`claude_client.build_base_system`이 매 LLM 호출에서 합성** (paper_write task에 yoosun_style.md + raw_examples 자동 첨부) |
+| **Citation grounding** (DOI/orphan/연도 검증) | `src/safety/citation_grounding.py` | ✅ active | CrossRef 24h cache, parse_references, check_year_consistency, check_rag_grounding |
+| **Truth hierarchy** (SYSTEM>VERIFIED>PROJECT>SESSION>TEMP) | `src/safety/truth_hierarchy.py` | ✅ active | `memory/router.py`가 write 시 자동 classify+injectable 부착 |
+| **Physician review queue** (임상 키워드 자동 격리) | `src/safety/physician_review.py` | ✅ active | `paper_writer._generate()` 산출물 자동 검사 + `tools/export_citations` 게이팅 |
+| **Audit trail** (events.db 기반 safety 사건) | `src/safety/audit_trail.py` | ✅ active | `memory_gate.assess` quarantine, citation_grounding orphan, physician queue, consistency_check_fail, figure_validation_fail 자동 기록 |
+| **Cross-section consistency** (n/OR-CI/P-value/연도 일관성) | `src/safety/consistency_checker.py` | ✅ active | 정규식 기반 정형 검증 — LLM이 못 잡는 모순 자동 발견. fail 시 audit |
+| **Vision figure validator** (출력 figure 재검증) | `src/safety/figure_validator.py` | ✅ active | Claude Vision으로 axis/CI bar/legend 자동 검사 (`document_reader._image_ocr` vision client 재사용) |
+| **Reporting checklist** (STROBE 22항목) | `src/research/reporting_checklist.py` | ✅ active | `peer_reviewer.review` 결과에 자동 흡수 — free-form 리뷰에 정형 보완 |
+| **Eval benchmark** (5축 정량) | `scripts/eval_benchmark.py` | ✅ active | memory/hallucination/stat/figure/citation. eval_report.json → `capability_bench.get_improvement_context`가 fail 항목을 다음 LLM prompt에 자동 주입 (Eval→Prompt 루프) |
+| **Replay CLI** (events 시간순 재구성) | `scripts/replay_task.py` | ✅ active | `events.replay(task_id)` 활용 — LLM/도구/메모리/safety 사후 추적 |
+| **Tool-use agentic loop** | `src/llm/claude_client.py:generate_with_tools()` | ✅ active | Claude function calling. tool_handler로 `src.tools.run_tool` 직결. 각 step events에 기록 → replay 가능 |
+| **Multi-stage RAG** (dense + lexical + recency rerank) | `src/rag/pipeline.py:search_multistage()` | ✅ active | 기본 search 옆 보강 — top-N 후보풀 → Jaccard token rerank + recency_boost + must_cite 강제 포함 |
+| **Citation graph** (co-citation/bridging/missing seminal) | `src/knowledge/citation_graph.py` | ✅ active | PubMed eLink로 cited_by 빌드 + NetworkX 분석. reference_library/medical_graph 결합 |
+| **Cost/latency observability** | `src/llm/budget.py:latency_summary()` | ✅ active | budget.record(latency_ms=) → p50/p95/max provider별 집계. snapshot에 포함 → heartbeat 누적 |
+| **Prompt A/B + bandit** | `src/diagnostics/prompt_ab.py` | ✅ active | epsilon-greedy variant 선택 + eval 점수 누적. `data/diagnostics/prompt_ab.json` |
+| **Self-consistency ensemble** | `src/llm/self_consistency.py` | ✅ active | n회 sample → 다수결/agreement. critical 통계 해석에서 hallucination ↓ |
+| **Wiring audit** (dead code 차단) | `scripts/audit_wiring.py` | ✅ active | git diff 추가 심볼 → 호출부 grep. 0 callers = FAIL 보고. **모든 신규 모듈 작성 후 의무 실행** |
+| **Word 표준 템플릿** (zcb_dep_v5 양식) | `data/templates/manuscript_template.json` + `src/export/word_exporter.py` | ✅ active | JSON spec이 단일 진실원본 — 모든 논문 docx가 동일 양식. inline label / Vancouver / italic P / 학술지 세 줄 표 |
+| **학술지 세 줄 표** | `src/export/table_builder.py:render_publication_table()` | ✅ active | NEJM/Lancet 표준 — top/header-bottom/bottom horizontal only, 세로선 없음, p-value italic P |
+| **Figure 양식 통일** | `src/export/publication_figure_generator.py` | ✅ active | template JSON figures 섹션 read → TNR + spine 깔끔 + grid off + 색팔레트 통일 |
+
+> **★ 추적 가능성 = events → replay**: tool_use loop의 각 step / memory_gate quarantine /
+> citation orphan / physician queue / consistency fail / figure_validation fail / budget downgrade
+> 모두 `events.db`에 기록 → `python scripts/replay_task.py --task=...`로 사후 재구성.
+
 ---
 
 ## 삭제된 모듈 (왜 없는지 기록)
@@ -180,6 +211,7 @@
 | `src/statistics/results_writer.py` | 2026-05-19 | 미호출 dead code. paper_writer가 직접 처리 | `src/research/paper_writer.py` |
 | `SurveyLoader.generate_synthetic()` | 2026-05-19 | 합성 데이터 생성 전면 금지. 실제 원시자료만 허용 | `src/data/kyrbs_raw_loader.py` |
 | `StatBridge.quick_demo()` | 2026-05-19 | 합성 데이터 기반 demo 함수. 동일 사유 삭제 | — |
+| `src/agent/prompt_loader.compose_runtime_system_prompt` | 2026-05-27 | dead code — `claude_client.build_base_system`이 같은 합성 수행 → 단일화 | `src.llm.claude_client.build_base_system` |
 
 ---
 

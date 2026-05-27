@@ -101,13 +101,19 @@ def caps() -> dict:
 
 
 def record(provider: str, model: str, tokens_in: int = 0, tokens_out: int = 0,
-           task: str | None = None, success: bool = True) -> dict:
-    """LLM 호출 결과 기록. events에 audit 항목으로 누적 (집계는 events에서)."""
+           task: str | None = None, success: bool = True,
+           latency_ms: int | None = None) -> dict:
+    """LLM 호출 결과 기록. events에 audit 항목으로 누적 (집계는 events에서).
+
+    latency_ms 도 함께 기록하면 `latency_summary()`에서 p50/p95 산출.
+    """
     p_in, p_out = _price_for(model)
     cost = (tokens_in * p_in + tokens_out * p_out) / 1_000_000.0
     payload = {"provider": provider, "model": model, "tokens_in": tokens_in,
                "tokens_out": tokens_out, "cost_usd": round(cost, 6),
                "task": task, "success": success}
+    if latency_ms is not None:
+        payload["latency_ms"] = int(latency_ms)
     _events.append("llm_usage", payload, actor=f"llm:{provider}")
     return payload
 
@@ -193,4 +199,30 @@ def snapshot() -> dict:
         "day": {**usage("day"), **remaining("day")},
         "week": {**usage("week"), **remaining("week")},
         "caps": caps(),
+        "latency": latency_summary("day"),
     }
+
+
+def latency_summary(window: str = "day") -> dict:
+    """provider별 p50/p95/max latency (ms) — events.llm_usage의 latency_ms 집계."""
+    since = _window_since(window)
+    rows = _events.find(type="llm_usage", since_ts=since, limit=10000)
+    by_p: dict[str, list[int]] = {}
+    for r in rows:
+        pl = r.get("payload") or {}
+        lat = pl.get("latency_ms")
+        if lat is None:
+            continue
+        by_p.setdefault(pl.get("provider", "?"), []).append(int(lat))
+    out: dict[str, dict] = {}
+    for prov, lats in by_p.items():
+        if not lats:
+            continue
+        lats_sorted = sorted(lats)
+        n = len(lats_sorted)
+        def _pct(p: float) -> int:
+            idx = max(0, min(n - 1, int(p * n / 100)))
+            return lats_sorted[idx]
+        out[prov] = {"n": n, "p50_ms": _pct(50), "p95_ms": _pct(95),
+                     "max_ms": lats_sorted[-1], "mean_ms": int(sum(lats_sorted) / n)}
+    return {"window": window, "by_provider": out}

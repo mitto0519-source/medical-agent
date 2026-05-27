@@ -333,6 +333,21 @@ def get_improvement_context() -> str:
             note = w.get("improvement_notes", "")
             if note:
                 lines.append(f"- {note[:200]}")
+
+        # ★ eval_benchmark의 5축 점수도 흡수 (LLM 호출 시 자가 약점 인지)
+        # data/exports/eval_report.json — scripts/eval_benchmark.py가 생성
+        try:
+            eval_path = Path("data/exports/eval_report.json")
+            if eval_path.exists():
+                er = json.loads(eval_path.read_text(encoding="utf-8"))
+                fails = [m for m in er.get("metrics", [])
+                         if m.get("pass") is False]
+                if fails:
+                    lines.append("BENCHMARK FAILS (proactively address in this output):")
+                    for m in fails:
+                        lines.append(f"- {m.get('name')}: {m.get('detail','')[:160]}")
+        except Exception:
+            pass
         return "\n".join(lines)
     except Exception:
         return ""

@@ -21,10 +21,14 @@ from .physician_review import (
 from .audit_trail import (
     record_safety_event, get_safety_events, compliance_report,
 )
+from .consistency_checker import check_consistency, ConsistencyReport
+from .figure_validator import validate_figure, FigureValidationReport
 
 __all__ = [
     "verify_citation_integrity", "verify_doi_crossref", "check_year_consistency",
     "TruthLevel", "classify", "can_inject_to_context",
     "review_required", "queue_for_review", "get_pending", "approve", "reject",
     "record_safety_event", "get_safety_events", "compliance_report",
+    "check_consistency", "ConsistencyReport",
+    "validate_figure", "FigureValidationReport",
 ]

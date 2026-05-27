@@ -79,7 +79,22 @@ def build_base_system(base_prompt: str, task: str = "general") -> str:
         except Exception:
             pass
 
-    parts = [p for p in [persona_prompt, preamble, insight_block,
+    # 7. ★ Versioned prompts (medical_core + safety_constraints + task별 style) — ★최우선 task 정합
+    #    `prompts/*.md` + `src/agent/prompt_loader.py`가 task→md 합성. paper_writing/paper_write는
+    #    yoosun_style.md + raw_examples 3편이 자동 첨부. safety_constraints는 모든 task 필수.
+    #    이 블록이 들어가면서 "환각 차단/임상키워드/truth hierarchy" 규약이 모든 LLM 호출에 강제됨.
+    versioned_block = ""
+    try:
+        from src.agent.prompt_loader import load_prompt
+        # paper_writing alias → paper_write composition
+        _task_map = {"paper_writing": "paper_write", "paper_review": "paper_write"}
+        pl_task = _task_map.get(task, task)
+        versioned_block = load_prompt(pl_task) or ""
+    except Exception as _e:
+        # 안전망: prompt_loader 실패해도 페르소나/베이스는 그대로 살아있음
+        pass
+
+    parts = [p for p in [persona_prompt, versioned_block, preamble, insight_block,
                          reviewer_block, improvement_block, design_block, base_prompt or ""] if p]
     return "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
@@ -173,6 +188,107 @@ class ClaudeClient:
                 raise
 
         return self._extract_text(response)
+
+    def generate_with_tools(
+        self,
+        user_message: str,
+        tools: List[dict],
+        tool_handler: callable,
+        system_prompt: str = "",
+        max_tokens: int = 4096,
+        max_iters: int = 6,
+        task: Optional[str] = None,
+    ) -> dict:
+        """★ Agentic loop — Claude가 직접 tool을 호출하며 task 수행 (ReAct/Plan-Execute).
+
+        Args:
+            tools: Anthropic tool_use 스키마. 예:
+                   [{"name": "search_pubmed", "description": "...",
+                     "input_schema": {"type": "object", "properties": {...}}}]
+            tool_handler: callable(name, input) → str. 도구 실행 결과 반환.
+                          `src.tools.run_tool`을 그대로 넘기면 됨.
+            max_iters: tool 호출-결과-재호출 사이클 최대 반복 (무한루프 방지).
+
+        Returns:
+            {"text": str (최종 응답), "trace": [{"tool": str, "input": dict, "result_preview": str}],
+             "stop_reason": str, "iters": int}
+
+        events.db에 각 step을 'tool_call' 타입으로 기록 → replay 가능.
+        """
+        effective_task = task or self._task
+        system = self._build_system(system_prompt, None, task=effective_task)
+        messages = [{"role": "user", "content": user_message}]
+        trace: list = []
+        stop_reason = "max_iters"
+
+        try:
+            from src.runtime.events import append as _events_append
+        except Exception:
+            _events_append = None
+
+        for it in range(max_iters):
+            kwargs = dict(model=self.model, max_tokens=max_tokens,
+                          system=system, messages=messages, tools=tools)
+            try:
+                response = self._client.messages.create(**kwargs)
+            except Exception as e:
+                _log.warning("tool_use create 실패: %s", e)
+                break
+
+            stop_reason = response.stop_reason
+            # tool_use 블록 수집
+            tool_uses = []
+            text_parts = []
+            for block in response.content:
+                btype = getattr(block, "type", None)
+                if btype == "tool_use":
+                    tool_uses.append(block)
+                elif btype == "text":
+                    text_parts.append(block.text)
+
+            # 도구가 더 없으면 종료
+            if not tool_uses:
+                if _events_append:
+                    try:
+                        _events_append("tool_loop_end", {"iters": it + 1, "reason": stop_reason})
+                    except Exception:
+                        pass
+                return {"text": "".join(text_parts), "trace": trace,
+                        "stop_reason": stop_reason, "iters": it + 1}
+
+            # 도구 실행
+            assistant_blocks = []
+            for block in response.content:
+                btype = getattr(block, "type", None)
+                if btype == "text":
+                    assistant_blocks.append({"type": "text", "text": block.text})
+                elif btype == "tool_use":
+                    assistant_blocks.append({"type": "tool_use", "id": block.id,
+                                             "name": block.name, "input": block.input})
+            messages.append({"role": "assistant", "content": assistant_blocks})
+
+            tool_results = []
+            for tu in tool_uses:
+                try:
+                    result = tool_handler(tu.name, tu.input)
+                except Exception as e:
+                    result = f"ERROR: {e}"
+                result_str = result if isinstance(result, str) else str(result)
+                trace.append({"tool": tu.name, "input": tu.input,
+                              "result_preview": result_str[:200]})
+                if _events_append:
+                    try:
+                        _events_append("tool_call",
+                                       {"tool": tu.name, "input_keys": list(tu.input.keys()),
+                                        "result_len": len(result_str)})
+                    except Exception:
+                        pass
+                tool_results.append({"type": "tool_result", "tool_use_id": tu.id,
+                                     "content": result_str[:8000]})
+            messages.append({"role": "user", "content": tool_results})
+
+        return {"text": "", "trace": trace, "stop_reason": stop_reason, "iters": max_iters}
+
 
     def generate_streamed(
         self,

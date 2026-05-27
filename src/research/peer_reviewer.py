@@ -167,6 +167,29 @@ class PeerReviewer:
             result = self._parse_review(raw)
             if suggest_revision and result.total_score < 80:
                 result.revised_abstract = self._revise_abstract(paper_text, result)
+            # ★ STROBE 정형 체크리스트 — free-form 리뷰에 정량 보완
+            try:
+                from src.research.reporting_checklist import auto_check, format_checklist_report
+                sections = {"Introduction": "", "Methods": "", "Results": "", "Discussion": "",
+                            "Abstract": paper_text[:2000]}
+                # 본문에서 섹션 단순 분리 (헤딩 기반)
+                import re as _re
+                for sec in list(sections.keys()):
+                    pat = _re.compile(rf"\b{sec}\b\s*\n", _re.IGNORECASE)
+                    m = pat.search(paper_text)
+                    if m:
+                        nxt = paper_text.find("\n\n", m.end())
+                        sections[sec] = paper_text[m.end(): nxt if nxt > 0 else len(paper_text)]
+                checklist = auto_check(sections, abstract=sections["Abstract"],
+                                        study_type="cross_sectional")
+                # ReviewResult에 보고서 append
+                summary = format_checklist_report(checklist, verbose=True)
+                if hasattr(result, "summary") and isinstance(result.summary, str):
+                    result.summary = (result.summary + "\n\n" + summary)
+                elif hasattr(result, "comments") and isinstance(result.comments, list):
+                    result.comments.append(summary)
+            except Exception:
+                pass
             return result
         except Exception as e:
             _log.error("PeerReviewer.review failed: %s", e, exc_info=True)

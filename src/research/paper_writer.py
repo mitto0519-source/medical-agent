@@ -717,4 +717,15 @@ DISCUSSION
     # ------------------------------------------------------------------
 
     def _generate(self, system_prompt: str, user_prompt: str) -> str:
-        return self._client.generate(user_prompt, system_prompt=system_prompt)
+        out = self._client.generate(user_prompt, system_prompt=system_prompt)
+        # ★ Safety gate: 처방/진단/복용량 등 임상 의사결정 키워드 포함 시 자동 격리 큐.
+        # 텍스트 자체는 그대로 반환(사용자 직접 사용 차단은 UI에서) — events 기록 + queue로
+        # physician_review.list_pending()이 잡도록 한다. safety_constraints.md와 정합.
+        try:
+            from src.safety.physician_review import review_required, queue_for_review
+            if out and review_required(out):
+                queue_for_review(text=out[:8000], source="paper_writer._generate",
+                                  meta={"task": "paper_writing"})
+        except Exception:
+            pass
+        return out

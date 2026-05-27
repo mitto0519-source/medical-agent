@@ -141,18 +141,7 @@ def load_yoosun_with_exemplars() -> str:
     return load_prompt("paper_write", include_yoosun_exemplars=True)
 
 
-def compose_runtime_system_prompt(task: str, *, persona_extra: str = "",
-                                  recent_memory: str = "") -> str:
-    """런타임에서 실 system_prompt 만들 때 — 기본 prompt + 페르소나 + 최근 메모리.
-
-    Streamlit/_ws_agent, MCP 도구 핸들러 등에서 호출.
-    """
-    base = load_prompt(task)
-    addons = []
-    if persona_extra:
-        addons.append("# Persona\n\n" + persona_extra)
-    if recent_memory:
-        addons.append("# Recent context\n\n" + recent_memory)
-    if addons:
-        return base + "\n\n" + "\n\n".join(addons)
-    return base
+# NOTE: 과거에 있었던 compose_runtime_system_prompt()는 제거됨 (2026-05-27).
+# 같은 합성(versioned prompt + persona + memory)을 `src.llm.claude_client.build_base_system()`이
+# 이미 수행한다. 두 경로 공존은 dead code 및 buildup-drift 위험이므로 build_base_system 단일화.
+# 외부에서 직접 versioned prompt만 받고 싶을 때는 `load_prompt(task)`를 그대로 호출.

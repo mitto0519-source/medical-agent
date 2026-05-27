@@ -53,29 +53,63 @@ def _setup_korean_font():
 
 _setup_korean_font()
 
-# ── 출판용 스타일 상수 ────────────────────────────────────────────────
+
+# ── manuscript_template.json 기반 스타일 (단일 진실원본) ──────────────
+def _load_fig_tpl() -> dict:
+    """data/templates/manuscript_template.json의 figures 섹션. 미존재 시 안전 fallback."""
+    try:
+        import json
+        from pathlib import Path as _P
+        p = _P("data/templates/manuscript_template.json")
+        if p.exists():
+            tpl = json.loads(p.read_text(encoding="utf-8"))
+            return tpl.get("figures", {})
+    except Exception:
+        pass
+    return {}
+
+
+_FIG_TPL = _load_fig_tpl()
 _PALETTE = {
-    "primary": "#1B4F8A",      # 딥 블루
-    "significant": "#C0392B",  # 유의 빨강
-    "neutral": "#95A5A6",      # 회색
-    "secondary": "#27AE60",    # 초록
-    "ci_line": "#2C3E50",      # CI 선
-    "null_line": "#E74C3C",    # OR=1 기준선
-    "bg": "#FFFFFF",
-    "grid": "#ECF0F1",
+    "primary":     _FIG_TPL.get("color_palette", {}).get("primary", "#1f4e79"),
+    "significant": _FIG_TPL.get("color_palette", {}).get("secondary", "#7d2e2e"),
+    "secondary":   _FIG_TPL.get("color_palette", {}).get("accent", "#2e7d32"),
+    "neutral":     _FIG_TPL.get("color_palette", {}).get("neutral_light", "#999999"),
+    "ci_line":     _FIG_TPL.get("color_palette", {}).get("neutral_dark", "#333333"),
+    "null_line":   "#7d2e2e",   # OR=1 기준선
+    "bg":          _FIG_TPL.get("color_palette", {}).get("background", "#FFFFFF"),
+    "grid":        "#E0E0E0",
 }
 
-_FONT_SIZES = {"title": 13, "label": 11, "tick": 9, "caption": 9, "table_header": 10}
+_FONT_SIZES = {
+    "title":  _FIG_TPL.get("title_size_pt", 12),
+    "label":  _FIG_TPL.get("axis_label_size_pt", 11),
+    "tick":   _FIG_TPL.get("tick_label_size_pt", 9),
+    "caption": _FIG_TPL.get("caption_size_pt", 10),
+    "table_header": 10,
+}
+
+# matplotlib 전역 폰트 = Times New Roman (한글 미포함 텍스트만 — 한글 그래프는 _setup_korean_font 이후)
+try:
+    import matplotlib.pyplot as _plt
+    _plt.rcParams["font.family"] = ["Times New Roman", _plt.rcParams.get("font.family", ["DejaVu Sans"])[0]]
+    _plt.rcParams["axes.unicode_minus"] = False
+    _plt.rcParams["mathtext.fontset"] = "stix"
+except Exception:
+    pass
 
 
 def _apply_publication_style(ax, grid: bool = False):
-    """공통 출판 스타일 적용."""
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
+    """학술지 공통 양식 — 위/오른쪽 spine 제거, 가는 axis line, 옅은 grid (optional)."""
+    ax.spines["top"].set_visible(_FIG_TPL.get("spine_top_visible", False))
+    ax.spines["right"].set_visible(_FIG_TPL.get("spine_right_visible", False))
     ax.spines["left"].set_linewidth(0.8)
     ax.spines["bottom"].set_linewidth(0.8)
-    ax.tick_params(labelsize=_FONT_SIZES["tick"])
-    if grid:
+    ax.spines["left"].set_color("#222222")
+    ax.spines["bottom"].set_color("#222222")
+    ax.tick_params(labelsize=_FONT_SIZES["tick"], length=4, width=0.6, color="#222222")
+    show_grid = grid if grid is not None else _FIG_TPL.get("grid_visible", False)
+    if show_grid:
         ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color=_PALETTE["grid"], alpha=0.8)
         ax.set_axisbelow(True)
 

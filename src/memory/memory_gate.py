@@ -50,16 +50,33 @@ def _is_duplicate(text: str, existing: List[str], thresh: float = 0.9) -> bool:
     return False
 
 
+def _audit(reason: str, text: str, source: str) -> None:
+    """quarantine 사건을 safety audit_trail에 자동 기록. 실패는 silent (게이트 자체는 살아있어야)."""
+    try:
+        from src.safety.audit_trail import record_safety_event
+        record_safety_event(
+            "memory_gate_quarantine",
+            {"reason": reason, "source": source,
+             "text_preview": (text or "")[:120].replace("\n", " ")},
+        )
+    except Exception:
+        pass
+
+
 def assess(text: str, source: str = "observation",
            existing: Optional[List[str]] = None, min_len: int = 20) -> Dict:
-    """메모리 후보 평가 → {ok, tier, confidence, reason}. LLM 불필요."""
+    """메모리 후보 평가 → {ok, tier, confidence, reason}. LLM 불필요.
+    quarantine 사건은 audit_trail에 자동 기록(events.db) → compliance_report에 잡힘."""
     t = (text or "").strip()
     if len(t) < min_len:
+        _audit("too_short", t, source)
         return {"ok": False, "tier": "quarantine", "confidence": 0.0, "reason": "too_short"}
     low = t.lower()
     if any(m in low for m in _HALLUC_MARKERS):
+        _audit("hallucination_marker", t, source)
         return {"ok": False, "tier": "quarantine", "confidence": 0.0, "reason": "hallucination_marker"}
     if _is_duplicate(t, existing or []):
+        _audit("duplicate", t, source)
         return {"ok": False, "tier": "quarantine", "confidence": 0.0, "reason": "duplicate"}
     s = (source or "").lower()
     if s in _VERIFIED_SOURCES:

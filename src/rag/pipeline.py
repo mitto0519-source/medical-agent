@@ -245,6 +245,77 @@ class RAGPipeline:
         return self._store.search(query, n_results=n_results) or []
 
     # ------------------------------------------------------------------
+    # Multi-stage retrieval (B-7) — dense + lexical rerank + context compression
+    # ------------------------------------------------------------------
+
+    def search_multistage(self, query: str, *, n_final: int = 5, n_pool: int = 20,
+                          recency_boost: float = 0.1,
+                          must_cite: Optional[List[str]] = None) -> List[Dict]:
+        """확장된 retrieval — dense top-N → lexical/메타 rerank → 최종 n_final.
+
+        Args:
+            n_final: 최종 반환 개수
+            n_pool: dense 후보 풀 크기 (>= n_final)
+            recency_boost: 최근 PubMed pub_year에 가산점 (0~0.5)
+            must_cite: 반드시 포함되어야 할 PMID/DOI 리스트 (있으면 강제 합집합)
+
+        Returns:
+            List of dicts with: text, score, score_dense, score_lex, score_recency,
+            final_score, metadata.
+        """
+        pool = self._store.search(query, n_results=n_pool) or []
+        if not pool:
+            return []
+        # Lexical overlap (Jaccard token) — query token vs chunk token
+        q_tokens = set(_simple_tokens(query))
+
+        scored: list = []
+        for hit in pool:
+            text = hit.get("text", "") or ""
+            md = hit.get("metadata", {}) or {}
+            score_dense = float(hit.get("score", 0.0) or 0.0)
+            score_lex = _jaccard(q_tokens, set(_simple_tokens(text[:600])))
+            score_recency = 0.0
+            year = md.get("year") or md.get("pub_year")
+            if year:
+                try:
+                    y = int(str(year)[:4])
+                    if 2020 <= y <= 2030:
+                        score_recency = recency_boost * (y - 2020) / 10.0
+                except Exception:
+                    pass
+            # Final score = 0.6 dense + 0.3 lex + recency
+            final = 0.6 * score_dense + 0.3 * score_lex + score_recency
+            scored.append({**hit, "score_dense": score_dense, "score_lex": score_lex,
+                           "score_recency": score_recency, "final_score": final})
+
+        # must_cite 강제 포함 (앞쪽)
+        forced: list = []
+        if must_cite:
+            keep = set(str(x).strip().lower() for x in must_cite)
+            for it in scored:
+                md = it.get("metadata", {}) or {}
+                key = str(md.get("pmid") or md.get("doi") or "").lower()
+                if key and key in keep:
+                    forced.append(it)
+                    keep.discard(key)
+
+        rest = [it for it in scored if it not in forced]
+        rest.sort(key=lambda x: x["final_score"], reverse=True)
+        return forced + rest[: max(0, n_final - len(forced))]
+
+
+def _simple_tokens(s: str) -> List[str]:
+    import re
+    return [t for t in re.findall(r"[A-Za-z가-힣]{3,}", (s or "").lower())]
+
+
+def _jaccard(a: set, b: set) -> float:
+    if not a or not b:
+        return 0.0
+    return len(a & b) / max(1, len(a | b))
+
+    # ------------------------------------------------------------------
     # Status
     # ------------------------------------------------------------------
 
