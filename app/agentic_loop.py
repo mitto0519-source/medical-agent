@@ -184,6 +184,8 @@ def make_tool_handler(get_project: Callable[[], dict],
                 return _h_find_components(inputs)
             if name == "cross_modal_query":
                 return _h_cross_modal(inputs)
+            if name == "apply_author_style":
+                return _h_apply_style(inputs)
             return f"unknown tool: {name}"
         except Exception as e:
             return f"ERROR in {name}: {e}"
@@ -368,6 +370,16 @@ def _h_cross_modal(inputs):
     )
     resp = get_writing_orchestrator().ask_knowledge(req)
     return json.dumps(resp.to_dict(), ensure_ascii=False)[:6000]
+
+
+def _h_apply_style(inputs):
+    """② Style layer — substance text에 저자 voice 입힘."""
+    from src.agent.writing_orchestrator import get_writing_orchestrator
+    styled = get_writing_orchestrator().apply_author_style(
+        text=inputs.get("text", ""),
+        author_style=inputs.get("author_style", "yoosun_cho"),
+    )
+    return styled[:4000]
 
 
 # ── System prompt — preview snapshot 포함 ────────────────────────────────────
