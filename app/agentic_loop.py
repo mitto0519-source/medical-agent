@@ -285,9 +285,16 @@ def _h_rag(inputs):
 
 # ── System prompt — preview snapshot 포함 ────────────────────────────────────
 
-def build_system_with_preview(base_prompt: str, project: dict) -> str:
-    """LLM이 매 호출마다 현재 preview snapshot을 보도록 system prompt 끝에 첨부."""
+def build_system_with_preview(base_prompt: str, project: dict,
+                                user_msg: str = "") -> str:
+    """LLM이 매 호출마다 다음을 모두 보도록 합성:
+    1. 현재 preview snapshot (docx state)
+    2. conversation_memory.recall_relevant(user_msg) — VS Code/Streamlit 공유 메모리
+    3. change_log 최근 — 양쪽에서 한 작업 이력
+    이로써 동일 LLM 코어가 어디서 호출되든 누적 상태 유지."""
     sections = project.get("sections", {}) or {}
+    owner = str(project.get("owner") or "anonymous")
+
     parts = ["", "# CURRENT PREVIEW (docx state — 사용자가 실제로 보고 있는 본문)", ""]
     # Abstract
     ab = sections.get("Abstract")
@@ -321,4 +328,36 @@ def build_system_with_preview(base_prompt: str, project: dict) -> str:
     parts.append("→ 위 preview를 보고 부족한 부분이 있으면 `patch_preview` tool을 호출해 직접 채워라. "
                   "통계 결과가 필요하면 `kyrbs_stat`, 인용이 필요하면 `pubmed_search`/`rag_search`, "
                   "보고 양식 검증은 `strobe_check`, 정합성은 `consistency_check`.")
+
+    # ★ 공유 코어 — VS Code/Streamlit 어디서 호출되든 같은 메모리/이력 보게 함
+    try:
+        from src.memory import conversation_memory as cm
+        recalled = cm.recall_relevant(user_msg or "이전 작업", account=owner, n=5) \
+            if user_msg else []
+        if recalled:
+            parts.append("")
+            parts.append("# CROSS-SESSION MEMORY (VS Code · Streamlit 공유 — recall_relevant)")
+            for i, mem in enumerate(recalled[:5], 1):
+                if isinstance(mem, dict):
+                    txt = mem.get("text") or mem.get("content") or str(mem)
+                else:
+                    txt = str(mem)
+                parts.append(f"{i}. {txt[:200]}")
+    except Exception:
+        pass
+
+    try:
+        from src.memory.change_log import get_recent
+        hist = get_recent(n=5) or []
+        if hist:
+            parts.append("")
+            parts.append("# RECENT WORK LOG (양쪽 entry — change_log)")
+            for h in hist:
+                title = str(h.get("title", "?"))[:80]
+                action = h.get("action_type", "")
+                ts = str(h.get("timestamp", ""))[:19]
+                parts.append(f"- [{ts}] ({action}) {title}")
+    except Exception:
+        pass
+
     return (base_prompt or "") + "\n\n" + "\n".join(parts)
