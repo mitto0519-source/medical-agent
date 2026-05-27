@@ -56,6 +56,119 @@ def render_open_action_if_any() -> None:
     fn(**ctx)
 
 
+# ── Preview patch helpers — 모달 결과를 docx 프리뷰에 즉시 반영 ──────────────
+
+def patch_preview(*, section: str = None, subsection: str = None,
+                   abstract_field: str = None, append: bool = True,
+                   content: str = "", supplement_block: str = None) -> None:
+    """현재 프로젝트(session_state['sg_project'])의 sections에 content를 patch.
+
+    - section: "Introduction"/"Methods"/"Results"/"Discussion"
+    - subsection: section이 dict일 때 sub-key (예: "Study population")
+    - abstract_field: "Background"/"Methods"/"Results"/"Conclusion"
+    - supplement_block: Supplement 탭에 추가 (key=block 이름)
+    - append=True면 기존에 누적, False면 덮어쓰기
+    """
+    proj = st.session_state.setdefault("sg_project", {})
+    sections = proj.setdefault("sections", {})
+
+    if abstract_field:
+        ab = sections.setdefault("Abstract", {})
+        if not isinstance(ab, dict):
+            ab = {"Background": str(ab)}
+            sections["Abstract"] = ab
+        old = ab.get(abstract_field, "")
+        ab[abstract_field] = (old + "\n\n" + content).strip() if append and old else content
+    elif section:
+        if subsection:
+            sec = sections.setdefault(section, {})
+            if not isinstance(sec, dict):
+                sec = {"_intro": str(sec)}
+                sections[section] = sec
+            old = sec.get(subsection, "")
+            sec[subsection] = (old + "\n\n" + content).strip() if append and old else content
+        else:
+            old = sections.get(section, "")
+            if isinstance(old, dict):
+                old["_appended"] = (old.get("_appended", "") + "\n\n" + content).strip()
+            else:
+                sections[section] = (old + "\n\n" + content).strip() if append and old else content
+
+    if supplement_block:
+        supp = proj.setdefault("supplement", {})
+        old = supp.get(supplement_block, "")
+        supp[supplement_block] = (old + "\n\n" + content).strip() if append and old else content
+
+    # 저장 (workspace의 _save_project가 처리)
+    pid = st.session_state.get("sg_active_project")
+    if pid and pid != "new":
+        try:
+            from app.pages.project_workspace import _save_project
+            _save_project(pid, proj)
+        except Exception:
+            pass
+
+
+# ── Floating Action Button (FAB) ─────────────────────────────────────────────
+
+def render_fab(actions: list[tuple[str, str]] | None = None,
+                position: str = "bottom-right") -> None:
+    """우하단 플로팅 액션 버튼. 클릭 시 quick action 메뉴 펼침.
+
+    Streamlit은 진짜 floating div를 native로 못 만들어서 (st.button은 layout 내),
+    expander + custom CSS로 우하단 sticky하게 만든다.
+
+    Args:
+        actions: [(action_key, label), ...]. None이면 ACTIONS 전체.
+    """
+    if actions is None:
+        actions = list(ACTIONS.items())
+
+    st.markdown("""
+<style>
+.sg-fab-wrap {
+    position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+}
+.sg-fab-wrap [data-testid="stExpander"] {
+    background: rgba(124, 58, 237, 0.16) !important;
+    border: 1px solid rgba(124, 58, 237, 0.50) !important;
+    border-radius: 18px !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.40);
+    min-width: 240px;
+}
+.sg-fab-wrap .streamlit-expanderHeader {
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border-radius: 18px !important;
+    padding: 14px 20px !important;
+}
+.sg-fab-wrap .stButton > button {
+    background: transparent !important;
+    border: none !important;
+    text-align: left !important;
+    padding: 10px 14px !important;
+    border-radius: 10px !important;
+}
+.sg-fab-wrap .stButton > button:hover {
+    background: rgba(255,255,255,0.08) !important;
+    transform: none !important;
+}
+</style>
+<div class='sg-fab-wrap' id='sg-fab-anchor'></div>
+""", unsafe_allow_html=True)
+
+    # Streamlit limitation: native floating은 어려우니 우하단 가까이 columns 끝에 expander 배치
+    _c1, _c2, _c3 = st.columns([4, 4, 2])
+    with _c3:
+        with st.expander("✨ Actions"):
+            for key, label in actions:
+                if st.button(label, key=f"sg_fab_{key}", use_container_width=True):
+                    open_action(key)
+
+
 # ── Dialog implementations (각 기능 = 한 dialog) ─────────────────────────────
 
 @st.dialog("🔬 신규성 확인 — PubMed")
@@ -80,22 +193,41 @@ def _dlg_novelty(**ctx):
             try:
                 from src.research.novelty_checker import NoveltyChecker
                 result = NoveltyChecker().check(query, max_results=max_n, years=years)
-                st.success(f"신규성 점수: {result.get('novelty_score', 'N/A')}")
-                st.write(result.get("summary", ""))
-                with st.expander("유사 논문 목록"):
-                    for r in (result.get("similar_papers") or [])[:max_n]:
-                        st.markdown(f"- **{r.get('title', '?')}** "
-                                     f"({r.get('year', '?')}) — {r.get('authors', '')[:80]}")
-                # 결과를 chat에 삽입
-                if st.button("📋 결과를 작업실 chat으로 보내기"):
-                    seed = (f"[신규성 확인 결과]\n주제: {query}\n"
-                            f"신규성 점수: {result.get('novelty_score', 'N/A')}\n"
-                            f"요약: {result.get('summary', '')[:500]}")
-                    st.session_state["sg_initial_prompt"] = seed
-                    st.session_state["sg_active_project"] = "new"
-                    st.rerun()
+                st.session_state["_sg_last_novelty"] = result
+                st.session_state["_sg_last_novelty_query"] = query
             except Exception as e:
                 st.error(f"신규성 확인 실패: {e}")
+                return
+
+    result = st.session_state.get("_sg_last_novelty")
+    if result:
+        st.success(f"신규성 점수: {result.get('novelty_score', 'N/A')}")
+        st.write(result.get("summary", ""))
+        with st.expander("유사 논문 목록"):
+            for r in (result.get("similar_papers") or [])[:max_n]:
+                st.markdown(f"- **{r.get('title', '?')}** "
+                             f"({r.get('year', '?')}) — {r.get('authors', '')[:80]}")
+        st.divider()
+        st.markdown("**📌 결과를 docx preview에 즉시 반영**")
+        b1, b2 = st.columns(2)
+        with b1:
+            if st.button("→ Introduction 끝에 추가", use_container_width=True, type="primary"):
+                block = (f"\n\n[Novelty assessment — {st.session_state.get('_sg_last_novelty_query', '')}] "
+                          f"Score: {result.get('novelty_score', 'N/A')}. "
+                          f"{result.get('summary', '')[:400]}")
+                patch_preview(section="Introduction", append=True, content=block)
+                st.toast("Introduction에 신규성 보고 추가됨", icon="✅")
+                st.rerun()
+        with b2:
+            if st.button("→ Supplement에 저장", use_container_width=True):
+                similar = "\n".join(f"- {r.get('title', '?')} ({r.get('year', '?')})"
+                                     for r in (result.get("similar_papers") or [])[:max_n])
+                patch_preview(supplement_block="Novelty assessment",
+                              content=f"Score: {result.get('novelty_score', 'N/A')}\n\n"
+                                       f"Summary: {result.get('summary', '')}\n\n"
+                                       f"Similar papers:\n{similar}")
+                st.toast("Supplement에 저장됨", icon="✅")
+                st.rerun()
 
 
 @st.dialog("📊 KYRBS 2025 빠른 분석")
@@ -123,7 +255,6 @@ def _dlg_kyrbs_quick(**ctx):
                 from src.data.stat_bridge import StatBridge
 
                 df, _ = KYRBSLoader().load(_P("data/raw/kyrbs2025.sav"))
-                st.metric("표본수", f"{len(df):,}")
                 if exposure:
                     spec = {"outcome": outcome, "predictors": [exposure],
                              "covariates": ["sex", "age", "school_type"],
@@ -131,20 +262,65 @@ def _dlg_kyrbs_quick(**ctx):
                              "strata_var": "strata", "cluster_var": "cluster",
                              "analysis": "logistic"}
                     r = StatBridge().run(df, spec).to_dict()
-                    vars_ = r.get("model_vars", [])
-                    for v in vars_:
-                        if exposure in str(v.get("variable", "")).lower():
-                            st.metric(f"aOR ({exposure} → {outcome})",
-                                       f"{v.get('or_value', 0):.3f}",
-                                       help=f"95% CI [{v.get('ci_lower', 0):.3f}, {v.get('ci_upper', 0):.3f}]")
-                            st.caption(f"P-value: {v.get('p_value', 'N/A')}")
-                            break
+                    st.session_state["_sg_last_kyrbs"] = {
+                        "n": len(df), "outcome": outcome, "exposure": exposure,
+                        "result": r,
+                    }
                 else:
-                    desc = df[outcome].describe() if outcome in df.columns else None
-                    if desc is not None:
-                        st.write(desc)
+                    st.session_state["_sg_last_kyrbs"] = {
+                        "n": len(df), "outcome": outcome, "exposure": None,
+                        "desc": str(df[outcome].describe()) if outcome in df.columns else "",
+                    }
             except Exception as e:
                 st.error(f"분석 실패: {e}")
+                return
+
+    last = st.session_state.get("_sg_last_kyrbs")
+    if last:
+        st.metric("표본수", f"{last['n']:,}")
+        if last.get("exposure"):
+            r = last["result"]
+            vars_ = r.get("model_vars", [])
+            target_var = next((v for v in vars_
+                                if last["exposure"] in str(v.get("variable", "")).lower()), None)
+            if target_var:
+                lo, hi = target_var.get("ci_lower", 0), target_var.get("ci_upper", 0)
+                st.metric(f"aOR ({last['exposure']} → {last['outcome']})",
+                           f"{target_var.get('or_value', 0):.3f}",
+                           help=f"95% CI [{lo:.3f}, {hi:.3f}]")
+                p = target_var.get("p_value")
+                st.caption(f"P-value: {p:.3f}" if p else "N/A")
+
+                st.divider()
+                st.markdown("**📌 결과를 docx preview에 반영**")
+                b1, b2 = st.columns(2)
+                with b1:
+                    if st.button("→ Results 끝에 통계 요약 추가", use_container_width=True,
+                                  type="primary"):
+                        block = (f"In the fully adjusted model, {last['exposure']} was associated "
+                                  f"with {last['outcome']} (aOR {target_var.get('or_value', 0):.2f}; "
+                                  f"95% CI {lo:.2f}-{hi:.2f}; "
+                                  f"P {'< 0.001' if (p and p < 0.001) else f'= {p:.3f}'}).")
+                        patch_preview(section="Results", append=True, content=block)
+                        st.toast("Results에 통계 요약 추가됨", icon="✅")
+                        st.rerun()
+                with b2:
+                    if st.button("→ Table 2 데이터로 저장", use_container_width=True):
+                        proj = st.session_state.setdefault("sg_project", {})
+                        tables = proj.setdefault("tables", [])
+                        tables.append({
+                            "type": "regression", "n": len(tables) + 1,
+                            "caption": f"Adjusted Odds Ratios for {last['outcome']}",
+                            "data": [{"variable": v.get("variable"),
+                                       "or": v.get("or_value"),
+                                       "ci_low": v.get("ci_lower"),
+                                       "ci_high": v.get("ci_upper"),
+                                       "p_value": v.get("p_value")} for v in vars_],
+                        })
+                        st.toast("Table 2로 저장됨", icon="✅")
+                        st.rerun()
+        elif last.get("desc"):
+            st.code(last["desc"], language=None)
 
 
 @st.dialog("📑 STROBE 체크리스트")
