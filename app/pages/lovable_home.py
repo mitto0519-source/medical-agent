@@ -119,16 +119,42 @@ def render() -> None:
         st.session_state["sg_active_project"] = "new"
         st.session_state["sg_initial_prompt"] = prompt
         st.session_state["sg_view"] = "workspace"
-        st.rerun()
+        try:
+            st.switch_page("pages/project_workspace.py")
+        except Exception:
+            st.rerun()
 
-    # Quick actions
-    st.markdown("<div style='max-width:760px;margin:8px auto 24px auto;'>"
-                "<div class='sg-chip-row' style='justify-content:center;'>"
-                "<span class='sg-chip'>📊 KYRBS 2025 빠른 분석</span>"
-                "<span class='sg-chip'>📝 Yoosun 스타일 재작성</span>"
-                "<span class='sg-chip'>🔬 신규성 확인 (PubMed)</span>"
-                "<span class='sg-chip'>📑 STROBE 체크리스트</span>"
-                "</div></div>", unsafe_allow_html=True)
+    # Quick actions — 클릭 시 해당 prompt seed로 workspace 진입
+    quick_actions = [
+        ("📊 KYRBS 2025 빠른 분석",
+         "KYRBS 2025 데이터로 빠른 통계 분석을 수행해줘. n, 결과 분포, 기본 인구통계 요약 + Table 1 만들어줘.",
+         "kyrbs_quick"),
+        ("📝 Yoosun 스타일 재작성",
+         "현재 작성 중인 논문 본문을 Yoosun Cho 스타일로 재작성해줘 (hedging vocabulary, evidence-first, "
+         "단락 전개: topic → cited evidence → limitation → transition).",
+         "yoosun_restyle"),
+        ("🔬 신규성 확인 (PubMed)",
+         "이 연구 주제로 PubMed에서 최근 5년간 유사 논문을 검색하고 신규성을 평가해줘.",
+         "novelty_check"),
+        ("📑 STROBE 체크리스트",
+         "현재 논문에 대해 STROBE 22항목 체크리스트를 자동 검사하고 누락된 항목과 보완안을 알려줘.",
+         "strobe_check"),
+    ]
+
+    st.markdown("<div style='max-width:880px;margin:10px auto 24px auto;'>",
+                 unsafe_allow_html=True)
+    qc = st.columns(len(quick_actions))
+    for i, (label, seed, key) in enumerate(quick_actions):
+        with qc[i]:
+            if st.button(label, key=f"sg_qa_{key}", use_container_width=True):
+                st.session_state["sg_active_project"] = "new"
+                st.session_state["sg_initial_prompt"] = seed
+                st.session_state["sg_view"] = "workspace"
+                try:
+                    st.switch_page("pages/project_workspace.py")
+                except Exception:
+                    st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # Tabs
     st.markdown("<div style='max-width:1080px;margin:24px auto 0 auto;'>",
