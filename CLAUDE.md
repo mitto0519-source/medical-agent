@@ -304,6 +304,60 @@ src/research/research_pipeline.py        — 주제 생성 후 자동 진화
 
 ---
 
+### 규칙 12 — VS Code · Streamlit · MCP 단일 코어 공유 (★ 단순한 챗봇이 아니다)
+
+> **provider(Claude/Gemini/GPT)는 호출자마다 다를 수 있지만, 코어(memory/persona/prompts/events/change_log)는 단일 저장소에서 공유**된다.
+> "어디서 누가 언제 쓰건" 같은 학습·자가발전 상태를 유지하기 위함이다.
+
+#### 단일 진실원본 (모든 호출자가 같은 파일을 읽고 쓴다)
+
+| 코어 | 파일 / 모듈 | 진입 |
+|------|-----------|-----|
+| Prompts | `prompts/*.md` + `src/agent/prompt_loader.py` | `build_base_system()` 자동 합성 |
+| Persona | `data/agent_self/persona.json` + `src/agent/persona.py` | `get_system_prompt(task)` |
+| Conversation memory | `data/runtime/conversation_memory.*` (ChromaDB) | `src.memory.conversation_memory.record/recall_relevant` |
+| Typed memory | `data/runtime/memory.db` | `src.memory.router.write` (gate+scorer+lifecycle) |
+| Events | `data/runtime/events.db` | `src.runtime.events.append/find/replay` |
+| Change log | `data/change_log/history.json` | `src.memory.change_log.log/get_recent` |
+| Knowledge graph | `data/knowledge_graph/medical_graph.json` | `src.knowledge.medical_graph` |
+| Insights | `data/agent_self/insights.json` | `src.memory.agent_insight.build_self_context` |
+
+#### LLM provider는 자동 failover (코어 호출은 통일)
+
+```python
+# ✗ 금지 — provider별 직접 호출은 코어 우회
+from src.llm.claude_client import ClaudeClient; ClaudeClient(...).generate(...)
+
+# ✓ 정석 — get_llm_client가 build_base_system + 3중 failover 자동
+from src.llm import get_llm_client
+client = get_llm_client(task="paper_writing")
+out = client.generate(prompt, system_prompt=sys, max_tokens=2048)
+```
+
+`build_base_system()`이 자동 합성:
+1. persona → 2. **versioned prompts (medical_core/safety/yoosun)** → 3. medical_seed
+→ 4. insight (capability_bench 약점) → 5. reviewer 패턴 → 6. design template
+
+`app/agentic_loop.build_system_with_preview()` 가 추가로 합성:
+7. **현재 docx preview snapshot** → 8. **conversation_memory.recall_relevant** (cross-session) → 9. **change_log 최근**
+
+#### 양쪽 진입점 — 같은 backend
+
+- **VS Code (Claude Code)** → MCP server (`mcp_server.py` port 8765) — `memory_write/memory_recall/events_recent/budget_status/task_list_unfinished`
+- **Streamlit (sapphire_app)** → 직접 src.* import
+- **Heartbeat (learner 컨테이너)** → 같은 SQLite/ChromaDB volume 마운트
+
+→ 어디서 어떤 provider로 호출되든 **다음 호출의 LLM context에 그 흔적이 자동 누적**된다.
+이게 "단순 챗봇이 아니라 자가발전 시스템"의 단일 진실원본 원칙.
+
+#### 위반 신호 (감지 시 즉시 수정)
+
+- 같은 사용자가 한 시간 전 한 질문을 LLM이 모름 → `recall_relevant` 미주입
+- VS Code에서 한 변경이 Streamlit에 안 보임 → MCP 미사용 또는 별도 저장소
+- provider별 동작 차이 (Claude 됨/Gemini 안 됨) → `build_base_system` 우회
+
+---
+
 ### 규칙 11 — 거짓말하지 않는다 (절대 규칙, 예외 없음)
 
 #### 금지 행위
