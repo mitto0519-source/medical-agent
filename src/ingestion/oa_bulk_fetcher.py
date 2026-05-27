@@ -99,16 +99,20 @@ def _search_oa(query: str, *, n_target: int = 100, page_size: int = 25,
 
 
 def _fetch_fulltext(pmcid: str, source: str = "PMC") -> Optional[str]:
-    """XML 본문 fetch → 텍스트만 추출. 실패 시 None."""
-    # Europe PMC 풀텍스트는 PMCID 기준
-    eid = pmcid.replace("PMC", "") if pmcid.startswith("PMC") else pmcid
+    """XML 본문 fetch → 텍스트만 추출. 실패 시 None.
+    Europe PMC URL: /webservices/rest/PMC/PMC1234567/fullTextXML (prefix 유지)"""
+    # PMC source는 PMC prefix 포함 ID 필요. MED source는 PMID 숫자.
+    if source == "PMC":
+        eid = pmcid if pmcid.startswith("PMC") else f"PMC{pmcid}"
+    else:
+        eid = pmcid.replace("PMC", "") if pmcid.startswith("PMC") else pmcid
     url = _EPMC_FULLTEXT.format(src=source, eid=eid)
     try:
         req = urllib.request.Request(url, headers=_ua())
         with urllib.request.urlopen(req, timeout=60) as resp:
             xml = resp.read().decode("utf-8", errors="replace")
     except Exception as e:
-        _log.debug("fulltext fetch fail %s: %s", pmcid, e)
+        _log.warning("fulltext fetch fail %s @ %s: %s", pmcid, url, e)
         return None
     return xml
 
@@ -161,7 +165,9 @@ def fetch_oa_batch(query: str, *, n_target: int = 100,
             if row:
                 skipped += 1
                 continue
-        xml = _fetch_fulltext(pmcid, source=hit.get("source", "PMC"))
+        # source 무시 — pmcid가 있으면 항상 'PMC' source 사용해야 fulltext 받음
+        # (hit['source']는 'MED'/'PMC' 등인데 'MED'면 fulltext 없음 → 404)
+        xml = _fetch_fulltext(pmcid, source="PMC")
         if not xml:
             failed += 1
             continue
@@ -223,9 +229,10 @@ def fetch_oa_batch(query: str, *, n_target: int = 100,
 
 
 def manifest_stats() -> dict:
-    """전체 수집 현황 — /backlog 페이지가 표시."""
+    """전체 수집 현황 — /backlog 페이지가 표시. 키 통일: total_papers/chunked_papers."""
     if not _MANIFEST_DB.exists():
-        return {"total": 0, "by_query": [], "by_year": []}
+        return {"total_papers": 0, "chunked_papers": 0, "pending_chunk": 0,
+                "total_chars": 0, "by_query": [], "by_year": []}
     c = sqlite3.connect(str(_MANIFEST_DB))
     total = c.execute("SELECT COUNT(*) FROM papers").fetchone()[0]
     chunked = c.execute("SELECT COUNT(*) FROM papers WHERE chunked_at IS NOT NULL").fetchone()[0]
