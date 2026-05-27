@@ -192,10 +192,64 @@ def _oa_learning_panel():
         f"총 char: {stat.get('total_chars', 0):,}</div>"
         f"</div>", unsafe_allow_html=True)
 
+    # 🚀 5만편 학습 시작 / 추가 / Component lib 통계
+    c1, c2, c3 = st.columns([1, 1, 1])
+    with c1:
+        if st.button("🚀 5만편 학습 시작 (50 시드 enqueue)", use_container_width=True,
+                      type="primary", key="bl_start_50k"):
+            _bootstrap_learning(per=200, target=50000)
+    with c2:
+        if st.button("+ 빠른 시드 1k 추가", use_container_width=True, key="bl_quick"):
+            _bootstrap_learning(per=200, target=1000)
+    with c3:
+        if st.button("📊 Component 통계", use_container_width=True, key="bl_compstat"):
+            try:
+                from src.library.components import get_library
+                cs = get_library().stats()
+                st.session_state["_bl_compstat"] = cs
+            except Exception as e:
+                st.warning(str(e))
+
+    if "_bl_compstat" in st.session_state:
+        cs = st.session_state["_bl_compstat"]
+        with st.expander("📚 ComponentLibrary 통계", expanded=True):
+            st.metric("총 components", cs.get("total", 0))
+            if cs.get("by_kind"):
+                st.markdown("**종류별:**")
+                for k, n in cs["by_kind"].items():
+                    st.markdown(f"- {k}: {n:,}")
+            if cs.get("most_used"):
+                st.markdown("**가장 자주 쓰임:**")
+                for m in cs["most_used"]:
+                    st.markdown(f"- ({m['n_uses']}회) `{m['kind']}` — {m['text'][:80]}")
+
     if stat.get("by_query"):
         with st.expander("Query별 분포"):
             for row in stat["by_query"]:
                 st.markdown(f"- **{row['query'][:60]}** — {row['n']:,}편")
+
+
+def _bootstrap_learning(*, per: int, target: int):
+    """bootstrap_oa_learning.py와 같은 시드를 backlog에 enqueue."""
+    try:
+        from scripts.bootstrap_oa_learning import DEFAULT_SEEDS
+        from src.runtime.backlog import enqueue
+        n_q = max(1, target // max(1, per))
+        queries = (DEFAULT_SEEDS * (n_q // len(DEFAULT_SEEDS) + 1))[:n_q]
+        enqueued = 0
+        for q in queries:
+            try:
+                enqueue("oa_bulk_fetch",
+                         {"query": q, "n_target": per, "year_min": 2018},
+                         owner=st.session_state.get("user_email", "bootstrap@oa"))
+                enqueued += 1
+            except Exception:
+                continue
+        st.success(f"🚀 {enqueued}편의 OA bulk_fetch job 백로그 등록 완료. "
+                    f"heartbeat가 5분마다 처리합니다.")
+        st.toast(f"✓ {enqueued} queries enqueued", icon="🚀")
+    except Exception as e:
+        st.error(f"bootstrap 실패: {e}")
 
 
 def render():

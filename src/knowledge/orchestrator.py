@@ -131,19 +131,33 @@ class KnowledgeOrchestrator:
         # 4. citation graph 확장 (cited_by 1-hop)
         cited_added = self._extend_citation_graph(pmid)
 
-        # 5. events 기록
+        # 5. ★ Component 추출 (reusable microcomponent 자산화)
+        n_components = 0
+        try:
+            from src.library.component_extractor import extract_and_store
+            n_components = extract_and_store(
+                full_text or abstract,
+                source_pmid=pmid,
+                author_style="",   # OA 일반. yoosun_cho 시드는 별도 source
+            )
+        except Exception as e:
+            _log.debug("component extract fail %s: %s", pmid, e)
+
+        # 6. events 기록
         try:
             _events.append("orchestrator_ingest",
                             {"pmid": pmid, "n_concepts": len(concepts),
                              "n_chunks": chunks_added, "year": year,
-                             "cited_added": cited_added},
+                             "cited_added": cited_added,
+                             "n_components": n_components},
                             actor="knowledge_orchestrator")
         except Exception:
             pass
 
         return {"pmid": pmid, "concepts": concepts,
                 "n_chunks": chunks_added, "graph_node": graph_node,
-                "citation_added": cited_added}
+                "citation_added": cited_added,
+                "n_components": n_components}
 
     # ── Internal: ontology → concept_ids ────────────────────────────────────
 

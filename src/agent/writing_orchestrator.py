@@ -96,6 +96,54 @@ class WritingOrchestrator:
 
     # ── A2A 핵심 메서드 ─────────────────────────────────────────────────────
 
+    def apply_author_style(self, text: str, *, author_style: str = "yoosun_cho",
+                             llm_client=None) -> str:
+        """② Style layer — 합성된 substance text에 저자 voice 입힘.
+        prompts/yoosun_style.md + raw_examples를 system prompt로 LLM 호출."""
+        if not text:
+            return ""
+        try:
+            if llm_client is None:
+                from src.llm import get_llm_client
+                llm_client = get_llm_client(task="paper_writing")
+            from src.agent.prompt_loader import load_yoosun_with_exemplars
+            sys_p = load_yoosun_with_exemplars() if author_style == "yoosun_cho" \
+                else "Rewrite preserving all numbers, citations, statistics."
+            return llm_client.generate(
+                f"Rewrite the following paragraph in {author_style} style "
+                f"(preserve all numbers, citations, statistics):\n\n{text}",
+                system_prompt=sys_p, max_tokens=2000) or text
+        except Exception as e:
+            _log.warning("apply_author_style fail: %s", e)
+            return text
+
+    def gather_components(self, *, kind: str, n: int = 5,
+                            author_style: Optional[str] = None,
+                            contains: Optional[str] = None) -> List[Dict]:
+        """ComponentLibrary에서 reusable microcomponent 조합용 sample.
+        LLM이 patch_preview 전에 참고할 양식 풀."""
+        try:
+            from src.library.components import get_library
+            lib = get_library()
+            if contains:
+                hits = lib.search(kind=kind, author_style=author_style,
+                                    contains=contains, limit=n)
+            else:
+                hits = lib.sample(kind, n=n, author_style=author_style)
+            for h in hits:
+                lib.mark_used(h["id"])
+            try:
+                from src.runtime import events as _events
+                _events.append("components_gathered",
+                                {"kind": kind, "n": len(hits), "author_style": author_style or ""},
+                                actor="writing_orchestrator")
+            except Exception:
+                pass
+            return hits
+        except Exception as e:
+            _log.warning("gather_components fail: %s", e)
+            return []
+
     def ask_knowledge(self, req: KnowledgeRequest) -> KnowledgeResponse:
         """A2A: KnowledgeOrchestrator에 정보 요청. 단일 진입점."""
         try:

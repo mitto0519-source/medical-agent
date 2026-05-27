@@ -200,6 +200,18 @@ def fetch_oa_batch(query: str, *, n_target: int = 100,
             )
             c.commit()
             fetched += 1
+
+            # ★ KnowledgeOrchestrator 자동 ingest — graph + vector + ontology + components
+            try:
+                from src.knowledge.orchestrator import get_orchestrator
+                orch = get_orchestrator()
+                orch.ingest_oa_paper(pmcid, meta, extracted["body"])
+                # chunked_at 업데이트
+                c.execute("UPDATE papers SET chunked_at=?, status='INGESTED' WHERE pmcid=?",
+                           (time.time(), pmcid))
+                c.commit()
+            except Exception as e:
+                _log.warning("orchestrator ingest fail %s: %s", pmcid, e)
         except Exception as e:
             _log.warning("save fail %s: %s", pmcid, e)
             failed += 1

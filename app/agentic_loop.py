@@ -98,6 +98,59 @@ TOOL_SCHEMAS: List[dict] = [
             "required": ["query"],
         },
     },
+    {
+        "name": "find_components",
+        "description": "ComponentLibrary에서 reusable microcomponent 양식 N개 sample. "
+                        "kind: hedging|stat_report|transition|topic_sentence|"
+                        "methods_boilerplate|mechanism_phrase|limitation|"
+                        "figure_caption_pattern|table_caption_pattern|"
+                        "subgroup_sentence|citation_cluster_pattern. "
+                        "patch_preview 전에 호출해서 양식을 골라 조합하라.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "kind": {"type": "string",
+                          "description": "components 종류"},
+                "n": {"type": "integer", "description": "상위 N. 기본 5."},
+                "author_style": {"type": "string",
+                                  "description": "특정 저자 양식만 (예: yoosun_cho). 선택."},
+                "contains": {"type": "string",
+                              "description": "본문에 포함될 키워드. 선택."},
+            },
+            "required": ["kind"],
+        },
+    },
+    {
+        "name": "cross_modal_query",
+        "description": "KnowledgeOrchestrator 통합 검색 — vector top-K + graph neighbors "
+                        "+ top concepts + suggested citations 한 번에. "
+                        "복합 정보가 필요한 작성 단계 진입 시 호출.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string"},
+                "k": {"type": "integer", "description": "기본 8."},
+                "intent": {"type": "string",
+                            "description": "evidence|definition|citation|stat_method|figure_example"},
+            },
+            "required": ["query"],
+        },
+    },
+    {
+        "name": "apply_author_style",
+        "description": "★ ② Style layer — 합성된 substance text에 저자 voice 입힘. "
+                        "Content components로 draft 만든 다음, 본 tool로 yoosun_cho 양식 "
+                        "(hedging/transition/단락 전개) 입혀라. 숫자/인용/통계는 보존됨.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "text": {"type": "string", "description": "스타일 입힐 본문"},
+                "author_style": {"type": "string",
+                                  "description": "yoosun_cho (기본) 또는 다른 author"},
+            },
+            "required": ["text"],
+        },
+    },
 ]
 
 
@@ -127,6 +180,10 @@ def make_tool_handler(get_project: Callable[[], dict],
                 return _h_consistency(get_project())
             if name == "rag_search":
                 return _h_rag(inputs)
+            if name == "find_components":
+                return _h_find_components(inputs)
+            if name == "cross_modal_query":
+                return _h_cross_modal(inputs)
             return f"unknown tool: {name}"
         except Exception as e:
             return f"ERROR in {name}: {e}"
@@ -283,6 +340,34 @@ def _h_rag(inputs):
         "score": h.get("final_score"),
         "metadata": h.get("metadata", {}),
     } for h in hits], ensure_ascii=False)
+
+
+def _h_find_components(inputs):
+    """ComponentLibrary 검색 — WritingOrchestrator.gather_components 위임."""
+    from src.agent.writing_orchestrator import get_writing_orchestrator
+    hits = get_writing_orchestrator().gather_components(
+        kind=inputs["kind"],
+        n=int(inputs.get("n", 5)),
+        author_style=inputs.get("author_style"),
+        contains=inputs.get("contains"),
+    )
+    return json.dumps([{"id": h["id"], "text": h["text"][:400],
+                         "kind": h["kind"], "source_pmid": h.get("source_pmid", ""),
+                         "n_uses": h.get("n_uses", 0)}
+                        for h in hits], ensure_ascii=False)
+
+
+def _h_cross_modal(inputs):
+    """KnowledgeOrchestrator 통합 검색."""
+    from src.agent.writing_orchestrator import (
+        get_writing_orchestrator, KnowledgeRequest)
+    req = KnowledgeRequest(
+        intent=inputs.get("intent", "evidence"),
+        query=inputs["query"],
+        k=int(inputs.get("k", 8)),
+    )
+    resp = get_writing_orchestrator().ask_knowledge(req)
+    return json.dumps(resp.to_dict(), ensure_ascii=False)[:6000]
 
 
 # ── System prompt — preview snapshot 포함 ────────────────────────────────────
