@@ -1,7 +1,8 @@
 ---
 name: Medical-Agent Design System
-version: 1.0.0
+version: 2.0.0
 last_updated: 2026-05-27
+theme: sapphire_glass        # Lovable-inspired glassmorphism (2026-05-27 도입)
 source_of_truth: this file
 applies_to:
   - app/streamlit_app.py    # 메인 UI
@@ -271,3 +272,93 @@ Claude Code · Cursor · Streamlit chat이 새 화면·figure 만들 때:
 4. frontmatter에 없는 패턴 새로 만들면 → 사용자에게 명시 후 추가
 
 관련: [ARCHITECTURE.md](ARCHITECTURE.md) (모듈 레지스트리), `memory/feedback_full_layer_standard.md` (품질 표준).
+
+---
+
+## Section 9. Sapphire Glass theme (v2.0.0 — 2026-05-27)
+
+> Lovable.dev 스타일에서 영감받은 **글래스모피즘 다크 테마**. 사용자 요청:
+> "옛스럽지 않게, 사파이어 글라스 액션 카드 기준으로 깨끗하고 심플하게."
+> 본 섹션은 streamlit UI 전용 (논문 figure/docx 양식과 무관).
+
+```yaml
+sapphire_glass:
+  background:
+    # 화면 전체 — 사파이어→마젠타 radial gradient
+    primary:   "#0A0A1F"
+    radial_from: "#1E1B4B"        # 사파이어 인디고
+    radial_via:  "#7C3AED"        # 보라
+    radial_to:   "#EC4899"        # 마젠타 핑크
+    surface_dark: "#0F0F23"       # sidebar
+    overlay_black: "rgba(0, 0, 0, 0.40)"
+
+  glass:
+    # 액션 카드/입력바/메뉴 표면
+    bg:           "rgba(255, 255, 255, 0.06)"
+    bg_hover:     "rgba(255, 255, 255, 0.10)"
+    bg_active:    "rgba(255, 255, 255, 0.14)"
+    border:       "rgba(255, 255, 255, 0.12)"
+    border_focus: "rgba(124, 58, 237, 0.50)"   # 사파이어 글로우
+    blur_px:      24
+    radius_card:  "18px"
+    radius_chip:  "999px"          # pill
+    shadow_soft:  "0 8px 32px rgba(15, 15, 35, 0.40)"
+    shadow_glow:  "0 0 24px rgba(124, 58, 237, 0.25)"
+
+  text:
+    on_dark:        "#F5F5FA"      # 본문 (옅은 화이트)
+    on_dark_subtle: "#A3A3B8"      # 보조
+    on_dark_muted:  "#6B6B7E"
+    on_glass:       "#FFFFFF"
+
+  accent:
+    sapphire:  "#3B82F6"    # 액션 버튼 / Link
+    cyan:      "#06B6D4"    # 보조 강조
+    violet:    "#8B5CF6"    # 글로우
+    mint:      "#10B981"    # 성공
+    rose:      "#F43F5E"    # 위험
+
+  spacing:
+    page_padding: "24px"
+    card_padding: "20px"
+    card_gap:     "16px"
+    sidebar_w:    "232px"
+
+  typography:
+    family: ["Inter", "Pretendard", "system-ui", "sans-serif"]
+    title:  "1.5rem / 700"
+    h2:     "1.1rem / 600"
+    body:   "0.92rem / 400"
+    caption: "0.80rem / 400"
+
+  motion:
+    transition_fast: "150ms cubic-bezier(0.4, 0, 0.2, 1)"
+    transition_med:  "250ms cubic-bezier(0.4, 0, 0.2, 1)"
+    hover_lift:      "translateY(-2px)"
+```
+
+### 컴포넌트 사양 (sapphire_glass)
+
+- **Glass action card** — `background: glass.bg`, `backdrop-filter: blur(24px)`,
+  `border: 1px solid glass.border`, `border-radius: 18px`. hover시 `glass.bg_hover`
+  + `transform: hover_lift` + `box-shadow: shadow_glow`.
+- **Project card (그리드)** — 16:10 비율 썸네일 위, 하단 제목+편집일자.
+  hover시 ring(2px sapphire). published 배지(좌하단 chip).
+- **Big input bar** (홈 메인) — 폭 720px, padding 16px, glass.bg, border focus시
+  sapphire 글로우. 우측 `Build ▾` chip + 마이크/전송 icon.
+- **Sidebar** — surface_dark, 232px 폭, item hover시 glass.bg, active=violet bg.
+- **Split workspace** — 좌 chat 38% / 우 preview 62%, drag handle (양쪽 폭 조절).
+- **Preview tab bar** — Manuscript / Figures / Tables / Supplement (4 chip tabs).
+- **Manuscript preview** — Word 양식 1:1 (TNR 11pt, double-space, A4) on white card.
+
+### 모듈
+
+- `app/styles/sapphire_glass.py` — `inject_sapphire_glass()` → `st.markdown(<style>)`
+  으로 한 번 주입. 모든 새 page 진입 시 호출.
+- `app/pages/_lovable_home.py` — Lovable-style 홈 (사이드바+입력바+카드그리드)
+- `app/pages/_project_workspace.py` — split chat + Word preview + figure/table toggle.
+
+### 옛 UI 호환
+
+기존 `app/streamlit_app.py` 본체는 살아있음 — 사이드바에 "New (sapphire)" 토글로
+새 양식 진입. 점진 마이그레이션, 갑작스러운 변경으로 사용자 워크플로 깨지지 않게.
