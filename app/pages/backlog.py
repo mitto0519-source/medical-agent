@@ -232,7 +232,17 @@ def _oa_learning_panel():
 def _bootstrap_learning(*, per: int, target: int):
     """bootstrap_oa_learning.py와 같은 시드를 backlog에 enqueue."""
     try:
-        from scripts.bootstrap_oa_learning import DEFAULT_SEEDS
+        # Streamlit Cloud는 scripts/ 가 sys.path에 없을 수 있어 안전하게 inline import
+        import importlib.util as _ilu
+        from pathlib import Path as _P
+        spec = _ilu.spec_from_file_location(
+            "_oa_seeds", str(_P(__file__).resolve().parent.parent.parent
+                                  / "scripts" / "bootstrap_oa_learning.py"))
+        if spec and spec.loader:
+            mod = _ilu.module_from_spec(spec); spec.loader.exec_module(mod)
+            DEFAULT_SEEDS = mod.DEFAULT_SEEDS
+        else:
+            DEFAULT_SEEDS = ["depression adolescent", "diabetes Korea", "obesity BMI"]
         from src.runtime.backlog import enqueue
         n_q = max(1, target // max(1, per))
         queries = (DEFAULT_SEEDS * (n_q // len(DEFAULT_SEEDS) + 1))[:n_q]
@@ -245,9 +255,11 @@ def _bootstrap_learning(*, per: int, target: int):
                 enqueued += 1
             except Exception:
                 continue
-        st.success(f"🚀 {enqueued}편의 OA bulk_fetch job 백로그 등록 완료. "
-                    f"heartbeat가 5분마다 처리합니다.")
-        st.toast(f"✓ {enqueued} queries enqueued", icon="🚀")
+        st.success(f"🚀 {enqueued}편의 OA bulk_fetch job 백로그 등록 완료.")
+        st.info("⚠️ Streamlit Cloud 환경에선 heartbeat 백그라운드 worker가 없습니다. "
+                "**▶ Drain now** 버튼을 직접 눌러 한 배치씩 처리하세요. "
+                "(Docker 환경에선 learner 컨테이너가 5분마다 자동 drain)")
+        st.toast(f"🚀 {enqueued} queries enqueued", icon="🚀")
     except Exception as e:
         st.error(f"bootstrap 실패: {e}")
 
@@ -280,9 +292,25 @@ def render():
                     st.error(f"drain 실패: {e}")
 
     if "_bl_drain_result" in st.session_state:
-        r = st.session_state["_bl_drain_result"]
-        st.toast(f"처리 {len(r.get('processed', []))}건 · skip {len(r.get('skipped', []))}건 "
-                  f"(today {r.get('pct_used_today', 0):.0f}%)", icon="✓")
+        r = st.session_state.pop("_bl_drain_result")
+        proc = r.get("processed", [])
+        skip = r.get("skipped", [])
+        st.toast(f"처리 {len(proc)}건 · skip {len(skip)}건 "
+                  f"(today budget {r.get('pct_used_today', 0):.0f}%)", icon="✅")
+        # 디테일을 expander로 표시 (사용자가 실제 무엇이 처리됐는지 확인)
+        if proc or skip:
+            with st.expander(f"🔍 Drain 결과 — processed {len(proc)} · skipped {len(skip)}",
+                              expanded=True):
+                if proc:
+                    st.markdown("**처리됨:**")
+                    for p in proc[:10]:
+                        emoji = "✅" if p.get("status") == "COMPLETED" else "❌"
+                        st.markdown(f"- {emoji} `{p.get('kind')}` ({p.get('id','')[:12]}) "
+                                     f"{p.get('error', '')[:120]}")
+                if skip:
+                    st.markdown("**대기됨 (budget/handler):**")
+                    for s in skip[:10]:
+                        st.markdown(f"- ⏸️ `{s.get('kind')}` — {s.get('reason')}")
 
     st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
 
