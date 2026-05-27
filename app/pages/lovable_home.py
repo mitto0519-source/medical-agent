@@ -127,6 +127,12 @@ def _sidebar():
 def render() -> None:
     """홈 렌더링 — `app/streamlit_app.py`에서 호출."""
     inject_sapphire_glass()
+    # 모달 dialog가 pending이면 먼저 띄움 (FAB/chip 클릭 시)
+    try:
+        from app.sapphire_actions import render_open_action_if_any, render_fab
+        render_open_action_if_any()
+    except Exception:
+        render_fab = None
     _, _, projects = _sidebar()
 
     # Top notice
@@ -258,6 +264,13 @@ def render() -> None:
         st.markdown(tpl_html, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+    # ── Floating Action Button (우하단 quick-action 메뉴) ──
+    try:
+        from app.sapphire_actions import render_fab as _render_fab
+        _render_fab()
+    except Exception:
+        pass
 
 
 # Streamlit 멀티페이지: 페이지 파일을 runpy로 실행하므로 무조건 render() 호출
