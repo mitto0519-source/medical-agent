@@ -31,6 +31,42 @@ from app.styles.sapphire_glass import (
 
 
 _PROJECTS_DIR = Path("data/working_papers")
+_UPLOAD_DIR = Path("data/uploads")
+
+
+def _enqueue_uploaded_files(uploaded_files, prompt_hint: str = "") -> None:
+    """첨부 파일을 디스크에 저장하고, 양식별로 적절한 backlog job 등록.
+    - PDF/DOCX/TXT → paper_ingest (논문 학습)
+    - PNG/JPG       → vision_check (figure 검증)
+    """
+    _UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    try:
+        from src.runtime.backlog import enqueue
+    except Exception as e:
+        st.error(f"backlog import 실패: {e}")
+        return
+    owner = st.session_state.get("user_email", "")
+    n_paper, n_vision = 0, 0
+    for f in uploaded_files:
+        target = _UPLOAD_DIR / f.name
+        try:
+            target.write_bytes(f.getbuffer())
+        except Exception as e:
+            st.warning(f"저장 실패 {f.name}: {e}")
+            continue
+        ext = target.suffix.lower()
+        if ext in (".pdf", ".docx", ".txt"):
+            enqueue("paper_ingest",
+                     {"path": str(target), "filename": f.name, "hint": prompt_hint[:300]},
+                     owner=owner)
+            n_paper += 1
+        elif ext in (".png", ".jpg", ".jpeg"):
+            enqueue("vision_check",
+                     {"path": str(target), "filename": f.name},
+                     owner=owner)
+            n_vision += 1
+    if n_paper or n_vision:
+        st.success(f"📥 백로그 등록: 논문 {n_paper}편 · 이미지 {n_vision}장")
 
 
 def _load_projects() -> list[dict]:
@@ -103,25 +139,42 @@ def render() -> None:
     user_name = st.session_state.get("user_name", "Researcher")
     hero_title(f"좋은 아이디어 있으세요, {user_name}?")
 
-    # Big input
+    # Big input + 파일 첨부 (러버블 양식: + 버튼 → uploader)
     with st.container():
         c1, c2 = st.columns([6, 1])
         with c1:
             prompt = st.text_area(
-                "prompt", placeholder="논문 아이디어 / KYRBS 분석 / Yoosun 스타일 재작성 요청…",
+                "prompt", placeholder="논문 아이디어 / KYRBS 분석 / Yoosun 스타일 재작성 요청…\n"
+                                       "💡 파일을 첨부하면 자동으로 백로그에 학습/분석 작업으로 등록됩니다.",
                 label_visibility="collapsed", height=110, key="sg_home_prompt")
+            uploaded = st.file_uploader(
+                "📎 파일 첨부 (PDF/DOCX/이미지 — 논문 학습·참고·vision 검증)",
+                type=["pdf", "docx", "txt", "png", "jpg", "jpeg"],
+                accept_multiple_files=True, key="sg_home_files",
+                label_visibility="visible")
         with c2:
             st.markdown("<div style='height:40px;'></div>", unsafe_allow_html=True)
             send = st.button("✨ Build", use_container_width=True, type="primary",
                               key="sg_home_send")
+            st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+            st.caption(f"📎 {len(uploaded) if uploaded else 0} 파일")
 
-    if send and prompt:
-        st.session_state["sg_active_project"] = "new"
-        st.session_state["sg_initial_prompt"] = prompt
-        st.session_state["sg_view"] = "workspace"
-        try:
-            st.switch_page("pages/project_workspace.py")
-        except Exception:
+    if send and (prompt or uploaded):
+        # 1) 파일 첨부 — 백로그 enqueue (즉시 처리 X, 미처리 로그에 표시)
+        if uploaded:
+            _enqueue_uploaded_files(uploaded, prompt_hint=prompt)
+        # 2) prompt가 있으면 workspace 진입
+        if prompt:
+            st.session_state["sg_active_project"] = "new"
+            st.session_state["sg_initial_prompt"] = prompt
+            st.session_state["sg_view"] = "workspace"
+            try:
+                st.switch_page("pages/project_workspace.py")
+            except Exception:
+                st.rerun()
+        else:
+            st.toast(f"{len(uploaded)}개 파일을 백로그에 등록함. /backlog에서 진행도 확인",
+                      icon="📥")
             st.rerun()
 
     # Quick actions — 클릭 시 해당 prompt seed로 workspace 진입

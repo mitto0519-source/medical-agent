@@ -110,12 +110,23 @@ def _job_trend_learn() -> dict:
         return {"error": str(e)[:200]}
 
 
+def _job_backlog_drain() -> dict:
+    """백로그 큐 처리 — 매 5분 호출. budget 80% 초과 시 high-cost job 자동 skip,
+    pending 유지 → 다음 cycle에서 재시도. 사용자 요구: '리미트 걸리면 내일이라도 해야지'."""
+    try:
+        from src.runtime.backlog import drain_once
+        return drain_once(max_jobs=5)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
 JOBS = [
     Job("task_recover",     interval_sec=3600,      fn=_job_task_recover),
     Job("budget_snapshot",  interval_sec=3600,      fn=_job_budget_snapshot),
     Job("idempotency_gc",   interval_sec=6 * 3600,  fn=_job_idempotency_gc),
     Job("lifecycle_tick",   interval_sec=24 * 3600, fn=_job_lifecycle_tick),
     Job("trend_learn",      interval_sec=24 * 3600, fn=_job_trend_learn),
+    Job("backlog_drain",    interval_sec=5 * 60,    fn=_job_backlog_drain),
 ]
 
 

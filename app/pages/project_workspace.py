@@ -168,10 +168,17 @@ def _render_chat_left(project: dict, pid: str):
     for m in messages:
         _render_chat_event(m)
 
-    # 입력 form
+    # 입력 form — 파일 첨부 포함
     with st.form(key="ws_form", clear_on_submit=True):
-        prompt = st.text_area("ask", placeholder="Ask Medical-Agent… (LLM이 tool을 직접 호출해 preview를 갱신합니다)",
+        prompt = st.text_area("ask",
+                               placeholder="Ask Medical-Agent… (LLM이 tool을 직접 호출해 preview를 갱신합니다)\n"
+                                           "💡 파일 첨부 시 자동으로 백로그에 등록됩니다.",
                                label_visibility="collapsed", height=80)
+        uploaded = st.file_uploader(
+            "📎 파일 첨부 (참고 논문/이미지) — heavy 작업은 백로그 처리",
+            type=["pdf", "docx", "txt", "png", "jpg", "jpeg"],
+            accept_multiple_files=True, key="ws_files",
+            label_visibility="visible")
         c1, c2, c3 = st.columns([5, 2, 1])
         with c1:
             mode = st.selectbox("mode",
@@ -186,20 +193,58 @@ def _render_chat_left(project: dict, pid: str):
         with c3:
             sent = st.form_submit_button("➤", use_container_width=True, type="primary")
 
-    if sent and prompt:
-        messages.append({"role": "user", "content": prompt})
-        project["messages"] = messages
-        _save_project(pid, project)
-
-        if use_tools:
-            _run_agentic_step(prompt, project, pid, mode)
-        else:
-            reply = _delegate_to_writer(prompt, project, mode)
-            messages.append({"role": "assistant",
-                              "content": reply.get("content", "")})
+    if sent and (prompt or uploaded):
+        # 1) 첨부 → 백로그 (비동기 처리)
+        if uploaded:
+            _enqueue_workspace_uploads(uploaded, prompt_hint=prompt)
+        # 2) prompt 가 있으면 agentic loop 실행
+        if prompt:
+            messages.append({"role": "user", "content": prompt})
             project["messages"] = messages
             _save_project(pid, project)
+            if use_tools:
+                _run_agentic_step(prompt, project, pid, mode)
+            else:
+                reply = _delegate_to_writer(prompt, project, mode)
+                messages.append({"role": "assistant",
+                                  "content": reply.get("content", "")})
+                project["messages"] = messages
+                _save_project(pid, project)
         st.rerun()
+
+
+def _enqueue_workspace_uploads(uploaded_files, prompt_hint: str = "") -> None:
+    """workspace 첨부 → backlog. lovable_home의 _enqueue_uploaded_files 와 동일 동작."""
+    from pathlib import Path as _P
+    upload_dir = _P("data/uploads")
+    upload_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        from src.runtime.backlog import enqueue
+    except Exception as e:
+        st.error(f"backlog import 실패: {e}")
+        return
+    owner = st.session_state.get("user_email", "")
+    n_p, n_v = 0, 0
+    for f in uploaded_files:
+        target = upload_dir / f.name
+        try:
+            target.write_bytes(f.getbuffer())
+        except Exception as e:
+            st.warning(f"저장 실패 {f.name}: {e}")
+            continue
+        ext = target.suffix.lower()
+        if ext in (".pdf", ".docx", ".txt"):
+            enqueue("paper_ingest",
+                     {"path": str(target), "filename": f.name, "hint": prompt_hint[:300]},
+                     owner=owner)
+            n_p += 1
+        elif ext in (".png", ".jpg", ".jpeg"):
+            enqueue("vision_check",
+                     {"path": str(target), "filename": f.name},
+                     owner=owner)
+            n_v += 1
+    if n_p or n_v:
+        st.toast(f"📥 백로그 등록: 논문 {n_p}편 · 이미지 {n_v}장", icon="✅")
 
 
 def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
