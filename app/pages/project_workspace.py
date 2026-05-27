@@ -112,8 +112,51 @@ def _figures_list() -> list[dict]:
     return items
 
 
+def _render_chat_event(m: dict):
+    """user/assistant/tool_use/tool_result/system 모두 시각 양식 분기 렌더."""
+    role = m.get("role", "system")
+    if role == "user":
+        message_bubble("user", m.get("content", ""))
+        return
+    if role == "assistant":
+        if m.get("content"):
+            message_bubble("assistant", m["content"])
+        return
+    if role == "tool_use":
+        st.markdown(
+            f"<div class='sg-action-card' style='border-color:rgba(6,182,212,0.45);"
+            f"background:rgba(6,182,212,0.10);'>"
+            f"<div class='sg-icon'>🛠️</div>"
+            f"<div class='sg-detail'>"
+            f"<div class='sg-title'>{m.get('tool', '?')}</div>"
+            f"<div class='sg-sub'>input: <code>{json.dumps(m.get('input', {}), ensure_ascii=False)[:200]}</code></div>"
+            f"</div></div>", unsafe_allow_html=True)
+        return
+    if role == "tool_result":
+        preview = (m.get("content") or "")[:280]
+        st.markdown(
+            f"<div class='sg-action-card' style='border-color:rgba(16,185,129,0.40);"
+            f"background:rgba(16,185,129,0.08);'>"
+            f"<div class='sg-icon'>📥</div>"
+            f"<div class='sg-detail'>"
+            f"<div class='sg-title'>tool_result</div>"
+            f"<div class='sg-sub'>{preview}…</div>"
+            f"</div></div>", unsafe_allow_html=True)
+        return
+    if role == "system":
+        st.markdown(
+            f"<div class='sg-action-card' style='border-color:rgba(124,58,237,0.40);"
+            f"background:rgba(124,58,237,0.08);'>"
+            f"<div class='sg-icon'>⚙️</div>"
+            f"<div class='sg-detail'>"
+            f"<div class='sg-title'>{m.get('event', 'system')}</div>"
+            f"<div class='sg-sub'>{m.get('detail', '')}</div>"
+            f"</div></div>", unsafe_allow_html=True)
+
+
 def _render_chat_left(project: dict, pid: str):
-    """좌측 chat panel."""
+    """좌측 chat panel — VS Code/Claude Code 양식.
+    user/assistant/tool_use/tool_result/system 모두 시간순 표시."""
     st.markdown("<div style='font-size:0.78rem;color:#A3A3B8;margin:4px 0 8px 4px;'>"
                 f"{project.get('updated', 'today')}</div>", unsafe_allow_html=True)
 
@@ -123,30 +166,13 @@ def _render_chat_left(project: dict, pid: str):
         messages.append({"role": "user", "content": initial})
 
     for m in messages:
-        message_bubble(m["role"], m.get("content", ""))
+        _render_chat_event(m)
 
-    # 마지막 assistant action card 양식 (Lovable의 "Details / Preview")
-    if messages and messages[-1]["role"] == "assistant":
-        last = messages[-1]
-        title = last.get("title", "응답")
-        st.markdown(
-            f"<div class='sg-card' style='border:1px solid rgba(124,58,237,0.5);'>"
-            f"<div style='font-weight:600;margin-bottom:8px;'>{title}</div>"
-            f"<div style='color:#A3A3B8;font-size:0.85rem;'>{last.get('summary', '')[:180]}</div>"
-            f"</div>", unsafe_allow_html=True)
-        cdetail, cpreview = st.columns(2)
-        with cdetail:
-            st.button("Details", use_container_width=True, key=f"ws_details_{len(messages)}")
-        with cpreview:
-            if st.button("Preview", use_container_width=True, key=f"ws_preview_{len(messages)}",
-                          type="primary"):
-                st.session_state["sg_active_tab"] = "Manuscript"
-
-    # 입력
+    # 입력 form
     with st.form(key="ws_form", clear_on_submit=True):
-        prompt = st.text_area("ask", placeholder="Ask Medical-Agent…",
+        prompt = st.text_area("ask", placeholder="Ask Medical-Agent… (LLM이 tool을 직접 호출해 preview를 갱신합니다)",
                                label_visibility="collapsed", height=80)
-        c1, c2 = st.columns([5, 1])
+        c1, c2, c3 = st.columns([5, 2, 1])
         with c1:
             mode = st.selectbox("mode",
                                  ["✨ Build (자유 작성)",
@@ -155,37 +181,102 @@ def _render_chat_left(project: dict, pid: str):
                                   "📑 STROBE 체크"],
                                  label_visibility="collapsed")
         with c2:
+            use_tools = st.checkbox("🛠️ Tool-use", value=True,
+                                     help="LLM이 직접 patch_preview/kyrbs_stat 등 tool을 호출")
+        with c3:
             sent = st.form_submit_button("➤", use_container_width=True, type="primary")
 
     if sent and prompt:
         messages.append({"role": "user", "content": prompt})
-        # 실제 LLM 호출은 기존 PaperWriter/ResearchPipeline에 위임 (간단 stub)
-        reply = _delegate_to_writer(prompt, project, mode)
-        messages.append({"role": "assistant",
-                          "content": reply.get("content", ""),
-                          "title": reply.get("title", "응답"),
-                          "summary": reply.get("summary", "")})
         project["messages"] = messages
         _save_project(pid, project)
+
+        if use_tools:
+            _run_agentic_step(prompt, project, pid, mode)
+        else:
+            reply = _delegate_to_writer(prompt, project, mode)
+            messages.append({"role": "assistant",
+                              "content": reply.get("content", "")})
+            project["messages"] = messages
+            _save_project(pid, project)
         st.rerun()
 
 
+def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
+    """★ Agentic loop — LLM이 tool을 직접 호출해 preview를 갱신.
+    각 step(assistant text / tool_use / tool_result / system)을 chat에 시간순 기록.
+    실패해도 UX는 살아있게 system 이벤트로 남김."""
+    try:
+        from src.llm.claude_client import ClaudeClient
+        from src.agent.prompt_loader import load_prompt
+        from app.agentic_loop import TOOL_SCHEMAS, make_tool_handler, build_system_with_preview
+
+        messages = project["messages"]
+
+        def get_project():
+            return project
+
+        def set_project(p):
+            project.update(p)
+            _save_project(pid, project)
+
+        def append_chat_event(ev_type: str, payload: dict):
+            messages.append({"role": "system", "event": ev_type,
+                              "detail": json.dumps(payload, ensure_ascii=False)[:280]})
+
+        handler = make_tool_handler(get_project, set_project, append_chat_event)
+
+        base_system = load_prompt("paper_write")
+        system = build_system_with_preview(
+            base_system + f"\n\nMode: {mode}.", project)
+
+        cc = ClaudeClient(task="paper_writing")
+        # 사용자 프롬프트 + 직전 대화 컨텍스트 (간단히 마지막 사용자 메시지만 보내고
+        # 직전 assistant/tool 흐름은 system 안의 preview snapshot으로 대체)
+        user_msg = prompt
+
+        result = cc.generate_with_tools(
+            user_message=user_msg, tools=TOOL_SCHEMAS,
+            tool_handler=handler, system_prompt=system,
+            max_tokens=3000, max_iters=6, task="paper_writing",
+        )
+
+        # trace를 chat에 시간순 기록
+        for step in result.get("trace", []):
+            messages.append({"role": "tool_use",
+                              "tool": step.get("tool"),
+                              "input": step.get("input", {})})
+            messages.append({"role": "tool_result",
+                              "content": step.get("result_preview", "")})
+        # 최종 assistant text
+        text = (result.get("text") or "").strip()
+        if text:
+            messages.append({"role": "assistant", "content": text})
+        else:
+            messages.append({"role": "system", "event": "no_text",
+                              "detail": f"stop_reason={result.get('stop_reason')} iters={result.get('iters')}"})
+        project["messages"] = messages
+        _save_project(pid, project)
+    except Exception as e:
+        import traceback
+        project["messages"].append({"role": "system", "event": "agentic_error",
+                                      "detail": f"{e}\n\n{traceback.format_exc()[:500]}"})
+        _save_project(pid, project)
+
+
 def _delegate_to_writer(prompt: str, project: dict, mode: str) -> dict:
-    """LLM 호출 위임. 실패해도 UX는 살아있게 stub."""
+    """단순 one-shot LLM 호출 (tool-use OFF일 때). 실패 시 graceful."""
     try:
         from src.llm import get_llm_client
         from src.agent.prompt_loader import load_prompt
-        sys_prompt = load_prompt("paper_write")
+        from app.agentic_loop import build_system_with_preview
+        base = load_prompt("paper_write")
+        sys_prompt = build_system_with_preview(base + f"\n\nMode: {mode}.", project)
         client = get_llm_client(task="paper_writing")
-        body = f"Mode: {mode}\nProject: {project.get('title')}\nUser: {prompt}"
-        out = client.generate(body, system_prompt=sys_prompt, max_tokens=1500)
-        return {"content": out[:1200],
-                "title": f"{mode} 결과",
-                "summary": out[:200]}
+        out = client.generate(prompt, system_prompt=sys_prompt, max_tokens=1500)
+        return {"content": out[:2000]}
     except Exception as e:
-        return {"content": f"(임시 응답) {prompt[:120]}",
-                "title": "응답",
-                "summary": f"LLM 호출 실패: {e}"[:200]}
+        return {"content": f"⚠️ LLM 호출 실패: {e}"[:300]}
 
 
 def _render_preview_right(project: dict):
