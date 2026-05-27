@@ -50,21 +50,53 @@ def _extract_symbols(file_path: str, lines: list[str]) -> list[tuple[str, str]]:
 
 
 def _count_callers(symbol: str, exclude_file: str) -> int:
-    """src/ app/ scripts/에서 symbol을 참조하는 줄 수 (정의 자체 제외)."""
+    """src/ app/ scripts/ + repo root .py에서 symbol을 참조하는 줄 수 (정의 자체 제외).
+
+    git grep은 HEAD를 보므로 unstaged 변경분을 못 잡아 false-FAIL을 낸다 →
+    filesystem 직접 grep으로 working tree 전체를 본다.
+    """
     n = 0
+    roots = []
     for root in ("src", "app", "scripts"):
-        if not Path(root).exists():
-            continue
-        cmd = ["git", "grep", "-n", r"\b" + symbol + r"\b", "--", root]
-        out = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
-        for ln in out.stdout.splitlines():
-            # 경로:line:내용
+        if Path(root).exists():
+            roots.append(root)
+    # repo root의 .py 단일 파일들 (mcp_server.py 같은)
+    for p in Path(".").glob("*.py"):
+        roots.append(str(p))
+
+    pattern = r"\b" + re.escape(symbol) + r"\b"
+    for root in roots:
+        # ripgrep이 있으면 빠름, 없으면 python으로 fallback
+        cmd = ["grep", "-rEn", "--include=*.py", pattern, root]
+        try:
+            out = subprocess.run(cmd, capture_output=True, text=True,
+                                  encoding="utf-8", errors="replace")
+            lines = out.stdout.splitlines()
+        except FileNotFoundError:
+            # grep 없는 환경(Windows native PowerShell만) — python으로 fallback
+            lines = []
+            for py in Path(root).rglob("*.py") if Path(root).is_dir() else [Path(root)]:
+                try:
+                    for i, ln in enumerate(py.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+                        if re.search(pattern, ln):
+                            lines.append(f"{py}:{i}:{ln}")
+                except Exception:
+                    pass
+        for ln in lines:
             if not ln:
                 continue
-            path = ln.split(":", 1)[0]
-            if Path(path).resolve() == Path(exclude_file).resolve():
-                # 자기 파일 내 호출(__init__ 자가호출 등)도 카운트는 함 — but skip definition line
-                if re.search(rf"^\s*(def|class)\s+{re.escape(symbol)}\b", ln.split(":", 2)[-1]):
+            try:
+                path, _rest = ln.split(":", 1)
+            except ValueError:
+                continue
+            try:
+                same_file = Path(path).resolve() == Path(exclude_file).resolve()
+            except Exception:
+                same_file = False
+            if same_file:
+                # 자기 파일 정의 라인은 제외
+                if re.search(rf"^\s*(def|class)\s+{re.escape(symbol)}\b",
+                              ln.split(":", 2)[-1]):
                     continue
             n += 1
     return n

@@ -115,7 +115,12 @@ def _apply_publication_style(ax, grid: bool = False):
 
 
 def _save(fig, out_dir: Path, stem: str, dpi: int = 300) -> Tuple[bytes, str, str]:
-    """PNG + SVG 저장, PNG bytes 반환."""
+    """PNG + SVG 저장, PNG bytes 반환.
+
+    환경변수 `ENABLE_FIGURE_VISION_CHECK=1`이면 저장 직후 `figure_validator.validate_figure`
+    로 자체 검증 (Claude Vision) → 문제 시 safety audit_trail에 기록. 기본 OFF (Vision 비용).
+    """
+    import os as _os
     import matplotlib.pyplot as plt
     out_dir.mkdir(parents=True, exist_ok=True)
     png_path = str(out_dir / f"{stem}.png")
@@ -126,6 +131,16 @@ def _save(fig, out_dir: Path, stem: str, dpi: int = 300) -> Tuple[bytes, str, st
     fig.savefig(buf, format="png", dpi=dpi, bbox_inches="tight", facecolor=_PALETTE["bg"])
     buf.seek(0)
     plt.close(fig)
+
+    if _os.environ.get("ENABLE_FIGURE_VISION_CHECK") == "1":
+        try:
+            from src.safety.figure_validator import validate_figure
+            rep = validate_figure(png_path)
+            if not rep.ok:
+                _log.warning("figure_validator FAIL %s: %s", stem, rep.issues[:3])
+        except Exception:
+            pass
+
     return buf.read(), png_path, svg_path
 
 

@@ -894,6 +894,112 @@ def budget_set_caps(day_cost_usd: float = None, week_cost_usd: float = None,
         return {"error": str(e)[:200]}
 
 
+@mcp.tool
+def budget_latency(window: str = "day", ctx=None) -> dict:
+    """provider별 p50/p95/max latency (ms) — events.llm_usage 집계."""
+    try:
+        from src.llm.budget import latency_summary
+        return latency_summary(window)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def rag_search_multistage(query: str, n_final: int = 5, n_pool: int = 20,
+                            must_cite_csv: str = "", ctx=None) -> dict:
+    """다단계 RAG 검색 — dense + Jaccard lexical + recency_boost rerank.
+    must_cite_csv: PMID/DOI csv (강제 포함)."""
+    try:
+        from src.rag.pipeline import RAGPipeline
+        must = [x.strip() for x in must_cite_csv.split(",") if x.strip()] if must_cite_csv else None
+        hits = RAGPipeline().search_multistage(query, n_final=n_final,
+                                                  n_pool=n_pool, must_cite=must)
+        return {"n": len(hits), "hits": [{"text": h.get("text", "")[:300],
+                                            "final_score": h.get("final_score"),
+                                            "metadata": h.get("metadata", {})}
+                                           for h in hits]}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def citation_graph_analyze(refs_csv: str, ctx=None) -> dict:
+    """ref list(PMID/DOI csv)로 citation graph 빌드 → co-citation + bridging + missing seminal."""
+    try:
+        from src.knowledge.citation_graph import (
+            build_citation_graph, find_co_citations, find_bridging_refs, find_missing_seminal
+        )
+        refs = [x.strip() for x in refs_csv.split(",") if x.strip()]
+        if not refs:
+            return {"error": "refs_csv가 비어있음"}
+        g = build_citation_graph(refs, depth=1, max_per_ref=10)
+        if g is None:
+            return {"error": "networkx 미설치 또는 그래프 구축 실패"}
+        return {
+            "nodes": g.number_of_nodes(), "edges": g.number_of_edges(),
+            "co_citations": find_co_citations(g)[:5],
+            "bridging": find_bridging_refs(g, top_n=5),
+            "missing_seminal": find_missing_seminal(g, refs, top_n=10),
+        }
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def llm_with_tools(message: str, tool_names_csv: str = "search_papers,check_novelty",
+                    max_iters: int = 4, ctx=None) -> dict:
+    """★ Agentic tool-use loop — Claude가 직접 도구를 호출하며 task 수행.
+    tool_names_csv: TOOLS 레지스트리에서 노출할 도구 이름 csv."""
+    try:
+        from src.llm import get_llm_client
+        from src.tools import TOOLS, run_tool
+        names = [n.strip() for n in tool_names_csv.split(",") if n.strip()]
+        tools_spec = []
+        for n in names:
+            t = TOOLS.get(n)
+            if not t:
+                continue
+            tools_spec.append({
+                "name": n,
+                "description": getattr(t, "description", n),
+                "input_schema": getattr(t, "input_schema", {"type": "object", "properties": {}}),
+            })
+        client = get_llm_client(task="standard")
+        # ClaudeClient 우회 (failover wrapper) — 직접 anthropic이 필요
+        from src.llm.claude_client import ClaudeClient
+        cc = client if isinstance(client, ClaudeClient) else ClaudeClient(task="standard")
+        result = cc.generate_with_tools(message, tools=tools_spec,
+                                          tool_handler=lambda n, i: str(run_tool(n, i)),
+                                          max_iters=max_iters)
+        return result
+    except Exception as e:
+        return {"error": str(e)[:300]}
+
+
+@mcp.tool
+def consistency_check_paper(paper_text: str, ctx=None) -> dict:
+    """본문 정형 모순 검사 (n/OR-CI/p값/연도). LLM이 못 잡는 것을 정규식으로."""
+    try:
+        from src.safety.consistency_checker import check_consistency
+        sections = {"Paper": paper_text}
+        rep = check_consistency(sections)
+        return rep.to_dict()
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def reporting_checklist_strobe(sections_json: str, ctx=None) -> dict:
+    """STROBE 22항목 자동 체크 — sections_json은 {"Introduction": "...", ...} dict."""
+    try:
+        import json as _json
+        from src.research.reporting_checklist import check_strobe
+        sections = _json.loads(sections_json)
+        return check_strobe(sections)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
 # ════════════════════════════════════════════════════════════════════════
 # Entry point
 # ════════════════════════════════════════════════════════════════════════

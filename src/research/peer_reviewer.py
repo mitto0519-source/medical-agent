@@ -190,6 +190,21 @@ class PeerReviewer:
                     result.comments.append(summary)
             except Exception:
                 pass
+            # ★ consistency_checker — 본문 정형 모순 검출 (n/OR/CI/p값/연도)
+            try:
+                from src.safety.consistency_checker import check_consistency
+                cr = check_consistency({"Methods": paper_text, "Results": paper_text,
+                                          "Discussion": paper_text})
+                if cr.severity != "ok" and cr.issues:
+                    extra = (f"\n\nInternal consistency: {cr.severity.upper()} "
+                              f"({len(cr.issues)} issues): "
+                              + "; ".join(i.detail for i in cr.issues[:5]))
+                    if hasattr(result, "summary") and isinstance(result.summary, str):
+                        result.summary = result.summary + extra
+                    elif hasattr(result, "comments") and isinstance(result.comments, list):
+                        result.comments.append(extra)
+            except Exception:
+                pass
             return result
         except Exception as e:
             _log.error("PeerReviewer.review failed: %s", e, exc_info=True)
