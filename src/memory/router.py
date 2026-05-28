@@ -41,6 +41,17 @@ MemType = Literal["working", "episodic", "semantic", "procedural", "goal"]
 
 # ── 외부 저장소 어댑터 (실제 저장은 기존 모듈에 위임) ──────────────────────────
 
+def _store_working(text: str, meta: dict) -> str:
+    """Working memory — 단기 (TTL 1h). session_state 또는 SQLite events 'memory_working'.
+    Vision 다이어그램 'A. Working Memory': 대화 컨텍스트/현재 작업 상태/임시 정보/최근 활동."""
+    eid = _events.append(
+        "memory_working",
+        payload={"text": text, "ttl_sec": meta.get("ttl_sec", 3600), **meta},
+        actor="memory_router",
+    )
+    return f"working:{eid}"
+
+
 def _store_episodic(text: str, meta: dict) -> str:
     """SQLite events에 memory_episodic 이벤트로 기록 → id 반환."""
     eid = _events.append(
@@ -97,10 +108,11 @@ def _store_goal(text: str, meta: dict) -> str:
 
 
 _STORE = {
-    "episodic": _store_episodic,
-    "semantic": _store_semantic,
+    "working":    _store_working,
+    "episodic":   _store_episodic,
+    "semantic":   _store_semantic,
     "procedural": _store_procedural,
-    "goal": _store_goal,
+    "goal":       _store_goal,
 }
 
 
