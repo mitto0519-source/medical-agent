@@ -52,3 +52,64 @@
 - ❌ LLM이 p값/OR 계산 → StatBridge만.
 - ❌ 검증 없이 self-memory/persona commit → memory_gate 우회 금지.
 - ❌ 새 "그림/메모리/그래프" 모듈 난립 → 기존 엔진에 위임(ARCHITECTURE.md 확인).
+
+---
+
+## EstreGenesis / agent-skills 통합 패턴 (2026-05-28 추가)
+
+### 다중 도구 thin bridge (드리프트 방지)
+
+| 도구 | 파일 | 본 SSoT 흡수 |
+|------|------|-------------|
+| Claude Code | `CLAUDE.md` (11 규칙) | 본 AGENTS.md + ARCHITECTURE.md |
+| GitHub Copilot | `.github/copilot-instructions.md` | (필요 시) — 본 파일 가리킴 |
+| Cursor | `.cursor/rules/main.mdc` | (필요 시) |
+| Gemini CLI | `GEMINI.md` | `build_base_system` 공유 — 동일 prompts/persona/memory |
+| 기타 (Cline/Windsurf/Continue) | 각자 룰 파일 | 본 AGENTS.md 참조 |
+
+→ 도구별 룰 변경 금지. 변경은 본 파일 + CLAUDE.md + `prompts/*.md` 에서만.
+
+### Agent-time vs Human-time 추정 (EstreGenesis v1.6.0)
+
+`src/agent/planner.py::Planner.plan(..., pace_mode=)`:
+
+| Mode | agent×human 배수 | 용도 |
+|------|-----------------|------|
+| `cautious` | 2–4× | 모든 검증 단계 강제 |
+| `proactive` | 5–6× | **기본값** |
+| `burst` | 6–8× | 빠른 prototype |
+| `sprint` | 9–10× | 데모/실험 (최소 검증) |
+
+각 `TaskNode`: `agent_time_sec + human_review_time_sec + wall_clock_sec` 분리 보고.
+
+### 의학 논문 도메인 슬래시 커맨드 (agent-skills 패턴)
+
+`src/agent/slash_commands.py`:
+
+| 슬래시 | 동작 | 내부 호출 |
+|--------|------|----------|
+| `/research-question` | 가설 + novelty | pubmed_search + cross_modal_query |
+| `/study-design` | KYRBS/KNHANES + STROBE | strobe_check + design template |
+| `/run-analysis` | StatBridge 회귀 + figure | kyrbs_stat + build_figure |
+| `/draft-section` | content + style 2-layer | find_components + apply_author_style + patch_preview |
+| `/strobe-review` | 22항목 + consistency + causal | strobe_check + consistency_check + causal_check |
+| `/submit-journal` | docx + figure + EndNote XML | WordExporter + reference_library |
+
+### 합리화 방지 (agent-skills "rationalization defense")
+
+흔한 변명 + 우리 반박 메모리:
+- ❌ "나중에 추가할게요" → [[feedback_wiring_not_creation]]
+- ❌ "아마 동작할 거예요" → [[feedback_no_lies]]
+- ❌ "OneDrive 때문이에요" → [[feedback_no_lies]] (외부 탓 금지)
+- ❌ "사용자가 묻기 전에 알 수 없어요" → [[feedback_proactive_to_be]]
+- ❌ "각 layer는 따로 동작합니다" → [[feedback_organism_flow]]
+
+증거 요건 (협상 불가):
+- 코드 변경 → `python scripts/audit_wiring.py` PASS
+- LLM 동작 → 실 generate 결과 (PONG 아님)
+- 데이터 변경 → events.db append 확인 (`python scripts/replay_task.py`)
+
+### `_lessons/` = `memory/feedback_*.md`
+
+50건 ceiling → 패턴화 → `docs/troubleshooting/` 정착 (EstreGenesis 패턴).
+현재 11건 → 안전.

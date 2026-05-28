@@ -989,6 +989,21 @@ def consistency_check_paper(paper_text: str, ctx=None) -> dict:
 
 
 @mcp.tool
+def slash_command(slash: str, args_json: str = "{}", ctx=None) -> dict:
+    """의학 논문 도메인 슬래시 (/research-question /study-design /run-analysis /draft-section
+    /strobe-review /submit-journal /research-pulse). args는 JSON string."""
+    try:
+        import json as _j
+        from src.agent.slash_commands import run_slash, list_slashes
+        if not slash:
+            return {"available": list_slashes()}
+        args = _j.loads(args_json) if args_json else {}
+        return run_slash(slash, args)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
 def trigger_analyze(text: str, ctx=None) -> dict:
     """사용자 메시지 → intent/topic/sentiment/priority/urgency 분류 (vision 트리거 분석기)."""
     try:

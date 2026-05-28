@@ -183,21 +183,22 @@ def render() -> None:
                       icon="📥")
             st.rerun()
 
-    # Quick actions — 클릭 시 해당 prompt seed로 workspace 진입
+    # Quick actions — 의학 논문 도메인 슬래시 (agent-skills 패턴, src.agent.slash_commands)
     quick_actions = [
-        ("📊 KYRBS 2025 빠른 분석",
-         "KYRBS 2025 데이터로 빠른 통계 분석을 수행해줘. n, 결과 분포, 기본 인구통계 요약 + Table 1 만들어줘.",
-         "kyrbs_quick"),
-        ("📝 Yoosun 스타일 재작성",
-         "현재 작성 중인 논문 본문을 Yoosun Cho 스타일로 재작성해줘 (hedging vocabulary, evidence-first, "
-         "단락 전개: topic → cited evidence → limitation → transition).",
-         "yoosun_restyle"),
-        ("🔬 신규성 확인 (PubMed)",
-         "이 연구 주제로 PubMed에서 최근 5년간 유사 논문을 검색하고 신규성을 평가해줘.",
-         "novelty_check"),
-        ("📑 STROBE 체크리스트",
-         "현재 논문에 대해 STROBE 22항목 체크리스트를 자동 검사하고 누락된 항목과 보완안을 알려줘.",
-         "strobe_check"),
+        ("🔬 /research-question",
+         "/research-question 슬래시 실행: 이 주제로 PubMed 신규성 + cross-modal 검색해줘.",
+         "research-question"),
+        ("📊 /run-analysis (KYRBS 2025)",
+         "/run-analysis 슬래시 실행: KYRBS 2025 StatBridge survey-weighted logistic 회귀 돌려줘 "
+         "(outcome=depression, exposure=zcb_freq).",
+         "run-analysis"),
+        ("📝 /draft-section (Planner DAG)",
+         "/draft-section 슬래시 실행: content + style 2-layer로 Introduction 섹션 자동 작성 "
+         "(pace_mode=proactive).",
+         "draft-section"),
+        ("📑 /strobe-review",
+         "/strobe-review 슬래시 실행: STROBE 22 + consistency + causal 통합 검사.",
+         "strobe-review"),
     ]
 
     st.markdown("<div style='max-width:880px;margin:10px auto 24px auto;'>",

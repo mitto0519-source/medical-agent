@@ -34,7 +34,7 @@ _log = get_logger(__name__)
 
 @dataclass
 class TaskNode:
-    """DAG 단일 노드."""
+    """DAG 단일 노드. agent-time vs human-time 분리 (EstreGenesis v1.6.0)."""
     id: str
     action: str                    # "gather_evidence" | "patch_preview" | "run_stat" | "apply_style" | ...
     args: Dict[str, Any] = field(default_factory=dict)
@@ -46,9 +46,22 @@ class TaskNode:
     max_attempts: int = 2
     expected_output: str = ""
     rationale: str = ""
+    # ── 시간 분리 (EstreGenesis 패턴) ──────────────────────────
+    agent_time_sec: float = 0.0            # LLM 호출 + tool 실행 시간 (실측)
+    human_review_time_sec: float = 0.0     # 사용자 검토/승인 시간 (예측 또는 측정)
+    wall_clock_sec: float = 0.0            # 전체 경과 (대기 포함)
 
     def to_dict(self) -> Dict:
         return asdict(self)
+
+
+# pace_mode → agent×human 배수 (EstreGenesis v1.6.0 시간 추정 보정)
+PACE_MULTIPLIER = {
+    "cautious":  3.0,    # 2-4× 평균
+    "proactive": 5.5,    # 5-6× 평균 (기본)
+    "burst":     7.0,    # 6-8×
+    "sprint":    9.5,    # 9-10×
+}
 
 
 @dataclass
@@ -59,6 +72,7 @@ class ExecutionGraph:
     nodes: Dict[str, TaskNode] = field(default_factory=dict)
     created_at: float = field(default_factory=time.time)
     state: str = "pending"   # pending | running | completed | failed | partial
+    pace_mode: str = "proactive"   # cautious|proactive|burst|sprint (EstreGenesis v1.6.0)
 
     def add(self, node: TaskNode):
         self.nodes[node.id] = node
@@ -110,11 +124,17 @@ class Planner:
 
     # ── DAG 생성 ────────────────────────────────────────────────────────────
 
-    def plan(self, goal: str, context: Optional[Dict] = None) -> ExecutionGraph:
-        """goal + context → DAG. 룰 base 기본 + LLM mutation 옵션."""
+    def plan(self, goal: str, context: Optional[Dict] = None,
+              pace_mode: str = "proactive") -> ExecutionGraph:
+        """goal + context → DAG. 룰 base 기본 + LLM mutation 옵션.
+        pace_mode (EstreGenesis): cautious(2-4×) | proactive(5-6× 기본) | burst(6-8×) | sprint(9-10×)."""
         ctx = context or {}
         section = (ctx.get("section") or "").lower()
-        graph = ExecutionGraph(id=uuid.uuid4().hex[:12], goal=goal)
+        # context에 pace_mode 있으면 우선 (slash_commands 등 호출자가 넘김)
+        pace_mode = ctx.get("pace_mode") or pace_mode
+        if pace_mode not in PACE_MULTIPLIER:
+            pace_mode = "proactive"
+        graph = ExecutionGraph(id=uuid.uuid4().hex[:12], goal=goal, pace_mode=pace_mode)
 
         if section in ("introduction", "intro"):
             n1 = TaskNode(id="evidence_def",
@@ -231,7 +251,9 @@ class Planner:
             _events.append("planner_dag_created",
                             {"id": graph.id, "goal": goal[:200],
                              "n_nodes": len(graph.nodes),
-                             "n_edges": sum(len(n.deps) for n in graph.nodes.values())},
+                             "n_edges": sum(len(n.deps) for n in graph.nodes.values()),
+                             "pace_mode": pace_mode,
+                             "multiplier": PACE_MULTIPLIER[pace_mode]},
                             actor="planner")
         except Exception:
             pass
@@ -266,15 +288,24 @@ class Planner:
                                          "action": node.action, "attempt": node.n_attempts},
                                         actor="planner")
                     except Exception: pass
+                node_t0 = time.time()
                 try:
                     result = executor(node)
                     node.output = result
                     node.state = "done"
+                    # 시간 측정 (EstreGenesis 패턴)
+                    node.agent_time_sec = round(time.time() - node_t0, 3)
+                    mult = PACE_MULTIPLIER.get(graph.pace_mode, 5.5)
+                    node.human_review_time_sec = round(node.agent_time_sec * mult, 2)
+                    node.wall_clock_sec = node.agent_time_sec    # 비동기 대기 X = 동일
                     if _events:
                         try:
                             _events.append("planner_node_done",
                                             {"graph_id": graph.id, "node_id": node.id,
-                                             "action": node.action},
+                                             "action": node.action,
+                                             "agent_time_sec": node.agent_time_sec,
+                                             "est_human_review_sec": node.human_review_time_sec,
+                                             "pace_mode": graph.pace_mode},
                                             actor="planner")
                         except Exception: pass
                     if on_step:

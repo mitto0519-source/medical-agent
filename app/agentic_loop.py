@@ -264,6 +264,21 @@ TOOL_SCHEMAS: List[dict] = [
             "required": ["code"],
         },
     },
+    {
+        "name": "slash_run",
+        "description": "의학 논문 도메인 슬래시 커맨드 (/research-question, /study-design, "
+                        "/run-analysis, /draft-section, /strobe-review, /submit-journal, "
+                        "/research-pulse) 실행. 사용자 의도 명확한 다단계 워크플로우.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "slash": {"type": "string"},
+                "args": {"type": "object",
+                          "description": "각 슬래시별 인자 (topic/exposure/outcome/sections/text 등)"},
+            },
+            "required": ["slash"],
+        },
+    },
 ]
 
 
@@ -315,6 +330,8 @@ def make_tool_handler(get_project: Callable[[], dict],
                 return _h_longitudinal(inputs)
             if name == "sandbox_run":
                 return _h_sandbox(inputs)
+            if name == "slash_run":
+                return _h_slash(inputs)
             return f"unknown tool: {name}"
         except Exception as e:
             return f"ERROR in {name}: {e}"
@@ -624,6 +641,13 @@ def _h_longitudinal(inputs):
     if m:
         return json.dumps(trend(m, days=days), ensure_ascii=False)
     return json.dumps(summary(days=days), ensure_ascii=False)[:4000]
+
+
+def _h_slash(inputs):
+    """의학 논문 도메인 슬래시 커맨드 dispatch."""
+    from src.agent.slash_commands import run_slash
+    r = run_slash(inputs.get("slash", ""), inputs.get("args") or {})
+    return json.dumps(r, ensure_ascii=False, default=str)[:5000]
 
 
 def _h_sandbox(inputs):
