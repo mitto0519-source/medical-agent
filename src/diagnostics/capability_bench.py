@@ -335,7 +335,6 @@ def get_improvement_context() -> str:
                 lines.append(f"- {note[:200]}")
 
         # ★ eval_benchmark의 5축 점수도 흡수 (LLM 호출 시 자가 약점 인지)
-        # data/exports/eval_report.json — scripts/eval_benchmark.py가 생성
         try:
             eval_path = Path("data/exports/eval_report.json")
             if eval_path.exists():
@@ -346,6 +345,16 @@ def get_improvement_context() -> str:
                     lines.append("BENCHMARK FAILS (proactively address in this output):")
                     for m in fails:
                         lines.append(f"- {m.get('name')}: {m.get('detail','')[:160]}")
+        except Exception:
+            pass
+
+        # ★ Longitudinal trend (외부 진단 'longitudinal benchmark' 흡수)
+        try:
+            from src.diagnostics.longitudinal_eval import improvement_context_block
+            block = improvement_context_block()
+            if block:
+                lines.append("")
+                lines.append(block)
         except Exception:
             pass
         return "\n".join(lines)

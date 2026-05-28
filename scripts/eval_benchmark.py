@@ -265,6 +265,20 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(overall, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\n저장: {OUT}")
+
+    # ★ Longitudinal — 시계열 누적 + regression alert
+    try:
+        from src.diagnostics.longitudinal_eval import record_eval, regression_alert
+        run_id = record_eval(overall)
+        alerts = regression_alert()
+        if alerts:
+            print(f"\n⚠️ REGRESSION ALERT ({len(alerts)} metrics):")
+            for a in alerts:
+                print(f"  - {a['metric']}: {a['latest']:.3f} (avg {a['prev_avg']:.3f}, drop {a['drop']:.3f})")
+        print(f"longitudinal run_id: {run_id}")
+    except Exception as e:
+        print(f"longitudinal record fail: {e}")
+
     return 0 if n_pass == n_scored else 1
 
 

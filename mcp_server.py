@@ -989,6 +989,38 @@ def consistency_check_paper(paper_text: str, ctx=None) -> dict:
 
 
 @mcp.tool
+def longitudinal_summary(days: int = 30, ctx=None) -> dict:
+    """eval metric의 시계열 trend + regression alert. 'agent가 좋아졌나' 측정."""
+    try:
+        from src.diagnostics.longitudinal_eval import summary
+        return summary(days=days)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def causal_check_paper(paper_text: str, study_design: str = "cross_sectional",
+                         ctx=None) -> dict:
+    """본문 causal claim 추출 + design 적합성 평가 (STROBE 위반 검출)."""
+    try:
+        from src.safety.causal_checker import check_causal_claims
+        rep = check_causal_claims(paper_text, study_design=study_design)
+        return rep.to_dict()
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def sandbox_python(code: str, timeout_sec: int = 30, ctx=None) -> dict:
+    """격리 subprocess에서 Python 코드 실행. autonomous debug용."""
+    try:
+        from src.runtime.sandbox import run_python
+        return run_python(code, timeout_sec=timeout_sec)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
 def list_agent_roles(ctx=None) -> dict:
     """multi-agent roles 레지스트리 + action→role mapping."""
     try:
