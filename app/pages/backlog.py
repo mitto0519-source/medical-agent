@@ -229,6 +229,54 @@ def _oa_learning_panel():
                 st.markdown(f"- **{row['query'][:60]}** — {row['n']:,}편")
 
 
+def _drain_all_background():
+    """🌊 Drain ALL — 모든 대기 작업을 전부 처리. 큰 batch를 한 spinner 안에서 진행.
+    UI는 progress bar로 한 건씩 표시. budget 초과 시 자동 중단."""
+    try:
+        from src.runtime.backlog import drain_once, status
+        s0 = status(limit=500)
+        pending = s0["counts"].get("CREATED", 0) + s0["counts"].get("RETRYING", 0)
+        if pending == 0:
+            st.warning("처리할 대기 작업이 없습니다.")
+            return
+        st.info(f"🌊 총 {pending:,}건 처리 시작 (한 건당 ~30초-3분 소요).")
+        prog = st.progress(0.0, text=f"0 / {pending}")
+        log_box = st.empty()
+        done, fail = 0, 0
+        for i in range(pending):
+            r = drain_once(max_jobs=1)
+            proc = r.get("processed", [])
+            if not proc:
+                # 남은 job 없거나 budget 초과로 skip
+                if r.get("skipped"):
+                    skp = r["skipped"][0]
+                    st.warning(f"⏸ 중단: {skp.get('reason')} (budget {r.get('pct_used_today',0):.0f}%)")
+                break
+            for p in proc:
+                if p.get("status") == "COMPLETED":
+                    done += 1
+                else:
+                    fail += 1
+            prog.progress((i + 1) / pending,
+                            text=f"{i+1} / {pending} · ✅ {done} · ❌ {fail}")
+            # 5건마다 manifest 갱신
+            if (i + 1) % 5 == 0:
+                try:
+                    from src.ingestion.oa_bulk_fetcher import manifest_stats
+                    ms = manifest_stats()
+                    log_box.markdown(
+                        f"<div style='color:#A3A3B8;font-size:0.84rem;'>"
+                        f"📚 OA 누적 {ms['total_papers']:,}편 · "
+                        f"{ms['total_chars']:,} chars</div>",
+                        unsafe_allow_html=True)
+                except Exception:
+                    pass
+        st.success(f"🌊 완료: ✅ {done} · ❌ {fail}")
+        st.balloons()
+    except Exception as e:
+        st.error(f"Drain ALL 실패: {e}")
+
+
 def _bootstrap_learning(*, per: int, target: int):
     """bootstrap_oa_learning.py와 같은 시드를 backlog에 enqueue."""
     try:
@@ -267,8 +315,8 @@ def _bootstrap_learning(*, per: int, target: int):
 def render():
     inject_sapphire_glass()
 
-    # 헤더 + manual drain
-    c1, c2, c3 = st.columns([6, 1.5, 1.5])
+    # 헤더 + drain 버튼 3종
+    c1, c2, c3, c4 = st.columns([5, 1.2, 1.4, 1.6])
     with c1:
         st.markdown(
             "<div style='display:flex;align-items:center;gap:12px;padding:8px 0;'>"
@@ -276,20 +324,25 @@ def render():
             "background:linear-gradient(135deg,#3B82F6,#8B5CF6);'></div>"
             "<div><div style='font-weight:700;font-size:1.25rem;color:#F5F5FA;'>Backlog</div>"
             "<div style='color:#A3A3B8;font-size:0.82rem;'>"
-            "미처리 작업 · API 한도 초과시 자동 대기 · heartbeat가 매분 처리"
+            "미처리 작업 · API 한도 초과시 자동 대기 · heartbeat가 5분마다 처리"
             "</div></div></div>", unsafe_allow_html=True)
     with c2:
         if st.button("🔄 Refresh", use_container_width=True, key="bl_refresh"):
             st.rerun()
     with c3:
-        if st.button("▶ Drain now", use_container_width=True, type="primary", key="bl_drain"):
-            with st.spinner("백로그 처리 중…"):
+        if st.button("▶ Drain 5", use_container_width=True, key="bl_drain"):
+            with st.spinner("백로그 5건 처리 중…"):
                 try:
                     from src.runtime.backlog import drain_once
                     r = drain_once(max_jobs=5)
                     st.session_state["_bl_drain_result"] = r
                 except Exception as e:
                     st.error(f"drain 실패: {e}")
+    with c4:
+        if st.button("🌊 Drain ALL", use_container_width=True, type="primary",
+                      key="bl_drain_all",
+                      help="대기 중인 모든 작업 처리 (시간 오래 걸림 · budget 80% 초과 시 high-cost 자동 skip)"):
+            _drain_all_background()
 
     if "_bl_drain_result" in st.session_state:
         r = st.session_state.pop("_bl_drain_result")
