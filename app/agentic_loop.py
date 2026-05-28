@@ -197,6 +197,73 @@ TOOL_SCHEMAS: List[dict] = [
             "required": ["context"],
         },
     },
+    {
+        "name": "consensus_search",
+        "description": "같은 query를 여러 retrieval strategy로 병렬 호출 → consensus rerank "
+                        "+ contradiction detect. critical evidence가 필요할 때.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string"},
+                "n_samples": {"type": "integer",
+                                "description": "consensus 반복 횟수 (기본 3)"},
+            },
+            "required": ["query"],
+        },
+    },
+    {
+        "name": "causal_check",
+        "description": "본문의 causal claim 추출 + study_design 적합성 평가 "
+                        "(strong/weak/neutral 분류, STROBE 권고 위반 검출).",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "text": {"type": "string"},
+                "study_design": {"type": "string",
+                                  "description": "cross_sectional(기본)|cohort|rct|case_control|review"},
+            },
+            "required": ["text"],
+        },
+    },
+    {
+        "name": "external_evidence",
+        "description": "RAG에서 단일 claim을 지지/반박하는 ref 검색 → consensus verdict. "
+                       "강한 인과 진술 보강 시.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "claim": {"type": "string"},
+                "k": {"type": "integer", "description": "검색 수 (기본 5)"},
+            },
+            "required": ["claim"],
+        },
+    },
+    {
+        "name": "longitudinal_trend",
+        "description": "eval metric의 시계열 trend + regression alert. "
+                        "'지난주보다 좋아졌나' 자가 진단 용.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "metric": {"type": "string",
+                            "description": "특정 metric 지정 시 그 trend만. 없으면 전체 summary"},
+                "days": {"type": "integer", "description": "기간 (기본 30)"},
+            },
+        },
+    },
+    {
+        "name": "sandbox_run",
+        "description": "Python 코드를 격리 subprocess에서 실행 → stdout/stderr/exit. "
+                        "통계 코드 검증·새 logic 테스트용.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "code": {"type": "string"},
+                "timeout_sec": {"type": "integer", "description": "기본 30"},
+            },
+            "required": ["code"],
+        },
+    },
 ]
 
 
