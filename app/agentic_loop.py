@@ -637,15 +637,63 @@ def _h_sandbox(inputs):
 
 def build_system_with_preview(base_prompt: str, project: dict,
                                 user_msg: str = "") -> str:
-    """LLM이 매 호출마다 다음을 모두 보도록 합성:
-    1. 현재 preview snapshot (docx state)
-    2. conversation_memory.recall_relevant(user_msg) — VS Code/Streamlit 공유 메모리
-    3. change_log 최근 — 양쪽에서 한 작업 이력
-    이로써 동일 LLM 코어가 어디서 호출되든 누적 상태 유지."""
+    """★ 유기체 흐름 ([[feedback_organism_flow]]) — LLM이 매 호출마다 다음을 모두 봄:
+    1. trigger_analyzer 결과 (intent/topic/sentiment/priority)
+    2. cognitive_activation 5-layer (fragments → routing → flow → policy)
+    3. recall_all_layers 5층 메모리 (working/episodic/semantic/procedural/goal)
+    4. 현재 preview snapshot (docx state)
+    5. change_log 최근 + longitudinal trend
+    """
     sections = project.get("sections", {}) or {}
     owner = str(project.get("owner") or "anonymous")
+    parts: list = []
 
-    parts = ["", "# CURRENT PREVIEW (docx state — 사용자가 실제로 보고 있는 본문)", ""]
+    # 1. Trigger analyzer
+    try:
+        from src.agent.trigger_analyzer import analyze as _trig
+        t = _trig(user_msg) if user_msg else None
+        if t:
+            parts.append("# TRIGGER ANALYSIS (auto)")
+            parts.append(f"intent={t.intent}({t.intent_confidence}) "
+                          f"topics={t.topics[:5]} sentiment={t.sentiment} "
+                          f"priority={t.priority} urgency_sec={t.urgency_sec}")
+            parts.append("")
+    except Exception:
+        pass
+
+    # 2. Cognitive activation 5-layer
+    try:
+        from src.agent.cognitive_activation import activate as _activate, to_system_prompt_block
+        if user_msg:
+            act = _activate(user_msg, project=project, owner=owner)
+            block = to_system_prompt_block(act)
+            if block:
+                parts.append(block)
+                parts.append("")
+    except Exception:
+        pass
+
+    # 3. Recall 5층 메모리 (facade)
+    try:
+        from src.memory import recall_all_layers
+        if user_msg:
+            layers = recall_all_layers(user_msg, owner=owner, n_per_layer=3)
+            non_empty = {k: v for k, v in layers.items() if v}
+            if non_empty:
+                parts.append("# 5-LAYER MEMORY RECALL")
+                for k, v in non_empty.items():
+                    if k == "episodic" and isinstance(v, str):
+                        parts.append(f"## {k}\n{v[:600]}")
+                    else:
+                        import json as _j
+                        parts.append(f"## {k}\n{_j.dumps(v, ensure_ascii=False, default=str)[:600]}")
+                parts.append("")
+    except Exception:
+        pass
+
+    # 4. PREVIEW snapshot
+    parts.append("# CURRENT PREVIEW (docx state — 사용자가 실제로 보고 있는 본문)")
+    parts.append("")
     # Abstract
     ab = sections.get("Abstract")
     if ab:

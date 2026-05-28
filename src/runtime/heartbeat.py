@@ -120,6 +120,15 @@ def _job_backlog_drain() -> dict:
         return {"error": str(e)[:200]}
 
 
+def _job_notify_drain() -> dict:
+    """events.db의 최근 safety/fail/regression → notification 자동 변환."""
+    try:
+        from src.runtime.notifier import notify_drain
+        return notify_drain(lookback_min=10)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
 JOBS = [
     Job("task_recover",     interval_sec=3600,      fn=_job_task_recover),
     Job("budget_snapshot",  interval_sec=3600,      fn=_job_budget_snapshot),
@@ -127,6 +136,7 @@ JOBS = [
     Job("lifecycle_tick",   interval_sec=24 * 3600, fn=_job_lifecycle_tick),
     Job("trend_learn",      interval_sec=24 * 3600, fn=_job_trend_learn),
     Job("backlog_drain",    interval_sec=5 * 60,    fn=_job_backlog_drain),
+    Job("notify_drain",     interval_sec=5 * 60,    fn=_job_notify_drain),
 ]
 
 
