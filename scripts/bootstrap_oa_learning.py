@@ -16,7 +16,16 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+
+
+def _ensure_utf8_stdout():
+    """sys.stdout을 UTF-8 wrap (CLI에서만 호출 — Streamlit import 시엔 호출 X)."""
+    try:
+        if hasattr(sys.stdout, "buffer"):
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
+                                            errors="replace", line_buffering=True)
+    except Exception:
+        pass
 
 
 # 주요 의학 도메인 시드 — 5만편 분산 (각 query 200-500편)
@@ -76,6 +85,7 @@ DEFAULT_SEEDS = [
 
 
 def main():
+    _ensure_utf8_stdout()   # CLI 전용
     ap = argparse.ArgumentParser()
     ap.add_argument("--per", type=int, default=200,
                      help="각 query당 fetch할 편수 (기본 200)")
