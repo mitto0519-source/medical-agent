@@ -989,6 +989,58 @@ def consistency_check_paper(paper_text: str, ctx=None) -> dict:
 
 
 @mcp.tool
+def trigger_analyze(text: str, ctx=None) -> dict:
+    """사용자 메시지 → intent/topic/sentiment/priority/urgency 분류 (vision 트리거 분석기)."""
+    try:
+        from src.agent.trigger_analyzer import analyze
+        return analyze(text).to_dict()
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def cognitive_activate(user_msg: str, owner: str = "", ctx=None) -> dict:
+    """5-layer Cognitive Activation (vision 인지 활성화 엔진).
+    fragments → propagation → routing → flow → policy."""
+    try:
+        from src.agent.cognitive_activation import activate
+        return activate(user_msg, owner=owner or None)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def memory_recall_5layers(query: str, owner: str = "", n: int = 3, ctx=None) -> dict:
+    """5층 메모리 동시 recall (working/episodic/semantic/procedural/goal)."""
+    try:
+        from src.memory import recall_all_layers
+        return recall_all_layers(query, owner=owner or None, n_per_layer=n)
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def memory_stats_5layers(ctx=None) -> dict:
+    """5층 메모리 누적 통계 (Dashboard용)."""
+    try:
+        from src.memory import stats
+        return stats()
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def notify_list(unread_only: bool = True, limit: int = 50, ctx=None) -> dict:
+    """알림 시스템 — 읽지 않은/전체 알림 목록."""
+    try:
+        from src.runtime.notifier import list_unread, list_all, stats
+        items = list_unread(limit=limit) if unread_only else list_all(limit=limit)
+        return {"stats": stats(), "items": items}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
 def longitudinal_summary(days: int = 30, ctx=None) -> dict:
     """eval metric의 시계열 trend + regression alert. 'agent가 좋아졌나' 측정."""
     try:

@@ -580,24 +580,26 @@ def _h_procedural(inputs):
 
 
 def _h_consensus(inputs):
-    from src.llm.tool_consensus import consensus_call, parallel_branches
+    from src.llm.tool_consensus import consensus_call, parallel_branches, contradiction_check
     from src.rag.pipeline import RAGPipeline
     q = inputs["query"]
     n = int(inputs.get("n_samples", 3))
     rag = RAGPipeline()
-    # 같은 RAG search n번 + 추가로 multi-stage 1번 = consensus
     cons = consensus_call(rag.search, {"query": q, "n_results": 5}, n=n)
-    # parallel branches: dense vs multi-stage
     branches = parallel_branches([
         ("dense", lambda: rag.search(q, n_results=5)),
         ("multistage", lambda: rag.search_multistage(q, n_final=5, n_pool=20)
             if hasattr(rag, "search_multistage") else []),
     ])
+    # ★ contradiction check across all results (organism flow — 추가 검증)
+    all_outputs = list(cons.get("raw", [])) + list(branches.get("results", {}).values())
+    cc = contradiction_check([o for o in all_outputs if o]) if len(all_outputs) >= 2 else {}
     return json.dumps({
         "consensus": {"agreement": cons["agreement"],
                        "contradiction": cons["contradiction"], "n": cons["n"]},
         "branches": {"n_ok": len(branches["results"]),
                       "elapsed_sec": branches["elapsed_sec"]},
+        "cross_contradiction": cc,
         "answer_preview": str(cons["answer"])[:600],
     }, ensure_ascii=False)
 
@@ -625,12 +627,36 @@ def _h_longitudinal(inputs):
 
 
 def _h_sandbox(inputs):
-    from src.runtime.sandbox import run_python
+    from src.runtime.sandbox import run_python, regression_compare
     r = run_python(inputs["code"], timeout_sec=int(inputs.get("timeout_sec", 30)))
+    # 같은 입력의 직전 실행 결과가 session에 있으면 regression 비교
+    sess_key = f"_sandbox_last_{hash(inputs['code'])}"
+    reg = None
+    try:
+        # session_state 없을 수도 (mcp/cli 경로) — file fallback
+        from pathlib import Path as _P
+        cache = _P("data/runtime/sandbox_last.json")
+        prev = {}
+        if cache.exists():
+            import json as _j
+            try:
+                prev = _j.loads(cache.read_text(encoding="utf-8"))
+            except Exception:
+                prev = {}
+        if sess_key in prev and r["ok"]:
+            reg = regression_compare(prev[sess_key], r["stdout"])
+        # 갱신
+        prev[sess_key] = r["stdout"][:5000]
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        import json as _j
+        cache.write_text(_j.dumps(prev, ensure_ascii=False)[:200000], encoding="utf-8")
+    except Exception:
+        pass
     return json.dumps({"ok": r["ok"], "exit": r["exit_code"],
                         "stdout": r["stdout"][:2000],
                         "stderr": r["stderr"][:1500],
-                        "elapsed_sec": r["elapsed_sec"]}, ensure_ascii=False)
+                        "elapsed_sec": r["elapsed_sec"],
+                        "regression_vs_prev": reg}, ensure_ascii=False)
 
 
 # ── System prompt — preview snapshot 포함 ────────────────────────────────────

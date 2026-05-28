@@ -6,7 +6,7 @@
 > **규칙**: 새 모듈을 만들기 전에 반드시 이 파일을 확인한다.
 > 모듈을 추가/변경/삭제할 때마다 이 파일을 업데이트한다.
 >
-> Last updated: 2026-05-27 (Safety+Prompt 레이어 12번 섹션 + B 그룹 11모듈 + Word 표준 템플릿)
+> Last updated: 2026-05-28 (Vision Continuity 14번 섹션 + Knowledge/Writing Orchestrator + Multi-agent roles + Cognitive activation 5-layer + Memory facade + Notifier)
 
 ---
 
@@ -192,6 +192,57 @@
 > **★ 추적 가능성 = events → replay**: tool_use loop의 각 step / memory_gate quarantine /
 > citation orphan / physician queue / consistency fail / figure_validation fail / budget downgrade
 > 모두 `events.db`에 기록 → `python scripts/replay_task.py --task=...`로 사후 재구성.
+
+### 13. Orchestrator + Multi-agent + Planner DAG — 2026-05-28 신규
+
+> "tool-rich workflow" → "autonomous agent" 격상. 두 Orchestrator A2A 통신 + 7 roles + DAG.
+
+| 기능 | 정규 모듈 | 상태 | 비고 |
+|------|----------|------|------|
+| **Knowledge Orchestrator** (graph+vector+ontology+citation 동시 ingest) | `src/knowledge/orchestrator.py` | ✅ active | `oa_bulk_fetcher` 자동 호출. 단일 PMID → 4 자산 통합 |
+| **Writing Orchestrator** + A2A contract | `src/agent/writing_orchestrator.py` | ✅ active | KnowledgeRequest/Response schema, gather_components, apply_author_style |
+| **Planner DAG** (hierarchical decomposition + topological execute + retry/skip) | `src/agent/planner.py` | ✅ active | TaskNode/ExecutionGraph, Introduction/Methods/Results 별 룰 base DAG |
+| **Multi-agent roles** (planner/researcher/writer/stylist/critic/statistician/citation_auditor) | `src/agent/roles.py` | ✅ active | 7 roles + ACTION_TO_ROLE + 도구 화이트리스트. ClaudeClient.generate_with_tools 위임 |
+| **Tool consensus** (n-sample + parallel branches + contradiction + rollback) | `src/llm/tool_consensus.py` | ✅ active | `_h_consensus` 호출 |
+| **Sandbox** (subprocess isolation + autonomous repair loop + regression compare) | `src/runtime/sandbox.py` | ✅ active | `_h_sandbox` + agentic tool |
+| **Causal checker** (cross-sectional 등 design별 causal claim 적합성) | `src/safety/causal_checker.py` | ✅ active | `_h_causal` + mcp |
+| **Longitudinal eval** (시계열 trend + regression alert) | `src/diagnostics/longitudinal_eval.py` | ✅ active | `eval_benchmark.py` 끝, `capability_bench.get_improvement_context` 흡수 |
+| **ComponentLibrary** (CONTENT_KINDS + STYLE_KINDS 2-layer pipeline 자산) | `src/library/components.py` + `component_extractor.py` | ✅ active | `KnowledgeOrchestrator.ingest`에서 자동 추출 |
+| **OA bulk fetcher** (Europe PMC 풀텍스트 5만편 인프라) | `src/ingestion/oa_bulk_fetcher.py` | ✅ active | backlog `oa_bulk_fetch` job → Orchestrator |
+| **Backlog queue** (JobKind + budget-aware drain) | `src/runtime/backlog.py` | ✅ active | heartbeat 5min cron |
+
+### 14. Vision Continuity — 2026-05-28 신규 (vision 다이어그램 정렬)
+
+> Vision 다이어그램의 "AI Agent Continuity 시스템" 컴포넌트 명시 wire. 흐름 = 유기체.
+
+| Vision 컴포넌트 | 모듈 | 상태 |
+|---|---|---|
+| **트리거 분석기** (의도/주제/감정/우선순위/긴급도) | `src/agent/trigger_analyzer.py` | ✅ — agentic_loop.build_system_with_preview 자동 호출 |
+| **인지 활성화 엔진 5-layer** (fragment→propagation→routing→flow→policy) | `src/agent/cognitive_activation.py` | ✅ — build_system_with_preview 자동 호출 |
+| **Multi-layer Memory facade** (Working+Episodic+Semantic+Procedural+Goal) | `src/memory/__init__.py` (facade) + `procedural.py` + `schemas.py` + 기존 11개 | ✅ — `recall_all_layers` / `stats` 통합 |
+| **Memory Explorer UI** | `app/pages/memory_explorer.py` | ✅ — `/memory_explorer` 자동 |
+| **Agent Dashboard UI** (5층 memory + backlog + budget + longitudinal + notification) | `app/pages/dashboard.py` | ✅ — `/dashboard` 자동 |
+| **알림 시스템** (notification + webhook + heartbeat drain) | `src/runtime/notifier.py` | ✅ — heartbeat `notify_drain` 5min |
+| **메모리 schema versioning** (Pydantic) | `src/memory/schemas.py` | ✅ v1.0.0 |
+| **MCP 노출** (trigger_analyze/cognitive_activate/memory_recall_5layers/memory_stats_5layers/notify_list/sandbox_python/causal_check_paper/longitudinal_summary/list_agent_roles/plan_section_dag/llm_with_tools) | `mcp_server.py` | ✅ 11+ tools |
+
+#### 흐름 (유기체 — feedback_organism_flow)
+
+```
+user_msg
+  → trigger_analyzer.analyze (intent/topic/sentiment/priority/urgency)
+  → cognitive_activation.activate (5-layer: fragments/propagation/routing/flow/policy)
+  → memory.recall_all_layers (working/episodic/semantic/procedural/goal)
+  → build_system_with_preview (위 3 + change_log + longitudinal + preview snapshot)
+  → ClaudeClient.generate_with_tools (17 tools agentic loop)
+    → tool_handler → src.* (KnowledgeOrch / WritingOrch / planner.execute / roles.dispatch_role
+                              / patch_preview / kyrbs_stat / consensus / sandbox / causal / ...)
+  → patch_preview → consistency_checker + causal_checker + citation_grounding
+  → audit_trail + events.db
+  → memory.router.write + conversation_memory.record + procedural rule (해당 시)
+  → longitudinal_eval.record_eval + capability_bench.get_improvement_context
+  → 다음 build_base_system에 자동 주입 (자가발전 회로 닫힘)
+```
 
 ---
 
