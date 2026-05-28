@@ -36,7 +36,7 @@ _AGENT_DIR = Path(os.environ.get("AGENT_SELF_DIR", "data/agent_self"))
 _RULES_PATH = _AGENT_DIR / "rules.json"
 _GOALS_PATH = _AGENT_DIR / "goals.json"
 
-MemType = Literal["episodic", "semantic", "procedural", "goal"]
+MemType = Literal["working", "episodic", "semantic", "procedural", "goal"]
 
 
 # ── 외부 저장소 어댑터 (실제 저장은 기존 모듈에 위임) ──────────────────────────
