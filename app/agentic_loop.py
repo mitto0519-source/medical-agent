@@ -579,6 +579,60 @@ def _h_procedural(inputs):
     return json.dumps({"n": len(rules), "rules": rules}, ensure_ascii=False)
 
 
+def _h_consensus(inputs):
+    from src.llm.tool_consensus import consensus_call, parallel_branches
+    from src.rag.pipeline import RAGPipeline
+    q = inputs["query"]
+    n = int(inputs.get("n_samples", 3))
+    rag = RAGPipeline()
+    # 같은 RAG search n번 + 추가로 multi-stage 1번 = consensus
+    cons = consensus_call(rag.search, {"query": q, "n_results": 5}, n=n)
+    # parallel branches: dense vs multi-stage
+    branches = parallel_branches([
+        ("dense", lambda: rag.search(q, n_results=5)),
+        ("multistage", lambda: rag.search_multistage(q, n_final=5, n_pool=20)
+            if hasattr(rag, "search_multistage") else []),
+    ])
+    return json.dumps({
+        "consensus": {"agreement": cons["agreement"],
+                       "contradiction": cons["contradiction"], "n": cons["n"]},
+        "branches": {"n_ok": len(branches["results"]),
+                      "elapsed_sec": branches["elapsed_sec"]},
+        "answer_preview": str(cons["answer"])[:600],
+    }, ensure_ascii=False)
+
+
+def _h_causal(inputs):
+    from src.safety.causal_checker import check_causal_claims
+    rep = check_causal_claims(inputs["text"],
+                                study_design=inputs.get("study_design", "cross_sectional"))
+    return json.dumps(rep.to_dict(), ensure_ascii=False)[:4000]
+
+
+def _h_external_ev(inputs):
+    from src.safety.causal_checker import external_evidence_consensus
+    r = external_evidence_consensus(inputs["claim"], k=int(inputs.get("k", 5)))
+    return json.dumps(r, ensure_ascii=False)[:3000]
+
+
+def _h_longitudinal(inputs):
+    from src.diagnostics.longitudinal_eval import trend, summary
+    m = inputs.get("metric")
+    days = int(inputs.get("days", 30))
+    if m:
+        return json.dumps(trend(m, days=days), ensure_ascii=False)
+    return json.dumps(summary(days=days), ensure_ascii=False)[:4000]
+
+
+def _h_sandbox(inputs):
+    from src.runtime.sandbox import run_python
+    r = run_python(inputs["code"], timeout_sec=int(inputs.get("timeout_sec", 30)))
+    return json.dumps({"ok": r["ok"], "exit": r["exit_code"],
+                        "stdout": r["stdout"][:2000],
+                        "stderr": r["stderr"][:1500],
+                        "elapsed_sec": r["elapsed_sec"]}, ensure_ascii=False)
+
+
 # ── System prompt — preview snapshot 포함 ────────────────────────────────────
 
 def build_system_with_preview(base_prompt: str, project: dict,
