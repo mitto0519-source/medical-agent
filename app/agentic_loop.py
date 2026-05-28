@@ -305,6 +305,16 @@ def make_tool_handler(get_project: Callable[[], dict],
                 return _h_dispatch_role(inputs, get_project)
             if name == "procedural_recall":
                 return _h_procedural(inputs)
+            if name == "consensus_search":
+                return _h_consensus(inputs)
+            if name == "causal_check":
+                return _h_causal(inputs)
+            if name == "external_evidence":
+                return _h_external_ev(inputs)
+            if name == "longitudinal_trend":
+                return _h_longitudinal(inputs)
+            if name == "sandbox_run":
+                return _h_sandbox(inputs)
             return f"unknown tool: {name}"
         except Exception as e:
             return f"ERROR in {name}: {e}"

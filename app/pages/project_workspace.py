@@ -50,15 +50,71 @@ def _load_project(pid: str) -> dict:
         return {"title": pid, "sections": {}, "messages": [], "figures": [], "tables": []}
 
 
-def _save_project(pid: str, data: dict) -> None:
+def _save_project(pid: str, data: dict, *, msg_cap: int = 200,
+                   archive_after: int = 300) -> None:
+    """working_papers/{pid}.json. messages 무한 누적으로 write 실패 방지:
+    archive_after 초과 시 오래된 메시지 archive 파일로 분리 → main은 최근 msg_cap만."""
     if pid == "new":
         return
     _WP_DIR.mkdir(parents=True, exist_ok=True)
     p = _WP_DIR / f"{pid}.json"
+
+    # messages cap + archive
+    msgs = data.get("messages") or []
+    if isinstance(msgs, list) and len(msgs) > archive_after:
+        archive_dir = _WP_DIR / "_archive"
+        archive_dir.mkdir(parents=True, exist_ok=True)
+        archive_path = archive_dir / f"{pid}_msgs.jsonl"
+        keep = msgs[-msg_cap:]
+        drop = msgs[:-msg_cap]
+        try:
+            with archive_path.open("a", encoding="utf-8") as af:
+                for m in drop:
+                    af.write(json.dumps(m, ensure_ascii=False, default=str) + "\n")
+            data["messages"] = keep
+            data["_archived_msgs_count"] = (data.get("_archived_msgs_count", 0)
+                                              + len(drop))
+        except Exception as e:
+            # archive 실패해도 본 저장은 시도 — 가장 최근 msg_cap만 강제
+            data["messages"] = keep
+            try:
+                from src.runtime import events as _events
+                _events.append("project_archive_fail",
+                                {"pid": pid, "err": str(e)[:160]},
+                                actor="project_workspace")
+            except Exception:
+                pass
+
+    # 단일 message 자체가 거대한 경우(예: tool_result 거대 JSON) 잘라내기
+    if isinstance(data.get("messages"), list):
+        for m in data["messages"]:
+            c = m.get("content")
+            if isinstance(c, str) and len(c) > 8000:
+                m["content"] = c[:8000] + "\n…[truncated]"
+
     try:
-        p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    except Exception:
-        pass
+        text = json.dumps(data, ensure_ascii=False, indent=2, default=str)
+        # 5MB 이상이면 indent 제거하고 재시도
+        if len(text) > 5_000_000:
+            text = json.dumps(data, ensure_ascii=False, default=str)
+        p.write_text(text, encoding="utf-8")
+    except Exception as e:
+        try:
+            from src.runtime import events as _events
+            _events.append("project_save_fail",
+                            {"pid": pid, "err": str(e)[:200],
+                             "size_attempt": len(text) if "text" in dir() else 0},
+                            actor="project_workspace")
+        except Exception:
+            pass
+        # 마지막 시도 — messages 완전 비우고 메타만 저장
+        try:
+            backup = {**data}
+            backup["messages"] = (backup.get("messages") or [])[-20:]
+            p.write_text(json.dumps(backup, ensure_ascii=False, default=str),
+                          encoding="utf-8")
+        except Exception:
+            pass
 
 
 def _render_topbar(project: dict):
@@ -379,8 +435,22 @@ def _render_chat_left(project: dict, pid: str):
     if initial and not messages:
         messages.append({"role": "user", "content": initial})
 
-    for i, m in enumerate(messages):
-        _render_chat_event(m, idx=i)
+    # 너무 많으면 앞쪽은 expander 안에 — 페이지 길이/렌더 시간 제어
+    _RECENT_CAP = 80
+    if len(messages) > _RECENT_CAP:
+        older = messages[:-_RECENT_CAP]
+        recent = messages[-_RECENT_CAP:]
+        archived = project.get("_archived_msgs_count", 0)
+        with st.expander(f"📁 이전 메시지 {len(older):,}개 + archive {archived:,}개 (펼치기)"):
+            st.caption("archive: data/working_papers/_archive/{pid}_msgs.jsonl")
+            for i, m in enumerate(older):
+                _render_chat_event(m, idx=i)
+        st.markdown("---")
+        for i, m in enumerate(recent, start=len(older)):
+            _render_chat_event(m, idx=i)
+    else:
+        for i, m in enumerate(messages):
+            _render_chat_event(m, idx=i)
 
     # 입력 form — 파일 첨부 포함
     with st.form(key="ws_form", clear_on_submit=True):
