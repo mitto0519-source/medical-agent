@@ -176,18 +176,62 @@ class ClaudeClient:
         if t_cfg:
             kwargs["thinking"] = t_cfg
 
+        # ── Tracing + Provenance: 한 호출의 span + fingerprint 자동 적재 ──
+        # (실패해도 본 호출은 살아있어야 함 — 모두 graceful)
         try:
-            response = self._client.messages.create(**kwargs)
-        except Exception as e:
-            # thinking 파라미터 미지원 모델 폴백
-            if "thinking" in str(e).lower() and "thinking" in kwargs:
-                _log.warning(f"thinking 파라미터 미지원, 재시도: {e}")
-                del kwargs["thinking"]
-                response = self._client.messages.create(**kwargs)
-            else:
-                raise
+            from src.runtime.tracing import trace_span as _trace_span
+            from src.runtime import provenance as _prov
+        except Exception:
+            _trace_span = None
+            _prov = None
 
-        return self._extract_text(response)
+        if _trace_span is None:
+            # tracing 로드 실패 — 원래 경로 그대로
+            try:
+                response = self._client.messages.create(**kwargs)
+            except Exception as e:
+                if "thinking" in str(e).lower() and "thinking" in kwargs:
+                    _log.warning(f"thinking 파라미터 미지원, 재시도: {e}")
+                    del kwargs["thinking"]
+                    response = self._client.messages.create(**kwargs)
+                else:
+                    raise
+            return self._extract_text(response)
+
+        with _trace_span(
+            "llm.anthropic.generate",
+            provider="anthropic", model=self.model, task=effective_task,
+            prompt_sha=_prov.text_hash(user_message),
+            system_sha=_prov.text_hash(system),
+        ) as _sp:
+            try:
+                response = self._client.messages.create(**kwargs)
+            except Exception as e:
+                if "thinking" in str(e).lower() and "thinking" in kwargs:
+                    _log.warning(f"thinking 파라미터 미지원, 재시도: {e}")
+                    del kwargs["thinking"]
+                    response = self._client.messages.create(**kwargs)
+                else:
+                    raise
+
+            text = self._extract_text(response)
+            # usage 추출 — Anthropic SDK response.usage.{input,output}_tokens
+            usage = getattr(response, "usage", None)
+            t_in = int(getattr(usage, "input_tokens", 0) or 0)
+            t_out = int(getattr(usage, "output_tokens", 0) or 0)
+            _sp.update(tokens_in=t_in, tokens_out=t_out,
+                       response_sha=_prov.text_hash(text),
+                       response_len=len(text or ""))
+            try:
+                _prov.auto_record_llm_call(
+                    provider="anthropic", model=self.model,
+                    prompt=user_message, system_prompt=system,
+                    response_sha=_prov.text_hash(text),
+                    tokens_in=t_in, tokens_out=t_out, latency_ms=0,
+                )
+            except Exception:
+                pass
+            return text
 
     def generate_with_tools(
         self,
