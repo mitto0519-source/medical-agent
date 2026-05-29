@@ -718,14 +718,22 @@ DISCUSSION
 
     def _generate(self, system_prompt: str, user_prompt: str) -> str:
         out = self._client.generate(user_prompt, system_prompt=system_prompt)
-        # ★ Safety gate: 처방/진단/복용량 등 임상 의사결정 키워드 포함 시 자동 격리 큐.
-        # 텍스트 자체는 그대로 반환(사용자 직접 사용 차단은 UI에서) — events 기록 + queue로
-        # physician_review.list_pending()이 잡도록 한다. safety_constraints.md와 정합.
+        # ★ Safety gate (unified): 모든 게이트를 단일 진입점으로 호출 → audit_trail 자동 적재.
+        # sections/references/design은 _generate 시점에 없으므로 text-only 게이트(physician/causal)만 활성.
+        # 더 풍부한 컨텍스트가 있는 상위 caller(write_full_paper_with_stats)에서 한 번 더 호출 가능.
+        try:
+            from src.safety import check_all
+            if out:
+                check_all(out, scope="paper_writer._generate", design="cross_sectional")
+        except Exception:
+            pass
+        # 처방/진단/복용량 등 임상 키워드 → physician_review 큐(사람 검토 채널)
         try:
             from src.safety.physician_review import review_required, queue_for_review
-            if out and review_required(out):
-                queue_for_review(text=out[:8000], source="paper_writer._generate",
-                                  meta={"task": "paper_writing"})
+            if out:
+                needed, _triggers = review_required(out)
+                if needed:
+                    queue_for_review(content=out[:8000], source="paper_writer._generate")
         except Exception:
             pass
         return out

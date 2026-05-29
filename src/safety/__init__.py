@@ -23,6 +23,7 @@ from .audit_trail import (
 )
 from .consistency_checker import check_consistency, ConsistencyReport
 from .figure_validator import validate_figure, FigureValidationReport
+from .unified import check_all, SafetyReport, GateOutcome, SEVERITY_ORDER
 
 __all__ = [
     "verify_citation_integrity", "verify_doi_crossref", "check_year_consistency",
@@ -31,4 +32,5 @@ __all__ = [
     "record_safety_event", "get_safety_events", "compliance_report",
     "check_consistency", "ConsistencyReport",
     "validate_figure", "FigureValidationReport",
+    "check_all", "SafetyReport", "GateOutcome", "SEVERITY_ORDER",
 ]
