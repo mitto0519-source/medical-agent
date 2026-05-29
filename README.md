@@ -210,11 +210,46 @@ v3 commit-first 패턴 — stash 0 의존, 60초 디바운스, 분 단위 pollin
 
 ---
 
+## 📊 자가발전 자산 현황 (2026-05-29)
+
+| 자산 | 누적 | 비고 |
+|---|---|---|
+| **OA 풀텍스트** | **12,258편** (695M chars) | Europe PMC OA Subset, 180 의학 도메인 시드 |
+| **ComponentLibrary** | **131K components** | hedging 78K / transition 24K / mechanism 12K / stat_report 6.9K / citation 6.4K |
+| **medical_graph** | **19.6K nodes / 84K edges** | paper + concept + dataset 통합 그래프 (NetworkX) |
+| **ChromaDB papers** | **20K chunks** | hierarchical chunker + sentence-transformers |
+| **memory/feedback rules** | 13개 | feedback_organism_flow / feedback_no_lies / feedback_proactive_to_be 등 |
+| **agentic tools** | **23개** | run_plan / dispatch_role / find_components / slash_run / consensus_search 등 |
+| **mcp_server tools** | **30+** | trigger_analyze / cognitive_activate / memory_recall_5layers / slash_command 등 |
+| **heartbeat jobs** | 7개 (task_recover/budget_snapshot/idempotency_gc/lifecycle_tick/trend_learn/backlog_drain/notify_drain) |
+
+## 🧠 핵심 컴포넌트 (ARCHITECTURE 14 sections)
+
+| 영역 | 주요 모듈 |
+|---|---|
+| **Multi-orchestrator** | `knowledge/orchestrator.py` (graph+vector+ontology+citation+component 동시 등록) + `agent/writing_orchestrator.py` (A2A) |
+| **Planner DAG + 7 roles** | `agent/planner.py` (TaskNode/ExecutionGraph + pace_mode) + `agent/roles.py` (researcher/writer/stylist/critic/statistician/citation_auditor/planner) |
+| **5-layer memory** | `memory/__init__.py` facade (Working/Episodic/Semantic/Procedural/Goal) + `memory/schemas.py` (Pydantic versioned) |
+| **Cognitive activation** | `agent/cognitive_activation.py` (5-layer fragments→propagation→routing→flow→policy) + `agent/trigger_analyzer.py` |
+| **Component pipeline** | `library/components.py` (CONTENT_KINDS + STYLE_KINDS 2-layer) + `library/component_extractor.py` (정규식 v2) |
+| **Slash commands** | `agent/slash_commands.py` (`/research-question` `/study-design` `/run-analysis` `/draft-section` `/strobe-review` `/submit-journal` `/research-pulse`) |
+| **Safety 7-gate** | citation_grounding · truth_hierarchy · physician_review · audit_trail · consistency_checker · causal_checker · figure_validator |
+| **Self-evolution** | capability_bench + longitudinal_eval + prompt_ab + self_consistency + tool_consensus |
+| **Backlog + heartbeat** | runtime/backlog.py (JobKind + budget-aware drain) + runtime/heartbeat.py (7 jobs) |
+| **UI (Sapphire Glass)** | `app/styles/sapphire_glass.py` + `/ez_home` + `/project_workspace` + `/backlog` + `/dashboard` + `/memory_explorer` |
+
+---
+
 ## 📁 디렉토리
 
 ```
 .
-├── app/                    Streamlit UI (단일 진입점)
+├── app/                    Streamlit UI + Sapphire Glass theme
+│   ├── pages/              ez_home·project_workspace·backlog·dashboard·memory_explorer
+│   ├── styles/             sapphire_glass (Lovable-style 글래스모피즘)
+│   ├── agentic_loop.py     23 tools agentic loop
+│   ├── sapphire_actions.py 부가기능 모달 (10 actions)
+│   └── streamlit_app.py
 ├── src/
 │   ├── data/               KYRBS/KNHANES loader, StatBridge
 │   ├── research/           paper_writer, peer_reviewer, pipeline
@@ -227,40 +262,53 @@ v3 commit-first 패턴 — stash 0 의존, 60초 디바운스, 분 단위 pollin
 │   ├── knowledge/          medical_seed, trend_learner, research_wiki
 │   ├── rag/                ChromaDB pipeline
 │   └── config/             models, env, logging
+│   ├── library/            ComponentLibrary (CONTENT/STYLE kinds) + extractor v2
+│   ├── ingestion/          OA bulk fetcher (Europe PMC) + hierarchical chunker
+│   ├── safety/             7-gate (citation_grounding/truth_hierarchy/physician_review/
+│   │                        audit_trail/consistency/causal/figure_validator)
+│   └── diagnostics/        capability_bench + longitudinal_eval + prompt_ab + self_consistency
+├── prompts/                medical_core / safety_constraints / yoosun_style (versioned md)
 ├── scripts/
-│   ├── test_rag_smoke.py   ① 임포트 + RAG
-│   ├── e2e_diagnose.py     ② 코드 무결성
-│   ├── e2e_functions.py    ③ 함수 E2E
-│   ├── prove_stata_e2e.py  ④ 통계 회귀
-│   ├── ui_eval.py          ⑤ Playwright
-│   ├── compute_all_figure_data.py  KYRBS → 모든 figure 수치
-│   ├── build_paper_figures.py      → PNG/PDF
+│   ├── test_rag_smoke.py   ① 임포트 + RAG · audit_wiring.py · e2e_diagnose.py
+│   ├── eval_benchmark.py   5축 metric (memory/hallucination/stat/figure/citation)
+│   ├── replay_task.py      events 시간순 재구성
+│   ├── bootstrap_oa_learning.py  180 시드 query (5만편 cover 가능)
+│   ├── rebuild_components.py     기존 12K paper 재추출 (정규식 v2)
+│   ├── enrich_assets.py    ontology mapping + citation graph + seed enrichment
 │   └── auto_sync.py        v3 commit-first 데몬
 ├── data/
 │   ├── raw/                KYRBS/KNHANES .sav (gitignore)
-│   ├── runtime/            SQLite (events/tasks/idempotency/lifecycle)
-│   ├── exports/            논문 산출물
-│   ├── chromadb/           RAG 벡터 인덱스
+│   ├── runtime/            SQLite (events/tasks/idempotency/lifecycle/procedural/notifications)
+│   ├── oa_papers/          12K+ Europe PMC OA 풀텍스트 + manifest
+│   ├── library/            components.db (131K+ reusable microcomponent)
+│   ├── exports/            논문 산출물 (zcb_dep_v5 양식)
+│   ├── chromadb/           RAG 벡터 인덱스 (20K+ chunks)
+│   ├── knowledge_graph/    medical_graph.json (19K+ nodes)
+│   ├── templates/          manuscript_template.json (단일 진실원본)
 │   ├── agent_self/         persona, insights, change_log
-│   └── author_profiles/    yoosun_cho.json 등
-├── mcp_server.py           MCP backend (공통)
-├── docker-compose.yml      medical-agent + learner 서비스
-├── ARCHITECTURE.md         모듈 레지스트리 (★새 모듈 만들기 전 필독)
-├── DESIGN.md               디자인 토큰 (★figure/UI 색·폰트 변경 전 필독)
-└── CLAUDE.md               작업 표준 11 규칙
+│   └── author_profiles/    yoosun_cho + oa_curated_top{N} (auto)
+├── mcp_server.py           MCP backend (30+ tools 공통)
+├── docker-compose.yml      medical-agent + learner + sapphire-ui
+├── AGENTS.md               에이전트 책임 맵 + EstreGenesis pace_mode
+├── ARCHITECTURE.md         14 sections 모듈 레지스트리 (★새 모듈 전 필독)
+├── DESIGN.md               디자인 토큰 + Sapphire Glass v2
+└── CLAUDE.md               작업 표준 12 규칙 + 단일 코어 공유 원칙
 ```
 
 ---
 
 ## 🛠️ 기술 스택
 
-- **UI**: Streamlit 1.30+
-- **LLM**: Anthropic Claude · OpenAI GPT · Google Gemini (3중 failover)
-- **통계**: statsmodels, pingouin, lifelines, pyreadstat (KYRBS .sav)
-- **시각화**: matplotlib, seaborn, plotly (논문 figure는 matplotlib)
-- **RAG**: sentence-transformers + ChromaDB (or Supabase pgvector)
-- **문서**: python-docx, mammoth (DOCX), reportlab (PDF), python-pptx
-- **인프라**: Docker, SQLite WAL, FastMCP
+- **UI**: Streamlit 1.30+ · Sapphire Glass theme (Lovable-style glassmorphism)
+- **LLM**: Anthropic Claude · OpenAI GPT · Google Gemini (3중 failover + budget downgrade)
+- **통계**: statsmodels (svy weighted logistic + GEE), pingouin, lifelines, pyreadstat (KYRBS .sav)
+- **시각화**: matplotlib (출판 figure 300dpi + TNR), seaborn, plotly
+- **RAG**: sentence-transformers (all-MiniLM-L6-v2) + ChromaDB (multi-stage rerank)
+- **Memory**: SQLite WAL (events/tasks/procedural) + ChromaDB (semantic/episodic) + JSON (working/goal)
+- **Knowledge**: NetworkX (medical_graph) + Europe PMC OA Subset (풀텍스트 12K+)
+- **Schema**: Pydantic v2 versioned (MemoryRecord/ProceduralRule/A2AMessage)
+- **문서**: python-docx (Word zcb_dep_v5 양식), reportlab (PDF), python-pptx
+- **인프라**: Docker (medical-agent + learner + sapphire-ui) · FastMCP · auto_sync v3
 
 ---
 

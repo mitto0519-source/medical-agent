@@ -6,7 +6,7 @@
 > **규칙**: 새 모듈을 만들기 전에 반드시 이 파일을 확인한다.
 > 모듈을 추가/변경/삭제할 때마다 이 파일을 업데이트한다.
 >
-> Last updated: 2026-05-28 (Vision Continuity 14번 섹션 + Knowledge/Writing Orchestrator + Multi-agent roles + Cognitive activation 5-layer + Memory facade + Notifier)
+> Last updated: 2026-05-29 (OA 12K+ 자산화 + 정규식 v2 + Slash commands 7개 + AGENTS.md SSoT + pace_mode + audit_wiring 80/80 PASS)
 
 ---
 
