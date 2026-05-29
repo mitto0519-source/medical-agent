@@ -28,11 +28,16 @@ _AUDIT_LOG = Path("data/diagnostics/audit_log.json")
 _MAX_LOG = 30
 
 _SAMPLE_QUERIES = [
-    "adolescent obesity Korea BMI KYRBS",
-    "sleep quality smartphone Korean youth",
-    "physical activity mental health adolescent Korea",
-    "KNHANES cardiovascular metabolic syndrome",
-    "depression suicidal ideation Korean adolescent survey",
+    # 한국어 의학 도메인 — 실제 사용 양식과 일치 (RAG 인덱스가 한국 OA 논문 위주라 영어로만 측정하면
+    # 임베딩 도메인 불일치로 false-poor 판정. 2026-05-30 정정)
+    "청소년 비만과 BMI 위험 요인",
+    "수면 부족과 스마트폰 사용 한국 청소년",
+    "신체활동과 정신건강 청소년",
+    "대사증후군 심혈관 위험 인자",
+    "우울증 자살생각 청소년",
+    # 보조: 영어 키워드 (KYRBS/KNHANES 같은 변수명은 그대로 사용됨)
+    "KYRBS cohort cross-sectional",
+    "KNHANES sample weight",
 ]
 
 _RULE_VIOLATIONS = [
@@ -153,10 +158,26 @@ class SelfAuditor:
                         else:
                             issues.append(_issue(rel, i, severity, vtype, desc))
 
-                # 하드코딩 모델명 (models.py, test 파일 제외)
-                if "models.py" not in rel and "test_" not in rel and "self_auditor" not in rel:
-                    for model_name in _HARDCODED_MODELS:
-                        if f'"{model_name}"' in line or f"'{model_name}'" in line:
+                # 하드코딩 모델명 검사 — 정당한 사용 인지 후 false positive 제거 (2026-05-30 정정)
+                #   정당한 경우:
+                #     (a) src/config/* — 중앙 모델 레지스트리 (models.py 외)
+                #     (b) test_* / self_auditor — 테스트/메타 검사 자체
+                #     (c) dict key 양식 `"model_name":` — 가격표/매핑 사전 (budget.py, health.py 등)
+                #     (d) 인라인 마커 `# noqa: hardcoded-model` 주석
+                _ALLOWED_FILE_PATTERNS = ("config/", "models.py", "test_", "self_auditor")
+                if not any(pat in rel for pat in _ALLOWED_FILE_PATTERNS):
+                    if "# noqa: hardcoded-model" not in stripped:
+                        for model_name in _HARDCODED_MODELS:
+                            in_dq = f'"{model_name}"' in line
+                            in_sq = f"'{model_name}'" in line
+                            if not (in_dq or in_sq):
+                                continue
+                            # dict key 양식 — `"model": value` 는 가격표·매핑이라 정당
+                            is_dict_key = (
+                                f'"{model_name}":' in line or f"'{model_name}':" in line
+                            )
+                            if is_dict_key:
+                                continue
                             issues.append(_issue(rel, i, "medium", "hardcoded_model",
                                                  f"하드코딩 모델명: {model_name} — get_model() 사용"))
         return issues
