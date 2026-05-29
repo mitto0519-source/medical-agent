@@ -19,9 +19,11 @@ _INJECTED_FLAG = "_sapphire_glass_injected"
 
 
 def inject_sapphire_glass(*, hide_streamlit_chrome: bool = True) -> None:
-    """전역 sapphire_glass 테마 CSS를 1회 주입. 중복 호출은 무시."""
-    if st.session_state.get(_INJECTED_FLAG):
-        return
+    """전역 sapphire_glass 테마 CSS 주입.
+
+    Streamlit 멀티페이지에서 페이지 전환마다 script가 새로 실행되므로
+    매번 inject해야 일관된 테마 유지. session_state guard 제거 (2026-05-29).
+    중복 주입은 idempotent (같은 <style> 블록 덮어씀)."""
     st.session_state[_INJECTED_FLAG] = True
 
     chrome_hide = """

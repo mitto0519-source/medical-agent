@@ -119,8 +119,10 @@ def _sidebar():
         if st.sidebar.button(p["title"][:24], key=f"sg_recent_{p['id']}",
                               use_container_width=True):
             st.session_state["sg_active_project"] = p["id"]
-            st.session_state["sg_view"] = "workspace"
-            st.rerun()
+            try:
+                st.switch_page("pages/project_workspace.py")
+            except Exception:
+                st.rerun()
     return nav, sub, projects
 
 
