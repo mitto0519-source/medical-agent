@@ -1130,6 +1130,73 @@ def reporting_checklist_strobe(sections_json: str, ctx=None) -> dict:
         return {"error": str(e)[:200]}
 
 
+@mcp.tool
+def text_safety_check(text: str, fix: bool = False, ctx=None) -> dict:
+    """텍스트의 lone UTF-16 surrogate / nasty ctrl char 안전성 검사.
+
+    2026-05-30 사고(API 6.6MB no-low-surrogate 영구차단) 방어 인프라.
+    외부 에이전트가 LLM 호출 / 저장 전 입력 안전성을 사전 검증하는 용도.
+
+    Args:
+        text: 검사할 텍스트
+        fix: True면 sanitize된 안전 텍스트도 함께 반환
+
+    Returns:
+        is_safe: lone surrogate / ctrl 모두 없는가
+        lone_surrogate_positions: 위치 인덱스 리스트 (audit용)
+        utf8_encodable: UTF-8 인코딩 성공 여부
+        sanitized: fix=True일 때만 클린 텍스트 (U+FFFD 대체)
+        length: 원본 길이
+    """
+    try:
+        from src.utils.text_sanitize import (
+            is_safe, scan_lone_surrogates, strip_lone_surrogates,
+        )
+        positions = scan_lone_surrogates(text)
+        utf8_ok = True
+        try:
+            text.encode("utf-8")
+        except UnicodeEncodeError:
+            utf8_ok = False
+        result = {
+            "is_safe": is_safe(text),
+            "lone_surrogate_positions": positions[:50],  # cap for huge inputs
+            "lone_surrogate_count": len(positions),
+            "utf8_encodable": utf8_ok,
+            "length": len(text) if isinstance(text, str) else 0,
+        }
+        if fix:
+            result["sanitized"] = strip_lone_surrogates(text)
+        return result
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.resource("medical-agent://change-log/recent")
+def recent_change_log_resource() -> str:
+    """최근 작업 이력 (markdown) — Claude Desktop이 컨텍스트로 자동 fetch.
+
+    `build_context_summary`가 만드는 timeline을 그대로 노출.
+    URL: `medical-agent://change-log/recent`
+    """
+    try:
+        from src.memory.change_log import build_context_summary
+        return build_context_summary(n=20) or "(no recent activity)"
+    except Exception as e:
+        return f"(failed to build summary: {type(e).__name__}: {str(e)[:120]})"
+
+
+@mcp.resource("medical-agent://architecture")
+def architecture_resource() -> str:
+    """ARCHITECTURE.md 전체 — 모듈 레지스트리. Claude Desktop이 자동 fetch."""
+    try:
+        from pathlib import Path as _P
+        p = _P(__file__).parent / "ARCHITECTURE.md"
+        return p.read_text(encoding="utf-8") if p.exists() else "(ARCHITECTURE.md missing)"
+    except Exception as e:
+        return f"(read failed: {type(e).__name__}: {str(e)[:120]})"
+
+
 # ════════════════════════════════════════════════════════════════════════
 # Entry point
 # ════════════════════════════════════════════════════════════════════════

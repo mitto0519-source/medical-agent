@@ -134,14 +134,38 @@ def _render_topbar(project: dict):
             f"<div style='color:#A3A3B8;font-size:0.78rem;'>Previewing last saved version</div>"
             f"</div></div>", unsafe_allow_html=True)
     with cols[1]:
-        if st.button("💬 Comments", use_container_width=True, key="ws_comments"):
-            st.toast("Comments: 곧 활성화", icon="💬")
+        # Comments — inline note 양식은 Phase 2. 지금은 회의록/메모 download 양식.
+        if st.button("💬 Notes", use_container_width=True, key="ws_comments"):
+            st.session_state["ws_show_notes"] = not st.session_state.get("ws_show_notes", False)
     with cols[2]:
-        if st.button("🔗 Share", use_container_width=True, key="ws_share"):
-            st.toast("Share link: 곧 활성화", icon="🔗")
+        # Share — working_paper JSON download (link 기반 share는 Phase 2 multi-user)
+        try:
+            payload = safe_json_dumps(project, indent=2)
+            st.download_button(
+                "🔗 Share", data=payload.encode("utf-8"),
+                file_name=f"{project.get('title','manuscript').replace(' ','_')[:40]}.json",
+                mime="application/json", use_container_width=True, key="ws_share_dl",
+                help="현재 프로젝트 상태(JSON)를 다운로드. 공유 링크는 multi-user 단계에서.")
+        except Exception as e:
+            if st.button("🔗 Share", use_container_width=True, key="ws_share"):
+                st.error(f"Share export 실패: {e}")
     with cols[3]:
         if st.button("⬇ Export", use_container_width=True, key="ws_export", type="primary"):
             _export_docx(project)
+
+    # Notes panel — 짧은 메모 적어 working_paper.notes 로 저장 (inline comment의 단순 양식)
+    if st.session_state.get("ws_show_notes"):
+        with st.container():
+            current_notes = project.get("notes", "")
+            new_notes = st.text_area(
+                "📝 작업 메모 (이 프로젝트에만 저장)", value=current_notes, height=100,
+                key="ws_notes_text",
+                placeholder="예: TODO Discussion 강화 / 사용자 피드백 / 통계 재검토 항목…")
+            if new_notes != current_notes:
+                project["notes"] = strip_lone_surrogates(new_notes)
+                # 호출자(render)가 pid를 갖고 있음 — 여기는 정적 함수라 즉시 저장은 다음 rerun에 맡김.
+                st.session_state["ws_notes_pending_save"] = True
+                st.caption("✓ 다음 메시지 전송 시 함께 저장됩니다.")
 
 
 def _export_docx(project: dict):
