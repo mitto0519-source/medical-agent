@@ -56,14 +56,41 @@ _TRANSITION_VOCAB = [
 ]
 _TRANSITION_RE = re.compile("|".join(_TRANSITION_VOCAB))
 
-# Methods boilerplate
-_METHODS_RE = re.compile(
-    r"(?:Survey-weighted|Multivariable|Multivariate|Cox proportional hazards|"
-    r"Generalized estimating equations?|Propensity score-matched|"
-    r"Logistic regression) (?:was|were) (?:used to|fit to|applied to|estimated)"
-    r"[^.]{0,200}\.",
-    re.IGNORECASE,
-)
+# Methods boilerplate — 다양한 양식 (확장 v2)
+_METHODS_PATTERNS = [
+    # 통계 모델
+    r"(?:Survey-weighted|Multivariable|Multivariate|Cox proportional hazards?|Cox regression|"
+    r"Generalized (?:estimating equations?|linear models?|additive models?)|"
+    r"Propensity score[- ]matched|Propensity-matched|Logistic regression|"
+    r"Mixed[- ]effects? (?:linear |logistic )?(?:regression|model)|"
+    r"Random[- ]effects? (?:model|meta-analysis)|Fixed[- ]effects? model|"
+    r"Linear regression|Negative binomial|Poisson regression|"
+    r"Conditional logistic|Stepwise regression|LASSO|Ridge regression|"
+    r"Structural equation model(?:l?ing)?|Mediation analysis|"
+    r"Inverse probability weighting|Marginal structural model|"
+    r"Difference[- ]in[- ]differences?|Interrupted time[- ]series|"
+    r"Regression discontinuity|Instrumental variable) "
+    r"(?:was|were|is|are) (?:used to|fit to|fitted to|applied to|employed to|"
+    r"performed to|conducted to|estimated|adjusted for|computed)[^.]{0,200}\.",
+    # 통계 보정 / 검정 설명
+    r"We (?:fit(?:ted)?|estimated|computed|performed|conducted|applied|adjusted for|used) "
+    r"(?:a |an |the )?[^.]{10,180}\.",
+    # 분석 도구 / 소프트웨어
+    r"(?:All )?(?:Statistical )?[Aa]nalyses (?:were|was) (?:performed|conducted|done|carried out) "
+    r"(?:using|with) (?:Stata|SAS|R(?: version \d| \(version)|SPSS|Python|MATLAB|Statistics)[^.]{0,160}\.",
+    # 변수 정의
+    r"(?:Multivariable|Multivariate|Adjusted|Final) models? (?:included|adjusted for|controlled for) "
+    r"[^.]{10,200}\.",
+    # 결측치 처리
+    r"Missing data (?:were|was) (?:imputed|handled|addressed|excluded|treated)[^.]{0,160}\.",
+    # 신뢰구간
+    r"(?:95\s*%|Ninety-five percent) confidence intervals? (?:were|was) (?:calculated|estimated|computed)[^.]{0,160}\.",
+    # 표본추출 설계
+    r"(?:Complex sampling|Survey|Stratified|Cluster|Multistage) design[^.]{0,160}\.",
+    # 보고 양식
+    r"All (?:tests|analyses|p[- ]values?) (?:were|was) two[- ]sided[^.]{0,80}\.",
+]
+_METHODS_RE = re.compile("|".join(f"(?:{p})" for p in _METHODS_PATTERNS), re.IGNORECASE)
 
 # Mechanism phrase
 _MECHANISM_VOCAB = [
@@ -87,28 +114,52 @@ _LIMITATION_VOCAB = [
 ]
 _LIMITATION_RE = re.compile("|".join(_LIMITATION_VOCAB), re.IGNORECASE | re.MULTILINE)
 
-# Figure caption
+# Figure/Table caption — 확장 v2 (다양한 양식: "Fig 1", "FIGURE 1", "Table S1" 등)
 _FIG_CAPTION_RE = re.compile(
-    r"\b(?:Figure|Fig\.?)\s*\d+\.\s*[A-Z][^.]{8,200}\.",
+    r"\b(?:Figure|Fig\.?|FIGURE)\s*(?:S?\d+[A-Za-z]?)\.?\s*[—–\-:]?\s*"
+    r"[A-Z][^.]{5,300}\.",
 )
 _TBL_CAPTION_RE = re.compile(
-    r"\bTable\s*\d+\.\s*[A-Z][^.]{8,200}\.",
+    r"\b(?:Table|Tab\.?|TABLE)\s*(?:S?\d+[A-Za-z]?)\.?\s*[—–\-:]?\s*"
+    r"[A-Z][^.]{5,300}\.",
 )
 
-# Subgroup / interaction
-_SUBGROUP_RE = re.compile(
-    r"(?:A )?(?:significant )?interaction (?:was observed |emerged )?"
-    r"(?:by [a-z]+ )?\(P (?:for interaction )?[=<]\s*0?\.\d+\)[^.]{0,160}\.",
-    re.IGNORECASE,
-)
+# Subgroup / interaction — 확장 v2
+_SUBGROUP_PATTERNS = [
+    r"(?:A )?(?:statistically )?(?:significant|notable|marked) interaction "
+    r"(?:was (?:observed|found|noted|detected)|emerged|exist(?:s|ed)?) "
+    r"(?:by |for |with |across )?[a-z\- ]+\s*\(P\s*(?:for interaction\s*)?[=<>]\s*0?\.\d+\)[^.]{0,200}\.",
+    # subgroup analysis 문장
+    r"(?:In|Among|Within|Across) (?:subgroups? of |stratif(?:ied|ication) by |"
+    r"strat(?:a|um) of |sex-stratified |age-stratified |"
+    r"(?:male|female|men|women|boys|girls) (?:participants|subjects|adolescents)),?\s*"
+    r"[^.]{20,250}\.",
+    # effect modification
+    r"(?:Effect modification|Effect estimates? differ(?:ed|s)|Heterogeneity) "
+    r"(?:by |across |between )[a-z\- ]+[^.]{0,200}\.",
+    # 'stratified analyses' 류
+    r"(?:Stratified|Sex-specific|Sex-stratified|Age-stratified|Race-stratified) "
+    r"(?:analyses?|estimates?|results?|associations?) [^.]{10,200}\.",
+    # P for trend / linear trend
+    r"(?:A |The )?(?:linear |dose-response )?trend (?:was |is )?(?:observed|noted|significant|found|evident)"
+    r"[^.]{0,160}\(P\s*for trend\s*[=<>]\s*0?\.\d+\)[^.]{0,80}\.",
+]
+_SUBGROUP_RE = re.compile("|".join(f"(?:{p})" for p in _SUBGROUP_PATTERNS), re.IGNORECASE)
 
 # Citation cluster — [1, 2], [3-7], [12, 14, 15]
 _CITE_CLUSTER_RE = re.compile(r"\[\d+(?:\s*[,-–]\s*\d+){0,8}\]")
 
-# Topic sentence (단락 시작, 일반화 명제) — 단순 휴리스틱: 단락 첫 문장 + 키워드
+# Topic sentence (단락 시작, 일반화 명제) — 확장 v2: 더 많은 주어/동사
 _TOPIC_HINTS = re.compile(
-    r"\b(?:Adolescents|Patients|Participants|Children|Women|Men|Studies)\s+"
-    r"(?:are|were|have|exhibit|demonstrate|show|report)\b",
+    r"\b(?:Adolescents?|Patients?|Participants?|Children|Youth|Women|Men|Boys?|Girls?|Adults?|"
+    r"Subjects?|Individuals?|Studies|Research(?:ers?)?|Authors?|Investigators?|"
+    r"Evidence|Data|Findings?|Reports?|Surveys?|Analyses|Trials?|Cohorts?|Reviews?|"
+    r"Recent (?:research|studies|reviews|evidence|trials)|Multiple studies|"
+    r"(?:Several|Numerous|Many) (?:studies|investigations|trials|reports))\s+"
+    r"(?:are|were|have (?:been|shown|reported|demonstrated|found|indicated|suggested|established)|"
+    r"has been|exhibit|demonstrate|show|report|reveal|indicate|suggest|highlight|"
+    r"document|establish|describe|provide|present|examine|investigate|"
+    r"assess|evaluate|find(?:s)?|consistently|increasingly)\b",
     re.IGNORECASE,
 )
 
@@ -136,7 +187,7 @@ def _section_guess(idx: int, total: int) -> str:
 
 
 def extract_all(text: str, *, source_pmid: str = "",
-                 author_style: str = "", max_per_kind: int = 30) -> List[PaperComponent]:
+                 author_style: str = "", max_per_kind: int = 80) -> List[PaperComponent]:
     """단일 논문 본문 → microcomponent list."""
     text = (text or "").strip()
     if not text:
