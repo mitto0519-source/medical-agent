@@ -6,7 +6,7 @@
 > **규칙**: 새 모듈을 만들기 전에 반드시 이 파일을 확인한다.
 > 모듈을 추가/변경/삭제할 때마다 이 파일을 업데이트한다.
 >
-> Last updated: 2026-05-29 (OA 12K+ 자산화 + 정규식 v2 + Slash commands 7개 + AGENTS.md SSoT + pace_mode + audit_wiring 80/80 PASS)
+> Last updated: 2026-05-30 (text_sanitize 신설 — API 6.6MB lone surrogate 사고 방어, 3 저장 진입점 wiring + audit_text_safety 스캔/--fix)
 
 ---
 
@@ -185,6 +185,7 @@
 | **Prompt A/B + bandit** | `src/diagnostics/prompt_ab.py` | ✅ active | epsilon-greedy variant 선택 + eval 점수 누적. `data/diagnostics/prompt_ab.json` |
 | **Self-consistency ensemble** | `src/llm/self_consistency.py` | ✅ active | n회 sample → 다수결/agreement. critical 통계 해석에서 hallucination ↓ |
 | **Wiring audit** (dead code 차단) | `scripts/audit_wiring.py` | ✅ active | git diff 추가 심볼 → 호출부 grep. 0 callers = FAIL 보고. **모든 신규 모듈 작성 후 의무 실행** |
+| **Text sanitize** (lone UTF-16 surrogate + ctrl-char 차단) | `src/utils/text_sanitize.py` | ✅ active | 2026-05-30 사고(`API 400 no low surrogate`, 6.6MB 요청 본문 영구 차단) 방어. `strip_lone_surrogates` / `sanitize_obj` / `safe_json_dumps` / `is_safe` / `scan_lone_surrogates`. **3개 저장 진입점에 wiring**: `change_log._write_local`, `conversation_memory._save`+`record`, `project_workspace._save_project`. `scripts/audit_text_safety.py`로 data/ 전체 스캔 + `--fix` |
 | **Word 표준 템플릿** (zcb_dep_v5 양식) | `data/templates/manuscript_template.json` + `src/export/word_exporter.py` | ✅ active | JSON spec이 단일 진실원본 — 모든 논문 docx가 동일 양식. inline label / Vancouver / italic P / 학술지 세 줄 표 |
 | **학술지 세 줄 표** | `src/export/table_builder.py:render_publication_table()` | ✅ active | NEJM/Lancet 표준 — top/header-bottom/bottom horizontal only, 세로선 없음, p-value italic P |
 | **Figure 양식 통일** | `src/export/publication_figure_generator.py` | ✅ active | template JSON figures 섹션 read → TNR + spine 깔끔 + grid off + 색팔레트 통일 |

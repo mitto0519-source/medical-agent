@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python scripts/audit_wiring.py --range HEAD~12..HEAD)"
+      "Bash(python scripts/audit_wiring.py --range HEAD~12..HEAD)",
+      "Bash(python -c ' *)"
     ]
   }
 }

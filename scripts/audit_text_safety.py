@@ -21,9 +21,24 @@
 from __future__ import annotations
 
 import argparse
+import io
 import json
+import os
 import sys
 from pathlib import Path
+
+# Windows cp949 콘솔에서도 em-dash(—) 같은 비-ASCII 출력이 깨지지 않도록 강제 UTF-8.
+os.environ["PYTHONIOENCODING"] = "utf-8"
+if sys.stdout and hasattr(sys.stdout, "buffer"):
+    try:
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+    except Exception:
+        pass
+if sys.stderr and hasattr(sys.stderr, "buffer"):
+    try:
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+    except Exception:
+        pass
 
 # 프로젝트 루트 sys.path 보장 (스크립트 단독 실행)
 _root = Path(__file__).resolve().parent.parent
