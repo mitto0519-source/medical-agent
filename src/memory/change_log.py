@@ -28,6 +28,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from src.config.logging_config import get_logger
+from src.utils.text_sanitize import safe_json_dumps, sanitize_obj
 
 _log = get_logger(__name__)
 _LOG_DIR = Path("data/change_log")
@@ -83,9 +84,10 @@ def append(entry: ChangeLogEntry) -> None:
 def _write_local(entry: ChangeLogEntry) -> None:
     _LOG_DIR.mkdir(parents=True, exist_ok=True)
     existing = _load_local()
-    existing.insert(0, asdict(entry))
+    # 외부 텍스트 lone surrogate / ctrl char 차단 (API 6.6MB 사고 방어, 2026-05-30)
+    existing.insert(0, sanitize_obj(asdict(entry)))
     _LOG_FILE.write_text(
-        json.dumps(existing[:_MAX_LOCAL], ensure_ascii=False, indent=2),
+        safe_json_dumps(existing[:_MAX_LOCAL], indent=2),
         encoding="utf-8",
     )
 

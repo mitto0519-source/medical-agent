@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 from src.config.logging_config import get_logger
+from src.utils.text_sanitize import safe_json_dumps, strip_lone_surrogates
 
 _log = get_logger(__name__)
 _FILE = Path("data/agent_self/conversation_memory.json")
@@ -54,8 +55,9 @@ def _load() -> List[Dict]:
 
 def _save(entries: List[Dict]):
     _FILE.parent.mkdir(parents=True, exist_ok=True)
+    # sanitize: lone UTF-16 surrogate / nasty ctrl char 차단 (API 사고 방어, 2026-05-30)
     _FILE.write_text(
-        json.dumps(entries[:_MAX], ensure_ascii=False, indent=2),
+        safe_json_dumps(entries[:_MAX], indent=2),
         encoding="utf-8",
     )
 
@@ -69,6 +71,10 @@ def record(
     owner_email: str = "",
 ) -> None:
     """대화 교환 기록 — JSON(최근/요약) + ChromaDB(verbatim 의미검색) 동시 저장."""
+    # 외부 입력 sanitize: 깨진 utf-16 surrogate가 ChromaDB / JSON / API에 전파되지 않도록
+    user_message = strip_lone_surrogates(user_message)
+    agent_response = strip_lone_surrogates(agent_response)
+    topic = strip_lone_surrogates(topic)
     _id = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     _ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     entries = _load()

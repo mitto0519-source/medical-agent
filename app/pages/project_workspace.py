@@ -30,6 +30,7 @@ import streamlit as st
 from app.styles.sapphire_glass import (
     inject_sapphire_glass, message_bubble, manuscript_preview_html, action_card,
 )
+from src.utils.text_sanitize import safe_json_dumps, sanitize_obj, strip_lone_surrogates
 
 
 _WP_DIR = Path("data/working_papers")
@@ -85,18 +86,23 @@ def _save_project(pid: str, data: dict, *, msg_cap: int = 200,
             except Exception:
                 pass
 
-    # 단일 message 자체가 거대한 경우(예: tool_result 거대 JSON) 잘라내기
+    # 단일 message 자체가 거대한 경우(예: tool_result 거대 JSON) 잘라내기 + lone surrogate 제거
+    # (2026-05-30 API 6.6MB no-low-surrogate 사고 방어)
     if isinstance(data.get("messages"), list):
         for m in data["messages"]:
             c = m.get("content")
-            if isinstance(c, str) and len(c) > 8000:
-                m["content"] = c[:8000] + "\n…[truncated]"
+            if isinstance(c, str):
+                c = strip_lone_surrogates(c)
+                if len(c) > 8000:
+                    c = c[:8000] + "\n…[truncated]"
+                m["content"] = c
 
     try:
-        text = json.dumps(data, ensure_ascii=False, indent=2, default=str)
+        # sanitize: dict 안 모든 str의 lone surrogate / nasty ctrl 제거 → JSON 직렬화 안전
+        text = safe_json_dumps(data, indent=2)
         # 5MB 이상이면 indent 제거하고 재시도
         if len(text) > 5_000_000:
-            text = json.dumps(data, ensure_ascii=False, default=str)
+            text = safe_json_dumps(data)
         p.write_text(text, encoding="utf-8")
     except Exception as e:
         try:
@@ -111,8 +117,7 @@ def _save_project(pid: str, data: dict, *, msg_cap: int = 200,
         try:
             backup = {**data}
             backup["messages"] = (backup.get("messages") or [])[-20:]
-            p.write_text(json.dumps(backup, ensure_ascii=False, default=str),
-                          encoding="utf-8")
+            p.write_text(safe_json_dumps(backup), encoding="utf-8")
         except Exception:
             pass
 
