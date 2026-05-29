@@ -751,7 +751,10 @@ def render(pid: str) -> None:
     with cback:
         if st.button("← Home", key="ws_back", use_container_width=True):
             st.session_state["sg_view"] = "home"
-            st.rerun()
+            try:
+                st.switch_page("pages/ez_home.py")
+            except Exception:
+                st.rerun()
     with ctop:
         _render_topbar(project)
 

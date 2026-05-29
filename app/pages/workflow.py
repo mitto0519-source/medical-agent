@@ -19,6 +19,11 @@ load_dotenv()
 
 from src.research.research_workflow import ResearchWorkflow, STAGES, STAGE_LABELS
 
+try:
+    from app.styles.sapphire_glass import inject_sapphire_glass
+except Exception:
+    inject_sapphire_glass = None
+
 
 def _setup_session_state():
     st.session_state.setdefault('wf_id', '')
@@ -149,6 +154,11 @@ def _render_variable_stage(wf: ResearchWorkflow):
 
 def run_workflow_page():
     st.set_page_config(page_title='단계별 연구 워크플로우', page_icon='🔬', layout='wide')
+    if inject_sapphire_glass is not None:
+        try:
+            inject_sapphire_glass()
+        except Exception:
+            pass
     st.title('🔬 단계별 연구 워크플로우')
     st.caption('각 단계에서 검수·승인 후 다음 단계로 진행됩니다.')
 
