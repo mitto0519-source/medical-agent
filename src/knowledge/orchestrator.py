@@ -97,8 +97,13 @@ class KnowledgeOrchestrator:
                 full_text: str = "", year: Optional[int] = None,
                 journal: str = "", doi: str = "",
                 figures: Optional[List[str]] = None,
-                tables: Optional[List[str]] = None) -> Dict:
+                tables: Optional[List[str]] = None,
+                fast_mode: bool = False) -> Dict:
         """단일 논문을 4 자산에 동시 등록.
+
+        Args:
+            fast_mode: True면 citation_graph eLink fetch skip (5만편 학습 같은 bulk 단계).
+                       fetch는 별도 backlog job으로 후순위 처리 가능.
 
         Returns:
             {"pmid": ..., "concepts": [...], "n_chunks": N, "graph_node": ...,
@@ -128,8 +133,8 @@ class KnowledgeOrchestrator:
         graph_node = self._add_to_graph(pmid, title, abstract, year, journal,
                                           concepts)
 
-        # 4. citation graph 확장 (cited_by 1-hop)
-        cited_added = self._extend_citation_graph(pmid)
+        # 4. citation graph 확장 (cited_by 1-hop) — fast_mode면 skip (bulk 학습용)
+        cited_added = False if fast_mode else self._extend_citation_graph(pmid)
 
         # 5. ★ Component 추출 (reusable microcomponent 자산화)
         n_components = 0
@@ -316,8 +321,11 @@ class KnowledgeOrchestrator:
 
     # ── Bulk helpers ────────────────────────────────────────────────────────
 
-    def ingest_oa_paper(self, pmcid: str, meta: Dict, body_text: str) -> Dict:
-        """oa_bulk_fetcher가 한 편씩 호출. meta는 .meta.json 내용."""
+    def ingest_oa_paper(self, pmcid: str, meta: Dict, body_text: str,
+                          fast_mode: bool = True) -> Dict:
+        """oa_bulk_fetcher가 한 편씩 호출. meta는 .meta.json 내용.
+        fast_mode=True (기본): bulk 학습이므로 citation_graph eLink fetch skip.
+        citation 보강은 나중에 별도 backlog job으로 처리."""
         return self.ingest(
             pmid=meta.get("pmid", "") or pmcid.replace("PMC", ""),
             title=meta.get("title", ""),
@@ -328,6 +336,7 @@ class KnowledgeOrchestrator:
             doi=meta.get("doi", ""),
             figures=meta.get("figures", []),
             tables=meta.get("tables", []),
+            fast_mode=fast_mode,
         )
 
 
