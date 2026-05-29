@@ -237,6 +237,30 @@ def write(
          "injectable_to_context": _injectable},
         actor="memory_router", task_id=task_id,
     )
+
+    # ── Lifecycle wiring (2026-05-30) ──
+    # 라이프사이클 DB(items)에 register → tick()이 TTL/decay/archive를 실제로 적용 가능해진다.
+    # 이 wiring이 빠지면 lifecycle DB가 빈 채로 heartbeat가 noop를 매일 돌게 됨.
+    try:
+        from src.memory.lifecycle import register as _lc_register
+        # 신뢰도 source별 차등 — user/verified는 높게, llm/observation은 보통
+        _conf_table = {
+            "user": 0.95, "human": 0.95, "verified": 0.92, "rule": 0.9,
+            "reflection": 0.82, "observation": 0.72, "llm": 0.6, "auto_learn": 0.5,
+        }
+        _conf = _conf_table.get(source, 0.7)
+        _ttl_days = None
+        if extra_meta and isinstance(extra_meta.get("ttl_days"), (int, float)):
+            _ttl_days = int(extra_meta["ttl_days"])
+        elif type == "working":
+            _ttl_days = 1   # working은 1일
+        elif type == "goal":
+            _ttl_days = None   # goal은 만료 없음
+        _lc_register(item_id=mem_id, type=type, text=text, source=source,
+                     confidence=_conf, ttl_days=_ttl_days)
+    except Exception as _e:
+        _log.debug("lifecycle.register skipped: %s", _e)
+
     return {"decision": decision, "id": mem_id, "scores": scores, "gate_reason": None,
             "truth_level": _level.name if _level else None,
             "injectable_to_context": _injectable}
