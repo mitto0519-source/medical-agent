@@ -555,12 +555,28 @@ def _nb(label, target):
 with st.sidebar:
     st.markdown("""
     <div class="sidebar-logo">
-        <div class="logo-icon">🔬</div>
+        <div class="logo-icon">✨</div>
         <span style="font-size:15px;font-weight:800;color:#E5E7EB;letter-spacing:-0.01em;">Medical-Agent</span>
     </div>
     """, unsafe_allow_html=True)
     st.markdown('<div style="padding:4px 4px 2px;">', unsafe_allow_html=True)
-    # ── 모든 사용자 공통: 바이브 중심 (깔끔) ──
+
+    # ── ✨ EZ 모드 (Sapphire Glass) — Streamlit 자동 멀티페이지로 라우팅 ──
+    st.markdown('<div class="nav-section">✨ EZ Mode (Sapphire Glass)</div>',
+                  unsafe_allow_html=True)
+    if st.button("🏠  EZ Home", key="_sg_home", use_container_width=True):
+        st.switch_page("pages/ez_home.py")
+    if st.button("📝  Workspace", key="_sg_ws", use_container_width=True):
+        st.switch_page("pages/project_workspace.py")
+    if st.button("📋  Backlog", key="_sg_bl", use_container_width=True):
+        st.switch_page("pages/backlog.py")
+    if st.button("📊  Dashboard", key="_sg_dash", use_container_width=True):
+        st.switch_page("pages/dashboard.py")
+    if st.button("🧠  Memory", key="_sg_mem", use_container_width=True):
+        st.switch_page("pages/memory_explorer.py")
+
+    st.markdown('<div class="nav-section" style="margin-top:8px;">📚 클래식 모드</div>',
+                  unsafe_allow_html=True)
     _nb("🏠  홈", "홈")
     _nb("📝  논문 작업실", "논문 작업실")          # ★ 바이브 — AI 채팅으로 논문 작성
     _nb("✍️  글쓰기 스타일", "글쓰기 스타일")       # 스타일 학습 + 선택

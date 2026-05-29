@@ -183,37 +183,15 @@ def render() -> None:
                       icon="📥")
             st.rerun()
 
-    # Quick actions — 의학 논문 도메인 슬래시 (agent-skills 패턴, src.agent.slash_commands)
-    quick_actions = [
-        ("🔬 /research-question",
-         "/research-question 슬래시 실행: 이 주제로 PubMed 신규성 + cross-modal 검색해줘.",
-         "research-question"),
-        ("📊 /run-analysis (KYRBS 2025)",
-         "/run-analysis 슬래시 실행: KYRBS 2025 StatBridge survey-weighted logistic 회귀 돌려줘 "
-         "(outcome=depression, exposure=zcb_freq).",
-         "run-analysis"),
-        ("📝 /draft-section (Planner DAG)",
-         "/draft-section 슬래시 실행: content + style 2-layer로 Introduction 섹션 자동 작성 "
-         "(pace_mode=proactive).",
-         "draft-section"),
-        ("📑 /strobe-review",
-         "/strobe-review 슬래시 실행: STROBE 22 + consistency + causal 통합 검사.",
-         "strobe-review"),
-    ]
-
-    st.markdown("<div style='max-width:880px;margin:10px auto 24px auto;'>",
+    # ── Quick actions (통합 matrix) — chip + modal + slash 단일 진입 ──
+    st.markdown("<div style='max-width:1080px;margin:10px auto 24px auto;'>",
                  unsafe_allow_html=True)
-    qc = st.columns(len(quick_actions))
-    for i, (label, seed, key) in enumerate(quick_actions):
-        with qc[i]:
-            if st.button(label, key=f"sg_qa_{key}", use_container_width=True):
-                st.session_state["sg_active_project"] = "new"
-                st.session_state["sg_initial_prompt"] = seed
-                st.session_state["sg_view"] = "workspace"
-                try:
-                    st.switch_page("pages/project_workspace.py")
-                except Exception:
-                    st.rerun()
+    try:
+        from app.styles.quick_actions import render_quick_actions, render_last_slash_result
+        render_quick_actions(context="ez_home", n_cols=4, max_actions=8)
+        render_last_slash_result()
+    except Exception as e:
+        st.warning(f"Quick actions 로드 실패: {e}")
     st.markdown("</div>", unsafe_allow_html=True)
 
     # Tabs
