@@ -215,6 +215,35 @@ class StatBridge:
                 X[col1] = clean[v1].astype(float) * clean[v2].astype(float)
 
         y = clean[outcome].astype(float)
+        # ── 자동 binarize (2026-05-30): Logit은 y가 [0,1] 양식 양식 양식 양식 양식 양식 양식 양식
+        # KYRBS depression 같은 ordinal/Likert (1-5) 또는 1/2 양식 양식 양식 양식 양식 양식 양식 양식
+        unique_vals = sorted(y.dropna().unique())
+        if not set(unique_vals).issubset({0.0, 1.0}):
+            if len(unique_vals) == 2:
+                # 1/2, 0/2 양식 양식 양식 양식 양식 양식 → 양식 양식 = 양식 양식 (1)
+                pos_val = float(max(unique_vals))
+                y = (y == pos_val).astype(float)
+                _log.info("outcome '%s' 자동 binarize: %s → 1 (양식 %d), %s → 0 (양식 %d)",
+                          outcome, pos_val, int(y.sum()),
+                          float(min(unique_vals)), int(len(y) - y.sum()))
+            elif len(unique_vals) >= 3:
+                # 양식 양식 (예: 1-5 Likert) → 양식 양식 cutoff
+                # 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식 양식 양식
+                med = float(y.median())
+                y = (y > med).astype(float)
+                _log.info("outcome '%s' 자동 binarize: ordinal %d-levels → 양식 cutoff > %.1f "
+                          "(양식 %d = 1, 양식 %d = 0)",
+                          outcome, len(unique_vals), med,
+                          int(y.sum()), int(len(y) - y.sum()))
+            else:
+                raise ValueError(
+                    f"outcome '{outcome}' 양식 binarize 양식: 양식 양식 양식 양식 {len(unique_vals)}개 "
+                    f"({unique_vals[:5]}). KYRBS 표준화 양식 양식 양식 양식 양식 양식 양식 양식 양식."
+                )
+            # 양식 양식 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식
+            n_outcome = int(y.sum())
+            outcome_rate = n_outcome / len(y) * 100 if len(y) else 0.0
+
         weights = clean[weight_var].astype(float) if weight_var and weight_var in clean.columns else None
 
         X_const = sm.add_constant(X)
