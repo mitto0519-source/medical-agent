@@ -717,6 +717,68 @@ DISCUSSION
     # ------------------------------------------------------------------
 
     def _generate(self, system_prompt: str, user_prompt: str) -> str:
+        return _do_generate(self, system_prompt, user_prompt)
+
+
+def _strip_llm_meta(text: str) -> str:
+    """LLM 응답에서 메타 코멘트(자기소개·서문) 제거.
+
+    2026-05-31 사고: "This is an interesting intersection of topics – ...
+    Let's structure an abstract that captures the essence of the study,
+    mimicking the precise style and rigor of Dr. Yoosun Cho." 같은 메타가
+    본문 첫 부분에 박혀 docx에 그대로 들어간 사고.
+
+    가장 흔한 LLM 메타 패턴을 정규식으로 잡아 첫 1-2 문장 절단.
+    """
+    if not text:
+        return text
+    import re as _re_meta
+    cleaned = text.lstrip()
+    # 흔한 메타 패턴 — 본문 시작 전 1-2 문장
+    meta_patterns = [
+        # "This is an interesting/important/fascinating/complex intersection of topics ..."
+        r"^This is (?:an? |the )?(?:interesting|important|fascinating|complex|"
+        r"nuanced|fascinating|excellent|great|wonderful|critical)[^.!?]*[.!?]",
+        # "Let's structure / Let me write / Let me craft / Let me draft"
+        r"^Let'?s [^.!?]*[.!?]",
+        r"^Let me [^.!?]*[.!?]",
+        # "Here's / Here is the abstract/methods/section"
+        r"^Here'?s (?:the |an? )?[^.!?]*[.!?]",
+        r"^Here is (?:the |an? )?[^.!?]*[.!?]",
+        # "I'll / I will / I'm going to write/draft/craft/structure"
+        r"^I'?ll [^.!?]*[.!?]",
+        r"^I will [^.!?]*[.!?]",
+        r"^I'?m going to [^.!?]*[.!?]",
+        # "Below is / Following is the abstract"
+        r"^Below is [^.!?]*[.!?]",
+        r"^Following is [^.!?]*[.!?]",
+        # "In this abstract/section/paper, I will ..."
+        r"^In this (?:abstract|section|paper|response)[^.!?]*[.!?]",
+        # "Sure! Certainly! Absolutely! Of course!"
+        r"^(?:Sure|Certainly|Absolutely|Of course)[,.!:][^.!?]*[.!?]",
+        # "I'll draft an abstract that mimics..."
+        r"^[^.!?]*(?:mimicking|mimic|emulating|matching|following) the [^.!?]*style[^.!?]*[.!?]",
+        # "The following abstract / The abstract below"
+        r"^The following [^.!?]*[.!?]",
+        # **Abstract** / # Abstract / Abstract: (섹션 라벨이 본문 앞에 박힘)
+        r"^\*\*\s*(?:Abstract|Introduction|Methods|Results|Discussion)\s*\*\*[:\s]*",
+        r"^#+\s*(?:Abstract|Introduction|Methods|Results|Discussion)[:\s]*\n",
+        r"^(?:Abstract|Introduction|Methods|Results|Discussion):\s*\n",
+    ]
+    for _ in range(5):  # 최대 5번 반복으로 누적된 메타 제거
+        matched = False
+        for pat in meta_patterns:
+            m = _re_meta.match(pat, cleaned, _re_meta.IGNORECASE | _re_meta.DOTALL)
+            if m:
+                cleaned = cleaned[m.end():].lstrip()
+                matched = True
+                break
+        if not matched:
+            break
+    return cleaned
+
+
+def _do_generate(self, system_prompt: str, user_prompt: str) -> str:
         # ★ System prompt에 메타 코멘트 금지 강제 (2026-05-31 사고 차단)
         anti_meta = (
             "\n\n# CRITICAL OUTPUT RULES\n"
