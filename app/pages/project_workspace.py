@@ -177,8 +177,39 @@ def _render_topbar(project: dict):
             if st.button("🔗 Share", use_container_width=True, key="ws_share"):
                 st.error(f"Share export 실패: {e}")
     with cols[3]:
-        if st.button("⬇ Export", use_container_width=True, key="ws_export", type="primary"):
-            _export_docx(project)
+        # ── Export: Word / PDF / EndNote XML / BibTeX 한큐 (2026-05-30) ──
+        with st.popover("⬇ Export", use_container_width=True):
+            st.caption("4가지 포맷 한 번에")
+            # 1) Word (docx)
+            if st.button("📄 Word (.docx)", use_container_width=True, key="ws_exp_docx"):
+                _export_docx(project)
+            # 2) PDF
+            if st.button("📑 PDF (.pdf)", use_container_width=True, key="ws_exp_pdf"):
+                _export_pdf(project)
+            # 3) EndNote XML
+            refs = project.get("references", []) or []
+            if refs:
+                try:
+                    from src.export.reference_library import ReferenceLibrary
+                    slug = (project.get("topic") or {}).get("title", "manuscript")[:60]
+                    lib = ReferenceLibrary(paper_slug=slug)
+                    for r in refs:
+                        lib.add_from_dict(r)
+                    st.download_button(
+                        "🔖 EndNote (.xml)",
+                        data=lib.export_endnote_xml().encode("utf-8"),
+                        file_name=f"{slug}.xml", mime="application/xml",
+                        use_container_width=True, key="ws_exp_endnote")
+                    # 4) BibTeX
+                    st.download_button(
+                        "📚 BibTeX (.bib)",
+                        data=lib.export_bibtex().encode("utf-8"),
+                        file_name=f"{slug}.bib", mime="text/plain",
+                        use_container_width=True, key="ws_exp_bib")
+                except Exception as _e:
+                    st.warning(f"인용 export 실패: {_e}")
+            else:
+                st.caption("인용이 없어 EndNote/BibTeX 비활성")
 
     # Notes panel — 짧은 메모 적어 working_paper.notes 로 저장 (inline comment의 단순 양식)
     if st.session_state.get("ws_show_notes"):
@@ -210,8 +241,127 @@ def _export_docx(project: dict):
         )
         st.session_state["sg_last_export"] = path
         st.toast(f"docx 저장: {Path(path).name}", icon="✅")
+        # 즉시 download_button 제공
+        try:
+            with open(path, "rb") as f:
+                st.download_button(
+                    "⬇ docx 다운로드", data=f.read(),
+                    file_name=Path(path).name,
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    key=f"dl_docx_{Path(path).stem}")
+        except Exception:
+            pass
     except Exception as e:
         st.error(f"Export 실패: {e}")
+
+
+def _export_pdf(project: dict):
+    """PDF export — reportlab 또는 docx2pdf 폴백.
+
+    1순위: docx → LibreOffice headless 변환 (docker container 안 가능)
+    2순위: reportlab으로 직접 PDF 생성 (간단한 한국어 양식)
+    3순위: 'PDF는 Word에서 Save As로 변환하세요' 안내
+    """
+    sections = project.get("sections", {})
+    topic = project.get("topic") or {"title": project.get("title", "Untitled")}
+    refs = project.get("references", []) or []
+
+    # 우선 reportlab 직접 생성 시도 (가장 안정적)
+    try:
+        from reportlab.lib.pagesizes import A4
+        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+        from reportlab.lib.units import cm
+        from reportlab.pdfbase import pdfmetrics
+        from reportlab.pdfbase.ttfonts import TTFont
+        from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+
+        # 한국어 폰트 등록 (docker에 fonts-nanum 양식 양식 양식)
+        try:
+            pdfmetrics.registerFont(TTFont("NanumGothic", "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"))
+            base_font = "NanumGothic"
+        except Exception:
+            base_font = "Helvetica"
+
+        from pathlib import Path as _PP
+        out_dir = _PP("data/exports")
+        out_dir.mkdir(parents=True, exist_ok=True)
+        from datetime import datetime
+        out_path = out_dir / f"{topic.get('title', 'manuscript')[:50].replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf"
+
+        doc = SimpleDocTemplate(str(out_path), pagesize=A4,
+                                 leftMargin=2.5*cm, rightMargin=2.5*cm,
+                                 topMargin=2.5*cm, bottomMargin=2.5*cm)
+        styles = getSampleStyleSheet()
+        title_style = ParagraphStyle("Title", parent=styles["Title"],
+                                       fontName=base_font, fontSize=18, alignment=1)
+        h2 = ParagraphStyle("H2", parent=styles["Heading2"],
+                              fontName=base_font, fontSize=13, spaceBefore=12)
+        body = ParagraphStyle("Body", parent=styles["BodyText"],
+                                fontName=base_font, fontSize=10.5, leading=15)
+
+        story = []
+        story.append(Paragraph(str(topic.get("title", "Untitled")), title_style))
+        story.append(Spacer(1, 8))
+        story.append(Paragraph("Yoosun Cho", body))
+        story.append(Spacer(1, 16))
+
+        for name in ("Abstract", "Introduction", "Methods", "Results", "Discussion"):
+            content = sections.get(name)
+            if not content:
+                continue
+            story.append(Paragraph(name, h2))
+            if isinstance(content, dict):
+                for k, v in content.items():
+                    story.append(Paragraph(f"<b>{k}</b>: {str(v)}", body))
+                    story.append(Spacer(1, 4))
+            else:
+                # 줄바꿈 보존
+                for para in str(content).split("\n\n"):
+                    if para.strip():
+                        story.append(Paragraph(para.replace("\n", "<br/>"), body))
+                        story.append(Spacer(1, 6))
+            story.append(Spacer(1, 10))
+
+        # References
+        if refs:
+            story.append(PageBreak())
+            story.append(Paragraph("References", h2))
+            try:
+                from src.export.reference_library import (
+                    ReferenceLibrary, format_reference, Reference,
+                )
+                for i, r in enumerate(refs, 1):
+                    ref = Reference.from_dict(r) if isinstance(r, dict) else r
+                    line = format_reference(ref, "Vancouver", i)
+                    story.append(Paragraph(line, body))
+                    story.append(Spacer(1, 4))
+            except Exception:
+                for i, r in enumerate(refs, 1):
+                    story.append(Paragraph(
+                        f"{i}. {r.get('title', '?') if isinstance(r, dict) else str(r)}",
+                        body))
+
+        doc.build(story)
+        st.session_state["sg_last_export"] = str(out_path)
+        st.toast(f"PDF 저장: {out_path.name}", icon="✅")
+        with open(out_path, "rb") as f:
+            st.download_button(
+                "⬇ PDF 다운로드", data=f.read(),
+                file_name=out_path.name, mime="application/pdf",
+                key=f"dl_pdf_{out_path.stem}")
+        return
+    except ImportError:
+        pass
+    except Exception as e:
+        st.warning(f"reportlab PDF 실패: {e}")
+
+    # 폴백: docx만 만들고 안내
+    try:
+        _export_docx(project)
+        st.info("PDF 직접 export는 docker container에 reportlab 설치가 필요합니다. "
+                "현재 docx로 저장됐으니 Word에서 'PDF로 저장'을 사용하세요.")
+    except Exception as e:
+        st.error(f"PDF/docx 모두 실패: {e}")
 
 
 def _figures_list() -> list[dict]:
