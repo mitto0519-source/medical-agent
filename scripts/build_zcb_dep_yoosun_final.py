@@ -175,6 +175,16 @@ for fn, cap in [
 
 print(f"[4/4] WordExporter: sections={list(sections.keys())} refs={len(references)} figs={len(figs)} tables={len(tables_html)}")
 
+# sections cache — 다음 호출 시 재사용 (71초 LLM 호출 절약)
+import json as _json
+cache_p = Path("data/drafts/yoosun_sections_cache.json")
+cache_p.parent.mkdir(parents=True, exist_ok=True)
+cache_p.write_text(_json.dumps(sections, ensure_ascii=False, indent=2), encoding="utf-8")
+print(f"[cache] sections saved: {cache_p}")
+
+# 표는 별도 HTML 파일로 따로 (docx에 HTML 통째로 박으면 깨짐) — render_publication_table은
+# type 키 ("baseline"/"regression"/"cross"/"raw") 기반이라 우리 HTML dict와 양식 다름.
+# 따라서 docx에는 sections + figures + references만 넣고, 표는 사용자가 HTML/별도 양식.
 we = WordExporter()
 out_docx = we.export(
     topic={"title": topic, "authors": ["Yoosun Cho"]},
@@ -184,10 +194,7 @@ out_docx = we.export(
     keywords=["zero-calorie beverage", "depression", "adolescent",
               "Korean", "KYRBS", "sex differences"],
     figures=figs,
-    tables=[{"n": 1, "caption": "Baseline characteristics", "html": tables_html["Table 1"]},
-            {"n": 2, "caption": "ZCB and depressive symptoms", "html": tables_html["Table 2"]},
-            {"n": 3, "caption": "Sex-stratified association", "html": tables_html["Table 3"]},
-            {"n": "S1", "caption": "Secondary outcomes",
-             "html": tables_html["Supplementary Table 1"]}],
+    tables=[],   # 표 비움 — 깨짐 사고 방지
 )
 print(f"\nsaved: {out_docx}")
+print(f"표 4종 별도 위치: data/exports/Table_1.html ... Supplementary_Table_1.html")
