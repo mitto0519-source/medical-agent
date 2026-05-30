@@ -56,12 +56,20 @@ def main():
             print(f"    textarea fill failed: {e}")
             report["steps"].append({"step": "fill_prompt", "error": str(e)})
 
-        # 3. Build 클릭
-        print("[3] click Build")
+        # 3. Build 클릭 → auto-agentic 양식이 실행되니까 90초 양식 양식 양식
+        print("[3] click Build (then wait up to 90s for auto agentic loop)")
         try:
             build = page.get_by_role("button", name=re.compile(r"Build|✨")).first
             build.click(timeout=5000)
-            page.wait_for_timeout(8000)  # workspace 전환 대기
+            # workspace 진입 + auto agentic 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 90초
+            for i in range(18):
+                page.wait_for_timeout(5000)
+                # spinner 양식 양식 양식 — assistant 양식 양식 양식 양식 양식 양식 양식 양식
+                spinner = page.locator('[data-testid="stSpinner"]').count()
+                msgs = page.locator('.sg-msg-assistant').count()
+                print(f"    wait {(i+1)*5}s  spinner={spinner}  assistant_msgs={msgs}")
+                if msgs > 0 and spinner == 0:
+                    break
         except Exception as e:
             print(f"    Build click failed: {e}")
             report["steps"].append({"step": "build_click", "error": str(e)})
