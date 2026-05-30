@@ -605,10 +605,48 @@ def _enqueue_workspace_uploads(uploaded_files, prompt_hint: str = "") -> None:
         st.toast(f"📥 백로그 등록: 논문 {n_p}편 · 이미지 {n_v}장", icon="✅")
 
 
+def _build_prior_context(messages: list, k: int = 8) -> str:
+    """직전 K개 user/assistant/tool 메시지를 압축해 LLM 컨텍스트로 묶음.
+    시스템 이벤트는 압축 표시. (2026-05-30 — 세션 흐름 끊김 차단)
+    """
+    if not messages:
+        return ""
+    recent = messages[-k:]
+    lines = ["# PRIOR CONVERSATION IN THIS PROJECT (직전 대화 — 흐름 유지)",
+             ""]
+    for m in recent:
+        role = m.get("role", "system")
+        if role == "user":
+            lines.append(f"USER: {str(m.get('content',''))[:600]}")
+        elif role == "assistant":
+            c = str(m.get("content", "") or "")
+            if c.strip():
+                lines.append(f"ASSISTANT: {c[:800]}")
+        elif role == "tool_use":
+            t = m.get("tool", "?")
+            inp = json.dumps(m.get("input", {}), ensure_ascii=False, default=str)[:200]
+            lines.append(f"TOOL_USE [{t}]: {inp}")
+        elif role == "tool_result":
+            t = m.get("tool", "?")
+            res = str(m.get("content", ""))[:300]
+            lines.append(f"TOOL_RESULT [{t}]: {res}")
+        elif role == "system":
+            ev = m.get("event", "system")
+            det = str(m.get("detail", ""))[:200]
+            lines.append(f"SYSTEM [{ev}]: {det}")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
     """★ Agentic loop — LLM이 tool을 직접 호출해 preview를 갱신.
     각 step(assistant text / tool_use / tool_result / system)을 chat에 시간순 기록.
-    실패해도 UX는 살아있게 system 이벤트로 남김."""
+    실패해도 UX는 살아있게 system 이벤트로 남김.
+
+    2026-05-30 fix — 세션 흐름 끊김 차단:
+      (a) build_system_with_preview에 user_msg 전달 → trigger/cognitive/5층메모리 활성
+      (b) 직전 N개 messages를 prior_ctx로 묶어 user_message에 주입 → ClaudeClient single-turn 한계 우회
+    """
     try:
         from src.llm.claude_client import ClaudeClient
         from src.agent.prompt_loader import load_prompt
@@ -630,13 +668,15 @@ def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
         handler = make_tool_handler(get_project, set_project, append_chat_event)
 
         base_system = load_prompt("paper_write")
+        # ★ user_msg 전달 — build_system_with_preview의 trigger_analyzer/cognitive_activation/
+        #   recall_all_layers/conversation_memory.recall_relevant 활성화 (이전엔 다 skip됐음)
         system = build_system_with_preview(
-            base_system + f"\n\nMode: {mode}.", project)
+            base_system + f"\n\nMode: {mode}.", project, user_msg=prompt)
 
         cc = ClaudeClient(task="paper_writing")
-        # 사용자 프롬프트 + 직전 대화 컨텍스트 (간단히 마지막 사용자 메시지만 보내고
-        # 직전 assistant/tool 흐름은 system 안의 preview snapshot으로 대체)
-        user_msg = prompt
+        # ★ 직전 대화를 user_message에 묶어 주입 — ClaudeClient single-turn 한계 우회
+        prior_ctx = _build_prior_context(messages[:-1], k=8)  # 방금 추가된 user 메시지 제외
+        user_msg = (prior_ctx + "\n\n# CURRENT REQUEST\n" + prompt) if prior_ctx else prompt
 
         result = cc.generate_with_tools(
             user_message=user_msg, tools=TOOL_SCHEMAS,
@@ -706,15 +746,19 @@ def _wire_memory(user_msg: str, assistant_text: str, project: dict) -> None:
 
 
 def _delegate_to_writer(prompt: str, project: dict, mode: str) -> dict:
-    """단순 one-shot LLM 호출 (tool-use OFF일 때). 실패 시 graceful."""
+    """단순 one-shot LLM 호출 (tool-use OFF일 때). 실패 시 graceful.
+    2026-05-30 — build_system_with_preview에 user_msg + 직전 대화 컨텍스트 함께 주입."""
     try:
         from src.llm import get_llm_client
         from src.agent.prompt_loader import load_prompt
         from app.agentic_loop import build_system_with_preview
         base = load_prompt("paper_write")
-        sys_prompt = build_system_with_preview(base + f"\n\nMode: {mode}.", project)
+        sys_prompt = build_system_with_preview(
+            base + f"\n\nMode: {mode}.", project, user_msg=prompt)
+        prior_ctx = _build_prior_context(project.get("messages", [])[:-1], k=8)
+        user_msg = (prior_ctx + "\n\n# CURRENT REQUEST\n" + prompt) if prior_ctx else prompt
         client = get_llm_client(task="paper_writing")
-        out = client.generate(prompt, system_prompt=sys_prompt, max_tokens=1500)
+        out = client.generate(user_msg, system_prompt=sys_prompt, max_tokens=1500)
         return {"content": out[:2000]}
     except Exception as e:
         return {"content": f"⚠️ LLM 호출 실패: {e}"[:300]}
