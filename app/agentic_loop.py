@@ -773,9 +773,57 @@ def build_system_with_preview(base_prompt: str, project: dict,
         parts.append(f"## Supplement blocks: {list(supp.keys())}")
 
     parts.append("")
-    parts.append("→ 위 preview를 보고 부족한 부분이 있으면 `patch_preview` tool을 호출해 직접 채워라. "
-                  "통계 결과가 필요하면 `kyrbs_stat`, 인용이 필요하면 `pubmed_search`/`rag_search`, "
-                  "보고 양식 검증은 `strobe_check`, 정합성은 `consistency_check`.")
+    parts.append("=" * 60)
+    parts.append("★★ MANDATORY BEHAVIOR — 매 응답에 반드시 지킬 것 ★★")
+    parts.append("=" * 60)
+    parts.append(
+        "1) **사용자의 모든 요청(단어 한 글자라도)은 즉시 `patch_preview` tool로 preview에 반영하라.**\n"
+        "   - '좀 더 자세히' → 해당 섹션 expand patch\n"
+        "   - 'X 추가해줘' → 해당 위치 append patch\n"
+        "   - '다시 써줘' → overwrite patch\n"
+        "   - 답변 텍스트보다 preview 갱신이 우선. 텍스트 답변은 1-2문장 요약만.\n"
+        "2) **인용·근거가 필요한 변경은 patch_preview 직전에 `rag_search` 또는 `cross_modal_query`를 호출**해서 "
+        "   24,000+편 OA seed에서 evidence 가져온 뒤 patch에 포함하라. 환각 금지.\n"
+        "3) **통계 보강 요청은 `kyrbs_stat`을 먼저 호출**해서 실측 수치 받은 뒤 patch.\n"
+        "4) **요청이 모호하면** Methods → Results → Discussion 순서로 부족한 곳부터 patch.\n"
+        "5) 한 응답에 patch_preview를 0번 호출하면 그 응답은 실패로 간주된다. 최소 1번 호출 필수.\n"
+    )
+    parts.append("")
+
+    # ── AUTO RAG EVIDENCE (사용자 user_msg에 대한 5개 hit 자동 사전 주입) ──
+    # 사용자가 patch 요청만 해도 LLM이 항상 evidence를 곁들이도록 미리 가져온다.
+    if user_msg:
+        try:
+            from src.vectordb.store import get_vector_store
+            store = get_vector_store()
+            hits = store.search(user_msg, n_results=5) or []
+            if hits:
+                parts.append("# AUTO-PULLED RAG EVIDENCE (24K OA seed — 위 요청 관련)")
+                for i, h in enumerate(hits[:5], 1):
+                    md = h.get("metadata") or {}
+                    src = md.get("source") or md.get("doi") or md.get("pmid") or md.get("title", "")
+                    score = h.get("score", 0) or h.get("final_score", 0)
+                    snippet = (h.get("text") or "")[:280]
+                    parts.append(f"[{i}] (score={score:.3f}) {snippet}…")
+                    if src:
+                        parts.append(f"    src: {str(src)[:120]}")
+                parts.append("→ 이 evidence를 patch_preview 내용에 인용/근거로 활용하라.")
+                parts.append("")
+        except Exception:
+            pass
+
+        # ── AUTO COMPONENTS (재사용 가능한 양식 시드 — ComponentLibrary) ──
+        try:
+            from src.library.components import get_library as _get_comp_lib
+            comp_hint = _get_comp_lib().sample(
+                kind="topic_sentence", n=3, contains=user_msg[:60])
+            if comp_hint:
+                parts.append("# AUTO-PULLED COMPONENT TEMPLATES (Yoosun-style topic sentences)")
+                for c in comp_hint[:3]:
+                    parts.append(f"- {str(c.get('text', '') or c)[:200]}")
+                parts.append("")
+        except Exception:
+            pass
 
     # ★ 공유 코어 — VS Code/Streamlit 어디서 호출되든 같은 메모리/이력 보게 함
     try:

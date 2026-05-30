@@ -681,8 +681,26 @@ def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
         result = cc.generate_with_tools(
             user_message=user_msg, tools=TOOL_SCHEMAS,
             tool_handler=handler, system_prompt=system,
-            max_tokens=3000, max_iters=6, task="paper_writing",
+            max_tokens=3000, max_iters=10, task="paper_writing",
         )
+        # ★ patch_preview가 0회 호출됐으면 폴백: _delegate_to_writer로 한 번 더 시도해 본문 보강
+        trace = result.get("trace") or []
+        patch_calls = sum(1 for s in trace if s.get("tool") == "patch_preview")
+        if patch_calls == 0:
+            messages.append({"role": "system", "event": "no_patch_fallback",
+                              "detail": "patch_preview 0회 → 폴백 본문 보강 시도"})
+            try:
+                fallback = _delegate_to_writer(prompt, project, mode)
+                # 폴백 응답을 Discussion에 append (가장 무난한 곳)
+                sections = project.get("sections") or {}
+                old = sections.get("Discussion") or ""
+                new_text = str(fallback.get("content", ""))
+                if new_text.strip():
+                    sections["Discussion"] = (str(old) + "\n\n" + new_text).strip()
+                    project["sections"] = sections
+                    _save_project(pid, project)
+            except Exception:
+                pass
 
         # trace를 chat에 시간순 기록
         for step in result.get("trace", []):
