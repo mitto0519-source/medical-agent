@@ -56,19 +56,20 @@ def main():
             print(f"    textarea fill failed: {e}")
             report["steps"].append({"step": "fill_prompt", "error": str(e)})
 
-        # 3. Build 클릭 → auto-agentic 양식이 실행되니까 90초 양식 양식 양식
-        print("[3] click Build (then wait up to 90s for auto agentic loop)")
+        # 3. Build 클릭 → orchestrated paper run (5섹션 양식 100초 양식 양식)
+        print("[3] click Build (wait up to 180s for full 5-section paper)")
         try:
             build = page.get_by_role("button", name=re.compile(r"Build|✨")).first
             build.click(timeout=5000)
-            # workspace 진입 + auto agentic 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 90초
-            for i in range(18):
+            for i in range(36):
                 page.wait_for_timeout(5000)
-                # spinner 양식 양식 양식 — assistant 양식 양식 양식 양식 양식 양식 양식 양식
+                # manuscript 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식
                 spinner = page.locator('[data-testid="stSpinner"]').count()
-                msgs = page.locator('.sg-msg-assistant').count()
-                print(f"    wait {(i+1)*5}s  spinner={spinner}  assistant_msgs={msgs}")
-                if msgs > 0 and spinner == 0:
+                intro = page.evaluate("() => (document.body.innerText.match(/Introduction|Methods|Results|Discussion/g)||[]).length")
+                body_len = page.evaluate("() => document.body.innerText.length")
+                print(f"    wait {(i+1)*5}s  spinner={spinner}  section_kw_hits={intro}  body={body_len}")
+                if spinner == 0 and intro >= 4 and body_len > 3000:
+                    print("    ✓ 5섹션 양식 양식 양식 — 양식 양식 양식")
                     break
         except Exception as e:
             print(f"    Build click failed: {e}")
