@@ -32,52 +32,52 @@ OUT.mkdir(parents=True, exist_ok=True)
 
 
 def build_figure1_prisma():
-    """사용자 제공 양식 그대로 — 3 box flow (top / right excluded / bottom)."""
-    fig, ax = plt.subplots(figsize=(11.5, 7.5))
+    """사용자 제공 양식 그대로 — 3 box flow (top / right excluded / bottom).
+    텍스트가 박스 안에 정확히 들어가도록 두 줄 분할 + 넉넉한 박스 폭."""
+    fig, ax = plt.subplots(figsize=(13, 8.5))
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
 
-    # ── Top box: enrolled ──
-    top_x, top_y, top_w, top_h = 8, 80, 84, 12
+    # ── Top box: enrolled (텍스트 두 줄 분할로 박스 안 보장) ──
+    top_x, top_y, top_w, top_h = 6, 78, 88, 14
     rect_top = mpatches.Rectangle((top_x, top_y), top_w, top_h,
                                     linewidth=1.0, edgecolor="black", facecolor="white")
     ax.add_patch(rect_top)
-    # 한 줄 normal + (n=54,170)만 bold — 별도 text 호출 + x 좌표 분리
-    top_normal = ("Korean adolescents aged 12–18 responded to the Korea Youth "
-                  "Risk Behavior Web-based Survey (KYRBS) 2025  ")
-    top_bold = "(n = 54,170)"
-    # 전체를 한 줄로, normal 부분 ha=center로 그리고 bold는 그 옆에
-    # 단순화 — 전체를 한 줄로 normal + bold 합쳐서 표시 (mixed weight)
-    cy = top_y + top_h/2
-    # 측정용: 임시 텍스트로 너비 계산
+    cx = top_x + top_w/2
+    # Line 1: normal text
+    ax.text(cx, top_y + top_h * 0.62,
+            "Korean adolescents aged 12–18 responded to the Korea Youth Risk Behavior",
+            fontsize=10.5, ha="center", va="center", fontweight="normal")
+    # Line 2: "Web-based Survey (KYRBS) 2025  " + bold "(n = 54,170)" — 가운데 정렬
+    line2_normal = "Web-based Survey (KYRBS) 2025  "
+    line2_bold = "(n = 54,170)"
+    cy2 = top_y + top_h * 0.28
+    # 너비 측정해서 두 부분을 가운데 정렬
     fig_local = ax.figure
     fig_local.canvas.draw()
-    txt_full = ax.text(top_x + top_w/2, cy, top_normal + top_bold,
-                        fontsize=10, ha="center", va="center", alpha=0)
-    bb = txt_full.get_window_extent(renderer=fig_local.canvas.get_renderer())
+    tmp = ax.text(cx, cy2, line2_normal + line2_bold,
+                   fontsize=10.5, ha="center", va="center", alpha=0)
+    bb = tmp.get_window_extent(renderer=fig_local.canvas.get_renderer())
     bb_data = bb.transformed(ax.transData.inverted())
-    txt_full.remove()
-    full_w = bb_data.width
-    left_x = top_x + top_w/2 - full_w/2
-    # normal 부분 — left aligned, 좌측 시작점에서
-    n_text = ax.text(left_x, cy, top_normal, fontsize=10, ha="left", va="center",
-                      fontweight="normal")
+    tmp.remove()
+    left_start = cx - bb_data.width / 2
+    n_text = ax.text(left_start, cy2, line2_normal,
+                      fontsize=10.5, ha="left", va="center", fontweight="normal")
     fig_local.canvas.draw()
     n_bb = n_text.get_window_extent(renderer=fig_local.canvas.get_renderer())
     n_bb_data = n_bb.transformed(ax.transData.inverted())
-    # bold 부분 — normal 끝나는 위치에서 이어 붙임
-    ax.text(left_x + n_bb_data.width, cy, top_bold,
-            fontsize=10, ha="left", va="center", fontweight="bold")
+    ax.text(left_start + n_bb_data.width, cy2, line2_bold,
+            fontsize=10.5, ha="left", va="center", fontweight="bold")
 
     # ── Right exclusion box ──
-    exc_x, exc_y, exc_w, exc_h = 50, 30, 40, 42
+    exc_x, exc_y, exc_w, exc_h = 50, 25, 44, 48
     rect_exc = mpatches.Rectangle((exc_x, exc_y), exc_w, exc_h,
                                     linewidth=1.0, edgecolor="black", facecolor="white")
     ax.add_patch(rect_exc)
-    # Header (bold)
-    ax.text(exc_x + 1.5, exc_y + exc_h - 3,
+    # Header (bold) — 박스 안에 들어가도록 두 줄 분할
+    ax.text(exc_x + 1.5, exc_y + exc_h - 3.5,
             "Excluded participants (n = 3,198): some individuals met",
             fontsize=9.5, ha="left", va="top", fontweight="bold")
-    ax.text(exc_x + 1.5, exc_y + exc_h - 6.5,
+    ax.text(exc_x + 1.5, exc_y + exc_h - 7,
             "more than one variable for missing",
             fontsize=9.5, ha="left", va="top", fontweight="bold")
 
@@ -94,61 +94,59 @@ def build_figure1_prisma():
          "intake (n=0)"),
         "Missing school type (n=501)",
     ]
-    y_cursor = exc_y + exc_h - 11
-    line_h = 3.2
+    y_cursor = exc_y + exc_h - 12
+    line_h = 3.4
     for item in bullets:
         if isinstance(item, tuple):
-            ax.text(exc_x + 2, y_cursor, f"• {item[0]}",
+            ax.text(exc_x + 2.5, y_cursor, f"• {item[0]}",
                     fontsize=9, ha="left", va="top")
             y_cursor -= line_h
-            ax.text(exc_x + 4, y_cursor, item[1],
+            ax.text(exc_x + 4.5, y_cursor, item[1],
                     fontsize=9, ha="left", va="top")
             y_cursor -= line_h
         else:
-            ax.text(exc_x + 2, y_cursor, f"• {item}",
+            ax.text(exc_x + 2.5, y_cursor, f"• {item}",
                     fontsize=9, ha="left", va="top")
             y_cursor -= line_h
 
     # ── Bottom box: eligible ──
-    bot_x, bot_y, bot_w, bot_h = 8, 6, 84, 13
+    bot_x, bot_y, bot_w, bot_h = 6, 5, 88, 14
     rect_bot = mpatches.Rectangle((bot_x, bot_y), bot_w, bot_h,
                                     linewidth=1.0, edgecolor="black", facecolor="white")
     ax.add_patch(rect_bot)
-    # 첫 줄: 두 부분으로 분리 — "Eligible participants " (normal) + "(n = 50,972)" (bold)
-    cy1 = bot_y + bot_h * 0.65
-    line1_normal = "Eligible participants "
-    line1_bold = "(n = 50,972)"
-    # 측정으로 가운데 정렬
+    # 첫 줄: "Eligible participants (n = 50,972)" — normal + bold 두 부분
+    cy_b1 = bot_y + bot_h * 0.65
+    bl_normal = "Eligible participants "
+    bl_bold = "(n = 50,972)"
     fig_local2 = ax.figure
     fig_local2.canvas.draw()
-    tmp1 = ax.text(bot_x + bot_w/2, cy1, line1_normal + line1_bold,
-                    fontsize=10, ha="center", va="center", alpha=0)
+    tmp1 = ax.text(bot_x + bot_w/2, cy_b1, bl_normal + bl_bold,
+                    fontsize=10.5, ha="center", va="center", alpha=0)
     bb1 = tmp1.get_window_extent(renderer=fig_local2.canvas.get_renderer())
     bb1_data = bb1.transformed(ax.transData.inverted())
     tmp1.remove()
     left1_x = bot_x + bot_w/2 - bb1_data.width/2
-    n1 = ax.text(left1_x, cy1, line1_normal,
-                  fontsize=10, ha="left", va="center", fontweight="normal")
+    n1 = ax.text(left1_x, cy_b1, bl_normal,
+                  fontsize=10.5, ha="left", va="center", fontweight="normal")
     fig_local2.canvas.draw()
     n1_bb = n1.get_window_extent(renderer=fig_local2.canvas.get_renderer())
     n1_bb_data = n1_bb.transformed(ax.transData.inverted())
-    ax.text(left1_x + n1_bb_data.width, cy1, line1_bold,
-            fontsize=10, ha="left", va="center", fontweight="bold")
+    ax.text(left1_x + n1_bb_data.width, cy_b1, bl_bold,
+            fontsize=10.5, ha="left", va="center", fontweight="bold")
     # 둘째 줄: Men / Women
     ax.text(bot_x + bot_w/2, bot_y + bot_h * 0.28,
             "Men = 25,963     Women = 25,009",
-            fontsize=10, ha="center", va="center")
+            fontsize=10.5, ha="center", va="center")
 
     # ── 연결선: top center → vertical down → tee → bottom + right exclusion ──
-    cx = top_x + top_w/2   # center x of top/bot boxes
-    # Top box 좌표 갱신 후 재계산
-    top_bottom = top_y       # box 아래쪽 y
-    bot_top = bot_y + bot_h  # box 위쪽 y
+    line_x = top_x + top_w/2   # center x of top/bot boxes
+    top_bottom = top_y         # top box 아래쪽 y
+    bot_top = bot_y + bot_h    # bottom box 위쪽 y
     # Vertical line from top box bottom to bottom box top
-    ax.plot([cx, cx], [bot_top, top_bottom], color="black", linewidth=1.0)
+    ax.plot([line_x, line_x], [bot_top, top_bottom], color="black", linewidth=1.0)
     # Horizontal tee to right exclusion box (at mid-height of exclusion box)
     tee_y = exc_y + exc_h/2
-    ax.plot([cx, exc_x], [tee_y, tee_y], color="black", linewidth=1.0)
+    ax.plot([line_x, exc_x], [tee_y, tee_y], color="black", linewidth=1.0)
 
     # ── Title (caption) ──
     fig.text(0.05, 0.96,
