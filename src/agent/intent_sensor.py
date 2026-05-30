@@ -29,16 +29,33 @@
 """
 from __future__ import annotations
 
+import json
+import os
 import re
+import statistics
+import threading
 from collections import Counter
 from dataclasses import dataclass, field, asdict
+from pathlib import Path
 from typing import List, Optional
 
+from src.config.logging_config import get_logger
 
-# ── Signal patterns ─────────────────────────────────────────────────────
+_log = get_logger(__name__)
+_INTENT_DIR = Path(os.environ.get("AGENT_SELF_DIR", "data/agent_self"))
+_INTENT_FILE = _INTENT_DIR / "current_intent.json"
+_PATTERNS_FILE = _INTENT_DIR / "intent_patterns.json"
+_LOCK = threading.Lock()
+
+
+# ── Signal patterns (data/agent_self/intent_patterns.json으로 외부화 가능) ──
+#
+# 다른 도메인(예: 정신과·소아과·간호·정책)에서도 쓰려면 intent_patterns.json에
+# {"emphasis": [["regex", "label"], ...], "avoidance": [...], "reader": [...], "tone": [...]}
+# 양식으로 두면 부팅 시 자동 로드. 없으면 아래 기본(공중보건/의학 도메인) 사용.
 
 # 강조 신호 — 사용자가 무엇을 부각하고 싶어하는지
-_EMPHASIS_MARKERS = [
+_EMPHASIS_MARKERS_DEFAULT = [
     (r"꼭|반드시|특히|중요", "must_include"),
     (r"강조|부각|살려|돋보이게", "emphasize"),
     (r"\bvs\.?\b|대비|비교|차이|gap", "contrast"),
@@ -50,7 +67,7 @@ _EMPHASIS_MARKERS = [
 ]
 
 # 회피 신호 — 사용자가 빼고 싶어하는 양식
-_AVOIDANCE_MARKERS = [
+_AVOIDANCE_MARKERS_DEFAULT = [
     (r"너무\s*(많아|길어|장황|복잡|formal|academic)", "too_verbose"),
     (r"AI.?스러|로봇|뻔한|cliche|기계적", "anti_ai_tone"),
     (r"단순|간결|짧게|줄여|brief", "want_concise"),
@@ -60,7 +77,7 @@ _AVOIDANCE_MARKERS = [
 ]
 
 # 독자 가정 — 누가 읽을 것을 가정하는가
-_READER_MARKERS = [
+_READER_MARKERS_DEFAULT = [
     (r"NEJM|Lancet|JAMA|JKMS|high.?impact|top.?journal", "top_journal_reviewer"),
     (r"reviewer|reviewer.?comment|peer.?review|동료심사", "reviewer_focus"),
     (r"임상의|physician|practitioner|clinician", "clinician"),
@@ -70,13 +87,32 @@ _READER_MARKERS = [
 ]
 
 # 톤 신호
-_TONE_MARKERS = [
+_TONE_MARKERS_DEFAULT = [
     (r"strong|강하게|단호|definitive|확실", "assertive"),
     (r"cautious|조심|hedging|약화|tentative", "cautious"),
     (r"비판|critical|limitation|반박|반대|counter", "critical"),
     (r"설명|explanatory|clarify|풀어서|쉽게", "explanatory"),
     (r"흥미|engaging|narrative|이야기", "engaging"),
 ]
+
+
+def _load_external_patterns() -> dict:
+    """data/agent_self/intent_patterns.json에서 도메인별 패턴 로드. 없으면 기본."""
+    if not _PATTERNS_FILE.exists():
+        return {}
+    try:
+        d = json.loads(_PATTERNS_FILE.read_text(encoding="utf-8"))
+        return {k: [(p, l) for p, l in v] for k, v in d.items() if isinstance(v, list)}
+    except Exception as e:
+        _log.debug("intent_patterns.json 로드 실패(기본 사용): %s", e)
+        return {}
+
+
+_EXT = _load_external_patterns()
+_EMPHASIS_MARKERS = _EXT.get("emphasis", _EMPHASIS_MARKERS_DEFAULT)
+_AVOIDANCE_MARKERS = _EXT.get("avoidance", _AVOIDANCE_MARKERS_DEFAULT)
+_READER_MARKERS = _EXT.get("reader", _READER_MARKERS_DEFAULT)
+_TONE_MARKERS = _EXT.get("tone", _TONE_MARKERS_DEFAULT)
 
 
 @dataclass
@@ -178,7 +214,7 @@ def _infer_user_persona(prior_messages: list, current_prompt: str) -> dict:
         "mixed"
     )
 
-    # 양식 양식 양식 — Yoosun 양식 양식 양식 양식
+    # 스타일 신호 — Yoosun 양식 hedging/표현 사용 흔적
     yoosun_indicators = bool(re.search(r"yoosun|조유선|hedg|consistent with|associated with",
                                          blob, re.IGNORECASE))
 

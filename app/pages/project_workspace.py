@@ -354,7 +354,7 @@ def _export_pdf(project: dict):
         from reportlab.pdfbase.ttfonts import TTFont
         from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
 
-        # 한국어 폰트 등록 (docker에 fonts-nanum 양식 양식 양식)
+        # 한국어 폰트 등록 (docker에 fonts-nanum 설치됨)
         try:
             pdfmetrics.registerFont(TTFont("NanumGothic", "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"))
             base_font = "NanumGothic"
@@ -725,7 +725,7 @@ def _render_chat_left(project: dict, pid: str):
         _save_project(pid, project)
         st.session_state["_ws_auto_run_pending"] = initial   # 이번 rerun에서 agentic step 실행
     # 미완 작업: 직전 rerun에 _ws_auto_run_pending이 set돼 있으면 양식 자동 실행
-    # _orchestrated_paper_run 양식 양식 — KYRBS 양식 양식 → StatBridge → 5섹션 양식 양식 양식 양식 양식 양식
+    # _orchestrated_paper_run 호출 — KYRBS 로드 → StatBridge → 5섹션 자동 작성 → safety 게이트
     auto_run = st.session_state.pop("_ws_auto_run_pending", None)
     if auto_run:
         with st.spinner("✨ 논문 초안 생성 중… (KYRBS 로드 → StatBridge 회귀 → 5섹션 작성 → safety 게이트)"):
@@ -1272,17 +1272,18 @@ def _empty_sections_notice() -> dict:
 
 
 def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
-    """진짜 유기적 논문 생성 (2026-05-30 근본 양식).
+    """진짜 유기적 논문 생성 (2026-05-30 근본 수정).
     StatBridge 통계 → PaperWriter 5섹션 → project.sections + chat 결과 메시지.
 
     agentic_loop의 tool-use 양식이 아닌, 결과 보장 양식. agentic_loop는 후속 보강용.
 
-    Returns: 최종 pid (양식 양식 'new' 양식 양식 양식 양식 양식 양식 양식 양식 양식)
+    Returns: 최종 pid (입력이 'new'면 paper_{timestamp}로 자동 변환된 새 pid)
     """
     import traceback, time as _time
     from pathlib import Path as _P
 
-    # ★ pid="new" 양식 양식 양식 양식 양식 — _save_project 양식 양식 양식 양식 양식 양식 양식
+    # ★ pid="new" 저장 구멍 우회 — _save_project가 pid=='new'면 즉시 return해서 디스크 저장 안 됨.
+    # paper_{timestamp}로 자동 변환해서 영속화 보장.
     if pid == "new":
         new_pid = f"paper_{int(_time.time())}"
         st.session_state["sg_active_project"] = new_pid
@@ -1523,7 +1524,7 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
         # 섹션 dict 추출 (last_sections 우선)
         sections = getattr(pw, "last_sections", None)
         if not sections:
-            # fallback: text 양식 양식 양식 split
+            # fallback: text 통째로 받은 경우 단순 분할
             sections = {"Abstract": paper_text[:1500],
                         "Introduction": "", "Methods": "", "Results": "", "Discussion": ""}
         project["sections"] = sections

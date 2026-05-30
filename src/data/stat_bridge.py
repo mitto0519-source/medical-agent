@@ -215,32 +215,32 @@ class StatBridge:
                 X[col1] = clean[v1].astype(float) * clean[v2].astype(float)
 
         y = clean[outcome].astype(float)
-        # ── 자동 binarize (2026-05-30): Logit은 y가 [0,1] 양식 양식 양식 양식 양식 양식 양식 양식
-        # KYRBS depression 같은 ordinal/Likert (1-5) 또는 1/2 양식 양식 양식 양식 양식 양식 양식 양식
+        # ── 자동 binarize (2026-05-30): Logit은 y가 [0,1] 안에 있어야 함.
+        # KYRBS depression 같은 ordinal/Likert (1-5) 또는 1/2 코딩을 0/1로 자동 변환.
         unique_vals = sorted(y.dropna().unique())
         if not set(unique_vals).issubset({0.0, 1.0}):
             if len(unique_vals) == 2:
-                # 1/2, 0/2 양식 양식 양식 양식 양식 양식 → 양식 양식 = 양식 양식 (1)
+                # 1/2, 0/2 같은 두 값 코딩 → 큰 값을 사건(1)로
                 pos_val = float(max(unique_vals))
                 y = (y == pos_val).astype(float)
-                _log.info("outcome '%s' 자동 binarize: %s → 1 (양식 %d), %s → 0 (양식 %d)",
+                _log.info("outcome '%s' 자동 binarize: %s → 1 (n=%d), %s → 0 (n=%d)",
                           outcome, pos_val, int(y.sum()),
                           float(min(unique_vals)), int(len(y) - y.sum()))
             elif len(unique_vals) >= 3:
-                # 양식 양식 (예: 1-5 Likert) → 양식 양식 cutoff
-                # 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식 양식 양식
+                # 다값 (예: 1-5 Likert) → 중앙값 초과를 사건으로
+                # 중앙값 cutoff는 임시 양식 — 실제 임상 기준이 있으면 spec.outcome_cutoff로 명시 권장.
                 med = float(y.median())
                 y = (y > med).astype(float)
-                _log.info("outcome '%s' 자동 binarize: ordinal %d-levels → 양식 cutoff > %.1f "
-                          "(양식 %d = 1, 양식 %d = 0)",
+                _log.info("outcome '%s' 자동 binarize: ordinal %d-levels → cutoff > %.1f "
+                          "(사건 %d = 1, 비사건 %d = 0)",
                           outcome, len(unique_vals), med,
                           int(y.sum()), int(len(y) - y.sum()))
             else:
                 raise ValueError(
-                    f"outcome '{outcome}' 양식 binarize 양식: 양식 양식 양식 양식 {len(unique_vals)}개 "
-                    f"({unique_vals[:5]}). KYRBS 표준화 양식 양식 양식 양식 양식 양식 양식 양식 양식."
+                    f"outcome '{outcome}' binarize 불가: 고유값 {len(unique_vals)}개 "
+                    f"({unique_vals[:5]}). KYRBS 표준화 단계에서 결측 처리 또는 컬럼명 확인 필요."
                 )
-            # 양식 양식 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식
+            # 사건 수·비율 재계산 — 이후 로그·결과 보고에 사용
             n_outcome = int(y.sum())
             outcome_rate = n_outcome / len(y) * 100 if len(y) else 0.0
 

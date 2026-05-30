@@ -51,7 +51,7 @@ TOOL_SCHEMAS: List[dict] = [
         "name": "kyrbs_stat",
         "description": "KYRBS/KNHANES 원시자료로 즉시 회귀 분석. "
                         "outcome/exposure/covariates 자유 조합 가능 — 사용자가 '공변량에 BMI 추가' "
-                        "또는 'outcome을 스트레스로 변경' 양식 양식 요청하면 즉시 이 tool 호출 후 "
+                        "또는 'outcome을 스트레스로 변경' 같이 요청하면 즉시 이 tool 호출 후 "
                         "patch_preview로 Results/Methods 갱신. 결과: aOR, 95% CI, P, all_vars_or.",
         "input_schema": {
             "type": "object",
@@ -923,7 +923,7 @@ def build_system_with_preview(base_prompt: str, project: dict,
         if intent_block:
             parts.append(intent_block)
             parts.append("")
-        # 이후 RAG/components 양식 양식 양식 양식 양식 의도 키워드 추출
+        # 이후 RAG / components 검색 query에 주입할 의도 키워드 추출
         intent_emphasis_kws = list(sig.implicit_emphasis or [])
         intent_persona_kws = list((sig.user_persona_inferred or {}).get("top_domain_keywords", []))
         intent_voice = list(sig.voice_tone or [])
