@@ -3,6 +3,7 @@ numpy>=1.24.0
 pandas>=2.0.0
 scipy>=1.11.0
 scikit-learn>=1.3.0
+reportlab>=4.0.0  # PDF export (2026-05-30)
 
 # ── Statistical Analysis ──────────────────────────────────────────────
 statsmodels>=0.14.0
