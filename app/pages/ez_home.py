@@ -24,6 +24,37 @@ if str(_root) not in sys.path:
 
 import streamlit as st
 
+# ── Page-level config + 즉시 chrome_hide micro-CSS ──
+# 사용자 사고(2026-05-30): chip 첫 클릭 전 진입 시점에 sapphire 미주입 + Streamlit chrome
+# (Deploy/Stop/Menu/Toolbar) 노출되던 사고. 양식 양식 양식 양식 양식 양식 양식 양식.
+# set_page_config는 module-level 첫 st 호출이어야 함 → import 직후로 옮김.
+try:
+    st.set_page_config(
+        page_title="Medical-Agent · EZ home",
+        page_icon="🔬",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+except Exception:
+    pass  # streamlit_app.py가 이미 set_page_config 호출했으면 silently skip
+# 양식 진입 즉시 chrome 숨김 — sapphire가 박히기 전 시점에 raw 양식 노출 차단
+st.markdown(
+    "<style>"
+    "#MainMenu{visibility:hidden!important;display:none!important;}"
+    "header[data-testid='stHeader']{background:transparent!important;}"
+    "[data-testid='stToolbar']{display:none!important;}"
+    "[data-testid='stToolbarActions']{display:none!important;}"
+    "[data-testid='stDecoration']{display:none!important;}"
+    "[data-testid='stStatusWidget']{display:none!important;}"
+    "[data-testid='stAppDeployButton']{display:none!important;}"
+    ".stDeployButton{display:none!important;}"
+    "button[kind='header']{display:none!important;}"
+    "footer{visibility:hidden!important;display:none!important;}"
+    "html,body,[data-testid='stApp']{background:#1E1B4B!important;color:#F5F5FA!important;}"
+    "</style>",
+    unsafe_allow_html=True,
+)
+
 from app.styles.sapphire_glass import (
     inject_sapphire_glass, hero_title, glass_card, chip_row,
     project_grid, action_card,

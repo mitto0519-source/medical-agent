@@ -27,6 +27,33 @@ if str(_root) not in sys.path:
 
 import streamlit as st
 
+# ── Page-level config + 즉시 chrome_hide micro-CSS (2026-05-30, ez_home과 동일) ──
+try:
+    st.set_page_config(
+        page_title="Medical-Agent · Workspace",
+        page_icon="📝",
+        layout="wide",
+        initial_sidebar_state="collapsed",
+    )
+except Exception:
+    pass
+st.markdown(
+    "<style>"
+    "#MainMenu{visibility:hidden!important;display:none!important;}"
+    "header[data-testid='stHeader']{background:transparent!important;}"
+    "[data-testid='stToolbar']{display:none!important;}"
+    "[data-testid='stToolbarActions']{display:none!important;}"
+    "[data-testid='stDecoration']{display:none!important;}"
+    "[data-testid='stStatusWidget']{display:none!important;}"
+    "[data-testid='stAppDeployButton']{display:none!important;}"
+    ".stDeployButton{display:none!important;}"
+    "button[kind='header']{display:none!important;}"
+    "footer{visibility:hidden!important;display:none!important;}"
+    "html,body,[data-testid='stApp']{background:#1E1B4B!important;color:#F5F5FA!important;}"
+    "</style>",
+    unsafe_allow_html=True,
+)
+
 from app.styles.sapphire_glass import (
     inject_sapphire_glass, message_bubble, manuscript_preview_html, action_card,
 )
