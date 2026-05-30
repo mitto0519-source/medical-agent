@@ -37,20 +37,16 @@ def build_figure1_prisma():
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
 
     # ── Top box: enrolled ──
-    top_text = ("Korean adolescents aged 12–18 responded to the Korea Youth "
-                "Risk Behavior Web-based Survey (KYRBS) 2025 ")
-    top_bold = "(n = 54,170)"
-    top_x, top_y, top_w, top_h = 12, 82, 76, 10
+    top_x, top_y, top_w, top_h = 10, 80, 80, 12
     rect_top = mpatches.Rectangle((top_x, top_y), top_w, top_h,
                                     linewidth=1.0, edgecolor="black", facecolor="white")
     ax.add_patch(rect_top)
+    # 한 번만 그리기 — 본문 normal + (n=54,170) bold는 별도 mathtext로
     ax.text(top_x + top_w/2, top_y + top_h/2,
-            top_text + top_bold, fontsize=10, ha="center", va="center",
-            fontweight="normal")
-    # bold n
-    ax.text(top_x + top_w/2 + 0.3, top_y + top_h/2 - 0.5,
-            "                                                                                                                       " + top_bold,
-            fontsize=10, ha="center", va="center", fontweight="bold")
+            "Korean adolescents aged 12–18 responded to the Korea Youth "
+            "Risk Behavior Web-based Survey (KYRBS) 2025 "
+            r"$\bf{(n\ =\ 54{,}170)}$",
+            fontsize=10, ha="center", va="center", fontweight="normal")
 
     # ── Right exclusion box ──
     exc_x, exc_y, exc_w, exc_h = 50, 30, 40, 42
@@ -94,17 +90,16 @@ def build_figure1_prisma():
             y_cursor -= line_h
 
     # ── Bottom box: eligible ──
-    bot_x, bot_y, bot_w, bot_h = 12, 8, 76, 11
+    bot_x, bot_y, bot_w, bot_h = 10, 6, 80, 13
     rect_bot = mpatches.Rectangle((bot_x, bot_y), bot_w, bot_h,
                                     linewidth=1.0, edgecolor="black", facecolor="white")
     ax.add_patch(rect_bot)
-    ax.text(bot_x + bot_w/2, bot_y + bot_h/2 + 1.8,
-            "Eligible participants ", fontsize=10, ha="center", va="center")
-    # bold n부분 별도 양식 — 양식 다음 줄
-    ax.text(bot_x + bot_w/2, bot_y + bot_h/2 + 1.8,
-            "                                  (n = 50,972)",
-            fontsize=10, ha="center", va="center", fontweight="bold")
-    ax.text(bot_x + bot_w/2, bot_y + bot_h/2 - 2,
+    # 첫 줄: "Eligible participants (n = 50,972)" — n부분 bold mathtext
+    ax.text(bot_x + bot_w/2, bot_y + bot_h * 0.65,
+            r"Eligible participants $\bf{(n\ =\ 50{,}972)}$",
+            fontsize=10, ha="center", va="center")
+    # 둘째 줄: Men / Women
+    ax.text(bot_x + bot_w/2, bot_y + bot_h * 0.28,
             "Men = 25,963     Women = 25,009",
             fontsize=10, ha="center", va="center")
 
@@ -293,9 +288,8 @@ def build_figure3_forest():
 
 
 if __name__ == "__main__":
-    print("=== Building ZCB-Depression figures (STATA v2.4 aligned) ===")
+    print("=== Building ZCB-Depression figures (사용자 양식 그대로) ===")
     build_figure1_prisma()
-    build_figure2a_overall()
-    build_figure2b_sex()
+    build_figure2_sex()        # 단일 figure 2 — sex stratified
     build_figure3_forest()
-    print("\nAll figures saved to data/exports/")
+    print("\nFigures saved to data/exports/")
