@@ -26,10 +26,25 @@ def inject_sapphire_glass(*, hide_streamlit_chrome: bool = True) -> None:
     중복 주입은 idempotent (같은 <style> 블록 덮어씀)."""
     st.session_state[_INJECTED_FLAG] = True
 
+    # Streamlit 자체 chrome 전수 숨김 (2026-05-30 — 스크린샷 2번의 Share/Star/Edit/GitHub/Menu
+    # 노출 사고 영구 차단). 새 Streamlit은 stToolbar/stActionButton 양식 추가됨.
     chrome_hide = """
-        #MainMenu {visibility: hidden;}
-        header[data-testid="stHeader"] {background: transparent;}
-        footer {visibility: hidden;}
+        #MainMenu {visibility: hidden !important; display: none !important;}
+        header[data-testid="stHeader"] {background: transparent !important;}
+        [data-testid="stToolbar"] {display: none !important;}
+        [data-testid="stToolbarActions"] {display: none !important;}
+        [data-testid="stDecoration"] {display: none !important;}
+        [data-testid="stStatusWidget"] {display: none !important;}
+        [data-testid="stAppDeployButton"] {display: none !important;}
+        .stDeployButton {display: none !important;}
+        [data-testid="stAppViewBlockContainer"] > div:first-child > [data-testid="stToolbar"] {
+            display: none !important;
+        }
+        a[href*="github.com"][data-testid] {display: none !important;}
+        button[kind="header"] {display: none !important;}
+        footer {visibility: hidden !important; display: none !important;}
+        footer:after {display: none !important;}
+        #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 0 !important;}
     """ if hide_streamlit_chrome else ""
 
     st.markdown(f"""

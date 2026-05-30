@@ -139,38 +139,113 @@ def render_quick_actions(*, context: str, n_cols: int = 4,
                 _dispatch(a, context=context, on_slash=on_slash)
 
 
+def _read_user_prompt() -> str:
+    """현재 페이지의 입력바 값을 읽어 slash 인자로 자동 주입.
+    ez_home은 sg_home_prompt, workspace는 ws_form 안 text_area — 둘 다 시도."""
+    for k in ("sg_home_prompt", "ws_input_text", "sg_workspace_prompt"):
+        v = st.session_state.get(k)
+        if isinstance(v, str) and v.strip():
+            return v.strip()
+    return ""
+
+
+# slash별 "필수 인자 → 사용자 prompt에서 채울 키" 매핑 (2026-05-30 fix)
+_PROMPT_FILLS = {
+    "/research-question": ["topic", "query"],
+    "/study-design":      [],  # sections는 prompt가 아니라 docx에서 와야 함
+    "/run-analysis":      ["exposure"],
+    "/draft-section":     ["goal"],
+    "/strobe-review":     ["text"],
+    "/submit-journal":    [],
+    "/research-pulse":    [],
+}
+
+# slash별 "최소 필요 인자" — 부족하면 inline form 띄움
+_REQUIRED_ARGS = {
+    "/research-question": ["topic"],
+    "/study-design":      ["sections"],
+    "/run-analysis":      ["exposure"],
+    "/strobe-review":     ["text"],
+    "/submit-journal":    ["project"],
+}
+
+
+def _autofill_payload(slash_key: str, base_payload: Dict) -> Dict:
+    """입력바 prompt를 _PROMPT_FILLS에 따라 빈 인자에 자동 주입."""
+    p = dict(base_payload)
+    user_text = _read_user_prompt()
+    if not user_text:
+        return p
+    for arg in _PROMPT_FILLS.get(slash_key, []):
+        if not p.get(arg):
+            p[arg] = user_text
+    return p
+
+
+def _missing_required(slash_key: str, payload: Dict) -> list:
+    """필수 인자 중 빈 키들 반환."""
+    req = _REQUIRED_ARGS.get(slash_key, [])
+    return [k for k in req if not payload.get(k)]
+
+
 def _dispatch(action: Dict, *, context: str, on_slash=None) -> None:
-    """action.kind에 따라 분기."""
+    """action.kind에 따라 분기.
+
+    slash kind 처리 흐름 (2026-05-30 fix):
+      1) 입력바 prompt가 있으면 _PROMPT_FILLS에 따라 자동 인자 주입
+      2) 필수 인자가 여전히 비어있으면 inline form을 띄워 사용자에게 안내 (즉시 실패 X)
+      3) 다 채워졌으면 run_slash 실행
+    """
     kind = action.get("kind")
     key = action.get("key")
-    payload = action.get("payload") or {}
+    base_payload = action.get("payload") or {}
 
     if kind == "slash":
-        # 즉시 실행 (인자 없는 경우 default payload로)
+        payload = _autofill_payload(key, base_payload)
+        missing = _missing_required(key, payload)
+        if missing:
+            # 사용자에게 명확히 안내 — 즉시 fail 토스트 대신 inline 안내
+            need = ", ".join(missing)
+            st.session_state[f"_qa_need_{key}"] = {
+                "missing": missing, "label": action.get("label", key),
+                "hint": (
+                    f"💡 입력바에 {need}을(를) 입력 후 다시 누르면 자동 실행됩니다."
+                    if "topic" in missing or "text" in missing or "exposure" in missing
+                    else f"이 액션은 {need} 인자가 필요합니다."
+                ),
+            }
+            st.warning(
+                f"**{action.get('label', key)}** — 입력바에 `{need}`을(를) "
+                f"먼저 적고 다시 눌러 주세요."
+            )
+            return
+
+        # 인자 OK — 실행
         try:
             from src.agent.slash_commands import run_slash
-            result = run_slash(key, payload)
+            with st.spinner(f"{action.get('label', key)} 실행 중..."):
+                result = run_slash(key, payload)
             if on_slash:
                 on_slash(key, result)
             else:
                 if result.get("ok"):
-                    st.toast(f"{key} 실행됨", icon="✅")
+                    st.toast(f"{action.get('label', key)} 완료", icon="✅")
                     st.session_state[f"_qa_last_{key}"] = result
                 else:
-                    st.error(f"{key} 실패: {result.get('error', '')}")
+                    st.error(f"{action.get('label', key)} 실패: {result.get('error', '')}")
         except Exception as e:
             st.error(f"slash 실패: {e}")
 
     elif kind == "modal":
         try:
             from app.sapphire_actions import open_action
-            open_action(key, **payload)
+            open_action(key, **base_payload)
         except Exception as e:
             st.error(f"modal 실패: {e}")
 
     elif kind == "chat_seed":
-        # workspace 진입 + prompt seed 채우기
-        prompt = payload.get("prompt", "")
+        # workspace 진입 + prompt seed 채우기 (사용자가 입력바에 적은 게 있으면 그걸 우선)
+        prompt = _read_user_prompt() or base_payload.get("prompt", "")
         st.session_state["sg_active_project"] = "new"
         st.session_state["sg_initial_prompt"] = prompt
         try:
