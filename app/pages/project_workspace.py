@@ -783,9 +783,10 @@ def _delegate_to_writer(prompt: str, project: dict, mode: str) -> dict:
 
 
 def _render_preview_right(project: dict):
-    """우측 preview tab bar + 내용."""
+    """우측 preview tab bar + 내용 (2026-05-30: References 탭 추가)."""
     tab = st.session_state.get("sg_active_tab", "Manuscript")
-    tabs = st.tabs(["📄 Manuscript", "📊 Figures", "🧮 Tables", "📎 Supplement"])
+    tabs = st.tabs(["📄 Manuscript", "📊 Figures", "🧮 Tables",
+                    "📚 References", "📎 Supplement"])
 
     with tabs[0]:
         sections = project.get("sections") or _demo_sections()
@@ -828,6 +829,162 @@ def _render_preview_right(project: dict):
                 st.json(t.get("data", []))
 
     with tabs[3]:
+        # ── References 탭 (2026-05-30 신규) ──
+        st.markdown("<div class='sg-card'>", unsafe_allow_html=True)
+        st.markdown("**📚 Reference Library**")
+        refs = project.get("references", []) or []
+        st.caption(f"등록된 인용: **{len(refs)}**개 · Vancouver 양식 자동")
+
+        # 현재 references 표시
+        if refs:
+            for i, r in enumerate(refs, 1):
+                title = r.get("title", "") or "(no title)"
+                authors = ", ".join(r.get("authors", [])[:3])
+                if len(r.get("authors", [])) > 3:
+                    authors += " et al."
+                year = r.get("year", "")
+                journal = r.get("journal", "")
+                pmid = r.get("pmid", "")
+                doi = r.get("doi", "")
+                st.markdown(
+                    f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
+                    f"<div style='color:#F5F5FA;font-size:0.88rem;'>"
+                    f"<b>[{i}]</b> {title[:200]}</div>"
+                    f"<div style='color:#A3A3B8;font-size:0.76rem;'>"
+                    f"{authors} · {journal} {year}"
+                    f"{f' · PMID:{pmid}' if pmid else ''}"
+                    f"{f' · DOI:{doi}' if doi else ''}</div></div>",
+                    unsafe_allow_html=True)
+        else:
+            st.info("아직 등록된 인용이 없습니다. 아래로 PubMed에서 자동 검색하거나 PMID를 추가하세요.")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        # PubMed 검색 + 추가 + 본문 [n] 자동 삽입
+        st.markdown("<div class='sg-card' style='margin-top:12px;'>", unsafe_allow_html=True)
+        st.markdown("**+ 인용 추가**")
+        c1, c2 = st.columns([3, 1])
+        with c1:
+            pq = st.text_input("PubMed 검색어", key="ws_ref_q",
+                                placeholder="예: zero-calorie beverage depression adolescent")
+        with c2:
+            pn = st.number_input("결과 수", 3, 30, 8, key="ws_ref_n")
+        if st.button("🔍 PubMed 검색 → 자동 추가", type="primary", key="ws_ref_search"):
+            try:
+                from src.export.reference_library import ReferenceLibrary
+                slug = (project.get("topic") or {}).get("title", pid)[:60] or pid
+                lib = ReferenceLibrary(paper_slug=slug)
+                # 기존 refs 양식 동기화
+                for r in refs:
+                    lib.add_from_dict(r)
+                added = lib.search_and_add(pq, max_results=int(pn))
+                lib.save()
+                # project 양식 다시 반영
+                project["references"] = [r.to_dict() for r in lib.get_refs()]
+                _save_project(pid, project)
+                st.success(f"✓ {added}개 인용 추가 → 총 {len(lib)}개")
+                st.rerun()
+            except Exception as e:
+                st.error(f"검색 실패: {e}")
+
+        pmid_in = st.text_input("PMID 직접 (쉼표/공백 구분)", key="ws_ref_pmid",
+                                  placeholder="39012345, 38991234")
+        if st.button("➕ PMID로 추가", key="ws_ref_pmid_add"):
+            try:
+                from src.export.reference_library import ReferenceLibrary
+                slug = (project.get("topic") or {}).get("title", pid)[:60] or pid
+                lib = ReferenceLibrary(paper_slug=slug)
+                for r in refs:
+                    lib.add_from_dict(r)
+                import re as _re3
+                pmids = [p for p in _re3.split(r"[,\s]+", pmid_in) if p.strip().isdigit()]
+                added = lib.add_from_pmids(pmids)
+                lib.save()
+                project["references"] = [r.to_dict() for r in lib.get_refs()]
+                _save_project(pid, project)
+                st.success(f"✓ {added}개 추가")
+                st.rerun()
+            except Exception as e:
+                st.error(f"추가 실패: {e}")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        # 본문 [n] 자동 삽입 + Export 모음
+        st.markdown("<div class='sg-card' style='margin-top:12px;'>", unsafe_allow_html=True)
+        st.markdown("**🔗 본문 인용 연동 + Export**")
+        col_a, col_b = st.columns(2)
+        with col_a:
+            if st.button("📝 본문에 [n] 자동 삽입", key="ws_ref_inline", use_container_width=True):
+                try:
+                    from src.export.reference_library import (
+                        ReferenceLibrary, insert_inline_citations,
+                    )
+                    slug = (project.get("topic") or {}).get("title", pid)[:60] or pid
+                    lib = ReferenceLibrary(paper_slug=slug)
+                    for r in refs:
+                        lib.add_from_dict(r)
+                    sections = project.get("sections") or {}
+                    for sec_name in ("Introduction", "Methods", "Results", "Discussion"):
+                        body = sections.get(sec_name)
+                        if isinstance(body, str) and body.strip():
+                            sections[sec_name] = insert_inline_citations(body, lib)
+                    project["sections"] = sections
+                    _save_project(pid, project)
+                    st.success("✓ 본문에 [n] 인용 삽입 완료")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"삽입 실패: {e}")
+        with col_b:
+            if refs:
+                try:
+                    from src.export.reference_library import ReferenceLibrary
+                    slug = (project.get("topic") or {}).get("title", pid)[:60] or pid
+                    lib = ReferenceLibrary(paper_slug=slug)
+                    for r in refs:
+                        lib.add_from_dict(r)
+                    formatted = lib.format_list("Vancouver")
+                    st.download_button(
+                        "⬇ Vancouver 목록 (.txt)",
+                        data=formatted.encode("utf-8"),
+                        file_name=f"{slug}_refs.txt", mime="text/plain",
+                        use_container_width=True, key="ws_ref_dl_txt")
+                except Exception:
+                    pass
+        # EndNote XML + BibTeX
+        col_c, col_d = st.columns(2)
+        with col_c:
+            if refs:
+                try:
+                    from src.export.reference_library import ReferenceLibrary
+                    slug = (project.get("topic") or {}).get("title", pid)[:60] or pid
+                    lib = ReferenceLibrary(paper_slug=slug)
+                    for r in refs:
+                        lib.add_from_dict(r)
+                    xml_str = lib.export_endnote_xml()
+                    st.download_button(
+                        "⬇ EndNote XML",
+                        data=xml_str.encode("utf-8"),
+                        file_name=f"{slug}.xml", mime="application/xml",
+                        use_container_width=True, key="ws_ref_dl_xml")
+                except Exception:
+                    pass
+        with col_d:
+            if refs:
+                try:
+                    from src.export.reference_library import ReferenceLibrary
+                    slug = (project.get("topic") or {}).get("title", pid)[:60] or pid
+                    lib = ReferenceLibrary(paper_slug=slug)
+                    for r in refs:
+                        lib.add_from_dict(r)
+                    bib_str = lib.export_bibtex()
+                    st.download_button(
+                        "⬇ BibTeX",
+                        data=bib_str.encode("utf-8"),
+                        file_name=f"{slug}.bib", mime="text/plain",
+                        use_container_width=True, key="ws_ref_dl_bib")
+                except Exception:
+                    pass
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    with tabs[4]:
         # Supplement: STROBE 체크리스트 + Stata do-file + consistency report
         st.markdown("<div class='sg-card'>", unsafe_allow_html=True)
         st.markdown("**STROBE Reporting Checklist**")
@@ -1112,6 +1269,29 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
         _emit_system("safety_check", f"overall={rep.overall} failed={rep.failed_gates} warn={rep.warning_gates}")
     except Exception as e:
         _emit_system("safety_check_err", f"{type(e).__name__}: {e}")
+
+    # 5.5) 자동 PubMed 인용 검색 + 본문 [n] 삽입 (2026-05-30 — References 자동 채우기)
+    try:
+        from src.export.reference_library import (
+            ReferenceLibrary, insert_inline_citations,
+        )
+        slug = (prompt[:60].strip() or "manuscript").replace(" ", "_")
+        lib = ReferenceLibrary(paper_slug=slug)
+        # 주제 키워드 영문 변환 — exposure/outcome 양식
+        query_en = f"{exposure} {outcome} adolescent Korean".replace("_", " ")
+        added = lib.search_and_add(query_en, max_results=8)
+        if added > 0:
+            lib.save()
+            project["references"] = [r.to_dict() for r in lib.get_refs()]
+            # 본문에 [n] 자동 삽입
+            for sec_name in ("Introduction", "Methods", "Results", "Discussion"):
+                body = sections.get(sec_name)
+                if isinstance(body, str) and body.strip():
+                    sections[sec_name] = insert_inline_citations(body, lib)
+            project["sections"] = sections
+            _emit_system("refs_added", f"PubMed 자동 {added}개 추가 → 본문 [n] 삽입 완료")
+    except Exception as e:
+        _emit_system("refs_skip", f"인용 자동 추가 스킵: {type(e).__name__}: {str(e)[:120]}")
 
     # 6) 사용자 친화 결과 메시지
     try:
