@@ -49,15 +49,26 @@ TOOL_SCHEMAS: List[dict] = [
     },
     {
         "name": "kyrbs_stat",
-        "description": "KYRBS 2025 원시자료(n=54,170)로 survey-weighted logistic 회귀 즉시 실행. "
-                        "결과(aOR, 95% CI, P)를 반환.",
+        "description": "KYRBS/KNHANES 원시자료로 즉시 회귀 분석. "
+                        "outcome/exposure/covariates 자유 조합 가능 — 사용자가 '공변량에 BMI 추가' "
+                        "또는 'outcome을 스트레스로 변경' 양식 양식 요청하면 즉시 이 tool 호출 후 "
+                        "patch_preview로 Results/Methods 갱신. 결과: aOR, 95% CI, P, all_vars_or.",
         "input_schema": {
             "type": "object",
             "properties": {
-                "outcome": {"type": "string", "description": "depression/stress/sleep_satis 등 표준 컬럼명"},
-                "exposure": {"type": "string", "description": "zcb_freq/ssb_freq/screen_time 등"},
+                "outcome": {"type": "string",
+                             "description": "결과변인. depression/stress/sleep_satis/insufficient_sleep/suicide_ideation 등 KYRBS 표준 컬럼명"},
+                "exposure": {"type": "string",
+                              "description": "주요 노출. zcb_freq/ssb_freq/screen_time/smartphone_hours/smoking/alcohol/physical_act 등"},
                 "covariates": {"type": "array", "items": {"type": "string"},
-                                "description": "공변량 리스트. 미지정 시 ['sex','age','school_type']."},
+                                "description": "공변량 리스트. 미지정 시 표준 11개 (sex,age,school_type,family_econ,academic_perf,bmi,smoking,alcohol,physical_act,screen_time,breakfast). "
+                                                "사용자 요청에 따라 자유롭게 추가/제거."},
+                "years": {"type": "array", "items": {"type": "integer"},
+                           "description": "차수 연도 (예: [2024] 또는 [2020,2021,2022,2023,2024,2025]). 미지정 시 가장 최근 1년."},
+                "dataset": {"type": "string", "enum": ["KYRBS", "KNHANES"],
+                             "description": "데이터셋 종류. 기본 KYRBS."},
+                "analysis": {"type": "string", "enum": ["logistic", "linear", "gee_logistic"],
+                              "description": "분석 종류. 기본 logistic."},
             },
             "required": ["outcome", "exposure"],
         },
@@ -415,37 +426,139 @@ def _h_patch_preview(inputs, get_project, set_project, append_chat_event):
             f"Preview docx 갱신됨. before_len={len(before)} after_len={len(after)}.")
 
 
-def _h_kyrbs_stat(inputs):
-    from pathlib import Path as _P
-    from src.data.kyrbs_raw_loader import KYRBSLoader
-    from src.data.stat_bridge import StatBridge
+# DataFrame 캐시 — 14초 KYRBS 로드를 매번 반복 안 하도록 (2026-05-30)
+# key: (dataset_kind, tuple(years)) → df
+_KYRBS_DF_CACHE: dict = {}
 
-    sav = _P("data/raw/kyrbs2025.sav")
-    if not sav.exists():
-        return "ERROR: kyrbs2025.sav 없음"
-    df, _ = KYRBSLoader().load(sav)
+
+def _load_kyrbs_cached(years: list[int], dataset_kind: str = "KYRBS"):
+    """절대경로 + 캐시. years=None/empty면 가장 최근 단일."""
+    from pathlib import Path as _P
+    import re as _re_cache
+    from src.data.kyrbs_raw_loader import KYRBSLoader, KNHANESLoader
+    import pandas as _pd_cache
+
+    cache_key = (dataset_kind, tuple(sorted(years or [])))
+    if cache_key in _KYRBS_DF_CACHE:
+        return _KYRBS_DF_CACHE[cache_key]
+
+    _project_root = _P(__file__).resolve().parent.parent
+    raw_dir = _project_root / "data" / "raw"
+    uploads_dir = _project_root / "data" / "uploads"
+
+    available: dict = {}
+    if dataset_kind == "KYRBS":
+        for y in range(2005, 2026):
+            cand = raw_dir / f"kyrbs{y}.sav"
+            if cand.exists():
+                available[y] = cand
+        if uploads_dir.exists():
+            for p in uploads_dir.glob("*.sav"):
+                m = _re_cache.search(r"(20[0-2]\d)", p.name)
+                if m:
+                    available.setdefault(int(m.group(1)), p)
+    else:
+        for p in (raw_dir / "knhanes").glob("*.sav"):
+            m = _re_cache.search(r"(20[0-2]\d)", p.name)
+            if m:
+                available[int(m.group(1))] = p
+
+    if not available:
+        raise FileNotFoundError(
+            f"{dataset_kind} .sav 파일 없음. 로컬 docker (localhost:8501)에서 사용하거나 "
+            f"ez_home에 .sav 첨부 필요.")
+
+    target_years = [y for y in (years or []) if y in available] or [max(available.keys())]
+    loader = KYRBSLoader() if dataset_kind == "KYRBS" else KNHANESLoader()
+    dfs = []
+    for y in sorted(target_years):
+        df_y, _ = loader.load(available[y])
+        df_y["__survey_year"] = y
+        dfs.append(df_y)
+    df = _pd_cache.concat(dfs, ignore_index=True) if len(dfs) > 1 else dfs[0]
+    _KYRBS_DF_CACHE[cache_key] = (df, target_years)
+    return df, target_years
+
+
+def _h_kyrbs_stat(inputs):
+    """KYRBS/KNHANES 즉시 통계 — 캐시 + 다년도 + 유동 covariates (2026-05-30 강화).
+
+    inputs:
+      outcome, exposure (필수)
+      covariates: list[str] — 미지정 시 표준 11개 자동
+      years: list[int] | None — 미지정 시 최근 1년
+      dataset: "KYRBS"|"KNHANES" — 기본 KYRBS
+      analysis: "logistic"|"linear"|"gee_logistic" — 기본 logistic
+    """
+    from src.data.stat_bridge import StatBridge
+    try:
+        years = inputs.get("years") or []
+        dataset_kind = inputs.get("dataset") or "KYRBS"
+        df, used_years = _load_kyrbs_cached(years, dataset_kind=dataset_kind)
+    except Exception as e:
+        return json.dumps({"error": f"{type(e).__name__}: {str(e)[:200]}",
+                            "hint": "ez_home 📎 파일 첨부로 .sav 업로드하거나 localhost:8501 사용"},
+                           ensure_ascii=False)
+
     outcome = inputs["outcome"]
     exposure = inputs["exposure"]
-    covariates = inputs.get("covariates") or ["sex", "age", "school_type"]
+    # 기본 11 covariates — 미지정 시 자동
+    default_covs = ["sex", "age", "school_type", "family_econ", "academic_perf",
+                     "bmi", "smoking", "alcohol", "physical_act",
+                     "screen_time", "breakfast"]
+    requested = inputs.get("covariates") or default_covs
+    covariates = [c for c in requested if c in df.columns and c != exposure]
+    analysis = inputs.get("analysis") or "logistic"
+
     spec = {"outcome": outcome, "predictors": [exposure],
-             "covariates": [c for c in covariates if c in df.columns],
+             "covariates": covariates,
              "weight_var": "weight_var" if "weight_var" in df.columns else None,
              "strata_var": "strata" if "strata" in df.columns else None,
              "cluster_var": "cluster" if "cluster" in df.columns else None,
-             "analysis": "logistic"}
-    r = StatBridge().run(df, spec).to_dict()
+             "analysis": analysis}
+    try:
+        r = StatBridge().run(df, spec).to_dict()
+    except Exception as e:
+        return json.dumps({
+            "error": f"StatBridge 실패: {type(e).__name__}: {str(e)[:200]}",
+            "spec": spec,
+            "available_cols_sample": [c for c in df.columns[:40]],
+        }, ensure_ascii=False)
+
     vars_ = r.get("model_vars", [])
     tgt = next((v for v in vars_ if exposure in str(v.get("variable", "")).lower()), None)
-    if not tgt:
-        return f"WARN: {exposure}에 해당하는 추정치 없음. vars={[v.get('variable') for v in vars_[:6]]}"
-    return json.dumps({
-        "n": len(df), "outcome": outcome, "exposure": exposure,
-        "aOR": tgt.get("or_value"),
-        "ci_low": tgt.get("ci_lower"), "ci_high": tgt.get("ci_upper"),
-        "p_value": tgt.get("p_value"),
-        "n_covariates": len(spec["covariates"]),
+
+    # 모든 covariates의 aOR도 같이 반환 — LLM이 Table 1 만들 때 사용
+    cov_or = [{
+        "variable": v.get("variable"), "label": v.get("label"),
+        "aOR": v.get("or_value"),
+        "ci_low": v.get("ci_lower"), "ci_high": v.get("ci_upper"),
+        "p": v.get("p_value"),
+        "significant": v.get("significant"),
+    } for v in vars_ if v.get("or_value") is not None]
+
+    out = {
+        "n": int(r.get("n_total") or len(df)),
+        "outcome": outcome, "exposure": exposure,
+        "years_used": used_years,
+        "dataset": dataset_kind,
+        "covariates_used": covariates,
+        "covariates_dropped": [c for c in requested if c not in covariates],
+        "analysis": analysis,
         "design": "svy-style (pweight + cluster)" if spec["weight_var"] else "unweighted",
-    }, ensure_ascii=False)
+        "pseudo_r2": (r.get("model_metrics") or {}).get("pseudo_r2"),
+        "all_vars_or": cov_or,
+    }
+    if tgt:
+        out.update({
+            "aOR": tgt.get("or_value"),
+            "ci_low": tgt.get("ci_lower"), "ci_high": tgt.get("ci_upper"),
+            "p_value": tgt.get("p_value"),
+            "significant": tgt.get("significant"),
+        })
+    else:
+        out["warning"] = f"{exposure}에 해당하는 추정치 없음. 결과 변수명 후보: {[v.get('variable') for v in vars_[:6]]}"
+    return json.dumps(out, ensure_ascii=False)
 
 
 def _h_pubmed_search(inputs):
@@ -784,7 +897,13 @@ def build_system_with_preview(base_prompt: str, project: dict,
         "   - 답변 텍스트보다 preview 갱신이 우선. 텍스트 답변은 1-2문장 요약만.\n"
         "2) **인용·근거가 필요한 변경은 patch_preview 직전에 `rag_search` 또는 `cross_modal_query`를 호출**해서 "
         "   24,000+편 OA seed에서 evidence 가져온 뒤 patch에 포함하라. 환각 금지.\n"
-        "3) **통계 보강 요청은 `kyrbs_stat`을 먼저 호출**해서 실측 수치 받은 뒤 patch.\n"
+        "3) **통계 변경 요청은 `kyrbs_stat`을 즉시 호출** — 이후 결과를 patch_preview로 Results+Methods 갱신.\n"
+        "   다음 패턴은 무조건 kyrbs_stat 즉시 호출:\n"
+        "   • 'outcome을 X로 바꿔' / 'X로 결과변인 변경' → outcome=X\n"
+        "   • 'BMI 추가/제외' / '공변량에 X 넣어/빼' → covariates 조정\n"
+        "   • '2023년으로' / '2020~2024 합쳐' → years 지정\n"
+        "   • '단순 logistic 말고 GEE로' → analysis='gee_logistic'\n"
+        "   결과 받은 후 Methods의 'Statistical analysis' 절·Results 본문·Table 1 모두 즉시 patch_preview.\n"
         "4) **요청이 모호하면** Methods → Results → Discussion 순서로 부족한 곳부터 patch.\n"
         "5) 한 응답에 patch_preview를 0번 호출하면 그 응답은 실패로 간주된다. 최소 1번 호출 필수.\n"
     )
