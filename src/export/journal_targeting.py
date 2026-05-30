@@ -99,7 +99,7 @@ JOURNALS: dict[str, JournalTargeting] = {
         impact_factor=7.5,
         strengths_to_emphasize=[
             "Adolescent-specific developmental window (12-15세) — 뇌·정신건강 발달의 결정적 시기",
-            "Sex differences in dose-response (여성에서 양식 양식의 양식 양식 양식 양식 X — "
+            "Sex differences in dose-response (여성에서 단순히 더 강한 효과 X — "
             "구체: 'effect evident only in females, P for interaction < 0.001')",
             "Korean national survey representativeness (KYRBS, n=50K+)",
         ],
@@ -163,8 +163,8 @@ JOURNALS: dict[str, JournalTargeting] = {
             "Body image distortion이 mental health와 ZCB 양쪽의 공통 driver."
         ),
         reader_assumption=(
-            "Eating behavior / appetite science reviewer — 양식 양식 양식 양식 mechanism + "
-            "behavioral pathway에 가장 관심. Pure clinical outcome 양식 양식."
+            "Eating behavior / appetite science reviewer — 통계 결과보다 mechanism + "
+            "behavioral pathway에 가장 관심. Pure clinical outcome 단독 보고는 약함."
         ),
         voice_tone="hypothesis-driven, behavioral framework 중심",
         section_priorities={
@@ -180,24 +180,24 @@ JOURNALS: dict[str, JournalTargeting] = {
         full_name="Nutrients",
         impact_factor=5.9,
         strengths_to_emphasize=[
-            "Dose-response (frequency 1단위 증가당 aOR 양식 양식의 양식 양식)",
+            "Dose-response (frequency 1단위 증가당 aOR의 선형 추세 + categorical aOR 표)",
             "Comprehensive covariate adjustment (11개: 인구통계 + lifestyle + dietary)",
-            "Linear trend test + categorical frequency 양식 양식 양식 양식 양식",
-            "Sensitivity analysis (양식 양식 양식 양식 양식 양식 양식 양식 양식 양식)",
+            "Linear trend test + categorical frequency 양쪽 모두 보고",
+            "Sensitivity analysis (complete-case / multiple imputation / restricted model 다중)",
         ],
         angle=(
-            "Frequency 단위의 dose-response를 11개 공변량 조정 후 양식 양식 양식 — "
+            "Frequency 단위의 dose-response를 11개 공변량 조정 후 견고하게 입증 — "
             "nutritional epidemiology의 정량성·강건성 강조."
         ),
         reader_assumption=(
-            "Nutritional epidemiology reviewer — statistical rigor 양식 양식 양식 양식 양식. "
-            "Methodological detail 양식 양식 양식 양식 양식."
+            "Nutritional epidemiology reviewer — statistical rigor에 가장 무게. "
+            "Methodological detail이 본문에 충분히 드러나야 함."
         ),
         voice_tone="precise, quantitative, methodological",
         section_priorities={
             "Methods": "covariate selection rationale + dose coding 상세",
             "Results": "categorical aOR 표 + linear trend P value",
-            "Discussion": "robustness — multiple sensitivity analysis 결과 양식 양식",
+            "Discussion": "robustness — multiple sensitivity analysis 결과 정리 + 추정의 안정성",
         },
         avoid=["mechanism speculation을 통계 결과보다 앞세우는 양식"],
     ),
