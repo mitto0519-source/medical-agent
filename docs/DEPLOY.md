@@ -80,6 +80,31 @@ cloudflared tunnel --url http://localhost:8501
 
 ---
 
+## 로컬 docker ↔ 클라우드 프로젝트 공유 (2026-05-30 신규)
+
+KYRBS .sav 원시자료(약 1.7GB)는 GitHub에 못 올리는데, **이미 작성한 논문 프로젝트**는 어디서든 보고
+첨삭 가능해야 합니다. 두 가지 자동화:
+
+### A. Supabase 자동 동기 (권장)
+
+로컬 docker에서 작업한 프로젝트는 `_save_project` 호출 시 자동으로 Supabase의 `ma_working_papers`
+테이블에 동기됩니다. 클라우드에서 **같은 user_email로 로그인하면 ez_home에 ☁ Cloud 배지와 함께
+자동 표시**되고, 클릭하면 작업실에서 chat 첨삭 가능 (KYRBS 통계 도구만 graceful fail, LLM 본문
+재작성·STROBE·consistency는 정상).
+
+Streamlit Cloud Secrets 또는 Railway 환경변수에 동일 키 설정:
+```
+SUPABASE_DB_URL=postgresql://postgres.xxx:pwd@aws-x.pooler.supabase.com:5432/postgres
+SUPABASE_URL=https://xxx.supabase.co
+```
+
+### B. .json 파일 직접 import (Supabase 없을 때)
+
+로컬 docker 토픽바의 🔗 Share 버튼으로 프로젝트 JSON을 다운로드해서, 클라우드의 ez_home 입력바
+아래 📎 파일 첨부로 그 .json을 올리면 자동으로 작업실에 import됩니다.
+
+---
+
 ## 사용자 등록(초대) 방법
 
 배포 위치와 무관하게, 신규 사용자를 추가하려면:
