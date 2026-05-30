@@ -813,14 +813,22 @@ def _empty_sections_notice() -> dict:
 # (전 grep 결과 _demo_sections는 같은 파일 안에서만 호출돼서 안전)
 
 
-def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> None:
+def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
     """진짜 유기적 논문 생성 (2026-05-30 근본 양식).
     StatBridge 통계 → PaperWriter 5섹션 → project.sections + chat 결과 메시지.
 
     agentic_loop의 tool-use 양식이 아닌, 결과 보장 양식. agentic_loop는 후속 보강용.
+
+    Returns: 최종 pid (양식 양식 'new' 양식 양식 양식 양식 양식 양식 양식 양식 양식)
     """
-    import traceback
+    import traceback, time as _time
     from pathlib import Path as _P
+
+    # ★ pid="new" 양식 양식 양식 양식 양식 — _save_project 양식 양식 양식 양식 양식 양식 양식
+    if pid == "new":
+        new_pid = f"paper_{int(_time.time())}"
+        st.session_state["sg_active_project"] = new_pid
+        pid = new_pid
 
     messages = project["messages"]
 
