@@ -165,9 +165,8 @@ if not fig_dir.exists():
     fig_dir = Path("data/exports")
 figs = []
 for fn, cap in [
-    ("Figure1_PRISMA.png",           "Figure 1. Sample flow diagram, KYRBS 2025"),
-    ("Figure2A_overall.png",         "Figure 2A. Predicted probability of depression by ZCB category."),
-    ("Figure2B_sex.png",             "Figure 2B. Predicted probability by sex x ZCB frequency."),
+    ("Figure1_PRISMA.png",           "Figure 1. Flow Chart for Participant Selection: Initial KYRBS 2025 enrolled (N = 50,972)"),
+    ("Figure2_sex.png",              "Figure 2. Predicted probability of Depression by zero-calorie beverage consumption frequency, KYRBS 2025 (N = 50,972)"),
     ("Figure3_forest_subgroups.png", "Figure 3. Subgroup analyses - 7 a priori stratifiers."),
 ]:
     p = fig_dir / fn
