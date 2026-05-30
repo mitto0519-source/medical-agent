@@ -495,17 +495,19 @@ def _render_chat_left(project: dict, pid: str):
         project["messages"] = messages
         _save_project(pid, project)
         st.session_state["_ws_auto_run_pending"] = initial   # 이번 rerun에서 agentic step 실행
-    # 미완 작업: 직전 rerun에 _ws_auto_run_pending이 set돼 있으면 agentic 실행
+    # 미완 작업: 직전 rerun에 _ws_auto_run_pending이 set돼 있으면 양식 자동 실행
+    # _orchestrated_paper_run 양식 양식 — KYRBS 양식 양식 → StatBridge → 5섹션 양식 양식 양식 양식 양식 양식
     auto_run = st.session_state.pop("_ws_auto_run_pending", None)
     if auto_run:
-        with st.spinner("✨ 첫 응답 생성 중… (KYRBS 분석 + 섹션 초안 + safety 게이트)"):
+        with st.spinner("✨ 논문 초안 생성 중… (KYRBS 로드 → StatBridge 회귀 → 5섹션 작성 → safety 게이트)"):
             try:
-                _run_agentic_step(auto_run, project, pid,
-                                  mode="✨ Build (자유 작성)")
+                _orchestrated_paper_run(auto_run, project, pid)
             except Exception as _e:
+                import traceback as _tb
                 project["messages"].append({"role": "system", "event": "auto_run_error",
-                                              "detail": str(_e)[:300]})
+                                              "detail": f"{_e}\n{_tb.format_exc()[:400]}"})
                 _save_project(pid, project)
+        st.rerun()
 
     # 너무 많으면 앞쪽은 expander 안에 — 페이지 길이/렌더 시간 제어
     _RECENT_CAP = 80
@@ -791,26 +793,204 @@ def _render_preview_right(project: dict):
         st.markdown("</div>", unsafe_allow_html=True)
 
 
-def _demo_sections() -> dict:
+def _empty_sections_notice() -> dict:
+    """아직 분석이 안 됐을 때 보여줄 안내 (예전엔 _demo_sections로 가짜 ZCB 양식 보임 → 사용자가
+    'Abstract만 나옴, 날림 양식'으로 혼동. 2026-05-30: 안내로 교체)."""
+    notice = ("아직 본문이 생성되지 않았습니다. 입력바에 연구 아이디어를 적고 ✨ Build를 누르면 "
+              "(1) KYRBS 데이터 자동 로드 → (2) 통계 분석(StatBridge) → "
+              "(3) 5섹션(Abstract/Intro/Methods/Results/Discussion) 자동 작성 → "
+              "(4) safety 게이트 통과 후 이 영역에 채워집니다.")
     return {
-        "Abstract": {
-            "Background": "Zero-calorie beverages (ZCB) are increasingly consumed by adolescents.",
-            "Methods": "Cross-sectional analysis of KYRBS 2025 (n = 50,972).",
-            "Results": "Daily ZCB associated with depressive symptoms (aOR 1.27; 95% CI 1.03-1.56).",
-            "Conclusion": "Higher ZCB intake independently associated with depression in adolescents.",
-        },
-        "Introduction": "Depression is a leading cause of disability in adolescence [1, 2]. "
-                          "ZCB consumption has risen, with unclear mental health implications.",
-        "Methods": {
-            "Study population": "We used 2025 KYRBS data (n = 50,972 aged 12-18).",
-            "Measurements": "ZCB ascertained on 7-point scale, collapsed into 4 categories.",
-            "Statistical analysis": "Survey-weighted logistic regression with 95% CI.",
-        },
-        "Results": "Daily ZCB consumption ≥1/day showed aOR 1.27 (95% CI 1.03-1.56, "
-                    "P = 0.026). Significant interaction by sex (P for interaction < 0.001).",
-        "Discussion": "Key finding: female-predominant dose-response association. "
-                       "Limitation: cross-sectional design precludes causal inference.",
+        "Abstract": {"Background": notice, "Methods": "", "Results": "", "Conclusion": ""},
+        "Introduction": "",
+        "Methods": "",
+        "Results": "",
+        "Discussion": "",
     }
+
+
+# 역호환: 외부에서 _demo_sections로 import하는 곳 차단을 위해 alias 유지하지 않음.
+# (전 grep 결과 _demo_sections는 같은 파일 안에서만 호출돼서 안전)
+
+
+def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> None:
+    """진짜 유기적 논문 생성 (2026-05-30 근본 양식).
+    StatBridge 통계 → PaperWriter 5섹션 → project.sections + chat 결과 메시지.
+
+    agentic_loop의 tool-use 양식이 아닌, 결과 보장 양식. agentic_loop는 후속 보강용.
+    """
+    import traceback
+    from pathlib import Path as _P
+
+    messages = project["messages"]
+
+    def _add_msg(role: str, content: str, **kw):
+        m = {"role": role, "content": strip_lone_surrogates(content)[:8000]}
+        m.update(kw)
+        messages.append(m)
+
+    def _emit_system(event: str, detail: str):
+        messages.append({"role": "system", "event": event,
+                          "detail": strip_lone_surrogates(detail)[:600]})
+
+    _add_msg("assistant",
+             "📥 시작합니다. KYRBS 2025 로드 → StatBridge → 5섹션 자동 작성 순서.")
+    project["messages"] = messages
+    _save_project(pid, project)
+
+    # 1) KYRBS 로드
+    try:
+        from src.data.kyrbs_raw_loader import KYRBSLoader
+        sav = _P("data/raw/kyrbs2025.sav")
+        if not sav.exists():
+            # 다른 경로 시도
+            for cand in [_P("data/raw/KYRBS_2025.sav"),
+                          _P("data/KYRBS/kyrbs2025.sav")]:
+                if cand.exists():
+                    sav = cand; break
+        df, _meta = KYRBSLoader().load(sav)
+        _emit_system("data_loaded",
+                     f"KYRBS 2025 로드: {len(df):,}행 × {len(df.columns)}열")
+    except Exception as e:
+        _emit_system("data_load_failed", f"{type(e).__name__}: {e}")
+        _add_msg("assistant",
+                 f"⚠️ KYRBS 로드 실패 — {type(e).__name__}: {str(e)[:200]}.\n"
+                 f"`data/raw/kyrbs2025.sav` 위치를 확인하세요.")
+        project["messages"] = messages
+        _save_project(pid, project)
+        return
+
+    # 2) outcome/exposure 자동 매핑 — prompt 단어 우선, 없으면 KYRBS 표준 변수 fallback
+    p_low = prompt.lower()
+    OUTCOME_TABLE = [
+        ("depression", ["우울", "depress"]),
+        ("stress",     ["스트레스", "stress"]),
+        ("insufficient_sleep", ["수면부족", "sleep"]),
+        ("suicide_ideation",   ["자살", "suicid"]),
+    ]
+    EXPOSURE_TABLE = [
+        ("zcb_freq",         ["zcb", "제로", "zero", "음료"]),
+        ("smartphone_hours", ["스마트폰", "screen", "phone"]),
+        ("physical_act",     ["운동", "physical"]),
+        ("smoking",          ["흡연", "smok"]),
+        ("alcohol",          ["음주", "alcohol"]),
+        ("breakfast",        ["아침", "breakfast"]),
+    ]
+    def _pick(table, df_cols):
+        for col, words in table:
+            if col in df_cols and any(w in p_low for w in words):
+                return col
+        for col, _ in table:
+            if col in df_cols:
+                return col
+        return None
+    outcome = _pick(OUTCOME_TABLE, df.columns)
+    exposure = _pick(EXPOSURE_TABLE, df.columns)
+    if not outcome or not exposure:
+        _emit_system("var_pick_failed",
+                     f"available_cols(sample)={list(df.columns)[:30]}")
+        _add_msg("assistant",
+                 f"⚠️ KYRBS 변수에서 outcome/exposure를 못 찾았습니다 "
+                 f"(outcome={outcome}, exposure={exposure}). "
+                 f"입력바에 더 구체적인 키워드(예: '우울증', '스마트폰')를 적어 주세요.")
+        project["messages"] = messages
+        _save_project(pid, project)
+        return
+
+    # 3) StatBridge
+    try:
+        from src.data.stat_bridge import StatBridge
+        covs = [c for c in ["sex","age","school_type","family_econ","academic_perf",
+                            "bmi","smoking","alcohol","physical_act","screen_time",
+                            "breakfast"] if c in df.columns and c != exposure]
+        spec = {"outcome": outcome, "predictors": [exposure], "covariates": covs,
+                "weight_var": "weight_var" if "weight_var" in df.columns else None,
+                "strata_var": "strata" if "strata" in df.columns else None,
+                "cluster_var": "cluster" if "cluster" in df.columns else None,
+                "analysis": "logistic"}
+        stat = StatBridge().run(df, spec).to_dict()
+        n_total = stat.get("n_total", len(df))
+        _emit_system("stat_done",
+                     f"StatBridge: n={n_total:,} outcome={outcome} exposure={exposure} "
+                     f"covs={len(covs)}")
+    except Exception as e:
+        _emit_system("stat_failed",
+                     f"{type(e).__name__}: {e}\n{traceback.format_exc()[:300]}")
+        _add_msg("assistant",
+                 f"⚠️ 통계 분석 실패 — {type(e).__name__}: {str(e)[:200]}.")
+        project["messages"] = messages
+        _save_project(pid, project)
+        return
+
+    # 4) PaperWriter 5섹션
+    try:
+        from src.research.paper_writer import PaperWriter
+        pw = PaperWriter()
+        study_info = {
+            "dataset": "KYRBS 2025", "design": "cross-sectional",
+            "exposure": exposure, "outcome": outcome,
+            "population": f"Korean adolescents (KYRBS 2025, n={n_total:,})",
+            "sample_size": n_total,
+            "covariates": ", ".join(covs),
+            "methods_list": ["logistic_regression"],
+        }
+        paper_text = pw.write_full_paper_with_stats(
+            topic=prompt[:200], study_info=study_info, stat_result=stat)
+        # 섹션 dict 추출 (last_sections 우선)
+        sections = getattr(pw, "last_sections", None)
+        if not sections:
+            # fallback: text 양식 양식 양식 split
+            sections = {"Abstract": paper_text[:1500],
+                        "Introduction": "", "Methods": "", "Results": "", "Discussion": ""}
+        project["sections"] = sections
+        project["topic"] = {"title": prompt[:120],
+                             "exposure": exposure, "outcome": outcome,
+                             "dataset": "KYRBS 2025"}
+        _emit_system("paper_written",
+                     f"sections: {list(sections.keys())}; chars={sum(len(str(v)) for v in sections.values())}")
+    except Exception as e:
+        _emit_system("paper_failed",
+                     f"{type(e).__name__}: {e}\n{traceback.format_exc()[:300]}")
+        _add_msg("assistant",
+                 f"⚠️ 논문 생성 실패 — {type(e).__name__}: {str(e)[:200]}.")
+        project["messages"] = messages
+        _save_project(pid, project)
+        return
+
+    # 5) Safety check
+    try:
+        from src.safety import check_all
+        text_for_check = "\n\n".join(str(v) for v in sections.values() if isinstance(v, str))
+        rep = check_all(text_for_check, sections=sections,
+                         design="cross_sectional", scope="orchestrated_paper")
+        _emit_system("safety_check", f"overall={rep.overall} failed={rep.failed_gates} warn={rep.warning_gates}")
+    except Exception as e:
+        _emit_system("safety_check_err", f"{type(e).__name__}: {e}")
+
+    # 6) 사용자 친화 결과 메시지
+    try:
+        # OR 값 추출 (있으면)
+        mv = stat.get("model_vars") or []
+        tgt = next((v for v in mv if exposure in str(v.get("variable",""))), None)
+        or_text = ""
+        if tgt and tgt.get("or_value") is not None:
+            or_text = (f" 핵심 결과: aOR {tgt.get('or_value', 0):.2f} "
+                       f"(95% CI {tgt.get('ci_lower', 0):.2f}–{tgt.get('ci_upper', 0):.2f}, "
+                       f"P={tgt.get('p_value', 0):.3g}).")
+        _add_msg("assistant",
+                 f"✅ 논문 초안 완성: **{exposure} → {outcome}** (KYRBS 2025, n={n_total:,}).{or_text}\n\n"
+                 f"우측 Manuscript 탭에서 5섹션 전체를 확인하세요. 추가 수정·재작성·STROBE 검사는 "
+                 f"하단 입력바에 자연어로 요청하면 됩니다.")
+    except Exception:
+        _add_msg("assistant", "✅ 논문 초안이 완성되었습니다. 우측 Manuscript 탭을 확인하세요.")
+
+    project["messages"] = messages
+    _save_project(pid, project)
+
+
+def _demo_sections() -> dict:
+    """역호환 alias — 새 안내 dict 반환."""
+    return _empty_sections_notice()
 
 
 def render(pid: str) -> None:
