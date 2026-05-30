@@ -488,8 +488,24 @@ def _render_chat_left(project: dict, pid: str):
 
     messages = project.get("messages", [])
     initial = st.session_state.pop("sg_initial_prompt", None)
+    # ★ 유기적 흐름 (2026-05-30): ez_home에서 prompt 받고 workspace 진입 시 자동으로 agentic loop
+    # 실행해서 첫 응답까지 한 번에. 사용자가 두 번 입력할 필요 없음. [[feedback-vibe-paper]] 정신.
     if initial and not messages:
         messages.append({"role": "user", "content": initial})
+        project["messages"] = messages
+        _save_project(pid, project)
+        st.session_state["_ws_auto_run_pending"] = initial   # 이번 rerun에서 agentic step 실행
+    # 미완 작업: 직전 rerun에 _ws_auto_run_pending이 set돼 있으면 agentic 실행
+    auto_run = st.session_state.pop("_ws_auto_run_pending", None)
+    if auto_run:
+        with st.spinner("✨ 첫 응답 생성 중… (KYRBS 분석 + 섹션 초안 + safety 게이트)"):
+            try:
+                _run_agentic_step(auto_run, project, pid,
+                                  mode="✨ Build (자유 작성)")
+            except Exception as _e:
+                project["messages"].append({"role": "system", "event": "auto_run_error",
+                                              "detail": str(_e)[:300]})
+                _save_project(pid, project)
 
     # 너무 많으면 앞쪽은 expander 안에 — 페이지 길이/렌더 시간 제어
     _RECENT_CAP = 80
