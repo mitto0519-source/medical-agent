@@ -187,13 +187,69 @@ def _login_gate():
             st.session_state["user"] = user
             st.rerun()
 
+    # ── Sapphire 양식 + chrome 숨김 (외부 사람이 보는 첫 화면 — 2026-05-30) ──
     st.markdown("""
-    <div style="max-width:420px;margin:80px auto;padding:2.5rem;
-                background:#1c2128;border:1px solid #30363d;border-radius:16px;
-                box-shadow:0 16px 48px rgba(0,0,0,0.5);text-align:center;">
-        <div style="font-size:2.5rem;margin-bottom:0.5rem;">🔬</div>
-        <h2 style="color:#e6edf3;margin:0;font-size:1.4rem;">Medical-Agent</h2>
-        <p style="color:#8b949e;margin-top:.4rem;font-size:.85rem;">의학 논문 자동 생산 파이프라인</p>
+    <style>
+    #MainMenu{visibility:hidden!important;display:none!important;}
+    header[data-testid='stHeader']{background:transparent!important;}
+    [data-testid='stToolbar']{display:none!important;}
+    [data-testid='stToolbarActions']{display:none!important;}
+    [data-testid='stDecoration']{display:none!important;}
+    [data-testid='stStatusWidget']{display:none!important;}
+    [data-testid='stAppDeployButton']{display:none!important;}
+    .stDeployButton{display:none!important;}
+    button[kind='header']{display:none!important;}
+    footer{visibility:hidden!important;display:none!important;}
+    html, body, [data-testid='stApp']{
+        background:
+            radial-gradient(900px 700px at 18% 10%, rgba(244,114,182,0.45), transparent 60%),
+            radial-gradient(900px 700px at 85% 12%, rgba(251,191,36,0.30), transparent 60%),
+            radial-gradient(1000px 800px at 50% 95%, rgba(167,139,250,0.45), transparent 65%),
+            linear-gradient(135deg, #4C1D80 0%, #7C2D8A 35%, #B83A8E 65%, #E85A8E 100%) !important;
+        color:#F5F5FA !important;
+        font-family:"Inter","Pretendard","Apple SD Gothic Neo",system-ui,sans-serif !important;
+        background-attachment:fixed !important;
+    }
+    .sg-login-card {
+        max-width:440px; margin:80px auto; padding:2.8rem 2.4rem;
+        background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,255,255,0.12);
+        border-radius:18px;
+        box-shadow:0 8px 32px rgba(15,15,35,0.40), 0 0 24px rgba(124,58,237,0.20);
+        text-align:center;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+    .sg-login-title {
+        background:linear-gradient(135deg,#3B82F6,#8B5CF6,#EC4899);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        background-clip:text;
+        font-weight:700; font-size:1.6rem; margin:0;
+    }
+    .stTextInput input, .stForm input {
+        background:rgba(255,255,255,0.08) !important;
+        border:1px solid rgba(255,255,255,0.16) !important;
+        color:#F5F5FA !important;
+        border-radius:10px !important;
+    }
+    .stForm [data-testid='stFormSubmitButton'] button {
+        background:linear-gradient(135deg,#3B82F6,#8B5CF6) !important;
+        border:none !important;
+        color:#fff !important;
+        font-weight:600 !important;
+        border-radius:10px !important;
+    }
+    </style>
+    <div class="sg-login-card">
+        <div style="font-size:2.8rem;margin-bottom:0.5rem;">🔬</div>
+        <h2 class="sg-login-title">Medical-Agent</h2>
+        <p style="color:#A3A3B8;margin-top:.5rem;font-size:.86rem;">
+            의학 논문 자동 생산 파이프라인 · KYRBS / KNHANES 기반
+        </p>
+        <p style="color:#6B6B7E;margin-top:.4rem;font-size:.74rem;">
+            가입·초대된 사용자만 접속 가능 · 자체 LLM 키로 작동
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
