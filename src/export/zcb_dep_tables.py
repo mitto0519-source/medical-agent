@@ -254,7 +254,7 @@ def _compute_table1_from_df(df, exposure_col: str) -> Dict[str, Any]:
     # exposure 4그룹 정의 — KYRBS zcb_freq는 0=None, 1=≤2/week, 2=3-6/week, 3=≥1/day 또는 다른 양식
     # 사용자 PDF는 None/≤2/week/3-6/week/≥1/day 4그룹
     e = pd.to_numeric(df[exposure_col], errors="coerce")
-    # 단순 양식 — 양식 양식 양식 양식 양식 양식 grouping (사용자 데이터 분포에 맞춰 조정 필요)
+    # 단순 4-band 양식 (0=None, 1=≤2/week, 2=3-6/week, 3=≥1/day). 실제 KYRBS 코딩에 맞춰 조정 필요.
     bins = [-0.5, 0.5, 2.5, 5.5, 100]
     labels = [0, 1, 2, 3]   # 4그룹
     e_cat = pd.cut(e, bins=bins, labels=labels)
