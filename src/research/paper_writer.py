@@ -717,7 +717,20 @@ DISCUSSION
     # ------------------------------------------------------------------
 
     def _generate(self, system_prompt: str, user_prompt: str) -> str:
-        out = self._client.generate(user_prompt, system_prompt=system_prompt)
+        # ★ System prompt에 메타 코멘트 금지 강제 (2026-05-31 사고 차단)
+        anti_meta = (
+            "\n\n# CRITICAL OUTPUT RULES\n"
+            "- Output ONLY the section content. No preamble.\n"
+            "- Do NOT start with 'This is...', 'Let's...', 'Let me...', 'Here is...', "
+            "'I'll write...', 'I will...', 'I'm going to...', 'Sure', 'Certainly', "
+            "'In this abstract/section/paper...', 'Below is...', 'Following is...'\n"
+            "- Do NOT mention the author by name in meta-commentary "
+            "('mimicking the style of Dr. Yoosun Cho' etc.)\n"
+            "- Start directly with the first sentence of the actual academic content.\n"
+        )
+        out = self._client.generate(user_prompt, system_prompt=system_prompt + anti_meta)
+        # ★ Response sanitizer — 그래도 새어 나온 메타 코멘트 절단
+        out = _strip_llm_meta(out)
         # ★ Safety gate (unified): 모든 게이트를 단일 진입점으로 호출 → audit_trail 자동 적재.
         # sections/references/design은 _generate 시점에 없으므로 text-only 게이트(physician/causal)만 활성.
         # 더 풍부한 컨텍스트가 있는 상위 caller(write_full_paper_with_stats)에서 한 번 더 호출 가능.
