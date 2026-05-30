@@ -908,37 +908,85 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
     project["messages"] = messages
     _save_project(pid, project)
 
-    # 1) KYRBS 로드 — 절대경로 우선 (Streamlit 멀티페이지 cwd 변동 차단)
+    # 1) 자료 자동 선택 — prompt에서 데이터셋/연도/다년도 추출 (2026-05-30 일반화)
+    #    KYRBS 2005~2025 21개 차수 + KNHANES 지원. 미지정시 가장 최근.
     try:
-        from src.data.kyrbs_raw_loader import KYRBSLoader
-        # 프로젝트 루트(app/pages/project_workspace.py → parent×3 = /app) 기준 절대경로
+        import re as _re2
+        from src.data.kyrbs_raw_loader import KYRBSLoader, KNHANESLoader
         _project_root = _P(__file__).resolve().parent.parent.parent
-        candidates = [
-            _project_root / "data/raw/kyrbs2025.sav",
-            _project_root / "data/raw/KYRBS_2025.sav",
-            _project_root / "data/KYRBS/kyrbs2025.sav",
-            _P("data/raw/kyrbs2025.sav"),       # cwd 기반 (보조)
-            _P("/app/data/raw/kyrbs2025.sav"),  # docker 절대경로 (보조)
-        ]
-        sav = None
-        for cand in candidates:
-            if cand.exists():
-                sav = cand
-                break
-        if sav is None:
-            tried = [str(c) for c in candidates]
-            raise FileNotFoundError(f"KYRBS .sav 파일 없음. 시도한 경로: {tried}")
-        df, _meta = KYRBSLoader().load(sav)
+        _raw_dir = _project_root / "data" / "raw"
+
+        # (a) 데이터셋 종류 — KYRBS 우선, KNHANES 명시 시 전환
+        ds_kind = "KYRBS"
+        if _re2.search(r"KNHANES|국민건강영양|kn\s*hanes", prompt, _re2.IGNORECASE):
+            ds_kind = "KNHANES"
+
+        # (b) 연도 추출 — "2024", "2024년", "2023년-2025년", "최근 5년" 등
+        years_found = sorted({int(y) for y in _re2.findall(r"(20[0-2]\d)", prompt)})
+        years_range = None
+        m_range = _re2.search(r"(20[0-2]\d)\s*[~\-–]\s*(20[0-2]\d)", prompt)
+        if m_range:
+            y1, y2 = sorted([int(m_range.group(1)), int(m_range.group(2))])
+            years_range = list(range(y1, y2 + 1))
+
+        # (c) 자료 경로 후보 수집 (실제 파일이 있는 것만)
+        if ds_kind == "KYRBS":
+            available = {}
+            for y in range(2005, 2026):
+                cand = _raw_dir / f"kyrbs{y}.sav"
+                if cand.exists():
+                    available[y] = cand
+        else:  # KNHANES
+            available = {}
+            for p in _raw_dir.glob("knhanes/*.sav"):
+                m = _re2.search(r"(20[0-2]\d)", p.name)
+                if m:
+                    available[int(m.group(1))] = p
+
+        if not available:
+            raise FileNotFoundError(
+                f"{ds_kind} .sav 파일이 컨테이너에 없음. data/raw/ 확인 필요.")
+
+        # (d) 어떤 연도(들)을 쓸지 결정
+        if years_range:
+            target_years = [y for y in years_range if y in available]
+        elif years_found:
+            target_years = [y for y in years_found if y in available]
+        else:
+            target_years = [max(available.keys())]  # 최근 1년 기본
+
+        if not target_years:
+            target_years = [max(available.keys())]
+            _emit_system("year_fallback",
+                          f"요청 연도 {years_found or years_range} → 사용 가능 {sorted(available)} → "
+                          f"가장 최근 {target_years[0]}으로 폴백")
+
+        # (e) 단일/다년도 로드
+        loader = KYRBSLoader() if ds_kind == "KYRBS" else KNHANESLoader()
+        import pandas as _pd2
+        dfs = []
+        meta_combined = {"survey_years": target_years, "dataset": ds_kind, "sources": []}
+        for y in sorted(target_years):
+            sav = available[y]
+            _emit_system("loading_year", f"{ds_kind} {y} 로드 중... ({sav.name})")
+            df_y, m_y = loader.load(sav)
+            df_y["__survey_year"] = y
+            dfs.append(df_y)
+            meta_combined["sources"].append(str(sav))
+        df = _pd2.concat(dfs, ignore_index=True) if len(dfs) > 1 else dfs[0]
+        _meta = meta_combined
+
         _emit_system("data_loaded",
-                     f"KYRBS 2025 로드: {len(df):,}행 × {len(df.columns)}열 (path={sav})")
+                     f"{ds_kind} 로드: {len(df):,}행 × {len(df.columns)}열 "
+                     f"(연도: {target_years})")
     except Exception as e:
         import traceback as _tb2
         _emit_system("data_load_failed",
                       f"{type(e).__name__}: {e}\n{_tb2.format_exc()[:400]}")
         _add_msg("assistant",
-                 f"⚠️ KYRBS 로드 실패 — {type(e).__name__}: {str(e)[:300]}.\n"
-                 f"확인: docker container 안 `/app/data/raw/kyrbs2025.sav` 존재 여부.\n"
-                 f"명령: `docker exec medical-agent ls /app/data/raw/kyrbs2025.sav`")
+                 f"⚠️ 데이터 로드 실패 — {type(e).__name__}: {str(e)[:300]}.\n"
+                 f"확인: docker container 안 `/app/data/raw/` 폴더 — "
+                 f"`docker exec medical-agent ls /app/data/raw/`")
         project["messages"] = messages
         _save_project(pid, project)
         return
