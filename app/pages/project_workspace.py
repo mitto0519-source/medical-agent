@@ -786,6 +786,16 @@ def _render_chat_left(project: dict, pid: str):
             _enqueue_workspace_uploads(uploaded, prompt_hint=prompt)
         # 2) prompt 가 있으면 agentic loop 실행
         if prompt:
+            # ★ 무의식 임프린트 — 사용자 prompt 진입 시점에 intent 발화 (이후 모든 LLM 호출 자동 픽업)
+            try:
+                from src.agent.intent_sensor import sense_and_imprint
+                _owner = (st.session_state.get("user") or {}).get("email") or \
+                          st.session_state.get("user_email", "")
+                sense_and_imprint(prompt,
+                                   prior_messages=messages,
+                                   project=project, owner_email=_owner)
+            except Exception:
+                pass
             messages.append({"role": "user", "content": prompt})
             project["messages"] = messages
             _save_project(pid, project)
@@ -1277,6 +1287,18 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
         new_pid = f"paper_{int(_time.time())}"
         st.session_state["sg_active_project"] = new_pid
         pid = new_pid
+
+    # ★ 무의식 임프린트 (2026-05-30) — 사용자 prompt 진입 즉시 intent_sensor 발화.
+    # 이후 paper_writer가 호출하는 LLM은 자동으로 사용자 의도/뉘앙스/페르소나 임프린트 픽업.
+    try:
+        from src.agent.intent_sensor import sense_and_imprint
+        owner_email = (st.session_state.get("user") or {}).get("email") or \
+                       st.session_state.get("user_email", "")
+        sense_and_imprint(prompt,
+                           prior_messages=project.get("messages") or [],
+                           project=project, owner_email=owner_email)
+    except Exception:
+        pass
 
     messages = project["messages"]
 

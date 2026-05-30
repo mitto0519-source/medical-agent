@@ -94,8 +94,21 @@ def build_base_system(base_prompt: str, task: str = "general") -> str:
         # 안전망: prompt_loader 실패해도 페르소나/베이스는 그대로 살아있음
         pass
 
-    parts = [p for p in [persona_prompt, versioned_block, preamble, insight_block,
-                         reviewer_block, improvement_block, design_block, base_prompt or ""] if p]
+    # ── ★ 무의식 임프린트 (2026-05-30) — 현재 사용자 의도를 자동 픽업 ──
+    # 사용자가 prompt 하나 입력하면 intent_sensor.set_current로 박혀, 이후 모든 LLM 호출이
+    # 명시 전달 없이 자동으로 그 의도/뉘앙스/페르소나를 system_prompt에 임프린트.
+    intent_block = ""
+    try:
+        from src.agent.intent_sensor import get_current as _intent_get
+        sig = _intent_get()
+        if sig is not None:
+            intent_block = sig.to_system_block() or ""
+    except Exception:
+        pass
+
+    parts = [p for p in [persona_prompt, versioned_block, preamble, intent_block,
+                         insight_block, reviewer_block, improvement_block,
+                         design_block, base_prompt or ""] if p]
     return "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
 
 
