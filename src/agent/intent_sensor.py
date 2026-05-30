@@ -244,35 +244,181 @@ def _scan_prior_conversation(prior_messages: list) -> dict:
     return out
 
 
-# ── 글로벌 "현재 의도" 캐시 (무의식 임프린트) ──────────────────────────
-# 사용자 prompt 한 번 들어오면 set_current로 박혀, 이후 모든 LLM 호출(paper_writer / chat /
-# tool_use 등)이 get_current()로 자동 픽업. 명시 전달 없이도 의도가 항상 발현.
+# ── 영구 "현재 의도" 저장 (2026-05-30 업그레이드) ──────────────────────────
+# process-level 캐시 → 디스크 + Supabase 영구화. container 재시작에도 살아남음.
+# 또한 owner_email별로 분리 저장해서 multi-user 환경에서도 의도 격리.
 _CURRENT_INTENT: Optional["IntentSignal"] = None
 
 
-def set_current(sig: "IntentSignal") -> None:
+def _persist_to_disk(sig: "IntentSignal", owner_email: str = "") -> None:
+    """current intent를 디스크에 저장 — container restart에도 살아남음."""
+    try:
+        with _LOCK:
+            _INTENT_DIR.mkdir(parents=True, exist_ok=True)
+            data = {"owner_email": owner_email,
+                    "intent": sig.to_dict(),
+                    "ts": __import__("time").time()}
+            _INTENT_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2),
+                                       encoding="utf-8")
+    except Exception as e:
+        _log.debug("intent disk persist 실패: %s", e)
+
+
+def _persist_to_supabase(sig: "IntentSignal", owner_email: str = "") -> None:
+    """Supabase ma_intent_history에 누적 저장 — owner별 의도 추적."""
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if not cloud_available():
+            return
+        import sqlalchemy as sa
+        with get_engine().begin() as conn:
+            conn.execute(sa.text(
+                "CREATE TABLE IF NOT EXISTS ma_intent_history ("
+                "id bigserial PRIMARY KEY, owner_email text, "
+                "emphasis jsonb, avoidance jsonb, reader jsonb, tone jsonb, "
+                "persona jsonb, ts timestamp DEFAULT now())"))
+            conn.execute(sa.text(
+                "INSERT INTO ma_intent_history "
+                "(owner_email, emphasis, avoidance, reader, tone, persona) "
+                "VALUES (:oe, :em, :av, :rd, :tn, :ps)"),
+                {"oe": owner_email,
+                 "em": json.dumps(sig.implicit_emphasis, ensure_ascii=False),
+                 "av": json.dumps(sig.implicit_avoidance, ensure_ascii=False),
+                 "rd": json.dumps(sig.reader_assumption, ensure_ascii=False),
+                 "tn": json.dumps(sig.voice_tone, ensure_ascii=False),
+                 "ps": json.dumps(sig.user_persona_inferred, ensure_ascii=False)})
+    except Exception as e:
+        _log.debug("intent Supabase 누적 실패: %s", e)
+
+
+def _load_from_disk() -> Optional["IntentSignal"]:
+    """디스크의 current_intent.json 로드 — container restart 직후 사용."""
+    if not _INTENT_FILE.exists():
+        return None
+    try:
+        data = json.loads(_INTENT_FILE.read_text(encoding="utf-8"))
+        i = data.get("intent") or {}
+        return IntentSignal(
+            explicit_request=i.get("explicit_request", ""),
+            implicit_emphasis=i.get("implicit_emphasis", []),
+            implicit_avoidance=i.get("implicit_avoidance", []),
+            reader_assumption=i.get("reader_assumption", []),
+            voice_tone=i.get("voice_tone", []),
+            prior_conversation_signal=i.get("prior_conversation_signal", {}),
+            user_persona_inferred=i.get("user_persona_inferred", {}),
+        )
+    except Exception:
+        return None
+
+
+def set_current(sig: "IntentSignal", *, owner_email: str = "") -> None:
     global _CURRENT_INTENT
     _CURRENT_INTENT = sig
+    _persist_to_disk(sig, owner_email=owner_email)
+    _persist_to_supabase(sig, owner_email=owner_email)
 
 
 def get_current() -> Optional["IntentSignal"]:
+    """메모리 우선 + 디스크 폴백 — container restart 직후에도 직전 의도 복원."""
+    global _CURRENT_INTENT
+    if _CURRENT_INTENT is not None:
+        return _CURRENT_INTENT
+    sig = _load_from_disk()
+    if sig is not None:
+        _CURRENT_INTENT = sig
     return _CURRENT_INTENT
 
 
 def clear_current() -> None:
     global _CURRENT_INTENT
     _CURRENT_INTENT = None
+    try:
+        if _INTENT_FILE.exists():
+            _INTENT_FILE.unlink()
+    except Exception:
+        pass
 
 
 def sense_and_imprint(prompt: str, *,
                        prior_messages: Optional[list] = None,
                        project: Optional[dict] = None,
-                       owner_email: Optional[str] = None) -> "IntentSignal":
-    """sense 호출 + 글로벌 캐시 set 한 줄로. 사용자 prompt 진입점에서 호출."""
+                       owner_email: Optional[str] = None,
+                       deep: bool = False) -> "IntentSignal":
+    """sense 호출 + 영구 저장 한 줄로. 사용자 prompt 진입점에서 호출.
+
+    deep=True면 LLM 의도 추론(sense_deep) 추가 — 미묘한 의도(비꼬는 톤, 함축적 회피 등) 잡힘.
+    cheap model (task='fast') 사용 — 약 1-2초.
+    """
     sig = sense(prompt, prior_messages=prior_messages,
                  project=project, owner_email=owner_email)
-    set_current(sig)
+    if deep:
+        try:
+            deep_sig = sense_deep(prompt, prior_messages=prior_messages)
+            sig = merge_signals(sig, deep_sig)
+        except Exception as e:
+            _log.debug("sense_deep 실패, 휴리스틱만 사용: %s", e)
+    set_current(sig, owner_email=owner_email or "")
     return sig
+
+
+def sense_deep(prompt: str, *,
+                prior_messages: Optional[list] = None) -> "IntentSignal":
+    """LLM 기반 의도 추론 — 휴리스틱이 못 잡는 미묘한 신호 (비꼬는 톤·함축적 의도·이중 메시지).
+
+    cheap model (fast task) 사용 — 1-2초 비용으로 깊이 있는 추론.
+    실패하면 빈 IntentSignal 반환 (graceful).
+    """
+    sig = IntentSignal(explicit_request=(prompt or "")[:500])
+    try:
+        from src.llm import get_llm_client
+        client = get_llm_client(task="fast")
+        recent = ""
+        if prior_messages:
+            for m in (prior_messages or [])[-4:]:
+                if isinstance(m, dict):
+                    recent += f"\n{m.get('role', '?')}: {str(m.get('content', ''))[:200]}"
+        sys_p = (
+            "You analyze a user request for an academic medical paper. "
+            "Detect IMPLICIT intent the user did not say out loud: tone, hidden emphasis, "
+            "avoidance, sarcasm, reader assumption. "
+            "Return ONLY a JSON object with keys: emphasis (list), avoidance (list), "
+            "reader (list), tone (list). No prose."
+        )
+        usr = f"Request:\n{prompt}\n\nRecent conversation:{recent}\n\nReturn JSON only."
+        out = client.generate(usr, system_prompt=sys_p, max_tokens=300, task="fast")
+        # JSON 파싱
+        m = re.search(r"\{[\s\S]*\}", out or "")
+        if m:
+            d = json.loads(m.group(0))
+            sig.implicit_emphasis = list(d.get("emphasis") or [])[:10]
+            sig.implicit_avoidance = list(d.get("avoidance") or [])[:10]
+            sig.reader_assumption = list(d.get("reader") or [])[:10]
+            sig.voice_tone = list(d.get("tone") or [])[:10]
+    except Exception as e:
+        _log.debug("sense_deep LLM 호출 실패: %s", e)
+    return sig
+
+
+def merge_signals(a: "IntentSignal", b: "IntentSignal") -> "IntentSignal":
+    """두 IntentSignal 합치기 — 휴리스틱(a) + LLM 추론(b)."""
+    def _u(x, y):  # 중복 제거 + 순서 보존
+        seen = set()
+        out = []
+        for it in list(x) + list(y):
+            if it not in seen:
+                seen.add(it); out.append(it)
+        return out
+    return IntentSignal(
+        explicit_request=a.explicit_request or b.explicit_request,
+        implicit_emphasis=_u(a.implicit_emphasis, b.implicit_emphasis),
+        implicit_avoidance=_u(a.implicit_avoidance, b.implicit_avoidance),
+        reader_assumption=_u(a.reader_assumption, b.reader_assumption),
+        voice_tone=_u(a.voice_tone, b.voice_tone),
+        prior_conversation_signal={**a.prior_conversation_signal,
+                                     **b.prior_conversation_signal},
+        user_persona_inferred={**a.user_persona_inferred,
+                                **b.user_persona_inferred},
+    )
 
 
 def sense(prompt: str, *,
@@ -299,5 +445,5 @@ def sense(prompt: str, *,
     return sig
 
 
-__all__ = ["IntentSignal", "sense", "sense_and_imprint",
-           "set_current", "get_current", "clear_current"]
+__all__ = ["IntentSignal", "sense", "sense_deep", "sense_and_imprint",
+           "merge_signals", "set_current", "get_current", "clear_current"]
