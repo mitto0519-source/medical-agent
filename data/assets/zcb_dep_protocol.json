@@ -1,0 +1,147 @@
+{
+  "project": "Zero-Calorie Beverage Consumption and Depressive Symptoms in Korean Adolescents",
+  "dataset": "KYRBS 2025",
+  "author": "Yoosun Cho",
+  "stata_version": "v2.4 INTEGRATED (FINAL)",
+  "archived_at": "2026-05-30",
+  "raw_N": 54170,
+  "final_N": 50972,
+
+  "exposure": {
+    "variable": "zero_freq",
+    "source_column": "F_ZERO",
+    "scale": "1-7 (none to >=3/day)",
+    "categorical": {
+      "variable": "zero_cat",
+      "levels": [
+        {"code": 1, "label": "None (ref)", "source": "F_ZERO == 1"},
+        {"code": 2, "label": "<=2/wk",     "source": "F_ZERO in 2-3"},
+        {"code": 3, "label": "3-6/wk",     "source": "F_ZERO in 4-5"},
+        {"code": 4, "label": ">=1/day",    "source": "F_ZERO in 6-7"}
+      ]
+    }
+  },
+
+  "outcomes": {
+    "primary": {
+      "variable": "depression",
+      "source": "M_SAD (1=No, 2=Yes)",
+      "coding": "1 if M_SAD==2 else 0"
+    },
+    "secondary": [
+      {"variable": "high_stress",
+       "source": "M_STR (1-5)",
+       "coding": "1 if M_STR in 1-2 else 0"},
+      {"variable": "poor_sleep",
+       "source": "M_SLP_EN (1-5)",
+       "coding": "1 if M_SLP_EN in 1-2 else 0"}
+    ]
+  },
+
+  "covariates": {
+    "M1_demographics": [
+      "sex", "age_cat", "school_n", "academic3", "ses3"
+    ],
+    "M2_full_additions": [
+      "bmi_cat", "ever_smoker", "ever_drinker",
+      "swd_freq3", "caff_freq3", "pa_cat", "br_skip"
+    ],
+    "M2_total_count": 12,
+    "smartphone_handling": "stratifier (NOT covariate) — sibling exposure"
+  },
+
+  "exclusion_flow_13_steps": [
+    "(-) Missing F_ZERO (exposure)",
+    "(-) Missing M_SAD (depression)",
+    "(-) Missing sex",
+    "(-) Missing age",
+    "(-) Missing height or weight",
+    "(-) Implausible BMI (<10 or >50)",
+    "(-) Missing academic rank",
+    "(-) Missing SSB or caffeine frequency",
+    "(-) Missing breakfast frequency",
+    "(-) Missing physical activity",
+    "(-) Missing smartphone (both wd+wk)",
+    "(-) Missing household SES",
+    "(-) Missing school type"
+  ],
+
+  "survey_design": {
+    "command": "svyset cluster [pweight=w], strata(strata) singleunit(centered)",
+    "subpop": "cc==1 (complete-case flag)"
+  },
+
+  "key_results": {
+    "Table_2_Model_2_aOR_for_depression": {
+      "None": "Ref(1)",
+      "<=2_per_week": "1.10 (1.05-1.16)",
+      "3-6_per_week": "1.14 (1.03-1.27)",
+      ">=1_per_day":  "1.31 (1.06-1.61)",
+      "p_for_trend": "<0.001"
+    },
+    "Table_3_sex_stratified_aOR_M2": {
+      "Male":   ["Ref(1)", "1.07 (0.99-1.14)", "0.97 (0.85-1.12)", "1.32 (1.02-1.69)"],
+      "Female": ["Ref(1)", "1.12 (1.05-1.20)", "1.43 (1.22-1.67)", "1.37 (0.99-1.91)"],
+      "p_trend_male":   0.088,
+      "p_trend_female": "<0.001",
+      "p_interaction":  "<0.001"
+    },
+    "SuppTable1_secondary": {
+      "high_stress_M2": ["Ref", "0.97 (0.93-1.01)", "1.13 (1.03-1.24)", "1.14 (0.94-1.38)"],
+      "high_stress_p_trend": 0.253,
+      "poor_sleep_M2": ["Ref", "0.97 (0.93-1.02)", "0.99 (0.88-1.13)", "1.22 (0.97-1.53)"],
+      "poor_sleep_p_trend": 0.990
+    }
+  },
+
+  "figure_specifications": {
+    "Figure_1": {
+      "type": "PRISMA-style sample flow",
+      "steps": 13,
+      "initial_N": 54170,
+      "final_N": 50972,
+      "excluded": 3198,
+      "exclusion_rate_pct": 5.9
+    },
+    "Figure_2A": {
+      "type": "marginsplot — predicted probability of depression by zero_cat (4-level), Overall",
+      "y_axis": "Predicted probability (0-0.4, 0.05 step)",
+      "design": "fully adjusted (M2)"
+    },
+    "Figure_2B": {
+      "type": "marginsplot — predicted probability by zero_freq (7-level) × sex",
+      "design": "fully adjusted with sex##zero_freq interaction",
+      "color_scheme": {"male": "navy", "female": "maroon"},
+      "y_axis": "Predicted probability (0-0.5, 0.1 step)"
+    },
+    "Figure_3": {
+      "type": "Forest plot - 7 a priori subgroup stratifiers (R metafor style)",
+      "stratifiers": [
+        "Age category (12-13, 14-15, 16-18)",
+        "BMI category (Underweight, Normal, Overweight/Obese)",
+        "Household SES (High, Middle, Low)",
+        "Academic performance (High, Middle, Low)",
+        "Smartphone tertile (Low T1, Mid T2, High T3)",
+        "Physical activity (Low, Moderate, High)",
+        "Breakfast (Non-skipper, Skipper)"
+      ],
+      "excluded_from_subgroup": [
+        "Sex (covered in Table 3 + Figure 2B as effect modifier)",
+        "Ever smoker (true confounder)",
+        "Ever drinker (true confounder)",
+        "SSB / Caffeine (co-exposures, collinear with ZCB)"
+      ],
+      "rows": 30,
+      "estimate_type": "Adjusted OR per 1-level increase in zero_freq",
+      "x_range": [0.8, 1.3]
+    }
+  },
+
+  "matching_with_pdf_tables": {
+    "PDF_source": "Tables_publication_format.pdf (사용자 제공, 2026-05-30)",
+    "Table_1_match": "변수 17개 + N(%) 전 컬럼 일치 (None=28669, <=2wk=19138, 3-6wk=2564, >=1d=601, Total=50972)",
+    "Table_2_match": "Model 2 4-cat aOR 완전 일치 (1.10/1.14/1.31, P_trend<0.001)",
+    "Table_3_match": "Male/Female stratified aOR 완전 일치, P_interaction<0.001",
+    "SuppTable_1_match": "stress/sleep aOR 완전 일치"
+  }
+}
