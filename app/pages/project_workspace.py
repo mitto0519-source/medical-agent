@@ -256,6 +256,47 @@ def _render_topbar(project: dict):
             if st.button("🔗 Share", use_container_width=True, key="ws_share"):
                 st.error(f"Share export 실패: {e}")
     with cols[3]:
+        # ── 🎯 Target Journal — 저널별 strength 자동 임프린트 (2026-05-30) ──
+        with st.popover("🎯 Journal", use_container_width=True):
+            try:
+                from src.export.journal_targeting import (
+                    list_journals, apply_to_intent, rewrite_prompt,
+                    get_journal_targeting,
+                )
+                journals = list_journals()
+                opts = ["(선택)"] + [f"{j['full_name']} (IF {j['impact_factor']})"
+                                       for j in journals]
+                slugs = [""] + [j["slug"] for j in journals]
+                idx = st.selectbox("Target Journal", range(len(opts)),
+                                     format_func=lambda i: opts[i],
+                                     key="ws_journal_idx")
+                if idx > 0:
+                    slug = slugs[idx]
+                    jt = get_journal_targeting(slug)
+                    if jt:
+                        st.caption(f"**Angle**: {jt.angle[:200]}")
+                        st.caption(f"**Strength**: {len(jt.strengths_to_emphasize)}개")
+                        for s in jt.strengths_to_emphasize:
+                            st.markdown(f"- {s[:160]}")
+                        if st.button(f"✨ {slug.upper()} 양식 임프린트",
+                                       key="ws_journal_apply",
+                                       use_container_width=True, type="primary"):
+                            ok = apply_to_intent(slug,
+                                                   owner_email=(st.session_state.get("user") or {}).get("email", ""))
+                            if ok:
+                                st.session_state["sg_target_journal"] = slug
+                                st.success("✓ 의도 임프린트 — 이후 모든 LLM 호출 자동 반영")
+                                st.toast(f"🎯 {jt.full_name} 양식으로 LLM 톤·강조 전환", icon="🎯")
+                            else:
+                                st.error("임프린트 실패")
+                        if st.button(f"📝 Discussion {slug.upper()} 양식으로 재작성",
+                                       key="ws_journal_rewrite", use_container_width=True):
+                            rp = rewrite_prompt(slug, section="Discussion")
+                            st.session_state["sg_initial_prompt"] = rp
+                            st.toast("입력바에 재작성 prompt를 넣었습니다. 전송 누르세요.", icon="📝")
+            except Exception as _e:
+                st.caption(f"journal targeting unavailable: {_e}")
+
         # ── Export: Word / PDF / EndNote XML / BibTeX 한큐 (2026-05-30) ──
         with st.popover("⬇ Export", use_container_width=True):
             st.caption("4가지 포맷 한 번에")
