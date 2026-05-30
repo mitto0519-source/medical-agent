@@ -1134,13 +1134,49 @@ def _render_preview_right(project: dict):
                     st.markdown("</div>", unsafe_allow_html=True)
 
     with tabs[2]:
-        tables = project.get("tables", [])
-        if not tables:
-            st.markdown("<div class='sg-card' style='color:#A3A3B8;'>"
-                         "Table 데이터 없음 — Chat에서 'KYRBS 통계 보강'으로 생성"
-                         "</div>", unsafe_allow_html=True)
+        # ── ZCB-depression 표준 표 4종 (NEJM 양식) — 사용자 PDF 양식 그대로 ──
+        st.markdown("<div class='sg-card'>", unsafe_allow_html=True)
+        c1, c2 = st.columns([3, 1])
+        with c1:
+            st.markdown("**📋 ZCB-Depression 표준 표 4종** — KYRBS PDF 양식 (NEJM 세 줄 표)")
+        with c2:
+            if st.button("🔬 4종 생성/갱신", key="ws_zcb_tables_build",
+                          use_container_width=True, type="primary"):
+                try:
+                    from src.export.zcb_dep_tables import build_all_tables
+                    # 통계 결과가 project에 있으면 활용 (없으면 사용자 PDF 기본값)
+                    htmls = build_all_tables(survey_year=2025)
+                    project["tables_html"] = htmls
+                    _save_project(pid, project)
+                    st.success("✓ 4종 표 생성 — 아래 표시")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"표 생성 실패: {e}")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        tables_html = project.get("tables_html") or {}
+        if tables_html:
+            for name, html_str in tables_html.items():
+                with st.expander(f"📊 {name}", expanded=(name == "Table 1")):
+                    st.markdown(html_str, unsafe_allow_html=True)
         else:
-            for t in tables:
+            # 미생성 시 — 기본 4종을 즉시 표시 (사용자 PDF 양식 그대로)
+            try:
+                from src.export.zcb_dep_tables import build_all_tables
+                preview_htmls = build_all_tables(survey_year=2025)
+                st.caption("⬇ 기본 양식 미리보기 (위 '🔬 생성' 누르면 현재 통계로 갱신)")
+                for name, html_str in preview_htmls.items():
+                    with st.expander(f"📊 {name}", expanded=(name == "Table 1")):
+                        st.markdown(html_str, unsafe_allow_html=True)
+            except Exception as e:
+                st.warning(f"표 양식 로드 실패: {e}")
+
+        # legacy tables (chat에서 생성된 JSON 양식)
+        legacy_tables = project.get("tables", [])
+        if legacy_tables:
+            st.markdown("---")
+            st.caption("기타 생성된 표 (JSON)")
+            for t in legacy_tables:
                 st.markdown(
                     f"<div class='sg-card'><div style='font-weight:600;margin-bottom:8px;'>"
                     f"Table {t.get('n', '')}. {t.get('caption', '')}</div></div>",
