@@ -922,10 +922,25 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> None:
         _save_project(pid, project)
         return
 
-    # 4) PaperWriter 5섹션
+    # 4) PaperWriter 5섹션 (필수 인자 author_profile + 보조 라이브러리 wiring)
     try:
         from src.research.paper_writer import PaperWriter
-        pw = PaperWriter()
+        from src.profile.author_profile import AuthorProfile
+        try:
+            from src.library.methods_library import MethodsLibrary
+            methods_lib = MethodsLibrary()
+        except Exception:
+            methods_lib = None
+        try:
+            from src.library.dataset_library import DatasetLibrary
+            dataset_lib = DatasetLibrary("data/libraries")
+        except Exception:
+            dataset_lib = None
+        pw = PaperWriter(
+            author_profile=AuthorProfile("Yoosun Cho"),
+            methods_library=methods_lib,
+            dataset_library=dataset_lib,
+        )
         study_info = {
             "dataset": "KYRBS 2025", "design": "cross-sectional",
             "exposure": exposure, "outcome": outcome,
