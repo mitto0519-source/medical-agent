@@ -200,7 +200,10 @@ def _login_gate():
     .stDeployButton{display:none!important;}
     button[kind='header']{display:none!important;}
     footer{visibility:hidden!important;display:none!important;}
-    html, body, [data-testid='stApp']{
+    html, body, [data-testid='stApp'],
+    [data-testid='stAppViewContainer'],
+    [data-testid='stAppViewContainer'] > section,
+    section.main, .main, .stMainBlockContainer, .block-container {
         background:
             radial-gradient(900px 700px at 18% 10%, rgba(244,114,182,0.45), transparent 60%),
             radial-gradient(900px 700px at 85% 12%, rgba(251,191,36,0.30), transparent 60%),
@@ -210,6 +213,10 @@ def _login_gate():
         font-family:"Inter","Pretendard","Apple SD Gothic Neo",system-ui,sans-serif !important;
         background-attachment:fixed !important;
     }
+    /* 로그인 전엔 사이드바 / 멀티페이지 nav 숨김 — 외부 사람이 깔끔한 첫 화면 보게 */
+    [data-testid='stSidebar'] {display:none !important;}
+    [data-testid='stSidebarNav'] {display:none !important;}
+    [data-testid='collapsedControl'] {display:none !important;}
     .sg-login-card {
         max-width:440px; margin:80px auto; padding:2.8rem 2.4rem;
         background:rgba(255,255,255,0.06);
