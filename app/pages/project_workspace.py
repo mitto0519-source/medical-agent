@@ -65,17 +65,64 @@ _FIG_DIR = Path("data/exports")
 
 
 def _load_project(pid: str) -> dict:
-    """working_papers/{pid}.json 또는 new 빈 프로젝트."""
+    """working_papers/{pid}.json (로컬) 또는 Supabase ma_working_papers (클라우드).
+    2026-05-30: 클라우드 fallback 추가 — 로컬에 없으면 Supabase에서 자동 로드.
+    KYRBS .sav 데이터 없어도 sections/messages/references 다 보고 chat 첨삭 가능.
+    """
     if pid == "new":
         return {"title": "New manuscript",
                 "topic": {}, "sections": {}, "messages": [], "figures": [], "tables": []}
-    p = _WP_DIR / f"{pid}.json"
-    if not p.exists():
-        return {"title": pid, "sections": {}, "messages": [], "figures": [], "tables": []}
+
+    # 1) 로컬 우선
+    for p in (_WP_DIR / f"{pid}.json",
+              *(_WP_DIR.glob(f"*/{pid}.json"))):  # user-scoped subdir도 탐색
+        if p.exists():
+            try:
+                return json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+
+    # 2) Supabase 폴백 — 클라우드에서 동기된 프로젝트 로드
     try:
-        return json.loads(p.read_text(encoding="utf-8"))
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text as _sql
+            with get_engine().connect() as conn:
+                row = conn.execute(_sql(
+                    "SELECT title, sections, meta FROM ma_working_papers WHERE id=:id"),
+                    {"id": pid}).mappings().first()
+            if row:
+                sec_lower = row["sections"] or {}
+                if isinstance(sec_lower, str):
+                    try: sec_lower = json.loads(sec_lower)
+                    except Exception: sec_lower = {}
+                meta = row["meta"] or {}
+                if isinstance(meta, str):
+                    try: meta = json.loads(meta)
+                    except Exception: meta = {}
+                # lowercase → PascalCase 변환
+                sec_pascal = {
+                    "Abstract": sec_lower.get("abstract", ""),
+                    "Introduction": sec_lower.get("introduction", ""),
+                    "Methods": sec_lower.get("methods", ""),
+                    "Results": sec_lower.get("results", ""),
+                    "Discussion": sec_lower.get("discussion", ""),
+                }
+                return {
+                    "title": row["title"] or pid,
+                    "topic": (meta.get("topic") or {"title": row["title"]}),
+                    "sections": sec_pascal,
+                    "messages": [],   # Supabase에는 messages 미저장 → 빈 list (첨삭 시작 가능)
+                    "references": meta.get("references") or [],
+                    "figures": [],
+                    "tables": [],
+                    "_loaded_from": "supabase",
+                }
     except Exception:
-        return {"title": pid, "sections": {}, "messages": [], "figures": [], "tables": []}
+        pass
+
+    # 3) 진짜 없음
+    return {"title": pid, "sections": {}, "messages": [], "figures": [], "tables": []}
 
 
 def _save_project(pid: str, data: dict, *, msg_cap: int = 200,
@@ -131,6 +178,38 @@ def _save_project(pid: str, data: dict, *, msg_cap: int = 200,
         if len(text) > 5_000_000:
             text = safe_json_dumps(data)
         p.write_text(text, encoding="utf-8")
+
+        # ★ Supabase 자동 동기 (2026-05-30) — 로컬 docker → 클라우드 자동 sync,
+        # 클라우드에서 같은 user_email로 로그인하면 같은 프로젝트 자동 표시.
+        try:
+            from src.storage.working_paper_store import save_paper as _wp_save
+            owner = str(data.get("owner") or
+                          st.session_state.get("user", {}).get("email") or
+                          st.session_state.get("user_email", "") or "anonymous")
+            sec_in = data.get("sections") or {}
+            sec_out = {
+                "title": (data.get("topic") or {}).get("title") or data.get("title", ""),
+                "abstract": str(sec_in.get("Abstract") or sec_in.get("abstract", ""))[:30000],
+                "introduction": str(sec_in.get("Introduction") or sec_in.get("introduction", ""))[:30000],
+                "methods": str(sec_in.get("Methods") or sec_in.get("methods", ""))[:30000],
+                "results": str(sec_in.get("Results") or sec_in.get("results", ""))[:30000],
+                "discussion": str(sec_in.get("Discussion") or sec_in.get("discussion", ""))[:30000],
+            }
+            meta_out = {
+                "topic": data.get("topic"),
+                "references": data.get("references"),
+                "messages_count": len(data.get("messages") or []),
+                "raw_pid": pid,
+            }
+            _wp_save(owner, sec_out, meta=meta_out, paper_id=pid)
+        except Exception as _sync_e:
+            try:
+                from src.runtime import events as _ev
+                _ev.append("project_supabase_sync_fail",
+                            {"pid": pid, "err": str(_sync_e)[:160]},
+                            actor="project_workspace")
+            except Exception:
+                pass
     except Exception as e:
         try:
             from src.runtime import events as _events

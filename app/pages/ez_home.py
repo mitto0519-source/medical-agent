@@ -96,34 +96,95 @@ def _enqueue_uploaded_files(uploaded_files, prompt_hint: str = "") -> None:
                      {"path": str(target), "filename": f.name},
                      owner=owner)
             n_vision += 1
+        elif ext == ".json":
+            # 프로젝트 .json 자동 import — sections/messages/references 가진 파일이면 작업실 진입
+            try:
+                data = json.loads(target.read_text(encoding="utf-8"))
+                if isinstance(data, dict) and ("sections" in data or "messages" in data):
+                    import uuid as _uuid
+                    new_pid = f"imported_{_uuid.uuid4().hex[:10]}"
+                    # working_papers/에 저장 (Supabase는 _save_project가 알아서 동기)
+                    _PROJECTS_DIR.mkdir(parents=True, exist_ok=True)
+                    out_path = _PROJECTS_DIR / f"{new_pid}.json"
+                    out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+                    st.session_state["sg_active_project"] = new_pid
+                    st.success(f"📥 프로젝트 import: {new_pid} → 작업실로 이동합니다")
+                    try:
+                        st.switch_page("pages/project_workspace.py")
+                    except Exception:
+                        pass
+            except Exception as _je:
+                st.warning(f"JSON import 실패: {_je}")
     if n_paper or n_vision:
         st.success(f"📥 백로그 등록: 논문 {n_paper}편 · 이미지 {n_vision}장")
 
 
 def _load_projects() -> list[dict]:
-    """data/working_papers/*.json 스캔 → 카드용 dict 리스트."""
+    """data/working_papers/*.json 스캔 + Supabase ma_working_papers 통합 (2026-05-30).
+    로컬 docker에서 만든 프로젝트는 Supabase로 자동 sync되므로,
+    클라우드에서 같은 user_email로 로그인하면 자동 표시."""
     out: list[dict] = []
-    if not _PROJECTS_DIR.exists():
-        return out
-    for jp in sorted(_PROJECTS_DIR.glob("*.json"),
-                      key=lambda p: p.stat().st_mtime, reverse=True):
-        try:
-            data = json.loads(jp.read_text(encoding="utf-8"))
-            title = data.get("title") or data.get("topic", {}).get("title") or jp.stem
-            edited = datetime.fromtimestamp(jp.stat().st_mtime).strftime("Edited %Y-%m-%d")
-            status = "Published" if data.get("status") == "published" else ""
-            grads = [
-                "linear-gradient(135deg, #1E1B4B, #312E81)",
-                "linear-gradient(135deg, #312E81, #7C3AED)",
-                "linear-gradient(135deg, #581C87, #EC4899)",
-                "linear-gradient(135deg, #1E3A8A, #06B6D4)",
-            ]
-            out.append({"title": title[:60], "edited": edited, "status": status,
-                         "gradient": grads[len(out) % len(grads)],
-                         "id": jp.stem})
-        except Exception:
-            continue
-    return out
+    seen_ids: set = set()
+    grads = [
+        "linear-gradient(135deg, #1E1B4B, #312E81)",
+        "linear-gradient(135deg, #312E81, #7C3AED)",
+        "linear-gradient(135deg, #581C87, #EC4899)",
+        "linear-gradient(135deg, #1E3A8A, #06B6D4)",
+    ]
+
+    # 1) Supabase (있으면 우선) — 클라우드에서 데이터 없어도 프로젝트 보기·첨삭 가능
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text as _sql
+            owner = (st.session_state.get("user") or {}).get("email") or \
+                     st.session_state.get("user_email", "")
+            with get_engine().connect() as conn:
+                if owner:
+                    rows = conn.execute(_sql(
+                        "SELECT id, title, updated_at FROM ma_working_papers "
+                        "WHERE owner_email=:oe ORDER BY updated_at DESC LIMIT 50"),
+                        {"oe": owner}).mappings().all()
+                else:
+                    rows = conn.execute(_sql(
+                        "SELECT id, title, updated_at FROM ma_working_papers "
+                        "ORDER BY updated_at DESC LIMIT 20")).mappings().all()
+            for r in rows:
+                pid = r["id"]
+                if pid in seen_ids:
+                    continue
+                seen_ids.add(pid)
+                title = (r["title"] or "Untitled")[:60]
+                ts = r["updated_at"] or 0
+                edited = datetime.fromtimestamp(ts).strftime("Edited %Y-%m-%d") if ts else "Edited (cloud)"
+                out.append({"title": title, "edited": edited,
+                             "status": "☁ Cloud",
+                             "gradient": grads[len(out) % len(grads)],
+                             "id": pid})
+    except Exception:
+        pass
+
+    # 2) 로컬 working_papers/*.json (보조 — 동일 id 중복 제거)
+    if _PROJECTS_DIR.exists():
+        # 평탄: data/working_papers/{user}/{pid}.json + 직접 data/working_papers/{pid}.json
+        all_jsons = list(_PROJECTS_DIR.glob("*.json")) + list(_PROJECTS_DIR.glob("*/*.json"))
+        for jp in sorted(all_jsons, key=lambda p: p.stat().st_mtime, reverse=True):
+            pid = jp.stem
+            if pid in seen_ids:
+                continue
+            try:
+                data = json.loads(jp.read_text(encoding="utf-8"))
+                title = (data.get("title") or
+                         (data.get("topic") or {}).get("title") or pid)[:60]
+                edited = datetime.fromtimestamp(jp.stat().st_mtime).strftime("Edited %Y-%m-%d")
+                status = "Published" if data.get("status") == "published" else ""
+                seen_ids.add(pid)
+                out.append({"title": title, "edited": edited, "status": status,
+                             "gradient": grads[len(out) % len(grads)], "id": pid})
+            except Exception:
+                continue
+
+    return out[:30]
 
 
 def _sidebar():
@@ -188,7 +249,7 @@ def render() -> None:
                 label_visibility="collapsed", height=110, key="sg_home_prompt")
             uploaded = st.file_uploader(
                 "📎 파일 첨부 (PDF/DOCX/이미지 — 논문 학습·참고·vision 검증)",
-                type=["pdf", "docx", "txt", "png", "jpg", "jpeg", "sav", "csv", "xlsx"],
+                type=["pdf", "docx", "txt", "png", "jpg", "jpeg", "sav", "csv", "xlsx", "json"],
                 accept_multiple_files=True, key="sg_home_files",
                 label_visibility="visible")
         with c2:
