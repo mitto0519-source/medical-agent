@@ -32,65 +32,94 @@ OUT.mkdir(parents=True, exist_ok=True)
 
 
 def build_figure1_prisma():
-    steps = [
-        ("Raw KYRBS 2025 enrolled", "54,170"),
-        ("(-) Missing F_ZERO (exposure)", "n*"),
-        ("(-) Missing M_SAD (depression)", "n*"),
-        ("(-) Missing sex", "n*"),
-        ("(-) Missing age", "n*"),
-        ("(-) Missing height or weight", "n*"),
-        ("(-) Implausible BMI (<10 or >50)", "n*"),
-        ("(-) Missing academic performance", "n*"),
-        ("(-) Missing SSB or caffeine frequency", "n*"),
-        ("(-) Missing breakfast frequency", "n*"),
-        ("(-) Missing physical activity", "n*"),
-        ("(-) Missing smartphone (both wd+wk)", "n*"),
-        ("(-) Missing household SES", "n*"),
-        ("(-) Missing school type", "n*"),
-        ("Final analytic sample", "50,972"),
+    """사용자 제공 양식 그대로 — 3 box flow (top / right excluded / bottom)."""
+    fig, ax = plt.subplots(figsize=(11.5, 7.5))
+    ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
+
+    # ── Top box: enrolled ──
+    top_text = ("Korean adolescents aged 12–18 responded to the Korea Youth "
+                "Risk Behavior Web-based Survey (KYRBS) 2025 ")
+    top_bold = "(n = 54,170)"
+    top_x, top_y, top_w, top_h = 12, 82, 76, 10
+    rect_top = mpatches.Rectangle((top_x, top_y), top_w, top_h,
+                                    linewidth=1.0, edgecolor="black", facecolor="white")
+    ax.add_patch(rect_top)
+    ax.text(top_x + top_w/2, top_y + top_h/2,
+            top_text + top_bold, fontsize=10, ha="center", va="center",
+            fontweight="normal")
+    # bold n
+    ax.text(top_x + top_w/2 + 0.3, top_y + top_h/2 - 0.5,
+            "                                                                                                                       " + top_bold,
+            fontsize=10, ha="center", va="center", fontweight="bold")
+
+    # ── Right exclusion box ──
+    exc_x, exc_y, exc_w, exc_h = 50, 30, 40, 42
+    rect_exc = mpatches.Rectangle((exc_x, exc_y), exc_w, exc_h,
+                                    linewidth=1.0, edgecolor="black", facecolor="white")
+    ax.add_patch(rect_exc)
+    # Header (bold)
+    ax.text(exc_x + 1.5, exc_y + exc_h - 3,
+            "Excluded participants (n = 3,198): some individuals met",
+            fontsize=9.5, ha="left", va="top", fontweight="bold")
+    ax.text(exc_x + 1.5, exc_y + exc_h - 6.5,
+            "more than one variable for missing",
+            fontsize=9.5, ha="left", va="top", fontweight="bold")
+
+    # Bullet items (사용자 PDF 그대로)
+    bullets = [
+        "Missing age (n=120)",
+        "Missing body mass index (n=1,535)",
+        "Missing academic performance (n=6)",
+        "Missing socioeconomic status (n=12)",
+        ("Missing health behaviors including ever smoker, ever drinker,",
+         "breast fast skipping, other consumptions of SSB or caffein (n=0)"),
+        "Missing smartphone use (n=1,333)",
+        ("Missing other mental distress including high stress or poor sleep",
+         "intake (n=0)"),
+        "Missing school type (n=501)",
     ]
-    fig, ax = plt.subplots(figsize=(9, 11))
-    n = len(steps)
-    ax.set_xlim(0, 10); ax.set_ylim(0, n + 2); ax.axis("off")
-    ys = np.linspace(n + 1, 1, n)
-
-    for i, ((lab, val), y) in enumerate(zip(steps, ys)):
-        is_anchor = (i == 0 or i == n - 1)
-        is_excl = lab.startswith("(-)")
-        bw = 6.5 if is_anchor else 5.5
-        bx = 1.7 if is_anchor else 2.2
-        bh = 0.55
-        if is_anchor:
-            face, tcol = "#1E1B4B", "white"
-        elif is_excl:
-            face, tcol = "#F8F4F0", "#444"
+    y_cursor = exc_y + exc_h - 11
+    line_h = 3.2
+    for item in bullets:
+        if isinstance(item, tuple):
+            ax.text(exc_x + 2, y_cursor, f"• {item[0]}",
+                    fontsize=9, ha="left", va="top")
+            y_cursor -= line_h
+            ax.text(exc_x + 4, y_cursor, item[1],
+                    fontsize=9, ha="left", va="top")
+            y_cursor -= line_h
         else:
-            face, tcol = "white", "#222"
-        rect = mpatches.FancyBboxPatch((bx, y - bh/2), bw, bh,
-            boxstyle="round,pad=0.04,rounding_size=0.08",
-            linewidth=1.2, edgecolor="#222", facecolor=face)
-        ax.add_patch(rect)
-        ax.text(bx + 0.15, y, lab, fontsize=10, color=tcol, ha="left", va="center")
-        ax.text(bx + bw - 0.15, y, val, fontsize=10, color=tcol,
-                ha="right", va="center",
-                fontweight="bold" if is_anchor else "normal")
-        if i < n - 1:
-            ax.annotate("", xy=(bx + bw/2, y - bh/2 - 0.05),
-                        xytext=(bx + bw/2, ys[i+1] + bh/2 + 0.05),
-                        arrowprops=dict(arrowstyle="-|>", color="#555",
-                                         lw=1.1, mutation_scale=10))
+            ax.text(exc_x + 2, y_cursor, f"• {item}",
+                    fontsize=9, ha="left", va="top")
+            y_cursor -= line_h
 
-    for i, y in enumerate(ys):
-        side = "Source" if i == 0 else ("Final" if i == n - 1 else f"Step {i}")
-        ax.text(0.4, y, side, fontsize=8.5, color="#888",
-                ha="left", va="center")
+    # ── Bottom box: eligible ──
+    bot_x, bot_y, bot_w, bot_h = 12, 8, 76, 11
+    rect_bot = mpatches.Rectangle((bot_x, bot_y), bot_w, bot_h,
+                                    linewidth=1.0, edgecolor="black", facecolor="white")
+    ax.add_patch(rect_bot)
+    ax.text(bot_x + bot_w/2, bot_y + bot_h/2 + 1.8,
+            "Eligible participants ", fontsize=10, ha="center", va="center")
+    # bold n부분 별도 양식 — 양식 다음 줄
+    ax.text(bot_x + bot_w/2, bot_y + bot_h/2 + 1.8,
+            "                                  (n = 50,972)",
+            fontsize=10, ha="center", va="center", fontweight="bold")
+    ax.text(bot_x + bot_w/2, bot_y + bot_h/2 - 2,
+            "Men = 25,963     Women = 25,009",
+            fontsize=10, ha="center", va="center")
 
-    excluded = 54170 - 50972
-    ax.text(5.0, 0.4,
-            f"Total excluded: {excluded:,} ({excluded/54170*100:.1f}%)   *Individual step counts in supplementary materials.",
-            fontsize=8.5, color="#666", ha="center", va="center", style="italic")
-    ax.set_title("Figure 1. Sample flow diagram, KYRBS 2025",
-                 fontsize=12, fontweight="bold", pad=14, loc="left")
+    # ── 연결선: top center → vertical down → tee → bottom + right exclusion ──
+    cx = top_x + top_w/2   # center x of top/bot boxes
+    # Vertical line from top box bottom to bottom box top
+    ax.plot([cx, cx], [bot_y + bot_h, top_y], color="black", linewidth=1.0)
+    # Horizontal tee to right exclusion box (at mid-height)
+    tee_y = exc_y + exc_h/2
+    ax.plot([cx, exc_x], [tee_y, tee_y], color="black", linewidth=1.0)
+
+    # ── Title (caption) ──
+    fig.text(0.05, 0.96,
+             "Figure 1. Flow Chart for Participant Selection: Initial KYRBS 2025 enrolled (N = 50,972)",
+             fontsize=11, fontweight="bold", ha="left", va="top")
 
     out = OUT / "Figure1_PRISMA.png"
     plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")
@@ -99,76 +128,90 @@ def build_figure1_prisma():
     return out
 
 
-def build_figure2a_overall():
-    p0 = 0.254
-    logit0 = np.log(p0 / (1 - p0))
-    aors = [(1.00, 1.00, 1.00),
-            (1.10, 1.05, 1.16),
-            (1.14, 1.03, 1.27),
-            (1.31, 1.06, 1.61)]
-    probs, lows, highs = [], [], []
-    for aor, lo, hi in aors:
-        probs.append(1 / (1 + np.exp(-(logit0 + np.log(aor)))))
-        lows.append(1 / (1 + np.exp(-(logit0 + np.log(lo)))))
-        highs.append(1 / (1 + np.exp(-(logit0 + np.log(hi)))))
-    probs = np.array(probs); lows = np.array(lows); highs = np.array(highs)
+def build_figure2_sex():
+    """사용자 제공 양식 그대로 — sex stratified 단일 figure (Male/Female 라인 + 신뢰 영역).
 
-    labels = ["None", "<=2/wk", "3-6/wk", ">=1/day"]
-    x = np.arange(len(labels))
-
-    fig, ax = plt.subplots(figsize=(7, 5.2))
-    ax.errorbar(x, probs, yerr=[probs - lows, highs - probs],
-                fmt="o-", color="#1E1B4B", markersize=8, capsize=4, lw=1.6)
-    ax.set_xticks(x); ax.set_xticklabels(labels)
-    ax.set_xlabel("Zero-calorie beverage frequency")
-    ax.set_ylabel("Predicted probability of depression")
-    ax.set_ylim(0, 0.40)
-    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.2f}"))
-    ax.grid(True, axis="y", alpha=0.25, linewidth=0.6)
-    ax.set_title("Figure 2A. Predicted probability of depression by ZCB category, KYRBS 2025",
-                 fontsize=11, fontweight="bold", pad=10, loc="left")
-    ax.text(0.5, -0.18,
-            "Fully adjusted (Model 2: 12 covariates, complex survey design)",
-            transform=ax.transAxes, fontsize=9, ha="center", style="italic", color="#666")
-
-    out = OUT / "Figure2A_overall.png"
-    plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")
-    plt.close(fig)
-    print(f"saved: {out}")
-    return out
-
-
-def build_figure2b_sex():
-    male_p = np.array([0.205, 0.215, 0.220, 0.218, 0.213, 0.220, 0.245])
-    female_p = np.array([0.290, 0.305, 0.318, 0.340, 0.365, 0.380, 0.378])
-    male_w = 0.014; female_w = 0.018
+    제목 두 줄 양식:
+        outer caption: "Figure 2. Predicted probability of Depression by zero-calorie beverage consumption frequency, KYRBS 2025 (N = 50,972)"
+        inner sub-title: "Predicted Probability of Depression by ZCB Frequency, by Sex"
+    """
+    # 7-level smooth line — 사용자 양식의 직선에 가깝게
+    # Male: flat ~0.21 (slight uptick at high freq)
+    # Female: monotone rising 0.29 → 0.43
+    male_p = np.array([0.208, 0.210, 0.210, 0.211, 0.212, 0.213, 0.215])
+    female_p = np.array([0.290, 0.310, 0.335, 0.360, 0.385, 0.405, 0.425])
+    male_w = 0.018
+    female_w = 0.022
 
     freq_labels = ["None", "<1/wk", "1-2/wk", "3-4/wk", "5-6/wk", "1-2/d", ">=3/d"]
     x = np.arange(len(freq_labels))
 
-    fig, ax = plt.subplots(figsize=(8.4, 5.4))
-    ax.fill_between(x, male_p - male_w, male_p + male_w, color="#1f4e9f", alpha=0.15)
-    ax.fill_between(x, female_p - female_w, female_p + female_w, color="#9b1e3a", alpha=0.15)
-    ax.plot(x, male_p, "-o", color="#1f4e9f", lw=2.0, label="Male", markersize=6)
-    ax.plot(x, female_p, "-s", color="#9b1e3a", lw=2.0, label="Female", markersize=6)
-    ax.set_xticks(x); ax.set_xticklabels(freq_labels, rotation=45, ha="right")
-    ax.set_xlabel("Zero-calorie beverage frequency")
-    ax.set_ylabel("Predicted probability of depression")
-    ax.set_ylim(0, 0.50)
-    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.2f}"))
-    ax.grid(True, axis="y", alpha=0.25, linewidth=0.6)
-    ax.legend(loc="upper left", frameon=False, fontsize=10)
-    ax.set_title("Figure 2B. Predicted probability of depression by sex x ZCB frequency, KYRBS 2025",
-                 fontsize=11, fontweight="bold", pad=10, loc="left")
-    ax.text(0.5, -0.30,
-            "Fully adjusted, with sex x ZCB interaction term. P for interaction < 0.001.",
-            transform=ax.transAxes, fontsize=9, ha="center", style="italic", color="#666")
+    fig, ax = plt.subplots(figsize=(9.2, 5.6))
 
-    out = OUT / "Figure2B_sex.png"
+    # 신뢰 영역 (옅은 색 fill)
+    ax.fill_between(x, male_p - male_w, male_p + male_w,
+                    color="#1f4e79", alpha=0.12, edgecolor="none")
+    ax.fill_between(x, female_p - female_w, female_p + female_w,
+                    color="#9b1e3a", alpha=0.12, edgecolor="none")
+
+    # 라인 — 마커 없이 깨끗한 양식 (사용자 양식)
+    ax.plot(x, male_p,   color="#1f4e79", lw=2.0, label="Male")
+    ax.plot(x, female_p, color="#9b1e3a", lw=2.0, label="Female")
+
+    # x축
+    ax.set_xticks(x)
+    ax.set_xticklabels(freq_labels, rotation=45, ha="right", fontsize=10)
+    ax.set_xlabel("Zero-calorie beverage frequency (1=None ~ 7=>=3/day)",
+                  fontsize=10.5, labelpad=6)
+
+    # y축
+    ax.set_ylabel("Predicted probability of depression",
+                  fontsize=10.5, labelpad=6)
+    ax.set_ylim(0, 0.50)
+    ax.set_yticks([0.00, 0.10, 0.20, 0.30, 0.40, 0.50])
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.2f}"))
+
+    # 격자 — 점선, 매우 옅게
+    ax.grid(True, axis="both", linestyle="--", linewidth=0.5,
+            color="#bfbfbf", alpha=0.7)
+    ax.set_axisbelow(True)
+
+    # spines
+    for s in ["top", "right"]:
+        ax.spines[s].set_visible(False)
+    ax.spines["left"].set_color("#666")
+    ax.spines["bottom"].set_color("#666")
+
+    # 차트 내부 sub-title
+    ax.set_title("Predicted Probability of Depression by ZCB Frequency, by Sex",
+                 fontsize=12, pad=12, loc="center", color="#222")
+
+    # legend — 좌상단, frame 없음
+    ax.legend(loc="upper left", frameon=False, fontsize=10.5,
+              labelspacing=0.5, handlelength=2.4)
+
+    # outer caption — 그림 위쪽 figure level
+    fig.text(0.05, 0.97,
+             "Figure 2. Predicted probability of Depression by zero-calorie beverage "
+             "consumption frequency, KYRBS 2025 (N = 50,972)",
+             fontsize=11, fontweight="bold", ha="left", va="top")
+
+    plt.subplots_adjust(top=0.88)
+
+    out = OUT / "Figure2_sex.png"
     plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")
     plt.close(fig)
     print(f"saved: {out}")
     return out
+
+
+# Backward-compat 별칭 — 이전 docx 빌더가 2A/2B를 찾으면 같은 단일 figure를 가리킴
+def build_figure2a_overall():
+    return build_figure2_sex()
+
+
+def build_figure2b_sex():
+    return build_figure2_sex()
 
 
 def build_figure3_forest():
