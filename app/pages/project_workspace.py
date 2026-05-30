@@ -908,24 +908,37 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
     project["messages"] = messages
     _save_project(pid, project)
 
-    # 1) KYRBS 로드
+    # 1) KYRBS 로드 — 절대경로 우선 (Streamlit 멀티페이지 cwd 변동 차단)
     try:
         from src.data.kyrbs_raw_loader import KYRBSLoader
-        sav = _P("data/raw/kyrbs2025.sav")
-        if not sav.exists():
-            # 다른 경로 시도
-            for cand in [_P("data/raw/KYRBS_2025.sav"),
-                          _P("data/KYRBS/kyrbs2025.sav")]:
-                if cand.exists():
-                    sav = cand; break
+        # 프로젝트 루트(app/pages/project_workspace.py → parent×3 = /app) 기준 절대경로
+        _project_root = _P(__file__).resolve().parent.parent.parent
+        candidates = [
+            _project_root / "data/raw/kyrbs2025.sav",
+            _project_root / "data/raw/KYRBS_2025.sav",
+            _project_root / "data/KYRBS/kyrbs2025.sav",
+            _P("data/raw/kyrbs2025.sav"),       # cwd 기반 (보조)
+            _P("/app/data/raw/kyrbs2025.sav"),  # docker 절대경로 (보조)
+        ]
+        sav = None
+        for cand in candidates:
+            if cand.exists():
+                sav = cand
+                break
+        if sav is None:
+            tried = [str(c) for c in candidates]
+            raise FileNotFoundError(f"KYRBS .sav 파일 없음. 시도한 경로: {tried}")
         df, _meta = KYRBSLoader().load(sav)
         _emit_system("data_loaded",
-                     f"KYRBS 2025 로드: {len(df):,}행 × {len(df.columns)}열")
+                     f"KYRBS 2025 로드: {len(df):,}행 × {len(df.columns)}열 (path={sav})")
     except Exception as e:
-        _emit_system("data_load_failed", f"{type(e).__name__}: {e}")
+        import traceback as _tb2
+        _emit_system("data_load_failed",
+                      f"{type(e).__name__}: {e}\n{_tb2.format_exc()[:400]}")
         _add_msg("assistant",
-                 f"⚠️ KYRBS 로드 실패 — {type(e).__name__}: {str(e)[:200]}.\n"
-                 f"`data/raw/kyrbs2025.sav` 위치를 확인하세요.")
+                 f"⚠️ KYRBS 로드 실패 — {type(e).__name__}: {str(e)[:300]}.\n"
+                 f"확인: docker container 안 `/app/data/raw/kyrbs2025.sav` 존재 여부.\n"
+                 f"명령: `docker exec medical-agent ls /app/data/raw/kyrbs2025.sav`")
         project["messages"] = messages
         _save_project(pid, project)
         return
