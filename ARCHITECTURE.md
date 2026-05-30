@@ -6,7 +6,7 @@
 > **규칙**: 새 모듈을 만들기 전에 반드시 이 파일을 확인한다.
 > 모듈을 추가/변경/삭제할 때마다 이 파일을 업데이트한다.
 >
-> Last updated: 2026-05-30 (text_sanitize 신설 — API 6.6MB lone surrogate 사고 방어, 3 저장 진입점 wiring + audit_text_safety 스캔/--fix)
+> Last updated: 2026-05-30 (Vibe paper full overhaul — UI sapphire + auto-agentic + StatBridge binarize + PaperWriter author_profile fix + pid='new' 저장 구멍 + _orchestrated_paper_run 5섹션 보장 + References 탭 + 4포맷 Export + Supabase 프로젝트 sync + 자료 자동선택 + kyrbs_stat 캐시 + intent_sensor 무의식 임프린트 + style_polish 학술 cliché 정리 + provenance/tracing/preregistration/unified wiring)
 
 ---
 
@@ -186,6 +186,12 @@
 | **Self-consistency ensemble** | `src/llm/self_consistency.py` | ✅ active | n회 sample → 다수결/agreement. critical 통계 해석에서 hallucination ↓ |
 | **Wiring audit** (dead code 차단) | `scripts/audit_wiring.py` | ✅ active | git diff 추가 심볼 → 호출부 grep. 0 callers = FAIL 보고. **모든 신규 모듈 작성 후 의무 실행** |
 | **Text sanitize** (lone UTF-16 surrogate + ctrl-char 차단) | `src/utils/text_sanitize.py` | ✅ active | 2026-05-30 사고(`API 400 no low surrogate`, 6.6MB 요청 본문 영구 차단) 방어. `strip_lone_surrogates` / `sanitize_obj` / `safe_json_dumps` / `is_safe` / `scan_lone_surrogates`. **3개 저장 진입점에 wiring**: `change_log._write_local`, `conversation_memory._save`+`record`, `project_workspace._save_project`. `scripts/audit_text_safety.py`로 data/ 전체 스캔 + `--fix` |
+| **Safety unified gate** (모든 safety 게이트 단일 진입점) | `src/safety/unified.py` → `check_all` | ✅ active | citation_grounding + consistency + causal + physician_review + figure_validator 한 번에 호출 → `SafetyReport(overall=ok/warn/fail)`. **paper_writer._generate + project_workspace._orchestrated_paper_run에 wiring**. audit_trail에 자동 적재. |
+| **Reproducibility provenance** (git_sha + model_ver + prompt_hash + dataset_md5 + seed) | `src/runtime/provenance.py` | ✅ active | `build_fingerprint` / `record` / `auto_record_llm_call` / `auto_record_stats` / `seed_for`. **claude_client.generate에 자동 wiring** (`_prov.auto_record_llm_call`). events.db `provenance` 타입 기록 |
+| **Distributed tracing span tree** | `src/runtime/tracing.py` | ✅ active | `trace_span` 컨텍스트매니저, 자동 parent-child, latency/tokens 자동 기록. **claude_client.generate에 자동 wiring** (`llm.anthropic.generate` span). `trace_tree(trace_id)` / `recent_traces(n)` |
+| **Analysis preregistration** (LLM 우회 통계 계획 잠금) | `src/research/analysis_preregistration.py` | ✅ active | `AnalysisPlan` dataclass + `register` (canonical_hash) + `verify` (spec mismatch detect) + `run_locked` (RuntimeError on violation). **_orchestrated_paper_run + MCP `preregister_analysis` tool**에 wiring. events `analysis_plan_registered`/`_violation`/`_result` |
+| **Intent sensor** (사용자 의도/뉘앙스/페르소나 무의식 임프린트) | `src/agent/intent_sensor.py` | ✅ active | 5+2차원 (emphasis/avoidance/reader/tone/persona/prior/lang) 휴리스틱 + LLM 추론. **모든 LLM 호출에 자동 픽업** (claude_client._build_system → get_current). 영구 저장 (disk + Supabase ma_intent_history). 외부 패턴 파일 `data/agent_self/intent_patterns.json` |
+| **Style polish** (학술 cliché 정리 + AI 양식 점수) | `src/safety/style_polish.py` + `prompts/style_polish.md` | ✅ active | `ai_style_score` (0-100) + `polish_text(gentle/aggressive)` + `polish_paper`. **_orchestrated_paper_run 끝에 gentle polish 자동 적용** + workspace References 탭의 ✨ Polish 버튼. style_polish.md는 prompt_loader가 paper_write task에 자동 합성 |
 | **Word 표준 템플릿** (zcb_dep_v5 양식) | `data/templates/manuscript_template.json` + `src/export/word_exporter.py` | ✅ active | JSON spec이 단일 진실원본 — 모든 논문 docx가 동일 양식. inline label / Vancouver / italic P / 학술지 세 줄 표 |
 | **학술지 세 줄 표** | `src/export/table_builder.py:render_publication_table()` | ✅ active | NEJM/Lancet 표준 — top/header-bottom/bottom horizontal only, 세로선 없음, p-value italic P |
 | **Figure 양식 통일** | `src/export/publication_figure_generator.py` | ✅ active | template JSON figures 섹션 read → TNR + spine 깔끔 + grid off + 색팔레트 통일 |

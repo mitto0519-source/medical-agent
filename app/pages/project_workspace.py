@@ -1146,6 +1146,44 @@ def _render_preview_right(project: dict):
                 st.error(f"추가 실패: {e}")
         st.markdown("</div>", unsafe_allow_html=True)
 
+        # ✨ Style polish — AI cliché 정리 + AI score 표시
+        st.markdown("<div class='sg-card' style='margin-top:12px;'>", unsafe_allow_html=True)
+        st.markdown("**✨ Style Polish (학술 cliché 정리)**")
+        try:
+            from src.safety.style_polish import ai_style_score, polish_paper
+            sec_check = project.get("sections") or {}
+            txt = "\n\n".join(str(v) for v in sec_check.values() if isinstance(v, str))
+            if txt.strip():
+                rep_now = ai_style_score(txt)
+                cls = ("#10B981" if rep_now.ai_style_score <= 20
+                       else "#F59E0B" if rep_now.ai_style_score <= 50 else "#F43F5E")
+                st.markdown(
+                    f"<div style='display:flex;gap:24px;align-items:center;'>"
+                    f"<div><div style='color:#A3A3B8;font-size:0.74rem;'>AI 양식 점수 (낮을수록 자연스러움)</div>"
+                    f"<div style='color:{cls};font-size:1.6rem;font-weight:700;'>{rep_now.ai_style_score} / 100</div></div>"
+                    f"<div style='color:#A3A3B8;font-size:0.78rem;'>"
+                    f"cliche {rep_now.overused_vocab_count}개 · em-dash {rep_now.em_dash_per_1k_words}/1k · "
+                    f"burstiness {rep_now.burstiness}</div></div>",
+                    unsafe_allow_html=True)
+                cps1, cps2 = st.columns(2)
+                with cps1:
+                    if st.button("✨ Gentle polish (안전)", key="ws_polish_gentle",
+                                  use_container_width=True):
+                        project["sections"] = polish_paper(sec_check, mode="gentle")
+                        _save_project(pid, project)
+                        st.success("✓ Gentle polish 적용 — cliche 제거 + 전환어 다양화")
+                        st.rerun()
+                with cps2:
+                    if st.button("⚡ Aggressive (em-dash 정규화)", key="ws_polish_aggr",
+                                  use_container_width=True):
+                        project["sections"] = polish_paper(sec_check, mode="aggressive")
+                        _save_project(pid, project)
+                        st.success("✓ Aggressive polish 적용")
+                        st.rerun()
+        except Exception as _e:
+            st.caption(f"style polish unavailable: {_e}")
+        st.markdown("</div>", unsafe_allow_html=True)
+
         # 본문 [n] 자동 삽입 + Export 모음
         st.markdown("<div class='sg-card' style='margin-top:12px;'>", unsafe_allow_html=True)
         st.markdown("**🔗 본문 인용 연동 + Export**")
@@ -1541,6 +1579,57 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
         project["messages"] = messages
         _save_project(pid, project)
         return
+
+    # 4.5) 통계 분석 preregistration (재현성·LLM 우회 차단)
+    try:
+        from src.research.analysis_preregistration import (
+            AnalysisPlan, register as ap_register, record_result as ap_record,
+        )
+        plan = AnalysisPlan(
+            outcome=outcome, exposure=exposure,
+            confounders=covs, model_class="logistic",
+            design="cross_sectional",
+            dataset_label=f"{ds_kind} {target_years}",
+            dataset_md5="",  # 다년도 concat이라 단일 md5 비할당 (sources 리스트로 대체 추적)
+        )
+        plan_hash = ap_register(plan, actor="orchestrated_paper")
+        # 결과 plan_hash에 연결
+        result_summary = {
+            "n_total": stat.get("n_total"),
+            "outcome_label": stat.get("outcome_label", outcome),
+            "aOR_target": None,
+        }
+        if isinstance(stat.get("model_vars"), list):
+            for v in stat["model_vars"]:
+                if exposure in str(v.get("variable", "")):
+                    result_summary["aOR_target"] = v.get("or_value")
+                    break
+        ap_record(plan_hash, result_summary, actor="orchestrated_paper")
+        _emit_system("preregistered",
+                     f"plan_hash={plan_hash} outcome={outcome} exposure={exposure} covs={len(covs)}")
+    except Exception as e:
+        _emit_system("preregister_skip", f"{type(e).__name__}: {str(e)[:120]}")
+
+    # 4.7) Style polish — 5섹션 본문에서 AI cliché 자동 제거 (gentle mode)
+    try:
+        from src.safety.style_polish import polish_paper, ai_style_score
+        # 사전 AI score 측정 (전체 본문)
+        full_text_before = "\n\n".join(
+            str(v) for v in sections.values() if isinstance(v, str))
+        before_rep = ai_style_score(full_text_before)
+        # polish 적용
+        polished_sections = polish_paper(sections, mode="gentle")
+        project["sections"] = polished_sections
+        sections = polished_sections
+        # 사후 AI score
+        full_text_after = "\n\n".join(
+            str(v) for v in sections.values() if isinstance(v, str))
+        after_rep = ai_style_score(full_text_after)
+        _emit_system("style_polish",
+                     f"AI score {before_rep.ai_style_score} → {after_rep.ai_style_score} "
+                     f"(cliche {before_rep.overused_vocab_count} → {after_rep.overused_vocab_count})")
+    except Exception as e:
+        _emit_system("style_polish_skip", f"{type(e).__name__}: {str(e)[:120]}")
 
     # 5) Safety check
     try:

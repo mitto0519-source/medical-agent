@@ -1131,6 +1131,80 @@ def reporting_checklist_strobe(sections_json: str, ctx=None) -> dict:
 
 
 @mcp.tool
+def intent_sense(prompt: str, deep: bool = False, ctx=None) -> dict:
+    """사용자 prompt의 explicit + implicit 의도/뉘앙스/페르소나 5+2차원 센싱.
+
+    deep=True면 LLM 기반 미묘 의도 추론 추가 (cheap model, ~1-2초).
+    결과는 글로벌 _CURRENT_INTENT에 영구 저장(disk + Supabase) → 이후 모든 LLM 호출 자동 픽업.
+    """
+    try:
+        from src.agent.intent_sensor import sense_and_imprint
+        sig = sense_and_imprint(prompt, deep=deep,
+                                  owner_email=_caller_email(ctx))
+        return sig.to_dict()
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def style_score(text: str, ctx=None) -> dict:
+    """학술 글의 AI-cliché 양식 점수 (0=자연스러움 ~ 100=AI-스러움).
+
+    검출 패턴: vocabulary cliché, em-dash 과사용, sentence length burstiness,
+    'In conclusion' 류 stuffer, 균일한 문장 길이.
+    """
+    try:
+        from src.safety.style_polish import ai_style_score
+        return ai_style_score(text).to_dict()
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def style_polish(text: str, mode: str = "gentle", ctx=None) -> dict:
+    """학술 글의 cliché 정리 + 전환어 다양화 (gentle/aggressive).
+
+    gentle: vocab 치환 + 전환어 다양화 (안전, 기본)
+    aggressive: em-dash 정규화까지
+    """
+    try:
+        from src.safety.style_polish import polish_text, ai_style_score
+        polished = polish_text(text, mode=mode)
+        return {
+            "polished_text": polished,
+            "before_score": ai_style_score(text).ai_style_score,
+            "after_score": ai_style_score(polished).ai_style_score,
+        }
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
+def preregister_analysis(outcome: str, exposure: str,
+                          confounders: list = None,
+                          model_class: str = "logistic",
+                          design: str = "cross_sectional",
+                          dataset_label: str = "",
+                          ctx=None) -> dict:
+    """통계 분석 plan을 events.db에 immutable 기록 (재현성 보장).
+
+    plan_hash 반환. 이후 StatBridge.analyze에 plan_hash 전달 → spec 변경 시 violation 기록.
+    """
+    try:
+        from src.research.analysis_preregistration import AnalysisPlan, register
+        plan = AnalysisPlan(
+            outcome=outcome, exposure=exposure,
+            confounders=confounders or [],
+            model_class=model_class, design=design,
+            dataset_label=dataset_label,
+        )
+        plan_hash = register(plan, actor=_caller_email(ctx) or "mcp")
+        return {"plan_hash": plan_hash, "plan": plan.to_spec()}
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
+@mcp.tool
 def text_safety_check(text: str, fix: bool = False, ctx=None) -> dict:
     """텍스트의 lone UTF-16 surrogate / nasty ctrl char 안전성 검사.
 
