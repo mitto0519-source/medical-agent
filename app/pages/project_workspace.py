@@ -802,7 +802,10 @@ def _render_chat_left(project: dict, pid: str):
             if use_tools:
                 _run_agentic_step(prompt, project, pid, mode)
             else:
-                reply = _delegate_to_writer(prompt, project, mode)
+                # ★ Streaming 표시 — st.empty()로 placeholder 주고 token-by-token 갱신
+                stream_box = st.empty()
+                reply = _delegate_to_writer(prompt, project, mode,
+                                              stream_to=stream_box)
                 messages.append({"role": "assistant",
                                   "content": reply.get("content", "")})
                 project["messages"] = messages
@@ -1002,11 +1005,14 @@ def _wire_memory(user_msg: str, assistant_text: str, project: dict) -> None:
         pass
 
 
-def _delegate_to_writer(prompt: str, project: dict, mode: str) -> dict:
-    """단순 one-shot LLM 호출 (tool-use OFF일 때). 실패 시 graceful.
-    2026-05-30 — build_system_with_preview에 user_msg + 직전 대화 컨텍스트 함께 주입."""
+def _delegate_to_writer(prompt: str, project: dict, mode: str,
+                         *, stream_to: "st.delta_generator.DeltaGenerator | None" = None) -> dict:
+    """단순 one-shot LLM 호출. tool-use OFF일 때.
+    2026-05-30 — build_system_with_preview에 user_msg + 직전 대화 컨텍스트 함께 주입.
+    stream_to 인자로 Streamlit placeholder 받으면 token-by-token streaming 표시.
+    """
     try:
-        from src.llm import get_llm_client
+        from src.llm.claude_client import ClaudeClient
         from src.agent.prompt_loader import load_prompt
         from app.agentic_loop import build_system_with_preview
         base = load_prompt("paper_write")
@@ -1014,6 +1020,39 @@ def _delegate_to_writer(prompt: str, project: dict, mode: str) -> dict:
             base + f"\n\nMode: {mode}.", project, user_msg=prompt)
         prior_ctx = _build_prior_context(project.get("messages", [])[:-1], k=8)
         user_msg = (prior_ctx + "\n\n# CURRENT REQUEST\n" + prompt) if prior_ctx else prompt
+
+        # ── Streaming (2026-05-30) — Anthropic이면 token streaming, 그 외는 일반 호출 ──
+        if stream_to is not None:
+            try:
+                client = ClaudeClient(task="paper_writing")
+                buf = []
+                for chunk in client.generate_streamed(
+                        user_msg, system_prompt=sys_prompt, max_tokens=2000):
+                    buf.append(chunk)
+                    # 매 토큰마다 placeholder 갱신 (markdown 누적)
+                    try:
+                        stream_to.markdown(
+                            "".join(buf) + "▌",  # cursor 효과
+                            unsafe_allow_html=False)
+                    except Exception:
+                        pass
+                # 최종 (cursor 제거)
+                full = "".join(buf)
+                try:
+                    stream_to.markdown(full)
+                except Exception:
+                    pass
+                return {"content": full[:2000], "streamed": True}
+            except Exception as _stream_err:
+                # streaming 실패 시 일반 호출로 폴백
+                from src.llm import get_llm_client
+                client = get_llm_client(task="paper_writing")
+                out = client.generate(user_msg, system_prompt=sys_prompt, max_tokens=1500)
+                return {"content": out[:2000], "streamed": False,
+                        "stream_fallback_reason": str(_stream_err)[:120]}
+
+        # 일반 (non-streaming)
+        from src.llm import get_llm_client
         client = get_llm_client(task="paper_writing")
         out = client.generate(user_msg, system_prompt=sys_prompt, max_tokens=1500)
         return {"content": out[:2000]}
