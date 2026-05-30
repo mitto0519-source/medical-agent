@@ -909,13 +909,40 @@ def build_system_with_preview(base_prompt: str, project: dict,
     )
     parts.append("")
 
+    # ── ★ INTENT SENSING (2026-05-30) — 사용자 의도/뉘앙스/페르소나 5+2차원 센싱 ──
+    # 결과는 system_prompt에 주입 + 아래 RAG/components 검색 키워드를 intent로 augment.
+    intent_emphasis_kws: list[str] = []
+    intent_persona_kws: list[str] = []
+    intent_voice: list[str] = []
+    try:
+        from src.agent.intent_sensor import sense as _intent_sense
+        sig = _intent_sense(user_msg or "",
+                             prior_messages=project.get("messages") or [],
+                             project=project, owner_email=owner)
+        intent_block = sig.to_system_block()
+        if intent_block:
+            parts.append(intent_block)
+            parts.append("")
+        # 이후 RAG/components 양식 양식 양식 양식 양식 의도 키워드 추출
+        intent_emphasis_kws = list(sig.implicit_emphasis or [])
+        intent_persona_kws = list((sig.user_persona_inferred or {}).get("top_domain_keywords", []))
+        intent_voice = list(sig.voice_tone or [])
+    except Exception:
+        pass
+
     # ── AUTO RAG EVIDENCE (사용자 user_msg에 대한 5개 hit 자동 사전 주입) ──
     # 사용자가 patch 요청만 해도 LLM이 항상 evidence를 곁들이도록 미리 가져온다.
+    # 2026-05-30: intent emphasis + persona keywords로 query augment → 통일된 톤·관심으로 검색
     if user_msg:
         try:
             from src.vectordb.store import get_vector_store
             store = get_vector_store()
-            hits = store.search(user_msg, n_results=5) or []
+            # 의도 키워드로 augment된 쿼리
+            aug_kws = (intent_persona_kws[:3] + intent_emphasis_kws[:2])
+            aug_query = user_msg
+            if aug_kws:
+                aug_query = user_msg + " " + " ".join(aug_kws)
+            hits = store.search(aug_query, n_results=5) or []
             if hits:
                 parts.append("# AUTO-PULLED RAG EVIDENCE (24K OA seed — 위 요청 관련)")
                 for i, h in enumerate(hits[:5], 1):

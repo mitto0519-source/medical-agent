@@ -1,0 +1,267 @@
+"""Intent Sensor — 사용자 prompt의 explicit 요구 + implicit 의도·뉘앙스·페르소나 센싱.
+
+배경 (2026-05-30 사용자 요구):
+    "GEO의 핵심은 프롬프트(맥락) 이해를 통해 고객의 니즈를 알아채는 센싱이 1순위.
+     LLM이 의도와 맥락을 센싱해서 그 사람이 정말 필요로 하는 것이 무엇이고,
+     어떤 뉘앙스로 어떻게 표현하고 싶어하는지를 예측해서 논문에 심어줘야 한다."
+
+설계:
+    표층 prompt에 드러나지 않은 implicit 신호를 5차원으로 분리해서 system_prompt에 주입.
+    LLM은 이를 보고 단순 요구 응답이 아니라 사용자 페르소나·맥락·강조 의도까지 반영한 산출물 생성.
+
+    5차원:
+    1. explicit_request — 표면 요구 ("Discussion 다시 써줘")
+    2. implicit_emphasis — 강조하고 싶은 포인트 (직전 대화·키워드 빈도에서 유추)
+    3. implicit_avoidance — 회피하고 싶은 양식 (이전 거부 표현·"좀" "너무" 양식)
+    4. reader_assumption — 가정 독자 (저널·reviewer·임상의·정책결정자 중)
+    5. voice_tone — 톤 (formal academic / critical / explanatory / cautious)
+
+    추가:
+    - prior_conversation_signal — 직전 대화에서 잡힌 신호 (frustration/satisfaction/specific terminology)
+    - user_persona_inferred — 사용자가 자주 쓰는 도메인 어휘·관심 주제
+
+호출:
+    sig = sense(prompt, prior_messages=messages, project=project, owner_email=email)
+    sig.to_system_block()  # 양식 system_prompt에 주입
+
+이 모듈은 빠른 휴리스틱 (regex + 빈도) 기반이라 외부 LLM 호출 없음 — agentic loop 매 step에 안전하게.
+복잡한 의도 추론은 build_system_with_preview에 이미 있는 trigger_analyzer + cognitive_activation이 수행.
+"""
+from __future__ import annotations
+
+import re
+from collections import Counter
+from dataclasses import dataclass, field, asdict
+from typing import List, Optional
+
+
+# ── Signal patterns ─────────────────────────────────────────────────────
+
+# 강조 신호 — 사용자가 무엇을 부각하고 싶어하는지
+_EMPHASIS_MARKERS = [
+    (r"꼭|반드시|특히|중요", "must_include"),
+    (r"강조|부각|살려|돋보이게", "emphasize"),
+    (r"\bvs\.?\b|대비|비교|차이|gap", "contrast"),
+    (r"임상적|policy|정책|clinical|implication", "clinical_policy_focus"),
+    (r"새로운|신규|novel|first|첫", "novelty_claim"),
+    (r"여성|남성|sex.?specific|성별", "subgroup_sex"),
+    (r"연령|age|adolescent|청소년|elderly|노인", "subgroup_age"),
+    (r"interaction|상호작용|moderator|effect modif", "interaction_focus"),
+]
+
+# 회피 신호 — 사용자가 빼고 싶어하는 양식
+_AVOIDANCE_MARKERS = [
+    (r"너무\s*(많아|길어|장황|복잡|formal|academic)", "too_verbose"),
+    (r"AI.?스러|로봇|뻔한|cliche|기계적", "anti_ai_tone"),
+    (r"단순|간결|짧게|줄여|brief", "want_concise"),
+    (r"빼|제거|delete|remove", "remove_something"),
+    (r"\b좀\b|약간|조금", "soften_intensity"),
+    (r"환자.?중심|patient.?centric|독자.?친화", "reader_friendly"),
+]
+
+# 독자 가정 — 누가 읽을 것을 가정하는가
+_READER_MARKERS = [
+    (r"NEJM|Lancet|JAMA|JKMS|high.?impact|top.?journal", "top_journal_reviewer"),
+    (r"reviewer|reviewer.?comment|peer.?review|동료심사", "reviewer_focus"),
+    (r"임상의|physician|practitioner|clinician", "clinician"),
+    (r"정책|policy.?maker|public.?health|보건당국", "policy_maker"),
+    (r"general.?public|일반\s*독자|lay.?audience", "lay_audience"),
+    (r"thesis|학위논문|박사|defense", "thesis_committee"),
+]
+
+# 톤 신호
+_TONE_MARKERS = [
+    (r"strong|강하게|단호|definitive|확실", "assertive"),
+    (r"cautious|조심|hedging|약화|tentative", "cautious"),
+    (r"비판|critical|limitation|반박|반대|counter", "critical"),
+    (r"설명|explanatory|clarify|풀어서|쉽게", "explanatory"),
+    (r"흥미|engaging|narrative|이야기", "engaging"),
+]
+
+
+@dataclass
+class IntentSignal:
+    explicit_request: str = ""
+    implicit_emphasis: List[str] = field(default_factory=list)
+    implicit_avoidance: List[str] = field(default_factory=list)
+    reader_assumption: List[str] = field(default_factory=list)
+    voice_tone: List[str] = field(default_factory=list)
+    prior_conversation_signal: dict = field(default_factory=dict)
+    user_persona_inferred: dict = field(default_factory=dict)
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    def to_system_block(self) -> str:
+        """system_prompt에 주입할 한국어 블록 — LLM이 의도 센싱 결과를 보고 작동."""
+        if not (self.implicit_emphasis or self.implicit_avoidance
+                or self.reader_assumption or self.voice_tone
+                or self.prior_conversation_signal or self.user_persona_inferred):
+            return ""
+
+        lines = ["# ★ USER INTENT SENSING (사용자가 명시하지 않았지만 감지된 의도)",
+                 ""]
+        if self.explicit_request:
+            lines.append(f"## Explicit request\n{self.explicit_request[:300]}\n")
+        if self.implicit_emphasis:
+            lines.append("## 강조하고 싶어하는 포인트 (살려라)")
+            for e in self.implicit_emphasis:
+                lines.append(f"- {e}")
+            lines.append("")
+        if self.implicit_avoidance:
+            lines.append("## 회피하고 싶어하는 양식 (피해라)")
+            for a in self.implicit_avoidance:
+                lines.append(f"- {a}")
+            lines.append("")
+        if self.reader_assumption:
+            lines.append("## 가정 독자 (이 사람에게 가닿게 써라)")
+            for r in self.reader_assumption:
+                lines.append(f"- {r}")
+            lines.append("")
+        if self.voice_tone:
+            lines.append("## 원하는 톤")
+            for t in self.voice_tone:
+                lines.append(f"- {t}")
+            lines.append("")
+        if self.prior_conversation_signal:
+            lines.append("## 직전 대화에서 감지된 신호")
+            for k, v in self.prior_conversation_signal.items():
+                lines.append(f"- {k}: {v}")
+            lines.append("")
+        if self.user_persona_inferred:
+            lines.append("## 사용자 페르소나 (반복 등장 어휘·관심 주제)")
+            for k, v in self.user_persona_inferred.items():
+                if isinstance(v, list) and v:
+                    lines.append(f"- {k}: {', '.join(map(str, v[:8]))}")
+                elif v:
+                    lines.append(f"- {k}: {v}")
+            lines.append("")
+        lines.append("→ 위 의도/페르소나를 반영해 단어가 아니라 **의미·강조점·뉘앙스** 단위로 재창조하라.")
+        lines.append("→ 표면 요구만 만족하지 말고, 사용자가 직접 말하지 않은 implicit 신호까지 살려라.")
+        return "\n".join(lines)
+
+
+def _match_markers(text: str, markers: list[tuple[str, str]]) -> List[str]:
+    text_low = text or ""
+    hits = []
+    for pat, label in markers:
+        if re.search(pat, text_low, re.IGNORECASE):
+            hits.append(label)
+    return hits
+
+
+def _infer_user_persona(prior_messages: list, current_prompt: str) -> dict:
+    """직전 user 메시지들 + 현재 prompt에서 반복 등장하는 도메인 어휘·관심 주제 추출."""
+    user_texts = [current_prompt]
+    for m in (prior_messages or [])[-20:]:
+        if isinstance(m, dict) and m.get("role") == "user":
+            c = str(m.get("content", ""))
+            if c:
+                user_texts.append(c)
+    blob = " ".join(user_texts)
+
+    # 의학 도메인 키워드 빈도
+    domain_kw = re.findall(
+        r"\b(KYRBS|KNHANES|depression|stress|sleep|smoking|alcohol|BMI|obesity|"
+        r"adolescent|청소년|우울|스트레스|수면|비만|zcb|음료|sugar|sweetener|"
+        r"physical.?activity|운동|interaction|상호작용|aOR|95.?CI|P.?value|"
+        r"subgroup|stratif|sensitivity|mediation|매개|moderation|조절)\b",
+        blob, re.IGNORECASE)
+    kw_counter = Counter(k.lower() for k in domain_kw)
+
+    # 영문/한글 비율
+    en_chars = len(re.findall(r"[a-zA-Z]", blob))
+    ko_chars = len(re.findall(r"[가-힣]", blob))
+    lang_ratio = (
+        "kor_dominant" if ko_chars > en_chars * 1.5 else
+        "eng_dominant" if en_chars > ko_chars * 1.5 else
+        "mixed"
+    )
+
+    # 양식 양식 양식 — Yoosun 양식 양식 양식 양식
+    yoosun_indicators = bool(re.search(r"yoosun|조유선|hedg|consistent with|associated with",
+                                         blob, re.IGNORECASE))
+
+    return {
+        "top_domain_keywords": [k for k, _ in kw_counter.most_common(8)],
+        "language_pref": lang_ratio,
+        "yoosun_style_inferred": yoosun_indicators,
+    }
+
+
+def _scan_prior_conversation(prior_messages: list) -> dict:
+    """직전 대화에서 frustration/satisfaction/specific 요청 신호 추출."""
+    out = {}
+    if not prior_messages:
+        return out
+    recent = prior_messages[-10:]
+    user_texts = " ".join(str(m.get("content", "")) for m in recent
+                           if isinstance(m, dict) and m.get("role") == "user")
+    if re.search(r"왜이래|안돼|에러|틀려|이상해|wrong|wtf", user_texts):
+        out["frustration_detected"] = True
+    if re.search(r"좋|good|perfect|완벽|딱|괜찮", user_texts):
+        out["satisfaction_detected"] = True
+    if re.search(r"다시|재작|rewrite|redo", user_texts):
+        out["redo_request"] = True
+    if re.search(r"AI.?스러|로봇|뻔한", user_texts):
+        out["anti_ai_complaint"] = True
+    return out
+
+
+# ── 글로벌 "현재 의도" 캐시 (무의식 임프린트) ──────────────────────────
+# 사용자 prompt 한 번 들어오면 set_current로 박혀, 이후 모든 LLM 호출(paper_writer / chat /
+# tool_use 등)이 get_current()로 자동 픽업. 명시 전달 없이도 의도가 항상 발현.
+_CURRENT_INTENT: Optional["IntentSignal"] = None
+
+
+def set_current(sig: "IntentSignal") -> None:
+    global _CURRENT_INTENT
+    _CURRENT_INTENT = sig
+
+
+def get_current() -> Optional["IntentSignal"]:
+    return _CURRENT_INTENT
+
+
+def clear_current() -> None:
+    global _CURRENT_INTENT
+    _CURRENT_INTENT = None
+
+
+def sense_and_imprint(prompt: str, *,
+                       prior_messages: Optional[list] = None,
+                       project: Optional[dict] = None,
+                       owner_email: Optional[str] = None) -> "IntentSignal":
+    """sense 호출 + 글로벌 캐시 set 한 줄로. 사용자 prompt 진입점에서 호출."""
+    sig = sense(prompt, prior_messages=prior_messages,
+                 project=project, owner_email=owner_email)
+    set_current(sig)
+    return sig
+
+
+def sense(prompt: str, *,
+          prior_messages: Optional[list] = None,
+          project: Optional[dict] = None,
+          owner_email: Optional[str] = None) -> IntentSignal:
+    """사용자 prompt + 컨텍스트에서 의도·뉘앙스·페르소나를 5+2차원으로 추출.
+
+    빠른 휴리스틱만 — agentic loop 매 step에 안전하게 호출 가능 (외부 LLM 호출 없음).
+    더 깊은 의도 추론은 build_system_with_preview의 trigger_analyzer + cognitive_activation에서.
+    """
+    sig = IntentSignal()
+    sig.explicit_request = (prompt or "")[:500]
+
+    text_blob = prompt or ""
+    sig.implicit_emphasis = _match_markers(text_blob, _EMPHASIS_MARKERS)
+    sig.implicit_avoidance = _match_markers(text_blob, _AVOIDANCE_MARKERS)
+    sig.reader_assumption = _match_markers(text_blob, _READER_MARKERS)
+    sig.voice_tone = _match_markers(text_blob, _TONE_MARKERS)
+
+    sig.prior_conversation_signal = _scan_prior_conversation(prior_messages or [])
+    sig.user_persona_inferred = _infer_user_persona(prior_messages or [], prompt or "")
+
+    return sig
+
+
+__all__ = ["IntentSignal", "sense", "sense_and_imprint",
+           "set_current", "get_current", "clear_current"]
