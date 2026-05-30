@@ -28,9 +28,11 @@ _DIR = Path(os.environ.get("PROMPTS_DIR", "prompts"))
 _LOCK = threading.Lock()
 
 # task → prompts to compose (medical_core + safety_constraints 항상 포함)
+# 2026-05-30: style_polish 추가 — paper_write에서 의미 단위 재창조 양식 가이드
 _TASK_COMPOSITION = {
-    "paper_write":  ["medical_core", "safety_constraints", "yoosun_style"],
-    "paper_writing":["medical_core", "safety_constraints", "yoosun_style"],
+    "paper_write":  ["medical_core", "safety_constraints", "yoosun_style", "style_polish"],
+    "paper_writing":["medical_core", "safety_constraints", "yoosun_style", "style_polish"],
+    "paper_polish": ["medical_core", "safety_constraints", "yoosun_style", "style_polish"],
     "chat":         ["medical_core", "safety_constraints"],
     "qa":           ["medical_core", "safety_constraints"],
     "fast":         ["medical_core", "safety_constraints"],
