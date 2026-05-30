@@ -188,7 +188,7 @@ def render() -> None:
                 label_visibility="collapsed", height=110, key="sg_home_prompt")
             uploaded = st.file_uploader(
                 "📎 파일 첨부 (PDF/DOCX/이미지 — 논문 학습·참고·vision 검증)",
-                type=["pdf", "docx", "txt", "png", "jpg", "jpeg"],
+                type=["pdf", "docx", "txt", "png", "jpg", "jpeg", "sav", "csv", "xlsx"],
                 accept_multiple_files=True, key="sg_home_files",
                 label_visibility="visible")
         with c2:

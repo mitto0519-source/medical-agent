@@ -684,7 +684,7 @@ def _render_chat_left(project: dict, pid: str):
                                label_visibility="collapsed", height=80)
         uploaded = st.file_uploader(
             "📎 파일 첨부 (참고 논문/이미지) — heavy 작업은 백로그 처리",
-            type=["pdf", "docx", "txt", "png", "jpg", "jpeg"],
+            type=["pdf", "docx", "txt", "png", "jpg", "jpeg", "sav", "csv", "xlsx"],
             accept_multiple_files=True, key="ws_files",
             label_visibility="visible")
         c1, c2, c3 = st.columns([5, 2, 1])
@@ -1237,22 +1237,52 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
             years_range = list(range(y1, y2 + 1))
 
         # (c) 자료 경로 후보 수집 (실제 파일이 있는 것만)
+        # uploads/ 폴더의 첨부 .sav 파일도 자동 감지 (사용자가 ez_home에서 직접 업로드한 경우)
+        _uploads_dir = _project_root / "data" / "uploads"
         if ds_kind == "KYRBS":
             available = {}
             for y in range(2005, 2026):
                 cand = _raw_dir / f"kyrbs{y}.sav"
                 if cand.exists():
                     available[y] = cand
+            # 업로드 폴백 — uploaded kyrbs*.sav
+            if _uploads_dir.exists():
+                for p in _uploads_dir.glob("*.sav"):
+                    m = _re2.search(r"(20[0-2]\d)", p.name)
+                    if m:
+                        available.setdefault(int(m.group(1)), p)
+                    else:
+                        # 연도 없는 업로드는 9999로 (최우선)
+                        available[9999] = p
         else:  # KNHANES
             available = {}
             for p in _raw_dir.glob("knhanes/*.sav"):
                 m = _re2.search(r"(20[0-2]\d)", p.name)
                 if m:
                     available[int(m.group(1))] = p
+            if _uploads_dir.exists():
+                for p in _uploads_dir.glob("knhanes*.sav"):
+                    m = _re2.search(r"(20[0-2]\d)", p.name)
+                    if m:
+                        available.setdefault(int(m.group(1)), p)
 
         if not available:
-            raise FileNotFoundError(
-                f"{ds_kind} .sav 파일이 컨테이너에 없음. data/raw/ 확인 필요.")
+            # ★ 환경 감지 — Streamlit Cloud는 GitHub repo 기반이라 대용량 .sav 없음
+            import os as _os3
+            is_cloud = "/mount/src/" in str(_project_root) or _os3.environ.get("STREAMLIT_RUNTIME_CLOUD")
+            env_hint = (
+                "**현재 Streamlit Cloud 환경입니다** — KYRBS .sav 파일들(약 1.7GB)이 "
+                "GitHub repo에 없어 분석 불가.\n\n"
+                "**해결**:\n"
+                "1. (권장) localhost:8501 로컬 docker로 접속 — 모든 자료 사용 가능\n"
+                "2. 또는 ez_home 입력바 아래 📎 파일 첨부로 .sav 직접 업로드\n"
+                "3. 또는 데이터 없이 PubMed 검색·논문 작성 (Build 대신 chat에 '리뷰 논문 양식'으로 요청)"
+                if is_cloud else
+                "**로컬 docker 환경에서 KYRBS 파일이 발견되지 않음**.\n\n"
+                "확인: `docker exec medical-agent ls /app/data/raw/`\n"
+                "예상 위치: `data/raw/kyrbs2005.sav` ~ `kyrbs2025.sav`"
+            )
+            raise FileNotFoundError(env_hint)
 
         # (d) 어떤 연도(들)을 쓸지 결정
         if years_range:
