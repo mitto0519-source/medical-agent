@@ -147,6 +147,38 @@ TABLE1_ABBR = ("Abbreviations: BMI, body mass index; KCDC, Korea Disease Control
                 "WHO, World Health Organization.")
 
 
+def _load_pdf_table1_data() -> Optional[Dict[str, Any]]:
+    """data/assets/zcb_dep_table1_data.json에서 사용자 PDF의 전 데이터 로드."""
+    import json
+    from pathlib import Path
+    p = Path("data/assets/zcb_dep_table1_data.json")
+    if not p.exists():
+        return None
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        col_totals = d.get("_col_totals", [0, 0, 0, 0])[:4]
+        n_total = d.get("_col_totals", [0, 0, 0, 0, 0])[4] if len(d.get("_col_totals", [])) >= 5 else sum(col_totals)
+        rows = []
+        for r in d.get("rows", []):
+            if r.get("type") == "subhead":
+                rows.append({
+                    "label": r["label"], "kind": "cat",
+                    "subhead": True,
+                    "levels": [(lvl[0], lvl[1]) for lvl in r.get("levels", [])],
+                })
+            else:
+                # values는 5개 (None, ≤2, 3-6, ≥1, Total) — 마지막이 total
+                vals = r.get("values", [])
+                rows.append({
+                    "label": r["label"], "kind": r.get("type", "single"),
+                    "values": vals,
+                })
+        return {"col_totals": col_totals, "n_total": n_total, "rows": rows}
+    except Exception as e:
+        _log.warning("zcb_dep_table1_data.json 로드 실패: %s", e)
+        return None
+
+
 def build_table1_html(
     df=None,
     *,
@@ -155,6 +187,7 @@ def build_table1_html(
     survey_year: int = 2025,
     title: Optional[str] = None,
     precomputed: Optional[Dict[str, Any]] = None,
+    use_pdf_data: bool = True,
 ) -> str:
     """Table 1 HTML 양식. df 받으면 직접 계산 / precomputed 받으면 그것 사용.
 
@@ -169,15 +202,13 @@ def build_table1_html(
         title = (f"Table 1. Baseline characteristics of study participants by "
                  f"zero-calorie beverage consumption frequency, KYRBS {survey_year}")
 
-    # 데이터 추출 — df 있으면 자동 계산, 없으면 precomputed
-    if df is not None and precomputed is None:
+    # 데이터 추출 — 우선순위: precomputed > df 계산 > PDF 정본 데이터
+    if precomputed is None and df is not None:
         precomputed = _compute_table1_from_df(df, exposure_col)
-
+    if precomputed is None and use_pdf_data:
+        precomputed = _load_pdf_table1_data()
     if precomputed is None:
-        # 빈 표 양식 — 사용자가 데이터 없는 환경에서도 양식만 보여줌
-        precomputed = {"col_totals": [0, 0, 0, 0],
-                       "n_total": 0,
-                       "rows": []}
+        precomputed = {"col_totals": [0, 0, 0, 0], "n_total": 0, "rows": []}
 
     col_totals = precomputed.get("col_totals", [0, 0, 0, 0])
     n_total = precomputed.get("n_total", sum(col_totals))
