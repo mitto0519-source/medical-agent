@@ -148,9 +148,9 @@ def build_figure1_prisma():
     tee_y = exc_y + exc_h/2
     ax.plot([line_x, exc_x], [tee_y, tee_y], color="black", linewidth=1.0)
 
-    # ── Title (caption) ──
+    # ── Title (caption) — 제목만, 보조 (...) 정보 제거 ──
     fig.text(0.05, 0.96,
-             "Figure 1. Flow Chart for Participant Selection: Initial KYRBS 2025 enrolled (N = 50,972)",
+             "Figure 1. Flow Chart for Participant Selection",
              fontsize=11, fontweight="bold", ha="left", va="top")
 
     out = OUT / "Figure1_PRISMA.png"
@@ -222,10 +222,10 @@ def build_figure2_sex():
     ax.legend(loc="upper left", frameon=False, fontsize=10.5,
               labelspacing=0.5, handlelength=2.4)
 
-    # outer caption — 그림 위쪽 figure level
+    # outer caption — 제목만, 보조 (...) 정보 제거
     fig.text(0.05, 0.97,
              "Figure 2. Predicted probability of Depression by zero-calorie beverage "
-             "consumption frequency, KYRBS 2025 (N = 50,972)",
+             "consumption frequency",
              fontsize=11, fontweight="bold", ha="left", va="top")
 
     plt.subplots_adjust(top=0.88)
@@ -314,7 +314,7 @@ def build_figure3_forest():
     ax.spines["left"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
-    ax.set_title("Figure 3. Subgroup analyses - Depressive symptoms (7 a priori stratifiers)",
+    ax.set_title("Figure 3. Subgroup analyses for Depressive symptoms",
                  fontsize=11.5, fontweight="bold", pad=10, loc="left")
 
     out = OUT / "Figure3_forest_subgroups.png"
