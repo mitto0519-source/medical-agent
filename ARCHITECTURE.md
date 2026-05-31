@@ -201,6 +201,38 @@
 > citation orphan / physician queue / consistency fail / figure_validation fail / budget downgrade
 > 모두 `events.db`에 기록 → `python scripts/replay_task.py --task=...`로 사후 재구성.
 
+### 15. 시드 자산화 3단계 파이프라인 — 2026-06-01 신규
+
+> 사용자 비전 (2026-06-01): "12,301편 OA 시드를 자산화·구조화해서 의학적 사고흐름·전개·골격을
+> 여러 유형화 표현법으로 익히고 → AI 같지 않도록 필터링 → 조유선 스타일로 최종 변환."
+> ★ 사고: 자산은 690MB 12,301편 + ChromaDB 262MB 20,894 chunks로 다 있었는데
+> `paper_writer.rag_pipeline=None` 기본값으로 회로가 끊겨 한 줄도 retrieve 안 됨. FIX 10-15로 연결.
+
+| 기능 | 정규 모듈 | 상태 | 비고 |
+|------|----------|------|------|
+| **본문 12,301편 저장소** | `data/oa_papers/` (689 MB) + `manifest.sqlite` | ✅ active | `oa_bulk_fetcher.py`가 채움. 본문 txt + meta.json |
+| **ChromaDB 인덱싱** | `data/chromadb/` 안 `papers` collection (count=20,894) | ✅ active | hierarchical_chunker 산출, search_multistage가 호출 |
+| **자동 RAG attach** | `paper_writer.PaperWriter.__init__` (FIX 10) | ✅ active | `rag_pipeline=None`이면 자동으로 RAGPipeline() 부착. 호출자가 안 줘도 회로 살아있음 |
+| **섹션별 RAG 발췌 user_prompt 박기** | `paper_writer.write_full_paper` (FIX 11) | ✅ active | introduction/methods/results/discussion 4 query × search_multistage → 4 발췌 user_prompt에 박힘. `pubmed:` 식별자 + 텍스트 |
+| **Typology 카탈로그 (섹션×유형)** | `src/knowledge/paper_typology.py` → `build_typology_catalog()` | ✅ active | 12,145편 IMRAD 분해 + 5 유형/섹션 × 20 예문 = 400 패턴. `data/medical_knowledge_seed/typology_catalog.json` |
+| **Orientation → typology mix & match** | `paper_typology.mix_and_match()` + `get_typology_block_for_orientation()` | ✅ active | 사용자가 말한 "강조/톤"(PaperOrientation novelty/consistency/...) → 섹션별 typology slug 자동 선택. 사용자에게 typology slug 비노출 |
+| **Humanize 카탈로그 (문장 단위)** | `src/knowledge/humanize_extractor.py` → `build_humanize_catalog()` | ✅ active | 12,301편 → 7 kind × 80 예문 = 560 문장. statistical_reporting / figure_table_citation / hedged_claim / emphasis_injection / methodological_decision / synthetic_bridge / specific_detail |
+| **Humanize block system_prompt 주입** | `paper_writer._generate` (FIX 13) | ✅ active | 매 LLM 호출 system_prompt에 humanize_block 자동 합성 (sample_per_kind=1) |
+| **Anti-AI 필터** | `src/safety/anti_ai_filter.py` → `ai_score`, `filter_text` | ✅ active | 점수 산출(generic_openers/hedge_clusters/meta_phrases/ai_cliches/transition_overuse/tricolon/rhythm) + gentle/aggressive 정리. 검증: 76→24 (-52점). `paper_writer._generate`에 wiring (FIX 14, score>25일 때만) |
+| **Yoosun 최종 변환 stage** | `src/research/yoosun_finalize.py` → `finalize()`, `finalize_paper()` | ✅ active | 본문 생성+필터 후 별도 LLM 호출로 Yoosun voice 변환. 수치/citations 보존. paper_writer가 Introduction+Discussion만 변환 (비용 절감) — FIX 15 |
+
+> **전체 파이프라인 (paper_writer.write_full_paper 1회 호출 시)**:
+> 1. RAG search_multistage × 4 섹션 → user_prompt에 발췌 박힘 (FIX 11)
+> 2. PaperOrientation → typology slug 자동 mix → user_prompt에 패턴 박힘 (FIX 12)
+> 3. _generate가 humanize_block + anti_meta를 system_prompt에 자동 합성 (FIX 13)
+> 4. LLM 호출 → 출력 → _strip_llm_meta + anti_ai_filter(score>25) (FIX 14)
+> 5. write_full_paper 끝에 Introduction+Discussion만 Yoosun voice 변환 (FIX 15)
+> 6. safety unified gate + physician_review queue
+>
+> **회로 검증**: anti-AI 정상화 differential 76→24 / RAG attach log "chunks≈1801" / typology block sample 출력 확인.
+
+---
+
 ### 14. Harness 통합 진입점 — 2026-06-01 신규
 
 > 외부 harness 엔지니어링 사례(Anthropic claude-agent-sdk 패턴, OmX 공개 PHILOSOPHY) 검토 결과
