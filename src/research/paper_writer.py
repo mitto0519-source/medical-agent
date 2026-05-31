@@ -427,7 +427,16 @@ Keep the author's academic writing style. Output ONLY the improved section text 
         methods_ctx = self._methods.get_context_for_claude(
             study_info.get("methods_list", ["logistic_regression"])
         ) if self._methods else ""
-        covariates = study_info.get("covariates", "sex, age, grade, family_econ, academic_perf, BMI, depression, physical activity")
+        # ★ FIX 2 (라인 430 원본): 'depression'은 outcome인데 covariate에 잘못 들어가 있었음.
+        #   STATA 실제 Model 2 covariates 12개로 교체. KYRBS ZCB-Depression 분석 사양.
+        covariates = study_info.get(
+            "covariates",
+            "sex, age category (12-13/14-15/16-18), school level (middle/high), "
+            "academic performance (tertile), household SES (tertile), "
+            "BMI category (under/normal/overweight-obese), ever smoking, ever drinking, "
+            "sugar-sweetened beverage intake (tertile), caffeine intake (tertile), "
+            "physical activity (low/moderate/high), breakfast skipping"
+        )
 
         # ── raw_examples from yoosun_cho.json — user_prompt에 직접 박아 few-shot ──
         # system_prompt에만 박으면 LLM이 "참고만 하고 자기 양식으로 fallback"하는 사고 차단.
@@ -726,9 +735,13 @@ DISCUSSION
     # Internal
     # ------------------------------------------------------------------
 
-    def _build_exemplars_block(self) -> str:
-        """yoosun_cho.json raw_examples 3개를 user_prompt 앞에 박는 few-shot 블록.
-        system_prompt에 박으면 LLM이 '참고만' 하고 fallback. user_prompt에 박아야 mimic."""
+    def _build_exemplars_block(self, *, n: int = 2, per_chars: int = 900) -> str:
+        """yoosun_cho.json raw_examples를 few-shot으로 박는 블록.
+
+        ★ FIX 3 (이전 1,500자×3=4,500자→ 900자×2=1,800자):
+            user_prompt 앞에 4,500자 박으면 LLM 응답 토큰을 압박해 Methods 862자처럼
+            짧아짐. 2개×900자 = 1,800자로 축소 — mimic 신호는 충분히 살아 있음.
+        """
         try:
             import json as _j
             from pathlib import Path as _P
@@ -739,33 +752,37 @@ DISCUSSION
             exs = prof.get("raw_examples") or []
             if not exs:
                 return ""
-            # 첫 3개 — 각 1500자 양식
-            picks = exs[:3]
-            block = ("## ★ AUTHOR'S ACTUAL WRITING — MIMIC EXACTLY\n\n"
-                     "Below are 3 verbatim passages from the author's published papers. "
-                     "Match their EXACT sentence rhythm, verb selection, hedging cadence, "
-                     "and topic-sentence structure. Do NOT default to generic academic LLM tone.\n\n")
+            picks = exs[:n]
+            block = ("## AUTHOR'S ACTUAL WRITING (verbatim — mimic the cadence)\n\n")
             for i, ex in enumerate(picks, 1):
-                block += f"### Exemplar {i}\n\n{str(ex)[:1500]}\n\n---\n\n"
+                block += f"### Ex{i}\n{str(ex)[:per_chars]}\n\n"
+            block += ("Mimic the above: sentence rhythm, verb selection, hedging, "
+                       "topic-sentence structure. Do NOT default to generic LLM tone.\n\n")
             return block
         except Exception:
             return ""
 
-    def _generate(self, system_prompt: str, user_prompt: str) -> str:
-        # ★ System prompt에 메타 코멘트 금지 강제 (2026-05-31 사고 차단)
+    def _generate(self, system_prompt: str, user_prompt: str,
+                   *, max_tokens: int = 8192) -> str:
+        # ★ FIX 1 (라인 786 원본): max_tokens 미지정으로 Methods/Results가
+        #   기본 2048 토큰(~1,500자)에서 잘리는 사고. 섹션별로 명시 전달.
+        # ★ FIX 4 (라인 770 원본): anti_meta 룰을 압축 — 너무 길면 LLM이 본 지시를
+        #   덮어버림. 핵심 5줄만 남김.
         anti_meta = (
-            "\n\n# CRITICAL OUTPUT RULES\n"
-            "- Output ONLY the section content. No preamble.\n"
-            "- Do NOT start with 'This is...', 'Let's...', 'Let me...', 'Here is...', "
-            "'I'll write...', 'I will...', 'I'm going to...', 'Sure', 'Certainly', "
-            "'In this abstract/section/paper...', 'Below is...', 'Following is...'\n"
-            "- Do NOT mention the author by name in meta-commentary "
-            "('mimicking the style of Dr. Yoosun Cho' etc.).\n"
-            "- Do NOT include section labels (no '**Abstract**:', '# Methods', "
-            "'Introduction:' headers in the body — output is plain section text only).\n"
-            "- Start directly with the first sentence of the actual academic content.\n"
+            "\n\n# OUTPUT RULES\n"
+            "- Output ONLY the section content. No preamble, no meta.\n"
+            "- Forbidden openings: 'This is', 'Let me', 'Let's', \"Here's\", 'Here is', "
+            "'I will', \"I'll\", 'Sure', 'Certainly', 'Below is', 'Following is', "
+            "'In this abstract/section/paper'.\n"
+            "- Do NOT mention the author by name in meta ('mimicking Dr. Cho').\n"
+            "- Do NOT include section header lines ('**Abstract**:', '# Methods:').\n"
+            "- Start directly with the first sentence of the academic content.\n"
         )
-        out = self._client.generate(user_prompt, system_prompt=system_prompt + anti_meta)
+        out = self._client.generate(
+            user_prompt,
+            system_prompt=system_prompt + anti_meta,
+            max_tokens=max_tokens,
+        )
         # ★ Response sanitizer — 그래도 새어 나온 메타 코멘트 절단
         out = _strip_llm_meta(out)
         # Safety gate — 임상 키워드 자동 격리 큐
@@ -831,7 +848,8 @@ def _strip_llm_meta(text: str) -> str:
         r"^#+\s*(?:Abstract|Introduction|Methods|Results|Discussion)[:\s]*\n",
         r"^(?:Abstract|Introduction|Methods|Results|Discussion):\s*\n",
     ]
-    for _ in range(5):  # 최대 5번 반복으로 누적된 메타 제거
+    # ★ FIX 4a: 5번 → 2번. 5번 반복은 본문 첫 단락 2-3개가 통째로 삭제될 위험.
+    for _ in range(2):
         matched = False
         for pat in meta_patterns:
             m = _re_meta.match(pat, cleaned, _re_meta.IGNORECASE | _re_meta.DOTALL)
@@ -842,28 +860,27 @@ def _strip_llm_meta(text: str) -> str:
         if not matched:
             break
 
-    # ── 2차 안전망: 첫 단락에 메타 키워드 포함 시 그 단락 통째로 제거 ──
-    # (정규식이 첫 문장만 잡고 같은 단락의 다음 문장에 사족이 남는 사고 차단)
-    for _ in range(3):
-        paragraphs = cleaned.split("\n\n", 1)
-        if len(paragraphs) != 2:
-            break
-        first_para = paragraphs[0].lower()
-        meta_keywords = [
-            "let's", "let me", "this is an interesting", "this is a fascinating",
-            "this is the abstract", "this is the introduction", "this is the methods",
-            "mimicking", "emulating", "matching the style",
+    # ★ FIX 4b: 2차 안전망 — 키워드를 "단락 시작 prefix"로만 좁혀 본문 보호.
+    #   원본은 "let's" 같은 일반 단어가 본문 중간에 있어도 단락 통째 삭제 →
+    #   첫 30자 이내에 명시적 메타 prefix가 있을 때만 삭제. 1회만.
+    paragraphs = cleaned.split("\n\n", 1)
+    if len(paragraphs) == 2:
+        first_head = paragraphs[0][:60].lower().lstrip()
+        meta_prefixes = (
+            "let's ", "let me ", "this is an interesting", "this is a fascinating",
+            "this is the abstract", "this is the introduction",
             "i'll write", "i will write", "i'll draft", "i'll structure",
-            "i'll capture", "i'll craft", "here's the", "here is the",
+            "i'll capture", "i'll craft", "here's the abstract", "here is the abstract",
+            "here's the introduction", "here is the introduction",
+            "here's the methods", "here is the methods",
+            "here's the results", "here is the results",
+            "here's the discussion", "here is the discussion",
             "below is the", "following is the",
-            "captures the essence", "captures the spirit",
-            "yoosun cho.", "dr. yoosun", "in dr. cho's style",
-            "i'm going to", "i am going to",
-        ]
-        if any(k in first_para for k in meta_keywords):
+            "mimicking dr.", "emulating dr.", "in dr. cho's style",
+            "i'm going to ", "i am going to ",
+        )
+        if first_head.startswith(meta_prefixes):
             cleaned = paragraphs[1].lstrip()
-        else:
-            break
     return cleaned
 
 
