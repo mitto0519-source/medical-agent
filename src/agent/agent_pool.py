@@ -284,5 +284,66 @@ class AgentPool:
             return {}
 
 
+    # ── team review: 다중 perspective 병렬 리뷰 ───────────────────────
+    def team_review(
+        self,
+        content: str,
+        *,
+        perspectives: Optional[List[str]] = None,
+        llm=None,
+        max_tokens: int = 1500,
+    ) -> Dict[str, str]:
+        """동일 content에 N개 perspective를 병렬 리뷰. OmX $team 양식.
+
+        perspectives None이면 논문 기본 5개:
+            statistical_rigor / clinical_relevance / writing_clarity /
+            novelty_check / policy_translation
+        반환: {perspective_slug: review_text}
+        """
+        if not content or not content.strip():
+            return {}
+        if perspectives is None:
+            perspectives = [
+                "statistical_rigor", "clinical_relevance",
+                "writing_clarity", "novelty_check", "policy_translation",
+            ]
+        if llm is None:
+            from src.llm import get_llm_client
+            llm = get_llm_client(task="review")
+
+        _PROMPTS = {
+            "statistical_rigor":
+                "As a statistical reviewer, critique this draft for: model "
+                "appropriateness, multiple comparison handling, effect-size "
+                "reporting, and sensitivity-analysis completeness. 5 bullet points.",
+            "clinical_relevance":
+                "As a practicing clinician, critique whether the findings are "
+                "actionable in clinical care. Identify weak links between data "
+                "and clinical recommendation. 5 bullet points.",
+            "writing_clarity":
+                "As a scientific editor, identify the 5 weakest sentences and "
+                "rewrite each. Output: original → improved.",
+            "novelty_check":
+                "As a novelty reviewer, identify which findings are genuinely "
+                "new vs. incremental. 5 bullet points.",
+            "policy_translation":
+                "As a public health policy advisor, translate the findings into "
+                "3 concrete policy or intervention recommendations.",
+        }
+
+        def _review(persp_slug: str) -> str:
+            prompt = (f"{_PROMPTS.get(persp_slug, persp_slug)}\n\n"
+                       f"DRAFT:\n{content[:6000]}")
+            try:
+                return llm.generate(prompt, max_tokens=max_tokens) or ""
+            except Exception as e:
+                return f"[review error] {e}"
+
+        tasks = [AgentTask(name=p, fn=_review, args=(p,)) for p in perspectives]
+        results = self.run_tasks(tasks)
+        return {p: (results[p].result if p in results and results[p].ok
+                     else (results[p].error if p in results else "")) for p in perspectives}
+
+
 def get_agent_pool(max_workers: int = 4) -> AgentPool:
     return AgentPool(max_workers=max_workers)
