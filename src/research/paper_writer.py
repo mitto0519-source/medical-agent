@@ -806,6 +806,29 @@ def _strip_llm_meta(text: str) -> str:
                 break
         if not matched:
             break
+
+    # ── 2차 안전망: 첫 단락에 메타 키워드 포함 시 그 단락 통째로 제거 ──
+    # (정규식이 첫 문장만 잡고 같은 단락의 다음 문장에 사족이 남는 사고 차단)
+    for _ in range(3):
+        paragraphs = cleaned.split("\n\n", 1)
+        if len(paragraphs) != 2:
+            break
+        first_para = paragraphs[0].lower()
+        meta_keywords = [
+            "let's", "let me", "this is an interesting", "this is a fascinating",
+            "this is the abstract", "this is the introduction", "this is the methods",
+            "mimicking", "emulating", "matching the style",
+            "i'll write", "i will write", "i'll draft", "i'll structure",
+            "i'll capture", "i'll craft", "here's the", "here is the",
+            "below is the", "following is the",
+            "captures the essence", "captures the spirit",
+            "yoosun cho.", "dr. yoosun", "in dr. cho's style",
+            "i'm going to", "i am going to",
+        ]
+        if any(k in first_para for k in meta_keywords):
+            cleaned = paragraphs[1].lstrip()
+        else:
+            break
     return cleaned
 
 
