@@ -717,7 +717,38 @@ DISCUSSION
     # ------------------------------------------------------------------
 
     def _generate(self, system_prompt: str, user_prompt: str) -> str:
-        return _do_generate(self, system_prompt, user_prompt)
+        # ★ System prompt에 메타 코멘트 금지 강제 (2026-05-31 사고 차단)
+        anti_meta = (
+            "\n\n# CRITICAL OUTPUT RULES\n"
+            "- Output ONLY the section content. No preamble.\n"
+            "- Do NOT start with 'This is...', 'Let's...', 'Let me...', 'Here is...', "
+            "'I'll write...', 'I will...', 'I'm going to...', 'Sure', 'Certainly', "
+            "'In this abstract/section/paper...', 'Below is...', 'Following is...'\n"
+            "- Do NOT mention the author by name in meta-commentary "
+            "('mimicking the style of Dr. Yoosun Cho' etc.).\n"
+            "- Do NOT include section labels (no '**Abstract**:', '# Methods', "
+            "'Introduction:' headers in the body — output is plain section text only).\n"
+            "- Start directly with the first sentence of the actual academic content.\n"
+        )
+        out = self._client.generate(user_prompt, system_prompt=system_prompt + anti_meta)
+        # ★ Response sanitizer — 그래도 새어 나온 메타 코멘트 절단
+        out = _strip_llm_meta(out)
+        # Safety gate — 임상 키워드 자동 격리 큐
+        try:
+            from src.safety import check_all
+            if out:
+                check_all(out, scope="paper_writer._generate", design="cross_sectional")
+        except Exception:
+            pass
+        try:
+            from src.safety.physician_review import review_required, queue_for_review
+            if out:
+                needed, _triggers = review_required(out)
+                if needed:
+                    queue_for_review(content=out[:8000], source="paper_writer._generate")
+        except Exception:
+            pass
+        return out
 
 
 def _strip_llm_meta(text: str) -> str:
@@ -778,37 +809,4 @@ def _strip_llm_meta(text: str) -> str:
     return cleaned
 
 
-def _do_generate(self, system_prompt: str, user_prompt: str) -> str:
-        # ★ System prompt에 메타 코멘트 금지 강제 (2026-05-31 사고 차단)
-        anti_meta = (
-            "\n\n# CRITICAL OUTPUT RULES\n"
-            "- Output ONLY the section content. No preamble.\n"
-            "- Do NOT start with 'This is...', 'Let's...', 'Let me...', 'Here is...', "
-            "'I'll write...', 'I will...', 'I'm going to...', 'Sure', 'Certainly', "
-            "'In this abstract/section/paper...', 'Below is...', 'Following is...'\n"
-            "- Do NOT mention the author by name in meta-commentary "
-            "('mimicking the style of Dr. Yoosun Cho' etc.)\n"
-            "- Start directly with the first sentence of the actual academic content.\n"
-        )
-        out = self._client.generate(user_prompt, system_prompt=system_prompt + anti_meta)
-        # ★ Response sanitizer — 그래도 새어 나온 메타 코멘트 절단
-        out = _strip_llm_meta(out)
-        # ★ Safety gate (unified): 모든 게이트를 단일 진입점으로 호출 → audit_trail 자동 적재.
-        # sections/references/design은 _generate 시점에 없으므로 text-only 게이트(physician/causal)만 활성.
-        # 더 풍부한 컨텍스트가 있는 상위 caller(write_full_paper_with_stats)에서 한 번 더 호출 가능.
-        try:
-            from src.safety import check_all
-            if out:
-                check_all(out, scope="paper_writer._generate", design="cross_sectional")
-        except Exception:
-            pass
-        # 처방/진단/복용량 등 임상 키워드 → physician_review 큐(사람 검토 채널)
-        try:
-            from src.safety.physician_review import review_required, queue_for_review
-            if out:
-                needed, _triggers = review_required(out)
-                if needed:
-                    queue_for_review(content=out[:8000], source="paper_writer._generate")
-        except Exception:
-            pass
-        return out
+# (_do_generate 분리는 제거 — _generate 메소드가 직접 본문을 가짐)
