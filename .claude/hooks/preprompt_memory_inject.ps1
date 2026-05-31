@@ -1,67 +1,73 @@
 # Medical-Agent — pre-prompt memory inject hook
-#
-# Claude Code의 user-prompt-submit 양식 hook으로 호출되어, 매 사용자 입력 직전에
-# 핵심 메모리/룰 + data/ 인벤토리를 stdout으로 prepend한다.
-# Background polling은 불가능 — Claude는 stateless. 이게 가장 가까운 양식.
+# Outputs critical rules + data/ inventory to stdout for prepend.
+# English-only to avoid cp949/UTF-8 round-trip mojibake.
 
-# UTF-8 강제 (한국어 mojibake 차단)
 $OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
-
 $ErrorActionPreference = "SilentlyContinue"
 $root = "C:\Users\mitto\OneDrive\Desktop\Medical-Agent"
 
-# ── 1. 핵심 룰 (압축 — 토큰 절약) ──────────────────────────────
-Write-Output "## AUTO-RECALL (pre-prompt)"
+Write-Output "## AUTO-RECALL (pre-prompt hook)"
 Write-Output ""
-Write-Output "ABSOLUTE: 대충/거짓말/일안함/뻥치기 금지. 길더라도 시킨대로 무조건 다."
-Write-Output "DATA INVENTORY: 'X 없다' 진단 전 MEMORY.md grep + ls data/ + ARCHITECTURE grep 의무."
-Write-Output "ORGANISM: 새 모듈은 선행 trigger / 후행 output / events 기록 / 자가발전 회로 4가지 확보."
-Write-Output "WIRING: 작업 완료 = '파일 작성'이 아니라 '실제 호출되어 동작'. audit_wiring 실행."
+Write-Output "RULE-1 ABSOLUTE: No lies, no laziness, no excuses. Do exactly what user asked, in order, completely."
+Write-Output "RULE-2 DATA-INVENTORY: Before claiming 'X does not exist' or 'Y is missing', MUST grep MEMORY.md + ls data/ + grep ARCHITECTURE.md."
+Write-Output "RULE-3 ORGANISM: New module needs 4 wires: upstream trigger / downstream output / events log / self-improvement loop."
+Write-Output "RULE-4 WIRING: 'task done' means 'actually called and works', not 'file written'. Run audit_wiring.py."
 Write-Output ""
 
-# ── 2. data/ 인벤토리 (한 줄로) — 자주 까먹는 자산 위치 ─────────
+# data/ inventory — surfaces forgotten assets
 $dataDir = Join-Path $root "data"
 if (Test-Path $dataDir) {
-    Write-Output "## data/ INVENTORY (부재 단정 차단용)"
-    $items = Get-ChildItem $dataDir -Directory -ErrorAction SilentlyContinue |
-        ForEach-Object {
-            $size = 0
-            try {
-                $size = (Get-ChildItem $_.FullName -Recurse -File -ErrorAction SilentlyContinue |
-                         Measure-Object -Sum Length).Sum / 1MB
-            } catch {}
-            if ($size -ge 1) {
-                "{0}({1:N0}M)" -f $_.Name, $size
-            }
+    Write-Output "## data/ INVENTORY (against 'missing' misjudgments)"
+    $rows = @()
+    $dirs = Get-ChildItem $dataDir -Directory -ErrorAction SilentlyContinue
+    foreach ($d in $dirs) {
+        $bytes = 0
+        try {
+            $files = Get-ChildItem $d.FullName -Recurse -File -ErrorAction SilentlyContinue
+            foreach ($f in $files) { $bytes += $f.Length }
+        } catch {}
+        $mb = [Math]::Round($bytes / 1MB, 0)
+        if ($mb -ge 1) {
+            $rows += ("{0}={1}MB" -f $d.Name, $mb)
         }
-    Write-Output ($items -join " ")
+    }
+    Write-Output ($rows -join " ")
     Write-Output ""
 }
 
-# ── 3. ARCHITECTURE.md 섹션 헤더 (모듈 위치 강제 인지) ──────────
+# ARCHITECTURE.md section headers — module location enforcement
 $arch = Join-Path $root "ARCHITECTURE.md"
 if (Test-Path $arch) {
-    Write-Output "## ARCHITECTURE.md sections"
-    $lines = Get-Content $arch -Encoding UTF8 -ErrorAction SilentlyContinue |
-        Select-String -Pattern "^### \d+\." |
-        Select-Object -First 16 -ExpandProperty Line
-    Write-Output ($lines -join " | ")
+    Write-Output "## ARCHITECTURE.md sections (grep before creating new module)"
+    $hdrs = @()
+    $lines = Get-Content $arch -Encoding UTF8 -ErrorAction SilentlyContinue
+    foreach ($ln in $lines) {
+        if ($ln -match "^### \d+\.") {
+            $hdrs += $ln.Substring(0, [Math]::Min(80, $ln.Length))
+            if ($hdrs.Count -ge 16) { break }
+        }
+    }
+    Write-Output ($hdrs -join " | ")
     Write-Output ""
 }
 
-# ── 4. 최근 change_log 1줄 (마지막 작업이 뭐였는지) ─────────────
-$changeLog = Join-Path $root "data/change_log/history.json"
-if (Test-Path $changeLog) {
-    try {
-        $j = Get-Content $changeLog -Encoding UTF8 -Raw | ConvertFrom-Json
-        if ($j -is [Array] -and $j.Count -gt 0) {
-            $last = $j[-1]
-            Write-Output "## LAST change_log"
-            Write-Output ("{0}: {1}" -f $last.title, ($last.description -replace "`n", " ").Substring(0, [Math]::Min(120, ($last.description).Length)))
-            Write-Output ""
+# MEMORY.md index — first 6 entries (key rules user reminded recently)
+$memIdx = "C:\Users\mitto\.claude\projects\c--Users-mitto-OneDrive-Desktop-Medical-Agent\memory\MEMORY.md"
+if (Test-Path $memIdx) {
+    Write-Output "## MEMORY.md top entries"
+    $cnt = 0
+    $lines = Get-Content $memIdx -Encoding UTF8 -ErrorAction SilentlyContinue
+    foreach ($ln in $lines) {
+        if ($ln.StartsWith("- [")) {
+            $head = $ln
+            if ($head.Length -gt 140) { $head = $head.Substring(0, 140) + "..." }
+            Write-Output $head
+            $cnt += 1
+            if ($cnt -ge 6) { break }
         }
-    } catch {}
+    }
+    Write-Output ""
 }
 
 Write-Output "## END pre-prompt"
