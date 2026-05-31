@@ -363,44 +363,71 @@ html, body, [data-testid="stApp"] {{
   border-radius: var(--sg-radius-card);
   padding: 16px;
   overflow-y: auto;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--sg-shadow-soft);
 }}
 .sg-split-right {{ padding: 24px; }}
 
 .sg-msg-user {{
-  background: var(--sg-glass-active);
+  background: #F1F5F9;          /* slate-100 — assistant 대비 차분히 */
   border: 1px solid var(--sg-border);
-  border-radius: 14px;
-  padding: 12px 16px;
+  border-radius: 12px;
+  padding: 11px 14px;
   margin: 8px 0;
   color: var(--sg-text);
   font-size: 0.92rem;
 }}
 .sg-msg-assistant {{
-  background: rgba(124, 58, 237, 0.10);
-  border: 1px solid rgba(124, 58, 237, 0.30);
-  border-radius: 14px;
-  padding: 12px 16px;
+  background: rgba(219, 234, 254, 0.55);   /* blue-100 옅게 */
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  border-radius: 12px;
+  padding: 11px 14px;
   margin: 8px 0;
   color: var(--sg-text);
   font-size: 0.92rem;
 }}
 
 .sg-action-card {{
-  background: var(--sg-glass);
+  background: var(--sg-surface);
   border: 1px solid var(--sg-border);
-  border-radius: 14px;
-  padding: 14px 16px;
+  border-radius: 12px;
+  padding: 13px 16px;
   margin: 10px 0;
   display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--sg-shadow-soft);
+  transition: var(--sg-trans-fast);
 }}
-.sg-action-card .sg-icon {{ font-size: 1.4rem; }}
+.sg-action-card:hover {{
+  border-color: var(--sg-border-strong);
+  box-shadow: var(--sg-shadow-card);
+}}
+.sg-action-card .sg-icon {{ font-size: 1.3rem; color: var(--sg-text-sub); }}
 .sg-action-card .sg-detail {{ flex: 1; }}
 .sg-action-card .sg-title {{ font-weight: 600; color: var(--sg-text); font-size: 0.92rem; }}
 .sg-action-card .sg-sub {{ color: var(--sg-text-sub); font-size: 0.80rem; }}
 
-hr {{ border-color: var(--sg-border) !important; opacity: 0.5; }}
+/* ── Metric strip (AI Visibility 양식 KPI 블록) ─────────────────────── */
+.sg-metric {{
+  background: var(--sg-surface);
+  border: 1px solid var(--sg-border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-shadow: var(--sg-shadow-soft);
+}}
+.sg-metric-label {{
+  font-size: 0.78rem; color: var(--sg-text-muted);
+  text-transform: none; letter-spacing: 0;
+  margin-bottom: 4px;
+}}
+.sg-metric-value {{
+  font-size: 1.6rem; font-weight: 700; color: var(--sg-text);
+  line-height: 1.15;
+}}
+.sg-metric-delta-pos {{ color: var(--sg-accent-mint); font-size: 0.82rem; margin-left: 6px; }}
+.sg-metric-delta-neg {{ color: var(--sg-accent-rose); font-size: 0.82rem; margin-left: 6px; }}
+
+hr {{ border-color: var(--sg-border) !important; opacity: 1; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -426,8 +453,11 @@ def chip_row(chips: list[tuple[str, bool]]) -> None:
 
 
 def project_card_html(title: str, edited: str, status: str = "",
-                       gradient: str = "linear-gradient(135deg, #1E1B4B, #312E81)") -> str:
-    """프로젝트 카드 HTML 반환 (외부에서 grid에 collect)."""
+                       gradient: str = "linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 60%, #FCE7F3 100%)") -> str:
+    """프로젝트 카드 HTML 반환 (외부에서 grid에 collect).
+
+    기본 thumb는 라이트 파스텔 그라데이션 (blue-100 → indigo-100 → pink-100).
+    """
     badge = (f"<div style='position:absolute;bottom:8px;left:8px;'>"
               f"<span class='sg-badge published'>{status}</span></div>") if status else ""
     return (f"<div class='sg-project-card'>"
@@ -440,14 +470,33 @@ def project_card_html(title: str, edited: str, status: str = "",
 
 def project_grid(projects: list[dict]) -> None:
     """projects = [{"title":..., "edited":..., "status":..., "gradient":...}, ...]"""
+    default_g = "linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 60%, #FCE7F3 100%)"
     html = "<div class='sg-project-grid'>" + "".join(
         project_card_html(p.get("title", "Untitled"),
                            p.get("edited", ""),
                            p.get("status", ""),
-                           p.get("gradient", "linear-gradient(135deg, #1E1B4B, #312E81)"))
+                           p.get("gradient", default_g))
         for p in projects
     ) + "</div>"
     st.markdown(html, unsafe_allow_html=True)
+
+
+def metric_card(label: str, value: str, *, delta: str = "",
+                 delta_kind: str = "pos") -> None:
+    """AI Visibility 양식 KPI 블록: label / value / delta(+x.x%).
+
+    delta_kind: 'pos' (emerald) | 'neg' (rose) | 'neutral' (sub-text)
+    """
+    import html as _h
+    delta_cls = {"pos": "sg-metric-delta-pos",
+                 "neg": "sg-metric-delta-neg"}.get(delta_kind, "sg-metric-delta-pos")
+    delta_html = (f"<span class='{delta_cls}'>{_h.escape(delta)}</span>"
+                   if delta else "")
+    st.markdown(
+        f"<div class='sg-metric'>"
+        f"<div class='sg-metric-label'>{_h.escape(label)}</div>"
+        f"<div class='sg-metric-value'>{_h.escape(value)}{delta_html}</div>"
+        f"</div>", unsafe_allow_html=True)
 
 
 def message_bubble(role: str, text: str) -> None:
@@ -522,4 +571,4 @@ def manuscript_preview_html(*, title: str, authors: list[str] | str,
 
 # NOTE: 과거에 있던 `manuscript_preview()` wrapper는 제거 (2026-05-27).
 # 호출자 0건이었고, `_project_workspace.py`가 manuscript_preview_html()을
-# 직접 st.markdown(...)으로 출력하는 한 줄이라 wrapper의 가치�
+# 직접 st.markdown(...)으로 출력하는 한 줄이라 wrapper의 가치가 없음. dead code 차단.
