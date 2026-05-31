@@ -299,13 +299,11 @@ print(f"  Overall: aOR per 1-level = {overall_or['or']:.3f} ({overall_or['ci_low
 fig3 = {"overall": overall_or, "subgroups": {}}
 
 SUBGROUPS = [
+    ("sex",             [1, 2],       [c for c in cov_m2 if c != "sex_2"]),
     ("age_cat",         [1, 2, 3],    [c for c in cov_m2 if not c.startswith("age_cat_")]),
     ("bmi_cat",         [1, 2, 3],    [c for c in cov_m2 if not c.startswith("bmi_cat_")]),
     ("ses3",            [1, 2, 3],    [c for c in cov_m2 if not c.startswith("ses3_")]),
     ("academic3",       [1, 2, 3],    [c for c in cov_m2 if not c.startswith("academic3_")]),
-    ("smartphone_tert", [1, 2, 3],    cov_m2),
-    ("pa_cat",          [1, 2, 3],    [c for c in cov_m2 if not c.startswith("pa_cat_")]),
-    ("br_skip",         [0, 1],       [c for c in cov_m2 if c != "br_skip"]),
 ]
 
 from scipy import stats as _st
@@ -328,11 +326,6 @@ for col, levels, cov_set in SUBGROUPS:
     # P_interaction (Wald test)
     strat_dums, inter_cols = [], []
     for lev in levels[1:]:
-        if col in ["br_skip"]:
-            inter = f"zf_x_brskip"
-            cc[inter] = cc["zero_freq"] * cc["br_skip"]
-            inter_cols.append(inter)
-            break
         dum = f"{col}_{int(lev)}"
         if dum in cc.columns:
             strat_dums.append(dum)
