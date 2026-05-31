@@ -382,7 +382,112 @@ def get_typology_block(section: str, *, n_per_type: int = 1,
     return "\n".join(lines)
 
 
+# ── Mix & Match: PaperOrientation (사용자 표면) → typology (백엔드) ──────
+
+# orientation slug → 섹션별 추천 typology slug 가중치
+# (사용자가 "novelty 강조" 말하면 → introduction은 gap/trend-rising으로 자동 선택)
+_ORIENTATION_TO_TYPOLOGY = {
+    "novelty": {
+        "introduction": ["gap-statement-first", "trend-rising-first"],
+        "methods":      ["survey-design-first", "cross-sectional-first"],
+        "results":      ["main-effect-first"],
+        "discussion":   ["headline-finding-first", "comparison-first"],
+    },
+    "consistency": {
+        "introduction": ["public-health-burden-first"],
+        "methods":      ["cohort-design-first", "survey-design-first"],
+        "results":      ["forest-narrative", "trend-test-first"],
+        "discussion":   ["comparison-first", "limitation-first"],
+    },
+    "innovation": {
+        "introduction": ["biological-mechanism-first", "gap-statement-first"],
+        "methods":      ["rct-first", "cohort-design-first"],
+        "results":      ["main-effect-first"],
+        "discussion":   ["mechanism-first", "headline-finding-first"],
+    },
+    "public_health": {
+        "introduction": ["public-health-burden-first", "clinical-relevance-first"],
+        "methods":      ["survey-design-first"],
+        "results":      ["descriptive-first", "main-effect-first"],
+        "discussion":   ["policy-translation-first", "headline-finding-first"],
+    },
+    "methodological_rigor": {
+        "introduction": ["gap-statement-first"],
+        "methods":      ["cohort-design-first", "cross-sectional-first", "rct-first"],
+        "results":      ["trend-test-first", "forest-narrative", "main-effect-first"],
+        "discussion":   ["limitation-first", "comparison-first"],
+    },
+}
+
+
+def mix_and_match(section: str, orientation_slugs: List[str],
+                   *, default_modes: int = 2) -> List[str]:
+    """orientation 다중 선택 → 섹션별 추천 typology 슬러그 리스트.
+
+    사용자가 "novelty + public_health 강조" 말하면 →
+        introduction에서 gap-statement-first + trend-rising-first + burden-first +
+        clinical-relevance-first 합집합 반환.
+    """
+    if not orientation_slugs:
+        # orientation 없으면 섹션의 가장 일반적인 1-2개
+        return {
+            "introduction": ["gap-statement-first", "public-health-burden-first"],
+            "methods":      ["cross-sectional-first", "survey-design-first"],
+            "results":      ["descriptive-first", "main-effect-first"],
+            "discussion":   ["headline-finding-first", "comparison-first"],
+        }.get(section, [])[:default_modes]
+    picked: list = []
+    for o in orientation_slugs:
+        modes = _ORIENTATION_TO_TYPOLOGY.get(o, {}).get(section, [])
+        for m in modes:
+            if m not in picked:
+                picked.append(m)
+    return picked
+
+
+def get_typology_block_for_orientation(
+    section: str,
+    orientation_slugs: List[str],
+    *, n_per_type: int = 2,
+    catalog: Optional[TypologyCatalog] = None,
+) -> str:
+    """orientation 슬러그 리스트 → 매칭 typology만 예문 박은 블록.
+
+    paper_writer가 user_prompt에 박을 텍스트. typology 슬러그는 LLM context에
+    노출되지만 사용자 UI에는 노출 X (백엔드 자산).
+    """
+    modes = mix_and_match(section, orientation_slugs)
+    if not modes:
+        return ""
+    if catalog is None:
+        try:
+            catalog = build_typology_catalog()
+        except Exception:
+            return ""
+    type_dict = catalog.by_section_type.get(section) or {}
+    if not type_dict:
+        return ""
+    lines = [f"## SEED PATTERNS — {section.upper()} (real PMC excerpts matching the requested emphasis)",
+             ""]
+    for ty in modes:
+        hits = type_dict.get(ty) or []
+        if not hits:
+            continue
+        lines.append(f"Pattern: {ty}")
+        for h in hits[:n_per_type]:
+            ex = (h.get("excerpt") or "")[:360].replace("\n", " ").strip()
+            lines.append(f"  • [{h.get('pmcid','?')}] {ex}")
+        lines.append("")
+    if len(lines) <= 2:
+        return ""
+    lines.append("Absorb the rhetorical structure of the patterns above (topic-sentence "
+                  "rhythm, verb selection, hedging). Pick the one that best fits this "
+                  "study's aim — do NOT copy text. Translate to this paper's specific data.")
+    return "\n".join(lines)
+
+
 __all__ = [
     "build_typology_catalog", "get_typology_block",
+    "get_typology_block_for_orientation", "mix_and_match",
     "TypologyCatalog", "TypologyHit", "TYPOLOGIES",
 ]

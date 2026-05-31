@@ -461,6 +461,42 @@ Keep the author's academic writing style. Output ONLY the improved section text 
         MT = {"abstract": 1800, "introduction": 3500, "methods": 5500,
               "results": 4000, "discussion": 5500}
 
+        # ── ★ FIX 12 (백엔드 자산화 — 유형 카탈로그 mix & match): ──────────
+        # intent_sensor가 픽업한 PaperOrientation(novelty/consistency/...)을 읽어
+        # 섹션별 typology 패턴 예문을 user_prompt에 박는다. 사용자에게는 노출 X.
+        active_orientations: List[str] = []
+        try:
+            from src.agent.intent_sensor import get_current as _intent_now
+            sig = _intent_now()
+            if sig:
+                # implicit_emphasis에 박힌 orientation imprint label로부터 역추출
+                imp = " ".join(sig.implicit_emphasis or [])
+                for o in ["novelty", "consistency", "innovation",
+                           "public_health", "methodological_rigor"]:
+                    if o in (sig.explicit_request or "") or any(
+                            kw in imp for kw in {
+                                "novelty": ["novel_finding", "first_adolescent_study", "largest_N"],
+                                "consistency": ["consistent_across_subgroups", "robust_to_sensitivity"],
+                                "innovation": ["novel_mechanism", "new_methodology"],
+                                "public_health": ["policy_implication", "clinical_actionable"],
+                                "methodological_rigor": ["complex_survey_design", "multi_covariate_adjustment"],
+                            }[o]):
+                        active_orientations.append(o)
+        except Exception:
+            pass
+        try:
+            from src.knowledge.paper_typology import get_typology_block_for_orientation
+            typology_blocks: Dict[str, str] = {}
+            for sec_key in ("introduction", "methods", "results", "discussion"):
+                typology_blocks[sec_key] = get_typology_block_for_orientation(
+                    sec_key, active_orientations, n_per_type=2)
+            _log.info("[PaperWriter] typology patterns: orientations=%s, picked={%s}",
+                       active_orientations,
+                       ", ".join(f"{k}:{'Y' if v else 'n'}" for k, v in typology_blocks.items()))
+        except Exception as _e:
+            _log.warning("[PaperWriter] typology block fail: %s", _e)
+            typology_blocks = {}
+
         # ── ★ FIX 11 (시드 12,301편 회로 연결): 섹션별 query로 RAG retrieval ──
         # data/chromadb의 papers 컬렉션(20,894 chunks)에서 섹션에 맞는 실 발췌를
         # 끌어와 user_prompt에 박는다. 지금까지는 self._rag=None이라 한 줄도 안 박혔음.
@@ -510,7 +546,7 @@ TOPIC: {topic}
 EXPOSURE: {exposure}
 OUTCOME: {outcome}
 POPULATION: {population}
-STUDY DESIGN: {design}{ref_block}{feedback_block}{section_rag_blocks.get("introduction","")}
+STUDY DESIGN: {design}{ref_block}{feedback_block}{typology_blocks.get("introduction","")}{section_rag_blocks.get("introduction","")}
 
 Structure: broad public health context → specific problem → knowledge gap → study aim.
 Keep strictly to this topic. Do NOT refer to unrelated studies. Write 4–5 paragraphs.""",
@@ -530,7 +566,7 @@ OUTCOME: {outcome}
 COVARIATES: {covariates}
 
 {dataset_ctx}
-{methods_ctx}{section_rag_blocks.get("methods","")}
+{methods_ctx}{typology_blocks.get("methods","")}{section_rag_blocks.get("methods","")}
 
 Write subsections: Study Design and Population / Exposure / Outcome / Covariates / Statistical Analysis.
 Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""",
@@ -555,7 +591,7 @@ KEY FINDINGS (use these EXACT numbers — do NOT invent or round):
 {chr(10).join(f'- {f}' for f in main_findings)}
 
 Additional subgroup findings: {results.get("subgroup", "Not provided")}
-Sensitivity analyses: {results.get("sensitivity", "Not provided")}{section_rag_blocks.get("results","")}
+Sensitivity analyses: {results.get("sensitivity", "Not provided")}{typology_blocks.get("results","")}{section_rag_blocks.get("results","")}
 
 Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""",
             max_tokens=MT["results"])
@@ -578,7 +614,7 @@ COMPARISON WITH LITERATURE: {results.get("literature_comparison", "Discuss in re
 MECHANISMS: {results.get("mechanisms", "Propose biologically plausible mechanisms.")}
 STRENGTHS: nationwide representative sample, large n={sample_size}, validated survey instrument
 LIMITATIONS: cross-sectional design (cannot establish causality), self-reported data, residual confounding
-{ref_block}{feedback_block}{section_rag_blocks.get("discussion","")}
+{ref_block}{feedback_block}{typology_blocks.get("discussion","")}{section_rag_blocks.get("discussion","")}
 
 Structure: 1) Summary of main findings  2) Comparison with existing literature
 3) Proposed mechanisms  4) Strengths and limitations  5) Public health conclusion""",
