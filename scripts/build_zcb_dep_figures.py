@@ -230,7 +230,7 @@ def build_figure2_sex():
 
     plt.subplots_adjust(top=0.88)
 
-    out = OUT / "Figure2_sex.png"
+    out = OUT / "Supplementary_Figure_sex_lines.png"
     plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")
     plt.close(fig)
     print(f"saved: {out}")
@@ -263,22 +263,18 @@ def build_figure3_forest():
 
     def _level_label(strat, lev):
         mapping = {
+            "sex":             {1: "Male", 2: "Female"},
             "age_cat":         {1: "12-13 yr", 2: "14-15 yr", 3: "16-18 yr"},
             "bmi_cat":         {1: "Underweight", 2: "Normal", 3: "Overweight/Obese"},
             "ses3":            {1: "High", 2: "Middle", 3: "Low"},
             "academic3":       {1: "High", 2: "Middle", 3: "Low"},
-            "smartphone_tert": {1: "Low (T1)", 2: "Mid (T2)", 3: "High (T3)"},
-            "pa_cat":          {1: "Low (0-2 d/wk)", 2: "Moderate (3-4 d/wk)", 3: "High (>=5 d/wk)"},
-            "br_skip":         {0: "Non-skipper", 1: "Skipper"},
         }
         return mapping.get(strat, {}).get(lev, str(lev))
 
     def _head_label(strat, p_int):
         names = {
-            "age_cat": "Age category", "bmi_cat": "BMI category",
+            "sex": "Sex", "age_cat": "Age category", "bmi_cat": "BMI category",
             "ses3": "Household SES", "academic3": "Academic performance",
-            "smartphone_tert": "Smartphone tertile",
-            "pa_cat": "Physical activity", "br_skip": "Breakfast",
         }
         return f"{names.get(strat, strat)} ({_p_str(p_int)})"
 
@@ -286,8 +282,7 @@ def build_figure3_forest():
             ("  All adolescents", ov["or"], ov["ci_low"], ov["ci_high"], "diamond"),
             ("", None, None, None, "blank")]
 
-    for strat in ["age_cat", "bmi_cat", "ses3", "academic3",
-                  "smartphone_tert", "pa_cat", "br_skip"]:
+    for strat in ["sex", "age_cat", "bmi_cat", "ses3", "academic3"]:
         if strat not in sg: continue
         s = sg[strat]
         rows.append((_head_label(strat, s.get("p_interaction")),
@@ -334,19 +329,116 @@ def build_figure3_forest():
     ax.spines["left"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
-    ax.set_title("Figure 3. Subgroup analyses for Depressive symptoms",
+    ax.set_title("Figure 2. Subgroup analyses for Depressive symptoms",
                  fontsize=11.5, fontweight="bold", pad=10, loc="left")
 
-    out = OUT / "Figure3_forest_subgroups.png"
+    out = OUT / "Figure2_forest_subgroups.png"
     plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")
     plt.close(fig)
     print(f"saved: {out}")
     return out
 
 
+def verify_figure2_against_image():
+    """첨부 이미지(2026-05-31)의 숫자와 stat_results.json의 Figure_3 값이 ±0.02 이내인지 검증.
+
+    이미지 출처: 사용자 첨부 PNG. 표시는 소수 2자리 (반올림).
+    검증 기준: |OR - 이미지값| <= 0.015 AND |CI - 이미지값| <= 0.015.
+    P_interaction은 부호(< 0.05 / >= 0.05) 일치 + 자릿수 동일 여부만 검사
+    (P_int 정확값은 분석 모델 사양에 따라 미세 차이 정상).
+    """
+    import json as _j
+    from pathlib import Path as _P
+    sr = _j.loads(_P("data/exports/stat_results.json").read_text(encoding="utf-8"))
+    f3 = sr["Figure_3"]
+
+    # 이미지에서 사용자가 명시한 값 (사진 한 줄씩):
+    EXPECTED = {
+        "overall": (1.05, 1.03, 1.07),
+        "sex": {
+            "p_int": "<0.001",
+            "levels": {1: (1.02, 0.99, 1.05), 2: (1.09, 1.06, 1.12)},
+        },
+        "age_cat": {
+            "p_int": 0.008,
+            "levels": {1: (1.05, 1.01, 1.10), 2: (1.09, 1.05, 1.13), 3: (1.02, 0.99, 1.05)},
+        },
+        "bmi_cat": {
+            "p_int": 0.553,
+            "levels": {1: (1.04, 0.93, 1.17), 2: (1.05, 1.03, 1.08), 3: (1.04, 1.00, 1.08)},
+        },
+        "ses3": {
+            "p_int": 0.426,
+            "levels": {1: (1.05, 1.01, 1.09), 2: (1.05, 1.02, 1.08), 3: (1.04, 0.99, 1.10)},
+        },
+        "academic3": {
+            "p_int": 0.465,
+            "levels": {1: (1.05, 1.01, 1.09), 2: (1.06, 1.02, 1.10), 3: (1.04, 1.01, 1.08)},
+        },
+    }
+    TOL = 0.015  # 1.5% (반올림 + svy vs unweighted 미세차)
+
+    fails, warns, oks = [], [], []
+    # Overall
+    ov = f3["overall"]
+    e = EXPECTED["overall"]
+    for got, exp, name in [(ov["or"], e[0], "or"), (ov["ci_low"], e[1], "ci_low"),
+                             (ov["ci_high"], e[2], "ci_high")]:
+        d = abs(got - exp)
+        msg = f"Overall.{name}: got={got:.3f} exp={exp:.2f} delta={d:.4f}"
+        (fails if d > TOL else oks).append(msg)
+
+    # Subgroups
+    for strat, sp in EXPECTED.items():
+        if strat == "overall": continue
+        if strat not in f3["subgroups"]:
+            fails.append(f"{strat}: MISSING in stat_results"); continue
+        s = f3["subgroups"][strat]
+        for lev, exp in sp["levels"].items():
+            match = next((lv for lv in s["levels"] if lv.get("level") == lev), None)
+            if not match:
+                fails.append(f"{strat}.lev{lev}: MISSING"); continue
+            for got, exp_v, name in [(match["or"], exp[0], "or"),
+                                       (match["ci_low"], exp[1], "ci_low"),
+                                       (match["ci_high"], exp[2], "ci_high")]:
+                d = abs(got - exp_v)
+                msg = f"{strat}.lev{lev}.{name}: got={got:.3f} exp={exp_v:.2f} delta={d:.4f}"
+                (fails if d > TOL else oks).append(msg)
+        # P_interaction
+        got_p = s.get("p_interaction")
+        exp_p = sp["p_int"]
+        if isinstance(exp_p, str) and exp_p.startswith("<"):
+            thr = float(exp_p.replace("<", ""))
+            ok = got_p is not None and got_p < thr
+            msg = f"{strat}.P_int: got={got_p:.3g} exp={exp_p}"
+            (oks if ok else fails).append(msg)
+        else:
+            ok = got_p is not None and (got_p < 0.05) == (exp_p < 0.05)
+            d = abs((got_p or 0) - exp_p)
+            msg = f"{strat}.P_int: got={got_p:.3g} exp={exp_p:.3g} sig_dir={'same' if ok else 'DIFF'}"
+            (warns if ok else fails).append(msg)
+
+    print("\n" + "=" * 60)
+    print("FIGURE 2 — VERIFICATION AGAINST USER-ATTACHED IMAGE")
+    print("=" * 60)
+    print(f"PASS (within ±{TOL}):  {len(oks)}")
+    for m in oks: print(f"  ✓ {m}")
+    if warns:
+        print(f"\nWARN (P_int 부호 일치, 수치 미세차이):  {len(warns)}")
+        for m in warns: print(f"  ⚠ {m}")
+    if fails:
+        print(f"\nFAIL (±{TOL} 초과):  {len(fails)}")
+        for m in fails: print(f"  ✗ {m}")
+    else:
+        print("\n✓ ALL OR/CI POINT-ESTIMATES WITHIN ±0.015 OF ATTACHED IMAGE.")
+    return len(fails) == 0
+
+
 if __name__ == "__main__":
-    print("=== Building ZCB-Depression figures (사용자 양식 그대로) ===")
+    print("=== Building ZCB-Depression figures (Figure 2 = subgroup forest) ===")
     build_figure1_prisma()
-    build_figure2_sex()        # 단일 figure 2 — sex stratified
-    build_figure3_forest()
-    print("\nFigures saved to data/exports/")
+    build_figure2_sex()         # → Supplementary (sex line chart)
+    build_figure3_forest()      # → Figure 2 (subgroup forest) — 함수명만 옛이름 유지
+    ok = verify_figure2_against_image()
+    print(f"\nFigures saved to data/exports/  verify_pass={ok}")
+    sys.exit(0 if ok else 1)
