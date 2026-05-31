@@ -165,9 +165,14 @@ if not fig_dir.exists():
     fig_dir = Path("data/exports")
 figs = []
 for fn, cap in [
-    ("Figure1_PRISMA.png",           "Figure 1. Flow Chart for Participant Selection: Initial KYRBS 2025 enrolled (N = 50,972)"),
-    ("Figure2_sex.png",              "Figure 2. Predicted probability of Depression by zero-calorie beverage consumption frequency, KYRBS 2025 (N = 50,972)"),
-    ("Figure3_forest_subgroups.png", "Figure 3. Subgroup analyses - 7 a priori stratifiers."),
+    ("Figure1_PRISMA.png",
+     "Figure 1. Flow chart for participant selection, KYRBS 2025."),
+    ("Figure2_forest_subgroups.png",
+     "Figure 2. Subgroup analyses for depressive symptoms — adjusted odds ratios per "
+     "1-level increase in zero-calorie beverage consumption frequency."),
+    ("Supplementary_Figure_sex_lines.png",
+     "Supplementary Figure. Predicted probability of depressive symptoms by zero-calorie "
+     "beverage consumption frequency, stratified by sex."),
 ]:
     p = fig_dir / fn
     if p.exists():
@@ -175,12 +180,12 @@ for fn, cap in [
 
 print(f"[4/4] WordExporter: sections={list(sections.keys())} refs={len(references)} figs={len(figs)} tables={len(tables_html)}")
 
-# sections cache — 다음 호출 시 재사용 (71초 LLM 호출 절약)
-import json as _json
-cache_p = Path("data/drafts/yoosun_sections_cache.json")
-cache_p.parent.mkdir(parents=True, exist_ok=True)
-cache_p.write_text(_json.dumps(sections, ensure_ascii=False, indent=2), encoding="utf-8")
-print(f"[cache] sections saved: {cache_p}")
+# sections cache — LLM 신규 호출 시에만 갱신 (캐시 경로는 paper_text가 None이면 이미 캐시 로드한 경우)
+if paper_text is not None:
+    import json as _json
+    cache_p.parent.mkdir(parents=True, exist_ok=True)
+    cache_p.write_text(_json.dumps(sections, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"[cache] sections saved: {cache_p}")
 
 # 표는 별도 HTML 파일로 따로 (docx에 HTML 통째로 박으면 깨짐) — render_publication_table은
 # type 키 ("baseline"/"regression"/"cross"/"raw") 기반이라 우리 HTML dict와 양식 다름.

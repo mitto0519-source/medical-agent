@@ -44,48 +44,98 @@ _log = get_logger(__name__)
 
 _TABLE_CSS = """
 <style>
-.pub-table { border-collapse: collapse; font-family: 'Times New Roman', serif;
-             font-size: 10.5pt; margin: 12px 0; width: 100%; color: #111; }
-.pub-table caption { caption-side: top; text-align: left;
-                     font-weight: 700; padding: 6px 0; font-size: 11pt; }
-.pub-table thead tr { border-bottom: 1.5px solid #000; }
-.pub-table thead tr:first-child { border-top: 1.5px solid #000; }
-.pub-table tbody tr:last-child td { border-bottom: 1.5px solid #000; }
-.pub-table th, .pub-table td { padding: 4px 10px; vertical-align: top;
-                                border: none; text-align: left; }
+/* NEJM/Lancet 세 줄 표 — 세로선 0, 위/헤더아래/표끝 가로선만, decimal-align numeric */
+.pub-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: 'Times New Roman', 'Liberation Serif', serif;
+  font-size: 10.5pt;
+  line-height: 1.35;
+  margin: 14px 0 4px 0;
+  width: 100%;
+  color: #000;
+}
+.pub-table caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 700;
+  padding: 0 0 8px 0;
+  font-size: 11pt;
+  line-height: 1.35;
+}
+/* Three horizontal lines only */
+.pub-table thead tr:first-child > * { border-top:    1.5px solid #000; }
+.pub-table thead tr:last-child  > * { border-bottom: 0.75px solid #000; }
+.pub-table tbody tr:last-child  > * { border-bottom: 1.5px solid #000; }
+/* No internal verticals, no internal horizontals */
+.pub-table th, .pub-table td {
+  padding: 5px 12px;
+  vertical-align: top;
+  border: none;
+  text-align: left;
+  white-space: nowrap;
+}
 .pub-table th { font-weight: 700; }
-.pub-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
-.pub-table tr.subhead td { font-weight: 700; padding-top: 8px; }
-.pub-table tr.subrow td:first-child { padding-left: 18px; }
-.pub-table .ref { font-style: italic; }
+/* Numeric column: right-align + tabular figures for decimal alignment */
+.pub-table td.num, .pub-table th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  padding-right: 14px;
+}
+/* Subhead row — bold, no indent, slight top spacing */
+.pub-table tr.subhead td {
+  font-weight: 700;
+  padding-top: 9px;
+  padding-bottom: 3px;
+}
+/* Subrow — first cell indented 22px (PDF 양식과 일치) */
+.pub-table tr.subrow td:first-child { padding-left: 22px; }
+.pub-table .ref  { font-style: italic; }
 .pub-table .pval em { font-style: italic; }
-.pub-table-footnote { font-size: 9pt; color: #333;
-                       margin-top: 4px; line-height: 1.4; }
+/* Footnote — 9pt, italic abbr */
+.pub-table-footnote {
+  font-size: 9pt;
+  color: #000;
+  margin-top: 6px;
+  line-height: 1.4;
+  font-family: 'Times New Roman', 'Liberation Serif', serif;
+}
 .pub-table-footnote .abbr { font-style: italic; }
+.pub-table-footnote div { margin: 1px 0; }
 </style>
 """
 
 
 def _fmt_n_pct(n: int, denom: int) -> str:
+    """N (%) — thousands comma + 1 decimal % + thin space."""
     if denom == 0:
         return f"{n:,} (—)"
     return f"{n:,} ({n / denom * 100:.1f})"
 
 
 def _fmt_mean_sd(mean: float, sd: float) -> str:
-    return f"{mean:.2f} ± {sd:.2f}"
+    """mean ± SD — 2 decimal, NBSP around ±."""
+    return f"{mean:.2f} ± {sd:.2f}"
 
 
 def _fmt_or_ci(or_val: float, lo: float, hi: float) -> str:
+    """OR (95% CI) — 2 decimal, en-dash range, single space before paren.
+
+    "1.05 (1.03–1.07)" — NEJM/Lancet convention.
+    """
     return f"{or_val:.2f} ({lo:.2f}–{hi:.2f})"
 
 
 def _fmt_p(p: float) -> str:
+    """P-value — italic P, NBSP, en-dash style. '<' for sub-0.001."""
     if p is None:
         return "—"
     if p < 0.001:
-        return "<em>P</em> &lt; 0.001"
-    return f"<em>P</em> = {p:.3f}"
+        return "<em>P</em> &lt; 0.001"
+    if p < 0.01:
+        return f"<em>P</em> = {p:.3f}"
+    return f"<em>P</em> = {p:.3f}"
 
 
 # ── Table 1: Baseline characteristics ─────────────────────────────────────────
