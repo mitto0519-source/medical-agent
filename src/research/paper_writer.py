@@ -641,6 +641,28 @@ CONCLUSION FROM DISCUSSION:
 Base the abstract STRICTLY on the sections above. Do NOT invent numbers.""",
             max_tokens=MT["abstract"])
 
+        # ★ FIX 15 (자산화 3단계 — Yoosun 최종 변환):
+        # 본문 생성 + anti-AI 필터(_generate 내부) 통과 후, 별도 LLM 호출로
+        # Yoosun voice로 최종 변환. yoosun_voice=True (study_info에서 또는 기본).
+        # 비용 절감 위해 Discussion + Introduction만 변환 (가장 voice가 드러나는 섹션).
+        yoosun_finalize_on = bool(study_info.get("yoosun_finalize", True))
+        if yoosun_finalize_on:
+            try:
+                from src.research.yoosun_finalize import finalize as _yfin
+                for sec_key, label in [("introduction", "Introduction"),
+                                          ("discussion", "Discussion")]:
+                    body = sections.get(sec_key) or ""
+                    if len(body) < 400:
+                        continue
+                    _log.info("[PaperWriter] Yoosun finalize: %s (%d자)", label, len(body))
+                    new_body = _yfin(body, section_label=label,
+                                       llm_client=self._client,
+                                       max_tokens=min(len(body) * 2, 6000))
+                    if new_body and len(new_body) > len(body) * 0.5:
+                        sections[sec_key] = new_body
+            except Exception as _e:
+                _log.warning("[PaperWriter] Yoosun finalize 실패: %s", _e)
+
         # 섹션 dict를 인스턴스에 보관 (JournalDocxExporter가 접근할 수 있도록)
         self.last_sections = {
             "Abstract": sections["abstract"],
@@ -865,8 +887,16 @@ DISCUSSION
                    *, max_tokens: int = 8192) -> str:
         # ★ FIX 1 (라인 786 원본): max_tokens 미지정으로 Methods/Results가
         #   기본 2048 토큰(~1,500자)에서 잘리는 사고. 섹션별로 명시 전달.
-        # ★ FIX 4 (라인 770 원본): anti_meta 룰을 압축 — 너무 길면 LLM이 본 지시를
-        #   덮어버림. 핵심 5줄만 남김.
+        # ★ FIX 4: anti_meta 룰 압축 — 너무 길면 LLM이 본 지시를 덮어버림.
+        # ★ FIX 13 (자산화 1단계 연결): humanize 카탈로그를 system_prompt에 주입.
+        #   12,301편에서 추출한 sentence-level humanization signal 7종 × 1 예문.
+        humanize_block = ""
+        try:
+            from src.knowledge.humanize_extractor import get_humanize_block
+            humanize_block = get_humanize_block(sample_per_kind=1)
+        except Exception:
+            pass
+
         anti_meta = (
             "\n\n# OUTPUT RULES\n"
             "- Output ONLY the section content. No preamble, no meta.\n"
@@ -877,13 +907,29 @@ DISCUSSION
             "- Do NOT include section header lines ('**Abstract**:', '# Methods:').\n"
             "- Start directly with the first sentence of the academic content.\n"
         )
+        full_system = system_prompt + (("\n\n" + humanize_block) if humanize_block else "") + anti_meta
+
         out = self._client.generate(
             user_prompt,
-            system_prompt=system_prompt + anti_meta,
+            system_prompt=full_system,
             max_tokens=max_tokens,
         )
         # ★ Response sanitizer — 그래도 새어 나온 메타 코멘트 절단
         out = _strip_llm_meta(out)
+
+        # ★ FIX 14 (자산화 2단계 연결): anti-AI 필터 — LLM 흔적 자동 정리
+        try:
+            from src.safety.anti_ai_filter import filter_text as _ai_filter, ai_score
+            if out and len(out) > 200:
+                before = ai_score(out)
+                if before.score > 25:   # 명백한 AI-스러움일 때만 정리
+                    cleaned, _b, after = _ai_filter(out, mode="gentle")
+                    _log.info("[PaperWriter] anti-AI: score %.1f → %.1f (saved %d chars)",
+                               before.score, after.score, len(out) - len(cleaned))
+                    out = cleaned
+        except Exception as _e:
+            _log.warning("[PaperWriter] anti-AI filter 실패: %s", _e)
+
         # Safety gate — 임상 키워드 자동 격리 큐
         try:
             from src.safety import check_all
