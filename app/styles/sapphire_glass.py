@@ -49,41 +49,43 @@ def inject_sapphire_glass(*, hide_streamlit_chrome: bool = True) -> None:
 
     st.markdown(f"""
 <style>
-/* ── Global root ─────────────────────────────────────────────────────── */
+/* ── Global root — Light palette (2026-06-01: AI Visibility 첨부 양식 톤다운) ── */
 :root {{
-  --sg-bg:          #0A0A1F;
-  --sg-bg-from:     #1E1B4B;
-  --sg-bg-via:      #7C3AED;
-  --sg-bg-to:       #EC4899;
-  --sg-surface:     #0F0F23;
-  --sg-glass:       rgba(255, 255, 255, 0.06);
-  --sg-glass-hover: rgba(255, 255, 255, 0.10);
-  --sg-glass-active:rgba(255, 255, 255, 0.14);
-  --sg-border:      rgba(255, 255, 255, 0.12);
-  --sg-border-focus:rgba(124, 58, 237, 0.55);
-  --sg-text:        #F5F5FA;
-  --sg-text-sub:    #A3A3B8;
-  --sg-text-muted:  #6B6B7E;
-  --sg-accent-sap:  #3B82F6;
+  --sg-bg:          #F8FAFC;   /* slate-50, 거의 흰색 베이스 */
+  --sg-bg-from:     #FFFFFF;
+  --sg-bg-via:      #F1F5F9;   /* slate-100 */
+  --sg-bg-to:       #FFFFFF;
+  --sg-surface:     #FFFFFF;
+  --sg-glass:       rgba(255, 255, 255, 0.78);   /* 글래스 살리되 라이트 */
+  --sg-glass-hover: rgba(255, 255, 255, 0.92);
+  --sg-glass-active:rgba(249, 250, 251, 0.95);
+  --sg-border:      rgba(15, 23, 42, 0.06);      /* 얇고 은은하게 (slate-900 6%) */
+  --sg-border-strong:rgba(15, 23, 42, 0.10);
+  --sg-border-focus:rgba(59, 130, 246, 0.45);    /* sapphire focus ring */
+  --sg-text:        #0F172A;   /* slate-900 */
+  --sg-text-sub:    #475569;   /* slate-600 */
+  --sg-text-muted:  #94A3B8;   /* slate-400 */
+  --sg-accent-sap:  #3B82F6;   /* blue-500 */
   --sg-accent-cyan: #06B6D4;
   --sg-accent-vio:  #8B5CF6;
-  --sg-accent-mint: #10B981;
-  --sg-accent-rose: #F43F5E;
-  --sg-radius-card: 18px;
+  --sg-accent-mint: #10B981;   /* emerald-500 — positive/growth */
+  --sg-accent-rose: #EF4444;   /* red-500 — negative */
+  --sg-accent-amber:#F59E0B;
+  --sg-radius-card: 14px;
   --sg-radius-chip: 999px;
-  --sg-shadow-soft: 0 8px 32px rgba(15, 15, 35, 0.40);
-  --sg-shadow-glow: 0 0 24px rgba(124, 58, 237, 0.28);
+  --sg-shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04);
+  --sg-shadow-card: 0 1px 3px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.06);
+  --sg-shadow-glow: 0 0 0 3px rgba(59, 130, 246, 0.10);
   --sg-trans-fast:  150ms cubic-bezier(0.4, 0, 0.2, 1);
   --sg-trans-med:   250ms cubic-bezier(0.4, 0, 0.2, 1);
 }}
 
 html, body, [data-testid="stApp"] {{
   background:
-    radial-gradient(900px 700px at 18% 10%, rgba(244, 114, 182, 0.55), transparent 60%),
-    radial-gradient(900px 700px at 85% 12%, rgba(251, 191, 36, 0.35), transparent 60%),
-    radial-gradient(1000px 800px at 50% 95%, rgba(167, 139, 250, 0.50), transparent 65%),
-    radial-gradient(700px 600px at 92% 90%, rgba(236, 72, 153, 0.45), transparent 60%),
-    linear-gradient(135deg, #4C1D80 0%, #7C2D8A 35%, #B83A8E 65%, #E85A8E 100%) !important;
+    radial-gradient(1200px 800px at 12% 0%,  rgba(219, 234, 254, 0.55), transparent 55%),
+    radial-gradient(1000px 700px at 88% 5%,  rgba(220, 252, 231, 0.45), transparent 55%),
+    radial-gradient(1100px 800px at 50% 100%, rgba(243, 232, 255, 0.40), transparent 60%),
+    linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
   color: var(--sg-text) !important;
   font-family: "Inter", "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif !important;
   letter-spacing: -0.01em;
@@ -92,87 +94,94 @@ html, body, [data-testid="stApp"] {{
 
 {chrome_hide}
 
-/* ── Sidebar ────────────────────────────────────────────────────────── */
+/* ── Sidebar — light, very subtle right border ───────────────────────── */
 [data-testid="stSidebar"] {{
-  background: rgba(10, 10, 31, 0.72) !important;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-right: 1px solid var(--sg-border);
 }}
 [data-testid="stSidebar"] * {{ color: var(--sg-text) !important; }}
 [data-testid="stSidebar"] .stRadio label,
 [data-testid="stSidebar"] .stSelectbox label {{ color: var(--sg-text-sub) !important; }}
 
-/* ── Buttons (default → glass pill) ─────────────────────────────────── */
+/* ── Buttons — light glass, thin border, no transform ────────────────── */
 .stButton > button,
 [data-testid="stFormSubmitButton"] > button {{
   background: var(--sg-glass) !important;
   color: var(--sg-text) !important;
   border: 1px solid var(--sg-border) !important;
-  border-radius: var(--sg-radius-chip) !important;
-  padding: 10px 22px !important;
+  border-radius: 10px !important;
+  padding: 9px 18px !important;
   font-weight: 500 !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  font-size: 0.88rem !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition: var(--sg-trans-fast);
   box-shadow: var(--sg-shadow-soft);
 }}
 .stButton > button:hover,
 [data-testid="stFormSubmitButton"] > button:hover {{
   background: var(--sg-glass-hover) !important;
-  transform: translateY(-2px);
-  box-shadow: var(--sg-shadow-glow);
+  border-color: var(--sg-border-strong) !important;
+  box-shadow: var(--sg-shadow-card);
 }}
 .stButton > button[kind="primary"],
 .stButton > button.sg-primary {{
-  background: linear-gradient(135deg, var(--sg-accent-sap), var(--sg-accent-vio)) !important;
-  border: none !important;
+  background: var(--sg-accent-sap) !important;
+  border: 1px solid var(--sg-accent-sap) !important;
   color: white !important;
 }}
+.stButton > button[kind="primary"]:hover {{
+  background: #2563EB !important;   /* blue-600 */
+  border-color: #2563EB !important;
+}}
 
-/* ── Text input ─────────────────────────────────────────────────────── */
+/* ── Text input — light, thin border ────────────────────────────────── */
 .stTextInput input, .stTextArea textarea, .stChatInput textarea {{
-  background: var(--sg-glass) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
   color: var(--sg-text) !important;
   border: 1px solid var(--sg-border) !important;
-  border-radius: 14px !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 14px 18px !important;
-  font-size: 0.95rem !important;
+  border-radius: 10px !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 11px 14px !important;
+  font-size: 0.92rem !important;
+  box-shadow: var(--sg-shadow-soft);
 }}
 .stTextInput input:focus, .stTextArea textarea:focus, .stChatInput textarea:focus {{
-  border-color: var(--sg-border-focus) !important;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18), var(--sg-shadow-glow) !important;
+  border-color: var(--sg-accent-sap) !important;
+  box-shadow: var(--sg-shadow-glow) !important;
   outline: none !important;
 }}
 
-/* ── Tabs (chip style) ───────────────────────────────────────────────── */
+/* ── Tabs (chip style) — light, thin ─────────────────────────────────── */
 [data-baseweb="tab-list"] {{
-  gap: 8px !important;
+  gap: 6px !important;
   background: transparent !important;
 }}
 [data-baseweb="tab"] {{
-  background: var(--sg-glass) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
   border: 1px solid var(--sg-border) !important;
   border-radius: var(--sg-radius-chip) !important;
-  padding: 8px 18px !important;
+  padding: 7px 16px !important;
   color: var(--sg-text-sub) !important;
-  font-size: 0.88rem !important;
+  font-size: 0.85rem !important;
   transition: var(--sg-trans-fast);
 }}
 [data-baseweb="tab"]:hover {{
-  background: var(--sg-glass-hover) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
   color: var(--sg-text) !important;
+  border-color: var(--sg-border-strong) !important;
 }}
 [data-baseweb="tab"][aria-selected="true"] {{
-  background: linear-gradient(135deg, var(--sg-accent-sap), var(--sg-accent-vio)) !important;
-  color: white !important;
-  border-color: transparent !important;
+  background: var(--sg-text) !important;       /* dark pill on light — AI Visibility 양식 */
+  color: #FFFFFF !important;
+  border-color: var(--sg-text) !important;
 }}
 [data-baseweb="tab-highlight"] {{ display: none !important; }}
 
-/* ── Expander as glass card ──────────────────────────────────────────── */
+/* ── Expander — light card ───────────────────────────────────────────── */
 .streamlit-expanderHeader {{
   background: var(--sg-glass) !important;
   border: 1px solid var(--sg-border) !important;
@@ -185,38 +194,39 @@ html, body, [data-testid="stApp"] {{
   color: var(--sg-text) !important;
 }}
 [data-testid="stMarkdownContainer"] code {{
-  background: var(--sg-glass) !important;
+  background: #F1F5F9 !important;
   border: 1px solid var(--sg-border) !important;
-  border-radius: 6px !important;
-  padding: 2px 6px !important;
-  color: var(--sg-accent-cyan) !important;
+  border-radius: 5px !important;
+  padding: 1px 6px !important;
+  color: var(--sg-accent-sap) !important;
+  font-size: 0.86em !important;
 }}
 
 /* ── Our custom classes ──────────────────────────────────────────────── */
 .sg-card {{
   background: var(--sg-glass);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--sg-border);
   border-radius: var(--sg-radius-card);
-  padding: 20px 24px;
+  padding: 18px 22px;
   box-shadow: var(--sg-shadow-soft);
-  transition: var(--sg-trans-med);
+  transition: var(--sg-trans-fast);
 }}
 .sg-card:hover {{
   background: var(--sg-glass-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--sg-shadow-glow), var(--sg-shadow-soft);
+  border-color: var(--sg-border-strong);
+  box-shadow: var(--sg-shadow-card);
 }}
 
 .sg-big-input {{
-  background: var(--sg-glass);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  background: var(--sg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--sg-border);
-  border-radius: 22px;
-  padding: 8px 12px 8px 20px;
-  box-shadow: var(--sg-shadow-soft);
+  border-radius: 14px;
+  padding: 8px 12px 8px 18px;
+  box-shadow: var(--sg-shadow-card);
   max-width: 760px;
   margin: 0 auto;
   display: flex;
@@ -224,8 +234,8 @@ html, body, [data-testid="stApp"] {{
   gap: 12px;
 }}
 .sg-big-input:focus-within {{
-  border-color: var(--sg-border-focus);
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18), var(--sg-shadow-glow);
+  border-color: var(--sg-accent-sap);
+  box-shadow: var(--sg-shadow-glow), var(--sg-shadow-card);
 }}
 
 .sg-hero-title {{
@@ -235,49 +245,47 @@ html, body, [data-testid="stApp"] {{
   letter-spacing: -0.02em;
   color: var(--sg-text);
   margin: 80px 0 28px 0;
-  background: linear-gradient(135deg, #F5F5FA, #C4B5FD);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }}
 
 .sg-project-grid {{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 18px;
+  gap: 16px;
   margin-top: 24px;
 }}
 .sg-project-card {{
-  background: var(--sg-glass);
+  background: var(--sg-surface);
   border: 1px solid var(--sg-border);
-  border-radius: 16px;
+  border-radius: var(--sg-radius-card);
   overflow: hidden;
   cursor: pointer;
-  transition: var(--sg-trans-med);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  transition: var(--sg-trans-fast);
+  box-shadow: var(--sg-shadow-soft);
 }}
 .sg-project-card:hover {{
-  border-color: var(--sg-border-focus);
-  box-shadow: var(--sg-shadow-glow);
-  transform: translateY(-3px);
+  border-color: var(--sg-border-strong);
+  box-shadow: var(--sg-shadow-card);
+  transform: translateY(-1px);
 }}
 .sg-project-thumb {{
-  height: 160px;
-  background: linear-gradient(135deg, #1E1B4B, #312E81);
+  height: 150px;
+  background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 60%, #FCE7F3 100%);
   position: relative;
   overflow: hidden;
 }}
 .sg-project-thumb::after {{
   content: "";
   position: absolute; inset: 0;
-  background: radial-gradient(circle at 30% 20%, rgba(124, 58, 237, 0.35), transparent 70%);
+  background: radial-gradient(circle at 28% 22%, rgba(255, 255, 255, 0.55), transparent 60%);
 }}
 .sg-project-meta {{
   padding: 14px 16px;
   display: flex; flex-direction: column; gap: 4px;
+  background: var(--sg-surface);
+  border-top: 1px solid var(--sg-border);
 }}
 .sg-project-title {{
-  font-weight: 600; color: var(--sg-text); font-size: 0.95rem;
+  font-weight: 600; color: var(--sg-text); font-size: 0.94rem;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }}
 .sg-project-date {{
@@ -285,38 +293,48 @@ html, body, [data-testid="stApp"] {{
 }}
 .sg-badge {{
   display: inline-block;
-  background: var(--sg-glass-active);
+  background: #F8FAFC;
   border: 1px solid var(--sg-border);
   border-radius: var(--sg-radius-chip);
-  padding: 3px 10px;
+  padding: 2px 9px;
   font-size: 0.72rem;
   color: var(--sg-text-sub);
   margin-right: 6px;
 }}
-.sg-badge.published {{ color: var(--sg-accent-mint); border-color: rgba(16, 185, 129, 0.40); }}
+.sg-badge.published {{
+  color: var(--sg-accent-mint);
+  border-color: rgba(16, 185, 129, 0.30);
+  background: rgba(16, 185, 129, 0.08);
+}}
 
 .sg-chip-row {{
-  display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0;
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0;
 }}
 .sg-chip {{
   background: var(--sg-glass);
   border: 1px solid var(--sg-border);
   border-radius: var(--sg-radius-chip);
-  padding: 8px 16px;
-  font-size: 0.85rem;
+  padding: 6px 14px;
+  font-size: 0.83rem;
   color: var(--sg-text-sub);
   cursor: pointer;
   transition: var(--sg-trans-fast);
 }}
-.sg-chip:hover {{ background: var(--sg-glass-hover); color: var(--sg-text); }}
+.sg-chip:hover {{
+  background: var(--sg-glass-hover);
+  color: var(--sg-text);
+  border-color: var(--sg-border-strong);
+}}
 .sg-chip.active {{
-  background: linear-gradient(135deg, var(--sg-accent-sap), var(--sg-accent-vio));
-  color: white; border-color: transparent;
+  background: var(--sg-text);
+  color: #FFFFFF;
+  border-color: var(--sg-text);
 }}
 
 .sg-manuscript {{
-  background: #FAFAF7;
-  color: #1A1A1A;
+  background: #FFFFFF;
+  color: #0F172A;
+  border: 1px solid var(--sg-border);
   border-radius: 14px;
   padding: 56px 64px;
   font-family: "Times New Roman", Georgia, serif;
@@ -324,7 +342,7 @@ html, body, [data-testid="stApp"] {{
   font-size: 16px;
   max-width: 720px;
   margin: 0 auto;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--sg-shadow-card);
   min-height: 600px;
 }}
 .sg-manuscript h1 {{
@@ -504,4 +522,4 @@ def manuscript_preview_html(*, title: str, authors: list[str] | str,
 
 # NOTE: 과거에 있던 `manuscript_preview()` wrapper는 제거 (2026-05-27).
 # 호출자 0건이었고, `_project_workspace.py`가 manuscript_preview_html()을
-# 직접 st.markdown(...)으로 출력하는 한 줄이라 wrapper의 가치가 없음. dead code 차단.
+# 직접 st.markdown(...)으로 출력하는 한 줄이라 wrapper의 가치�
