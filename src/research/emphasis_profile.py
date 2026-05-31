@@ -1,35 +1,43 @@
-"""Emphasis Profile — 논문의 궁극 강조점을 LLM 임프린트로 자동 적용.
+"""Paper Orientation — 논문이 추구하는 유형에 따라 톤앤매너 자동 조정.
 
 사용자 비전 (2026-05-31):
-    "논문마다 궁극적으로 표현하고자 하는 톤앤 매너가 있다. 노벨티 / 통일성 /
-     학술적 혁신성 / 공중보건 함의 / 통계적 견고성 — 그것을 살리는 구조에 따라
-     작성 톤이 미묘하게 바뀐다."
+    "5개는 강조점이 아니다. 논문이 보통 추구하고자 하는 유형들이 있다는 것이다.
+     노벨티를 추구하는지, 통일성을 추구하는지, 학술적 혁신성을 추구하는지,
+     공중보건 함의를 추구하는지, 통계적 견고성을 추구하는지 —
+     논문마다 궁극적으로 표현하고자 하는 톤앤매너가 있다.
+     그 추구 유형에 따라 작성 톤이 미묘하게 바뀐다."
 
-5가지 강조점 (multi-select):
-    NOVELTY              — 첫/최대 N/새로운 finding 강조
-    CONSISTENCY          — subgroup 일관성, robustness, replicability
-    INNOVATION           — mechanism, methodology, conceptual leap
-    PUBLIC_HEALTH        — 정책·임상·역학 함의
-    METHODOLOGICAL_RIGOR — 통계 견고성, design strength
+본 모듈은 그 추구 유형(orientation)을 카탈로그하고, 선택된 유형(다중 가능)을
+intent_sensor에 임프린트하여 이후 모든 LLM 호출의 톤·구성·뉘앙스를 조정한다.
+
+대표적 추구 유형 (확장 가능 — 사용자가 자유 양식으로도 추가 가능):
+    NOVELTY              — 첫/최대 규모/새로운 finding을 추구
+    CONSISTENCY          — subgroup 일관성·robustness·재현성을 추구
+    INNOVATION           — 기전·방법론·개념적 혁신을 추구
+    PUBLIC_HEALTH        — 정책·임상·교육 함의를 추구
+    METHODOLOGICAL_RIGOR — 통계·design의 견고성을 추구
+
+이것들은 폐쇄적 enum이 아니다. 논문 작성자가 "여성 청소년의 사회문화적 압력"
+같은 자유 양식 추구 유형을 추가할 수 있다 (custom_notes).
 
 API:
-    EmphasisProfile(novelty=True, consistency=True, ...).apply_to_intent(owner_email)
-    list_emphasis_options() -> [(slug, label, hint)]
+    PaperOrientation(novelty=True, ...).apply_to_intent(owner_email)
+    list_orientation_types() -> [(slug, label, hint)]
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, field, asdict
-from typing import List, Optional
+from typing import List
 
 
-# ── 5가지 강조점 정의 ─────────────────────────────────────────────────────
+# ── 대표적 추구 유형 카탈로그 (예시 — 확장 가능) ──────────────────────────
 
-EMPHASIS_DEFS = [
+ORIENTATION_TYPES = [
     {
         "slug": "novelty",
-        "label": "Novelty (새로움/최초/큰 규모)",
-        "hint": "이 논문이 '처음 보여주는' 또는 '가장 큰 규모로 입증한' finding을 부각",
-        "emphasis_labels": [
+        "label": "Novelty (새로움/최초/큰 규모를 추구)",
+        "hint": "이 논문이 '처음 보여주는' 또는 '가장 큰 규모로 입증한' finding을 부각하는 유형",
+        "imprint_labels": [
             "first_adolescent_study", "largest_N", "novel_finding",
             "first_to_show_dose_response",
         ],
@@ -39,30 +47,30 @@ EMPHASIS_DEFS = [
             "Introduction": "기존 문헌의 빈 자리(gap) 명확히",
             "Discussion": "기존 연구와의 차이점 강조 + future direction",
         },
-        "avoid": ["incremental contribution", "confirmatory framing"],
+        "avoid": ["incremental contribution framing", "confirmatory tone"],
     },
     {
         "slug": "consistency",
-        "label": "Consistency (subgroup 일관성·견고성)",
-        "hint": "여러 subgroup·sensitivity 모두에서 같은 방향 결과 → 결과 신뢰성",
-        "emphasis_labels": [
+        "label": "Consistency (subgroup 일관성·견고성을 추구)",
+        "hint": "여러 subgroup·sensitivity 모두에서 같은 방향 결과 → 결과 신뢰성 강조 유형",
+        "imprint_labels": [
             "consistent_across_subgroups", "robust_to_sensitivity",
             "no_effect_modification", "replicated_findings",
         ],
         "voice_tone": ["measured", "cautious", "evidential"],
         "section_weight": {
-            "Results": "Overall + subgroup × 7 stratifier 같은 방향임을 forest plot 양식",
-            "Discussion": "robustness emphasis — 다른 연구와도 일치",
+            "Results": "Overall + subgroup × stratifier 같은 방향임을 forest plot으로",
+            "Discussion": "robustness 강조 — 다른 연구와도 일치",
             "Strengths": "comprehensive covariate adjustment + multiple sensitivity",
         },
         "avoid": ["overemphasis on one significant subgroup",
-                   "ignoring null subgroup"],
+                   "ignoring null subgroups"],
     },
     {
         "slug": "innovation",
-        "label": "Innovation (기전·방법론·개념 혁신)",
-        "hint": "새 mechanism 가설 또는 새 방법론·개념 양식 — 의학사적 진전",
-        "emphasis_labels": [
+        "label": "Innovation (기전·방법론·개념적 혁신을 추구)",
+        "hint": "새로운 mechanism 가설 또는 새 방법론·개념을 도입하여 의학적 진전을 추구하는 유형",
+        "imprint_labels": [
             "novel_mechanism", "new_methodology", "conceptual_leap",
             "interdisciplinary_bridge",
         ],
@@ -76,34 +84,34 @@ EMPHASIS_DEFS = [
     },
     {
         "slug": "public_health",
-        "label": "Public Health Implication (정책·임상 함의)",
-        "hint": "결과가 임상·정책·교육 양식에 직접 작용 — relevance",
-        "emphasis_labels": [
+        "label": "Public Health Implication (정책·임상 함의를 추구)",
+        "hint": "결과가 임상·정책·교육 현장에 직접 작용하는 함의(relevance)를 추구하는 유형",
+        "imprint_labels": [
             "policy_implication", "clinical_actionable",
             "school_intervention", "regulatory_signal",
         ],
         "voice_tone": ["practical", "action-oriented", "advocacy"],
         "section_weight": {
-            "Abstract": "Conclusion에 'should consider' 양식 정책 hook",
-            "Discussion": "임상·교육·정책 양식 actionable item 명시",
+            "Abstract": "Conclusion에 'should consider' 형태로 정책 hook",
+            "Discussion": "임상·교육·정책 actionable item 명시",
             "Conclusion": "imperative/recommendation 문장",
         },
-        "avoid": ["passive 'warrants further research' 양식만",
+        "avoid": ["passive 'warrants further research' framing만",
                    "academic-only framing"],
     },
     {
         "slug": "methodological_rigor",
-        "label": "Methodological Rigor (통계·design 견고성)",
-        "hint": "복합표본설계, 12 covariate, dose-response, sensitivity 양식 정확성",
-        "emphasis_labels": [
-            "complex_survey_design", "11_covariate_adjustment",
+        "label": "Methodological Rigor (통계·design 견고성을 추구)",
+        "hint": "복합표본설계·다수 covariate·dose-response·sensitivity의 정확성을 추구하는 유형",
+        "imprint_labels": [
+            "complex_survey_design", "multi_covariate_adjustment",
             "dose_response_linear_trend", "multiple_sensitivity",
         ],
         "voice_tone": ["precise", "quantitative", "methodological"],
         "section_weight": {
             "Methods": "각 분석 단계의 rationale 명시 (왜 그 covariate / 왜 그 cutoff)",
             "Results": "categorical + linear trend + sensitivity 모두 보고",
-            "Strengths": "methodological detail 양식 — 비교 연구 대비 우위",
+            "Strengths": "methodological detail — 비교 연구 대비 우위",
         },
         "avoid": ["overstatement of effect size",
                    "incomplete reporting of sensitivity"],
@@ -112,18 +120,19 @@ EMPHASIS_DEFS = [
 
 
 @dataclass
-class EmphasisProfile:
+class PaperOrientation:
+    """이 논문이 추구하는 유형 (다중 선택 가능)."""
     novelty: bool = False
     consistency: bool = False
     innovation: bool = False
     public_health: bool = False
     methodological_rigor: bool = False
-    # 사용자가 직접 추가한 자유 양식 강조 양식 (예: "여성 청소년에서의 사회문화적 압력")
+    # 사용자가 자유롭게 추가하는 추구 유형 (위 5개에 없는 것)
     custom_notes: List[str] = field(default_factory=list)
 
     def selected(self) -> List[dict]:
         out = []
-        for d in EMPHASIS_DEFS:
+        for d in ORIENTATION_TYPES:
             if getattr(self, d["slug"], False):
                 out.append(d)
         return out
@@ -135,8 +144,7 @@ class EmphasisProfile:
         sel = self.selected()
         if not sel and not self.custom_notes:
             return ""
-        lines = ["# 🎯 EMPHASIS PROFILE — 논문의 궁극 강조점",
-                 ""]
+        lines = ["# 🎯 PAPER ORIENTATION — 이 논문이 추구하는 유형", ""]
         for d in sel:
             lines.append(f"## {d['label']}")
             lines.append(d["hint"])
@@ -150,31 +158,32 @@ class EmphasisProfile:
                 lines.append(f"- {a}")
             lines.append("")
         if self.custom_notes:
-            lines.append("## 사용자 자유 강조 양식")
+            lines.append("## 사용자 자유 추구 유형")
             for c in self.custom_notes:
                 lines.append(f"- {c}")
-        lines.append("")
-        lines.append("→ 이 강조점을 본문 의미·구성·강조점·뉘앙스 단위로 살려라. "
+            lines.append("")
+        lines.append("→ 이 추구 유형을 본문 의미·구성·뉘앙스 단위로 살려라. "
                      "단순 키워드 나열 X. Abstract 첫 문장·Discussion 첫 단락·"
                      "Conclusion의 imperative에서 가장 두드러져야 한다.")
         return "\n".join(lines)
 
     def apply_to_intent(self, owner_email: str = "") -> bool:
-        """intent_sensor의 현재 의도에 emphasis 양식 imprint → 이후 모든 LLM 호출 자동 반영."""
+        """intent_sensor의 현재 의도에 orientation imprint
+        → 이후 모든 LLM 호출이 자동으로 이 추구 유형을 반영한다."""
         try:
             from src.agent.intent_sensor import (
                 get_current, set_current, IntentSignal, merge_signals,
             )
             cur = get_current() or IntentSignal()
-            all_labels = []
-            all_tones = []
+            all_labels: List[str] = []
+            all_tones: List[str] = []
             for d in self.selected():
-                all_labels.extend(d["emphasis_labels"])
+                all_labels.extend(d["imprint_labels"])
                 all_tones.extend(d["voice_tone"])
             for note in self.custom_notes:
-                all_labels.append(f"custom:{note[:60]}")
+                all_labels.append(f"custom_orientation:{note[:80]}")
             addition = IntentSignal(
-                explicit_request=f"Emphasis: {[d['slug'] for d in self.selected()]}",
+                explicit_request=f"Paper orientation: {[d['slug'] for d in self.selected()]}",
                 implicit_emphasis=all_labels,
                 voice_tone=all_tones,
             )
@@ -185,10 +194,19 @@ class EmphasisProfile:
             return False
 
 
-def list_emphasis_options() -> List[dict]:
-    """UI multi-select에 쓸 양식."""
+def list_orientation_types() -> List[dict]:
+    """UI multi-select용."""
     return [{"slug": d["slug"], "label": d["label"], "hint": d["hint"]}
-            for d in EMPHASIS_DEFS]
+            for d in ORIENTATION_TYPES]
 
 
-__all__ = ["EmphasisProfile", "EMPHASIS_DEFS", "list_emphasis_options"]
+# ── 후방 호환 alias (이전 명명) ──────────────────────────────────────────
+EmphasisProfile = PaperOrientation
+EMPHASIS_DEFS = ORIENTATION_TYPES
+list_emphasis_options = list_orientation_types
+
+
+__all__ = [
+    "PaperOrientation", "ORIENTATION_TYPES", "list_orientation_types",
+    "EmphasisProfile", "EMPHASIS_DEFS", "list_emphasis_options",
+]
