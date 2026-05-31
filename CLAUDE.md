@@ -2,6 +2,25 @@
 
 > 매 세션 시작 시 자동 로드. 이 규칙들은 모든 작업에 예외 없이 적용된다.
 
+## ★ 핵심 강제 (모든 답변 전 — 외부 LLM 분석 2026-06-01 적용)
+
+> **거짓 약속 금지**: 다음 4 파일이 매 user prompt 직전 hook(`.claude/hooks/preprompt_memory_inject.ps1`)으로 자동 prepend된다. "메모리에 있다"고 말하지 말고 *실제로 읽고 답해라*.
+
+1. **CURRENT_STATE.json** — authoritative runtime memory. 부재 단정 전 `key_assets_by_size` 확인 의무.
+2. **ARCHITECTURE_SHORT.md** — 새 모듈 만들기 전 grep 의무. 중복이면 즉시 통합.
+3. **FAILURE_PATTERNS.md** — 10가지 반복 실수 패턴 + 예방책. P-1(부재 단정) P-2(텍스트 비전) P-3(거짓 완료) 매번 자기검열.
+4. **MEMORY.md top entries** + **data/ inventory** + **ARCHITECTURE.md sections**.
+
+답변 시작 전 자기검열:
+- "X가 없다"고 말하려는가? → `CURRENT_STATE.json:key_assets_by_size` 확인했는가?
+- "완료" "PASS" "100% 일치"라 말하려는가? → 실 측정 결과 표 있는가?
+- 새 함수/모듈 만들었는가? → `python scripts/audit_wiring.py` 돌렸는가?
+- 사용자 의도와 정확히 일치하는가? → 텍스트 비전(말만)이 아니라 실코드 적용 + 반영 검증인가?
+
+위 4가지 중 하나라도 No이면 답변 전에 보강. 답변 끝에 변명/사과 X.
+
+---
+
 ## 세션 시작 루틴 (매번 실행)
 
 ### 0. 환경 무결성 체크 (★최우선 — 코드보다 환경부터)

@@ -266,7 +266,7 @@ def build_table1_html(
 
     # 빌드
     parts = [_TABLE_CSS, f'<table class="pub-table">']
-    parts.append(f'<caption>{title} (N = {n_total:,})</caption>')
+    parts.append(f'<caption>{title}</caption>')
 
     # Header — 2 row (top: super-header "Zero-calorie beverage consumption frequency", 2nd: 4 groups)
     parts.append('<thead>')
@@ -430,7 +430,7 @@ def build_table2_html(
              f"depressive symptoms among Korean adolescents, KYRBS {survey_year}")
 
     parts = [_TABLE_CSS, '<table class="pub-table">']
-    parts.append(f'<caption>{title} (N = {n_total:,})</caption>')
+    parts.append(f'<caption>{title}</caption>')
     parts.append('<thead>')
     parts.append('<tr><th rowspan="2">Zero-calorie beverage consumption</th>'
                   '<th colspan="2" style="text-align:center;">Model 1</th>'
@@ -500,7 +500,7 @@ def build_table3_html(
              f"depressive symptoms among Korean adolescents, KYRBS {survey_year}")
 
     parts = [_TABLE_CSS, '<table class="pub-table">']
-    parts.append(f'<caption>{title} (N = {n_total:,})</caption>')
+    parts.append(f'<caption>{title}</caption>')
     parts.append('<thead>')
     parts.append('<tr><th rowspan="2">Zero-calorie beverage consumption</th>'
                   '<th colspan="2" style="text-align:center;">Male</th>'
@@ -570,7 +570,7 @@ def build_supp_table1_html(
              f"KYRBS {survey_year}")
 
     parts = [_TABLE_CSS, '<table class="pub-table">']
-    parts.append(f'<caption>{title} (N = {n_total:,})</caption>')
+    parts.append(f'<caption>{title}</caption>')
     parts.append('<thead>')
     parts.append('<tr><th rowspan="2">Zero-calorie beverage consumption</th>'
                   '<th colspan="2" style="text-align:center;">High perceived stress</th>'

@@ -200,61 +200,69 @@ def _login_gate():
     .stDeployButton{display:none!important;}
     button[kind='header']{display:none!important;}
     footer{visibility:hidden!important;display:none!important;}
+    /* ★ 2026-06-01: 보라/핑크 다크 그라데이션 제거 — AI Visibility 라이트 톤으로 통일 */
     html, body, [data-testid='stApp'],
     [data-testid='stAppViewContainer'],
     [data-testid='stAppViewContainer'] > section,
     section.main, .main, .stMainBlockContainer, .block-container {
         background:
-            radial-gradient(900px 700px at 18% 10%, rgba(244,114,182,0.45), transparent 60%),
-            radial-gradient(900px 700px at 85% 12%, rgba(251,191,36,0.30), transparent 60%),
-            radial-gradient(1000px 800px at 50% 95%, rgba(167,139,250,0.45), transparent 65%),
-            linear-gradient(135deg, #4C1D80 0%, #7C2D8A 35%, #B83A8E 65%, #E85A8E 100%) !important;
-        color:#F5F5FA !important;
+            radial-gradient(1200px 800px at 12% 0%,  rgba(219,234,254,0.55), transparent 55%),
+            radial-gradient(1000px 700px at 88% 5%,  rgba(220,252,231,0.45), transparent 55%),
+            radial-gradient(1100px 800px at 50% 100%, rgba(243,232,255,0.40), transparent 60%),
+            linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+        color:#0F172A !important;
         font-family:"Inter","Pretendard","Apple SD Gothic Neo",system-ui,sans-serif !important;
         background-attachment:fixed !important;
     }
-    /* 로그인 전엔 사이드바 / 멀티페이지 nav 숨김 — 외부 사람이 깔끔한 첫 화면 보게 */
     [data-testid='stSidebar'] {display:none !important;}
     [data-testid='stSidebarNav'] {display:none !important;}
     [data-testid='collapsedControl'] {display:none !important;}
     .sg-login-card {
         max-width:440px; margin:80px auto; padding:2.8rem 2.4rem;
-        background:rgba(255,255,255,0.06);
-        border:1px solid rgba(255,255,255,0.12);
-        border-radius:18px;
-        box-shadow:0 8px 32px rgba(15,15,35,0.40), 0 0 24px rgba(124,58,237,0.20);
+        background:rgba(255,255,255,0.85);
+        border:1px solid rgba(15,23,42,0.06);
+        border-radius:16px;
+        box-shadow:0 1px 3px rgba(15,23,42,0.05), 0 8px 24px rgba(15,23,42,0.06);
         text-align:center;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
     }
     .sg-login-title {
-        background:linear-gradient(135deg,#3B82F6,#8B5CF6,#EC4899);
-        -webkit-background-clip:text;
-        -webkit-text-fill-color:transparent;
-        background-clip:text;
+        color:#0F172A;
         font-weight:700; font-size:1.6rem; margin:0;
+        letter-spacing:-0.02em;
     }
     .stTextInput input, .stForm input {
-        background:rgba(255,255,255,0.08) !important;
-        border:1px solid rgba(255,255,255,0.16) !important;
-        color:#F5F5FA !important;
+        background:rgba(255,255,255,0.95) !important;
+        border:1px solid rgba(15,23,42,0.10) !important;
+        color:#0F172A !important;
         border-radius:10px !important;
+    }
+    .stTextInput input:focus, .stForm input:focus {
+        border-color:#3B82F6 !important;
+        box-shadow:0 0 0 3px rgba(59,130,246,0.10) !important;
     }
     .stForm [data-testid='stFormSubmitButton'] button {
-        background:linear-gradient(135deg,#3B82F6,#8B5CF6) !important;
+        background:#0F172A !important;
         border:none !important;
-        color:#fff !important;
+        color:#FFFFFF !important;
         font-weight:600 !important;
         border-radius:10px !important;
+        padding:11px 18px !important;
     }
+    .stForm [data-testid='stFormSubmitButton'] button:hover {
+        background:#1E293B !important;
+    }
+    /* 체크박스 라벨도 라이트 톤 */
+    .stCheckbox label, .stCheckbox label * {color:#475569 !important;}
     </style>
     <div class="sg-login-card">
-        <div style="font-size:2.8rem;margin-bottom:0.5rem;">🔬</div>
+        <div style="font-size:2.6rem;margin-bottom:0.4rem;color:#3B82F6;">🔬</div>
         <h2 class="sg-login-title">Medical-Agent</h2>
-        <p style="color:#A3A3B8;margin-top:.5rem;font-size:.86rem;">
+        <p style="color:#475569;margin-top:.5rem;font-size:.86rem;">
             의학 논문 자동 생산 파이프라인 · KYRBS / KNHANES 기반
         </p>
-        <p style="color:#6B6B7E;margin-top:.4rem;font-size:.74rem;">
+        <p style="color:#94A3B8;margin-top:.4rem;font-size:.74rem;">
             가입·초대된 사용자만 접속 가능 · 자체 LLM 키로 작동
         </p>
     </div>
