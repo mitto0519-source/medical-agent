@@ -860,6 +860,14 @@ def _strip_llm_meta(text: str) -> str:
         if not matched:
             break
 
+    # ★ FIX 8 (Results 첫 줄 '### Characteristics...' 누출 차단):
+    #   본문 전체의 줄 시작 markdown 헤딩 마커 #~###### 를 평문 단락 제목으로 평탄화.
+    #   docx 변환 시 '#'가 본문에 그대로 들어가 깨지는 것 차단. 헤딩 텍스트 자체는 보존.
+    cleaned = _re_meta.sub(r"^#{1,6}[ \t]+", "", cleaned, flags=_re_meta.MULTILINE)
+    #   bold sub-header (**Characteristics**:) → 평문화
+    cleaned = _re_meta.sub(r"^\*\*([^*\n]{2,80})\*\*[ \t]*:?[ \t]*$",
+                            r"\1", cleaned, flags=_re_meta.MULTILINE)
+
     # ★ FIX 4b: 2차 안전망 — 키워드를 "단락 시작 prefix"로만 좁혀 본문 보호.
     #   원본은 "let's" 같은 일반 단어가 본문 중간에 있어도 단락 통째 삭제 →
     #   첫 30자 이내에 명시적 메타 prefix가 있을 때만 삭제. 1회만.
