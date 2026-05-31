@@ -440,7 +440,11 @@ Keep the author's academic writing style. Output ONLY the improved section text 
 
         # ── raw_examples from yoosun_cho.json — user_prompt에 직접 박아 few-shot ──
         # system_prompt에만 박으면 LLM이 "참고만 하고 자기 양식으로 fallback"하는 사고 차단.
+        # ★ FIX 9 (토큰 절약): 한 번 빌드해 5섹션 재사용. 매 호출마다 빌드/전송 안 함.
         exemplars_block = self._build_exemplars_block()
+        # 섹션별 max_tokens 차등 — Abstract/Intro/Results 낮춤, Methods/Discussion 만 길게
+        MT = {"abstract": 1800, "introduction": 3500, "methods": 5500,
+              "results": 4000, "discussion": 5500}
 
         # ── Step 1: Introduction (참고문헌 컨텍스트 활용, 독립 생성) ─────────
         _log.info("[PaperWriter] Introduction 작성 중...")
@@ -455,7 +459,8 @@ POPULATION: {population}
 STUDY DESIGN: {design}{ref_block}{feedback_block}
 
 Structure: broad public health context → specific problem → knowledge gap → study aim.
-Keep strictly to this topic. Do NOT refer to unrelated studies. Write 4–5 paragraphs.""")
+Keep strictly to this topic. Do NOT refer to unrelated studies. Write 4–5 paragraphs.""",
+            max_tokens=MT["introduction"])
 
         # ── Step 2: Methods ─────────────────────
         _log.info("[PaperWriter] Methods 작성 중...")
@@ -474,7 +479,8 @@ COVARIATES: {covariates}
 {methods_ctx}
 
 Write subsections: Study Design and Population / Exposure / Outcome / Covariates / Statistical Analysis.
-Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""")
+Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""",
+            max_tokens=MT["methods"])
 
         # ── Step 3: Results ──────────
         _log.info("[PaperWriter] Results 작성 중...")
@@ -497,7 +503,8 @@ KEY FINDINGS (use these EXACT numbers — do NOT invent or round):
 Additional subgroup findings: {results.get("subgroup", "Not provided")}
 Sensitivity analyses: {results.get("sensitivity", "Not provided")}
 
-Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""")
+Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""",
+            max_tokens=MT["results"])
 
         # ── Step 4: Discussion ──
         _log.info("[PaperWriter] Discussion 작성 중...")
@@ -520,7 +527,8 @@ LIMITATIONS: cross-sectional design (cannot establish causality), self-reported 
 {ref_block}{feedback_block}
 
 Structure: 1) Summary of main findings  2) Comparison with existing literature
-3) Proposed mechanisms  4) Strengths and limitations  5) Public health conclusion""")
+3) Proposed mechanisms  4) Strengths and limitations  5) Public health conclusion""",
+            max_tokens=MT["discussion"])
 
         # ── Step 5: Abstract ─────────
         _log.info("[PaperWriter] Abstract 작성 중 (전 섹션 통합)...")
@@ -540,7 +548,8 @@ RESULTS SUMMARY:
 CONCLUSION FROM DISCUSSION:
 {sections["discussion"][-400:]}
 
-Base the abstract STRICTLY on the sections above. Do NOT invent numbers.""")
+Base the abstract STRICTLY on the sections above. Do NOT invent numbers.""",
+            max_tokens=MT["abstract"])
 
         # 섹션 dict를 인스턴스에 보관 (JournalDocxExporter가 접근할 수 있도록)
         self.last_sections = {
