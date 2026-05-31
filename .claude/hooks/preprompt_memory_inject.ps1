@@ -70,4 +70,28 @@ if (Test-Path $memIdx) {
     Write-Output ""
 }
 
-Write-Output "## END pre-prompt"
+# CURRENT_STATE.json — authoritative runtime snapshot
+$state = Join-Path $root "CURRENT_STATE.json"
+if (Test-Path $state) {
+    Write-Output "## CURRENT_STATE.json (authoritative runtime memory)"
+    Get-Content $state -Encoding UTF8 -Raw
+    Write-Output ""
+}
+
+# ARCHITECTURE_SHORT.md — module map summary
+$archShort = Join-Path $root "ARCHITECTURE_SHORT.md"
+if (Test-Path $archShort) {
+    Write-Output "## ARCHITECTURE_SHORT.md"
+    Get-Content $archShort -Encoding UTF8 -Raw
+    Write-Output ""
+}
+
+# FAILURE_PATTERNS.md — common failures and prevention
+$failPat = Join-Path $root "FAILURE_PATTERNS.md"
+if (Test-Path $failPat) {
+    Write-Output "## FAILURE_PATTERNS.md (prevent repeat)"
+    Get-Content $failPat -Encoding UTF8 -Raw
+    Write-Output ""
+}
+
+Write-Output "## END pre-prompt — Read above before answering. Never claim 'missing' without grep."
