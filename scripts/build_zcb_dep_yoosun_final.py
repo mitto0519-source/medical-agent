@@ -186,8 +186,11 @@ print(f"[cache] sections saved: {cache_p}")
 # type 키 ("baseline"/"regression"/"cross"/"raw") 기반이라 우리 HTML dict와 양식 다름.
 # 따라서 docx에는 sections + figures + references만 넣고, 표는 사용자가 HTML/별도 양식.
 we = WordExporter()
+# Timestamp 양식 이름 — 직전 파일이 워드에서 열려 있어도 덮어쓰기 충돌 회피
+from datetime import datetime as _dt
+_ts = _dt.now().strftime("%H%M")
 out_docx = we.export(
-    topic={"title": topic, "authors": ["Yoosun Cho"]},
+    topic={"title": topic + f" v{_ts}", "authors": ["Yoosun Cho"]},
     sections=sections,
     references=references,
     back_matter={},
