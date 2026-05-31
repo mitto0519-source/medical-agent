@@ -170,7 +170,8 @@ df_x["smartphone_min"] = np.where(
 # ── Complete-case flag ──
 needvars = ["depression", "zero_freq", "zero_cat", "sex", "age_cat", "bmi_cat",
             "school_n", "academic3", "ses3", "ever_smoker", "ever_drinker",
-            "swd_freq3", "caff_freq3", "smartphone_min", "pa_cat", "br_skip"]
+            "swd_freq3", "caff_freq3", "smartphone_min", "pa_cat", "br_skip",
+            "W"]
 cc = df_x.copy()
 for v in needvars:
     cc = cc[cc[v].notna()]
@@ -204,19 +205,38 @@ cov_m2 = cov_m1 + ["bmi_cat_1", "bmi_cat_3", "ever_smoker", "ever_drinker",
 cov_m1 = [c for c in cov_m1 if c in cc.columns]
 cov_m2 = [c for c in cov_m2 if c in cc.columns]
 
-# ── Fit helper ──
+# ── Fit helper (survey-weighted Binomial GLM → Stata svy:logistic 등가) ──
+# KYRBS .sav의 `W` 컬럼은 sample weight (mean ≈ 48.8). 미적용 시 작은 subgroup에서
+# 추정치가 unweighted로 편향 → 이미지(svy)와 ±0.02 이상 차이가 남.
+# GLM Binomial + freq_weights = Stata pweight 등가 (Korn-Graubard SE는 미지원이나
+# cluster-robust SE로 svy linearized SE의 근사를 얻음).
 def _fit(y, X_cols, data):
     sub = data[[y] + X_cols].dropna().copy()
+    if "W" in data.columns:
+        w = data.loc[sub.index, "W"].astype(float)
+        # weight 결측은 1.0으로 (분석 모집단 유지)
+        w = w.fillna(1.0).clip(lower=1e-6)
+    else:
+        w = None
     X = sm.add_constant(sub[X_cols].astype(float))
     yv = sub[y].astype(float)
     try:
+        if w is not None:
+            m = sm.GLM(yv, X, family=sm.families.Binomial(),
+                       freq_weights=w.values).fit(disp=0, maxiter=300)
+            if "cluster" in data.columns:
+                cl = data.loc[sub.index, "cluster"].astype(float)
+                m2 = sm.GLM(yv, X, family=sm.families.Binomial(),
+                             freq_weights=w.values).fit(
+                                disp=0, maxiter=300,
+                                cov_type="cluster", cov_kwds={"groups": cl.values})
+                return m2
+            return m
         if "cluster" in data.columns:
             cl = data.loc[sub.index, "cluster"].astype(float)
-            m = sm.Logit(yv, X).fit(disp=0, maxiter=300,
-                                      cov_type="cluster", cov_kwds={"groups": cl.values})
-        else:
-            m = sm.Logit(yv, X).fit(disp=0, maxiter=300)
-        return m
+            return sm.Logit(yv, X).fit(disp=0, maxiter=300,
+                cov_type="cluster", cov_kwds={"groups": cl.values})
+        return sm.Logit(yv, X).fit(disp=0, maxiter=300)
     except Exception as e:
         print(f"  fit fail ({y}): {e}")
         return None
