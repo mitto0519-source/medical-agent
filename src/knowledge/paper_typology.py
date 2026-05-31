@@ -63,27 +63,33 @@ _MANIFEST = _OA_DIR / "manifest.sqlite"
 _CATALOG_PATH = Path("data/medical_knowledge_seed/typology_catalog.json")
 
 
-# ── 섹션 헤딩 검출 (case-insensitive, 라인 단위) ────────────────────────
+# ── 섹션 헤딩 검출 — PMC OA 본문은 인라인 (`1. Introduction`) 양식 ──────
+# 본문이 한 줄로 길게 이어져 있어 ^/$ 매칭 안 됨. 단어 경계 + 점 + 공백 양식.
 
 _SECTION_PATTERNS = {
-    "introduction": re.compile(r"^\s*(?:\d+\.?\s*)?(?:Introduction|Background)\s*$",
-                                re.IGNORECASE | re.MULTILINE),
-    "methods":      re.compile(r"^\s*(?:\d+\.?\s*)?(?:Methods?|Materials and Methods|"
-                                r"Patients and Methods|Study Design)\s*$",
-                                re.IGNORECASE | re.MULTILINE),
-    "results":      re.compile(r"^\s*(?:\d+\.?\s*)?(?:Results?|Findings)\s*$",
-                                re.IGNORECASE | re.MULTILINE),
-    "discussion":   re.compile(r"^\s*(?:\d+\.?\s*)?(?:Discussion|General Discussion)\s*$",
-                                re.IGNORECASE | re.MULTILINE),
-    "conclusion":   re.compile(r"^\s*(?:\d+\.?\s*)?(?:Conclusions?)\s*$",
-                                re.IGNORECASE | re.MULTILINE),
+    "introduction": re.compile(
+        r"(?:^|\s)(?:\d+\.\s+)?(?:Introduction|Background)(?=\s+[A-Z])",
+        re.IGNORECASE),
+    "methods": re.compile(
+        r"(?:^|\s)(?:\d+\.\s+)?(?:Methods|Materials\s+and\s+Methods|"
+        r"Patients\s+and\s+Methods|Study\s+Design\s+and\s+Population)(?=\s+[A-Z])",
+        re.IGNORECASE),
+    "results": re.compile(
+        r"(?:^|\s)(?:\d+\.\s+)?(?:Results|Findings)(?=\s+[A-Z])",
+        re.IGNORECASE),
+    "discussion": re.compile(
+        r"(?:^|\s)(?:\d+\.\s+)?(?:Discussion|General\s+Discussion)(?=\s+[A-Z])",
+        re.IGNORECASE),
+    "conclusion": re.compile(
+        r"(?:^|\s)(?:\d+\.\s+)?(?:Conclusions?)(?=\s+[A-Z])",
+        re.IGNORECASE),
 }
 
 _NEXT_SECTION_HEADS = re.compile(
-    r"^\s*(?:\d+\.?\s*)?(?:Methods?|Materials and Methods|Results?|"
+    r"(?:^|\s)(?:\d+\.\s+)?(?:Methods|Materials\s+and\s+Methods|Results|"
     r"Findings|Discussion|Conclusions?|References?|Acknowledg|Funding|"
-    r"Author Contributions|Competing Interests|Supplementary)\s*$",
-    re.IGNORECASE | re.MULTILINE,
+    r"Author\s+Contributions|Competing\s+Interests|Supplementary)(?=\s+[A-Z])",
+    re.IGNORECASE,
 )
 
 
