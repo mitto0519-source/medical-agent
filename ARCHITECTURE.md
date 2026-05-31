@@ -201,6 +201,23 @@
 > citation orphan / physician queue / consistency fail / figure_validation fail / budget downgrade
 > 모두 `events.db`에 기록 → `python scripts/replay_task.py --task=...`로 사후 재구성.
 
+### 14. Harness 통합 진입점 — 2026-06-01 신규
+
+> 외부 harness 엔지니어링 사례(Anthropic claude-agent-sdk 패턴, OmX 공개 PHILOSOPHY) 검토 결과
+> "컴포넌트는 다 있는데 사용처마다 import + wiring 중복"이 진짜 부족분으로 확인 →
+> 단일 facade `AgentHarness`로 모든 하네스 컴포넌트를 묶음. 신규 구현 0건, 기존 호출 통합만.
+
+| 기능 | 정규 모듈 | 상태 | 비고 |
+|------|----------|------|------|
+| **Single-entry facade** | `src/agent/harness.py` → `AgentHarness`, `get_harness()` | ✅ active | events/tasks/budget/memory/persona/safety/llm/tools/pool/planner/knowledge/writing 단일 객체 노출. `run_step`이 events.start/end + safety.check_all + memory.write 자동 wiring |
+| **Team review (병렬 다중 perspective)** | `src/agent/agent_pool.py:AgentPool.team_review()` | ✅ active | 동일 content를 N reviewer (statistical_rigor / clinical_relevance / writing_clarity / novelty_check / policy_translation) 병렬 평가 → 합의/이견 정리. OmX `$team` 양식 등가 |
+
+> **신규 작성 시 권장 진입점**: `from src.agent.harness import get_harness; h = get_harness(owner_email, task)` —
+> 그러면 events/budget/safety/memory/persona/intent_sensor가 자동 wire-up. 직접 `src.llm.get_llm_client`
+> 호출은 정당하지만 facade 우회 시 events/memory wiring을 수동으로 챙겨야 함.
+
+---
+
 ### 13. Orchestrator + Multi-agent + Planner DAG — 2026-05-28 신규
 
 > "tool-rich workflow" → "autonomous agent" 격상. 두 Orchestrator A2A 통신 + 7 roles + DAG.

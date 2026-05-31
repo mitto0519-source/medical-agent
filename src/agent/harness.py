@@ -85,7 +85,8 @@ class AgentHarness:
         self.memory = _mr
         self.tools = _tl
         # active LLM client (3중 폴백 + persona 자동 주입)
-        self.llm = _llm(task=task, owner_email=owner_email)
+        # owner_email은 intent_sensor.set_current를 통해 주입 — get_llm_client는 안 받음
+        self.llm = _llm(task=task)
         # persona instance (style identity)
         try:
             self.persona = _ps.get_persona()
