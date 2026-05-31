@@ -180,12 +180,11 @@ for fn, cap in [
 
 print(f"[4/4] WordExporter: sections={list(sections.keys())} refs={len(references)} figs={len(figs)} tables={len(tables_html)}")
 
-# sections cache — LLM 신규 호출 시에만 갱신 (캐시 경로는 paper_text가 None이면 이미 캐시 로드한 경우)
-if paper_text is not None:
-    import json as _json
-    cache_p.parent.mkdir(parents=True, exist_ok=True)
-    cache_p.write_text(_json.dumps(sections, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[cache] sections saved: {cache_p}")
+import json as _json
+cache_p = Path("data/drafts/yoosun_sections_cache.json")
+cache_p.parent.mkdir(parents=True, exist_ok=True)
+cache_p.write_text(_json.dumps(sections, ensure_ascii=False, indent=2), encoding="utf-8")
+print(f"[cache] sections saved: {cache_p}")
 
 # 표는 별도 HTML 파일로 따로 (docx에 HTML 통째로 박으면 깨짐) — render_publication_table은
 # type 키 ("baseline"/"regression"/"cross"/"raw") 기반이라 우리 HTML dict와 양식 다름.
