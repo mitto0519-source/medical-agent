@@ -91,6 +91,21 @@ class PaperWriter:
         self._profile = author_profile
         self._methods = methods_library
         self._datasets = dataset_library
+        # ★ FIX 10 (회로 끊김): rag_pipeline=None이면 자동으로 로컬 ChromaDB(20,894 chunks)
+        #   를 붙임. 호출자가 인자 전달 안 해도 자산이 회로에 연결되도록.
+        if rag_pipeline is None:
+            try:
+                from src.rag.pipeline import RAGPipeline
+                rag_pipeline = RAGPipeline()
+                n = 0
+                try:
+                    n = rag_pipeline._store.count() if hasattr(rag_pipeline._store, "count") else 0
+                except Exception:
+                    pass
+                _log.info("[PaperWriter] auto-attached RAGPipeline (chunks≈%s)", n)
+            except Exception as _e:
+                _log.warning("[PaperWriter] RAG auto-attach 실패 → reference 없이 진행: %s", _e)
+                rag_pipeline = None
         self._rag = rag_pipeline
         self._client = llm_client or get_llm_client(api_key=api_key)
 
@@ -446,6 +461,45 @@ Keep the author's academic writing style. Output ONLY the improved section text 
         MT = {"abstract": 1800, "introduction": 3500, "methods": 5500,
               "results": 4000, "discussion": 5500}
 
+        # ── ★ FIX 11 (시드 12,301편 회로 연결): 섹션별 query로 RAG retrieval ──
+        # data/chromadb의 papers 컬렉션(20,894 chunks)에서 섹션에 맞는 실 발췌를
+        # 끌어와 user_prompt에 박는다. 지금까지는 self._rag=None이라 한 줄도 안 박혔음.
+        SECTION_QUERIES = {
+            "introduction": f"{exposure} {outcome} {population} epidemiology adolescent public health background",
+            "methods":      f"{exposure} {outcome} {design} survey-weighted logistic regression covariate adjustment",
+            "results":      f"{exposure} {outcome} odds ratio confidence interval subgroup sex stratified",
+            "discussion":   f"{exposure} {outcome} mechanism limitation public health policy implication",
+        }
+        section_rag_blocks: Dict[str, str] = {}
+        if self._rag is not None:
+            for sec_key, q in SECTION_QUERIES.items():
+                try:
+                    hits = self._rag.search_multistage(q, n_final=4, n_pool=20) \
+                            if hasattr(self._rag, "search_multistage") \
+                            else self._rag.search(q, n_results=4)
+                except Exception as _e:
+                    _log.warning("[PaperWriter] RAG %s search 실패: %s", sec_key, _e)
+                    hits = []
+                if not hits:
+                    section_rag_blocks[sec_key] = ""
+                    continue
+                # 발췌 N개를 짧게 — 한 발췌 800자, 총 ~3200자 추가 (토큰 ~800)
+                pieces = []
+                for i, h in enumerate(hits[:4], 1):
+                    txt = (h.get("text") or "")[:800].replace("\n", " ").strip()
+                    md = h.get("metadata") or {}
+                    src_label = md.get("pmcid") or md.get("pmid") or md.get("source") or f"chunk{i}"
+                    pieces.append(f"[{src_label}] {txt}")
+                section_rag_blocks[sec_key] = (
+                    f"\n\n## RELEVANT LITERATURE EXCERPTS (from {len(hits)} retrieved chunks)\n"
+                    "Use these passages to ground your claims. Paraphrase, do NOT plagiarize. "
+                    "Cite the bracketed source when you draw from a passage.\n\n"
+                    + "\n\n---\n\n".join(pieces)
+                    + "\n\n"
+                )
+            _log.info("[PaperWriter] RAG hits per section: %s",
+                       {k: ('hit' if v else 'miss') for k, v in section_rag_blocks.items()})
+
         # ── Step 1: Introduction (참고문헌 컨텍스트 활용, 독립 생성) ─────────
         _log.info("[PaperWriter] Introduction 작성 중...")
         sections["introduction"] = self._generate(sys_p, f"""{exemplars_block}
@@ -456,7 +510,7 @@ TOPIC: {topic}
 EXPOSURE: {exposure}
 OUTCOME: {outcome}
 POPULATION: {population}
-STUDY DESIGN: {design}{ref_block}{feedback_block}
+STUDY DESIGN: {design}{ref_block}{feedback_block}{section_rag_blocks.get("introduction","")}
 
 Structure: broad public health context → specific problem → knowledge gap → study aim.
 Keep strictly to this topic. Do NOT refer to unrelated studies. Write 4–5 paragraphs.""",
@@ -476,7 +530,7 @@ OUTCOME: {outcome}
 COVARIATES: {covariates}
 
 {dataset_ctx}
-{methods_ctx}
+{methods_ctx}{section_rag_blocks.get("methods","")}
 
 Write subsections: Study Design and Population / Exposure / Outcome / Covariates / Statistical Analysis.
 Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""",
@@ -501,7 +555,7 @@ KEY FINDINGS (use these EXACT numbers — do NOT invent or round):
 {chr(10).join(f'- {f}' for f in main_findings)}
 
 Additional subgroup findings: {results.get("subgroup", "Not provided")}
-Sensitivity analyses: {results.get("sensitivity", "Not provided")}
+Sensitivity analyses: {results.get("sensitivity", "Not provided")}{section_rag_blocks.get("results","")}
 
 Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""",
             max_tokens=MT["results"])
@@ -524,7 +578,7 @@ COMPARISON WITH LITERATURE: {results.get("literature_comparison", "Discuss in re
 MECHANISMS: {results.get("mechanisms", "Propose biologically plausible mechanisms.")}
 STRENGTHS: nationwide representative sample, large n={sample_size}, validated survey instrument
 LIMITATIONS: cross-sectional design (cannot establish causality), self-reported data, residual confounding
-{ref_block}{feedback_block}
+{ref_block}{feedback_block}{section_rag_blocks.get("discussion","")}
 
 Structure: 1) Summary of main findings  2) Comparison with existing literature
 3) Proposed mechanisms  4) Strengths and limitations  5) Public health conclusion""",
