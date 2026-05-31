@@ -1,72 +1,67 @@
-# Medical-Agent — pre-prompt memory inject hook (PowerShell)
+# Medical-Agent — pre-prompt memory inject hook
 #
-# 매 사용자 입력 직전에 호출되어, 자주 까먹는 핵심 메모리/룰을
-# Claude 컨텍스트에 prepend한다. Background polling이 아니라
-# user-turn 단위 자동 reload.
-#
-# 출력 = stdout. Claude Code가 이를 user prompt 앞에 prepend.
+# Claude Code의 user-prompt-submit 양식 hook으로 호출되어, 매 사용자 입력 직전에
+# 핵심 메모리/룰 + data/ 인벤토리를 stdout으로 prepend한다.
+# Background polling은 불가능 — Claude는 stateless. 이게 가장 가까운 양식.
+
+# UTF-8 강제 (한국어 mojibake 차단)
+$OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 
 $ErrorActionPreference = "SilentlyContinue"
 $root = "C:\Users\mitto\OneDrive\Desktop\Medical-Agent"
-$memDir = "C:\Users\mitto\.claude\projects\c--Users-mitto-OneDrive-Desktop-Medical-Agent\memory"
 
-Write-Output "=== AUTO-MEMORY RECALL (pre-prompt hook, 매 입력시 자동) ==="
+# ── 1. 핵심 룰 (압축 — 토큰 절약) ──────────────────────────────
+Write-Output "## AUTO-RECALL (pre-prompt)"
+Write-Output ""
+Write-Output "ABSOLUTE: 대충/거짓말/일안함/뻥치기 금지. 길더라도 시킨대로 무조건 다."
+Write-Output "DATA INVENTORY: 'X 없다' 진단 전 MEMORY.md grep + ls data/ + ARCHITECTURE grep 의무."
+Write-Output "ORGANISM: 새 모듈은 선행 trigger / 후행 output / events 기록 / 자가발전 회로 4가지 확보."
+Write-Output "WIRING: 작업 완료 = '파일 작성'이 아니라 '실제 호출되어 동작'. audit_wiring 실행."
 Write-Output ""
 
-# 1. 절대 규칙 — no-excuses
-$abs = Join-Path $memDir "feedback_no_excuses_absolute_rule.md"
-if (Test-Path $abs) {
-    Write-Output "[ABSOLUTE RULE — feedback_no_excuses_absolute_rule.md]"
-    $body = Get-Content $abs -Raw
-    # frontmatter 제외하고 본문만
-    $stripped = $body -replace "(?s)^---.*?---\s*", ""
-    Write-Output ($stripped.Substring(0, [Math]::Min(700, $stripped.Length)))
-    Write-Output ""
-}
-
-# 2. Data inventory protocol — 부재 진단 전 grep 의무
-$di = Join-Path $memDir "feedback_data_inventory_protocol.md"
-if (Test-Path $di) {
-    Write-Output "[DATA INVENTORY PROTOCOL — 부재 진단 전 grep 의무]"
-    $body = Get-Content $di -Raw
-    $stripped = $body -replace "(?s)^---.*?---\s*", ""
-    Write-Output ($stripped.Substring(0, [Math]::Min(600, $stripped.Length)))
-    Write-Output ""
-}
-
-# 3. Organism flow
-$org = Join-Path $memDir "feedback_organism_flow.md"
-if (Test-Path $org) {
-    Write-Output "[ORGANISM FLOW — 선후행 연결 필수]"
-    $body = Get-Content $org -Raw
-    $stripped = $body -replace "(?s)^---.*?---\s*", ""
-    Write-Output ($stripped.Substring(0, [Math]::Min(400, $stripped.Length)))
-    Write-Output ""
-}
-
-# 4. data/ 인벤토리 (자주 까먹는 자산 위치)
+# ── 2. data/ 인벤토리 (한 줄로) — 자주 까먹는 자산 위치 ─────────
 $dataDir = Join-Path $root "data"
 if (Test-Path $dataDir) {
-    Write-Output "[CURRENT data/ INVENTORY — '없다' 진단 전 확인]"
-    Get-ChildItem $dataDir -Directory -ErrorAction SilentlyContinue | ForEach-Object {
-        $size = 0
-        try {
-            $size = (Get-ChildItem $_.FullName -Recurse -File -ErrorAction SilentlyContinue |
-                     Measure-Object -Sum Length).Sum / 1MB
-        } catch {}
-        Write-Output ("  data/{0}  {1:N1} MB" -f $_.Name, $size)
-    }
+    Write-Output "## data/ INVENTORY (부재 단정 차단용)"
+    $items = Get-ChildItem $dataDir -Directory -ErrorAction SilentlyContinue |
+        ForEach-Object {
+            $size = 0
+            try {
+                $size = (Get-ChildItem $_.FullName -Recurse -File -ErrorAction SilentlyContinue |
+                         Measure-Object -Sum Length).Sum / 1MB
+            } catch {}
+            if ($size -ge 1) {
+                "{0}({1:N0}M)" -f $_.Name, $size
+            }
+        }
+    Write-Output ($items -join " ")
     Write-Output ""
 }
 
-# 5. ARCHITECTURE.md 섹션 인덱스 (해당 모듈 찾기 강제)
+# ── 3. ARCHITECTURE.md 섹션 헤더 (모듈 위치 강제 인지) ──────────
 $arch = Join-Path $root "ARCHITECTURE.md"
 if (Test-Path $arch) {
-    Write-Output "[ARCHITECTURE.md section index — 새 모듈 만들기 전 확인]"
-    Select-String -Path $arch -Pattern "^### \d+\." -ErrorAction SilentlyContinue |
-        Select-Object -First 20 | ForEach-Object { Write-Output $_.Line }
+    Write-Output "## ARCHITECTURE.md sections"
+    $lines = Get-Content $arch -Encoding UTF8 -ErrorAction SilentlyContinue |
+        Select-String -Pattern "^### \d+\." |
+        Select-Object -First 16 -ExpandProperty Line
+    Write-Output ($lines -join " | ")
     Write-Output ""
 }
 
-Write-Output "=== END AUTO-MEMORY RECALL ==="
-Write-Output ""
+# ── 4. 최근 change_log 1줄 (마지막 작업이 뭐였는지) ─────────────
+$changeLog = Join-Path $root "data/change_log/history.json"
+if (Test-Path $changeLog) {
+    try {
+        $j = Get-Content $changeLog -Encoding UTF8 -Raw | ConvertFrom-Json
+        if ($j -is [Array] -and $j.Count -gt 0) {
+            $last = $j[-1]
+            Write-Output "## LAST change_log"
+            Write-Output ("{0}: {1}" -f $last.title, ($last.description -replace "`n", " ").Substring(0, [Math]::Min(120, ($last.description).Length)))
+            Write-Output ""
+        }
+    } catch {}
+}
+
+Write-Output "## END pre-prompt"
