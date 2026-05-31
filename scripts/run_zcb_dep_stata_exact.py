@@ -171,7 +171,7 @@ df_x["smartphone_min"] = np.where(
 needvars = ["depression", "zero_freq", "zero_cat", "sex", "age_cat", "bmi_cat",
             "school_n", "academic3", "ses3", "ever_smoker", "ever_drinker",
             "swd_freq3", "caff_freq3", "smartphone_min", "pa_cat", "br_skip",
-            "W"]
+            "w"]
 cc = df_x.copy()
 for v in needvars:
     cc = cc[cc[v].notna()]
@@ -212,10 +212,9 @@ cov_m2 = [c for c in cov_m2 if c in cc.columns]
 # cluster-robust SE로 svy linearized SE의 근사를 얻음).
 def _fit(y, X_cols, data):
     sub = data[[y] + X_cols].dropna().copy()
-    if "W" in data.columns:
-        w = data.loc[sub.index, "W"].astype(float)
-        # weight 결측은 1.0으로 (분석 모집단 유지)
-        w = w.fillna(1.0).clip(lower=1e-6)
+    wcol = "w" if "w" in data.columns else ("W" if "W" in data.columns else None)
+    if wcol is not None:
+        w = data.loc[sub.index, wcol].astype(float).fillna(1.0).clip(lower=1e-6)
     else:
         w = None
     X = sm.add_constant(sub[X_cols].astype(float))
