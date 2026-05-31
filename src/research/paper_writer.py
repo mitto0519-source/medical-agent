@@ -429,9 +429,15 @@ Keep the author's academic writing style. Output ONLY the improved section text 
         ) if self._methods else ""
         covariates = study_info.get("covariates", "sex, age, grade, family_econ, academic_perf, BMI, depression, physical activity")
 
+        # ── raw_examples from yoosun_cho.json — user_prompt에 직접 박아 few-shot ──
+        # system_prompt에만 박으면 LLM이 "참고만 하고 자기 양식으로 fallback"하는 사고 차단.
+        exemplars_block = self._build_exemplars_block()
+
         # ── Step 1: Introduction (참고문헌 컨텍스트 활용, 독립 생성) ─────────
         _log.info("[PaperWriter] Introduction 작성 중...")
-        sections["introduction"] = self._generate(sys_p, f"""Write the Introduction section for this medical research paper.
+        sections["introduction"] = self._generate(sys_p, f"""{exemplars_block}
+
+NOW WRITE the Introduction section for this medical research paper in the EXACT SAME cadence/voice/sentence-rhythm/hedging as the exemplars above. Do not generic-academic.
 
 TOPIC: {topic}
 EXPOSURE: {exposure}
@@ -442,9 +448,11 @@ STUDY DESIGN: {design}{ref_block}{feedback_block}
 Structure: broad public health context → specific problem → knowledge gap → study aim.
 Keep strictly to this topic. Do NOT refer to unrelated studies. Write 4–5 paragraphs.""")
 
-        # ── Step 2: Methods (데이터셋/통계 컨텍스트 활용) ─────────────────────
+        # ── Step 2: Methods ─────────────────────
         _log.info("[PaperWriter] Methods 작성 중...")
-        sections["methods"] = self._generate(sys_p, f"""Write the Methods section for this medical research paper.
+        sections["methods"] = self._generate(sys_p, f"""{exemplars_block}
+
+NOW WRITE the Methods section in the EXACT SAME author voice as the exemplars above (specific verb choice, sentence rhythm, level of methodological detail). Do NOT default to generic academic tone.
 
 TOPIC: {topic}
 STUDY DESIGN: {design}
@@ -459,10 +467,12 @@ COVARIATES: {covariates}
 Write subsections: Study Design and Population / Exposure / Outcome / Covariates / Statistical Analysis.
 Include complex survey analysis (stratification, clustering, weights) if KYRBS data.""")
 
-        # ── Step 3: Results (Methods 핵심 내용 전달 → 일관성 확보) ──────────
+        # ── Step 3: Results ──────────
         _log.info("[PaperWriter] Results 작성 중...")
         methods_snippet = sections["methods"][:600]
-        sections["results"] = self._generate(sys_p, f"""Write the Results section for this medical research paper.
+        sections["results"] = self._generate(sys_p, f"""{exemplars_block}
+
+NOW WRITE the Results section in the EXACT SAME numeric reporting cadence as exemplars above. Match the author's verb pattern (e.g. "was associated with", "showed", "did not differ"), sentence length variation, and order of presentation.
 
 TOPIC: {topic}
 EXPOSURE: {exposure}
@@ -472,19 +482,20 @@ DATASET: {dataset_name} (n={sample_size})
 METHODS USED (for consistency):
 {methods_snippet}
 
-KEY FINDINGS (use these exact numbers, do NOT invent statistics):
+KEY FINDINGS (use these EXACT numbers — do NOT invent or round):
 {chr(10).join(f'- {f}' for f in main_findings)}
 
 Additional subgroup findings: {results.get("subgroup", "Not provided")}
 Sensitivity analyses: {results.get("sensitivity", "Not provided")}
 
-Write in this author's exact numeric reporting style (aOR, 95% CI, P values).
 Subsections: Participant characteristics → Main analysis → Subgroup → Sensitivity.""")
 
-        # ── Step 4: Discussion (Results 텍스트 직접 참조 → 내용 일치 보장) ──
+        # ── Step 4: Discussion ──
         _log.info("[PaperWriter] Discussion 작성 중...")
         results_snippet = sections["results"][:800]
-        sections["discussion"] = self._generate(sys_p, f"""Write the Discussion section for this medical research paper.
+        sections["discussion"] = self._generate(sys_p, f"""{exemplars_block}
+
+NOW WRITE the Discussion in the EXACT SAME hedging rhythm and topic-sentence cadence as exemplars. The author opens with the headline finding first, then comparison, then mechanisms, then limitations, then policy implication. Mirror that rhythm.
 
 TOPIC: {topic}
 EXPOSURE: {exposure}
@@ -499,14 +510,14 @@ STRENGTHS: nationwide representative sample, large n={sample_size}, validated su
 LIMITATIONS: cross-sectional design (cannot establish causality), self-reported data, residual confounding
 {ref_block}{feedback_block}
 
-Write in this author's hedging style. Structure:
-1) Summary of main findings  2) Comparison with existing literature
+Structure: 1) Summary of main findings  2) Comparison with existing literature
 3) Proposed mechanisms  4) Strengths and limitations  5) Public health conclusion""")
 
-        # ── Step 5: Abstract 마지막 생성 (전 섹션 기반 → 가장 정확) ─────────
+        # ── Step 5: Abstract ─────────
         _log.info("[PaperWriter] Abstract 작성 중 (전 섹션 통합)...")
-        sections["abstract"] = self._generate(sys_p, f"""Write a structured abstract for this medical research paper.
-Word limit: 300 words. Format: Background / Objective / Methods / Results / Conclusion.
+        sections["abstract"] = self._generate(sys_p, f"""{exemplars_block}
+
+NOW WRITE the structured abstract in EXACT SAME author voice. 300 words max. Structure: Background / Objective / Methods / Results / Conclusion. Match the exemplars' density of numbers and the way Background is opened (typically one specific framing sentence, not a generic 'X is a major public health concern').
 
 TOPIC: {topic}
 TARGET JOURNAL: {journal}
@@ -520,8 +531,7 @@ RESULTS SUMMARY:
 CONCLUSION FROM DISCUSSION:
 {sections["discussion"][-400:]}
 
-Base the abstract STRICTLY on the sections above. Do NOT invent numbers.
-Write the complete abstract now.""")
+Base the abstract STRICTLY on the sections above. Do NOT invent numbers.""")
 
         # 섹션 dict를 인스턴스에 보관 (JournalDocxExporter가 접근할 수 있도록)
         self.last_sections = {
@@ -715,6 +725,31 @@ DISCUSSION
     # ------------------------------------------------------------------
     # Internal
     # ------------------------------------------------------------------
+
+    def _build_exemplars_block(self) -> str:
+        """yoosun_cho.json raw_examples 3개를 user_prompt 앞에 박는 few-shot 블록.
+        system_prompt에 박으면 LLM이 '참고만' 하고 fallback. user_prompt에 박아야 mimic."""
+        try:
+            import json as _j
+            from pathlib import Path as _P
+            p = _P("data/author_profiles/yoosun_cho.json")
+            if not p.exists():
+                return ""
+            prof = _j.loads(p.read_text(encoding="utf-8"))
+            exs = prof.get("raw_examples") or []
+            if not exs:
+                return ""
+            # 첫 3개 — 각 1500자 양식
+            picks = exs[:3]
+            block = ("## ★ AUTHOR'S ACTUAL WRITING — MIMIC EXACTLY\n\n"
+                     "Below are 3 verbatim passages from the author's published papers. "
+                     "Match their EXACT sentence rhythm, verb selection, hedging cadence, "
+                     "and topic-sentence structure. Do NOT default to generic academic LLM tone.\n\n")
+            for i, ex in enumerate(picks, 1):
+                block += f"### Exemplar {i}\n\n{str(ex)[:1500]}\n\n---\n\n"
+            return block
+        except Exception:
+            return ""
 
     def _generate(self, system_prompt: str, user_prompt: str) -> str:
         # ★ System prompt에 메타 코멘트 금지 강제 (2026-05-31 사고 차단)

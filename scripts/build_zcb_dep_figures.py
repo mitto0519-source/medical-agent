@@ -247,38 +247,58 @@ def build_figure2b_sex():
 
 
 def build_figure3_forest():
-    rows = [
-        ("Overall", None, None, None, "head"),
-        ("  All adolescents", 1.075, 1.055, 1.095, "diamond"),
-        ("", None, None, None, "blank"),
-        ("Age category (P-int = 0.42)", None, None, None, "head"),
-        ("  12-13 yr", 1.06, 1.02, 1.10, "square"),
-        ("  14-15 yr", 1.08, 1.05, 1.12, "square"),
-        ("  16-18 yr", 1.09, 1.06, 1.13, "square"),
-        ("BMI category (P-int = 0.18)", None, None, None, "head"),
-        ("  Underweight", 1.04, 0.95, 1.13, "square"),
-        ("  Normal", 1.07, 1.05, 1.10, "square"),
-        ("  Overweight/Obese", 1.11, 1.07, 1.16, "square"),
-        ("Household SES (P-int = 0.36)", None, None, None, "head"),
-        ("  High", 1.06, 1.03, 1.10, "square"),
-        ("  Middle", 1.08, 1.05, 1.11, "square"),
-        ("  Low", 1.10, 1.05, 1.15, "square"),
-        ("Academic performance (P-int = 0.21)", None, None, None, "head"),
-        ("  High", 1.06, 1.02, 1.09, "square"),
-        ("  Middle", 1.07, 1.04, 1.11, "square"),
-        ("  Low", 1.10, 1.07, 1.14, "square"),
-        ("Smartphone tertile (P-int = 0.09)", None, None, None, "head"),
-        ("  Low (T1)", 1.05, 1.02, 1.09, "square"),
-        ("  Mid (T2)", 1.08, 1.05, 1.12, "square"),
-        ("  High (T3)", 1.10, 1.07, 1.14, "square"),
-        ("Physical activity (P-int = 0.65)", None, None, None, "head"),
-        ("  Low (0-2 d/wk)", 1.07, 1.04, 1.10, "square"),
-        ("  Moderate (3-4 d/wk)", 1.08, 1.04, 1.12, "square"),
-        ("  High (>=5 d/wk)", 1.09, 1.05, 1.13, "square"),
-        ("Breakfast (P-int = 0.28)", None, None, None, "head"),
-        ("  Non-skipper", 1.06, 1.04, 1.09, "square"),
-        ("  Skipper", 1.10, 1.07, 1.14, "square"),
-    ]
+    """Figure 3 — data/exports/stat_results.json (실측)에서 값 로드."""
+    import json as _j
+    from pathlib import Path as _P
+    sr_path = _P("data/exports/stat_results.json")
+    sr = _j.loads(sr_path.read_text(encoding="utf-8"))
+    f3 = sr["Figure_3"]
+    ov = f3["overall"]
+    sg = f3["subgroups"]
+
+    def _p_str(p):
+        if p is None: return "N/A"
+        if p < 0.001: return "P-int < 0.001"
+        return f"P-int = {p:.3f}"
+
+    def _level_label(strat, lev):
+        mapping = {
+            "age_cat":         {1: "12-13 yr", 2: "14-15 yr", 3: "16-18 yr"},
+            "bmi_cat":         {1: "Underweight", 2: "Normal", 3: "Overweight/Obese"},
+            "ses3":            {1: "High", 2: "Middle", 3: "Low"},
+            "academic3":       {1: "High", 2: "Middle", 3: "Low"},
+            "smartphone_tert": {1: "Low (T1)", 2: "Mid (T2)", 3: "High (T3)"},
+            "pa_cat":          {1: "Low (0-2 d/wk)", 2: "Moderate (3-4 d/wk)", 3: "High (>=5 d/wk)"},
+            "br_skip":         {0: "Non-skipper", 1: "Skipper"},
+        }
+        return mapping.get(strat, {}).get(lev, str(lev))
+
+    def _head_label(strat, p_int):
+        names = {
+            "age_cat": "Age category", "bmi_cat": "BMI category",
+            "ses3": "Household SES", "academic3": "Academic performance",
+            "smartphone_tert": "Smartphone tertile",
+            "pa_cat": "Physical activity", "br_skip": "Breakfast",
+        }
+        return f"{names.get(strat, strat)} ({_p_str(p_int)})"
+
+    rows = [("Overall", None, None, None, "head"),
+            ("  All adolescents", ov["or"], ov["ci_low"], ov["ci_high"], "diamond"),
+            ("", None, None, None, "blank")]
+
+    for strat in ["age_cat", "bmi_cat", "ses3", "academic3",
+                  "smartphone_tert", "pa_cat", "br_skip"]:
+        if strat not in sg: continue
+        s = sg[strat]
+        rows.append((_head_label(strat, s.get("p_interaction")),
+                     None, None, None, "head"))
+        for lv in s["levels"]:
+            lev = lv["level"]
+            if lv.get("or") is None:
+                rows.append((f"  {_level_label(strat, lev)}", None, None, None, "blank"))
+            else:
+                rows.append((f"  {_level_label(strat, lev)}",
+                              lv["or"], lv["ci_low"], lv["ci_high"], "square"))
     n = len(rows)
 
     fig, ax = plt.subplots(figsize=(9.5, 0.30 * n + 1.0))

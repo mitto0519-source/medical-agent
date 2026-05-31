@@ -556,6 +556,24 @@ def build_supp_table1_html(
 
 # ── 한 번에 4종 ──────────────────────────────────────────────────────────────
 
+def _load_computed():
+    """data/exports/stat_results.json에서 실측값 로드 — default 무시하고 진짜 결과만 쓴다."""
+    import json as _j
+    from pathlib import Path as _P
+    p = _P("data/exports/stat_results.json")
+    if not p.exists():
+        return None
+    try:
+        return _j.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def _est_from_sr(rec):
+    if rec is None: return None
+    return {"or": rec["or"], "ci_low": rec["ci_low"], "ci_high": rec["ci_high"]}
+
+
 def build_all_tables(
     df=None,
     *,
@@ -568,23 +586,83 @@ def build_all_tables(
     p_interaction: float = 0.0,
     p_trend_stress: float = 0.253, p_trend_sleep: float = 0.990,
 ) -> Dict[str, str]:
-    """4종 표 한 번에 — workspace Tables 탭에서 호출."""
+    """4종 표 한 번에 — stat_results.json (실측) 우선, 없으면 PDF default."""
     n_total = len(df) if df is not None else 50972
+    sr = _load_computed()
+
+    # ── Table 2: 실측이 있으면 그것으로 estimates 교체 ──
+    m1_est = m2_est = None
+    p_t_m1, p_t_m2 = p_trend_m1, p_trend_m2
+    if sr and "Table_2" in sr:
+        t2 = sr["Table_2"]
+        m1_raw, m2_raw = t2["Model_1"], t2["Model_2"]
+        m1_est = [{"level": "None", "or": None}] + [
+            {"level": lab, **_est_from_sr(m1_raw[v])}
+            for v, lab in zip(["zero_cat_2", "zero_cat_3", "zero_cat_4"],
+                               ["≤2 times/week", "3-6 times/week", "≥1 time/day"])
+        ]
+        m2_est = [{"level": "None", "or": None}] + [
+            {"level": lab, **_est_from_sr(m2_raw[v])}
+            for v, lab in zip(["zero_cat_2", "zero_cat_3", "zero_cat_4"],
+                               ["≤2 times/week", "3-6 times/week", "≥1 time/day"])
+        ]
+        p_t_m1 = t2.get("p_trend_M1") or p_t_m1
+        p_t_m2 = t2.get("p_trend_M2") or p_t_m2
+        n_total = sr.get("final_N", n_total)
+
+    # ── Table 3 sex-stratified 실측 ──
+    male_est = female_est = None
+    p_t_male, p_t_female, p_int = p_trend_male, p_trend_female, p_interaction
+    if sr and "Table_3" in sr:
+        t3 = sr["Table_3"]
+        male_raw, female_raw = t3.get("Male", {}), t3.get("Female", {})
+        male_est = [{"level": "None", "or": None}] + [
+            {"level": lab, **_est_from_sr(male_raw.get(v))}
+            for v, lab in zip(["zero_cat_2", "zero_cat_3", "zero_cat_4"],
+                               ["≤2 times/week", "3-6 times/week", "≥1 time/day"])
+        ]
+        female_est = [{"level": "None", "or": None}] + [
+            {"level": lab, **_est_from_sr(female_raw.get(v))}
+            for v, lab in zip(["zero_cat_2", "zero_cat_3", "zero_cat_4"],
+                               ["≤2 times/week", "3-6 times/week", "≥1 time/day"])
+        ]
+        p_t_male = male_raw.get("p_trend") or p_t_male
+        p_t_female = female_raw.get("p_trend") or p_t_female
+        p_int = t3.get("p_interaction_sex") or p_int
+
+    # ── Supp Table 1 실측 ──
+    stress_est = sleep_est = None
+    p_t_str, p_t_slp = p_trend_stress, p_trend_sleep
+    if sr and "Supp_Table_1" in sr:
+        sp = sr["Supp_Table_1"]
+        stress_raw, sleep_raw = sp.get("stress", {}), sp.get("sleep", {})
+        stress_est = [{"level": "None", "or": None}] + [
+            {"level": lab, **_est_from_sr(stress_raw.get(v))}
+            for v, lab in zip(["zero_cat_2", "zero_cat_3", "zero_cat_4"],
+                               ["≤2/week", "3-6/week", "≥1/day"])
+        ]
+        sleep_est = [{"level": "None", "or": None}] + [
+            {"level": lab, **_est_from_sr(sleep_raw.get(v))}
+            for v, lab in zip(["zero_cat_2", "zero_cat_3", "zero_cat_4"],
+                               ["≤2/week", "3-6/week", "≥1/day"])
+        ]
+        p_t_str = stress_raw.get("p_trend") or p_t_str
+        p_t_slp = sleep_raw.get("p_trend") or p_t_slp
+
     return {
         "Table 1": build_table1_html(df=df, survey_year=survey_year),
         "Table 2": build_table2_html(
-            survey_year=survey_year, n_total=n_total,
-            p_trend_m1=p_trend_m1, p_trend_m2=p_trend_m2,
-        ),
+            model1_estimates=m1_est, model2_estimates=m2_est,
+            p_trend_m1=p_t_m1, p_trend_m2=p_t_m2,
+            survey_year=survey_year, n_total=n_total),
         "Table 3": build_table3_html(
-            survey_year=survey_year, n_total=n_total,
-            p_trend_male=p_trend_male, p_trend_female=p_trend_female,
-            p_interaction=p_interaction,
-        ),
+            male_estimates=male_est, female_estimates=female_est,
+            p_trend_male=p_t_male, p_trend_female=p_t_female,
+            p_interaction=p_int, survey_year=survey_year, n_total=n_total),
         "Supplementary Table 1": build_supp_table1_html(
-            survey_year=survey_year, n_total=n_total,
-            p_trend_stress=p_trend_stress, p_trend_sleep=p_trend_sleep,
-        ),
+            stress_estimates=stress_est, sleep_estimates=sleep_est,
+            p_trend_stress=p_t_str, p_trend_sleep=p_t_slp,
+            survey_year=survey_year, n_total=n_total),
     }
 
 
