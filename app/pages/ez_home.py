@@ -50,7 +50,9 @@ st.markdown(
     ".stDeployButton{display:none!important;}"
     "button[kind='header']{display:none!important;}"
     "footer{visibility:hidden!important;display:none!important;}"
-    "html,body,[data-testid='stApp']{background:#1E1B4B!important;color:#F5F5FA!important;}"
+    # ★ 2026-06-01: 다크 강제(#1E1B4B) 제거 — sapphire_glass 라이트 톤에 위임.
+    # 다크 강제가 라이트 톤을 덮어 카드 글자 invisible 사고의 직접 원인이었음.
+    "html,body,[data-testid='stApp']{background:#FFFFFF!important;color:#0F172A!important;}"
     "</style>",
     unsafe_allow_html=True,
 )

@@ -127,16 +127,55 @@ def render_quick_actions(*, context: str, n_cols: int = 4,
     if not items:
         return
 
-    st.markdown("<div class='sg-chip-row' style='margin-top:8px;'></div>",
-                 unsafe_allow_html=True)
+    # ★ 2026-06-01 (사용자 사고 fix): 카드 강제 양식
+    # - 다크 배경 + 흰 글자 + 무테 + 좌측 정렬 + 앞 여백 (Anymorph 양식)
+    # - 아이콘과 라벨 사이 여백, 라벨 font-weight 정돈
+    # 컨테이너 id 단위로 scope해서 다른 페이지 stButton에 영향 없음
+    st.markdown(f"""
+    <style>
+    /* Quick action 카드 — 이 컨테이너 내부의 stButton에만 적용 (페이지 다른 버튼 보존) */
+    div[data-testid="stHorizontalBlock"]:has(button[data-qa-{context}]) .stButton > button,
+    .qa-grid-{context} .stButton > button {{
+      background: #0F172A !important;
+      color: #FFFFFF !important;
+      border: none !important;
+      border-radius: 14px !important;
+      text-align: left !important;
+      padding: 16px 20px 16px 22px !important;
+      font-size: 0.92rem !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.01em !important;
+      min-height: 58px !important;
+      box-shadow: 0 1px 2px rgba(15,23,42,0.06), 0 4px 12px rgba(15,23,42,0.06) !important;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+    }}
+    .qa-grid-{context} .stButton > button:hover {{
+      background: #1E293B !important;        /* slate-800 */
+      transform: translateX(2px) !important;
+      box-shadow: 0 2px 6px rgba(15,23,42,0.10), 0 8px 20px rgba(15,23,42,0.10) !important;
+    }}
+    .qa-grid-{context} .stButton > button p {{
+      margin: 0 !important;
+      color: #FFFFFF !important;
+      font-weight: 500 !important;
+    }}
+    </style>
+    <div class='qa-grid-{context}'>
+    """, unsafe_allow_html=True)
+
     cols = st.columns(n_cols)
     for i, a in enumerate(items):
         with cols[i % n_cols]:
-            label = f"{a['icon']} {a['label']}"
+            # 아이콘과 라벨 사이 양식 — wide-space로 시각적 여백 확보 (Anymorph 양식)
+            label = f"{a['icon']}    {a['label']}"
             key = f"qa_{context}_{a['key'].replace('/','_')}"
             help_txt = a.get("desc", "")
             if st.button(label, key=key, use_container_width=True, help=help_txt):
                 _dispatch(a, context=context, on_slash=on_slash)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
 def _read_user_prompt() -> str:
