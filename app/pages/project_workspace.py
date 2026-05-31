@@ -256,6 +256,44 @@ def _render_topbar(project: dict):
             if st.button("🔗 Share", use_container_width=True, key="ws_share"):
                 st.error(f"Share export 실패: {e}")
     with cols[3]:
+        # ── 🎯 Emphasis Profile — 논문 궁극 강조점 임프린트 (2026-05-31) ──
+        with st.popover("🎯 Emphasis", use_container_width=True):
+            try:
+                from src.research.emphasis_profile import (
+                    list_emphasis_options, EmphasisProfile,
+                )
+                opts = list_emphasis_options()
+                st.caption("이 논문이 궁극적으로 강조하는 톤앤매너 (multi-select)")
+                sel = {}
+                for o in opts:
+                    sel[o["slug"]] = st.checkbox(
+                        o["label"], key=f"ws_emph_{o['slug']}",
+                        help=o["hint"],
+                        value=st.session_state.get(f"sg_emph_{o['slug']}", False))
+                custom = st.text_area(
+                    "자유 강조 양식 (선택)", height=70,
+                    placeholder="예: 여성 청소년 사회문화적 압력 / 한국 특이 dietary culture",
+                    key="ws_emph_custom")
+                if st.button("✨ 강조점 임프린트", use_container_width=True,
+                              type="primary", key="ws_emph_apply"):
+                    prof = EmphasisProfile(
+                        novelty=sel.get("novelty", False),
+                        consistency=sel.get("consistency", False),
+                        innovation=sel.get("innovation", False),
+                        public_health=sel.get("public_health", False),
+                        methodological_rigor=sel.get("methodological_rigor", False),
+                        custom_notes=[s.strip() for s in (custom or "").splitlines() if s.strip()],
+                    )
+                    owner = (st.session_state.get("user") or {}).get("email", "")
+                    ok = prof.apply_to_intent(owner_email=owner)
+                    if ok:
+                        st.session_state["sg_emphasis_profile"] = prof.to_dict()
+                        for k, v in sel.items():
+                            st.session_state[f"sg_emph_{k}"] = v
+                        st.success(f"✓ {sum(sel.values())}개 강조점 임프린트 — 이후 모든 LLM 호출 반영")
+            except Exception as _e:
+                st.caption(f"emphasis unavailable: {_e}")
+
         # ── 🎯 Target Journal — 저널별 strength 자동 임프린트 (2026-05-30) ──
         with st.popover("🎯 Journal", use_container_width=True):
             try:
