@@ -206,8 +206,7 @@ def build_figure2_sex():
     # x축 — Table 1과 동일한 4-level zero_cat (회전 불필요, 짧은 라벨)
     ax.set_xticks(x)
     ax.set_xticklabels(freq_labels, ha="center", fontsize=10.5)
-    ax.set_xlabel("Zero-calorie beverage consumption frequency "
-                  "(identical to Table 1 grouping)",
+    ax.set_xlabel("Zero-calorie beverage consumption frequency",
                   fontsize=10.5, labelpad=8)
 
     # y축
@@ -355,11 +354,6 @@ def build_figure3_forest():
     ax.spines["top"].set_visible(False)
     ax.set_title("Figure 2. Subgroup analyses for Depressive symptoms",
                  fontsize=11.5, fontweight="bold", pad=10, loc="left")
-    # KCDC BMI percentile footnote (Table 1과 동일 기준임을 명시)
-    fig.text(0.02, -0.01,
-              "BMI categories follow the KCDC sex- and age-specific percentiles, "
-              "identical to Table 1.",
-              fontsize=8, color="#444", style="italic")
 
     out = OUT / "Figure2_forest_subgroups.png"
     plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")

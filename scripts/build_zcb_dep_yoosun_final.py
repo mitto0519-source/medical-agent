@@ -169,9 +169,7 @@ for fn, cap in [
      "Figure 1. Flow chart for participant selection, KYRBS 2025."),
     ("Figure2_forest_subgroups.png",
      "Figure 2. Subgroup analyses for depressive symptoms — adjusted odds ratios per "
-     "1-level increase in zero-calorie beverage consumption frequency. "
-     "Subgroup categories and cutoffs are identical to those in Table 1 "
-     "(BMI: KCDC sex- and age-specific percentiles)."),
+     "1-level increase in zero-calorie beverage consumption frequency."),
     ("Supplementary_Figure_sex_lines.png",
      "Supplementary Figure. Predicted probability of depressive symptoms by zero-calorie "
      "beverage consumption frequency, stratified by sex."),
