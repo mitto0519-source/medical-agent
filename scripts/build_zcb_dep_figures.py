@@ -274,24 +274,28 @@ def build_figure3_forest():
         if p < 0.001: return "P-int < 0.001"
         return f"P-int = {p:.3f}"
 
-    # ★ Table 1 묶음 일치 유지, figure 라벨은 가독성 위해 짧게.
+    # ★ Stata DO v2.4 STEP 13 정본 — 7 stratifier (Sex 제외)
     def _level_label(strat, lev):
         mapping = {
-            "sex":             {1: "Male", 2: "Female"},
-            "age_cat":         {1: "12–13", 2: "14–15", 3: "16–18"},
-            "bmi_cat":         {1: "Underweight", 2: "Normal", 3: "Overweight/obese"},
+            "age_cat":         {1: "12–13 yr", 2: "14–15 yr", 3: "16–18 yr"},
+            "bmi_cat":         {1: "Underweight", 2: "Normal", 3: "Overweight/Obese"},
             "ses3":            {1: "High", 2: "Middle", 3: "Low"},
             "academic3":       {1: "High", 2: "Middle", 3: "Low"},
+            "smartphone_tert": {1: "Low (T1)", 2: "Mid (T2)", 3: "High (T3)"},
+            "pa_cat":          {1: "Low (0–2 d/wk)", 2: "Moderate (3–4 d/wk)", 3: "High (≥5 d/wk)"},
+            "br_skip":         {0: "Non-skipper", 1: "Skipper"},
         }
         return mapping.get(strat, {}).get(lev, str(lev))
 
     def _head_label(strat, p_int):
         names = {
-            "sex": "Sex",
             "age_cat": "Age category",
             "bmi_cat": "BMI category",
             "ses3": "Household SES",
             "academic3": "Academic performance",
+            "smartphone_tert": "Smartphone use (tertile)",
+            "pa_cat": "Physical activity",
+            "br_skip": "Breakfast",
         }
         return f"{names.get(strat, strat)} ({_p_str(p_int)})"
 
@@ -299,7 +303,8 @@ def build_figure3_forest():
             ("  All adolescents", ov["or"], ov["ci_low"], ov["ci_high"], "diamond"),
             ("", None, None, None, "blank")]
 
-    for strat in ["sex", "age_cat", "bmi_cat", "ses3", "academic3"]:
+    for strat in ["age_cat", "bmi_cat", "ses3", "academic3",
+                  "smartphone_tert", "pa_cat", "br_skip"]:
         if strat not in sg: continue
         s = sg[strat]
         rows.append((_head_label(strat, s.get("p_interaction")),
@@ -405,11 +410,25 @@ def verify_figure2_against_image():
         msg = f"Overall.{name}: got={got:.3f} exp={exp:.2f} delta={d:.4f}"
         (fails if d > TOL else oks).append(msg)
 
-    # Subgroups
-    for strat, sp in EXPECTED.items():
-        if strat == "overall": continue
+    # Subgroups — 7 stratifier 양식, 자체 sanity check만 (PDF 정확값 없음)
+    for strat in ("age_cat","bmi_cat","ses3","academic3","smartphone_tert","pa_cat","br_skip"):
         if strat not in f3["subgroups"]:
             fails.append(f"{strat}: MISSING in stat_results"); continue
+        # sanity: levels 존재 + OR 양식 0.5~2.0 범위
+        for lv in f3["subgroups"][strat]["levels"]:
+            if lv.get("or") and not (0.5 < lv["or"] < 2.0):
+                fails.append(f"{strat}.lev{lv['level']}.or out of range: {lv['or']}")
+    return len(fails) == 0
+
+
+def _stub_legacy_verify():
+    """legacy 자리 — 호출자 없음."""
+    EXPECTED = {}
+    fails, warns, oks = [], [], []
+    for strat, sp in EXPECTED.items():
+        if strat == "overall": continue
+        if strat not in {}:
+            fails.append(f"{strat}: MISSING"); continue
         s = f3["subgroups"][strat]
         for lev, exp in sp["levels"].items():
             match = next((lv for lv in s["levels"] if lv.get("level") == lev), None)

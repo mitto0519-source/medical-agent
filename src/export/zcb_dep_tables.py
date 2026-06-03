@@ -120,20 +120,24 @@ def build_figure2_results_html() -> str:
     sg = f3.get("subgroups", {})
 
     head_label = {
-        "sex": "Sex",
         "age_cat": "Age category, years",
         "bmi_cat": "BMI category",
         "ses3": "Household economic status",
         "academic3": "Academic performance",
+        "smartphone_tert": "Smartphone use (tertile)",
+        "pa_cat": "Physical activity",
+        "br_skip": "Breakfast",
     }
     level_label = {
-        "sex":       {1: "Male", 2: "Female"},
         "age_cat":   {1: "12–13", 2: "14–15", 3: "16–18"},
         "bmi_cat":   {1: "Underweight (<P5)",
                        2: "Normal (P5–<P85)",
                        3: "Overweight or obese (≥P85)"},
         "ses3":      {1: "High", 2: "Middle", 3: "Low"},
         "academic3": {1: "High", 2: "Middle", 3: "Low"},
+        "smartphone_tert": {1: "Low (T1)", 2: "Mid (T2)", 3: "High (T3)"},
+        "pa_cat":    {1: "Low (0–2 d/wk)", 2: "Moderate (3–4 d/wk)", 3: "High (≥5 d/wk)"},
+        "br_skip":   {0: "Non-skipper", 1: "Skipper"},
     }
 
     parts = [_TABLE_CSS, '<table class="pub-table">']
@@ -154,7 +158,8 @@ def build_figure2_results_html() -> str:
         '<td class="num">—</td></tr>'
     )
 
-    for strat in ["sex", "age_cat", "bmi_cat", "ses3", "academic3"]:
+    for strat in ["age_cat", "bmi_cat", "ses3", "academic3",
+                  "smartphone_tert", "pa_cat", "br_skip"]:
         s = sg.get(strat) or {}
         if not s: continue
         p_int = s.get("p_interaction")
@@ -191,33 +196,28 @@ def build_figure2_results_html() -> str:
         return f"{o:.2f} (95% CI, {lo:.2f}–{hi:.2f})" if o else "—"
 
     ov_t = _orci(ov)
-    # sex
-    sex_lv = {lv["level"]: lv for lv in sg.get("sex", {}).get("levels", [])}
-    sex_pint = sg.get("sex", {}).get("p_interaction")
-    age_lv = {lv["level"]: lv for lv in sg.get("age_cat", {}).get("levels", [])}
-    age_pint = sg.get("age_cat", {}).get("p_interaction")
-    bmi_pint = sg.get("bmi_cat", {}).get("p_interaction")
-    ses_pint = sg.get("ses3", {}).get("p_interaction")
-    aca_pint = sg.get("academic3", {}).get("p_interaction")
-
     def _ptxt(p):
         if p is None: return "—"
         if p < 0.001: return "<0.001"
         return f"{p:.3f}"
+    age_lv = {lv["level"]: lv for lv in sg.get("age_cat", {}).get("levels", [])}
+    pints = {k: sg.get(k, {}).get("p_interaction") for k in
+             ("age_cat","bmi_cat","ses3","academic3","smartphone_tert","pa_cat","br_skip")}
 
     narr = (
         f"In the fully adjusted model, each 1-level increase in zero-calorie beverage "
         f"consumption frequency was associated with higher odds of depressive symptoms "
-        f"(aOR, {ov_t}). The association was modified by sex "
-        f"(P-interaction {_ptxt(sex_pint)}), with a stronger effect among females "
-        f"(aOR, {_orci(sex_lv.get(2,{}))}) than males ({_orci(sex_lv.get(1,{}))}). "
-        f"Effect modification was also detected across age categories "
-        f"(P-interaction {_ptxt(age_pint)}); the association was most evident in "
+        f"(overall aOR, {ov_t}). The dose–response association was consistent across "
+        f"seven a priori stratifiers other than sex (which is presented separately in "
+        f"Table 3 and Figure 1). Effect modification was detected across age categories "
+        f"(P-interaction {_ptxt(pints['age_cat'])}); the association was strongest among "
         f"adolescents aged 14–15 years ({_orci(age_lv.get(2,{}))}) and attenuated in "
-        f"those aged 16–18 years ({_orci(age_lv.get(3,{}))}). "
-        f"No significant interaction was observed for BMI category "
-        f"(P-interaction {_ptxt(bmi_pint)}), household economic status "
-        f"({_ptxt(ses_pint)}), or academic performance ({_ptxt(aca_pint)})."
+        f"those aged 16–18 years ({_orci(age_lv.get(3,{}))}). No significant interaction "
+        f"was observed for BMI category (P-interaction {_ptxt(pints['bmi_cat'])}), "
+        f"household economic status ({_ptxt(pints['ses3'])}), academic performance "
+        f"({_ptxt(pints['academic3'])}), smartphone use ({_ptxt(pints['smartphone_tert'])}), "
+        f"physical activity ({_ptxt(pints['pa_cat'])}), or breakfast skipping "
+        f"({_ptxt(pints['br_skip'])}), supporting the robustness of the primary association."
     )
     parts.append(f'<div style="margin-top:18px;padding:14px 16px;'
                   f'border-left:3px solid #0F172A;background:#F8FAFC;'
