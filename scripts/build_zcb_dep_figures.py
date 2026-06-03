@@ -148,12 +148,12 @@ def build_figure1_prisma():
     tee_y = exc_y + exc_h/2
     ax.plot([line_x, exc_x], [tee_y, tee_y], color="black", linewidth=1.0)
 
-    # ── Title (caption) — 제목만, 보조 (...) 정보 제거 ──
+    # ── Title (caption) — Supplementary Figure 1 (PRISMA) ──
     fig.text(0.05, 0.96,
-             "Figure 1. Flow Chart for Participant Selection",
+             "Supplementary Figure 1. Flow chart for participant selection",
              fontsize=11, fontweight="bold", ha="left", va="top")
 
-    out = OUT / "Figure1_PRISMA.png"
+    out = OUT / "Supplementary_Figure_1_PRISMA.png"
     plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")
     plt.close(fig)
     print(f"saved: {out}")
@@ -167,41 +167,48 @@ def build_figure2_sex():
         outer caption: "Figure 2. Predicted probability of Depression by zero-calorie beverage consumption frequency, KYRBS 2025 (N = 50,972)"
         inner sub-title: "Predicted Probability of Depression by ZCB Frequency, by Sex"
     """
-    # ★ 2026-06-03: x축을 Table 1 표준 4-level (zero_cat 1/2/3/4)로 collapse.
-    # 7-level KYRBS F_ZERO → 4-level 매핑 (run_zcb_dep_stata_exact.zero_cat과 동일):
-    #   1 (None)        ← F_ZERO=1
-    #   2 (≤2/week)     ← F_ZERO=2,3 (<1/wk, 1-2/wk)
-    #   3 (3–6/week)    ← F_ZERO=4,5 (3-4/wk, 5-6/wk)
-    #   4 (≥1/day)      ← F_ZERO=6,7 (1-2/d, ≥3/d)
-    # 기존 7-level smooth predicted-probability를 그룹 평균으로 collapse.
-    male_p_7   = np.array([0.208, 0.210, 0.210, 0.211, 0.212, 0.213, 0.215])
-    female_p_7 = np.array([0.290, 0.310, 0.335, 0.360, 0.385, 0.405, 0.425])
-    male_p   = np.array([male_p_7[0],
-                          male_p_7[1:3].mean(),
-                          male_p_7[3:5].mean(),
-                          male_p_7[5:7].mean()])
-    female_p = np.array([female_p_7[0],
-                          female_p_7[1:3].mean(),
-                          female_p_7[3:5].mean(),
-                          female_p_7[5:7].mean()])
-    male_w = 0.018
-    female_w = 0.022
+    # ★ 2026-06-03: stat_results.json에서 실측 weighted prevalence 로드 (4-level).
+    # run_zcb_dep_stata_exact.py의 Supp_Figure_1이 sex × zero_cat 4셀당
+    # n / prob / 95% CI를 산출. illustrative 값 X.
+    import json as _j
+    from pathlib import Path as _P
+    sr = _j.loads(_P("data/exports/stat_results.json").read_text(encoding="utf-8"))
+    sf1 = sr.get("Supp_Figure_1") or {}
+    freq_labels = sf1.get("exposure_labels") or ["None", "≤2/week", "3–6/week", "≥1/day"]
+    by_sex = sf1.get("by_sex") or {}
 
-    # Table 1 exposure_labels와 정확히 동일
-    freq_labels = ["None", "≤2/week", "3–6/week", "≥1/day"]
+    def _series(label):
+        cells = by_sex.get(label) or []
+        p = np.array([c.get("prob") or 0.0 for c in cells])
+        lo = np.array([c.get("ci_low") or 0.0 for c in cells])
+        hi = np.array([c.get("ci_high") or 0.0 for c in cells])
+        n = [c.get("n") or 0 for c in cells]
+        return p, lo, hi, n
+
+    male_p,   male_lo,   male_hi,   male_n   = _series("Male")
+    female_p, female_lo, female_hi, female_n = _series("Female")
     x = np.arange(len(freq_labels))
 
     fig, ax = plt.subplots(figsize=(9.2, 5.6))
 
-    # 신뢰 영역 (옅은 색 fill)
-    ax.fill_between(x, male_p - male_w, male_p + male_w,
-                    color="#1f4e79", alpha=0.12, edgecolor="none")
-    ax.fill_between(x, female_p - female_w, female_p + female_w,
-                    color="#9b1e3a", alpha=0.12, edgecolor="none")
+    # 95% CI 영역 (실측 — Wald binomial)
+    ax.fill_between(x, male_lo,   male_hi,   color="#1f4e79", alpha=0.14, edgecolor="none")
+    ax.fill_between(x, female_lo, female_hi, color="#9b1e3a", alpha=0.14, edgecolor="none")
 
-    # 라인 — 마커 없이 깨끗한 양식 (사용자 양식)
-    ax.plot(x, male_p,   color="#1f4e79", lw=2.0, label="Male")
-    ax.plot(x, female_p, color="#9b1e3a", lw=2.0, label="Female")
+    # 라인 + 마커 (실측 점)
+    ax.plot(x, male_p,   color="#1f4e79", lw=2.0, marker="o", markersize=5,
+            label=f"Male (n={sum(male_n):,})")
+    ax.plot(x, female_p, color="#9b1e3a", lw=2.0, marker="o", markersize=5,
+            label=f"Female (n={sum(female_n):,})")
+
+    # 각 점에 실측값 라벨 (probability %)
+    for xi, mp, fp in zip(x, male_p, female_p):
+        if mp > 0:
+            ax.annotate(f"{mp*100:.1f}%", (xi, mp), textcoords="offset points",
+                         xytext=(0, -16), ha="center", fontsize=8.5, color="#1f4e79")
+        if fp > 0:
+            ax.annotate(f"{fp*100:.1f}%", (xi, fp), textcoords="offset points",
+                         xytext=(0, 8), ha="center", fontsize=8.5, color="#9b1e3a")
 
     # x축 — Table 1과 동일한 4-level zero_cat (회전 불필요, 짧은 라벨)
     ax.set_xticks(x)
@@ -212,8 +219,8 @@ def build_figure2_sex():
     # y축
     ax.set_ylabel("Predicted probability of depression",
                   fontsize=10.5, labelpad=6)
-    ax.set_ylim(0, 0.50)
-    ax.set_yticks([0.00, 0.10, 0.20, 0.30, 0.40, 0.50])
+    ax.set_ylim(0, 0.60)
+    ax.set_yticks([0.00, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60])
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.2f}"))
 
     # 격자 — 점선, 매우 옅게
@@ -235,15 +242,15 @@ def build_figure2_sex():
     ax.legend(loc="upper left", frameon=False, fontsize=10.5,
               labelspacing=0.5, handlelength=2.4)
 
-    # outer caption — 제목만, 보조 (...) 정보 제거
+    # outer caption — Figure 1
     fig.text(0.05, 0.97,
-             "Figure 2. Predicted probability of Depression by zero-calorie beverage "
-             "consumption frequency",
+             "Figure 1. Sex-stratified prevalence of depressive symptoms "
+             "by zero-calorie beverage consumption frequency",
              fontsize=11, fontweight="bold", ha="left", va="top")
 
     plt.subplots_adjust(top=0.88)
 
-    out = OUT / "Supplementary_Figure_sex_lines.png"
+    out = OUT / "Figure_1_sex_lines.png"
     plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")
     plt.close(fig)
     print(f"saved: {out}")

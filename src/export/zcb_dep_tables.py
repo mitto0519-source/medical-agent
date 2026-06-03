@@ -107,6 +107,134 @@ _TABLE_CSS = """
 """
 
 
+def build_figure2_results_html() -> str:
+    """Figure 2 (Subgroup forest) 산출 수치 표 — Word docx에 별도 출력용.
+
+    stat_results.json:Figure_3 → 5 stratifier × levels × (aOR, 95% CI, P_int).
+    """
+    import json as _j
+    from pathlib import Path as _P
+    sr = _j.loads(_P("data/exports/stat_results.json").read_text(encoding="utf-8"))
+    f3 = sr.get("Figure_3", {})
+    ov = f3.get("overall", {})
+    sg = f3.get("subgroups", {})
+
+    head_label = {
+        "sex": "Sex",
+        "age_cat": "Age category, years",
+        "bmi_cat": "BMI category",
+        "ses3": "Household economic status",
+        "academic3": "Academic performance",
+    }
+    level_label = {
+        "sex":       {1: "Male", 2: "Female"},
+        "age_cat":   {1: "12–13", 2: "14–15", 3: "16–18"},
+        "bmi_cat":   {1: "Underweight (<P5)",
+                       2: "Normal (P5–<P85)",
+                       3: "Overweight or obese (≥P85)"},
+        "ses3":      {1: "High", 2: "Middle", 3: "Low"},
+        "academic3": {1: "High", 2: "Middle", 3: "Low"},
+    }
+
+    parts = [_TABLE_CSS, '<table class="pub-table">']
+    parts.append('<caption>Figure 2 — Subgroup analyses, numeric results '
+                  '(adjusted odds ratio per 1-level increase in ZCB consumption)</caption>')
+    parts.append('<thead><tr>'
+                  '<th>Subgroup</th>'
+                  '<th class="num">n</th>'
+                  '<th class="num">aOR (95% CI)</th>'
+                  '<th class="num"><em>P</em><sub>interaction</sub></th>'
+                  '</tr></thead><tbody>')
+
+    # Overall
+    parts.append(
+        '<tr><td><b>Overall</b></td>'
+        '<td class="num">50,972</td>'
+        f'<td class="num">{_fmt_or_ci(ov.get("or",0), ov.get("ci_low",0), ov.get("ci_high",0))}</td>'
+        '<td class="num">—</td></tr>'
+    )
+
+    for strat in ["sex", "age_cat", "bmi_cat", "ses3", "academic3"]:
+        s = sg.get(strat) or {}
+        if not s: continue
+        p_int = s.get("p_interaction")
+        p_txt = _fmt_p(p_int) if p_int is not None else "—"
+        parts.append(
+            f'<tr class="subhead"><td colspan="3">{head_label[strat]}</td>'
+            f'<td class="num">{p_txt}</td></tr>'
+        )
+        for lv in s.get("levels", []):
+            lev = lv.get("level")
+            lab = level_label[strat].get(lev, str(lev))
+            n = lv.get("n", 0)
+            orv = lv.get("or"); lo = lv.get("ci_low"); hi = lv.get("ci_high")
+            or_txt = _fmt_or_ci(orv, lo, hi) if orv else "—"
+            parts.append(
+                f'<tr class="subrow"><td>{lab}</td>'
+                f'<td class="num">{n:,}</td>'
+                f'<td class="num">{or_txt}</td>'
+                f'<td class="num"></td></tr>'
+            )
+
+    parts.append('</tbody></table>')
+    parts.append('<div class="pub-table-footnote">'
+                  '<div>aOR adjusted for sex, age category, BMI category, school type, '
+                  'household economic status, academic performance, ever smoking, ever drinking, '
+                  'SSB frequency, high-caffeine frequency, daily smartphone use, physical activity, '
+                  'and breakfast skipping. <span class="abbr">P</span><sub>interaction</sub> from '
+                  'Wald test of stratifier×exposure interaction terms.</div>'
+                  '</div>')
+    return "\n".join(parts)
+
+
+def build_figure1_results_html() -> str:
+    """Figure 1 (Sex × ZCB 4-level) 산출 수치 표.
+
+    stat_results.json:Supp_Figure_1 → 8 cells (2 sex × 4 zero_cat).
+    (JSON 키는 호환 위해 유지, 의미는 Figure 1)
+    """
+    import json as _j
+    from pathlib import Path as _P
+    sr = _j.loads(_P("data/exports/stat_results.json").read_text(encoding="utf-8"))
+    sf1 = sr.get("Supp_Figure_1", {})
+    labels = sf1.get("exposure_labels") or ["None", "≤2/week", "3–6/week", "≥1/day"]
+    by_sex = sf1.get("by_sex") or {}
+
+    parts = [_TABLE_CSS, '<table class="pub-table">']
+    parts.append('<caption>Figure 1 — Sex-stratified prevalence of '
+                  'depressive symptoms by zero-calorie beverage consumption frequency '
+                  '(survey-weighted)</caption>')
+    parts.append('<thead><tr><th>Sex</th>'
+                  + ''.join(f'<th class="num">{lab}</th>' for lab in labels)
+                  + '</tr></thead><tbody>')
+
+    for sex_label in ("Male", "Female"):
+        cells = by_sex.get(sex_label) or []
+        # 1행: prevalence (95% CI)
+        parts.append(
+            f'<tr class="subhead"><td>{sex_label} — prevalence (95% CI)</td>'
+            + ''.join(
+                f'<td class="num">{(c.get("prob") or 0)*100:.1f}% '
+                f'({(c.get("ci_low") or 0)*100:.1f}–{(c.get("ci_high") or 0)*100:.1f})</td>'
+                if c.get("prob") is not None else '<td class="num">—</td>'
+                for c in cells
+            ) + '</tr>'
+        )
+        # 2행: n
+        parts.append(
+            f'<tr class="subrow"><td>n</td>'
+            + ''.join(f'<td class="num">{c.get("n",0):,}</td>' for c in cells)
+            + '</tr>'
+        )
+
+    parts.append('</tbody></table>')
+    parts.append('<div class="pub-table-footnote">'
+                  '<div>Cell prevalence weighted by KYRBS sampling weight. 95% CI from Wald binomial. '
+                  'Exposure categories identical to Table 1 (zero_cat 1–4).</div>'
+                  '</div>')
+    return "\n".join(parts)
+
+
 def _fmt_n_pct(n: int, denom: int) -> str:
     """N (%) — thousands comma + 1 decimal % + thin space."""
     if denom == 0:

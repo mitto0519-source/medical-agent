@@ -369,6 +369,39 @@ for col, levels, cov_set in SUBGROUPS:
 
 results["Figure_3"] = fig3
 
+# ── Supp Figure 1: Sex × zero_cat 4-level weighted prevalence ──
+# Sex별 ZCB 4 카테고리 우울증 유병률 + SE (survey-weighted)
+print(f"\n[Supp Figure 1] Sex x zero_cat 4-level weighted prevalence:")
+supp1 = {}
+for sex_val, label in [(1, "Male"), (2, "Female")]:
+    cells = []
+    for zc_lvl in [1, 2, 3, 4]:
+        sub = cc[(cc["sex"] == sex_val) & (cc["zero_cat"] == zc_lvl)]
+        if len(sub) < 10:
+            cells.append({"zero_cat": zc_lvl, "n": int(len(sub)),
+                           "prob": None, "se": None})
+            continue
+        w = sub["w"].astype(float).fillna(1.0)
+        n_w = float(w.sum())
+        d_w = float((sub["depression"].astype(float) * w).sum())
+        p = d_w / n_w if n_w > 0 else 0.0
+        # design-effect 무시 binomial SE (보고용 근사)
+        n_eff = float(len(sub))
+        se = (p * (1 - p) / max(1.0, n_eff)) ** 0.5
+        cells.append({
+            "zero_cat": zc_lvl, "n": int(len(sub)),
+            "prob": round(p, 4), "se": round(se, 4),
+            "ci_low": round(max(0.0, p - 1.96 * se), 4),
+            "ci_high": round(min(1.0, p + 1.96 * se), 4),
+        })
+        print(f"  {label} zero_cat={zc_lvl}: n={len(sub):,}, "
+              f"prob={p:.3f}, 95% CI [{p-1.96*se:.3f}, {p+1.96*se:.3f}]")
+    supp1[label] = cells
+results["Supp_Figure_1"] = {
+    "exposure_labels": ["None", "≤2/week", "3–6/week", "≥1/day"],
+    "by_sex": supp1,
+}
+
 # Save
 out = Path("data/exports/stat_results.json")
 out.parent.mkdir(parents=True, exist_ok=True)

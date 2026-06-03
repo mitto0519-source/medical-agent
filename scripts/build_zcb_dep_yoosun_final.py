@@ -170,8 +170,8 @@ for fn, cap in [
     ("Figure2_forest_subgroups.png",
      "Figure 2. Subgroup analyses for depressive symptoms — adjusted odds ratios per "
      "1-level increase in zero-calorie beverage consumption frequency."),
-    ("Supplementary_Figure_sex_lines.png",
-     "Supplementary Figure. Predicted probability of depressive symptoms by zero-calorie "
+    ("Supplementary_Figure_1.png",
+     "Supplementary Figure 1. Predicted probability of depressive symptoms by zero-calorie "
      "beverage consumption frequency, stratified by sex."),
 ]:
     p = fig_dir / fn
