@@ -4,5 +4,29 @@
       "Bash(python scripts/audit_wiring.py --range HEAD~12..HEAD)",
       "Bash(python -c ' *)"
     ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}\\.claude\\hooks\\preprompt_memory_inject.ps1\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}\\.claude\\hooks\\post_edit_check.ps1\""
+          }
+        ]
+      }
+    ]
   }
 }
