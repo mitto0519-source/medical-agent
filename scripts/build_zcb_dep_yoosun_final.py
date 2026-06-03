@@ -125,13 +125,23 @@ print(f"    {time.time()-t0:.1f}s 5섹션 완성:",
       {k: f"{len(str(v)):,}자" for k, v in sections.items()})
 
 from src.export.word_exporter import WordExporter
-from src.export.zcb_dep_tables import build_all_tables
+from src.export.zcb_dep_tables import (
+    build_all_tables, build_figure1_results_html, build_figure2_results_html,
+)
 
 tables_html = build_all_tables(
     survey_year=2025,
     p_trend_m1=0.0001, p_trend_m2=0.0001,
     p_trend_male=0.088, p_trend_female=0.0001, p_interaction=0.0001,
     p_trend_stress=0.253, p_trend_sleep=0.990)
+
+# Figure 1 / Figure 2 numeric result tables (별도 HTML)
+from pathlib import Path as _Pth
+_exp = _Pth("data/exports")
+_exp.mkdir(parents=True, exist_ok=True)
+(_exp / "Figure_1_results.html").write_text(build_figure1_results_html(), encoding="utf-8")
+(_exp / "Figure_2_results.html").write_text(build_figure2_results_html(), encoding="utf-8")
+print(f"Figure 1·2 산출 수치 표: {_exp}/Figure_1_results.html, Figure_2_results.html")
 
 references = [
     {"authors": ["Park JE", "Kim MJ", "Cho YS"], "year": 2024,
@@ -165,14 +175,14 @@ if not fig_dir.exists():
     fig_dir = Path("data/exports")
 figs = []
 for fn, cap in [
-    ("Figure1_PRISMA.png",
-     "Figure 1. Flow chart for participant selection, KYRBS 2025."),
+    ("Figure_1_sex_lines.png",
+     "Figure 1. Sex-stratified prevalence of depressive symptoms by zero-calorie "
+     "beverage consumption frequency, KYRBS 2025."),
     ("Figure2_forest_subgroups.png",
      "Figure 2. Subgroup analyses for depressive symptoms — adjusted odds ratios per "
      "1-level increase in zero-calorie beverage consumption frequency."),
-    ("Supplementary_Figure_1.png",
-     "Supplementary Figure 1. Predicted probability of depressive symptoms by zero-calorie "
-     "beverage consumption frequency, stratified by sex."),
+    ("Supplementary_Figure_1_PRISMA.png",
+     "Supplementary Figure 1. Flow chart for participant selection, KYRBS 2025."),
 ]:
     p = fig_dir / fn
     if p.exists():

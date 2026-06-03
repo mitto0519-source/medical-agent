@@ -229,10 +229,14 @@ def build_figure1_results_html() -> str:
 
     parts.append('</tbody></table>')
     parts.append('<div class="pub-table-footnote">'
-                  '<div>Cell prevalence weighted by KYRBS sampling weight. 95% CI from Wald binomial. '
-                  'Exposure categories identical to Table 1 (zero_cat 1–4).</div>'
+                  '<div>Cell prevalence weighted by KYRBS sampling weight. '
+                  '95% CI from Wald binomial.</div>'
                   '</div>')
     return "\n".join(parts)
+
+
+# Backward-compat alias (이전 함수명 호출자 있으면 동일 산출)
+build_supp_figure1_results_html = build_figure1_results_html
 
 
 def _fmt_n_pct(n: int, denom: int) -> str:
