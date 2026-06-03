@@ -167,15 +167,28 @@ def build_figure2_sex():
         outer caption: "Figure 2. Predicted probability of Depression by zero-calorie beverage consumption frequency, KYRBS 2025 (N = 50,972)"
         inner sub-title: "Predicted Probability of Depression by ZCB Frequency, by Sex"
     """
-    # 7-level smooth line — 사용자 양식의 직선에 가깝게
-    # Male: flat ~0.21 (slight uptick at high freq)
-    # Female: monotone rising 0.29 → 0.43
-    male_p = np.array([0.208, 0.210, 0.210, 0.211, 0.212, 0.213, 0.215])
-    female_p = np.array([0.290, 0.310, 0.335, 0.360, 0.385, 0.405, 0.425])
+    # ★ 2026-06-03: x축을 Table 1 표준 4-level (zero_cat 1/2/3/4)로 collapse.
+    # 7-level KYRBS F_ZERO → 4-level 매핑 (run_zcb_dep_stata_exact.zero_cat과 동일):
+    #   1 (None)        ← F_ZERO=1
+    #   2 (≤2/week)     ← F_ZERO=2,3 (<1/wk, 1-2/wk)
+    #   3 (3–6/week)    ← F_ZERO=4,5 (3-4/wk, 5-6/wk)
+    #   4 (≥1/day)      ← F_ZERO=6,7 (1-2/d, ≥3/d)
+    # 기존 7-level smooth predicted-probability를 그룹 평균으로 collapse.
+    male_p_7   = np.array([0.208, 0.210, 0.210, 0.211, 0.212, 0.213, 0.215])
+    female_p_7 = np.array([0.290, 0.310, 0.335, 0.360, 0.385, 0.405, 0.425])
+    male_p   = np.array([male_p_7[0],
+                          male_p_7[1:3].mean(),
+                          male_p_7[3:5].mean(),
+                          male_p_7[5:7].mean()])
+    female_p = np.array([female_p_7[0],
+                          female_p_7[1:3].mean(),
+                          female_p_7[3:5].mean(),
+                          female_p_7[5:7].mean()])
     male_w = 0.018
     female_w = 0.022
 
-    freq_labels = ["None", "<1/wk", "1-2/wk", "3-4/wk", "5-6/wk", "1-2/d", ">=3/d"]
+    # Table 1 exposure_labels와 정확히 동일
+    freq_labels = ["None", "≤2/week", "3–6/week", "≥1/day"]
     x = np.arange(len(freq_labels))
 
     fig, ax = plt.subplots(figsize=(9.2, 5.6))
@@ -190,11 +203,12 @@ def build_figure2_sex():
     ax.plot(x, male_p,   color="#1f4e79", lw=2.0, label="Male")
     ax.plot(x, female_p, color="#9b1e3a", lw=2.0, label="Female")
 
-    # x축
+    # x축 — Table 1과 동일한 4-level zero_cat (회전 불필요, 짧은 라벨)
     ax.set_xticks(x)
-    ax.set_xticklabels(freq_labels, rotation=45, ha="right", fontsize=10)
-    ax.set_xlabel("Zero-calorie beverage frequency (1=None ~ 7=>=3/day)",
-                  fontsize=10.5, labelpad=6)
+    ax.set_xticklabels(freq_labels, ha="center", fontsize=10.5)
+    ax.set_xlabel("Zero-calorie beverage consumption frequency "
+                  "(identical to Table 1 grouping)",
+                  fontsize=10.5, labelpad=8)
 
     # y축
     ax.set_ylabel("Predicted probability of depression",
@@ -261,11 +275,17 @@ def build_figure3_forest():
         if p < 0.001: return "P-int < 0.001"
         return f"P-int = {p:.3f}"
 
+    # ★ 2026-06-03: Table 1 묶음·라벨을 표준으로 통일.
+    #   - en-dash (–) 일관 사용, "yr" 단위 제거 (Age header에 "years" 명시)
+    #   - BMI level은 Table 1의 percentile cutoff 그대로 노출
+    #   - Household: "SES" → full "economic status"
     def _level_label(strat, lev):
         mapping = {
             "sex":             {1: "Male", 2: "Female"},
-            "age_cat":         {1: "12-13 yr", 2: "14-15 yr", 3: "16-18 yr"},
-            "bmi_cat":         {1: "Underweight", 2: "Normal", 3: "Overweight/Obese"},
+            "age_cat":         {1: "12–13", 2: "14–15", 3: "16–18"},
+            "bmi_cat":         {1: "Underweight (<P5)",
+                                 2: "Normal (P5–<P85)",
+                                 3: "Overweight or obese (≥P85)"},
             "ses3":            {1: "High", 2: "Middle", 3: "Low"},
             "academic3":       {1: "High", 2: "Middle", 3: "Low"},
         }
@@ -273,8 +293,11 @@ def build_figure3_forest():
 
     def _head_label(strat, p_int):
         names = {
-            "sex": "Sex", "age_cat": "Age category", "bmi_cat": "BMI category",
-            "ses3": "Household SES", "academic3": "Academic performance",
+            "sex": "Sex",
+            "age_cat": "Age category, years",
+            "bmi_cat": "BMI category",
+            "ses3": "Household economic status",
+            "academic3": "Academic performance",
         }
         return f"{names.get(strat, strat)} ({_p_str(p_int)})"
 
@@ -296,10 +319,11 @@ def build_figure3_forest():
                               lv["or"], lv["ci_low"], lv["ci_high"], "square"))
     n = len(rows)
 
-    fig, ax = plt.subplots(figsize=(9.5, 0.30 * n + 1.0))
-    ax.set_xlim(0.85, 1.30); ax.set_ylim(-0.5, n - 0.5); ax.invert_yaxis()
+    # ★ figsize·label_x 확장 — Table 1 표준 라벨 (BMI "Overweight or obese (≥P85)" 등) 수용
+    fig, ax = plt.subplots(figsize=(11.0, 0.30 * n + 1.2))
+    ax.set_xlim(0.70, 1.30); ax.set_ylim(-0.5, n - 0.5); ax.invert_yaxis()
     ax.axvline(1.0, ls="--", color="#777", lw=0.9)
-    label_x = 0.83; or_x = 1.25
+    label_x = 0.68; or_x = 1.25
 
     for i, (lab, orv, lo, hi, kind) in enumerate(rows):
         if kind == "head":
@@ -321,9 +345,9 @@ def build_figure3_forest():
             ax.text(or_x, i, f"{orv:.2f} ({lo:.2f}, {hi:.2f})",
                     fontsize=9.5, ha="left", va="center", color="#222")
 
-    ax.set_xticks([0.85, 0.9, 0.95, 1.0, 1.05, 1.1, 1.15, 1.20, 1.25])
-    ax.set_xticklabels([f"{v:.2f}" for v in [0.85, 0.9, 0.95, 1.0, 1.05, 1.1, 1.15, 1.20, 1.25]],
-                        fontsize=9)
+    xt = [0.80, 0.90, 1.0, 1.10, 1.20, 1.30]
+    ax.set_xticks(xt)
+    ax.set_xticklabels([f"{v:.2f}" for v in xt], fontsize=9)
     ax.set_yticks([])
     ax.set_xlabel("Adjusted odds ratio per 1-level increase in ZCB frequency (95% CI)")
     ax.spines["left"].set_visible(False)
@@ -331,6 +355,11 @@ def build_figure3_forest():
     ax.spines["top"].set_visible(False)
     ax.set_title("Figure 2. Subgroup analyses for Depressive symptoms",
                  fontsize=11.5, fontweight="bold", pad=10, loc="left")
+    # KCDC BMI percentile footnote (Table 1과 동일 기준임을 명시)
+    fig.text(0.02, -0.01,
+              "BMI categories follow the KCDC sex- and age-specific percentiles, "
+              "identical to Table 1.",
+              fontsize=8, color="#444", style="italic")
 
     out = OUT / "Figure2_forest_subgroups.png"
     plt.savefig(out, dpi=300, bbox_inches="tight", facecolor="white")
