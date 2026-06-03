@@ -451,11 +451,34 @@ def verify_figure2_against_image():
     return len(fails) == 0
 
 
+def regenerate_html_results():
+    """그림 ↔ HTML 결과표 ↔ narrative 항상 한 세트로 갱신.
+
+    stat_results.json 한 번 바뀌면 그림·표·문장 모두 같이 갱신되어야 함.
+    """
+    import sys as _sys
+    from pathlib import Path as _P
+    _root = _P(__file__).resolve().parent.parent
+    if str(_root) not in _sys.path:
+        _sys.path.insert(0, str(_root))
+    from src.export.zcb_dep_tables import (
+        build_figure1_results_html, build_figure2_results_html,
+    )
+    out = _P("data/exports")
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "Figure_1_results.html").write_text(
+        build_figure1_results_html(), encoding="utf-8")
+    (out / "Figure_2_results.html").write_text(
+        build_figure2_results_html(), encoding="utf-8")
+    print("saved: data/exports/Figure_1_results.html, Figure_2_results.html")
+
+
 if __name__ == "__main__":
-    print("=== Building ZCB-Depression figures (Figure 2 = subgroup forest) ===")
+    print("=== Building ZCB-Depression figures + result HTMLs (set sync) ===")
     build_figure1_prisma()
-    build_figure2_sex()         # → Supplementary (sex line chart)
-    build_figure3_forest()      # → Figure 2 (subgroup forest) — 함수명만 옛이름 유지
+    build_figure2_sex()         # → Figure 1 (sex line)
+    build_figure3_forest()      # → Figure 2 (forest)
+    regenerate_html_results()   # → Figure_1·2_results.html (그림과 동일 출처)
     ok = verify_figure2_against_image()
     print(f"\nFigures saved to data/exports/  verify_pass={ok}")
     sys.exit(0 if ok else 1)
