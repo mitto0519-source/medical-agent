@@ -184,6 +184,49 @@ def build_figure2_results_html() -> str:
                   'and breakfast skipping. <span class="abbr">P</span><sub>interaction</sub> from '
                   'Wald test of stratifier×exposure interaction terms.</div>'
                   '</div>')
+
+    # ── Result narrative (논문 본문 양식) ─────────────────────────────────
+    def _orci(d):
+        o = d.get("or"); lo = d.get("ci_low"); hi = d.get("ci_high")
+        return f"{o:.2f} (95% CI, {lo:.2f}–{hi:.2f})" if o else "—"
+
+    ov_t = _orci(ov)
+    # sex
+    sex_lv = {lv["level"]: lv for lv in sg.get("sex", {}).get("levels", [])}
+    sex_pint = sg.get("sex", {}).get("p_interaction")
+    age_lv = {lv["level"]: lv for lv in sg.get("age_cat", {}).get("levels", [])}
+    age_pint = sg.get("age_cat", {}).get("p_interaction")
+    bmi_pint = sg.get("bmi_cat", {}).get("p_interaction")
+    ses_pint = sg.get("ses3", {}).get("p_interaction")
+    aca_pint = sg.get("academic3", {}).get("p_interaction")
+
+    def _ptxt(p):
+        if p is None: return "—"
+        if p < 0.001: return "<0.001"
+        return f"{p:.3f}"
+
+    narr = (
+        f"In the fully adjusted model, each 1-level increase in zero-calorie beverage "
+        f"consumption frequency was associated with higher odds of depressive symptoms "
+        f"(aOR, {ov_t}). The association was modified by sex "
+        f"(P-interaction {_ptxt(sex_pint)}), with a stronger effect among females "
+        f"(aOR, {_orci(sex_lv.get(2,{}))}) than males ({_orci(sex_lv.get(1,{}))}). "
+        f"Effect modification was also detected across age categories "
+        f"(P-interaction {_ptxt(age_pint)}); the association was most evident in "
+        f"adolescents aged 14–15 years ({_orci(age_lv.get(2,{}))}) and attenuated in "
+        f"those aged 16–18 years ({_orci(age_lv.get(3,{}))}). "
+        f"No significant interaction was observed for BMI category "
+        f"(P-interaction {_ptxt(bmi_pint)}), household economic status "
+        f"({_ptxt(ses_pint)}), or academic performance ({_ptxt(aca_pint)})."
+    )
+    parts.append(f'<div style="margin-top:18px;padding:14px 16px;'
+                  f'border-left:3px solid #0F172A;background:#F8FAFC;'
+                  f'font-family:\'Times New Roman\',serif;font-size:10.5pt;'
+                  f'line-height:1.55;color:#0F172A;">'
+                  f'<div style="font-weight:700;margin-bottom:6px;font-size:9.5pt;'
+                  f'color:#475569;text-transform:uppercase;letter-spacing:0.04em;">'
+                  f'Result narrative</div>{narr}</div>')
+
     return "\n".join(parts)
 
 
@@ -232,6 +275,46 @@ def build_figure1_results_html() -> str:
                   '<div>Cell prevalence weighted by KYRBS sampling weight. '
                   '95% CI from Wald binomial.</div>'
                   '</div>')
+
+    # ── Result narrative (논문 본문 양식) ──
+    def _cells(label):
+        return by_sex.get(label) or []
+
+    male_cells = _cells("Male")
+    female_cells = _cells("Female")
+    p_int = sr.get("Table_3", {}).get("p_interaction_sex")
+    p_txt = "<0.001" if (p_int is not None and p_int < 0.001) else (
+        f"{p_int:.3f}" if p_int is not None else "—")
+
+    def _pct_ci(c):
+        if not c or c.get("prob") is None:
+            return "—"
+        p = c["prob"] * 100
+        lo = c["ci_low"] * 100
+        hi = c["ci_high"] * 100
+        return f"{p:.1f}% (95% CI, {lo:.1f}–{hi:.1f})"
+
+    m_first = _pct_ci(male_cells[0]) if male_cells else "—"
+    m_last  = _pct_ci(male_cells[-1]) if male_cells else "—"
+    f_first = _pct_ci(female_cells[0]) if female_cells else "—"
+    f_last  = _pct_ci(female_cells[-1]) if female_cells else "—"
+
+    narr = (
+        f"The weighted prevalence of depressive symptoms increased with higher "
+        f"zero-calorie beverage consumption frequency in both sexes, with a steeper "
+        f"gradient observed among females (P-interaction {p_txt}). Among males, "
+        f"prevalence rose from {m_first} in non-consumers to {m_last} in those "
+        f"consuming zero-calorie beverages at least once daily. Among females, "
+        f"prevalence rose from {f_first} to {f_last} across the same gradient."
+    )
+    parts.append(f'<div style="margin-top:18px;padding:14px 16px;'
+                  f'border-left:3px solid #0F172A;background:#F8FAFC;'
+                  f'font-family:\'Times New Roman\',serif;font-size:10.5pt;'
+                  f'line-height:1.55;color:#0F172A;">'
+                  f'<div style="font-weight:700;margin-bottom:6px;font-size:9.5pt;'
+                  f'color:#475569;text-transform:uppercase;letter-spacing:0.04em;">'
+                  f'Result narrative</div>{narr}</div>')
+
     return "\n".join(parts)
 
 
