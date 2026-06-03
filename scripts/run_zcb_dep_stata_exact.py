@@ -369,37 +369,55 @@ for col, levels, cov_set in SUBGROUPS:
 
 results["Figure_3"] = fig3
 
-# ── Supp Figure 1: Sex × zero_cat 4-level weighted prevalence ──
-# Sex별 ZCB 4 카테고리 우울증 유병률 + SE (survey-weighted)
-print(f"\n[Supp Figure 1] Sex x zero_cat 4-level weighted prevalence:")
+# ── Figure 1: Sex × zero_cat 4-level ADJUSTED predicted probability ──
+# Model 2 (Stata svy: logistic + sex×zero_cat interaction) 적합 후 margins
+# i.zero_cat#i.sex with all covariates at mean. PDF 원본 figure와 동일 방식.
+print(f"\n[Figure 1] Sex x zero_cat 4-level ADJUSTED predicted probability:")
+zc_dums = ["zero_cat_2", "zero_cat_3", "zero_cat_4"]
+sex_dum = "sex_2"
+inter_cols = []
+for v in zc_dums:
+    inter = f"{v}_x_sex2"
+    cc[inter] = cc[v] * cc[sex_dum]
+    inter_cols.append(inter)
+cov_other = [c for c in cov_m2 if c not in zc_dums + [sex_dum] + inter_cols]
+m_int = _fit("depression", zc_dums + [sex_dum] + inter_cols + cov_other, cc)
+
+cov_mean = {c: float(cc[c].mean()) for c in cov_other}
 supp1 = {}
 for sex_val, label in [(1, "Male"), (2, "Female")]:
     cells = []
     for zc_lvl in [1, 2, 3, 4]:
         sub = cc[(cc["sex"] == sex_val) & (cc["zero_cat"] == zc_lvl)]
-        if len(sub) < 10:
-            cells.append({"zero_cat": zc_lvl, "n": int(len(sub)),
-                           "prob": None, "se": None})
-            continue
-        w = sub["w"].astype(float).fillna(1.0)
-        n_w = float(w.sum())
-        d_w = float((sub["depression"].astype(float) * w).sum())
-        p = d_w / n_w if n_w > 0 else 0.0
-        # design-effect 무시 binomial SE (보고용 근사)
-        n_eff = float(len(sub))
-        se = (p * (1 - p) / max(1.0, n_eff)) ** 0.5
+        row = {c: cov_mean[c] for c in cov_other}
+        row["sex_2"] = 1.0 if sex_val == 2 else 0.0
+        for v in zc_dums:
+            row[v] = 1.0 if int(v.split("_")[-1]) == zc_lvl else 0.0
+        for v in zc_dums:
+            inter = f"{v}_x_sex2"
+            row[inter] = row[v] * row["sex_2"]
+        x_row = np.array([1.0] + [row[c] for c in (zc_dums + [sex_dum] + inter_cols + cov_other)])
+        beta = m_int.params.values
+        eta = float(x_row @ beta)
+        p = 1.0 / (1.0 + np.exp(-eta))
+        cov_b = m_int.cov_params().values
+        se_eta = float((x_row @ cov_b @ x_row) ** 0.5)
+        lo_eta, hi_eta = eta - 1.96 * se_eta, eta + 1.96 * se_eta
+        lo = 1.0 / (1.0 + np.exp(-lo_eta))
+        hi = 1.0 / (1.0 + np.exp(-hi_eta))
         cells.append({
             "zero_cat": zc_lvl, "n": int(len(sub)),
-            "prob": round(p, 4), "se": round(se, 4),
-            "ci_low": round(max(0.0, p - 1.96 * se), 4),
-            "ci_high": round(min(1.0, p + 1.96 * se), 4),
+            "prob": round(p, 4),
+            "ci_low": round(lo, 4),
+            "ci_high": round(hi, 4),
         })
         print(f"  {label} zero_cat={zc_lvl}: n={len(sub):,}, "
-              f"prob={p:.3f}, 95% CI [{p-1.96*se:.3f}, {p+1.96*se:.3f}]")
+              f"adj_prob={p:.3f}, 95% CI [{lo:.3f}, {hi:.3f}]")
     supp1[label] = cells
 results["Supp_Figure_1"] = {
     "exposure_labels": ["None", "≤2/week", "3–6/week", "≥1/day"],
     "by_sex": supp1,
+    "method": "adjusted predicted probability from GLM Binomial (sex×zero_cat interaction, 12 covariates at mean)",
 }
 
 # Save

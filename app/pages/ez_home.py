@@ -53,6 +53,30 @@ st.markdown(
     # ★ 2026-06-01: 다크 강제(#1E1B4B) 제거 — sapphire_glass 라이트 톤에 위임.
     # 다크 강제가 라이트 톤을 덮어 카드 글자 invisible 사고의 직접 원인이었음.
     "html,body,[data-testid='stApp']{background:#FFFFFF!important;color:#0F172A!important;}"
+    /* ★ Quick action 카드 — 페이지 전역 .stButton(default) 다크 카드 + 흰글자 강제 */
+    ".stMainBlockContainer .stButton > button:not([kind='primary']),"
+    ".stMain .stButton > button:not([kind='primary']) {"
+    "  background:#0F172A !important;"
+    "  color:#FFFFFF !important;"
+    "  border:none !important;"
+    "  border-radius:14px !important;"
+    "  text-align:left !important;"
+    "  padding:16px 20px 16px 22px !important;"
+    "  font-size:0.92rem !important;"
+    "  font-weight:500 !important;"
+    "  min-height:58px !important;"
+    "  box-shadow:0 1px 2px rgba(15,23,42,0.06),0 4px 12px rgba(15,23,42,0.06) !important;"
+    "  display:flex !important; align-items:center !important; justify-content:flex-start !important;"
+    "}"
+    ".stMainBlockContainer .stButton > button:not([kind='primary']) *,"
+    ".stMain .stButton > button:not([kind='primary']) * {"
+    "  color:#FFFFFF !important;"
+    "}"
+    ".stMainBlockContainer .stButton > button:not([kind='primary']):hover,"
+    ".stMain .stButton > button:not([kind='primary']):hover {"
+    "  background:#1E293B !important;"
+    "  transform:translateX(2px) !important;"
+    "}"
     "</style>",
     unsafe_allow_html=True,
 )
