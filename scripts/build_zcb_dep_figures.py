@@ -201,14 +201,30 @@ def build_figure2_sex():
     ax.plot(x, female_p, color="#9b1e3a", lw=2.0, marker="o", markersize=5,
             label=f"Female (n={sum(female_n):,})")
 
-    # 각 점에 실측값 라벨 (probability %)
-    for xi, mp, fp in zip(x, male_p, female_p):
+    # 각 점에 실측값 + 95% CI (두 줄)
+    for xi, mp, mlo, mhi, fp, flo, fhi in zip(
+            x, male_p, male_lo, male_hi, female_p, female_lo, female_hi):
         if mp > 0:
-            ax.annotate(f"{mp*100:.1f}%", (xi, mp), textcoords="offset points",
-                         xytext=(0, -16), ha="center", fontsize=8.5, color="#1f4e79")
+            ax.annotate(f"{mp*100:.1f}%\n({mlo*100:.1f}–{mhi*100:.1f})",
+                         (xi, mp), textcoords="offset points",
+                         xytext=(0, -26), ha="center", fontsize=7.8, color="#1f4e79",
+                         linespacing=1.05)
         if fp > 0:
-            ax.annotate(f"{fp*100:.1f}%", (xi, fp), textcoords="offset points",
-                         xytext=(0, 8), ha="center", fontsize=8.5, color="#9b1e3a")
+            ax.annotate(f"{fp*100:.1f}%\n({flo*100:.1f}–{fhi*100:.1f})",
+                         (xi, fp), textcoords="offset points",
+                         xytext=(0, 8), ha="center", fontsize=7.8, color="#9b1e3a",
+                         linespacing=1.05)
+
+    # P_interaction (sex × ZCB) — Table_3에서 로드, 우상단 inset
+    p_int = sr.get("Table_3", {}).get("p_interaction_sex")
+    if p_int is not None:
+        p_txt = ("P-interaction (sex × ZCB) < 0.001" if p_int < 0.001
+                  else f"P-interaction (sex × ZCB) = {p_int:.3f}")
+        ax.text(0.97, 0.95, p_txt, transform=ax.transAxes,
+                ha="right", va="top", fontsize=10, fontweight="bold",
+                color="#111",
+                bbox=dict(boxstyle="round,pad=0.4", facecolor="#FFFFFF",
+                           edgecolor="#999", linewidth=0.8))
 
     # x축 — Table 1과 동일한 4-level zero_cat (회전 불필요, 짧은 라벨)
     ax.set_xticks(x)
