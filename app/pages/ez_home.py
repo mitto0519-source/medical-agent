@@ -53,7 +53,7 @@ st.markdown(
     # ★ 2026-06-01: 다크 강제(#1E1B4B) 제거 — sapphire_glass 라이트 톤에 위임.
     # 다크 강제가 라이트 톤을 덮어 카드 글자 invisible 사고의 직접 원인이었음.
     "html,body,[data-testid='stApp']{background:#FFFFFF!important;color:#0F172A!important;}"
-    /* ★ Quick action 카드 — 페이지 전역 .stButton(default) 다크 카드 + 흰글자 강제 */
+    # Quick action 카드 — 페이지 전역 .stButton(default) 다크 카드 + 흰글자 강제
     ".stMainBlockContainer .stButton > button:not([kind='primary']),"
     ".stMain .stButton > button:not([kind='primary']) {"
     "  background:#0F172A !important;"
