@@ -341,7 +341,8 @@ def build_figure3_forest():
                 ax.plot([lo, hi], [i, i], color="#111", lw=1.1)
                 ax.plot(orv, i, marker="s", markersize=6,
                         markerfacecolor="#111", markeredgecolor="#111")
-            # ★ 2026-06-03: forest 옆 숫자 라벨 제거 (수치는 HTML 결과표).
+            ax.text(or_x, i, f"{orv:.2f} ({lo:.2f}, {hi:.2f})",
+                    fontsize=9.5, ha="left", va="center", color="#222")
 
     xt = [0.80, 0.90, 1.0, 1.10, 1.20, 1.30]
     ax.set_xticks(xt)
