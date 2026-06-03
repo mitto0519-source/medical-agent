@@ -1,54 +1,74 @@
 {
-  "project_identity": "Medical-Agent — vibe paper copilot for Korean medical research (KYRBS/KNHANES)",
+  "project_identity": "Medical-Agent — generic vibe paper copilot for clinical & translational medicine across ALL specialties and study designs. KYRBS/KNHANES is the FIRST instantiated template, not the scope.",
+  "scope_extensibility": {
+    "supported_data_types": [
+      "national surveys (KYRBS, KNHANES, KOSIS) — current template",
+      "claims (NHIS-NSC, NHIS-HEALS, HIRA-NPS) — supported via same pipeline",
+      "registries (KCCR, KOTRY, K-STARK, PASKY) — supported",
+      "EMR single/multi-center — supported via PaperWriter input",
+      "cohort (KoGES, KLoSA) — supported",
+      "lab/biomarker datasets — supported",
+      "user uploads any sav/csv/dta"
+    ],
+    "supported_designs": [
+      "cross-sectional", "case-control", "cohort prospective/retrospective",
+      "RCT secondary analysis", "trial emulation (target trial framework)",
+      "self-controlled case series", "interrupted time series",
+      "mendelian randomization", "case-crossover",
+      "diagnostic accuracy", "prognosis (multivariable prediction)"
+    ],
+    "supported_clinical_questions": [
+      "drug safety signal (pharmacovigilance, AE detection)",
+      "clinical equipoise comparative effectiveness",
+      "guideline gap / RCT subpopulation not represented",
+      "biomarker validation / risk score derivation",
+      "diagnostic uncertainty (sensitivity/specificity, threshold)",
+      "treatment de-escalation/de-prescribing",
+      "mechanism → biomarker → outcome translational chain",
+      "subgroup heterogeneity / precision medicine",
+      "natural experiment (policy/reimbursement change)",
+      "post-marketing real-world evidence (RWE)"
+    ],
+    "NOT a restriction": "Above lists are starter templates. New domain (e.g., surgical outcomes, ICU sepsis, oncology trial emulation) plugs in via PaperWriter input + RAG re-query — no architectural change."
+  },
+  "current_template_instance": {
+    "topic": "Zero-calorie beverage and depressive symptoms in Korean adolescents",
+    "DB": "KYRBS 2025 (sav, open access, 21 waves stored)",
+    "why_chosen": "open DB, sav files already structured, fast prototyping. Demonstrates pipeline. NOT the system's scope."
+  },
   "core_rules": [
     "RULE-1 NO LIES: never claim 'done' if not actually called and verified",
     "RULE-2 DATA INVENTORY: before claiming 'missing', MUST grep MEMORY.md + ls data/ + grep ARCHITECTURE.md",
     "RULE-3 ORGANISM FLOW: new module needs upstream-trigger + downstream-output + events-log + self-improvement-loop",
     "RULE-4 WIRING: 'done' = actually called and works, not 'file written'. Run scripts/audit_wiring.py",
-    "RULE-5 GET_LLM_CLIENT: never construct ClaudeClient directly. Always get_llm_client(task=...) for failover + persona + intent injection"
+    "RULE-5 GET_LLM_CLIENT: never construct ClaudeClient directly. Always get_llm_client(task=...) for failover + persona + intent injection",
+    "RULE-6 NO DOMAIN BIAS: user is a clinician. Do NOT default to social epidemiology / nutrition / lifestyle framing when they request clinical topics. Default to mechanism / equipoise / guideline-gap / RWE / safety-signal reasoning.",
+    "RULE-7 NO PLACEHOLDER TOKENS: never write repeating filler words (any language) as a substitute for the actual word. If uncertain about a term, use English or skip the sentence."
   ],
   "key_assets_by_size": {
-    "data/raw": "2853 MB (KYRBS/KNHANES .sav files)",
-    "data/oa_papers": "689 MB (12,301 PMC OA full-text — DO NOT claim missing)",
-    "data/chromadb": "262 MB (papers=20894 chunks + research_wiki + conversation_memory collections)",
-    "data/library": "46 MB",
-    "data/medical_knowledge_seed": "6 MB (typology_catalog + humanize_catalog + vocabulary)",
+    "data/raw": "2853 MB (KYRBS 21 waves; user adds other sav/csv as needed)",
+    "data/oa_papers": "689 MB (12,301 PMC OA full-text — biased toward open access / public health / nutrition. Clinical Rx, RCT, guidelines from closed sources NOT in seed.)",
+    "data/chromadb": "262 MB (papers=20894 chunks)",
+    "data/medical_knowledge_seed": "6 MB (typology + humanize + vocabulary catalogs)",
     "data/knowledge_graph": "13 MB (10005 nodes NetworkX)",
-    "data/runtime": "14 MB (events.db + tasks + budget + idempotency)"
+    "data/runtime": "14 MB (events + tasks + budget)"
   },
-  "active_focus_2026_06_01": [
-    "Seed asset 3-stage pipeline (RAG attach + typology + humanize + anti-AI + Yoosun finalize) — wired in paper_writer FIX 10-15",
-    "Memory injection hook (.claude/hooks/preprompt_memory_inject.ps1) — pre-prompt UserPromptSubmit event",
-    "Sapphire glass light theme — AI Visibility palette, thin borders, dark-card quick actions with white text + left-align + padding-left"
-  ],
-  "recent_failures_to_remember": [
-    {
-      "date": "2026-06-01",
-      "what": "claimed data/oa_papers was missing because only checked data/pmc_papers (0.3 MB)",
-      "reality": "data/oa_papers had 689 MB / 12,301 papers all along; MEMORY.md indexed it",
-      "rule_added": "feedback_data_inventory_protocol.md — grep MEMORY + ls data/ + grep ARCH before any 'missing' claim"
-    },
-    {
-      "date": "2026-05-31",
-      "what": "claimed 'PDF values 100% match' without actually running analysis",
-      "reality": "values were illustrative defaults; StatBridge + KYRBSLoader never invoked",
-      "rule_added": "feedback_no_excuses_absolute_rule.md"
-    }
-  ],
+  "known_seed_bias": "OA papers fetched from Europe PMC OA Subset → over-represented: public health, environmental health, nutrition, epidemiology. Under-represented: pharmacology, clinical guidelines, surgical outcomes, oncology RCT. When user requests clinical topic, supplement reasoning beyond seed retrieval.",
   "single_entry_points": {
-    "llm_call": "src.llm.get_llm_client(task=...) → 3-way failover + persona + intent + provenance + tracing auto",
-    "system_prompt_compose": "src.llm.claude_client.build_base_system(base, task) → persona + prompts + seed + insight + reviewer + design + intent",
-    "harness_facade": "src.agent.harness.get_harness(owner, task) → events + budget + safety + memory + persona + llm + pool single object",
-    "paper_writing": "src.research.paper_writer.PaperWriter().write_full_paper_with_stats(...) → RAG + typology + humanize + anti-AI + Yoosun all wired",
-    "memory_write": "src.memory.router.write(kind, content, meta) → gate + scorer + lifecycle",
-    "events_log": "src.runtime.events.append(type, payload) → append-only audit"
+    "llm_call": "src.llm.get_llm_client(task=...)",
+    "system_prompt_compose": "src.llm.claude_client.build_base_system(base, task)",
+    "harness_facade": "src.agent.harness.get_harness(owner, task)",
+    "paper_writing": "src.research.paper_writer.PaperWriter().write_full_paper_with_stats(...)",
+    "memory_write": "src.memory.router.write(kind, content, meta)",
+    "events_log": "src.runtime.events.append(type, payload)"
   },
-  "architecture_section_count": 15,
-  "memory_index_count": 36,
   "do_not": [
     "Do not use ClaudeClient directly. Use get_llm_client.",
     "Do not skip audit_wiring.py after creating new symbols.",
     "Do not claim a directory is empty without `ls` it.",
-    "Do not write markdown headers (###) into paper_writer output — they leak into docx."
+    "Do not write markdown headers (###) into paper_writer output.",
+    "Do not narrow user requests to a single specialty unless they ask.",
+    "Do not return public-health framing when user requests clinical topics.",
+    "Do not insert repeating placeholder tokens in responses."
   ]
 }

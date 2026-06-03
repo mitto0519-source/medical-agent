@@ -32,6 +32,95 @@ from typing import List
 
 # ── 대표적 추구 유형 카탈로그 (예시 — 확장 가능) ──────────────────────────
 
+CLINICAL_ORIENTATION_TYPES = [
+    {
+        "slug": "clinical_unanswered_question",
+        "label": "Clinical Unanswered Question — RCT does not cover this patient",
+        "hint": "주요 RCT가 답하지 못한 subpopulation·시나리오. Guideline 권고가 약한 자리.",
+        "imprint_labels": ["unanswered_clinical_question", "rct_subpopulation_gap",
+                            "guideline_weak_recommendation", "real_world_decision_gap"],
+        "voice_tone": ["clinician-facing", "decision-oriented", "uncertainty-acknowledging"],
+        "section_weight": {
+            "Introduction": "기존 RCT의 inclusion/exclusion 한계 명시 → 이 환자군은 답 없음",
+            "Methods": "trial emulation framework 또는 target trial 명시",
+            "Discussion": "guideline 적용 시점·환자군 명시, 다음 RCT 설계 방향 제안",
+        },
+        "avoid": ["epidemiologic burden framing", "lifestyle factor framing"],
+    },
+    {
+        "slug": "drug_safety_signal",
+        "label": "Drug Safety Signal — post-marketing AE detection",
+        "hint": "RCT에서 못 잡은 rare/long-term AE를 real-world data로 탐지.",
+        "imprint_labels": ["pharmacovigilance", "adverse_event_detection",
+                            "self_controlled_case_series", "disproportionality_analysis"],
+        "voice_tone": ["safety-focused", "regulator-aware", "mechanistic when possible"],
+        "section_weight": {
+            "Introduction": "약물 작용기전 → 예상 AE → RCT 한계 (sample size, follow-up)",
+            "Methods": "SCCS / new-user active-comparator design / negative control",
+            "Results": "exposure window별 IRR + sensitivity",
+            "Discussion": "FDA/EMA/MFDS 시그널 비교, 임상의 처방 결정 implication",
+        },
+        "avoid": ["public-health burden opening", "ecological inference"],
+    },
+    {
+        "slug": "trial_emulation",
+        "label": "Target Trial Emulation (Hernán framework)",
+        "hint": "Observational data로 가상의 RCT를 protocol 단위로 emulation.",
+        "imprint_labels": ["target_trial_emulation", "hernan_framework",
+                            "active_comparator_new_user", "clone_censor_weight"],
+        "voice_tone": ["epidemiologic methods rigor", "causal language careful"],
+        "section_weight": {
+            "Methods": "target trial protocol table (eligibility/intervention/assignment/outcome/follow-up/analysis)",
+            "Results": "intention-to-treat + per-protocol with IPW",
+            "Discussion": "RCT 결과와 일치 여부, 외적 타당성",
+        },
+        "avoid": ["weak adjustment", "naive PSM only"],
+    },
+    {
+        "slug": "biomarker_validation",
+        "label": "Biomarker / Risk Score Validation",
+        "hint": "기존 또는 신규 biomarker·예측모델의 임상 검증 (validation cohort).",
+        "imprint_labels": ["biomarker_validation", "prediction_model_validation",
+                            "tripod_compliant", "calibration_discrimination"],
+        "voice_tone": ["TRIPOD-aligned", "clinical utility focus"],
+        "section_weight": {
+            "Methods": "biomarker measurement protocol, derivation vs validation cohort",
+            "Results": "AUC, calibration plot, decision curve analysis",
+            "Discussion": "임상 적용 cutoff, clinical utility",
+        },
+        "avoid": ["effect size only without clinical utility"],
+    },
+    {
+        "slug": "guideline_gap",
+        "label": "Guideline Gap — RWE for under-represented patient",
+        "hint": "가이드 권고가 약하거나 부재한 patient subgroup에 대한 RWE.",
+        "imprint_labels": ["guideline_gap", "weak_recommendation_evidence",
+                            "underrepresented_subgroup", "comparative_effectiveness"],
+        "voice_tone": ["guideline-aware", "subgroup-precise"],
+        "section_weight": {
+            "Introduction": "current guideline 인용 + 권고 등급 명시 + gap 정의",
+            "Methods": "subgroup analysis pre-specified, effect modification test",
+            "Discussion": "guideline 개정 시 고려할 evidence 위치",
+        },
+        "avoid": ["overstating guideline change implication"],
+    },
+    {
+        "slug": "mechanism_translational",
+        "label": "Mechanism → Biomarker → Outcome translational chain",
+        "hint": "분자/세포 기전 → biomarker → 임상 endpoint의 연결.",
+        "imprint_labels": ["translational_chain", "mechanism_biomarker_outcome",
+                            "mediator_analysis", "pathway_specific"],
+        "voice_tone": ["mechanistic", "translational"],
+        "section_weight": {
+            "Introduction": "biological pathway 명시 → 임상 가설 도출",
+            "Methods": "mediator measurement + 4-way decomposition or G-computation",
+            "Discussion": "mechanism이 outcome을 얼마나 매개하는지, druggable target",
+        },
+        "avoid": ["mechanism speculation without measurement"],
+    },
+]
+
+
 ORIENTATION_TYPES = [
     {
         "slug": "novelty",
@@ -121,18 +210,29 @@ ORIENTATION_TYPES = [
 
 @dataclass
 class PaperOrientation:
-    """이 논문이 추구하는 유형 (다중 선택 가능)."""
+    """이 논문이 추구하는 유형 (다중 선택 가능).
+
+    공중보건/역학 5개 + 임상 reasoning 6개. 사용자 분과/주제에 따라 임의 조합.
+    """
+    # epidemiology-leaning (original 5)
     novelty: bool = False
     consistency: bool = False
     innovation: bool = False
     public_health: bool = False
     methodological_rigor: bool = False
-    # 사용자가 자유롭게 추가하는 추구 유형 (위 5개에 없는 것)
+    # clinical reasoning (added 2026-06-04)
+    clinical_unanswered_question: bool = False
+    drug_safety_signal: bool = False
+    trial_emulation: bool = False
+    biomarker_validation: bool = False
+    guideline_gap: bool = False
+    mechanism_translational: bool = False
+    # 사용자가 자유롭게 추가
     custom_notes: List[str] = field(default_factory=list)
 
     def selected(self) -> List[dict]:
         out = []
-        for d in ORIENTATION_TYPES:
+        for d in (ORIENTATION_TYPES + CLINICAL_ORIENTATION_TYPES):
             if getattr(self, d["slug"], False):
                 out.append(d)
         return out
@@ -195,9 +295,10 @@ class PaperOrientation:
 
 
 def list_orientation_types() -> List[dict]:
-    """UI multi-select용."""
-    return [{"slug": d["slug"], "label": d["label"], "hint": d["hint"]}
-            for d in ORIENTATION_TYPES]
+    """UI multi-select용 — epidemiology 5 + clinical 6 = 11 카테고리."""
+    return [{"slug": d["slug"], "label": d["label"], "hint": d["hint"],
+              "category": "clinical" if d in CLINICAL_ORIENTATION_TYPES else "epidemiology"}
+            for d in (ORIENTATION_TYPES + CLINICAL_ORIENTATION_TYPES)]
 
 
 # ── 후방 호환 alias (이전 명명) ──────────────────────────────────────────

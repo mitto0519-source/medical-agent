@@ -500,12 +500,25 @@ Keep the author's academic writing style. Output ONLY the improved section text 
         # ── ★ FIX 11 (시드 12,301편 회로 연결): 섹션별 query로 RAG retrieval ──
         # data/chromadb의 papers 컬렉션(20,894 chunks)에서 섹션에 맞는 실 발췌를
         # 끌어와 user_prompt에 박는다. 지금까지는 self._rag=None이라 한 줄도 안 박혔음.
-        SECTION_QUERIES = {
-            "introduction": f"{exposure} {outcome} {population} epidemiology adolescent public health background",
-            "methods":      f"{exposure} {outcome} {design} survey-weighted logistic regression covariate adjustment",
-            "results":      f"{exposure} {outcome} odds ratio confidence interval subgroup sex stratified",
-            "discussion":   f"{exposure} {outcome} mechanism limitation public health policy implication",
-        }
+        # ★ 2026-06-04: 고정 "epidemiology / public health" 단어 제거 →
+        # 토픽·design 의존 동적 쿼리. 임상 토픽이면 mechanism / safety / RCT 양식 검색.
+        _clinical_topic = any(kw in (topic or "").lower() for kw in
+            ("drug","trial","cohort","emulation","biomarker","mechanism","safety",
+             "guideline","rwe","prescription","surgery","ade","adverse"))
+        if _clinical_topic:
+            SECTION_QUERIES = {
+                "introduction": f"{exposure} {outcome} {population} mechanism background clinical context",
+                "methods":      f"{exposure} {outcome} {design} target trial covariate confounding",
+                "results":      f"{exposure} {outcome} effect estimate confidence interval subgroup heterogeneity",
+                "discussion":   f"{exposure} {outcome} mechanism limitation guideline implication clinical decision",
+            }
+        else:
+            SECTION_QUERIES = {
+                "introduction": f"{exposure} {outcome} {population} background",
+                "methods":      f"{exposure} {outcome} {design} regression covariate adjustment",
+                "results":      f"{exposure} {outcome} odds ratio confidence interval subgroup",
+                "discussion":   f"{exposure} {outcome} mechanism limitation implication",
+            }
         section_rag_blocks: Dict[str, str] = {}
         if self._rag is not None:
             for sec_key, q in SECTION_QUERIES.items():
