@@ -317,12 +317,16 @@ print(f"  Overall: aOR per 1-level = {overall_or['or']:.3f} ({overall_or['ci_low
 
 fig3 = {"overall": overall_or, "subgroups": {}}
 
+# ★ 2026-06-03: Stata DO v2.4 STEP 13 정본 — 7 stratifier, Sex 제외
+# (Sex는 Table 3 + Figure 1(sex marginsplot)에서 cover)
 SUBGROUPS = [
-    ("sex",             [1, 2],       [c for c in cov_m2 if c != "sex_2"]),
     ("age_cat",         [1, 2, 3],    [c for c in cov_m2 if not c.startswith("age_cat_")]),
     ("bmi_cat",         [1, 2, 3],    [c for c in cov_m2 if not c.startswith("bmi_cat_")]),
     ("ses3",            [1, 2, 3],    [c for c in cov_m2 if not c.startswith("ses3_")]),
     ("academic3",       [1, 2, 3],    [c for c in cov_m2 if not c.startswith("academic3_")]),
+    ("smartphone_tert", [1, 2, 3],    cov_m2),
+    ("pa_cat",          [1, 2, 3],    [c for c in cov_m2 if not c.startswith("pa_cat_")]),
+    ("br_skip",         [0, 1],       [c for c in cov_m2 if c != "br_skip"]),
 ]
 
 from scipy import stats as _st
@@ -342,9 +346,15 @@ for col, levels, cov_set in SUBGROUPS:
         if or_l:
             print(f"    level {lev}: aOR={or_l['or']:.3f} ({or_l['ci_low']:.3f}-{or_l['ci_high']:.3f}), n={len(sub):,}")
 
-    # P_interaction (Wald test)
+    # P_interaction (Wald test) — Stata: testparm c.zero_freq#i.<strat>
     strat_dums, inter_cols = [], []
-    for lev in levels[1:]:
+    # br_skip은 binary (level 0,1)이므로 dummy = br_skip 컬럼 자체
+    if col == "br_skip":
+        cc["zf_x_brskip"] = cc["zero_freq"] * cc["br_skip"]
+        inter_cols = ["zf_x_brskip"]
+        strat_dums = ["br_skip"]
+    else:
+      for lev in levels[1:]:
         dum = f"{col}_{int(lev)}"
         if dum in cc.columns:
             strat_dums.append(dum)
