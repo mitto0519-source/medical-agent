@@ -45,7 +45,7 @@ def main():
         page.wait_for_timeout(4000)
         page.screenshot(path=str(OUT / "paper_flow_01_ez_home.png"), full_page=True)
 
-        # 2. 입력바에 양식
+        # 2. 입력바에 
         print("[2] type research prompt into textarea")
         prompt = "ZCB와 청소년 우울증 연관성을 KYRBS 2025로 분석한 논문 한 편 작성해줘"
         try:
@@ -56,20 +56,20 @@ def main():
             print(f"    textarea fill failed: {e}")
             report["steps"].append({"step": "fill_prompt", "error": str(e)})
 
-        # 3. Build 클릭 → orchestrated paper run (5섹션 양식 100초 양식 양식)
+        # 3. Build 클릭 → orchestrated paper run (5섹션 양식 100초 ...)
         print("[3] click Build (wait up to 180s for full 5-section paper)")
         try:
             build = page.get_by_role("button", name=re.compile(r"Build|✨")).first
             build.click(timeout=5000)
             for i in range(36):
                 page.wait_for_timeout(5000)
-                # manuscript 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식
+                # manuscript ...
                 spinner = page.locator('[data-testid="stSpinner"]').count()
                 intro = page.evaluate("() => (document.body.innerText.match(/Introduction|Methods|Results|Discussion/g)||[]).length")
                 body_len = page.evaluate("() => document.body.innerText.length")
                 print(f"    wait {(i+1)*5}s  spinner={spinner}  section_kw_hits={intro}  body={body_len}")
                 if spinner == 0 and intro >= 4 and body_len > 3000:
-                    print("    ✓ 5섹션 양식 양식 양식 — 양식 양식 양식")
+                    print("    ✓ 5섹션 ... — ...")
                     break
         except Exception as e:
             print(f"    Build click failed: {e}")
@@ -105,14 +105,14 @@ def main():
             print(f"      ! {a[:200]}")
         print(f"    tabs: {probe['tabs_present']}")
 
-        # 5. workspace의 chat input에 보조 메시지 양식 양식 양식 → agentic step 트리거
+        # 5. workspace의 chat input에 보조 메시지 ... → agentic step 트리거
         print("[5] try submit a chat message in workspace")
         try:
             # chat form 안의 textarea
             ta = page.locator('textarea').last
-            ta.fill("KYRBS 2025로 ZCB 노출 → 우울증 결과 분석해서 Introduction과 Methods 섹션을 써줘. 통계는 logistic regression 양식 양식 양식.")
+            ta.fill("KYRBS 2025로 ZCB 노출 → 우울증 결과 분석해서 Introduction과 Methods 섹션을 써줘. 통계는 logistic regression ....")
             page.wait_for_timeout(600)
-            # submit (➤ 양식 양식 양식 'send')
+            # submit (➤ ... 'send')
             send = page.get_by_role("button", name=re.compile(r"^➤$|Build|✨")).first
             send.click(timeout=4000)
             print("    submitted; waiting 35s for LLM/tool loop...")

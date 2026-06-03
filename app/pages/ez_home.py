@@ -37,7 +37,7 @@ try:
     )
 except Exception:
     pass  # streamlit_app.py가 이미 set_page_config 호출했으면 silently skip
-# 양식 진입 즉시 chrome 숨김 — sapphire가 박히기 전 시점에 raw 양식 노출 차단
+#  진입 즉시 chrome 숨김 — sapphire가 박히기 전 시점에 raw  노출 차단
 st.markdown(
     "<style>"
     "#MainMenu{visibility:hidden!important;display:none!important;}"
@@ -334,7 +334,7 @@ def render() -> None:
         st.markdown("<div class='sg-card' style='color:#A3A3B8;'>"
                      "★ 표시한 프로젝트가 여기 나타납니다.</div>", unsafe_allow_html=True)
     with tab_template:
-        # 템플릿 — Lovable처럼 시드된 양식
+        # 템플릿 — Lovable처럼 시드된 
         tpl_html = (
             "<div class='sg-project-grid'>"
             "<div class='sg-project-card'>"

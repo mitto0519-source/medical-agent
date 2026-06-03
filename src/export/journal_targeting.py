@@ -48,7 +48,7 @@ class JournalTargeting:
     reader_assumption: str = ""   # 가정 독자 (reviewer 양식)
     voice_tone: str = ""          # 권장 톤
     section_priorities: dict = field(default_factory=dict)   # 섹션별 강조 weight
-    avoid: List[str] = field(default_factory=list)           # 회피 양식
+    avoid: List[str] = field(default_factory=list)           # 회피 
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -105,7 +105,7 @@ JOURNALS: dict[str, JournalTargeting] = {
         ],
         angle=(
             "청소년기는 뇌 성숙·정체성 형성의 결정적 시기로, ZCB 섭취가 이 시기에 미치는 "
-            "성별 특이적 효과를 처음 보여준다. 양식 보강이 아닌 행동·정책 timing의 함의."
+            "성별 특이적 효과를 처음 보여준다.  보강이 아닌 행동·정책 timing의 함의."
         ),
         reader_assumption=(
             "Adolescent health 전문 reviewer (소아청소년과·청소년 정신건강 전문의·역학자). "
@@ -115,9 +115,9 @@ JOURNALS: dict[str, JournalTargeting] = {
         section_priorities={
             "Introduction": "adolescent developmental window 중심",
             "Discussion": "sex-diff implication + adolescent-specific timing",
-            "Abstract": "발달 시기 + 성별 차이 양식 두 문장에 명시",
+            "Abstract": "발달 시기 + 성별 차이  두 문장에 명시",
         },
-        avoid=["성인 데이터와 단순 비교", "general adult literature 양식 의존"],
+        avoid=["성인 데이터와 단순 비교", "general adult literature  의존"],
     ),
 
     "jama_open": JournalTargeting(

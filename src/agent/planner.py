@@ -152,7 +152,7 @@ class Planner:
             n3 = TaskNode(id="components_topic",
                            action="find_components",
                            args={"kind": "topic_sentence", "n": 4},
-                           rationale="단락 시작 양식 풀")
+                           rationale="단락 시작  풀")
             n4 = TaskNode(id="components_hedge",
                            action="find_components",
                            args={"kind": "hedging", "n": 6, "author_style": "yoosun_cho"},
@@ -188,7 +188,7 @@ class Planner:
             n2 = TaskNode(id="components_methods",
                            action="find_components",
                            args={"kind": "methods_boilerplate", "n": 4},
-                           rationale="Methods 양식 풀")
+                           rationale="Methods  풀")
             n3 = TaskNode(id="compose_draft",
                            action="compose",
                            args={"section": "Methods"},

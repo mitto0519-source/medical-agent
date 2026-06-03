@@ -1,4 +1,4 @@
-"""로그인 화면 sapphire 양식 적용 확인."""
+"""로그인 화면 sapphire  적용 확인."""
 from __future__ import annotations
 import io, sys
 from pathlib import Path

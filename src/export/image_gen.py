@@ -6,7 +6,7 @@
     이 모듈은 두 경로 제공:
 
     1) Mermaid (text → SVG/PNG): 정확한 medical flow (PRISMA, study design)
-       - LLM이 mermaid syntax 생성 → mermaid CLI 또는 mermaid.ink 양식 렌더
+       - LLM이 mermaid syntax 생성 → mermaid CLI 또는 mermaid.ink  렌더
        - 환각 위험 낮음 (text-based)
 
     2) DALL-E / Stable Diffusion (text → image): conceptual illustration
@@ -38,7 +38,7 @@ _log = get_logger(__name__)
 # ── Mermaid: LLM → syntax → SVG/PNG via mermaid.ink (외부 의존 없음) ─────────
 
 def _llm_to_mermaid_syntax(description: str, kind: str = "flowchart") -> str:
-    """LLM에 mermaid syntax 생성시킴. kind에 따라 양식 제시."""
+    """LLM에 mermaid syntax 생성시킴. kind에 따라  제시."""
     from src.llm import get_llm_client
     client = get_llm_client(task="fast")
 
@@ -117,7 +117,7 @@ def gen_dalle_image(prompt: str, *, size: str = "1024x1024",
     try:
         from openai import OpenAI
         client = OpenAI()
-        # 의학 도메인 안전성 — prompt에 medical illustration 양식 명시
+        # 의학 도메인 안전성 — prompt에 medical illustration  명시
         enhanced = (
             f"Medical research illustration: {prompt}. "
             f"Style: professional, journal-quality, monochrome with accent color, "

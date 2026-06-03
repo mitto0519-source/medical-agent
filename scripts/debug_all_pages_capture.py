@@ -1,4 +1,4 @@
-"""모든 페이지 sapphire 양식 + chrome hidden 양식 일괄 검수.
+"""모든 페이지 sapphire 양식 + chrome hidden  일괄 검수.
 
 대상: ez_home, project_workspace, backlog, dashboard, memory_explorer, workflow
 각 페이지 진입 → DOM probe → 스크린샷.

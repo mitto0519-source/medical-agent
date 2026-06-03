@@ -18,7 +18,7 @@ intent_sensor에 임프린트하여 이후 모든 LLM 호출의 톤·구성·뉘
     METHODOLOGICAL_RIGOR — 통계·design의 견고성을 추구
 
 이것들은 폐쇄적 enum이 아니다. 논문 작성자가 "여성 청소년의 사회문화적 압력"
-같은 자유 양식 추구 유형을 추가할 수 있다 (custom_notes).
+같은 자유  추구 유형을 추가할 수 있다 (custom_notes).
 
 API:
     PaperOrientation(novelty=True, ...).apply_to_intent(owner_email)

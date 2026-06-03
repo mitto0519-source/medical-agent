@@ -316,7 +316,7 @@ def _render_topbar(project: dict):
                         st.caption(f"**Strength**: {len(jt.strengths_to_emphasize)}개")
                         for s in jt.strengths_to_emphasize:
                             st.markdown(f"- {s[:160]}")
-                        if st.button(f"✨ {slug.upper()} 양식 임프린트",
+                        if st.button(f"✨ {slug.upper()}  임프린트",
                                        key="ws_journal_apply",
                                        use_container_width=True, type="primary"):
                             ok = apply_to_intent(slug,
@@ -533,7 +533,7 @@ def _figures_list() -> list[dict]:
 
 
 def _render_chat_event(m: dict, *, idx: int = 0):
-    """user/assistant/tool_use/tool_result/system — rich content 양식 분기 렌더.
+    """user/assistant/tool_use/tool_result/system — rich content  분기 렌더.
     VS Code less/more 양식: 긴 콘텐츠는 collapsible <details>로 접고 펴기.
     짧은 것(<300자, default tool_use)은 그대로 표시."""
     role = m.get("role", "system")
@@ -803,7 +803,7 @@ def _render_chat_left(project: dict, pid: str):
         project["messages"] = messages
         _save_project(pid, project)
         st.session_state["_ws_auto_run_pending"] = initial   # 이번 rerun에서 agentic step 실행
-    # 미완 작업: 직전 rerun에 _ws_auto_run_pending이 set돼 있으면 양식 자동 실행
+    # 미완 작업: 직전 rerun에 _ws_auto_run_pending이 set돼 있으면  자동 실행
     # _orchestrated_paper_run 호출 — KYRBS 로드 → StatBridge → 5섹션 자동 작성 → safety 게이트
     auto_run = st.session_state.pop("_ws_auto_run_pending", None)
     if auto_run:
@@ -1172,7 +1172,7 @@ def _render_preview_right(project: dict):
                     st.markdown("</div>", unsafe_allow_html=True)
 
     with tabs[2]:
-        # ── ZCB-depression 표준 표 4종 (NEJM 양식) — 사용자 PDF 양식 그대로 ──
+        # ── ZCB-depression 표준 표 4종 (NEJM 양식) — 사용자 PDF  그대로 ──
         st.markdown("<div class='sg-card'>", unsafe_allow_html=True)
         c1, c2 = st.columns([3, 1])
         with c1:
@@ -1198,16 +1198,16 @@ def _render_preview_right(project: dict):
                 with st.expander(f"📊 {name}", expanded=(name == "Table 1")):
                     st.markdown(html_str, unsafe_allow_html=True)
         else:
-            # 미생성 시 — 기본 4종을 즉시 표시 (사용자 PDF 양식 그대로)
+            # 미생성 시 — 기본 4종을 즉시 표시 (사용자 PDF  그대로)
             try:
                 from src.export.zcb_dep_tables import build_all_tables
                 preview_htmls = build_all_tables(survey_year=2025)
-                st.caption("⬇ 기본 양식 미리보기 (위 '🔬 생성' 누르면 현재 통계로 갱신)")
+                st.caption("⬇ 기본  미리보기 (위 '🔬 생성' 누르면 현재 통계로 갱신)")
                 for name, html_str in preview_htmls.items():
                     with st.expander(f"📊 {name}", expanded=(name == "Table 1")):
                         st.markdown(html_str, unsafe_allow_html=True)
             except Exception as e:
-                st.warning(f"표 양식 로드 실패: {e}")
+                st.warning(f"표  로드 실패: {e}")
 
         # legacy tables (chat에서 생성된 JSON 양식)
         legacy_tables = project.get("tables", [])
@@ -1226,7 +1226,7 @@ def _render_preview_right(project: dict):
         st.markdown("<div class='sg-card'>", unsafe_allow_html=True)
         st.markdown("**📚 Reference Library**")
         refs = project.get("references", []) or []
-        st.caption(f"등록된 인용: **{len(refs)}**개 · Vancouver 양식 자동")
+        st.caption(f"등록된 인용: **{len(refs)}**개 · Vancouver  자동")
 
         # 현재 references 표시
         if refs:
@@ -1266,12 +1266,12 @@ def _render_preview_right(project: dict):
                 from src.export.reference_library import ReferenceLibrary
                 slug = (project.get("topic") or {}).get("title", pid)[:60] or pid
                 lib = ReferenceLibrary(paper_slug=slug)
-                # 기존 refs 양식 동기화
+                # 기존 refs  동기화
                 for r in refs:
                     lib.add_from_dict(r)
                 added = lib.search_and_add(pq, max_results=int(pn))
                 lib.save()
-                # project 양식 다시 반영
+                # project  다시 반영
                 project["references"] = [r.to_dict() for r in lib.get_refs()]
                 _save_project(pid, project)
                 st.success(f"✓ {added}개 인용 추가 → 총 {len(lib)}개")
@@ -1313,7 +1313,7 @@ def _render_preview_right(project: dict):
                        else "#F59E0B" if rep_now.ai_style_score <= 50 else "#F43F5E")
                 st.markdown(
                     f"<div style='display:flex;gap:24px;align-items:center;'>"
-                    f"<div><div style='color:#A3A3B8;font-size:0.74rem;'>AI 양식 점수 (낮을수록 자연스러움)</div>"
+                    f"<div><div style='color:#A3A3B8;font-size:0.74rem;'>AI  점수 (낮을수록 자연스러움)</div>"
                     f"<div style='color:{cls};font-size:1.6rem;font-weight:700;'>{rep_now.ai_style_score} / 100</div></div>"
                     f"<div style='color:#A3A3B8;font-size:0.78rem;'>"
                     f"cliche {rep_now.overused_vocab_count}개 · em-dash {rep_now.em_dash_per_1k_words}/1k · "
@@ -1444,7 +1444,7 @@ def _render_preview_right(project: dict):
 
 
 def _empty_sections_notice() -> dict:
-    """아직 분석이 안 됐을 때 보여줄 안내 (예전엔 _demo_sections로 가짜 ZCB 양식 보임 → 사용자가
+    """아직 분석이 안 됐을 때 보여줄 안내 (예전엔 _demo_sections로 가짜 ZCB  보임 → 사용자가
     'Abstract만 나옴, 날림 양식'으로 혼동. 2026-05-30: 안내로 교체)."""
     notice = ("아직 본문이 생성되지 않았습니다. 입력바에 연구 아이디어를 적고 ✨ Build를 누르면 "
               "(1) KYRBS 데이터 자동 로드 → (2) 통계 분석(StatBridge) → "
@@ -1802,7 +1802,7 @@ def _orchestrated_paper_run(prompt: str, project: dict, pid: str) -> str:
         )
         slug = (prompt[:60].strip() or "manuscript").replace(" ", "_")
         lib = ReferenceLibrary(paper_slug=slug)
-        # 주제 키워드 영문 변환 — exposure/outcome 양식
+        # 주제 키워드 영문 변환 — exposure/outcome 
         query_en = f"{exposure} {outcome} adolescent Korean".replace("_", " ")
         added = lib.search_and_add(query_en, max_results=8)
         if added > 0:

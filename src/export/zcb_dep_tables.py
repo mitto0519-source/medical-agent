@@ -3,7 +3,7 @@
 배경 (2026-05-30):
     사용자가 보낸 Tables_publication_format.pdf의 Table 1 / 2 / 3 / Supp Table 1 양식이
     실제 제출용 표준. 이 모듈은 그 양식을 무조건 표준으로 박아, KYRBS 통계 결과만 들어가면
-    자동으로 동일한 학술지 양식 표(HTML + DOCX)를 생성한다.
+    자동으로 동일한 학술지  표(HTML + DOCX)를 생성한다.
 
 지원 4종:
     1) Table 1: Baseline characteristics by ZCB consumption frequency (4 groups + Total)
@@ -13,8 +13,8 @@
 
 양식 (사용자 PDF 그대로):
     - Top / Header bottom / Bottom horizontal lines only (세로선 없음)
-    - 굵은 subgroup heading + indent 양식 값
-    - Mean ± SD 양식 / N (%) 양식
+    - 굵은 subgroup heading + indent  값
+    - Mean ± SD 양식 / N (%) 
     - P italic, "(N = 50,972)" 타이틀
     - 각주 superscript (ᵃ ᵇ ᶜ ᵈ ᵉ)
     - Abbreviations: 줄 italic

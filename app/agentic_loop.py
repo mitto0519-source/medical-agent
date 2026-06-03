@@ -1,4 +1,4 @@
-"""Agentic loop for the Sapphire workspace — VS Code / Claude Code 양식 그대로.
+"""Agentic loop for the Sapphire workspace — VS Code / Claude Code  그대로.
 
 설계 (사용자 요구):
   · 사용자는 우측 preview(docx)를 본다
@@ -111,7 +111,7 @@ TOOL_SCHEMAS: List[dict] = [
     },
     {
         "name": "find_components",
-        "description": "ComponentLibrary에서 reusable microcomponent 양식 N개 sample. "
+        "description": "ComponentLibrary에서 reusable microcomponent  N개 sample. "
                         "kind: hedging|stat_report|transition|topic_sentence|"
                         "methods_boilerplate|mechanism_phrase|limitation|"
                         "figure_caption_pattern|table_caption_pattern|"
@@ -621,7 +621,7 @@ def _h_find_components(inputs):
         "kind": kind,
         "n": len(hits),
         "hint": ("content layer — substance/내용. draft 작성에 활용." if layer == "content"
-                  else ("style layer — author voice. draft 합성 후 입힐 양식 풀."
+                  else ("style layer — author voice. draft 합성 후 입힐  풀."
                           if layer == "style" else "unknown kind")),
         "components": [{"id": h["id"], "text": h["text"][:400],
                          "source_pmid": h.get("source_pmid", ""),
@@ -958,7 +958,7 @@ def build_system_with_preview(base_prompt: str, project: dict,
         except Exception:
             pass
 
-        # ── AUTO COMPONENTS (재사용 가능한 양식 시드 — ComponentLibrary) ──
+        # ── AUTO COMPONENTS (재사용 가능한  시드 — ComponentLibrary) ──
         try:
             from src.library.components import get_library as _get_comp_lib
             comp_hint = _get_comp_lib().sample(

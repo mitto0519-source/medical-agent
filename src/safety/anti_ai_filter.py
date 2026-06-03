@@ -87,8 +87,8 @@ _OVERUSED_TRANSITIONS = [
     "In addition,", "On the other hand,",
 ]
 
-# 트라이콜론 리스트 — "X, Y, and Z" 양식 자체는 정상이나
-# 한 단락에 3+개 양식이면 AI 정형 양식
+# 트라이콜론 리스트 — "X, Y, and Z"  자체는 정상이나
+# 한 단락에 3+개 양식이면 AI 정형 
 _TRICOLON = re.compile(r"\b\w+, \w+,? (?:and|or) \w+\b", re.IGNORECASE)
 
 

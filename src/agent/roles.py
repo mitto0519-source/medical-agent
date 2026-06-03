@@ -50,7 +50,7 @@ ROLES: Dict[str, RoleSpec] = {
     ),
     "statistician": RoleSpec(
         name="statistician",
-        description="StatBridge 결과 해석, 통계 보고 양식 작성. 환각 차단.",
+        description="StatBridge 결과 해석, 통계 보고  작성. 환각 차단.",
         system_prompt=(
             "You are the STATISTICIAN agent. ALWAYS report numbers with 95% CI and P-value. "
             "Never invent statistics. Use exact format: aOR 1.27 (95% CI 1.03-1.56; P = 0.026). "

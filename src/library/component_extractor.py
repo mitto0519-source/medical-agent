@@ -87,7 +87,7 @@ _METHODS_PATTERNS = [
     r"(?:95\s*%|Ninety-five percent) confidence intervals? (?:were|was) (?:calculated|estimated|computed)[^.]{0,160}\.",
     # 표본추출 설계
     r"(?:Complex sampling|Survey|Stratified|Cluster|Multistage) design[^.]{0,160}\.",
-    # 보고 양식
+    # 보고 
     r"All (?:tests|analyses|p[- ]values?) (?:were|was) two[- ]sided[^.]{0,80}\.",
 ]
 _METHODS_RE = re.compile("|".join(f"(?:{p})" for p in _METHODS_PATTERNS), re.IGNORECASE)

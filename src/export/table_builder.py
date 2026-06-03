@@ -21,7 +21,7 @@ from src.config.logging_config import get_logger
 
 _log = get_logger(__name__)
 
-# ── 학술지 양식 색·간격 (template 미주입 시 fallback) ────────────────────────
+# ── 학술지  색·간격 (template 미주입 시 fallback) ────────────────────────
 _BORDER_BLACK = "000000"
 _TABLE_FONT = "Times New Roman"
 _TABLE_PT = 9
@@ -195,7 +195,7 @@ def _fmt_mean_sd(mean: Optional[float], sd: Optional[float]) -> str:
     return f"{mean:.2f} ± {sd:.2f}"
 
 
-# ── 학술지 양식 표 빌더 (재작성, 시그니처 호환) ──────────────────────────────
+# ── 학술지  표 빌더 (재작성, 시그니처 호환) ──────────────────────────────
 
 def baseline_characteristics_table(doc, data: List[Dict],
                                     caption: str = "Table 1. Baseline Characteristics"):

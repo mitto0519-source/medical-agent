@@ -32,7 +32,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 
 
 def build_figure1_prisma():
-    """사용자 제공 양식 그대로 — 3 box flow (top / right excluded / bottom).
+    """사용자 제공  그대로 — 3 box flow (top / right excluded / bottom).
     텍스트가 박스 안에 정확히 들어가도록 두 줄 분할 + 넉넉한 박스 폭."""
     fig, ax = plt.subplots(figsize=(13, 8.5))
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis("off")
@@ -161,7 +161,7 @@ def build_figure1_prisma():
 
 
 def build_figure2_sex():
-    """사용자 제공 양식 그대로 — sex stratified 단일 figure (Male/Female 라인 + 신뢰 영역).
+    """사용자 제공  그대로 — sex stratified 단일 figure (Male/Female 라인 + 신뢰 영역).
 
     제목 두 줄 양식:
         outer caption: "Figure 2. Predicted probability of Depression by zero-calorie beverage consumption frequency, KYRBS 2025 (N = 50,972)"

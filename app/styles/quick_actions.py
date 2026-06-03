@@ -18,7 +18,7 @@
 장점:
   · 한 군데서 정의 → 일관성
   · 새 action 추가/수정 한 군데
-  · slash + modal + seed 양식 자유 혼합
+  · slash + modal + seed  자유 혼합
 """
 from __future__ import annotations
 

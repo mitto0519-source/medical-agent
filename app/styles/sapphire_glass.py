@@ -6,7 +6,7 @@ DESIGN.md Section 9의 토큰을 Streamlit에 1회 주입. 새 페이지 진입 
 
 UI 컴포넌트 helpers:
     glass_card(html_body, *, key=None)  → 글래스 액션 카드
-    big_input(placeholder, key)         → EZ 양식 큰 입력바
+    big_input(placeholder, key)         → EZ  큰 입력바
     project_card(title, edited, image, status)  → 프로젝트 카드 (홈 그리드)
     workspace_tabs(...)                 → Manuscript/Figures/Tables/Supplement chip tabs
 """
@@ -27,7 +27,7 @@ def inject_sapphire_glass(*, hide_streamlit_chrome: bool = True) -> None:
     st.session_state[_INJECTED_FLAG] = True
 
     # Streamlit 자체 chrome 전수 숨김 (2026-05-30 — 스크린샷 2번의 Share/Star/Edit/GitHub/Menu
-    # 노출 사고 영구 차단). 새 Streamlit은 stToolbar/stActionButton 양식 추가됨.
+    # 노출 사고 영구 차단). 새 Streamlit은 stToolbar/stActionButton  추가됨.
     chrome_hide = """
         #MainMenu {visibility: hidden !important; display: none !important;}
         header[data-testid="stHeader"] {background: transparent !important;}
@@ -49,7 +49,7 @@ def inject_sapphire_glass(*, hide_streamlit_chrome: bool = True) -> None:
 
     st.markdown(f"""
 <style>
-/* ── Global root — Light palette (2026-06-01: AI Visibility 첨부 양식 톤다운) ── */
+/* ── Global root — Light palette (2026-06-01: AI Visibility 첨부  톤다운) ── */
 :root {{
   --sg-bg:          #F8FAFC;   /* slate-50, 거의 흰색 베이스 */
   --sg-bg-from:     #FFFFFF;
@@ -407,7 +407,7 @@ html, body, [data-testid="stApp"] {{
 .sg-action-card .sg-title {{ font-weight: 600; color: var(--sg-text); font-size: 0.92rem; }}
 .sg-action-card .sg-sub {{ color: var(--sg-text-sub); font-size: 0.80rem; }}
 
-/* ── Metric strip (AI Visibility 양식 KPI 블록) ─────────────────────── */
+/* ── Metric strip (AI Visibility  KPI 블록) ─────────────────────── */
 .sg-metric {{
   background: var(--sg-surface);
   border: 1px solid var(--sg-border);
@@ -483,7 +483,7 @@ def project_grid(projects: list[dict]) -> None:
 
 def metric_card(label: str, value: str, *, delta: str = "",
                  delta_kind: str = "pos") -> None:
-    """AI Visibility 양식 KPI 블록: label / value / delta(+x.x%).
+    """AI Visibility  KPI 블록: label / value / delta(+x.x%).
 
     delta_kind: 'pos' (emerald) | 'neg' (rose) | 'neutral' (sub-text)
     """

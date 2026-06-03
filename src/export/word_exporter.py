@@ -43,7 +43,7 @@ _TPL_CACHE: Optional[dict] = None
 
 
 def load_template(path: Optional[Path] = None) -> dict:
-    """단일 진실원본 양식 spec 로드. 캐시됨 — `reload_template()`로 무효화."""
+    """단일 진실원본  spec 로드. 캐시됨 — `reload_template()`로 무효화."""
     global _TPL_CACHE
     if _TPL_CACHE is None or path is not None:
         p = path or _TEMPLATE_PATH
@@ -151,7 +151,7 @@ def _set_paragraph(p, *, alignment: str = "justify", indent_cm: Optional[float] 
 
 def _build_title_page(doc, tpl: dict, title: str, authors: List[dict],
                       affiliations: List[str]):
-    """zcb_dep_v5 양식 page 1: 제목 중앙 굵게, 저자 중앙(superscript marker), affiliation 중앙."""
+    """zcb_dep_v5  page 1: 제목 중앙 굵게, 저자 중앙(superscript marker), affiliation 중앙."""
     font = tpl["font"]
     tp = tpl["title_page"]
 
@@ -211,7 +211,7 @@ def _build_title_page(doc, tpl: dict, title: str, authors: List[dict],
 
 
 def _build_abstract(doc, tpl: dict, abstract: Any, keywords: List[str]):
-    """zcb_dep_v5 양식 page 2: Abstract heading + Background/Methods/Results/Conclusion inline bold."""
+    """zcb_dep_v5  page 2: Abstract heading + Background/Methods/Results/Conclusion inline bold."""
     font = tpl["font"]
     ab = tpl["abstract"]
     spacing = tpl["spacing"]
@@ -321,7 +321,7 @@ _FIG_TABLE_RE = re.compile(r"\b(Figure|Table|Supplementary Table|Supplementary F
 
 
 def _add_text_with_inline_cites(p, text: str, font: dict):
-    """본문에 [1, 2] / Figure 1 / Table 1 / P < 0.001 등 의학 inline 양식 자동 적용."""
+    """본문에 [1, 2] / Figure 1 / Table 1 / P < 0.001 등 의학 inline  자동 적용."""
     cursor = 0
     # 합성 토큰: cite (대괄호 그대로 유지 — Vancouver), Figure/Table (Bold), italic P-value
     pattern = re.compile(
@@ -421,7 +421,7 @@ def _build_references(doc, tpl: dict, references: List[Dict]):
 
 
 def _render_vancouver_entry(p, ref: dict, font: dict, refs: dict):
-    """단일 reference를 Vancouver 양식 inline runs로 렌더."""
+    """단일 reference를 Vancouver  inline runs로 렌더."""
     sz = refs.get("entry_size_pt", font["reference_size_pt"])
     fam = font["family"]
 

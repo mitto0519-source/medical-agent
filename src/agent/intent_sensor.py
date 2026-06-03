@@ -22,7 +22,7 @@
 
 호출:
     sig = sense(prompt, prior_messages=messages, project=project, owner_email=email)
-    sig.to_system_block()  # 양식 system_prompt에 주입
+    sig.to_system_block()  #  system_prompt에 주입
 
 이 모듈은 빠른 휴리스틱 (regex + 빈도) 기반이라 외부 LLM 호출 없음 — agentic loop 매 step에 안전하게.
 복잡한 의도 추론은 build_system_with_preview에 이미 있는 trigger_analyzer + cognitive_activation이 수행.
@@ -66,7 +66,7 @@ _EMPHASIS_MARKERS_DEFAULT = [
     (r"interaction|상호작용|moderator|effect modif", "interaction_focus"),
 ]
 
-# 회피 신호 — 사용자가 빼고 싶어하는 양식
+# 회피 신호 — 사용자가 빼고 싶어하는 
 _AVOIDANCE_MARKERS_DEFAULT = [
     (r"너무\s*(많아|길어|장황|복잡|formal|academic)", "too_verbose"),
     (r"AI.?스러|로봇|뻔한|cliche|기계적", "anti_ai_tone"),
@@ -214,7 +214,7 @@ def _infer_user_persona(prior_messages: list, current_prompt: str) -> dict:
         "mixed"
     )
 
-    # 스타일 신호 — Yoosun 양식 hedging/표현 사용 흔적
+    # 스타일 신호 — Yoosun  hedging/표현 사용 흔적
     yoosun_indicators = bool(re.search(r"yoosun|조유선|hedg|consistent with|associated with",
                                          blob, re.IGNORECASE))
 

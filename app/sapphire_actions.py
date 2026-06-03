@@ -1,4 +1,4 @@
-"""Sapphire action dialogs — 러버블 양식 부가기능 모달.
+"""Sapphire action dialogs — 러버블  부가기능 모달.
 
 기존 단위 기능(신규성 확인 / 통계 / STROBE / Figure / 인용 등)을 **페이지 이동 없이**
 현재 ez_home/workspace 위에 `st.dialog`로 팝업한다. 결과를 inline 표시 +

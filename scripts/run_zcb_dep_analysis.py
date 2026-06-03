@@ -1,4 +1,4 @@
-"""STATA v2.4 INTEGRATED 양식 Python으로 그대로 재현 — 실제 KYRBS 2025로 산출.
+"""STATA v2.4 INTEGRATED  Python으로 그대로 재현 — 실제 KYRBS 2025로 산출.
 
 흐름 (STATA 코드 STEP 그대로):
   STEP 0-2: KYRBS 2025 로드 + 13-step exclusion → final N
@@ -53,12 +53,12 @@ raw_N = len(df_raw)
 print(f"   loaded raw N = {raw_N:,}")
 print(f"   columns sample: {list(df_raw.columns)[:30]}")
 
-# ── STEP 3-6: 변수 양식 양식 + complete-case 양식 양식 ──
-# KYRBSLoader가 이미 표준화한 양식 양식 양식 양식 양식 — 어떤 변수가 매핑됐는지 양식 양식
+# ── STEP 3-6: 변수 ... + complete-case ... ──
+# KYRBSLoader가 이미 표준화한 ... — 어떤 변수가 매핑됐는지 ...
 mapped = sorted(c for c in df_raw.columns if not c.startswith("_"))
 print(f"   total columns: {len(df_raw.columns)}, sample: {mapped[:25]}")
 
-# STATA 코드 양식 양식 양식 양식 양식 양식 양식 (loader 양식 양식 양식 양식 양식 양식 양식)
+# STATA 코드 ... (loader ...)
 # F_ZERO → zero_freq → zero_cat (4-level)
 # M_SAD → depression
 # sex / age → age_cat
@@ -74,8 +74,8 @@ print(f"   total columns: {len(df_raw.columns)}, sample: {mapped[:25]}")
 # pa_tot → pa_cat
 # int_spwd_tm + int_spwk_tm → smartphone_min
 
-# 변수명 양식 양식 양식 — loader가 어떤 이름으로 표준화했는지 정확히 확인
-# loader가 알아낸 표준 변수 양식 양식 양식: depression, zcb_freq, ssb_freq, screen_time, smoking, ...
+# 변수명 ... — loader가 어떤 이름으로 표준화했는지 정확히 확인
+# loader가 알아낸 표준 변수 ... 양식: depression, zcb_freq, ssb_freq, screen_time, smoking, ...
 print()
 print("[STEP 1-2] Variable mapping check:")
 expected = ["zcb_freq", "depression", "stress", "insufficient_sleep",
@@ -87,7 +87,7 @@ for v in expected:
     flag = "OK" if v in df_raw.columns else "MISS"
     print(f"   {flag:4s} {v}")
 
-# ── 양식 양식 양식 ──
+# ── ... ──
 # Outcome
 if "depression" not in df_raw.columns:
     print("ERROR: 'depression' column missing")
@@ -107,24 +107,24 @@ df["zero_cat"] = pd.cut(zf, bins=[-0.5, 1.5, 3.5, 5.5, 8],
 dep = pd.to_numeric(df["depression"], errors="coerce")
 unique_dep = sorted(dep.dropna().unique())
 print(f"\n[STEP 4] depression raw values: {unique_dep[:6]}")
-# StatBridge 양식 양식 양식 자동 binarize 양식 양식 양식 양식 — 양식 양식 양식
+# StatBridge ... 자동 binarize ... — ...
 if set(unique_dep) <= {0.0, 1.0}:
     df["dep01"] = dep
 else:
-    # 양식 양식 양식 양식 (1=No, 2=Yes) → max 양식 양식 1
+    # ... (1=No, 2=Yes) → max ... 1
     pos = max(unique_dep)
     df["dep01"] = (dep == pos).astype(float)
 print(f"   binarized: 0={(df['dep01']==0).sum():,}, 1={(df['dep01']==1).sum():,}")
 
-# 양식 양식 양식 양식 양식 양식 양식 — STATA 양식 양식 양식 양식 양식 양식 양식 양식 양식
+# ... — STATA ...
 # Age cat (12-13, 14-15, 16-18)
 age_raw = pd.to_numeric(df.get("age"), errors="coerce")
 df["age_cat"] = pd.cut(age_raw, bins=[11.5, 13.5, 15.5, 18.5],
                         labels=[1, 2, 3]).astype("Int64")
 
-# BMI cat (under, normal, over) — KCDC 양식 양식 양식 양식 양식 양식 양식
+# BMI cat (under, normal, over) — KCDC ...
 bmi_raw = pd.to_numeric(df.get("bmi"), errors="coerce")
-# 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식
+# ... — ...
 bmi_p5_table = {  # (sex, age): p5
     (1, 12): 15.16, (1, 13): 15.57, (1, 14): 16.06, (1, 15): 16.61,
     (1, 16): 17.13, (1, 17): 17.59, (1, 18): 17.93,
@@ -152,9 +152,9 @@ def _bmi_cat(row):
     return 3
 df["bmi_cat"] = df.apply(_bmi_cat, axis=1).astype("Int64")
 
-# 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 (3 level)
+# ... (3 level)
 def _to3(s, lo_map):
-    """lo_map: {'1,2': 1, '3': 2, '4,5': 3} 같은 양식 양식 양식"""
+    """lo_map: {'1,2': 1, '3': 2, '4,5': 3} 같은 ..."""
     r = pd.to_numeric(s, errors="coerce")
     return r
 
@@ -212,10 +212,10 @@ if "breakfast" in df.columns:
 else:
     df["br_skip"] = np.nan
 
-# Smartphone minutes (loader가 양식 양식 양식 screen_time 양식 양식 양식)
+# Smartphone minutes (loader가 ... screen_time ...)
 df["smartphone_min"] = pd.to_numeric(df.get("screen_time"), errors="coerce")
 
-# Stress, sleep (양식 양식 양식 양식)
+# Stress, sleep (양식 ...)
 df["high_stress"] = pd.to_numeric(df.get("stress"), errors="coerce")
 df["poor_sleep"] = pd.to_numeric(df.get("insufficient_sleep"), errors="coerce")
 
@@ -240,13 +240,13 @@ df_cc["smartphone_tert"] = pd.qcut(df_cc["smartphone_min"], q=3, labels=[1, 2, 3
 print(f"\n[STEP 9] Table 2 analysis (continuous zero_freq + 4-cat zero_cat)...")
 
 def _logit_with_results(y_col, X_cols, data, label=""):
-    """logit regression — sm.Logit + robust SE (양식 양식 양식 양식 양식 양식 양식 양식 양식 양식)."""
+    """logit regression — sm.Logit + robust SE (양식 ...)."""
     sub = data[[y_col] + X_cols].dropna().copy()
     y = sub[y_col].astype(float)
     X = sub[X_cols].astype(float)
     X = sm.add_constant(X)
     try:
-        # cluster robust SE — STATA의 svy:logistic 양식 양식 양식 양식 양식 양식 양식
+        # cluster robust SE — STATA의 svy:logistic ...
         if "cluster" in data.columns:
             clust = data.loc[sub.index, "cluster"].astype("Int64").astype(float)
             model = sm.Logit(y, X).fit(disp=0, maxiter=200,
@@ -337,7 +337,7 @@ def _subgroup_OR(data, strat_col, levels, cov_set, label):
         if len(sub) < 200:
             out.append({"level": lev, "n": int(len(sub)), "or": None})
             continue
-        # 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식
+        # ...
         cov_sub = [c for c in cov_set if c in sub.columns]
         sub_m = _logit_with_results("dep01", ["zero_freq"] + cov_sub, sub, f"{label}-{lev}")
         if sub_m is None or "zero_freq" not in sub_m.params:

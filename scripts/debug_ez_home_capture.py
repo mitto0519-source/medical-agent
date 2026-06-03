@@ -3,7 +3,7 @@
 목표:
     1) 첫 진입 — 보라 sapphire 양식인지 확인
     2) 'Research Question' chip 클릭 (사용자 시나리오 재현)
-    3) chip 클릭 후 dark theme 양식 깨지는지 진단
+    3) chip 클릭 후 dark theme  깨지는지 진단
     4) DOM 점검: <style> 안 sapphire CSS 박혀있나, stToolbar 보이나
     5) 스크린샷 2장 저장
 
@@ -110,7 +110,7 @@ def main():
         if s2["error_text"]:
             print(f"    ALERTS: {s2['error_text']}")
 
-        # 3) 이번엔 입력바에 텍스트 채워서 chip 클릭 — 새 fix가 prompt 자동주입 양식 검증
+        # 3) 이번엔 입력바에 텍스트 채워서 chip 클릭 — 새 fix가 prompt 자동주입  검증
         print("[3] fill input + click chip (prompt autofill 양식)")
         try:
             # textarea (placeholder 포함)

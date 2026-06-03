@@ -121,7 +121,7 @@ class WritingOrchestrator:
                             author_style: Optional[str] = None,
                             contains: Optional[str] = None) -> List[Dict]:
         """ComponentLibrary에서 reusable microcomponent 조합용 sample.
-        LLM이 patch_preview 전에 참고할 양식 풀."""
+        LLM이 patch_preview 전에 참고할  풀."""
         try:
             from src.library.components import get_library
             lib = get_library()
