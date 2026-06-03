@@ -274,17 +274,12 @@ def build_figure3_forest():
         if p < 0.001: return "P-int < 0.001"
         return f"P-int = {p:.3f}"
 
-    # ★ 2026-06-03: Table 1 묶음·라벨을 표준으로 통일.
-    #   - en-dash (–) 일관 사용, "yr" 단위 제거 (Age header에 "years" 명시)
-    #   - BMI level은 Table 1의 percentile cutoff 그대로 노출
-    #   - Household: "SES" → full "economic status"
+    # ★ Table 1 묶음 일치 유지, figure 라벨은 가독성 위해 짧게.
     def _level_label(strat, lev):
         mapping = {
             "sex":             {1: "Male", 2: "Female"},
             "age_cat":         {1: "12–13", 2: "14–15", 3: "16–18"},
-            "bmi_cat":         {1: "Underweight (<P5)",
-                                 2: "Normal (P5–<P85)",
-                                 3: "Overweight or obese (≥P85)"},
+            "bmi_cat":         {1: "Underweight", 2: "Normal", 3: "Overweight/obese"},
             "ses3":            {1: "High", 2: "Middle", 3: "Low"},
             "academic3":       {1: "High", 2: "Middle", 3: "Low"},
         }
@@ -293,9 +288,9 @@ def build_figure3_forest():
     def _head_label(strat, p_int):
         names = {
             "sex": "Sex",
-            "age_cat": "Age category, years",
+            "age_cat": "Age category",
             "bmi_cat": "BMI category",
-            "ses3": "Household economic status",
+            "ses3": "Household SES",
             "academic3": "Academic performance",
         }
         return f"{names.get(strat, strat)} ({_p_str(p_int)})"
@@ -318,11 +313,10 @@ def build_figure3_forest():
                               lv["or"], lv["ci_low"], lv["ci_high"], "square"))
     n = len(rows)
 
-    # ★ figsize·label_x 확장 — Table 1 표준 라벨 (BMI "Overweight or obese (≥P85)" 등) 수용
-    fig, ax = plt.subplots(figsize=(11.0, 0.30 * n + 1.2))
-    ax.set_xlim(0.70, 1.30); ax.set_ylim(-0.5, n - 0.5); ax.invert_yaxis()
+    fig, ax = plt.subplots(figsize=(9.5, 0.30 * n + 1.0))
+    ax.set_xlim(0.85, 1.30); ax.set_ylim(-0.5, n - 0.5); ax.invert_yaxis()
     ax.axvline(1.0, ls="--", color="#777", lw=0.9)
-    label_x = 0.68; or_x = 1.25
+    label_x = 0.83; or_x = 1.25
 
     for i, (lab, orv, lo, hi, kind) in enumerate(rows):
         if kind == "head":
@@ -344,7 +338,7 @@ def build_figure3_forest():
             ax.text(or_x, i, f"{orv:.2f} ({lo:.2f}, {hi:.2f})",
                     fontsize=9.5, ha="left", va="center", color="#222")
 
-    xt = [0.80, 0.90, 1.0, 1.10, 1.20, 1.30]
+    xt = [0.85, 0.90, 0.95, 1.00, 1.05, 1.10, 1.15, 1.20, 1.25]
     ax.set_xticks(xt)
     ax.set_xticklabels([f"{v:.2f}" for v in xt], fontsize=9)
     ax.set_yticks([])
