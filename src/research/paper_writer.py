@@ -500,11 +500,69 @@ Keep the author's academic writing style. Output ONLY the improved section text 
         # ── ★ FIX 11 (시드 12,301편 회로 연결): 섹션별 query로 RAG retrieval ──
         # data/chromadb의 papers 컬렉션(20,894 chunks)에서 섹션에 맞는 실 발췌를
         # 끌어와 user_prompt에 박는다. 지금까지는 self._rag=None이라 한 줄도 안 박혔음.
-        # ★ 2026-06-04: 고정 "epidemiology / public health" 단어 제거 →
-        # 토픽·design 의존 동적 쿼리. 임상 토픽이면 mechanism / safety / RCT 양식 검색.
-        _clinical_topic = any(kw in (topic or "").lower() for kw in
-            ("drug","trial","cohort","emulation","biomarker","mechanism","safety",
-             "guideline","rwe","prescription","surgery","ade","adverse"))
+        # ★ 2026-06-04: 토픽·design 의존 동적 쿼리.
+        _topic_l = (topic or "").lower()
+        _clinical_kws = (
+            # study design / methods
+            "trial","cohort","emulation","biomarker","mechanism","safety","guideline",
+            "rwe","prescription","surgery","ade","adverse","intervention","randomi",
+            "therapy","treatment","procedure","de-prescribing","equipoise",
+            # device / procedure
+            "stent","implant","ablation","biopsy","resection","tavi","tavr","pci",
+            "evt","crrt","ecmo","dialysis","transplant","graft",
+            # drug class suffix
+            "inhibitor","blocker","agonist","antagonist","modulator","mab","mib",
+            # drug abbreviations
+            "sglt","glp","dpp","ace","arb","ssri","snri","doac","dapt","ppi","nsaid",
+            "tnf","jak","car-t","ici","abiraterone","statin","antibiotic",
+            "metformin","insulin","heparin","warfarin","aspirin","clopidogrel",
+            # disease / organ
+            "failure","infarction","stroke","ischemic","diabetes","hypertension",
+            "asthma","copd","ckd","nafld","hcc","mi ","af ","htn","dm ","cad ",
+            "sepsis","pneumonia","tuberculosis","hcv","hbv","hiv",
+            "cancer","carcinoma","leukemia","lymphoma","melanoma","sarcoma","tumor",
+            # outcome / endpoint
+            "mortality","survival","relapse","remission","progression","exacerbation",
+            "hospitalization","readmission","mace","sae",
+        )
+        _clinical_topic = any(kw in _topic_l for kw in _clinical_kws)
+
+        # ★ FIX 16 (clinical reasoning forcing): topic이 임상이면 system_prompt 앞에
+        # clinical reasoning frame을 강제 prepend. 짜집기 방지 핵심.
+        clinical_frame = ""
+        if _clinical_topic:
+            clinical_frame = (
+                "\n\n## CLINICAL REASONING FRAME (mandatory for this manuscript)\n"
+                "You are writing a clinical/translational medicine paper, not an "
+                "epidemiologic burden paper. Apply the following reasoning structure:\n\n"
+                "1. **Equipoise framing**: Open Introduction with a specific clinical "
+                "decision where two reasonable options exist without clear evidence "
+                "for the studied subpopulation. NOT with disease burden statistics.\n"
+                "2. **Mechanism → biomarker → outcome chain**: State the pathophysiologic "
+                "rationale for the studied exposure-outcome link in one specific sentence. "
+                "Identify the measurable mediator.\n"
+                "3. **Reference RCT/guideline gap explicitly**: Cite the most relevant RCT "
+                "by name (e.g., DAPA-CKD, EMPEROR, IMpower) and state which patient "
+                "subgroup or follow-up window is not covered. Cite the current guideline "
+                "recommendation grade.\n"
+                "4. **Target-trial-emulation language** in Methods if observational: "
+                "specify eligibility, intervention, assignment, follow-up, analysis as if "
+                "writing an RCT protocol.\n"
+                "5. **Clinical decision implication** in Discussion: state which specific "
+                "patient at the bedside benefits from this finding, and how it changes "
+                "the next prescription, procedure, or monitoring step.\n\n"
+                "FORBIDDEN openings/phrases (epidemiology burden tone):\n"
+                "- 'is a major public health concern / burden'\n"
+                "- 'has emerged as a leading cause'\n"
+                "- 'with the increasing prevalence'\n"
+                "- 'underscores the importance of'\n"
+                "- 'sheds light on'\n"
+                "- 'a growing body of evidence suggests'\n"
+                "Replace with clinician-facing language: 'In patients with X, the choice "
+                "between Y and Z remains unsettled because the pivotal trial excluded …'\n"
+            )
+        sys_p = sys_p + clinical_frame
+
         if _clinical_topic:
             SECTION_QUERIES = {
                 "introduction": f"{exposure} {outcome} {population} mechanism background clinical context",
