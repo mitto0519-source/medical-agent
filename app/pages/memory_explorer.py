@@ -25,7 +25,7 @@ def render():
         "<div style='width:36px;height:36px;border-radius:12px;"
         "background:linear-gradient(135deg,#8B5CF6,#06B6D4);'></div>"
         "<div><div style='font-weight:700;font-size:1.25rem;color:#F5F5FA;'>Memory Explorer</div>"
-        "<div style='color:#A3A3B8;font-size:0.82rem;'>5층 메모리 + procedural + events 탐색</div>"
+        "<div style='color:#475569;font-size:0.82rem;'>5층 메모리 + procedural + events 탐색</div>"
         "</div></div>", unsafe_allow_html=True)
 
     # 검색 박스
@@ -60,7 +60,7 @@ def render():
                 st.markdown(f"<div class='sg-card' style='margin:6px 0;'>"
                               f"<div style='color:#F5F5FA;font-size:0.92rem;'>"
                               f"{h.get('text','')[:300]}</div>"
-                              f"<div style='color:#A3A3B8;font-size:0.74rem;'>"
+                              f"<div style='color:#475569;font-size:0.74rem;'>"
                               f"score={h.get('score')} · {md.get('title','')[:80]}</div></div>",
                               unsafe_allow_html=True)
         with tabs[2]:
@@ -121,7 +121,7 @@ def render():
             n = st.slider("limit", 10, 200, 30, key="me_evt_n")
             rows = recent(n=n, type=None if etype == "(all)" else etype)
             for r in rows[:n]:
-                st.markdown(f"<div style='color:#A3A3B8;font-size:0.80rem;'>"
+                st.markdown(f"<div style='color:#475569;font-size:0.80rem;'>"
                               f"<code>{r.get('ts','?')[:19]}</code> "
                               f"<span style='color:#06B6D4;'>{r.get('type','?')}</span> "
                               f"actor={r.get('actor','?')} "

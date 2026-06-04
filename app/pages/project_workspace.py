@@ -237,7 +237,7 @@ def _render_topbar(project: dict):
             f"<div style='width:32px;height:32px;border-radius:10px;"
             f"background:linear-gradient(135deg,#3B82F6,#8B5CF6);'></div>"
             f"<div><div style='font-weight:600;font-size:1.0rem;'>{title}</div>"
-            f"<div style='color:#A3A3B8;font-size:0.78rem;'>Previewing last saved version</div>"
+            f"<div style='color:#475569;font-size:0.78rem;'>Previewing last saved version</div>"
             f"</div></div>", unsafe_allow_html=True)
     with cols[1]:
         # Comments — inline note 양식은 Phase 2. 지금은 회의록/메모 download 양식.
@@ -600,8 +600,8 @@ def _render_tool_use(m: dict):
         f"<div class='sg-icon'>{icon}</div>"
         f"<div class='sg-detail'>"
         f"<div class='sg-title'>tool_use · <code style='color:#06B6D4;'>{tool}</code> "
-        f"<span style='color:#A3A3B8;font-weight:400;'>{head}</span></div>"
-        f"<div class='sg-sub'><code style='font-size:0.74rem;color:#6B6B7E;'>"
+        f"<span style='color:#475569;font-weight:400;'>{head}</span></div>"
+        f"<div class='sg-sub'><code style='font-size:0.74rem;color:#64748B;'>"
         f"{json.dumps(inputs, ensure_ascii=False)[:260]}</code></div>"
         f"</div></div>", unsafe_allow_html=True)
 
@@ -665,8 +665,8 @@ def _render_metric_stat(d: dict):
         f"<div class='sg-card' style='border:1px solid rgba(59,130,246,0.50);"
         f"background:linear-gradient(135deg, rgba(59,130,246,0.10), rgba(139,92,246,0.10));'>"
         f"<div style='display:flex;justify-content:space-between;align-items:baseline;'>"
-        f"<div style='color:#A3A3B8;font-size:0.78rem;'>📊 KYRBS stat — {exposure} → {outcome}</div>"
-        f"<div style='color:#6B6B7E;font-size:0.72rem;'>n={n:,} · {design}</div></div>"
+        f"<div style='color:#475569;font-size:0.78rem;'>📊 KYRBS stat — {exposure} → {outcome}</div>"
+        f"<div style='color:#64748B;font-size:0.72rem;'>n={n:,} · {design}</div></div>"
         f"<div style='margin-top:10px;color:#F5F5FA;font-size:1.6rem;font-weight:700;'>"
         f"aOR {aor:.3f} "
         f"<span style='color:#A78BFA;font-size:0.85rem;font-weight:500;'>"
@@ -683,7 +683,7 @@ def _render_paper_list(d: dict):
         f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
         f"<div style='font-weight:600;color:#F5F5FA;font-size:0.88rem;'>"
         f"{p.get('title', '?')[:120]}</div>"
-        f"<div style='color:#A3A3B8;font-size:0.76rem;'>"
+        f"<div style='color:#475569;font-size:0.76rem;'>"
         f"{p.get('year', '?')} · {(p.get('authors') or '')[:80]}</div>"
         f"</div>" for p in papers)
     st.markdown(
@@ -691,7 +691,7 @@ def _render_paper_list(d: dict):
         f"<div style='display:flex;justify-content:space-between;'>"
         f"<div style='font-weight:600;color:#F5F5FA;'>🔬 PubMed novelty</div>"
         f"<div style='color:#A78BFA;font-weight:600;'>score: {score}</div></div>"
-        f"<div style='color:#A3A3B8;font-size:0.86rem;margin:8px 0;'>{summary}</div>"
+        f"<div style='color:#475569;font-size:0.86rem;margin:8px 0;'>{summary}</div>"
         f"{rows}</div>", unsafe_allow_html=True)
 
 
@@ -706,7 +706,7 @@ def _render_rag_hits(hits: list):
         rows += (
             f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
             f"<div style='font-size:0.84rem;color:#F5F5FA;'>{text}…</div>"
-            f"<div style='color:#A3A3B8;font-size:0.72rem;'>score={score:.3f} · {src}</div>"
+            f"<div style='color:#475569;font-size:0.72rem;'>score={score:.3f} · {src}</div>"
             f"</div>")
     st.markdown(
         f"<div class='sg-card' style='border:1px solid rgba(6,182,212,0.40);'>"
@@ -759,7 +759,7 @@ def _render_patch_diff(d: dict):
         f"<div style='display:flex;justify-content:space-between;align-items:baseline;'>"
         f"<div style='font-weight:600;color:#F5F5FA;'>📝 Preview patched · "
         f"<code style='color:#A78BFA;'>{target}</code></div>"
-        f"<div style='color:#A3A3B8;font-size:0.74rem;'>"
+        f"<div style='color:#475569;font-size:0.74rem;'>"
         f"before {len(before)} → after {len(after)} chars</div></div>")
 
     body = ""
@@ -771,7 +771,7 @@ def _render_patch_diff(d: dict):
             f"white-space:pre-wrap;'>+ {_html.escape(added[:600])}</div>")
     if before and before != after:
         body += (
-            f"<details style='margin-top:6px;'><summary style='cursor:pointer;color:#A3A3B8;"
+            f"<details style='margin-top:6px;'><summary style='cursor:pointer;color:#475569;"
             f"font-size:0.78rem;'>Before/After 전체 보기</summary>"
             f"<div style='margin-top:6px;background:rgba(244,63,94,0.06);"
             f"border-left:3px solid #FB7185;padding:8px 12px;border-radius:6px;"
@@ -791,7 +791,7 @@ def _render_patch_diff(d: dict):
 def _render_chat_left(project: dict, pid: str):
     """좌측 chat panel — VS Code/Claude Code 양식.
     user/assistant/tool_use/tool_result/system 모두 시간순 표시."""
-    st.markdown("<div style='font-size:0.78rem;color:#A3A3B8;margin:4px 0 8px 4px;'>"
+    st.markdown("<div style='font-size:0.78rem;color:#475569;margin:4px 0 8px 4px;'>"
                 f"{project.get('updated', 'today')}</div>", unsafe_allow_html=True)
 
     messages = project.get("messages", [])
@@ -1160,7 +1160,7 @@ def _render_preview_right(project: dict):
     with tabs[1]:
         figures = _figures_list()
         if not figures:
-            st.markdown("<div class='sg-card' style='text-align:center;color:#A3A3B8;'>"
+            st.markdown("<div class='sg-card' style='text-align:center;color:#475569;'>"
                          "data/exports/Figure*.png 없음 — `scripts/build_paper_figures.py` 실행 후 표시"
                          "</div>", unsafe_allow_html=True)
         else:
@@ -1243,7 +1243,7 @@ def _render_preview_right(project: dict):
                     f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
                     f"<div style='color:#F5F5FA;font-size:0.88rem;'>"
                     f"<b>[{i}]</b> {title[:200]}</div>"
-                    f"<div style='color:#A3A3B8;font-size:0.76rem;'>"
+                    f"<div style='color:#475569;font-size:0.76rem;'>"
                     f"{authors} · {journal} {year}"
                     f"{f' · PMID:{pmid}' if pmid else ''}"
                     f"{f' · DOI:{doi}' if doi else ''}</div></div>",
@@ -1313,9 +1313,9 @@ def _render_preview_right(project: dict):
                        else "#F59E0B" if rep_now.ai_style_score <= 50 else "#F43F5E")
                 st.markdown(
                     f"<div style='display:flex;gap:24px;align-items:center;'>"
-                    f"<div><div style='color:#A3A3B8;font-size:0.74rem;'>AI  점수 (낮을수록 자연스러움)</div>"
+                    f"<div><div style='color:#475569;font-size:0.74rem;'>AI  점수 (낮을수록 자연스러움)</div>"
                     f"<div style='color:{cls};font-size:1.6rem;font-weight:700;'>{rep_now.ai_style_score} / 100</div></div>"
-                    f"<div style='color:#A3A3B8;font-size:0.78rem;'>"
+                    f"<div style='color:#475569;font-size:0.78rem;'>"
                     f"cliche {rep_now.overused_vocab_count}개 · em-dash {rep_now.em_dash_per_1k_words}/1k · "
                     f"burstiness {rep_now.burstiness}</div></div>",
                     unsafe_allow_html=True)
@@ -1881,7 +1881,7 @@ try:
             "<div style='font-size:2.0rem;'>📂</div>"
             "<div style='font-weight:600;font-size:1.1rem;margin:8px 0;'>"
             "활성 프로젝트가 없습니다</div>"
-            "<div style='color:#A3A3B8;font-size:0.92rem;margin-bottom:18px;'>"
+            "<div style='color:#475569;font-size:0.92rem;margin-bottom:18px;'>"
             "EZ home에서 프로젝트를 먼저 선택해주세요.</div>"
             "</div>", unsafe_allow_html=True)
         if st.button("✨  EZ home으로", type="primary", use_container_width=False):

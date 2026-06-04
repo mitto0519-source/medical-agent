@@ -26,7 +26,7 @@ def render():
         "<div style='width:36px;height:36px;border-radius:12px;"
         "background:linear-gradient(135deg,#3B82F6,#8B5CF6);'></div>"
         "<div><div style='font-weight:700;font-size:1.25rem;color:#F5F5FA;'>Agent Dashboard</div>"
-        "<div style='color:#A3A3B8;font-size:0.82rem;'>시스템 상태 · 5층 메모리 · 백로그 · 알림</div>"
+        "<div style='color:#475569;font-size:0.82rem;'>시스템 상태 · 5층 메모리 · 백로그 · 알림</div>"
         "</div></div>", unsafe_allow_html=True)
 
     cols = st.columns(4)
@@ -42,9 +42,9 @@ def render():
                   + sum(v for k, v in s.items() if k.startswith("semantic.") and isinstance(v, int)))
         st.markdown(
             f"<div class='sg-card' style='text-align:center;'>"
-            f"<div style='color:#A3A3B8;font-size:0.78rem;'>🧠 Memory total</div>"
+            f"<div style='color:#475569;font-size:0.78rem;'>🧠 Memory total</div>"
             f"<div style='color:#A78BFA;font-weight:700;font-size:1.6rem;'>{total:,}</div>"
-            f"<div style='color:#6B6B7E;font-size:0.72rem;'>5층 누적</div>"
+            f"<div style='color:#64748B;font-size:0.72rem;'>5층 누적</div>"
             f"</div>", unsafe_allow_html=True)
 
     # ── 2. Backlog stats ──
@@ -58,9 +58,9 @@ def render():
         pending = counts.get("CREATED", 0) + counts.get("RETRYING", 0)
         st.markdown(
             f"<div class='sg-card' style='text-align:center;'>"
-            f"<div style='color:#A3A3B8;font-size:0.78rem;'>📋 Backlog pending</div>"
+            f"<div style='color:#475569;font-size:0.78rem;'>📋 Backlog pending</div>"
             f"<div style='color:#60A5FA;font-weight:700;font-size:1.6rem;'>{pending:,}</div>"
-            f"<div style='color:#6B6B7E;font-size:0.72rem;'>completed {counts.get('COMPLETED', 0)}</div>"
+            f"<div style='color:#64748B;font-size:0.72rem;'>completed {counts.get('COMPLETED', 0)}</div>"
             f"</div>", unsafe_allow_html=True)
 
     # ── 3. Budget ──
@@ -75,9 +75,9 @@ def render():
         color = "#10B981" if pct < 60 else ("#F59E0B" if pct < 80 else "#F43F5E")
         st.markdown(
             f"<div class='sg-card' style='text-align:center;'>"
-            f"<div style='color:#A3A3B8;font-size:0.78rem;'>💰 Today budget</div>"
+            f"<div style='color:#475569;font-size:0.78rem;'>💰 Today budget</div>"
             f"<div style='color:{color};font-weight:700;font-size:1.6rem;'>{pct:.0f}%</div>"
-            f"<div style='color:#6B6B7E;font-size:0.72rem;'>left ${left:.2f}</div>"
+            f"<div style='color:#64748B;font-size:0.72rem;'>left ${left:.2f}</div>"
             f"</div>", unsafe_allow_html=True)
 
     # ── 4. Notifications ──
@@ -91,9 +91,9 @@ def render():
         bg = "rgba(244,63,94,0.12)" if unread > 0 else "rgba(255,255,255,0.04)"
         st.markdown(
             f"<div class='sg-card' style='text-align:center;background:{bg};'>"
-            f"<div style='color:#A3A3B8;font-size:0.78rem;'>🔔 Notifications</div>"
+            f"<div style='color:#475569;font-size:0.78rem;'>🔔 Notifications</div>"
             f"<div style='color:#FB7185;font-weight:700;font-size:1.6rem;'>{unread:,}</div>"
-            f"<div style='color:#6B6B7E;font-size:0.72rem;'>unread / total {n.get('total', 0)}</div>"
+            f"<div style='color:#64748B;font-size:0.72rem;'>unread / total {n.get('total', 0)}</div>"
             f"</div>", unsafe_allow_html=True)
 
     st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
@@ -142,21 +142,21 @@ def render():
                                  label_visibility="collapsed")
             items = list_unread(limit=50) if view == "Unread" else list_all(limit=100)
             if not items:
-                st.markdown("<div class='sg-card' style='text-align:center;color:#A3A3B8;'>"
+                st.markdown("<div class='sg-card' style='text-align:center;color:#475569;'>"
                              "알림 없음</div>", unsafe_allow_html=True)
             for it in items:
                 sev = it.get("severity", "info")
                 color = {"info": "#60A5FA", "warning": "#F59E0B",
-                          "error": "#FB7185", "critical": "#DC2626"}.get(sev, "#A3A3B8")
+                          "error": "#FB7185", "critical": "#DC2626"}.get(sev, "#475569")
                 read_mark = "✅" if it.get("read") else "🔴"
                 st.markdown(
                     f"<div class='sg-card' style='border-left:4px solid {color};margin:6px 0;'>"
                     f"<div style='display:flex;justify-content:space-between;'>"
                     f"<div><span style='color:{color};font-weight:600;'>{sev.upper()}</span> "
                     f"<span style='color:#F5F5FA;'>{it.get('title','')}</span></div>"
-                    f"<div style='color:#6B6B7E;font-size:0.74rem;'>{read_mark} {it.get('timestamp','')}</div>"
+                    f"<div style='color:#64748B;font-size:0.74rem;'>{read_mark} {it.get('timestamp','')}</div>"
                     f"</div>"
-                    f"<div style='color:#A3A3B8;font-size:0.84rem;margin-top:4px;'>"
+                    f"<div style='color:#475569;font-size:0.84rem;margin-top:4px;'>"
                     f"{it.get('detail','')[:300]}</div></div>",
                     unsafe_allow_html=True)
                 if not it.get("read"):

@@ -76,7 +76,7 @@ def _stats_cards(stat: dict):
     total = sum(counts.values())
     cols = st.columns(5)
     metrics = [
-        ("전체", total, "#A3A3B8"),
+        ("전체", total, "#475569"),
         ("⏳ Pending", counts.get("CREATED", 0) + counts.get("WAITING", 0)
                        + counts.get("RETRYING", 0), "#A78BFA"),
         ("⚙️ Running", counts.get("RUNNING", 0), "#60A5FA"),
@@ -87,7 +87,7 @@ def _stats_cards(stat: dict):
         with col:
             st.markdown(
                 f"<div class='sg-card' style='text-align:center;padding:18px 12px;'>"
-                f"<div style='color:#A3A3B8;font-size:0.78rem;'>{label}</div>"
+                f"<div style='color:#475569;font-size:0.78rem;'>{label}</div>"
                 f"<div style='color:{color};font-weight:700;font-size:1.8rem;'>{n}</div>"
                 f"</div>", unsafe_allow_html=True)
 
@@ -95,7 +95,7 @@ def _stats_cards(stat: dict):
 def _job_list(stat: dict):
     items = stat.get("items", [])
     if not items:
-        st.markdown("<div class='sg-card' style='text-align:center;color:#A3A3B8;padding:40px;'>"
+        st.markdown("<div class='sg-card' style='text-align:center;color:#475569;padding:40px;'>"
                      "백로그가 비었습니다. 위 입력바 또는 ➕ 새 작업으로 추가하세요."
                      "</div>", unsafe_allow_html=True)
         return
@@ -115,11 +115,11 @@ def _job_list(stat: dict):
             f"<div>"
             f"<span style='font-size:1.1rem;'>{icon}</span> "
             f"<span style='font-weight:600;color:#F5F5FA;'>{it['kind']}</span> "
-            f"<span style='color:#A3A3B8;font-size:0.78rem;'>· {st_label}</span> "
-            f"<span style='color:#6B6B7E;font-size:0.72rem;margin-left:8px;'>"
+            f"<span style='color:#475569;font-size:0.78rem;'>· {st_label}</span> "
+            f"<span style='color:#64748B;font-size:0.72rem;margin-left:8px;'>"
             f"created {_fmt_ts(it.get('created_at'))} · updated {_fmt_ts(it.get('updated_at'))}</span>"
             f"</div>"
-            f"<code style='color:#A3A3B8;font-size:0.70rem;'>{it.get('id', '')[:12]}</code>"
+            f"<code style='color:#475569;font-size:0.70rem;'>{it.get('id', '')[:12]}</code>"
             f"</div>",
             unsafe_allow_html=True,
         )
@@ -157,10 +157,10 @@ def _events_log():
             except Exception:
                 pl = {"raw": pl}
         st.markdown(
-            f"<div style='font-size:0.82rem;color:#A3A3B8;margin:4px 0;'>"
+            f"<div style='font-size:0.82rem;color:#475569;margin:4px 0;'>"
             f"<code style='color:#06B6D4;'>{r.get('ts', '?')[:19]}</code> "
             f"<span style='color:#F5F5FA;'>{r.get('type', '?')}</span> "
-            f"<span style='color:#6B6B7E;'>{json.dumps(pl, ensure_ascii=False)[:200]}</span>"
+            f"<span style='color:#64748B;'>{json.dumps(pl, ensure_ascii=False)[:200]}</span>"
             f"</div>", unsafe_allow_html=True)
 
 
@@ -179,7 +179,7 @@ def _oa_learning_panel():
         f"<div class='sg-card'>"
         f"<div style='display:flex;justify-content:space-between;align-items:baseline;'>"
         f"<div style='font-weight:600;color:#F5F5FA;'>🎓 PubMed OA 학습 진행도</div>"
-        f"<div style='color:#A3A3B8;font-size:0.85rem;'>목표: 50,000편 — 의미있는 ontology</div>"
+        f"<div style='color:#475569;font-size:0.85rem;'>목표: 50,000편 — 의미있는 ontology</div>"
         f"</div>"
         f"<div style='margin-top:12px;color:#F5F5FA;font-size:1.6rem;font-weight:700;'>"
         f"{total:,} / 50,000 <span style='color:#A78BFA;font-size:0.9rem;'>({pct:.2f}%)</span></div>"
@@ -187,7 +187,7 @@ def _oa_learning_panel():
         f"<div style='height:100%;width:{min(pct, 100):.2f}%;"
         f"background:linear-gradient(90deg,#3B82F6,#8B5CF6,#EC4899);'></div>"
         f"</div>"
-        f"<div style='margin-top:8px;color:#A3A3B8;font-size:0.80rem;'>"
+        f"<div style='margin-top:8px;color:#475569;font-size:0.80rem;'>"
         f"청킹 완료: {chunked:,} · 청킹 대기: {stat.get('pending_chunk', 0):,} · "
         f"총 char: {stat.get('total_chars', 0):,}</div>"
         f"</div>", unsafe_allow_html=True)
@@ -265,7 +265,7 @@ def _drain_all_background():
                     from src.ingestion.oa_bulk_fetcher import manifest_stats
                     ms = manifest_stats()
                     log_box.markdown(
-                        f"<div style='color:#A3A3B8;font-size:0.84rem;'>"
+                        f"<div style='color:#475569;font-size:0.84rem;'>"
                         f"📚 OA 누적 {ms['total_papers']:,}편 · "
                         f"{ms['total_chars']:,} chars</div>",
                         unsafe_allow_html=True)
@@ -323,7 +323,7 @@ def render():
             "<div style='width:36px;height:36px;border-radius:12px;"
             "background:linear-gradient(135deg,#3B82F6,#8B5CF6);'></div>"
             "<div><div style='font-weight:700;font-size:1.25rem;color:#F5F5FA;'>Backlog</div>"
-            "<div style='color:#A3A3B8;font-size:0.82rem;'>"
+            "<div style='color:#475569;font-size:0.82rem;'>"
             "미처리 작업 · API 한도 초과시 자동 대기 · heartbeat가 5분마다 처리"
             "</div></div></div>", unsafe_allow_html=True)
     with c2:
