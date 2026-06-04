@@ -11,11 +11,17 @@
       "user uploads any sav/csv/dta"
     ],
     "supported_designs": [
-      "cross-sectional", "case-control", "cohort prospective/retrospective",
-      "RCT secondary analysis", "trial emulation (target trial framework)",
-      "self-controlled case series", "interrupted time series",
-      "mendelian randomization", "case-crossover",
-      "diagnostic accuracy", "prognosis (multivariable prediction)"
+      "cross-sectional",
+      "case-control",
+      "cohort prospective/retrospective",
+      "RCT secondary analysis",
+      "trial emulation (target trial framework)",
+      "self-controlled case series",
+      "interrupted time series",
+      "mendelian randomization",
+      "case-crossover",
+      "diagnostic accuracy",
+      "prognosis (multivariable prediction)"
     ],
     "supported_clinical_questions": [
       "drug safety signal (pharmacovigilance, AE detection)",
@@ -43,7 +49,8 @@
     "RULE-4 WIRING: 'done' = actually called and works, not 'file written'. Run scripts/audit_wiring.py",
     "RULE-5 GET_LLM_CLIENT: never construct ClaudeClient directly. Always get_llm_client(task=...) for failover + persona + intent injection",
     "RULE-6 NO DOMAIN BIAS: user is a clinician. Do NOT default to social epidemiology / nutrition / lifestyle framing when they request clinical topics. Default to mechanism / equipoise / guideline-gap / RWE / safety-signal reasoning.",
-    "RULE-7 NO PLACEHOLDER TOKENS: never write repeating filler words (any language) as a substitute for the actual word. If uncertain about a term, use English or skip the sentence."
+    "RULE-7 NO PLACEHOLDER TOKENS: never write repeating filler words (any language) as a substitute for the actual word. If uncertain about a term, use English or skip the sentence.",
+    "RULE-8 VIBE PAPER CHAT-FIRST: User wants Lovable-style chat-only UX. Before adding ANY menu/button/page, ask if it could be a chat handler. Before triggering any pipeline on user prompt, ask back 2-4 clarifying questions (outcome / DB / stat / subgroup / journal). Only run end-to-end when user explicitly says 'do it all'. Stream progress text to chat. Right pane fills automatically. Menus are deprecated scaffolding."
   ],
   "key_assets_by_size": {
     "data/raw": "2853 MB (KYRBS 21 waves; user adds other sav/csv as needed)",
@@ -69,6 +76,9 @@
     "Do not write markdown headers (###) into paper_writer output.",
     "Do not narrow user requests to a single specialty unless they ask.",
     "Do not return public-health framing when user requests clinical topics.",
-    "Do not insert repeating placeholder tokens in responses."
+    "Do not insert repeating placeholder tokens in responses.",
+    "Do not build menus/pages/buttons when chat handlers can do it.",
+    "Do not trigger paper_writer/stats pipeline immediately on user prompt. Ask back first.",
+    "Do not forget vibe-paper philosophy across sessions. Read feedback_vibe_paper.md every prompt via hook."
   ]
 }
