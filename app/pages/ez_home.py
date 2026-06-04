@@ -223,13 +223,13 @@ def _sidebar():
 
     nav = st.sidebar.radio("nav", ["🏠 Home", "🔍 Search", "📚 Resources", "🔌 Connectors"],
                             label_visibility="collapsed", key="sg_nav")
-    st.sidebar.markdown("<div style='margin:18px 0 6px 0;color:#A3A3B8;"
+    st.sidebar.markdown("<div style='margin:18px 0 6px 0;color:#475569;"
                          "font-size:0.78rem;letter-spacing:0.08em;'>PROJECTS</div>",
                          unsafe_allow_html=True)
     sub = st.sidebar.radio("subnav", ["▦ All projects", "★ Starred",
                                        "👤 Created by me", "👥 Shared with me"],
                             label_visibility="collapsed", key="sg_subnav")
-    st.sidebar.markdown("<div style='margin:18px 0 6px 0;color:#A3A3B8;"
+    st.sidebar.markdown("<div style='margin:18px 0 6px 0;color:#475569;"
                          "font-size:0.78rem;letter-spacing:0.08em;'>RECENTS</div>",
                          unsafe_allow_html=True)
     projects = _load_projects()
@@ -325,13 +325,13 @@ def render() -> None:
             project_grid(projects)
         else:
             st.markdown(
-                "<div class='sg-card' style='text-align:center;color:#A3A3B8;'>"
+                "<div class='sg-card' style='text-align:center;color:#475569;'>"
                 "아직 프로젝트가 없습니다. 위 입력바에 아이디어를 적어 첫 논문을 시작하세요."
                 "</div>", unsafe_allow_html=True)
     with tab_recent:
         project_grid(projects[:3])
     with tab_star:
-        st.markdown("<div class='sg-card' style='color:#A3A3B8;'>"
+        st.markdown("<div class='sg-card' style='color:#475569;'>"
                      "★ 표시한 프로젝트가 여기 나타납니다.</div>", unsafe_allow_html=True)
     with tab_template:
         # 템플릿 — Lovable처럼 시드된 
