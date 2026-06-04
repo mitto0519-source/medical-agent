@@ -35,13 +35,31 @@ st.set_page_config(
     page_title="Medical-Agent",
     page_icon="🔬",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
-# ── HF Datasets bootstrap (Online-first, RULE-9) ─────────────────────────
-# 컨테이너가 비어있는 상태로 부팅되면 (HF Spaces, Cloud Run 등) 누락 data/ 자동 download.
-# 로컬 docker에서는 이미 data/ 마운트돼있어 즉시 skip.
-@st.cache_resource
+# Hide Streamlit chrome ASAP (before any heavy import)
+# Stop/Deploy/3-dot menu/auto-multipage default labels — all hidden for Lovable-style UI
+st.markdown("""
+<style>
+#MainMenu, header[data-testid='stHeader'],
+[data-testid='stToolbar'], [data-testid='stToolbarActions'],
+[data-testid='stDecoration'], [data-testid='stStatusWidget'],
+[data-testid='stAppDeployButton'], .stDeployButton,
+button[kind='header'], footer {
+  display: none !important; visibility: hidden !important;
+}
+/* Auto-multipage labels (lowercase from file names) — hidden, custom sidebar takes over */
+[data-testid='stSidebarNav'] { display: none !important; }
+/* Spinner box (Running _supabase_migrate_once... 같은 양식) — silent on cache miss */
+[data-testid='stSpinner'] { display: none !important; }
+/* App background — pure white */
+html, body, [data-testid='stApp'] { background: #FFFFFF !important; }
+</style>
+""", unsafe_allow_html=True)
+
+# ── Bootstrap (Online-first, RULE-9) — silent, st.cache_resource로 cold start 1회만
+@st.cache_resource(show_spinner=False)
 def _hf_bootstrap_once():
     try:
         from src.runtime.hf_bootstrap import ensure_bootstrap
@@ -50,8 +68,7 @@ def _hf_bootstrap_once():
         return {"error": str(e)}
 _BOOTSTRAP_RESULT = _hf_bootstrap_once()
 
-# ── Supabase migration (12 ma_* tables) ──────────────────────────────────
-@st.cache_resource
+@st.cache_resource(show_spinner=False)
 def _supabase_migrate_once():
     try:
         from src.cloud.migrate import ensure_all_tables

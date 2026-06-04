@@ -214,34 +214,33 @@ def _load_projects() -> list[dict]:
 
 
 def _sidebar():
+    # Minimal sidebar — chat-first UX. 잡동사니 nav 제거. 사용자 + 로그아웃 + 새 채팅만.
     st.sidebar.markdown(
-        "<div style='padding:8px 4px 16px 4px;font-weight:700;font-size:1.1rem;'>"
-        "<span style='background:linear-gradient(135deg,#3B82F6,#8B5CF6);"
-        "-webkit-background-clip:text;-webkit-text-fill-color:transparent;'>"
-        "Medical-Agent</span>"
-        "</div>", unsafe_allow_html=True)
+        "<div style='padding:12px 4px 24px 4px;font-weight:600;font-size:1.05rem;"
+        "color:#0F172A;'>Medical-Agent</div>", unsafe_allow_html=True)
 
-    nav = st.sidebar.radio("nav", ["🏠 Home", "🔍 Search", "📚 Resources", "🔌 Connectors"],
-                            label_visibility="collapsed", key="sg_nav")
-    st.sidebar.markdown("<div style='margin:18px 0 6px 0;color:#475569;"
-                         "font-size:0.78rem;letter-spacing:0.08em;'>PROJECTS</div>",
-                         unsafe_allow_html=True)
-    sub = st.sidebar.radio("subnav", ["▦ All projects", "★ Starred",
-                                       "👤 Created by me", "👥 Shared with me"],
-                            label_visibility="collapsed", key="sg_subnav")
-    st.sidebar.markdown("<div style='margin:18px 0 6px 0;color:#475569;"
-                         "font-size:0.78rem;letter-spacing:0.08em;'>RECENTS</div>",
+    if st.sidebar.button("✚ 새 채팅", use_container_width=True, key="sg_new_chat"):
+        st.session_state["sg_active_project"] = "new"
+        st.session_state["sg_initial_prompt"] = None
+        st.rerun()
+
+    st.sidebar.markdown("<div style='margin:24px 0 6px 0;color:#94A3B8;"
+                         "font-size:0.72rem;letter-spacing:0.08em;'>RECENT</div>",
                          unsafe_allow_html=True)
     projects = _load_projects()
-    for p in projects[:5]:
-        if st.sidebar.button(p["title"][:24], key=f"sg_recent_{p['id']}",
+    for p in projects[:6]:
+        if st.sidebar.button(p["title"][:28], key=f"sg_recent_{p['id']}",
                               use_container_width=True):
             st.session_state["sg_active_project"] = p["id"]
             try:
                 st.switch_page("pages/project_workspace.py")
             except Exception:
                 st.rerun()
-    return nav, sub, projects
+            try:
+                st.switch_page("pages/project_workspace.py")
+            except Exception:
+                st.rerun()
+    return None, None, projects
 
 
 def render() -> None:
