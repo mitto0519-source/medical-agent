@@ -358,8 +358,8 @@ def render() -> None:
         label_visibility="visible")
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # Example chips — 빈 상태일 때 클릭하면 입력에 채움
-    if not prompt and not projects:
+    # Example chips — 입력이 비어있으면 항상 표시 (projects 있어도 OK)
+    if not prompt:
         st.markdown("<div class='ez-suggest-row'>", unsafe_allow_html=True)
         EX_CHIPS = [
             "SGLT2 억제제의 한국 심부전 환자 신기능 보존 효과 RWE",

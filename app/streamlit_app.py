@@ -49,8 +49,13 @@ st.markdown("""
 button[kind='header'], footer {
   display: none !important; visibility: hidden !important;
 }
-/* Auto-multipage labels (lowercase from file names) — hidden, custom sidebar takes over */
-[data-testid='stSidebarNav'] { display: none !important; }
+/* Auto-multipage labels (lowercase from file names) — 모든 양식 다 숨김 */
+[data-testid='stSidebarNav'], [data-testid='stSidebarNavItems'],
+[data-testid='stSidebarNavSeparator'], [data-testid='stSidebarNavLink'],
+section[data-testid='stSidebar'] ul[data-testid='stSidebarNavItems'],
+section[data-testid='stSidebar'] > div:first-child > div:first-child {
+  display: none !important;
+}
 /* Spinner box (Running _supabase_migrate_once... 같은 양식) — silent on cache miss */
 [data-testid='stSpinner'] { display: none !important; }
 /* App background — pure white */
@@ -267,10 +272,13 @@ def _login_gate():
         -webkit-backdrop-filter: blur(12px);
     }
     .sg-login-title {
-        color:#0F172A;
+        color:#0F172A !important;
         font-weight:700; font-size:1.6rem; margin:0;
         letter-spacing:-0.02em;
     }
+    .sg-login-card p { color:#0F172A !important; }
+    .sg-login-card p:nth-of-type(2) { color:#475569 !important; font-size:0.86rem; }
+    .sg-login-card p:nth-of-type(3) { color:#94A3B8 !important; font-size:0.78rem; }
     .stTextInput input, .stForm input {
         background:rgba(255,255,255,0.95) !important;
         border:1px solid rgba(15,23,42,0.10) !important;
