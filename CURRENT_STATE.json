@@ -50,7 +50,8 @@
     "RULE-5 GET_LLM_CLIENT: never construct ClaudeClient directly. Always get_llm_client(task=...) for failover + persona + intent injection",
     "RULE-6 NO DOMAIN BIAS: user is a clinician. Do NOT default to social epidemiology / nutrition / lifestyle framing when they request clinical topics. Default to mechanism / equipoise / guideline-gap / RWE / safety-signal reasoning.",
     "RULE-7 NO PLACEHOLDER TOKENS: never write repeating filler words (any language) as a substitute for the actual word. If uncertain about a term, use English or skip the sentence.",
-    "RULE-8 VIBE PAPER CHAT-FIRST: User wants Lovable-style chat-only UX. Before adding ANY menu/button/page, ask if it could be a chat handler. Before triggering any pipeline on user prompt, ask back 2-4 clarifying questions (outcome / DB / stat / subgroup / journal). Only run end-to-end when user explicitly says 'do it all'. Stream progress text to chat. Right pane fills automatically. Menus are deprecated scaffolding."
+    "RULE-8 VIBE PAPER CHAT-FIRST: User wants Lovable-style chat-only UX. Before adding ANY menu/button/page, ask if it could be a chat handler. Before triggering any pipeline on user prompt, ask back 2-4 clarifying questions (outcome / DB / stat / subgroup / journal). Only run end-to-end when user explicitly says 'do it all'. Stream progress text to chat. Right pane fills automatically. Menus are deprecated scaffolding.",
+    "RULE-9 ONLINE-FIRST: Every Agent feature must work from external URL (HF Spaces / Cloud Run / hosted Docker). Local docker is DEV/BACKUP only. Never gate features on local file paths. All persistent data in HF Datasets / Supabase / cloud storage. Bootstrap-download missing local cache on container start. Test = 'works from phone on cellular' before claiming done."
   ],
   "key_assets_by_size": {
     "data/raw": "2853 MB (KYRBS 21 waves; user adds other sav/csv as needed)",
@@ -79,6 +80,9 @@
     "Do not insert repeating placeholder tokens in responses.",
     "Do not build menus/pages/buttons when chat handlers can do it.",
     "Do not trigger paper_writer/stats pipeline immediately on user prompt. Ask back first.",
-    "Do not forget vibe-paper philosophy across sessions. Read feedback_vibe_paper.md every prompt via hook."
-  ]
+    "Do not forget vibe-paper philosophy across sessions. Read feedback_vibe_paper.md every prompt via hook.",
+    "Do not assume data files exist locally. Bootstrap from HF Datasets if missing.",
+    "Do not test only on local docker. Verify on external URL before claiming done."
+  ],
+  "deployment_target": "external URL (HF Spaces / Cloud Run / hosted), with HF Datasets as persistent data store. Local Docker is dev only."
 }
