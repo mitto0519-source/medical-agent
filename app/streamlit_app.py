@@ -38,6 +38,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ── HF Datasets bootstrap (Online-first, RULE-9) ─────────────────────────
+# 컨테이너가 비어있는 상태로 부팅되면 (HF Spaces, Cloud Run 등) 누락 data/ 자동 download.
+# 로컬 docker에서는 이미 data/ 마운트돼있어 즉시 skip.
+@st.cache_resource
+def _hf_bootstrap_once():
+    try:
+        from src.runtime.hf_bootstrap import ensure_bootstrap
+        return ensure_bootstrap()
+    except Exception as e:
+        return {"error": str(e)}
+_BOOTSTRAP_RESULT = _hf_bootstrap_once()
+
 # NOTE: Sapphire Glass (EZ-style) UI는 별도 entry `app/sapphire_app.py`로 완전 분리됨
 # (2026-05-27, 사용자 요청). 본 streamlit_app.py는 기존 단위 기능 UI만 담당.
 # 새 UI 접속: http://localhost:8502 (docker-compose의 sapphire-ui 서비스)
