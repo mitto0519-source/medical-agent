@@ -255,40 +255,131 @@ def render() -> None:
         render_fab = None
     _, _, projects = _sidebar()
 
-    # Top notice
+    # 페이지별 UX CSS — Chat-first 양식 (Lovable/ChatGPT 양식)
+    st.markdown("""
+    <style>
+    /* Hero — clean tool-like, not marketing */
+    .ez-hero { text-align:center; margin: 14vh 0 28px 0; }
+    .ez-hero h1 { font-size:1.9rem; font-weight:600; color:#0F172A; letter-spacing:-0.02em;
+                   margin:0 0 8px 0; }
+    .ez-hero p  { color:#64748B; font-size:0.95rem; margin:0; }
+    /* Chat box — input + paperclip + arrow in one frame */
+    .ez-chat-wrap { max-width: 720px; margin: 0 auto; position: relative; }
+    .ez-chat-wrap .stTextArea textarea {
+        min-height: 56px !important;
+        max-height: 280px !important;
+        padding: 16px 92px 16px 20px !important;
+        font-size: 0.98rem !important;
+        background: #FFFFFF !important;
+        border: 1px solid rgba(15,23,42,0.10) !important;
+        border-radius: 18px !important;
+        box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.06) !important;
+        line-height: 1.5 !important;
+        resize: none !important;
+    }
+    .ez-chat-wrap .stTextArea textarea:focus {
+        border-color: #3B82F6 !important;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.10), 0 8px 24px rgba(15,23,42,0.06) !important;
+    }
+    /* 파일 첨부 widget — 작은 라벨 + 박스 inline 양식 */
+    .ez-attach { max-width:720px; margin:8px auto 0; display:flex; align-items:center;
+                  gap:8px; color:#64748B; font-size:0.82rem; }
+    .ez-attach .stFileUploader { flex: 1; }
+    .ez-attach [data-testid='stFileUploader'] section {
+        min-height: 40px !important;
+        padding: 6px 12px !important;
+        border-radius: 10px !important;
+        border: 1px dashed rgba(15,23,42,0.12) !important;
+        background: rgba(255,255,255,0.5) !important;
+    }
+    /* Send 버튼 — 박스 안 우측 floating */
+    .ez-send-overlay { position: relative; max-width: 720px; margin: -56px auto 0; }
+    .ez-send-overlay .stButton { position: absolute; right: 10px; top: -52px; width: 80px; }
+    .ez-send-overlay .stButton button {
+        height: 36px !important; min-height: 36px !important;
+        border-radius: 12px !important; padding: 0 14px !important;
+        background: #0F172A !important; color: #FFFFFF !important;
+        border: none !important; font-weight: 600 !important;
+    }
+    .ez-send-overlay .stButton button:disabled { background: #CBD5E1 !important; color: #94A3B8 !important; }
+    /* Example chips */
+    .ez-suggest-row { max-width:720px; margin: 18px auto 0; display:flex; flex-wrap:wrap;
+                       gap:8px; justify-content:center; }
+    .ez-suggest-row .stButton button {
+        background: rgba(15,23,42,0.04) !important;
+        border: 1px solid rgba(15,23,42,0.08) !important;
+        border-radius: 999px !important;
+        padding: 6px 14px !important;
+        min-height: 30px !important;
+        color: #475569 !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        text-align: center !important;
+        box-shadow: none !important;
+    }
+    .ez-suggest-row .stButton button:hover {
+        background: rgba(15,23,42,0.08) !important; color: #0F172A !important;
+    }
+    /* Recent projects section */
+    .ez-recent-h { max-width:1080px; margin: 56px auto 8px; font-size:0.78rem;
+                    color:#94A3B8; text-transform:uppercase; letter-spacing:0.06em; }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Hero — short tool-like
     st.markdown(
-        "<div style='display:flex;justify-content:center;margin-top:24px;'>"
-        "<div class='sg-chip active'>⚡ Powered by Claude · OpenAI · Gemini · 3중 자동 폴백</div>"
+        "<div class='ez-hero'>"
+        "<h1>의학 연구를 채팅으로</h1>"
+        "<p>주제만 적어주세요. 데이터·통계·구조는 대화로 같이 정해갑니다.</p>"
         "</div>", unsafe_allow_html=True)
 
-    # Hero
-    user_name = st.session_state.get("user_name", "Researcher")
-    hero_title(f"좋은 아이디어 있으세요, {user_name}?")
+    # Example chip이 클릭되면 입력에 채움
+    if "_ez_chip_clicked" in st.session_state:
+        st.session_state["sg_home_prompt"] = st.session_state.pop("_ez_chip_clicked")
 
-    # Chat-first landing — 단일 입력 → Enter 또는 자동 submit → workspace 진입
-    # Build 버튼 + 8 quick action 카드 제거 (vibe paper 정신: chat만)
-    with st.container():
-        prompt = st.text_area(
-            "prompt",
-            placeholder="어떤 의학 연구를 하고 싶으세요? 주제만 적어주세요. "
-                         "필요한 데이터/통계/구조는 대화로 같이 정해갑니다.\n"
-                         "예) 제로칼로리 음료 섭취와 청소년 우울 증상의 관련성을 KYRBS로 보고 싶어",
-            label_visibility="collapsed", height=120, key="sg_home_prompt")
-        c1, c2 = st.columns([5, 1])
-        with c1:
-            uploaded = st.file_uploader(
-                "선택: 기존 논문/데이터 첨부 (PDF/DOCX/SAV/CSV)",
-                type=["pdf", "docx", "txt", "png", "jpg", "jpeg", "sav", "csv", "xlsx", "json"],
-                accept_multiple_files=True, key="sg_home_files",
-                label_visibility="visible")
-        with c2:
-            st.markdown("<div style='height:36px;'></div>", unsafe_allow_html=True)
-            send = st.button("→ Start", use_container_width=True, type="primary",
-                              key="sg_home_send")
+    # 단일 chat input — 박스 안 우측에 send 버튼 floating
+    st.markdown("<div class='ez-chat-wrap'>", unsafe_allow_html=True)
+    prompt = st.text_area(
+        "prompt",
+        placeholder="무엇을 연구하고 싶으세요?",
+        label_visibility="collapsed", height=68, key="sg_home_prompt")
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown("<div class='ez-send-overlay'>", unsafe_allow_html=True)
+    send = st.button("Start →", key="sg_home_send", type="primary",
+                      disabled=not (prompt and prompt.strip()))
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # 첨부 — chat 박스 아래 작은 widget
+    st.markdown("<div class='ez-attach'>", unsafe_allow_html=True)
+    uploaded = st.file_uploader(
+        "📎 첨부 (선택) — 기존 논문/데이터",
+        type=["pdf", "docx", "txt", "png", "jpg", "jpeg", "sav", "csv", "xlsx", "json"],
+        accept_multiple_files=True, key="sg_home_files",
+        label_visibility="visible")
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # Example chips — 빈 상태일 때 클릭하면 입력에 채움
+    if not prompt and not projects:
+        st.markdown("<div class='ez-suggest-row'>", unsafe_allow_html=True)
+        EX_CHIPS = [
+            "SGLT2 억제제의 한국 심부전 환자 신기능 보존 효과 RWE",
+            "GLP-1 RA 비급여 처방 후 갑상선 미세변화 시그널",
+            "코로나 락다운 전후 청소년 ADHD 진단·처방 추세",
+            "한국 청소년 우울증과 카페인 음료 노출의 자연실험",
+        ]
+        cols = st.columns(len(EX_CHIPS))
+        for i, ex in enumerate(EX_CHIPS):
+            with cols[i]:
+                if st.button(ex[:40] + ("…" if len(ex) > 40 else ""),
+                              key=f"sg_ex_{i}", help=ex):
+                    st.session_state["_ez_chip_clicked"] = ex
+                    st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
     if send and (prompt or uploaded):
         if uploaded:
-            _enqueue_uploaded_files(uploaded, prompt_hint=prompt)
+            _enqueue_uploaded_files(uploaded, prompt_hint=prompt or "")
         if prompt:
             st.session_state["sg_active_project"] = "new"
             st.session_state["sg_initial_prompt"] = prompt
@@ -300,15 +391,10 @@ def render() -> None:
         else:
             st.rerun()
 
-    # 프로젝트 그리드 — Tabs 없이 단순. 진행 중 프로젝트만 표시.
+    # 최근 프로젝트 — 명확한 헤더 + 카드
     if projects:
-        st.markdown("<div style='max-width:1080px;margin:32px auto 0 auto;"
-                     "color:#475569;font-size:0.85rem;'>최근 프로젝트</div>",
-                     unsafe_allow_html=True)
-        st.markdown("<div style='max-width:1080px;margin:8px auto 0 auto;'>",
-                     unsafe_allow_html=True)
+        st.markdown("<div class='ez-recent-h'>RECENT</div>", unsafe_allow_html=True)
         project_grid(projects[:6])
-        st.markdown("</div>", unsafe_allow_html=True)
     # Templates 탭 제거. 아래 templates 코드는 dead — 절대 호출 안 됨.
     if False:
         tpl_html = (
