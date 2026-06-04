@@ -1,0 +1,28 @@
+# HF Spaces deployment config
+# Deploy: huggingface.co/new-space → Choose "Docker" → "Blank" → paste this as README.md frontmatter
+# Or use this as reference and configure via HF Space settings UI
+---
+title: Medical-Agent
+emoji: 🔬
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 8501
+suggested_hardware: cpu-basic       # cpu-upgrade if KYRBS analysis needed
+suggested_storage: medium           # 5GB for HF Datasets cache
+pinned: false
+license: mit
+short_description: Vibe paper copilot for clinical/translational medicine
+---
+
+# Required secrets (HF Space → Settings → Variables and secrets)
+
+| Name | Type | Used for |
+|---|---|---|
+| HF_TOKEN | Secret | Download data from cave87/medical-agent-runtime |
+| SUPABASE_DB_URL | Secret | Live user state (12 ma_* tables) |
+| ANTHROPIC_API_KEY | Secret | LLM primary |
+| OPENAI_API_KEY | Secret | LLM fallback |
+| GOOGLE_API_KEY | Secret | LLM fallback (Gemini free tier) |
+| NCBI_EMAIL | Variable | PubMed API |
+| MEDICAL_AGENT_BOOTSTRAP_PROFILE | Variable | minimal / standard / full (default standard) |

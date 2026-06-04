@@ -125,12 +125,56 @@ def _load_project(pid: str) -> dict:
     return {"title": pid, "sections": {}, "messages": [], "figures": [], "tables": []}
 
 
+def _capture_section_edits(pid: str, new_sections: dict, *, owner_email: str = ""):
+    """RULE-8 #5: AI draft → user 최종 변경분 캡쳐. 다음 생성 시 few-shot.
+
+    이전 sections snapshot 대비 변경된 섹션 detect → record_edit. ai_draft는
+    pw.last_sections에서, user_final은 새 sections에서.
+    """
+    if not new_sections or pid == "new":
+        return
+    try:
+        from src.memory.feedback_store_user_edits import record_edit
+        from pathlib import Path as _P
+        snap_p = _WP_DIR / f"_snap_{pid}.json"
+        prev = {}
+        if snap_p.exists():
+            try: prev = json.loads(snap_p.read_text(encoding='utf-8'))
+            except Exception: prev = {}
+        # AI draft = pw.last_sections (별도 파일) — 직전 자동 생성본
+        ai_p = _WP_DIR / f"_ai_draft_{pid}.json"
+        ai_draft = {}
+        if ai_p.exists():
+            try: ai_draft = json.loads(ai_p.read_text(encoding='utf-8'))
+            except Exception: ai_draft = {}
+        for sec, final in (new_sections or {}).items():
+            if not isinstance(final, str) or len(final) < 100:
+                continue
+            ai = ai_draft.get(sec, prev.get(sec, ""))
+            if ai and ai != final:
+                record_edit(owner_email=owner_email, project_id=pid,
+                             section=sec, ai_draft=ai, user_final=final)
+        # snapshot 갱신
+        snap_p.write_text(json.dumps(new_sections, ensure_ascii=False),
+                          encoding='utf-8')
+    except Exception:
+        pass
+
+
 def _save_project(pid: str, data: dict, *, msg_cap: int = 200,
                    archive_after: int = 300) -> None:
     """working_papers/{pid}.json. messages 무한 누적으로 write 실패 방지:
     archive_after 초과 시 오래된 메시지 archive 파일로 분리 → main은 최근 msg_cap만."""
     if pid == "new":
         return
+    # RULE-8 #5 — section 변경 감지 시 user_edit feedback 자동 기록
+    try:
+        import streamlit as _st
+        _owner = (_st.session_state.get("user") or {}).get("email") or \
+                  _st.session_state.get("user_email", "")
+        _capture_section_edits(pid, data.get("sections") or {}, owner_email=_owner)
+    except Exception:
+        pass
     _WP_DIR.mkdir(parents=True, exist_ok=True)
     p = _WP_DIR / f"{pid}.json"
 
