@@ -201,6 +201,53 @@
 > citation orphan / physician queue / consistency fail / figure_validation fail / budget downgrade
 > 모두 `events.db`에 기록 → `python scripts/replay_task.py --task=...`로 사후 재구성.
 
+### 16. Online-First 배포 토폴로지 — 2026-06-05 신규
+
+> 사용자 원칙 (RULE-9): 모든 Agent는 외부 URL 접속에서 작동해야 함. 로컬 docker는 DEV/BACKUP only.
+
+**데이터 분리**
+
+| 종류 | 위치 | 용도 |
+|---|---|---|
+| 정적 큰 파일 (KYRBS sav, chromadb 임베딩, knowledge_graph, OA papers, seed catalogs) | **HF Datasets** `cave87/medical-agent-runtime` (private) | snapshot 양식 read-mostly. 컨테이너 부팅 시 download |
+| 라이브 사용자 상태 (auth, drafts, intent, activity, change_log, working_papers, agent_insights, ...) | **Supabase** 12 ma_* 테이블 | per-user concurrent write, ACID |
+| Runtime in-container (events.db, tasks.db, idempotency cache) | sqlite local volume | 컨테이너 lifetime, 옵션적으로 HF에 backup |
+
+**Bootstrap chain (컨테이너 부팅 시)**
+
+```
+streamlit_app.py 진입
+  → _hf_bootstrap_once()    : data/ 누락 폴더 HF에서 download
+  → _supabase_migrate_once(): 12 ma_* CREATE TABLE IF NOT EXISTS + verify
+  → _login_gate()           : HF OAuth 또는 ma_users 조회
+  → render pages            : ez_home (chat-first) / project_workspace
+```
+
+**환경변수 (배포 시 secret)**
+
+| 변수 | 필수? | 용도 |
+|---|---|---|
+| `HF_TOKEN` | 권장 | private dataset download (없으면 minimal 프로파일만) |
+| `HF_DATASET_ID` | 옵션 | 기본 `cave87/medical-agent-runtime` |
+| `MEDICAL_AGENT_BOOTSTRAP_PROFILE` | 옵션 | `minimal` / `standard` / `full` (기본 standard) |
+| `SUPABASE_DB_URL` | 필수 (online) | 라이브 상태 저장. 없으면 cloud_available()=False → 모든 ma_* 호출 skip (로컬 모드) |
+| `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` / `GOOGLE_API_KEY` | 1개+ | LLM (3중 폴백) |
+| `NCBI_EMAIL` | 권장 | PubMed API 양식 |
+
+| 기능 | 정규 모듈 | 상태 | 비고 |
+|------|----------|------|------|
+| **HF Datasets bootstrap** | `src/runtime/hf_bootstrap.py` → `ensure_bootstrap()` | ✅ active | 3 profile (minimal/standard/full), 누락 폴더만 snapshot_download |
+| **Supabase migration** | `src/cloud/migrate.py` → `ensure_all_tables()` | ✅ active | 12 ma_* CREATE + SELECT 양식 verify, idempotent |
+| **Streamlit entry wiring** | `app/streamlit_app.py` → `_hf_bootstrap_once()` + `_supabase_migrate_once()` | ✅ active | st.cache_resource로 1회만 실행 |
+| **deployment target** | HF Spaces / Cloud Run / hosted Docker | 🚧 spec only | Dockerfile은 기존, Space metadata 별도 작성 필요 |
+
+> **트러블슈팅**:
+> - 컨테이너 부팅 후 `data/raw/kyrbs2025.sav` missing → `HF_TOKEN` env 미설정, 또는 `MEDICAL_AGENT_BOOTSTRAP_PROFILE=full` 필요
+> - login fail → `SUPABASE_DB_URL` 누락 또는 `ma_users` 비어있음 (super_admin 시드 필요)
+> - LLM 호출 fail → 모든 API key 누락 (3중 폴백 다 무효)
+
+---
+
 ### 15. 시드 자산화 3단계 파이프라인 — 2026-06-01 신규
 
 > 사용자 비전 (2026-06-01): "12,301편 OA 시드를 자산화·구조화해서 의학적 사고흐름·전개·골격을
