@@ -788,6 +788,47 @@ def _render_patch_diff(d: dict):
         f"{head}{body}</div>", unsafe_allow_html=True)
 
 
+def _is_autopilot_trigger(text: str) -> bool:
+    """User said 'go ahead / 알아서 해 / 다 해줘' → run full pipeline."""
+    if not text: return False
+    t = text.lower().strip()
+    triggers = ["알아서", "맘대로", "다 해줘", "전부 해", "그냥 해",
+                "go ahead", "do it all", "let's go", "시작해", "시작",
+                "ok", "오케이", "응", "yes", "네", "yeah", "yep",
+                "ㄱㄱ", "ㄱㅊ", "고고", "콜"]
+    return any(g in t for g in triggers) and len(t) < 50
+
+
+def _build_clarification(topic: str, project: dict) -> str:
+    """User 첫 입력 → 역질문 생성. RULE-8 vibe paper chat-first."""
+    sys_p = (
+        "You are a vibe paper clinical research copilot. The user just gave you "
+        "a research topic. DO NOT write any paper yet. Ask 3-4 SHORT clarifying "
+        "questions in Korean before starting.\n\n"
+        "Required clarifications:\n"
+        "1. Outcome — which specific clinical endpoint (e.g., M_SAD depression vs "
+        "M_SUI_ATT suicide attempt; mortality vs MACE vs hospitalization)\n"
+        "2. Dataset — which DB and year (KYRBS 2025 stored, KNHANES, NHIS-NSC, "
+        "HIRA, registry, EMR)\n"
+        "3. Study design / statistical approach — logistic / Cox / linear / "
+        "survey-weighted, subgroup of interest\n"
+        "4. (optional) Target journal or paper style\n\n"
+        "Format: short numbered list, ONE line per question. End with: "
+        "'위 중 답변 가능한 만큼 알려주세요. 또는 \"알아서 해\"라 하시면 디폴트로 진행합니다.'\n"
+        "Do NOT include any other text. No preamble, no acknowledgment."
+    )
+    try:
+        from src.llm import get_llm_client
+        llm = get_llm_client(task="qa")
+        return llm.generate(topic, system_prompt=sys_p, max_tokens=600) or ""
+    except Exception as e:
+        return ("주제 잘 받았습니다. 시작 전 확인:\n"
+                "1. Outcome: 어떤 임상 엔드포인트? (예: M_SAD 우울, M_SUI_ATT 자살시도)\n"
+                "2. Dataset: 어떤 DB·연도? (KYRBS 2025 보유)\n"
+                "3. 통계: logistic / Cox / linear / survey-weighted?\n"
+                "위 중 답변 가능한 만큼 알려주세요. 또는 \"알아서 해\"라 하시면 디폴트로 진행합니다.")
+
+
 def _render_chat_left(project: dict, pid: str):
     """좌측 chat panel — VS Code/Claude Code 양식.
     user/assistant/tool_use/tool_result/system 모두 시간순 표시."""
@@ -796,18 +837,27 @@ def _render_chat_left(project: dict, pid: str):
 
     messages = project.get("messages", [])
     initial = st.session_state.pop("sg_initial_prompt", None)
-    # ★ 유기적 흐름 (2026-05-30): ez_home에서 prompt 받고 workspace 진입 시 자동으로 agentic loop
-    # 실행해서 첫 응답까지 한 번에. 사용자가 두 번 입력할 필요 없음. [[feedback-vibe-paper]] 정신.
+
+    # ★ RULE-8 VIBE PAPER CHAT-FIRST (2026-06-05): 주제 입력 → 역질문 우선.
+    # 자동 파이프라인은 사용자가 '알아서 해' / '다 해줘' 같은 trigger 명시 시에만.
     if initial and not messages:
         messages.append({"role": "user", "content": initial})
+        # AI 역질문 (즉시 생성, pipeline 미실행)
+        try:
+            clarif = _build_clarification(initial, project)
+            messages.append({"role": "assistant", "content": clarif,
+                              "kind": "clarification"})
+        except Exception as e:
+            messages.append({"role": "system", "event": "clarification_error",
+                              "detail": str(e)[:200]})
         project["messages"] = messages
         _save_project(pid, project)
-        st.session_state["_ws_auto_run_pending"] = initial   # 이번 rerun에서 agentic step 실행
-    # 미완 작업: 직전 rerun에 _ws_auto_run_pending이 set돼 있으면  자동 실행
-    # _orchestrated_paper_run 호출 — KYRBS 로드 → StatBridge → 5섹션 자동 작성 → safety 게이트
-    auto_run = st.session_state.pop("_ws_auto_run_pending", None)
+        st.rerun()
+
+    # 자동 실행은 _ws_autopilot_pending 플래그가 있을 때만 (사용자가 '알아서 해'라 답한 경우)
+    auto_run = st.session_state.pop("_ws_autopilot_pending", None)
     if auto_run:
-        with st.spinner("✨ 논문 초안 생성 중… (KYRBS 로드 → StatBridge 회귀 → 5섹션 작성 → safety 게이트)"):
+        with st.spinner("논문 초안 자동 생성 중 — KYRBS 로드 → 통계 회귀 → 5섹션 작성 → safety 게이트"):
             try:
                 _orchestrated_paper_run(auto_run, project, pid)
             except Exception as _e:
@@ -878,10 +928,20 @@ def _render_chat_left(project: dict, pid: str):
             messages.append({"role": "user", "content": prompt})
             project["messages"] = messages
             _save_project(pid, project)
-            if use_tools:
+
+            # ★ RULE-8: autopilot trigger 감지 → 백그라운드 파이프라인 실행
+            if _is_autopilot_trigger(prompt):
+                # 직전 messages 양식 분석해 의도 추출 (또는 default)
+                first_user = next((m["content"] for m in messages
+                                    if m.get("role")=="user"), prompt)
+                st.session_state["_ws_autopilot_pending"] = first_user
+                messages.append({"role": "system", "event": "autopilot_start",
+                                  "detail": "사용자 OK → 백그라운드 파이프라인 시작"})
+                project["messages"] = messages
+                _save_project(pid, project)
+            elif use_tools:
                 _run_agentic_step(prompt, project, pid, mode)
             else:
-                # ★ Streaming 표시 — st.empty()로 placeholder 주고 token-by-token 갱신
                 stream_box = st.empty()
                 reply = _delegate_to_writer(prompt, project, mode,
                                               stream_to=stream_box)
