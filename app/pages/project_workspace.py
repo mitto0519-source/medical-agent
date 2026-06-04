@@ -49,7 +49,7 @@ st.markdown(
     ".stDeployButton{display:none!important;}"
     "button[kind='header']{display:none!important;}"
     "footer{visibility:hidden!important;display:none!important;}"
-    "html,body,[data-testid='stApp']{background:#1E1B4B!important;color:#F5F5FA!important;}"
+    "html,body,[data-testid='stApp']{background:#FFFFFF!important;color:#0F172A!important;}"
     "</style>",
     unsafe_allow_html=True,
 )
@@ -711,7 +711,7 @@ def _render_metric_stat(d: dict):
         f"<div style='display:flex;justify-content:space-between;align-items:baseline;'>"
         f"<div style='color:#475569;font-size:0.78rem;'>📊 KYRBS stat — {exposure} → {outcome}</div>"
         f"<div style='color:#64748B;font-size:0.72rem;'>n={n:,} · {design}</div></div>"
-        f"<div style='margin-top:10px;color:#F5F5FA;font-size:1.6rem;font-weight:700;'>"
+        f"<div style='margin-top:10px;color:#0F172A;font-size:1.6rem;font-weight:700;'>"
         f"aOR {aor:.3f} "
         f"<span style='color:#A78BFA;font-size:0.85rem;font-weight:500;'>"
         f"(95% CI {lo:.3f}–{hi:.3f}; <i>P</i> {p_fmt})</span></div>"
@@ -725,7 +725,7 @@ def _render_paper_list(d: dict):
     papers = d.get("similar_papers", [])[:6]
     rows = "".join(
         f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
-        f"<div style='font-weight:600;color:#F5F5FA;font-size:0.88rem;'>"
+        f"<div style='font-weight:600;color:#0F172A;font-size:0.88rem;'>"
         f"{p.get('title', '?')[:120]}</div>"
         f"<div style='color:#475569;font-size:0.76rem;'>"
         f"{p.get('year', '?')} · {(p.get('authors') or '')[:80]}</div>"
@@ -733,7 +733,7 @@ def _render_paper_list(d: dict):
     st.markdown(
         f"<div class='sg-card' style='border:1px solid rgba(167,139,250,0.40);'>"
         f"<div style='display:flex;justify-content:space-between;'>"
-        f"<div style='font-weight:600;color:#F5F5FA;'>🔬 PubMed novelty</div>"
+        f"<div style='font-weight:600;color:#0F172A;'>🔬 PubMed novelty</div>"
         f"<div style='color:#A78BFA;font-weight:600;'>score: {score}</div></div>"
         f"<div style='color:#475569;font-size:0.86rem;margin:8px 0;'>{summary}</div>"
         f"{rows}</div>", unsafe_allow_html=True)
@@ -749,12 +749,12 @@ def _render_rag_hits(hits: list):
         src = md.get("source") or md.get("doi") or md.get("pmid") or "—"
         rows += (
             f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
-            f"<div style='font-size:0.84rem;color:#F5F5FA;'>{text}…</div>"
+            f"<div style='font-size:0.84rem;color:#0F172A;'>{text}…</div>"
             f"<div style='color:#475569;font-size:0.72rem;'>score={score:.3f} · {src}</div>"
             f"</div>")
     st.markdown(
         f"<div class='sg-card' style='border:1px solid rgba(6,182,212,0.40);'>"
-        f"<div style='font-weight:600;color:#F5F5FA;'>🧠 RAG retrieval (top {len(hits)})</div>"
+        f"<div style='font-weight:600;color:#0F172A;'>🧠 RAG retrieval (top {len(hits)})</div>"
         f"{rows}</div>", unsafe_allow_html=True)
 
 
@@ -801,7 +801,7 @@ def _render_patch_diff(d: dict):
     added = (d.get("added") or "").strip()
     head = (
         f"<div style='display:flex;justify-content:space-between;align-items:baseline;'>"
-        f"<div style='font-weight:600;color:#F5F5FA;'>📝 Preview patched · "
+        f"<div style='font-weight:600;color:#0F172A;'>📝 Preview patched · "
         f"<code style='color:#A78BFA;'>{target}</code></div>"
         f"<div style='color:#475569;font-size:0.74rem;'>"
         f"before {len(before)} → after {len(after)} chars</div></div>")
@@ -1345,7 +1345,7 @@ def _render_preview_right(project: dict):
                 doi = r.get("doi", "")
                 st.markdown(
                     f"<div style='border-top:1px solid rgba(255,255,255,0.08);padding:8px 0;'>"
-                    f"<div style='color:#F5F5FA;font-size:0.88rem;'>"
+                    f"<div style='color:#0F172A;font-size:0.88rem;'>"
                     f"<b>[{i}]</b> {title[:200]}</div>"
                     f"<div style='color:#475569;font-size:0.76rem;'>"
                     f"{authors} · {journal} {year}"
