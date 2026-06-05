@@ -297,61 +297,59 @@ def _is_autopilot_trigger(text: str) -> bool:
     return any(k in t for k in triggers)
 
 
-def _llm_reply(project: dict, user_msg: str, owner_email: str = "") -> str:
-    """단일 코어 wiring — CLAUDE.md 규칙 12.
-
-    모든 ez_home 채팅 한 턴이 다음을 같이 거친다 (VS Code MCP·Streamlit·heartbeat 공유):
-    1) persona.get_system_prompt(task) — versioned prompts + medical_seed + insight
-    2) agentic_loop.build_system_with_preview — + 현재 docx preview + conversation_memory.recall_relevant(cross-session) + change_log 최근
-    3) get_llm_client(task) — Claude→OpenAI→Gemini 3중 failover + persona 자동 주입
-    4) conversation_memory.record — ChromaDB cross-session 양식 양식 누적
-    5) events.append — append-only 감사 로그
-    6) memory.router.write — typed memory (episodic, scorer/lifecycle/gate)
-    """
-    try:
-        from src.llm import get_llm_client
-    except Exception as e:
-        return f"(LLM 클라이언트 import 실패: {e})"
-
-    # ── system prompt 양식 ──
+def _build_full_system(project: dict, user_msg: str) -> str:
+    """단일 코어 system prompt 합성 (CLAUDE.md 규칙 12)."""
     try:
         from src.agent.persona import get_system_prompt
         base_sys = get_system_prompt(task="paper_writing")
     except Exception:
         base_sys = "당신은 의학 연구 코파일럿입니다."
-
     try:
         from app.agentic_loop import build_system_with_preview
         full_sys = build_system_with_preview(base_sys, project, user_msg)
     except Exception:
         full_sys = base_sys
-
     rule_overlay = (
         "\n\n--- RULE-8 (vibe paper) ---\n"
         "사용자 주제가 모호하면 PICO·데이터·통계·하위군 중 짧은 역질문 2-3개로 좁히세요.\n"
         "'알아서 해' '그냥 해' '한번에' 같은 trigger를 들으면 그때 자동 파이프라인을 진행합니다.\n"
         "응답은 한국어, 동료 의학연구자 어투, 마크다운 짧게."
     )
-    full_sys = full_sys + rule_overlay
+    return full_sys + rule_overlay
 
-    # ── conversation history → prompt ──
+
+def _stream_reply(project: dict, user_msg: str):
+    """generator — token 단위 yield. failover 클라이언트의 generate_streamed 사용."""
+    try:
+        from src.llm import get_llm_client
+    except Exception as e:
+        yield f"(LLM 클라이언트 import 실패: {e})"
+        return
+
+    full_sys = _build_full_system(project, user_msg)
     history = "\n".join(
         f"{'사용자' if m['role']=='user' else '코파일럿'}: {m['content']}"
         for m in project.get("messages", [])[-10:])
     prompt = f"{history}\n사용자: {user_msg}\n코파일럿:"
 
-    # ── LLM 호출 (failover 자동) ──
     try:
         client = get_llm_client(task="paper_writing")
-        out = client.generate(prompt, system_prompt=full_sys, max_tokens=1200)
-        out = (out or "").strip() or "(빈 응답)"
+        yielded = False
+        for chunk in client.generate_streamed(prompt, system_prompt=full_sys, max_tokens=1200):
+            if chunk:
+                yielded = True
+                yield chunk
+        if not yielded:
+            yield "(빈 응답)"
     except Exception as e:
-        out = f"(LLM 호출 실패: {e})"
+        yield f"(LLM 호출 실패: {e})"
 
-    # ── 단일 코어 누적 (양식 best-effort, 양식 양식 양식 채팅 흐름 양식 양식) ──
+
+def _post_turn_hooks(project: dict, user_msg: str, full_reply: str, owner_email: str = ""):
+    """채팅 한 턴 완료 후 단일 코어 누적 (best-effort)."""
     try:
         from src.memory.conversation_memory import record as _cm_record
-        _cm_record(user_message=user_msg, agent_response=out,
+        _cm_record(user_message=user_msg, agent_response=full_reply,
                     topic=project.get("title", "")[:80],
                     context_type="ez_home_chat", quality="neutral",
                     owner_email=owner_email or "")
@@ -361,13 +359,13 @@ def _llm_reply(project: dict, user_msg: str, owner_email: str = "") -> str:
         from src.runtime.events import append as _evt
         _evt(type="ez_home_chat_turn",
               payload={"pid": project.get("id"), "user": user_msg[:300],
-                       "resp_len": len(out)},
+                       "resp_len": len(full_reply)},
               actor=owner_email or "anon")
     except Exception:
         pass
     try:
         from src.memory.router import write as _mem_write
-        _mem_write(f"[chat:{project.get('id','')}] {user_msg[:200]} || {out[:400]}",
+        _mem_write(f"[chat:{project.get('id','')}] {user_msg[:200]} || {full_reply[:400]}",
                     type="episodic", source="ez_home_chat",
                     owner_email=owner_email or None,
                     extra_meta={"project_id": project.get("id"),
@@ -384,30 +382,21 @@ def _llm_reply(project: dict, user_msg: str, owner_email: str = "") -> str:
     except Exception:
         pass
 
-    return out
+
+def _render_msg(role: str, content: str):
+    """단일 메시지를 chat bubble HTML 로 렌더."""
+    safe = (content or "").replace("<", "&lt;").replace(">", "&gt;")
+    cls = "msg-user" if role == "user" else "msg-asst"
+    st.markdown(f"<div class='{cls}'>{safe}</div>", unsafe_allow_html=True)
 
 
 def _render_chat_page(pid: str):
-    """단일 페이지 chat + preview. 좌측 메시지 양식, 우측 docx preview."""
+    """단일 페이지 chat + preview — 스트리밍 + 고정높이 스크롤."""
     project = _load_or_init_project(pid, st.session_state.get("sg_initial_prompt") or "새 작업")
-
     owner_email = (st.session_state.get("user") or {}).get("email") or \
                    st.session_state.get("user_email", "")
 
-    # 초기 prompt가 있고 messages가 비어있으면 양식 메시지 append + LLM 응답
-    initial = st.session_state.pop("sg_initial_prompt", None)
-    if initial and not project["messages"]:
-        project["messages"].append({"role": "user", "content": initial,
-                                      "ts": datetime.now().isoformat()})
-        if not project.get("title") or project["title"] == "새 작업":
-            project["title"] = initial[:60]
-        with st.spinner("응답 생성 중…"):
-            reply = _llm_reply(project, initial, owner_email)
-        project["messages"].append({"role": "assistant", "content": reply,
-                                      "ts": datetime.now().isoformat()})
-        _save_project(project)
-
-    # Topbar — ← 홈 + title
+    # Topbar
     cback, ctitle = st.columns([1, 7])
     with cback:
         if st.button("← 홈", key="chat_back_btn"):
@@ -420,51 +409,81 @@ def _render_chat_page(pid: str):
 
     st.markdown("""
     <style>
-    .chat-scroll { max-height: 70vh; overflow-y: auto; padding-right: 8px; }
     .msg-user { background:#0F172A; color:#FFFFFF; border-radius:14px 14px 4px 14px;
                  padding:10px 14px; margin:8px 0 8px auto; max-width:85%;
-                 width:fit-content; font-size:0.92rem; line-height:1.5; }
+                 width:fit-content; font-size:0.92rem; line-height:1.5;
+                 white-space:pre-wrap; word-wrap:break-word; }
     .msg-asst { background:#F1F5F9; color:#0F172A; border-radius:14px 14px 14px 4px;
-                 padding:10px 14px; margin:8px auto 8px 0; max-width:90%;
-                 width:fit-content; font-size:0.92rem; line-height:1.5; }
+                 padding:10px 14px; margin:8px auto 8px 0; max-width:92%;
+                 width:fit-content; font-size:0.92rem; line-height:1.55;
+                 white-space:pre-wrap; word-wrap:break-word; }
     .preview-box { background:#FFFFFF; border:1px solid rgba(15,23,42,0.08);
-                    border-radius:12px; padding:32px; min-height:70vh;
+                    border-radius:12px; padding:32px; min-height:600px;
                     box-shadow:0 1px 3px rgba(15,23,42,0.04); }
     .preview-box h1 { font-size:1.4rem; color:#0F172A; margin:0 0 8px 0; }
     .preview-box h2 { font-size:1.0rem; color:#0F172A; margin:18px 0 6px 0;
                        border-bottom:1px solid rgba(15,23,42,0.08); padding-bottom:4px; }
     .preview-box p  { color:#334155; font-size:0.92rem; line-height:1.7; margin:0 0 10px 0; }
-    .preview-empty  { color:#94A3B8; font-size:0.9rem; text-align:center; padding-top:30vh; }
+    .preview-empty  { color:#94A3B8; font-size:0.9rem; text-align:center; padding-top:240px; }
+    /* st.container(height=...) 내부 스크롤바 정돈 */
+    [data-testid='stVerticalBlockBorderWrapper'] > div > div > [data-testid='stVerticalBlock']::-webkit-scrollbar {
+        width: 6px;
+    }
     </style>
     """, unsafe_allow_html=True)
+
+    # 입력은 컨테이너 위에서 받음 (chat_input은 페이지 하단 고정)
+    initial = st.session_state.pop("sg_initial_prompt", None)
+    user_msg = st.chat_input("메시지를 입력하세요…", key=f"chat_input_{pid}")
+    if not user_msg and initial and not project["messages"]:
+        user_msg = initial
+        if not project.get("title") or project["title"] == "새 작업":
+            project["title"] = initial[:60]
 
     col_chat, col_preview = st.columns([0.46, 0.54], gap="medium")
 
     with col_chat:
-        st.markdown("<div class='chat-scroll'>", unsafe_allow_html=True)
-        for m in project.get("messages", []):
-            role = m.get("role", "assistant")
-            content = (m.get("content") or "").replace("<", "&lt;").replace(">", "&gt;")
-            cls = "msg-user" if role == "user" else "msg-asst"
-            st.markdown(f"<div class='{cls}'>{content}</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+        # 고정 높이 스크롤 박스 — 무한정 늘어나지 않음
+        msgs_box = st.container(height=600, border=False)
+        with msgs_box:
+            # 1) 누적된 과거 메시지
+            for m in project.get("messages", []):
+                _render_msg(m.get("role", "assistant"), m.get("content", ""))
 
-        user_msg = st.chat_input("메시지를 입력하세요…", key=f"chat_input_{pid}")
-        if user_msg:
-            project["messages"].append({"role": "user", "content": user_msg,
-                                          "ts": datetime.now().isoformat()})
-            if _is_autopilot_trigger(user_msg):
-                with st.spinner("파이프라인 실행 중…"):
+            # 2) 새 사용자 입력 처리 (같은 run 안에서 스트리밍)
+            if user_msg:
+                if not project.get("title") or project["title"] == "새 작업":
+                    project["title"] = user_msg[:60]
+                project["messages"].append({"role": "user", "content": user_msg,
+                                              "ts": datetime.now().isoformat()})
+                _render_msg("user", user_msg)
+
+                if _is_autopilot_trigger(user_msg):
                     reply = ("알겠습니다. 지금까지 합의된 PICO·데이터·통계 조건으로 "
                               "파이프라인을 시작합니다. 진행 상황을 이 채팅과 우측 프리뷰로 알려드릴게요.\n\n"
-                              "(현 단계: 실제 파이프라인 hookup은 다음 작업 — RULE-8 시드 응답)")
-            else:
-                with st.spinner("응답 생성 중…"):
-                    reply = _llm_reply(project, user_msg, owner_email)
-            project["messages"].append({"role": "assistant", "content": reply,
-                                          "ts": datetime.now().isoformat()})
-            _save_project(project)
-            st.rerun()
+                              "(현 단계: 실제 파이프라인 hookup은 다음 작업)")
+                    _render_msg("assistant", reply)
+                else:
+                    # 스트리밍 — placeholder를 토큰 단위로 갱신
+                    placeholder = st.empty()
+                    full = ""
+                    for chunk in _stream_reply(project, user_msg):
+                        full += chunk
+                        safe = full.replace("<", "&lt;").replace(">", "&gt;")
+                        placeholder.markdown(
+                            f"<div class='msg-asst'>{safe}▌</div>",
+                            unsafe_allow_html=True)
+                    # 커서 제거 + 최종
+                    safe = full.replace("<", "&lt;").replace(">", "&gt;")
+                    placeholder.markdown(
+                        f"<div class='msg-asst'>{safe}</div>",
+                        unsafe_allow_html=True)
+                    reply = full
+
+                project["messages"].append({"role": "assistant", "content": reply,
+                                              "ts": datetime.now().isoformat()})
+                _save_project(project)
+                _post_turn_hooks(project, user_msg, reply, owner_email)
 
     with col_preview:
         sections = project.get("sections") or {}
