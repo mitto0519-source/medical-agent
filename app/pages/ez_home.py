@@ -243,61 +243,244 @@ def _sidebar():
     return None, None, projects
 
 
-def _render_workspace_inline():
-    """RULE-8 single-page: ez_home 안에서 workspace 화면 양식으로 전환."""
-    import traceback as _tb
-    try:
-        from importlib import import_module
-        ws = import_module("app.pages.project_workspace")
-    except Exception as e:
-        st.error(f"workspace import fail: {e}")
-        st.code(_tb.format_exc())
-        if st.button("← 홈으로", key="ws_inline_back"):
-            st.session_state.pop("sg_active_project", None); st.rerun()
+def _project_path(pid: str) -> Path:
+    _PROJECTS_DIR.mkdir(parents=True, exist_ok=True)
+    return _PROJECTS_DIR / f"{pid}.json"
+
+
+def _load_or_init_project(pid: str, initial_title: str = "새 작업") -> dict:
+    p = _project_path(pid)
+    if p.exists():
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return {"id": pid, "title": initial_title[:60], "messages": [],
+            "sections": {}, "updated": datetime.now().isoformat()}
+
+
+def _save_project(project: dict) -> None:
+    pid = project.get("id")
+    if not pid:
         return
-
-    pid = st.session_state.get("sg_active_project")
-    initial = st.session_state.get("sg_initial_prompt")
-
-    # 신규 프로젝트면 메모리 양식으로 생성, 기존 양식이면 load
+    project["updated"] = datetime.now().isoformat()
     try:
-        if pid and pid.startswith("chat_"):
-            project = {"id": pid, "messages": [], "sections": {},
-                        "title": (initial or "새 작업")[:60], "updated": "today"}
-        else:
-            project = ws._load_project(pid) or {
-                "id": pid, "messages": [], "sections": {},
-                "title": "새 작업", "updated": "today"}
-    except Exception as e:
-        st.error(f"project load fail: {e}")
-        st.code(_tb.format_exc())
-        return
+        _project_path(pid).write_text(
+            json.dumps(project, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+    # Supabase mirror (best-effort)
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text as _sql
+            owner = (st.session_state.get("user") or {}).get("email") or \
+                     st.session_state.get("user_email", "")
+            with get_engine().begin() as conn:
+                conn.execute(_sql(
+                    "INSERT INTO ma_working_papers (id, owner_email, title, data_json, updated_at) "
+                    "VALUES (:id, :oe, :ti, :dj, :ts) "
+                    "ON CONFLICT (id) DO UPDATE SET title=:ti, data_json=:dj, updated_at=:ts"),
+                    {"id": pid, "oe": owner, "ti": project.get("title", "")[:200],
+                     "dj": json.dumps(project, ensure_ascii=False),
+                     "ts": int(datetime.now().timestamp())})
+    except Exception:
+        pass
 
-    # ← 홈으로 양식 + 양식
-    cback, ctitle = st.columns([1, 6])
+
+def _is_autopilot_trigger(text: str) -> bool:
+    if not text:
+        return False
+    t = text.strip().lower()
+    triggers = ["알아서 해", "알아서해", "go ahead", "그냥 해", "그냥해",
+                 "전체 진행", "끝까지", "한번에", "full run", "auto run"]
+    return any(k in t for k in triggers)
+
+
+def _llm_reply(project: dict, user_msg: str, owner_email: str = "") -> str:
+    """단일 코어 wiring — CLAUDE.md 규칙 12.
+
+    모든 ez_home 채팅 한 턴이 다음을 같이 거친다 (VS Code MCP·Streamlit·heartbeat 공유):
+    1) persona.get_system_prompt(task) — versioned prompts + medical_seed + insight
+    2) agentic_loop.build_system_with_preview — + 현재 docx preview + conversation_memory.recall_relevant(cross-session) + change_log 최근
+    3) get_llm_client(task) — Claude→OpenAI→Gemini 3중 failover + persona 자동 주입
+    4) conversation_memory.record — ChromaDB cross-session 양식 양식 누적
+    5) events.append — append-only 감사 로그
+    6) memory.router.write — typed memory (episodic, scorer/lifecycle/gate)
+    """
+    try:
+        from src.llm import get_llm_client
+    except Exception as e:
+        return f"(LLM 클라이언트 import 실패: {e})"
+
+    # ── system prompt 양식 ──
+    try:
+        from src.agent.persona import get_system_prompt
+        base_sys = get_system_prompt(task="paper_writing")
+    except Exception:
+        base_sys = "당신은 의학 연구 코파일럿입니다."
+
+    try:
+        from app.agentic_loop import build_system_with_preview
+        full_sys = build_system_with_preview(base_sys, project, user_msg)
+    except Exception:
+        full_sys = base_sys
+
+    rule_overlay = (
+        "\n\n--- 양식 양식 RULE-8 양식 ---\n"
+        "사용자 주제가 양식 양식 양식 양식 양식 PICO·데이터·통계·하위군 양식 짧은 역질문 2-3개로 좁히세요.\n"
+        "'알아서 해' '그냥 해' '한번에' 양식 trigger 들으면 그때 양식 양식 양식 양식 양식 양식.\n"
+        "응답은 한국어, 동료 의학연구자 어투, 마크다운 짧게, 코파일럿 양식."
+    )
+    full_sys = full_sys + rule_overlay
+
+    # ── conversation history → prompt ──
+    history = "\n".join(
+        f"{'사용자' if m['role']=='user' else '코파일럿'}: {m['content']}"
+        for m in project.get("messages", [])[-10:])
+    prompt = f"{history}\n사용자: {user_msg}\n코파일럿:"
+
+    # ── LLM 호출 (failover 자동) ──
+    try:
+        client = get_llm_client(task="paper_writing")
+        out = client.generate(prompt=prompt, system_prompt=full_sys, max_tokens=1200)
+        out = (out or "").strip() or "(빈 응답)"
+    except Exception as e:
+        out = f"(LLM 호출 실패: {e})"
+
+    # ── 단일 코어 누적 (양식 best-effort, 양식 양식 양식 채팅 흐름 양식 양식) ──
+    try:
+        from src.memory.conversation_memory import record as _cm_record
+        _cm_record(user_message=user_msg, agent_response=out,
+                    topic=project.get("title", "")[:80],
+                    context_type="ez_home_chat", quality="neutral",
+                    owner_email=owner_email or "")
+    except Exception:
+        pass
+    try:
+        from src.runtime.events import append as _evt
+        _evt(type="ez_home_chat_turn",
+              payload={"pid": project.get("id"), "user": user_msg[:300],
+                       "resp_len": len(out)},
+              actor=owner_email or "anon")
+    except Exception:
+        pass
+    try:
+        from src.memory.router import write as _mem_write
+        _mem_write(f"[chat:{project.get('id','')}] {user_msg[:200]} || {out[:400]}",
+                    type="episodic", source="ez_home_chat",
+                    owner_email=owner_email or None,
+                    extra_meta={"project_id": project.get("id"),
+                                  "project_title": project.get("title", "")[:80]})
+    except Exception:
+        pass
+    try:
+        from src.memory import change_log as _cl
+        _cl.log(title=f"chat turn: {user_msg[:50]}",
+                 action_type="chat",
+                 description=f"pid={project.get('id')} user={user_msg[:200]}",
+                 why_better="user dialogue accumulated for cross-session context",
+                 impact={"project_id": project.get("id")})
+    except Exception:
+        pass
+
+    return out
+
+
+def _render_chat_page(pid: str):
+    """단일 페이지 chat + preview. 좌측 메시지 양식, 우측 docx preview."""
+    project = _load_or_init_project(pid, st.session_state.get("sg_initial_prompt") or "새 작업")
+
+    # 초기 prompt가 있고 messages가 비어있으면 양식 메시지 append + LLM 응답
+    initial = st.session_state.pop("sg_initial_prompt", None)
+    if initial and not project["messages"]:
+        project["messages"].append({"role": "user", "content": initial,
+                                      "ts": datetime.now().isoformat()})
+        if not project.get("title") or project["title"] == "새 작업":
+            project["title"] = initial[:60]
+        with st.spinner("응답 생성 중…"):
+            reply = _llm_reply(project["messages"], initial)
+        project["messages"].append({"role": "assistant", "content": reply,
+                                      "ts": datetime.now().isoformat()})
+        _save_project(project)
+
+    # Topbar — ← 홈 + title
+    cback, ctitle = st.columns([1, 7])
     with cback:
-        if st.button("← 홈", key="ws_back_btn"):
+        if st.button("← 홈", key="chat_back_btn"):
             st.session_state.pop("sg_active_project", None)
-            st.session_state.pop("sg_initial_prompt", None)
             st.rerun()
     with ctitle:
         st.markdown(f"<div style='font-weight:600;font-size:1.05rem;color:#0F172A;"
-                    f"padding-top:6px;'>{project.get('title','새 작업')[:60]}</div>",
+                    f"padding-top:6px;'>{project.get('title','새 작업')[:80]}</div>",
                     unsafe_allow_html=True)
 
-    col_chat, col_preview = st.columns([0.45, 0.55], gap="small")
+    st.markdown("""
+    <style>
+    .chat-scroll { max-height: 70vh; overflow-y: auto; padding-right: 8px; }
+    .msg-user { background:#0F172A; color:#FFFFFF; border-radius:14px 14px 4px 14px;
+                 padding:10px 14px; margin:8px 0 8px auto; max-width:85%;
+                 width:fit-content; font-size:0.92rem; line-height:1.5; }
+    .msg-asst { background:#F1F5F9; color:#0F172A; border-radius:14px 14px 14px 4px;
+                 padding:10px 14px; margin:8px auto 8px 0; max-width:90%;
+                 width:fit-content; font-size:0.92rem; line-height:1.5; }
+    .preview-box { background:#FFFFFF; border:1px solid rgba(15,23,42,0.08);
+                    border-radius:12px; padding:32px; min-height:70vh;
+                    box-shadow:0 1px 3px rgba(15,23,42,0.04); }
+    .preview-box h1 { font-size:1.4rem; color:#0F172A; margin:0 0 8px 0; }
+    .preview-box h2 { font-size:1.0rem; color:#0F172A; margin:18px 0 6px 0;
+                       border-bottom:1px solid rgba(15,23,42,0.08); padding-bottom:4px; }
+    .preview-box p  { color:#334155; font-size:0.92rem; line-height:1.7; margin:0 0 10px 0; }
+    .preview-empty  { color:#94A3B8; font-size:0.9rem; text-align:center; padding-top:30vh; }
+    </style>
+    """, unsafe_allow_html=True)
+
+    col_chat, col_preview = st.columns([0.46, 0.54], gap="medium")
+
     with col_chat:
-        try:
-            ws._render_chat_left(project, pid)
-        except Exception as e:
-            st.error(f"chat_left fail: {type(e).__name__}: {e}")
-            st.code(_tb.format_exc()[:1500])
+        st.markdown("<div class='chat-scroll'>", unsafe_allow_html=True)
+        for m in project.get("messages", []):
+            role = m.get("role", "assistant")
+            content = (m.get("content") or "").replace("<", "&lt;").replace(">", "&gt;")
+            cls = "msg-user" if role == "user" else "msg-asst"
+            st.markdown(f"<div class='{cls}'>{content}</div>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        user_msg = st.chat_input("메시지를 입력하세요…", key=f"chat_input_{pid}")
+        if user_msg:
+            project["messages"].append({"role": "user", "content": user_msg,
+                                          "ts": datetime.now().isoformat()})
+            if _is_autopilot_trigger(user_msg):
+                with st.spinner("파이프라인 실행 중… (모의 — 실제 파이프라인 연결 예정)"):
+                    reply = ("알겠습니다. 지금까지 합의된 PICO·데이터·통계 조건으로 "
+                              "파이프라인을 시작합니다. 진행 상황을 양식 양식 양식 양식 양식…\n\n"
+                              "(현 양식: 실제 파이프라인 hookup은 다음 단계 — RULE-8 시드 응답)")
+            else:
+                with st.spinner("응답 생성 중…"):
+                    reply = _llm_reply(project["messages"], user_msg)
+            project["messages"].append({"role": "assistant", "content": reply,
+                                          "ts": datetime.now().isoformat()})
+            _save_project(project)
+            st.rerun()
+
     with col_preview:
-        try:
-            ws._render_preview_right(project)
-        except Exception as e:
-            st.error(f"preview_right fail: {type(e).__name__}: {e}")
-            st.code(_tb.format_exc()[:1500])
+        sections = project.get("sections") or {}
+        if not sections:
+            st.markdown(
+                "<div class='preview-box'><div class='preview-empty'>"
+                "📄 논문 양식 양식 양식 작성되면 이곳에 양식 양식 양식 양식 양식 양식.<br>"
+                "<span style='font-size:0.82rem;'>(대화로 주제·데이터·통계가 합의되고 "
+                "'알아서 해' 양식을 주면 자동 작성이 양식 양식니다)</span></div></div>",
+                unsafe_allow_html=True)
+        else:
+            html_parts = [f"<div class='preview-box'><h1>{project.get('title','')[:80]}</h1>"]
+            for key in ["abstract", "introduction", "methods", "results", "discussion", "conclusion"]:
+                if key in sections and sections[key]:
+                    body = str(sections[key]).replace("<", "&lt;").replace(">", "&gt;")
+                    body_html = "".join(f"<p>{para}</p>" for para in body.split("\n\n") if para.strip())
+                    html_parts.append(f"<h2>{key.capitalize()}</h2>{body_html}")
+            html_parts.append("</div>")
+            st.markdown("".join(html_parts), unsafe_allow_html=True)
 
 
 def render() -> None:
