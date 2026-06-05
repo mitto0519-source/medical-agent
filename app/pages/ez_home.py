@@ -391,6 +391,9 @@ def _render_chat_page(pid: str):
     """단일 페이지 chat + preview. 좌측 메시지 양식, 우측 docx preview."""
     project = _load_or_init_project(pid, st.session_state.get("sg_initial_prompt") or "새 작업")
 
+    owner_email = (st.session_state.get("user") or {}).get("email") or \
+                   st.session_state.get("user_email", "")
+
     # 초기 prompt가 있고 messages가 비어있으면 양식 메시지 append + LLM 응답
     initial = st.session_state.pop("sg_initial_prompt", None)
     if initial and not project["messages"]:
@@ -399,7 +402,7 @@ def _render_chat_page(pid: str):
         if not project.get("title") or project["title"] == "새 작업":
             project["title"] = initial[:60]
         with st.spinner("응답 생성 중…"):
-            reply = _llm_reply(project["messages"], initial)
+            reply = _llm_reply(project, initial, owner_email)
         project["messages"].append({"role": "assistant", "content": reply,
                                       "ts": datetime.now().isoformat()})
         _save_project(project)
@@ -457,7 +460,7 @@ def _render_chat_page(pid: str):
                               "(현 양식: 실제 파이프라인 hookup은 다음 단계 — RULE-8 시드 응답)")
             else:
                 with st.spinner("응답 생성 중…"):
-                    reply = _llm_reply(project["messages"], user_msg)
+                    reply = _llm_reply(project, user_msg, owner_email)
             project["messages"].append({"role": "assistant", "content": reply,
                                           "ts": datetime.now().isoformat()})
             _save_project(project)
