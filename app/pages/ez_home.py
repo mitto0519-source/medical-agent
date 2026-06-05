@@ -500,10 +500,10 @@ def render() -> None:
         render_fab = None
     _, _, projects = _sidebar()
 
-    # 상태 기반 분기 — 활성 프로젝트가 있으면 workspace inline 양식 렌더
+    # 상태 기반 분기 — 활성 프로젝트가 있으면 chat+preview 단일 페이지 양식
     active = st.session_state.get("sg_active_project")
     if active and active != "new":
-        _render_workspace_inline()
+        _render_chat_page(active)
         return
 
     # 페이지별 UX CSS — Chat-first 양식 (Lovable/ChatGPT 양식)
