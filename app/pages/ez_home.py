@@ -370,31 +370,26 @@ def render() -> None:
         "<p>주제만 적어주세요. 데이터·통계·구조는 대화로 같이 정해갑니다.</p>"
         "</div>", unsafe_allow_html=True)
 
-    # Example chip이 클릭되면 입력에 채움
-    if "_ez_chip_clicked" in st.session_state:
-        st.session_state["sg_home_prompt"] = st.session_state.pop("_ez_chip_clicked")
+    # Example chip이 클릭되면 입력에 채움 (다음 입력에 prepend)
+    chip_text = st.session_state.pop("_ez_chip_clicked", None)
 
-    # 단일 chat input — 박스 안 우측에 send 버튼 floating
-    st.markdown("<div class='ez-chat-wrap'>", unsafe_allow_html=True)
-    prompt = st.text_area(
-        "prompt",
-        placeholder="무엇을 연구하고 싶으세요?",
-        label_visibility="collapsed", height=68, key="sg_home_prompt")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("<div class='ez-send-overlay'>", unsafe_allow_html=True)
-    send = st.button("Start →", key="sg_home_send", type="primary",
-                      disabled=not (prompt and prompt.strip()))
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # 첨부 — chat 박스 아래 작은 widget
-    st.markdown("<div class='ez-attach'>", unsafe_allow_html=True)
+    # 첨부 widget — chat input 위에 작게
+    st.markdown("<div style='max-width:720px;margin:0 auto 12px;'>", unsafe_allow_html=True)
     uploaded = st.file_uploader(
-        "📎 첨부 (선택) — 기존 논문/데이터",
-        type=["pdf", "docx", "txt", "png", "jpg", "jpeg", "sav", "csv", "xlsx", "json"],
+        "📎 기존 논문/데이터 첨부 (선택)",
+        type=["pdf","docx","txt","png","jpg","jpeg","sav","csv","xlsx","json"],
         accept_multiple_files=True, key="sg_home_files",
-        label_visibility="visible")
+        label_visibility="collapsed")
     st.markdown("</div>", unsafe_allow_html=True)
+
+    # ★ st.chat_input — Enter로 즉시 제출 (ChatGPT/Lovable 양식)
+    prompt = st.chat_input(
+        "무엇을 연구하고 싶으세요?",
+        key="sg_home_chat_input",
+    )
+    if chip_text and not prompt:
+        prompt = chip_text
+    send = bool(prompt)
 
     # Example chips — 입력이 비어있으면 항상 표시 (projects 있어도 OK)
     if not prompt:
