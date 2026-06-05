@@ -352,11 +352,16 @@ if not _login_gate():
     st.stop()
 
 # ══════════════════════════════════════════════════════════════════════
-# 권한별 LLM 키 활성화 — admin 2명은 전역 모든 API full access,
-# 일반 user는 본인 키 필수 (각 계정 귀속). [규칙: 데이터/API 계정 귀속]
-# 주의: 단일 프로세스 동시 멀티유저 시 마지막 로그인 user 키가 전역에 남을 수 있음
-#       (실사용 1인 세션 기준 안전). 진짜 동시 멀티테넌시는 별도 프로세스 분리 필요.
+# 로그인 완료 후 → 즉시 ez_home으로 redirect (단일 vibe paper UI).
+# 옛 classic-mode 사이드바/EZ-mode 버튼 양식 등 streamlit_app 자체 렌더는
+# 제거. 모든 화면 전환은 ez_home 내부 상태로 처리 (single-page architecture).
 # ══════════════════════════════════════════════════════════════════════
+try:
+    st.switch_page("pages/ez_home.py")
+except Exception:
+    pass
+
+# admin 양식 권한 (LLM 키 wiring) — ez_home에서 import 시 활용
 _cur_email = st.session_state.get("user", {}).get("email", "")
 try:
     from src.auth.users import is_admin as _is_admin_fn

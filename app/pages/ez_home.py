@@ -243,16 +243,54 @@ def _sidebar():
     return None, None, projects
 
 
+def _render_workspace_inline():
+    """RULE-8 single-page: ez_home 안에서 workspace 화면 양식으로 전환.
+
+    sg_active_project이 set돼 있고 'new'가 아니면 호출. workspace의 chat_left +
+    preview_right를 import해서 같은 페이지에 split 렌더 (page switch X).
+    """
+    try:
+        # workspace 함수를 직접 import해서 호출
+        from importlib import import_module
+        ws = import_module("app.pages.project_workspace")
+        pid = st.session_state.get("sg_active_project")
+        project = ws._load_project(pid) if pid != "new" else {
+            "id": pid, "messages": [], "sections": {},
+            "title": "새 작업", "updated": "today",
+        }
+        ws._render_topbar(project)
+        col_chat, col_preview = st.columns([0.45, 0.55], gap="small")
+        with col_chat:
+            ws._render_chat_left(project, pid)
+        with col_preview:
+            ws._render_preview_right(project)
+    except Exception as e:
+        st.error(f"workspace inline render fail: {e}")
+        # fallback: hero로 돌아감
+        st.session_state.pop("sg_active_project", None)
+        if st.button("← 홈으로", key="ws_inline_back"):
+            st.rerun()
+
+
 def render() -> None:
-    """홈 렌더링 — `app/streamlit_app.py`에서 호출."""
+    """홈 렌더링 — `app/streamlit_app.py`에서 호출.
+
+    Single-page architecture: 활성 프로젝트 있으면 workspace 양식 인라인 렌더,
+    없으면 hero+chat 입력 양식.
+    """
     inject_sapphire_glass()
-    # 모달 dialog가 pending이면 먼저 띄움 (FAB/chip 클릭 시)
     try:
         from app.sapphire_actions import render_open_action_if_any, render_fab
         render_open_action_if_any()
     except Exception:
         render_fab = None
     _, _, projects = _sidebar()
+
+    # 상태 기반 분기 — 활성 프로젝트가 있으면 workspace inline 양식 렌더
+    active = st.session_state.get("sg_active_project")
+    if active and active != "new":
+        _render_workspace_inline()
+        return
 
     # 페이지별 UX CSS — Chat-first 양식 (Lovable/ChatGPT 양식)
     st.markdown("""
@@ -380,13 +418,13 @@ def render() -> None:
         if uploaded:
             _enqueue_uploaded_files(uploaded, prompt_hint=prompt or "")
         if prompt:
-            st.session_state["sg_active_project"] = "new"
+            # ★ Single-page architecture (사용자 요구 2026-06-05):
+            # switch_page X. 같은 ez_home 페이지 안에서 상태로 chat+preview split 전환.
+            import uuid as _uuid
+            pid = f"chat_{_uuid.uuid4().hex[:10]}"
+            st.session_state["sg_active_project"] = pid
             st.session_state["sg_initial_prompt"] = prompt
-            st.session_state["sg_view"] = "workspace"
-            try:
-                st.switch_page("pages/project_workspace.py")
-            except Exception:
-                st.rerun()
+            st.rerun()
         else:
             st.rerun()
 
