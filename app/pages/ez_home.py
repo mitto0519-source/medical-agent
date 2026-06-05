@@ -327,10 +327,10 @@ def _llm_reply(project: dict, user_msg: str, owner_email: str = "") -> str:
         full_sys = base_sys
 
     rule_overlay = (
-        "\n\n--- 양식 양식 RULE-8 양식 ---\n"
-        "사용자 주제가 양식 양식 양식 양식 양식 PICO·데이터·통계·하위군 양식 짧은 역질문 2-3개로 좁히세요.\n"
-        "'알아서 해' '그냥 해' '한번에' 양식 trigger 들으면 그때 양식 양식 양식 양식 양식 양식.\n"
-        "응답은 한국어, 동료 의학연구자 어투, 마크다운 짧게, 코파일럿 양식."
+        "\n\n--- RULE-8 (vibe paper) ---\n"
+        "사용자 주제가 모호하면 PICO·데이터·통계·하위군 중 짧은 역질문 2-3개로 좁히세요.\n"
+        "'알아서 해' '그냥 해' '한번에' 같은 trigger를 들으면 그때 자동 파이프라인을 진행합니다.\n"
+        "응답은 한국어, 동료 의학연구자 어투, 마크다운 짧게."
     )
     full_sys = full_sys + rule_overlay
 
@@ -343,7 +343,7 @@ def _llm_reply(project: dict, user_msg: str, owner_email: str = "") -> str:
     # ── LLM 호출 (failover 자동) ──
     try:
         client = get_llm_client(task="paper_writing")
-        out = client.generate(prompt=prompt, system_prompt=full_sys, max_tokens=1200)
+        out = client.generate(prompt, system_prompt=full_sys, max_tokens=1200)
         out = (out or "").strip() or "(빈 응답)"
     except Exception as e:
         out = f"(LLM 호출 실패: {e})"
@@ -454,10 +454,10 @@ def _render_chat_page(pid: str):
             project["messages"].append({"role": "user", "content": user_msg,
                                           "ts": datetime.now().isoformat()})
             if _is_autopilot_trigger(user_msg):
-                with st.spinner("파이프라인 실행 중… (모의 — 실제 파이프라인 연결 예정)"):
+                with st.spinner("파이프라인 실행 중…"):
                     reply = ("알겠습니다. 지금까지 합의된 PICO·데이터·통계 조건으로 "
-                              "파이프라인을 시작합니다. 진행 상황을 양식 양식 양식 양식 양식…\n\n"
-                              "(현 양식: 실제 파이프라인 hookup은 다음 단계 — RULE-8 시드 응답)")
+                              "파이프라인을 시작합니다. 진행 상황을 이 채팅과 우측 프리뷰로 알려드릴게요.\n\n"
+                              "(현 단계: 실제 파이프라인 hookup은 다음 작업 — RULE-8 시드 응답)")
             else:
                 with st.spinner("응답 생성 중…"):
                     reply = _llm_reply(project, user_msg, owner_email)
@@ -471,9 +471,9 @@ def _render_chat_page(pid: str):
         if not sections:
             st.markdown(
                 "<div class='preview-box'><div class='preview-empty'>"
-                "📄 논문 양식 양식 양식 작성되면 이곳에 양식 양식 양식 양식 양식 양식.<br>"
+                "📄 논문 초안이 생성되면 이곳에 실시간으로 표시됩니다.<br>"
                 "<span style='font-size:0.82rem;'>(대화로 주제·데이터·통계가 합의되고 "
-                "'알아서 해' 양식을 주면 자동 작성이 양식 양식니다)</span></div></div>",
+                "'알아서 해'라고 말씀하시면 자동 작성이 시작됩니다)</span></div></div>",
                 unsafe_allow_html=True)
         else:
             html_parts = [f"<div class='preview-box'><h1>{project.get('title','')[:80]}</h1>"]
