@@ -3,3 +3,15 @@ headless = true
 
 [browser]
 gatherUsageStats = false
+
+[client]
+# Disable Streamlit's auto-multipage nav (file names show up in sidebar otherwise)
+showSidebarNavigation = false
+
+[theme]
+base = "light"
+primaryColor = "#0F172A"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F8FAFC"
+textColor = "#0F172A"
+font = "sans serif"
