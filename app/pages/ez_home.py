@@ -244,32 +244,60 @@ def _sidebar():
 
 
 def _render_workspace_inline():
-    """RULE-8 single-page: ez_home 안에서 workspace 화면 양식으로 전환.
-
-    sg_active_project이 set돼 있고 'new'가 아니면 호출. workspace의 chat_left +
-    preview_right를 import해서 같은 페이지에 split 렌더 (page switch X).
-    """
+    """RULE-8 single-page: ez_home 안에서 workspace 화면 양식으로 전환."""
+    import traceback as _tb
     try:
-        # workspace 함수를 직접 import해서 호출
         from importlib import import_module
         ws = import_module("app.pages.project_workspace")
-        pid = st.session_state.get("sg_active_project")
-        project = ws._load_project(pid) if pid != "new" else {
-            "id": pid, "messages": [], "sections": {},
-            "title": "새 작업", "updated": "today",
-        }
-        ws._render_topbar(project)
-        col_chat, col_preview = st.columns([0.45, 0.55], gap="small")
-        with col_chat:
-            ws._render_chat_left(project, pid)
-        with col_preview:
-            ws._render_preview_right(project)
     except Exception as e:
-        st.error(f"workspace inline render fail: {e}")
-        # fallback: hero로 돌아감
-        st.session_state.pop("sg_active_project", None)
+        st.error(f"workspace import fail: {e}")
+        st.code(_tb.format_exc())
         if st.button("← 홈으로", key="ws_inline_back"):
+            st.session_state.pop("sg_active_project", None); st.rerun()
+        return
+
+    pid = st.session_state.get("sg_active_project")
+    initial = st.session_state.get("sg_initial_prompt")
+
+    # 신규 프로젝트면 메모리 양식으로 생성, 기존 양식이면 load
+    try:
+        if pid and pid.startswith("chat_"):
+            project = {"id": pid, "messages": [], "sections": {},
+                        "title": (initial or "새 작업")[:60], "updated": "today"}
+        else:
+            project = ws._load_project(pid) or {
+                "id": pid, "messages": [], "sections": {},
+                "title": "새 작업", "updated": "today"}
+    except Exception as e:
+        st.error(f"project load fail: {e}")
+        st.code(_tb.format_exc())
+        return
+
+    # ← 홈으로 양식 + 양식
+    cback, ctitle = st.columns([1, 6])
+    with cback:
+        if st.button("← 홈", key="ws_back_btn"):
+            st.session_state.pop("sg_active_project", None)
+            st.session_state.pop("sg_initial_prompt", None)
             st.rerun()
+    with ctitle:
+        st.markdown(f"<div style='font-weight:600;font-size:1.05rem;color:#0F172A;"
+                    f"padding-top:6px;'>{project.get('title','새 작업')[:60]}</div>",
+                    unsafe_allow_html=True)
+
+    col_chat, col_preview = st.columns([0.45, 0.55], gap="small")
+    with col_chat:
+        try:
+            ws._render_chat_left(project, pid)
+        except Exception as e:
+            st.error(f"chat_left fail: {type(e).__name__}: {e}")
+            st.code(_tb.format_exc()[:1500])
+    with col_preview:
+        try:
+            ws._render_preview_right(project)
+        except Exception as e:
+            st.error(f"preview_right fail: {type(e).__name__}: {e}")
+            st.code(_tb.format_exc()[:1500])
 
 
 def render() -> None:
