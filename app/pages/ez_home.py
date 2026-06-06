@@ -396,16 +396,13 @@ def _render_chat_page(pid: str):
     owner_email = (st.session_state.get("user") or {}).get("email") or \
                    st.session_state.get("user_email", "")
 
-    # Topbar
-    cback, ctitle = st.columns([1, 7])
-    with cback:
-        if st.button("← 홈", key="chat_back_btn"):
-            st.session_state.pop("sg_active_project", None)
-            st.rerun()
-    with ctitle:
-        st.markdown(f"<div style='font-weight:600;font-size:1.05rem;color:#0F172A;"
-                    f"padding-top:6px;'>{project.get('title','새 작업')[:80]}</div>",
-                    unsafe_allow_html=True)
+    # Topbar — title only (사이드바에 새 채팅 버튼 있음)
+    title_text = project.get("title", "새 작업") or "새 작업"
+    if title_text == "새 작업" and not project.get("messages"):
+        title_text = "새 대화"
+    st.markdown(f"<div style='font-weight:600;font-size:1.0rem;color:#0F172A;"
+                f"padding:4px 0 12px 0;'>{title_text[:80]}</div>",
+                unsafe_allow_html=True)
 
     st.markdown("""
     <style>
@@ -424,7 +421,7 @@ def _render_chat_page(pid: str):
     .preview-box h2 { font-size:1.0rem; color:#0F172A; margin:18px 0 6px 0;
                        border-bottom:1px solid rgba(15,23,42,0.08); padding-bottom:4px; }
     .preview-box p  { color:#334155; font-size:0.92rem; line-height:1.7; margin:0 0 10px 0; }
-    .preview-empty  { color:#94A3B8; font-size:0.9rem; text-align:center; padding-top:240px; }
+    .preview-empty  { color:#94A3B8; font-size:0.9rem; text-align:center; padding-top:140px; }
     /* st.container(height=...) 내부 스크롤바 정돈 */
     [data-testid='stVerticalBlockBorderWrapper'] > div > div > [data-testid='stVerticalBlock']::-webkit-scrollbar {
         width: 6px;
@@ -489,10 +486,25 @@ def _render_chat_page(pid: str):
         sections = project.get("sections") or {}
         if not sections:
             st.markdown(
-                "<div class='preview-box'><div class='preview-empty'>"
-                "📄 논문 초안이 생성되면 이곳에 실시간으로 표시됩니다.<br>"
-                "<span style='font-size:0.82rem;'>(대화로 주제·데이터·통계가 합의되고 "
-                "'알아서 해'라고 말씀하시면 자동 작성이 시작됩니다)</span></div></div>",
+                """
+                <div class='preview-box'>
+                  <div class='preview-empty'>
+                    <div style='font-size:64px;line-height:1;margin-bottom:20px;'>🔬</div>
+                    <div style='font-size:1.4rem;font-weight:600;color:#0F172A;margin-bottom:6px;'>
+                      Medical-Agent
+                    </div>
+                    <div style='color:#64748B;font-size:0.92rem;margin-bottom:24px;'>
+                      Vibe paper copilot · clinical / translational medicine
+                    </div>
+                    <div style='color:#94A3B8;font-size:0.82rem;line-height:1.6;
+                                 max-width:340px;margin:0 auto;'>
+                      대화로 주제·데이터·통계가 합의되고<br>
+                      <b style='color:#475569;'>'알아서 해'</b>라고 말씀하시면<br>
+                      이곳에 논문 초안이 실시간으로 작성됩니다.
+                    </div>
+                  </div>
+                </div>
+                """,
                 unsafe_allow_html=True)
         else:
             html_parts = [f"<div class='preview-box'><h1>{project.get('title','')[:80]}</h1>"]
@@ -506,197 +518,22 @@ def _render_chat_page(pid: str):
 
 
 def render() -> None:
-    """홈 렌더링 — `app/streamlit_app.py`에서 호출.
+    """홈 렌더링 — 항상 chat(좌) + preview(우) 고정 2-split.
 
-    Single-page architecture: 활성 프로젝트 있으면 workspace 양식 인라인 렌더,
-    없으면 hero+chat 입력 양식.
+    Hero / chips / 우측 RECENT grid / FAB 모두 제거. 단일 항상-고정 레이아웃.
+    active project 없으면 새 pid 자동 생성 (사용자 입력 즉시 누적 시작).
     """
+    import uuid as _uuid
     inject_sapphire_glass()
-    try:
-        from app.sapphire_actions import render_open_action_if_any, render_fab
-        render_open_action_if_any()
-    except Exception:
-        render_fab = None
-    _, _, projects = _sidebar()
+    _sidebar()
 
-    # 상태 기반 분기 — 활성 프로젝트가 있으면 chat+preview 단일 페이지 양식
+    # active 없으면 새로 만들어 즉시 chat 영역으로
     active = st.session_state.get("sg_active_project")
-    if active and active != "new":
-        _render_chat_page(active)
-        return
+    if not active or active == "new":
+        active = f"chat_{_uuid.uuid4().hex[:10]}"
+        st.session_state["sg_active_project"] = active
 
-    # 페이지별 UX CSS — Chat-first 양식 (Lovable/ChatGPT 양식)
-    st.markdown("""
-    <style>
-    /* Hero — clean tool-like, not marketing */
-    .ez-hero { text-align:center; margin: 14vh 0 28px 0; }
-    .ez-hero h1 { font-size:1.9rem; font-weight:600; color:#0F172A; letter-spacing:-0.02em;
-                   margin:0 0 8px 0; }
-    .ez-hero p  { color:#64748B; font-size:0.95rem; margin:0; }
-    /* Chat box — input + paperclip + arrow in one frame */
-    .ez-chat-wrap { max-width: 720px; margin: 0 auto; position: relative; }
-    .ez-chat-wrap .stTextArea textarea {
-        min-height: 56px !important;
-        max-height: 280px !important;
-        padding: 16px 92px 16px 20px !important;
-        font-size: 0.98rem !important;
-        background: #FFFFFF !important;
-        border: 1px solid rgba(15,23,42,0.10) !important;
-        border-radius: 18px !important;
-        box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.06) !important;
-        line-height: 1.5 !important;
-        resize: none !important;
-    }
-    .ez-chat-wrap .stTextArea textarea:focus {
-        border-color: #3B82F6 !important;
-        box-shadow: 0 0 0 3px rgba(59,130,246,0.10), 0 8px 24px rgba(15,23,42,0.06) !important;
-    }
-    /* 파일 첨부 widget — 작은 라벨 + 박스 inline 양식 */
-    .ez-attach { max-width:720px; margin:8px auto 0; display:flex; align-items:center;
-                  gap:8px; color:#64748B; font-size:0.82rem; }
-    .ez-attach .stFileUploader { flex: 1; }
-    .ez-attach [data-testid='stFileUploader'] section {
-        min-height: 40px !important;
-        padding: 6px 12px !important;
-        border-radius: 10px !important;
-        border: 1px dashed rgba(15,23,42,0.12) !important;
-        background: rgba(255,255,255,0.5) !important;
-    }
-    /* Send 버튼 — 박스 안 우측 floating */
-    .ez-send-overlay { position: relative; max-width: 720px; margin: -56px auto 0; }
-    .ez-send-overlay .stButton { position: absolute; right: 10px; top: -52px; width: 80px; }
-    .ez-send-overlay .stButton button {
-        height: 36px !important; min-height: 36px !important;
-        border-radius: 12px !important; padding: 0 14px !important;
-        background: #0F172A !important; color: #FFFFFF !important;
-        border: none !important; font-weight: 600 !important;
-    }
-    .ez-send-overlay .stButton button:disabled { background: #CBD5E1 !important; color: #94A3B8 !important; }
-    /* Example chips */
-    .ez-suggest-row { max-width:720px; margin: 18px auto 0; display:flex; flex-wrap:wrap;
-                       gap:8px; justify-content:center; }
-    .ez-suggest-row .stButton button {
-        background: rgba(15,23,42,0.04) !important;
-        border: 1px solid rgba(15,23,42,0.08) !important;
-        border-radius: 999px !important;
-        padding: 6px 14px !important;
-        min-height: 30px !important;
-        color: #475569 !important;
-        font-size: 0.85rem !important;
-        font-weight: 500 !important;
-        text-align: center !important;
-        box-shadow: none !important;
-    }
-    .ez-suggest-row .stButton button:hover {
-        background: rgba(15,23,42,0.08) !important; color: #0F172A !important;
-    }
-    /* Recent projects section */
-    .ez-recent-h { max-width:1080px; margin: 56px auto 8px; font-size:0.78rem;
-                    color:#94A3B8; text-transform:uppercase; letter-spacing:0.06em; }
-    </style>
-    """, unsafe_allow_html=True)
-
-    # Hero — short tool-like
-    st.markdown(
-        "<div class='ez-hero'>"
-        "<h1>의학 연구를 채팅으로</h1>"
-        "<p>주제만 적어주세요. 데이터·통계·구조는 대화로 같이 정해갑니다.</p>"
-        "</div>", unsafe_allow_html=True)
-
-    # Example chip이 클릭되면 입력에 채움 (다음 입력에 prepend)
-    chip_text = st.session_state.pop("_ez_chip_clicked", None)
-
-    # 첨부 widget — chat input 위에 작게
-    st.markdown("<div style='max-width:720px;margin:0 auto 12px;'>", unsafe_allow_html=True)
-    uploaded = st.file_uploader(
-        "📎 기존 논문/데이터 첨부 (선택)",
-        type=["pdf","docx","txt","png","jpg","jpeg","sav","csv","xlsx","json"],
-        accept_multiple_files=True, key="sg_home_files",
-        label_visibility="collapsed")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # ★ st.chat_input — Enter로 즉시 제출 (ChatGPT/Lovable 양식)
-    prompt = st.chat_input(
-        "무엇을 연구하고 싶으세요?",
-        key="sg_home_chat_input",
-    )
-    if chip_text and not prompt:
-        prompt = chip_text
-    send = bool(prompt)
-
-    # Example chips — 입력이 비어있으면 항상 표시 (projects 있어도 OK)
-    if not prompt:
-        st.markdown("<div class='ez-suggest-row'>", unsafe_allow_html=True)
-        EX_CHIPS = [
-            "SGLT2 억제제의 한국 심부전 환자 신기능 보존 효과 RWE",
-            "GLP-1 RA 비급여 처방 후 갑상선 미세변화 시그널",
-            "코로나 락다운 전후 청소년 ADHD 진단·처방 추세",
-            "한국 청소년 우울증과 카페인 음료 노출의 자연실험",
-        ]
-        cols = st.columns(len(EX_CHIPS))
-        for i, ex in enumerate(EX_CHIPS):
-            with cols[i]:
-                if st.button(ex[:40] + ("…" if len(ex) > 40 else ""),
-                              key=f"sg_ex_{i}", help=ex):
-                    st.session_state["_ez_chip_clicked"] = ex
-                    st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    if send and (prompt or uploaded):
-        if uploaded:
-            _enqueue_uploaded_files(uploaded, prompt_hint=prompt or "")
-        if prompt:
-            # ★ Single-page architecture (사용자 요구 2026-06-05):
-            # switch_page X. 같은 ez_home 페이지 안에서 상태로 chat+preview split 전환.
-            import uuid as _uuid
-            pid = f"chat_{_uuid.uuid4().hex[:10]}"
-            st.session_state["sg_active_project"] = pid
-            st.session_state["sg_initial_prompt"] = prompt
-            st.rerun()
-        else:
-            st.rerun()
-
-    # 최근 프로젝트 — 명확한 헤더 + 카드
-    if projects:
-        st.markdown("<div class='ez-recent-h'>RECENT</div>", unsafe_allow_html=True)
-        project_grid(projects[:6])
-    # Templates 탭 제거. 아래 templates 코드는 dead — 절대 호출 안 됨.
-    if False:
-        tpl_html = (
-            "<div class='sg-project-grid'>"
-            "<div class='sg-project-card'>"
-            "<div class='sg-project-thumb' style='background:linear-gradient(135deg,#1E3A8A,#06B6D4);'>"
-            "<div style='position:absolute;bottom:8px;left:8px;'>"
-            "<span class='sg-badge'>Template</span></div></div>"
-            "<div class='sg-project-meta'><div class='sg-project-title'>"
-            "Cross-sectional · STROBE (Yoosun 양식)</div>"
-            "<div class='sg-project-date'>KYRBS 2025 / IMRAD 기본</div></div></div>"
-            "<div class='sg-project-card'>"
-            "<div class='sg-project-thumb' style='background:linear-gradient(135deg,#581C87,#EC4899);'>"
-            "<div style='position:absolute;bottom:8px;left:8px;'>"
-            "<span class='sg-badge'>Template</span></div></div>"
-            "<div class='sg-project-meta'><div class='sg-project-title'>"
-            "Cohort · STROBE 코호트</div>"
-            "<div class='sg-project-date'>KNHANES 다년 추적 / 생존분석</div></div></div>"
-            "<div class='sg-project-card'>"
-            "<div class='sg-project-thumb' style='background:linear-gradient(135deg,#312E81,#7C3AED);'>"
-            "<div style='position:absolute;bottom:8px;left:8px;'>"
-            "<span class='sg-badge'>Template</span></div></div>"
-            "<div class='sg-project-meta'><div class='sg-project-title'>"
-            "Systematic review · PRISMA</div>"
-            "<div class='sg-project-date'>PubMed 자동 수집 + 평가</div></div></div>"
-            "</div>"
-        )
-        st.markdown(tpl_html, unsafe_allow_html=True)
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # ── Floating Action Button (우하단 quick-action 메뉴) ──
-    try:
-        from app.sapphire_actions import render_fab as _render_fab
-        _render_fab()
-    except Exception:
-        pass
+    _render_chat_page(active)
 
 
 # Streamlit 멀티페이지: 페이지 파일을 runpy로 실행하므로 무조건 render() 호출
