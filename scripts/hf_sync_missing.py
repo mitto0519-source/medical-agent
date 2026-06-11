@@ -31,6 +31,11 @@ UPLOAD_PLAN = [
 
 
 def upload_one(api: HfApi, local: str, in_repo: str):
+    """upload_folder는 path_in_repo 지원. upload_large_folder는 미지원이라 안 씀.
+
+    큰 폴더(>1GB)도 upload_folder가 정상 처리 — 단 commit이 커서 timeout 가능.
+    그럴 땐 hf-cli 또는 chunked upload로 전환 필요.
+    """
     if not Path(local).exists():
         print(f"  [SKIP] {local} not exists", flush=True)
         return
@@ -38,11 +43,12 @@ def upload_one(api: HfApi, local: str, in_repo: str):
     print(f"  [UPLOAD] {local} → {in_repo}  ({n} files)", flush=True)
     t0 = time.time()
     try:
-        api.upload_large_folder(
+        api.upload_folder(
             repo_id=REPO,
             repo_type="dataset",
             folder_path=local,
             path_in_repo=in_repo,
+            commit_message=f"Sync {in_repo}: {n} files",
             ignore_patterns=["*.pyc", "__pycache__/*", "*.tmp", ".DS_Store"],
         )
         print(f"  [DONE]   {in_repo}  ({time.time()-t0:.1f}s)", flush=True)
