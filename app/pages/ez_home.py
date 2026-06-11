@@ -497,8 +497,48 @@ def _is_autopilot_trigger(text: str) -> bool:
     return any(k in t for k in triggers)
 
 
+_RAG_PIPELINE_CACHE = {"pipeline": None, "fail": False}
+
+
+def _rag_retrieve(query: str, top_k: int = 5) -> str:
+    """ChromaDB 양식 paper chunks retrieval — 실제 의학 지식을 LLM에 inject.
+
+    이전: 회로 끊겨 있어서 답변이 generic. 이제 매 채팅 턴마다 RAG 검색 실행.
+    """
+    if not query or len(query.strip()) < 6:
+        return ""
+    cache = _RAG_PIPELINE_CACHE
+    if cache["fail"]:
+        return ""
+    if cache["pipeline"] is None:
+        try:
+            from src.rag.pipeline import RAGPipeline
+            cache["pipeline"] = RAGPipeline()
+        except Exception:
+            cache["fail"] = True
+            return ""
+    try:
+        hits = cache["pipeline"].search(query, n_results=top_k) or []
+        if not hits:
+            return ""
+        blocks = []
+        for i, h in enumerate(hits, 1):
+            text = (h.get("text", "") or "").strip().replace("\n", " ")[:600]
+            meta = h.get("metadata") or {}
+            pmid = meta.get("pmid", "")
+            title = (meta.get("title", "") or meta.get("source", ""))[:120]
+            tag = f"[RAG#{i}"
+            if pmid: tag += f" PMID:{pmid}"
+            if title: tag += f" — {title}"
+            tag += "]"
+            blocks.append(f"{tag}\n{text}")
+        return "\n\n".join(blocks)
+    except Exception:
+        return ""
+
+
 def _build_full_system(project: dict, user_msg: str) -> str:
-    """단일 코어 system prompt 합성 (CLAUDE.md 규칙 12)."""
+    """단일 코어 system prompt 합성 (CLAUDE.md 규칙 12) + RAG retrieve."""
     try:
         from src.agent.persona import get_system_prompt
         base_sys = get_system_prompt(task="paper_writing")
@@ -509,11 +549,22 @@ def _build_full_system(project: dict, user_msg: str) -> str:
         full_sys = build_system_with_preview(base_sys, project, user_msg)
     except Exception:
         full_sys = base_sys
+
+    # ★ RAG retrieve (paper-grounded) — 사용자 정직 진단 2026-06-12에 추가.
+    # 이전엔 ChromaDB 인덱스만 있고 query → inject 회로가 끊겨 답변 generic.
+    rag_ctx = _rag_retrieve(user_msg, top_k=5)
+    if rag_ctx:
+        full_sys = (full_sys +
+            "\n\n--- RETRIEVED MEDICAL EVIDENCE (cite by PMID inline as [PMID:xxx]) ---\n"
+            + rag_ctx +
+            "\n--- END EVIDENCE ---")
+
     rule_overlay = (
         "\n\n--- RULE-8 (vibe paper) ---\n"
         "사용자 주제가 모호하면 PICO·데이터·통계·하위군 중 짧은 역질문 2-3개로 좁히세요.\n"
         "'알아서 해' '그냥 해' '한번에' 같은 trigger를 들으면 그때 자동 파이프라인을 진행합니다.\n"
-        "응답은 한국어, 동료 의학연구자 어투, 마크다운 짧게."
+        "응답은 한국어 대화체, 동료 의학연구자 어투, 마크다운 짧게.\n"
+        "위 RETRIEVED MEDICAL EVIDENCE를 참고해 답변에 PMID 인라인 인용을 넣으세요."
     )
     return full_sys + rule_overlay
 

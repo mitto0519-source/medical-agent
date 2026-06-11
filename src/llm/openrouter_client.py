@@ -25,10 +25,14 @@ from src.config.logging_config import get_logger
 _log = get_logger(__name__)
 
 _FREE_MODELS_PREFERRED = [
-    "google/gemma-3n-e4b-it:free",
-    "nvidia/nemotron-nano-9b-v2:free",
-    "mistralai/mistral-7b-instruct:free",
+    # 의학 reasoning에 가장 큰 무료 모델 우선 (사용자 정직 진단 후 2026-06-12 재정렬)
     "meta-llama/llama-3.3-70b-instruct:free",
+    "nvidia/llama-3.1-nemotron-70b-instruct:free",
+    "qwen/qwen-2.5-72b-instruct:free",
+    "deepseek/deepseek-r1:free",
+    "nvidia/nemotron-nano-9b-v2:free",
+    "google/gemma-3n-e4b-it:free",
+    "mistralai/mistral-7b-instruct:free",
 ]
 
 
