@@ -305,6 +305,66 @@ def _is_go_wide_trigger(text: str) -> bool:
     return any(k in t for k in triggers)
 
 
+def _detect_figure_request(text: str) -> str | None:
+    """figurelabs 양식 — 자연어에서 figure 종류 감지.
+
+    반환: forest / subgroup / coef / roc / prev / table1 / table2 / None
+    """
+    if not text:
+        return None
+    t = text.strip().lower()
+    if any(k in t for k in ["forest plot", "forest 그", "forest plot 만"]):
+        if "subgroup" in t or "하위군" in t:
+            return "subgroup"
+        return "forest"
+    if "subgroup" in t and ("plot" in t or "그림" in t or "그려" in t):
+        return "subgroup"
+    if any(k in t for k in ["coefficient plot", "coef plot", "회귀 계수"]):
+        return "coef"
+    if any(k in t for k in ["roc curve", "auc", "roc 그", "roc plot"]):
+        return "roc"
+    if any(k in t for k in ["prevalence", "유병률", "prevalence bar"]):
+        return "prev"
+    if "table 1" in t or "표 1" in t or "table1" in t:
+        return "table1"
+    if "table 2" in t or "표 2" in t or "table2" in t:
+        return "table2"
+    return None
+
+
+def _generate_figure(project: dict, figure_type: str) -> tuple[bytes, str] | None:
+    """research_state.stat_result에서 figure 1종 생성. (png_bytes, caption) 반환."""
+    try:
+        from src.export.publication_figure_generator import (
+            make_forest_plot, make_subgroup_forest, make_coefficient_plot,
+            make_roc_curve, make_prevalence_bar, make_table1_image, make_table2_image)
+        from pathlib import Path
+        rs = project.get("research_state") or {}
+        stat_result = rs.get("stat_result") or {}
+        if not stat_result:
+            return None
+        out_dir = Path(f"data/drafts/figures/{project.get('id','tmp')}")
+        out_dir.mkdir(parents=True, exist_ok=True)
+        fn = {
+            "forest": make_forest_plot,
+            "subgroup": make_subgroup_forest,
+            "coef": make_coefficient_plot,
+            "roc": make_roc_curve,
+            "prev": make_prevalence_bar,
+            "table1": make_table1_image,
+            "table2": make_table2_image,
+        }.get(figure_type)
+        if not fn:
+            return None
+        result = fn(stat_result, out_dir)
+        if result is None:
+            return None
+        png_bytes, _svg_path, _png_path, caption = result[:4] if len(result) >= 4 else (result + ("",))
+        return png_bytes, caption
+    except Exception as e:
+        return None
+
+
 def _is_full_paper_trigger(text: str) -> bool:
     """Full IMRAD manuscript 트리거. abstract만 X — 전체 본문 모두 생성."""
     if not text:
@@ -601,12 +661,35 @@ def _render_chat_page(pid: str):
                                               "ts": datetime.now().isoformat()})
                 _render_msg("user", user_msg)
 
-                # 트리거 분기 — autopilot / Full IMRAD / Go wide / Go deep / 일반
+                # 트리거 분기 — autopilot / Full IMRAD / Figure / Go wide / Go deep / 일반
                 wide = _is_go_wide_trigger(user_msg)
                 deep = _is_go_deep_trigger(user_msg)
                 full = _is_full_paper_trigger(user_msg)
+                fig_type = _detect_figure_request(user_msg)
 
-                if _is_autopilot_trigger(user_msg):
+                if fig_type:
+                    # Figure 양식 시도 — stat_result 있으면 PNG 양식 양식 양식
+                    fig = _generate_figure(project, fig_type)
+                    if fig:
+                        png_bytes, caption = fig
+                        import base64 as _b64
+                        b64 = _b64.b64encode(png_bytes).decode()
+                        img_html = (f"<div class='msg-asst'>📊 <b>{fig_type.upper()}</b><br>"
+                                      f"<img src='data:image/png;base64,{b64}' style='max-width:100%;'><br>"
+                                      f"<i>{caption}</i></div>")
+                        st.markdown(img_html, unsafe_allow_html=True)
+                        reply = f"[Figure: {fig_type} generated, caption: {caption}]"
+                        # research_state.figures 양식 양식 양식
+                        rs = project.setdefault("research_state", {})
+                        figs = rs.setdefault("figures", [])
+                        figs.append({"type": fig_type, "caption": caption,
+                                       "size_bytes": len(png_bytes), "ts": datetime.now().isoformat()})
+                    else:
+                        reply = (f"📊 **{fig_type}** 그림을 만들려고 했지만, 이 프로젝트에 통계 결과(`research_state.stat_result`)가 "
+                                 f"아직 없습니다. 먼저 통계 분석을 실행하거나 데이터를 업로드해 주세요. "
+                                 f"분석 결과 dict가 준비되면 한 번에 7종(forest/subgroup/coef/roc/prev/table1/table2) 그림을 만들 수 있습니다.")
+                        _render_msg("assistant", reply)
+                elif _is_autopilot_trigger(user_msg):
                     reply = ("알겠습니다. 지금까지 합의된 PICO·데이터·통계 조건으로 "
                               "파이프라인을 시작합니다. 진행 상황을 이 채팅과 우측 프리뷰로 알려드릴게요.\n\n"
                               "(현 단계: 실제 파이프라인 hookup은 다음 작업)")
