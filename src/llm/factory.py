@@ -37,6 +37,9 @@ def _make_client(provider: str, api_key: Optional[str], model: Optional[str], ta
     if provider in ("google", "gemini"):
         from src.llm.gemini_client import GeminiClient
         return GeminiClient(api_key=api_key, model=model, task=task)
+    if provider in ("openrouter", "or"):
+        from src.llm.openrouter_client import OpenRouterClient
+        return OpenRouterClient(api_key=api_key, model=model, task=task)
     if provider == "mock":
         from src.llm.mock_client import MockClient
         return MockClient(api_key=api_key, model=model, task=task)
@@ -59,6 +62,8 @@ def _resolve_provider_order() -> list[str]:
         order.append("anthropic")
     if os.environ.get("OPENAI_API_KEY"):
         order.append("openai")
+    if os.environ.get("OPENROUTER_API_KEY"):
+        order.append("openrouter")
     if os.environ.get("GOOGLE_API_KEY"):
         order.append("google")
     # 자동 검색 최적화: 실제로 작동하는 provider를 우선 (죽은 것은 쿨다운 후순위)
@@ -76,6 +81,7 @@ def _provider_of(client) -> str:
         "ClaudeClient": "anthropic",
         "OpenAIClient": "openai",
         "GeminiClient": "google",
+        "OpenRouterClient": "openrouter",
     }.get(type(client).__name__, "unknown")
 
 
@@ -295,6 +301,7 @@ def get_llm_client(
         "anthropic": "ANTHROPIC_API_KEY",
         "openai": "OPENAI_API_KEY",
         "google": "GOOGLE_API_KEY",
+        "openrouter": "OPENROUTER_API_KEY",
     }
     _detected_provider, _detected_model = get_model(task)
     primary = None
@@ -337,6 +344,7 @@ def _build_fallbacks(primary_provider: str, task: str) -> list:
         "anthropic": "ANTHROPIC_API_KEY",
         "openai": "OPENAI_API_KEY",
         "google": "GOOGLE_API_KEY",
+        "openrouter": "OPENROUTER_API_KEY",
     }
     for p in providers:
         key = os.environ.get(_key_env.get(p, ""))

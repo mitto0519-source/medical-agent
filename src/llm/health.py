@@ -21,11 +21,12 @@ from src.config.logging_config import get_logger
 _log = get_logger(__name__)
 
 _PATH = Path("data/diagnostics/llm_health.json")
-_COOLDOWN_SEC = 600  # 실패 후 10분간 후순위 (크레딧 소진/레이트리밋 회피)
+_COOLDOWN_SEC = 60  # 실패 후 1분 후순위 (사용자 충전/쿼터복구 시 즉시 재시도)
 
 # 품질 우선순위 (낮을수록 우선). seed/스타일/근거는 모든 LLM에 동일 주입되지만,
 # 그 기준을 재현하는 문체·정밀도는 모델 급차가 있어 작동하는 것 중 고품질을 우선.
-_QUALITY_RANK = {"anthropic": 0, "openai": 1, "google": 2}
+# OpenRouter는 무료 모델 (Nemotron 9B / Gemma 4B 등) — Gemini 무료 RPM 5 한계보다 빠름.
+_QUALITY_RANK = {"anthropic": 0, "openai": 1, "openrouter": 2, "google": 3}
 
 
 def _load() -> Dict[str, dict]:
