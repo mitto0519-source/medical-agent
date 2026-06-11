@@ -305,6 +305,84 @@ def _is_go_wide_trigger(text: str) -> bool:
     return any(k in t for k in triggers)
 
 
+def _is_full_paper_trigger(text: str) -> bool:
+    """Full IMRAD manuscript 트리거. abstract만 X — 전체 본문 모두 생성."""
+    if not text:
+        return False
+    t = text.strip().lower()
+    triggers = [
+        "논문 작성", "논문 써", "논문 만들", "manuscript", "full draft",
+        "full paper", "전체 논문", "본문 작성", "본문 써", "imrad",
+        "실제 논문으로", "완성된 논문", "drafting", "지금까지로 논문",
+    ]
+    return any(k in t for k in triggers)
+
+
+def _full_paper_prompt(project: dict) -> str:
+    """Full IMRAD system prompt — data verification 선행 + 모든 섹션 영어."""
+    rs = project.get("research_state") or {}
+    target_journal = rs.get("target_journal", "")
+    reference_style = rs.get("reference_style", "Vancouver")
+    journal_hint = f"Target journal: {target_journal}. Reference style: {reference_style}." if target_journal else "Reference style: Vancouver (default; change when target journal is set)."
+
+    return f"""You are writing a FULL medical research manuscript, not just an abstract.
+
+CRITICAL RULES:
+1. **NEVER fabricate numbers.** All sample sizes, prevalence, OR, 95% CI, p-values, table values MUST come from actual stat_bridge output or cited papers (verbatim). If a number is unknown, STOP and ASK the user instead of inventing.
+2. **All manuscript sections MUST be in ENGLISH.** Chat replies stay Korean, but Title/Abstract/Introduction/Methods/Results/Discussion/Conclusion/References/Tables/Figure captions are all English.
+3. **Complete IMRAD structure required.** Do NOT stop at abstract. Generate in order: Title → Abstract → Introduction → Methods → Results → Discussion → Conclusion → References. If a section requires data not yet provided, mark `[NEEDS DATA: <specific question>]` inline and continue with remaining sections.
+4. **Reference style follows the target journal**, not Vancouver by default. {journal_hint}
+5. Use in-text citation markers [n] (Vancouver/AMA) or (Author, year) (Harvard/APA) consistent with the chosen style. Each citation MUST correspond to a real PMID/DOI that will be verified post-hoc.
+6. Tables/Figures are described in numbered placeholders (Table 1, Figure 1) with full captions and footnotes; actual data values come from stat_bridge.
+
+OUTPUT FORMAT (English manuscript):
+
+## Title
+<concise informative title, ≤25 words>
+
+## Abstract
+**Background:** ...
+**Objective:** ...
+**Methods:** ...
+**Results:** ...
+**Conclusion:** ...
+
+## 1. Introduction
+<3-5 paragraphs: rationale, gap, objective>
+
+## 2. Methods
+### 2.1 Study design
+### 2.2 Data source and study population
+### 2.3 Variables
+### 2.4 Statistical analysis
+### 2.5 Ethics
+
+## 3. Results
+### 3.1 Baseline characteristics (Table 1)
+### 3.2 Primary outcome
+### 3.3 Secondary outcomes and subgroup analyses
+### 3.4 Sensitivity analyses
+
+## 4. Discussion
+### 4.1 Main findings
+### 4.2 Comparison with prior literature
+### 4.3 Mechanistic interpretation
+### 4.4 Strengths and limitations
+
+## 5. Conclusion
+
+## References
+<numbered list, {reference_style} style>
+
+## Tables
+Table 1. <caption>...
+
+## Figure legends
+Figure 1. <caption>...
+
+If any required data is missing, STOP that section and write `[NEEDS DATA: question to user]`. Do NOT fabricate numbers to fill gaps."""
+
+
 def _is_go_deep_trigger(text: str) -> bool:
     """Figma-style 'Go deep' — 한 방향을 깊게 다듬기 + 내부화 토론 (Latent Agents).
 
