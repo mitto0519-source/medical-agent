@@ -170,15 +170,121 @@ def place_citations(sections: Dict[str, str],
     return new, ordered
 
 
+# ── Multi-style formatters — 저널마다 다른 reference style 지원 ─────────────
+def _authors_short(authors: List[str], max_n: int = 6) -> str:
+    if not authors:
+        return ""
+    if len(authors) <= max_n:
+        return ", ".join(authors)
+    return ", ".join(authors[:max_n]) + ", et al"
+
+
+def _author_last_first(name: str) -> str:
+    """'John Smith' -> 'Smith J'  /  'Smith J' -> 'Smith J'."""
+    parts = name.strip().split()
+    if len(parts) < 2:
+        return name
+    if len(parts[-1]) <= 3 and parts[-1].isupper():
+        return name  # already 'Smith J' form
+    last = parts[-1]
+    initials = "".join(p[0].upper() for p in parts[:-1])
+    return f"{last} {initials}"
+
+
+def format_ama(ref: Reference, index: int = 1) -> str:
+    """AMA Manual of Style 11th ed. — JAMA Network journals."""
+    authors = _authors_short([_author_last_first(a) for a in ref.authors], max_n=6)
+    bits = []
+    if authors: bits.append(authors + ".")
+    if ref.title: bits.append(ref.title.rstrip(".") + ".")
+    if ref.journal: bits.append(f"*{ref.journal}*.")
+    yvi = ref.year or ""
+    if ref.volume: yvi += f";{ref.volume}"
+    if ref.issue: yvi += f"({ref.issue})"
+    if ref.pages: yvi += f":{ref.pages}"
+    if yvi: bits.append(yvi + ".")
+    if ref.doi: bits.append(f"doi:{ref.doi}")
+    return f"{index}. " + " ".join(bits).strip()
+
+
+def format_apa(ref: Reference, index: int = 1) -> str:
+    """APA 7th ed. — author-date in-text, alphabetic ref list."""
+    authors_raw = ref.authors or []
+    if len(authors_raw) > 20:
+        first19 = ", ".join(_author_last_first(a) for a in authors_raw[:19])
+        last = _author_last_first(authors_raw[-1])
+        authors = f"{first19}, ... {last}"
+    else:
+        authors = ", ".join(_author_last_first(a) for a in authors_raw)
+    year = f"({ref.year})" if ref.year else "(n.d.)"
+    title = ref.title.rstrip(".") + "." if ref.title else ""
+    journal = f"*{ref.journal}*" if ref.journal else ""
+    vol = f", *{ref.volume}*" if ref.volume else ""
+    issue = f"({ref.issue})" if ref.issue else ""
+    pages = f", {ref.pages}" if ref.pages else ""
+    doi = f". https://doi.org/{ref.doi}" if ref.doi else ""
+    return f"{authors} {year}. {title} {journal}{vol}{issue}{pages}{doi}".strip()
+
+
+def format_harvard(ref: Reference, index: int = 1) -> str:
+    """Harvard author-date — common in public health journals."""
+    authors = ", ".join(_author_last_first(a) for a in (ref.authors or []))
+    year = ref.year or "n.d."
+    title = f"'{ref.title.rstrip('.')}'" if ref.title else ""
+    journal = f"*{ref.journal}*" if ref.journal else ""
+    vi = ""
+    if ref.volume: vi = ref.volume
+    if ref.issue: vi += f"({ref.issue})"
+    pages = f"pp. {ref.pages}" if ref.pages else ""
+    doi = f"doi: {ref.doi}" if ref.doi else ""
+    return f"{authors} ({year}) {title}, {journal}, {vi}, {pages}. {doi}".strip(" ,.")
+
+
+def format_ieee(ref: Reference, index: int = 1) -> str:
+    """IEEE — biomedical engineering journals."""
+    authors = ", ".join(_author_last_first(a) for a in (ref.authors or []))
+    title = f'"{ref.title.rstrip(".")},"' if ref.title else ""
+    journal = f"*{ref.journal}*," if ref.journal else ""
+    vol = f"vol. {ref.volume}," if ref.volume else ""
+    no = f"no. {ref.issue}," if ref.issue else ""
+    pages = f"pp. {ref.pages}," if ref.pages else ""
+    year = ref.year or ""
+    return f"[{index}] {authors}, {title} {journal} {vol} {no} {pages} {year}.".strip()
+
+
+_FORMAT_BY_STYLE = {
+    "vancouver": format_vancouver,
+    "ama": format_ama,
+    "apa": format_apa,
+    "harvard": format_harvard,
+    "ieee": format_ieee,
+    "chicago": format_apa,  # author-date Chicago fallback
+}
+
+
+def format_reference(ref: Reference, index: int = 1, style: str = "vancouver") -> str:
+    """저널별 reference style로 단일 ref 포맷.
+
+    style은 journal_registry.JournalStyle.reference_style 값을 그대로 받는다.
+    """
+    fn = _FORMAT_BY_STYLE.get((style or "vancouver").strip().lower(), format_vancouver)
+    return fn(ref, index)
+
+
 # ── ④ 출력 (참고문헌 목록 / Word / EndNote) ────────────────────────────────
-def reference_list_markdown(ordered: List[Reference]) -> str:
+def reference_list_markdown(ordered: List[Reference], style: str = "vancouver") -> str:
     if not ordered:
         return ""
-    return "\n".join(format_vancouver(r, i) for i, r in enumerate(ordered, 1))  # 번호는 format_vancouver가 부여
+    fn = _FORMAT_BY_STYLE.get((style or "vancouver").strip().lower(), format_vancouver)
+    return "\n".join(fn(r, i) for i, r in enumerate(ordered, 1))
 
 
-def build_cited_docx(title: str, sections: Dict[str, str], ordered: List[Reference]) -> bytes:
-    """본문(인용 [n] 포함) + 참고문헌 목록 → Word 바이트."""
+def build_cited_docx(title: str, sections: Dict[str, str], ordered: List[Reference],
+                       style: str = "vancouver") -> bytes:
+    """본문(인용 [n] 또는 (Author, year) 포함) + 참고문헌 목록 → Word 바이트.
+
+    style: vancouver / ama / apa / harvard / ieee / chicago — target journal에 맞춰 선택.
+    """
     try:
         from docx import Document
     except ImportError:
@@ -187,8 +293,10 @@ def build_cited_docx(title: str, sections: Dict[str, str], ordered: List[Referen
     if title:
         doc.add_heading(title, level=0)
     labels = {"abstract": "Abstract", "introduction": "Introduction",
-              "methods": "Methods", "results": "Results", "discussion": "Discussion"}
-    for k in ["abstract", "introduction", "methods", "results", "discussion"]:
+              "methods": "Methods", "results": "Results", "discussion": "Discussion",
+              "conclusion": "Conclusion"}
+    fn = _FORMAT_BY_STYLE.get((style or "vancouver").strip().lower(), format_vancouver)
+    for k in ["abstract", "introduction", "methods", "results", "discussion", "conclusion"]:
         body = (sections.get(k) or "").strip()
         if not body:
             continue
@@ -197,7 +305,7 @@ def build_cited_docx(title: str, sections: Dict[str, str], ordered: List[Referen
     if ordered:
         doc.add_heading("References", level=1)
         for i, r in enumerate(ordered, 1):
-            doc.add_paragraph(format_vancouver(r, i))  # format_vancouver가 "{i}. " 부여
+            doc.add_paragraph(fn(r, i))
     buf = io.BytesIO()
     doc.save(buf)
     return buf.getvalue()
