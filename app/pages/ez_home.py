@@ -288,6 +288,68 @@ def _save_project(project: dict) -> None:
         pass
 
 
+def _is_go_wide_trigger(text: str) -> bool:
+    """Figma-style 'Go wide' — 같은 주제를 여러 방향으로 동시 탐색.
+
+    Medical 도메인: 3-5개 PICO 변형 (population/intervention/outcome 축 변경)을
+    카드 양식으로 chat에 출력. 사용자가 카드 클릭 → Go deep으로 진입.
+    """
+    if not text:
+        return False
+    t = text.strip().lower()
+    triggers = [
+        "여러 방향", "여러 변형", "여러 양식", "3가지", "5가지", "3-5개",
+        "다양한 pico", "여러 pico", "wide", "go wide", "동시 탐색",
+        "병렬 탐색", "비교해줘", "변형 만들어", "옵션 펼쳐", "여러 옵션",
+    ]
+    return any(k in t for k in triggers)
+
+
+def _is_go_deep_trigger(text: str) -> bool:
+    """Figma-style 'Go deep' — 한 방향을 깊게 다듬기 + 내부화 토론 (Latent Agents).
+
+    Medical 도메인: 선택된 PICO에 대해 단일 LLM 호출 내부에서
+    <Epidemiologist> + <Biostatistician> + <Clinician> 3관점 토론 → 합의점.
+    """
+    if not text:
+        return False
+    t = text.strip().lower()
+    triggers = [
+        "이 방향 깊게", "깊게 다듬", "구체화", "정밀하게",
+        "go deep", "deep dive", "더 자세히", "더 깊게",
+        "전문가 토론", "관점 비교", "다각도", "비판적으로",
+    ]
+    return any(k in t for k in triggers)
+
+
+def _go_wide_prompt(user_msg: str) -> str:
+    """Go wide system prompt — 의학 PICO 양식 3-5개 변형 생성."""
+    return (
+        "사용자가 던진 의학 연구 주제를 받아 3-5개의 PICO 변형을 카드 양식으로 제시하세요. "
+        "각 카드는 다음 양식:\n\n"
+        "### Variant {n}: <짧은 제목>\n"
+        "- **P**opulation: ...\n"
+        "- **I/E**xposure/Intervention: ...\n"
+        "- **C**omparison: ...\n"
+        "- **O**utcome: ...\n"
+        "- **Dataset hint**: KYRBS / KNHANES / NHIS / HIRA / PubMed RCT meta\n"
+        "- **연구 가치**: 한 줄로 왜 흥미로운지\n\n"
+        "변형은 서로 다른 축(다른 outcome / 다른 population age / 다른 exposure 지표)을 잡아 정말 wide하게 펼치세요. "
+        "복붙이 아니라 진짜 다른 방향이어야 합니다. 마지막에 '어느 방향을 깊게 다듬어볼까요?'로 마무리."
+    )
+
+
+def _go_deep_prompt(user_msg: str, project: dict) -> str:
+    """Go deep system prompt — Latent Agents 양식 3관점 내부화 토론."""
+    return (
+        "선택된 PICO 또는 직전 응답을 더 깊게 다듬기 위해 다음 3관점을 한 번의 응답 안에서 내부적으로 토론하세요:\n\n"
+        "**<Epidemiologist>**: 역학·인과추론 관점 (confounder, bias, generalizability)\n"
+        "**<Biostatistician>**: 통계 방법 관점 (model choice, sample size, multiple testing)\n"
+        "**<Clinician>**: 임상 적용 관점 (clinical relevance, effect size 해석, 임상 의사결정에 어떤 의미)\n\n"
+        "각 관점이 한 두 문장씩 의견 제시 → 합의점 + 남은 disagreement 정리. 마지막에 '다음 단계' 한 줄 (어떤 데이터 확보, 어떤 분석 모델, 어떤 sensitivity)."
+    )
+
+
 def _is_autopilot_trigger(text: str) -> bool:
     if not text:
         return False
@@ -318,8 +380,11 @@ def _build_full_system(project: dict, user_msg: str) -> str:
     return full_sys + rule_overlay
 
 
-def _stream_reply(project: dict, user_msg: str):
-    """generator — token 단위 yield. failover 클라이언트의 generate_streamed 사용."""
+def _stream_reply(project: dict, user_msg: str, extra_system: str = ""):
+    """generator — token 단위 yield. failover 클라이언트의 generate_streamed 사용.
+
+    extra_system: Go wide / Go deep 등 트리거가 추가하는 system prompt overlay.
+    """
     try:
         from src.llm import get_llm_client
     except Exception as e:
@@ -327,6 +392,8 @@ def _stream_reply(project: dict, user_msg: str):
         return
 
     full_sys = _build_full_system(project, user_msg)
+    if extra_system:
+        full_sys = full_sys + "\n\n--- TASK OVERLAY ---\n" + extra_system
     history = "\n".join(
         f"{'사용자' if m['role']=='user' else '코파일럿'}: {m['content']}"
         for m in project.get("messages", [])[-10:])
@@ -455,16 +522,30 @@ def _render_chat_page(pid: str):
                                               "ts": datetime.now().isoformat()})
                 _render_msg("user", user_msg)
 
+                # 트리거 분기 — autopilot / Go wide / Go deep / 일반 대화
+                wide = _is_go_wide_trigger(user_msg)
+                deep = _is_go_deep_trigger(user_msg)
+
                 if _is_autopilot_trigger(user_msg):
                     reply = ("알겠습니다. 지금까지 합의된 PICO·데이터·통계 조건으로 "
                               "파이프라인을 시작합니다. 진행 상황을 이 채팅과 우측 프리뷰로 알려드릴게요.\n\n"
                               "(현 단계: 실제 파이프라인 hookup은 다음 작업)")
                     _render_msg("assistant", reply)
                 else:
+                    # Go wide/deep는 같은 _stream_reply를 쓰되 system prompt를 보강
+                    extra_system = ""
+                    badge = ""
+                    if wide:
+                        extra_system = _go_wide_prompt(user_msg)
+                        badge = "🌐 Go wide — PICO 변형 3-5개\n\n"
+                    elif deep:
+                        extra_system = _go_deep_prompt(user_msg, project)
+                        badge = "🔬 Go deep — 3관점 내부화 토론\n\n"
+
                     # 스트리밍 — placeholder를 토큰 단위로 갱신
                     placeholder = st.empty()
-                    full = ""
-                    for chunk in _stream_reply(project, user_msg):
+                    full = badge
+                    for chunk in _stream_reply(project, user_msg, extra_system=extra_system):
                         full += chunk
                         safe = full.replace("<", "&lt;").replace(">", "&gt;")
                         placeholder.markdown(
