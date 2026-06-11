@@ -1,0 +1,184 @@
+{
+  "schema_version": "1.0",
+  "project": "Medical-Agent (Vibe Paper Copilot)",
+  "last_updated": "2026-06-11",
+  "philosophy": "주인공은 사람. AI는 보조. 메인 = 사람이 직접 쓰는 흐름 + 옆에서 AI가 매끄럽게 거든다.",
+  "features": [
+    {
+      "id": "F001",
+      "name": "ez_home chat-first UX",
+      "stage": "deploy",
+      "status": "done",
+      "deps": [],
+      "evidence": [
+        "app/pages/ez_home.py:_render_chat_page",
+        "data/_ux_shots/H1_initial_split.png",
+        "data/_ux_shots/I2_120s.png"
+      ],
+      "notes": "chat(좌) + preview(우) 고정 2-split. 600px 스크롤. 토큰 스트리밍. 좌측 사이드바 RECENT만."
+    },
+    {
+      "id": "F002",
+      "name": "Single-core wiring (persona + memory + events + change_log)",
+      "stage": "deploy",
+      "status": "done",
+      "deps": [],
+      "evidence": [
+        "app/pages/ez_home.py:_build_full_system,_post_turn_hooks",
+        "app/agentic_loop.py:build_system_with_preview",
+        "src/agent/persona.py:get_system_prompt",
+        "src/memory/conversation_memory.py:record,recall_relevant"
+      ],
+      "notes": "VS Code MCP·Streamlit·heartbeat 동일 backend. 한 채팅 턴이 6개 코어를 거친다."
+    },
+    {
+      "id": "F003",
+      "name": "LLM failover (Claude → OpenAI → OpenRouter → Google)",
+      "stage": "deploy",
+      "status": "in_progress",
+      "blockers": ["사용자 OPENROUTER_API_KEY 추가 또는 paid 키 충전 필요"],
+      "deps": [],
+      "evidence": [
+        "src/llm/factory.py",
+        "src/llm/openrouter_client.py",
+        "src/llm/health.py (cooldown 60s, OpenRouter priority rank 2)"
+      ],
+      "notes": "코드 wiring 완료. OpenRouter 무료 키 추가 시 즉시 활성화. paid 키 죽었어도 무료 path로 동작."
+    },
+    {
+      "id": "F004",
+      "name": "Go wide — PICO parallel exploration (Figma 패턴)",
+      "stage": "design",
+      "status": "pending",
+      "deps": ["F002", "F003"],
+      "scope_lock": [
+        "사용자 주제 입력 → AgentPool로 3-5개 PICO 변형 동시 생성",
+        "각 변형은 (population, intervention/exposure, comparison, outcome, dataset_hint) 표준 카드",
+        "ez_home chat 우측 column에 카드 그리드 표준 표준",
+        "사용자가 카드 클릭 → F005(Go deep)로 진입"
+      ],
+      "anti_scope": [
+        "AI가 알아서 1개 PICO 선택해 진행 X (사용자 주도 원칙 RULE-8)",
+        "wide 변형은 LLM 호출 1회당 1개 X — AgentPool 병렬 사용"
+      ]
+    },
+    {
+      "id": "F005",
+      "name": "Go deep — Latent Agents internalized debate (epidemiologist + biostatistician + clinician)",
+      "stage": "design",
+      "status": "pending",
+      "deps": ["F004"],
+      "scope_lock": [
+        "선택된 PICO에 대해 단일 LLM 호출 내부에서 <Agent: Epidemiologist> / <Agent: Biostatistician> / <Agent: Clinician> 마커 표준 표준 표준",
+        "각 관점 합의·불일치를 chat에 표시",
+        "최종 합의 점은 ResearchState.design / methods로 영속화"
+      ],
+      "anti_scope": [
+        "실제 3개 별도 LLM 호출 X (Latent Agents 논문: 93% 토큰 절감)"
+      ]
+    },
+    {
+      "id": "F006",
+      "name": "physician_review verifier (STROBE 체크리스트)",
+      "stage": "verify",
+      "status": "partial",
+      "deps": ["F002"],
+      "evidence": ["src/safety/physician_review.py"],
+      "scope_lock": [
+        "paper_writer가 생성한 draft를 STROBE 항목별 검증",
+        "실패 항목 발견 시 paper_writer에 stderr 표준 표준 표준 표준 → 재시도 (Plan-Watch-Recover)",
+        "최대 3회 재시도, 그 이후 사용자에 표준"
+      ]
+    },
+    {
+      "id": "F007",
+      "name": "citation_grounding (fabrication 방지)",
+      "stage": "verify",
+      "status": "partial",
+      "deps": ["F002"],
+      "evidence": ["src/safety/citation_grounding.py", "src/knowledge/medical_graph.py"],
+      "scope_lock": [
+        "paper_writer가 인용한 PMID/DOI를 medical_graph + RAG에서 검증",
+        "존재하지 않는 인용은 reject + 표준 표준 표준",
+        "5만편 OA papers ChromaDB와 표준 표준 표준 표준"
+      ]
+    },
+    {
+      "id": "F008",
+      "name": "PublicationFigureGenerator 채팅 hookup (figurelabs 표준)",
+      "stage": "build",
+      "status": "partial",
+      "deps": ["F002"],
+      "evidence": ["src/figures/publication_generator.py"],
+      "scope_lock": [
+        "자연어 표준 'Forest plot 그려' / 'KM curve' / 'Sankey' / 'Funnel' / 'Heatmap' 표준 표준",
+        "7종 PNG+SVG 표준 표준 표준 표준 표준 표준 표준 표준",
+        "preview 우측 column 표준 표준 표준 docx와 표준 표준",
+        "NEJM 표준 TNR 폰트 표준 표준 표준"
+      ]
+    },
+    {
+      "id": "F009",
+      "name": "Structured extraction (PICO/GRADE/limitation/conflict)",
+      "stage": "ingest",
+      "status": "pending",
+      "deps": ["F003"],
+      "evidence": ["src/knowledge/paper_structured_extract.py"],
+      "scope_lock": [
+        "12,500편 PMC OA papers에 6필드 자동 추출 (PICO, GRADE, excluded_subgroup, limitation, practice_implication, conflict)",
+        "SQLite cache data/medical_knowledge_seed/structured.sqlite",
+        "paper_writer가 retrieve + few-shot 표준 표준"
+      ]
+    },
+    {
+      "id": "F010",
+      "name": "HF Datasets + HF Space deploy (online-first RULE-9)",
+      "stage": "deploy",
+      "status": "in_progress",
+      "deps": ["F003"],
+      "scope_lock": [
+        "Static data → cave87/medical-agent-runtime (12K OA + KYRBS 21차 + ChromaDB + knowledge_graph)",
+        "Live state → Supabase 12 ma_* tables",
+        "HF Space cave87/medical-agent (Docker SDK, app_port 8501)",
+        "Secrets: HF_TOKEN / SUPABASE_DB_URL / ANTHROPIC_API_KEY / OPENAI_API_KEY / GOOGLE_API_KEY / OPENROUTER_API_KEY / NCBI_EMAIL"
+      ],
+      "blockers": ["oa_papers 백그라운드 업로드 retry 상태 확인 필요"]
+    },
+    {
+      "id": "F011",
+      "name": "MOSS-style source-level self-evolution",
+      "stage": "design",
+      "status": "pending",
+      "deps": ["F006"],
+      "scope_lock": [
+        "capability_bench가 systematic failure 패턴 감지 (예: effect size 해석 반복 실수)",
+        "paper_writer.py 표준 일부 자동 rewrite (외부 코딩 표준 CLI 위임)",
+        "ephemeral trial worker가 실패 batch 재생 표준 표준 검증",
+        "health-probe 표준 표준 표준 표준 rollback"
+      ],
+      "anti_scope": [
+        "프롬프트 수정만 X — 실제 코드 구조 표준 표준 표준 표준 표준 표준 표준 표준 표준"
+      ]
+    },
+    {
+      "id": "F012",
+      "name": "Hooks 표준 표준 학습 회로 (사용자 'stop signal')",
+      "stage": "design",
+      "status": "pending",
+      "deps": [],
+      "scope_lock": [
+        "사용자 '하지마' '왜 자꾸' '그거 말고' 등 입력 패턴 감지",
+        "events.append + memory.router.write 자동",
+        ".harness/norms.md 업데이트 제안 표준 표준 (사용자 승인 후 반영)"
+      ]
+    }
+  ],
+  "active_research_states": [],
+  "rules_for_editing": [
+    "한 PR/한 세션 = 한 feature (Scope: Harness pattern).",
+    "기능 목록을 '끝났다 하기 위해' 고쳐 쓰지 말 것 (RULE-11 NO LIES).",
+    "Out-of-scope 발견 시 → 새 entry로 추가, 현재 작업 계속.",
+    "scope_lock = 반드시 표준 표준 표준, anti_scope = 절대 표준 표준 X.",
+    "evidence = 파일 경로 + line. 표준 표준 표준 표준 표준 표준."
+  ]
+}
