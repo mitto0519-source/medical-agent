@@ -458,10 +458,11 @@ def _build_full_system(project: dict, user_msg: str) -> str:
     return full_sys + rule_overlay
 
 
-def _stream_reply(project: dict, user_msg: str, extra_system: str = ""):
+def _stream_reply(project: dict, user_msg: str, extra_system: str = "", max_tokens: int = 1200):
     """generator — token 단위 yield. failover 클라이언트의 generate_streamed 사용.
 
-    extra_system: Go wide / Go deep 등 트리거가 추가하는 system prompt overlay.
+    extra_system: Go wide / Go deep / Full IMRAD 등 트리거가 추가하는 system prompt overlay.
+    max_tokens: Full IMRAD는 4500+ 권장, 일반 대화 1200.
     """
     try:
         from src.llm import get_llm_client
@@ -480,7 +481,7 @@ def _stream_reply(project: dict, user_msg: str, extra_system: str = ""):
     try:
         client = get_llm_client(task="paper_writing")
         yielded = False
-        for chunk in client.generate_streamed(prompt, system_prompt=full_sys, max_tokens=1200):
+        for chunk in client.generate_streamed(prompt, system_prompt=full_sys, max_tokens=max_tokens):
             if chunk:
                 yielded = True
                 yield chunk
@@ -600,9 +601,10 @@ def _render_chat_page(pid: str):
                                               "ts": datetime.now().isoformat()})
                 _render_msg("user", user_msg)
 
-                # 트리거 분기 — autopilot / Go wide / Go deep / 일반 대화
+                # 트리거 분기 — autopilot / Full IMRAD / Go wide / Go deep / 일반
                 wide = _is_go_wide_trigger(user_msg)
                 deep = _is_go_deep_trigger(user_msg)
+                full = _is_full_paper_trigger(user_msg)
 
                 if _is_autopilot_trigger(user_msg):
                     reply = ("알겠습니다. 지금까지 합의된 PICO·데이터·통계 조건으로 "
@@ -610,10 +612,13 @@ def _render_chat_page(pid: str):
                               "(현 단계: 실제 파이프라인 hookup은 다음 작업)")
                     _render_msg("assistant", reply)
                 else:
-                    # Go wide/deep는 같은 _stream_reply를 쓰되 system prompt를 보강
+                    # 트리거별 system prompt overlay
                     extra_system = ""
                     badge = ""
-                    if wide:
+                    if full:
+                        extra_system = _full_paper_prompt(project)
+                        badge = "📄 Full IMRAD manuscript — English, no fabrication\n\n"
+                    elif wide:
                         extra_system = _go_wide_prompt(user_msg)
                         badge = "🌐 Go wide — PICO 변형 3-5개\n\n"
                     elif deep:
@@ -623,7 +628,8 @@ def _render_chat_page(pid: str):
                     # 스트리밍 — placeholder를 토큰 단위로 갱신
                     placeholder = st.empty()
                     full = badge
-                    for chunk in _stream_reply(project, user_msg, extra_system=extra_system):
+                    _mt = 4500 if full else 1200
+                    for chunk in _stream_reply(project, user_msg, extra_system=extra_system, max_tokens=_mt):
                         full += chunk
                         safe = full.replace("<", "&lt;").replace(">", "&gt;")
                         placeholder.markdown(
