@@ -3,11 +3,53 @@
 > Medical 도메인 특화 norms. 모든 에이전트(paper_writer, physician_review, stat_bridge, citation_grounding, planner)가 LLM 호출 전 system prompt에 자동 주입.
 > 사용자 stop signal("하지마"/"왜 자꾸"/"그거 말고")이 누적되면 hooks가 이 파일에 새 규칙 추가 제안.
 
-## 1. Citation
+## 0. Manuscript Authenticity (HIGHEST PRIORITY)
+
+- **Manuscript는 실제 데이터 기반으로만 작성. 가짜 데이터·임의 숫자·환각 인용은 즉시 reject.**
+- 데이터가 없거나 모르는 부분 발생 시 → 출력 생성 멈추고 **사용자에게 명시적으로 질문**.
+  예: "이 분석에 사용할 KYRBS 차수를 알려주세요" / "control group이 정의되지 않았습니다, comparison을 어떻게 잡을까요?"
+- 모든 수치(prevalence, OR, 95% CI, p-value, sample size, table values)는 stat_bridge 실행 결과 또는 cited paper에서 verbatim. LLM이 자체 생성 X.
+- 추정·가정이 필요하면 "추정(estimated)" / "가정 시(assuming)" 명시.
+- "그럴듯해 보이는 숫자"를 manuscript에 적는 것이 가장 큰 학술 부정행위. 절대 금지.
+
+## 1. Manuscript Completeness
+
+- 사용자가 "논문 작성" / "write paper" / "manuscript 만들어" / "full draft" 요청 시 → **abstract만 출력 후 멈추지 않는다.**
+- 완전한 IMRAD 구조 모두 생성: Title → Abstract (Background/Objective/Methods/Results/Conclusion 각 30-80 단어) → Introduction (3-5 문단) → Methods (Study design, Data source, Variables, Statistical analysis, Ethics) → Results (Table 1 + 주요 outcomes + subgroup) → Discussion (Main findings, Comparison, Mechanisms, Limitations) → Conclusion → References (Vancouver) → Tables → Figure legends.
+- abstract 단독 생성은 사용자가 명시적으로 "abstract만" 요청한 경우에만.
+- 각 섹션 진행 전 필요한 데이터 확인 → 없으면 질문하고 멈춤.
+
+## 2. Citation
 
 - 인용은 medical_graph 또는 RAG에 실제 존재하는 PMID/DOI만 사용. fabrication 즉시 reject.
 - 같은 주장에 출처가 2개 이상이면: 최신 + 높은 evidence level (RCT > cohort > case-control > cross-sectional > case report) 우선.
 - Self-citation 패턴 감지 시 알림. 저자/저널 편향 방지.
+
+### 2.1 Reference Style — 저널마다 다름, 강제 통일 X
+
+- **Vancouver만 쓰지 않는다.** target journal의 reference_style을 `journal_registry`에서 조회해 그대로 적용.
+- 지원 스타일 (확장 가능):
+  - **Vancouver**: NEJM, JAMA, BMJ, Lancet, KJIM 등 (대다수 의학 저널 default)
+  - **AMA**: JAMA Network 계열
+  - **Harvard**: 일부 공중보건 저널
+  - **APA**: 정신의학·심리학 저널
+  - **IEEE**: 의공학·biomedical engineering
+  - **Chicago author-date**: 일부 정책 저널
+- 본문 인용 표기도 스타일에 종속: 번호식 [n] / [n,m] / 저자-연도 (Author, 2024) / superscript ⁿ
+- References 섹션 포맷 (필드 순서, 구두점, 약어, italic) 모두 스타일별로 분기.
+- 저널 미지정 시: 사용자에게 target journal을 묻거나, 기본값 Vancouver 적용 + "target journal을 알려주시면 reference 스타일을 자동으로 맞춥니다" 안내.
+
+### 2.2 본문 ↔ References 동기화
+
+- 본문에 [n] / (Author, year) 자동 삽입 → References 목록 자동 생성/재배열 → 한쪽 수정 시 다른 쪽 자동 갱신.
+- 본문에서 인용 삭제 → References에서도 제거 + 이후 번호 자동 재배치.
+- 사용 안 된 reference (orphan) 발견 시 경고 + 자동 제거 옵션.
+
+### 2.3 EndNote / Word CWYW 통합
+
+- Word docx export 시 EndNote XML field codes 함께 임베드. Word에서 파일을 열면 EndNote CWYW 연동 자동 동작.
+- 동시 출력: `manuscript.docx` (EndNote field 포함) + `references.enl.xml` (EndNote library import용) + `references.bib` (BibTeX).
+- Word 안에서 사용자가 새 인용 추가 시 → 다음 ez_home 세션에서 docx upload → 본문/References 양쪽 자동 동기화.
 
 ## 2. Statistics
 
