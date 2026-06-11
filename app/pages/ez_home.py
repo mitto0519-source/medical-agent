@@ -649,6 +649,11 @@ def _render_chat_page(pid: str):
 
     with col_preview:
         sections = project.get("sections") or {}
+        rs = project.get("research_state") or {}
+        refs = rs.get("references") or []
+        ref_style = rs.get("reference_style") or "vancouver"
+        target_journal = rs.get("target_journal", "")
+
         if not sections:
             st.markdown(
                 """
@@ -665,19 +670,83 @@ def _render_chat_page(pid: str):
                                  max-width:340px;margin:0 auto;'>
                       대화로 주제·데이터·통계가 합의되고<br>
                       <b style='color:#475569;'>'알아서 해'</b>라고 말씀하시면<br>
-                      이곳에 논문 초안이 실시간으로 작성됩니다.
+                      이곳에 논문 초안이 실시간으로 작성됩니다.<br><br>
+                      <span style='font-size:0.78rem;'>"논문 쓰자" → Full IMRAD · English<br>
+                      "3가지로 펼쳐" → Go wide (PICO 변형)<br>
+                      "이 방향 깊게" → Go deep (3관점 토론)</span>
                     </div>
                   </div>
                 </div>
                 """,
                 unsafe_allow_html=True)
         else:
+            # Top toolbar: target journal + reference style + export buttons
+            tj_label = target_journal or "Target journal: (not set)"
+            st.markdown(
+                f"<div style='display:flex;justify-content:space-between;align-items:center;"
+                f"padding:6px 12px;background:#F8FAFC;border:1px solid rgba(15,23,42,0.08);"
+                f"border-radius:8px;margin-bottom:8px;font-size:0.82rem;color:#475569;'>"
+                f"<span>{tj_label}</span><span>📖 {ref_style.title()} style · {len(refs)} refs</span></div>",
+                unsafe_allow_html=True)
+
+            # Export buttons row
+            c1, c2, c3 = st.columns(3)
+            try:
+                from src.export.citation_workflow import (
+                    build_cited_docx, endnote_bytes, bibtex_bytes, Reference)
+                # refs는 dict list로 직렬화되어 있을 수 있음 → Reference 객체로 변환
+                ref_objs = []
+                for rd in refs:
+                    if isinstance(rd, dict):
+                        ref_objs.append(Reference(**{k: rd.get(k, "") for k in
+                            ("pmid","doi","title","journal","year","volume","issue","pages","abstract","citation_key")} | {"authors": rd.get("authors", [])}))
+                    else:
+                        ref_objs.append(rd)
+                docx_bytes = build_cited_docx(project.get("title","Paper"), sections, ref_objs, style=ref_style)
+                with c1:
+                    st.download_button("📥 Word (.docx)", data=docx_bytes,
+                        file_name=f"{project.get('id','paper')}.docx",
+                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        use_container_width=True, disabled=not docx_bytes)
+                with c2:
+                    enl = endnote_bytes(ref_objs)
+                    st.download_button("📚 EndNote (.xml)", data=enl,
+                        file_name=f"{project.get('id','paper')}.enl.xml",
+                        mime="application/xml",
+                        use_container_width=True, disabled=not enl)
+                with c3:
+                    bib = bibtex_bytes(ref_objs)
+                    st.download_button("📑 BibTeX (.bib)", data=bib,
+                        file_name=f"{project.get('id','paper')}.bib",
+                        mime="application/x-bibtex",
+                        use_container_width=True, disabled=not bib)
+            except Exception as _e:
+                st.caption(f"export 양식 미준비: {_e}")
+
+            # Manuscript body
             html_parts = [f"<div class='preview-box'><h1>{project.get('title','')[:80]}</h1>"]
             for key in ["abstract", "introduction", "methods", "results", "discussion", "conclusion"]:
                 if key in sections and sections[key]:
                     body = str(sections[key]).replace("<", "&lt;").replace(">", "&gt;")
                     body_html = "".join(f"<p>{para}</p>" for para in body.split("\n\n") if para.strip())
                     html_parts.append(f"<h2>{key.capitalize()}</h2>{body_html}")
+
+            # References block (저널별 style 적용)
+            if refs:
+                try:
+                    from src.export.citation_workflow import format_reference
+                    html_parts.append("<h2>References</h2>")
+                    for i, rd in enumerate(refs, 1):
+                        if isinstance(rd, dict):
+                            r_obj = Reference(**{k: rd.get(k, "") for k in
+                                ("pmid","doi","title","journal","year","volume","issue","pages","abstract","citation_key")} | {"authors": rd.get("authors", [])})
+                        else:
+                            r_obj = rd
+                        formatted = format_reference(r_obj, i, ref_style).replace("<","&lt;").replace(">","&gt;")
+                        html_parts.append(f"<p style='font-size:0.85rem;color:#475569;'>{formatted}</p>")
+                except Exception:
+                    pass
+
             html_parts.append("</div>")
             st.markdown("".join(html_parts), unsafe_allow_html=True)
 
