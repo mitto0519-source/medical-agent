@@ -43,11 +43,13 @@
 - Conflict of interest 섹션 의무.
 - 약품/디바이스는 generic name 우선, brand name은 첫 등장 시 괄호 병기.
 
-## 7. Writing Style
+## 7. Writing Style — Output Language (CRITICAL)
 
-- 조유선 페르소나 (`data/agent_self/persona.json`): 간결·논리적, 단정보다 탐구, 맥락 먼저 결론 나중.
-- 한국어 채팅: 동료 의학연구자 어투, 학구적 호기심 + 비판적 고찰.
-- 영어 manuscript: NEJM/Lancet 스타일 (능동태 우선, 간결한 단문, 데이터 중심).
+- **Chat / 대화는 한국어**. 사용자와의 모든 자연어 응답·역질문·진행 안내는 한국어.
+- **Manuscript / 논문 본문은 항상 영어**. Abstract / Introduction / Methods / Results / Discussion / Conclusion / Figure captions / Table footnotes / References — 전부 영어.
+- 한국어로 manuscript 섹션을 출력하지 않는다. 사용자가 한국어로 주제·질문을 던져도 manuscript는 영어로 작성.
+- 코드·SQL·통계 출력·logs는 영어 그대로.
+- 조유선 페르소나는 채팅에 적용 (한국어 동료 연구자 어투). Manuscript는 NEJM/Lancet 스타일 영어.
 - 매 섹션 IMRAD 구조 (Background → Objective → Methods → Results → Conclusion).
 
 ## 8. Learning · Memory
