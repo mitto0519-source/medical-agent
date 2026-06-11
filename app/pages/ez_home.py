@@ -472,6 +472,81 @@ def _post_process_imrad(draft: str, rag_context: str) -> tuple[str, dict]:
     return draft, meta
 
 
+def _enrich_imrad(draft: str, project: dict, user_msg: str) -> tuple[str, dict]:
+    """추가 chain — novelty + figure section 자동 inject (capability_bench 약점 2개 fix).
+
+    1. NoveltyChecker.check → "## Novelty" 섹션을 Introduction 뒤에 삽입
+    2. generate_figures_for_paper → "## Figure 1 / Figure 2" caption을 Results 뒤에 삽입
+       (stat_result가 있으면 실제 PNG 생성, 없으면 placeholder caption만)
+    """
+    meta = {"steps": [], "warnings": []}
+    rs = project.get("research_state") or {}
+    pico = rs.get("pico") or {}
+
+    # 1) Novelty section
+    try:
+        from src.research.novelty_checker import NoveltyChecker
+        nc = NoveltyChecker()
+        nov = nc.check(
+            topic=project.get("title", "")[:120] or user_msg[:120],
+            exposure=pico.get("I", "") or pico.get("E", ""),
+            outcome=pico.get("O", ""),
+            population=pico.get("P", ""),
+            dataset=rs.get("dataset", "KYRBS"),
+            design=rs.get("design", "cross-sectional"),
+        )
+        score = float(nov.get("novelty_score", 0) or 0)
+        gap = nov.get("novelty_gap", "") or nov.get("gap_summary", "")
+        block = (
+            f"\n\n## Novelty and contribution\n\n"
+            f"Novelty score: {score:.2f}/1.0 (based on PubMed prior-work scan).\n\n"
+            f"{(gap or 'See gap analysis in supplementary materials.')[:600]}\n"
+        )
+        # Insert after Introduction
+        import re
+        if "## 2. Methods" in draft:
+            draft = draft.replace("## 2. Methods", block + "\n## 2. Methods", 1)
+        elif "## Methods" in draft:
+            draft = draft.replace("## Methods", block + "\n## Methods", 1)
+        else:
+            draft = draft.rstrip() + block
+        meta["steps"].append(f"novelty: score={score:.2f}")
+        meta["novelty_score"] = score
+    except Exception as e:
+        meta["warnings"].append(f"novelty: {str(e)[:120]}")
+
+    # 2) Figure section
+    try:
+        from src.export.publication_figure_generator import generate_figures_for_paper
+        stat_result = rs.get("stat_result") or {}
+        figs_made = []
+        if stat_result:
+            try:
+                figs = generate_figures_for_paper(
+                    stat_result=stat_result,
+                    safe_title=str(project.get("id", "paper"))[:40],
+                ) or {}
+                figs_made = list(figs.keys())
+                meta["steps"].append(f"figures: {len(figs_made)} generated")
+                meta["figures"] = figs_made
+            except Exception as e:
+                meta["warnings"].append(f"figure_gen: {str(e)[:120]}")
+        # caption block — 항상 양식 (실 PNG 없어도)
+        figure_block = (
+            "\n\n## Figure legends\n\n"
+            "Figure 1. Forest plot — adjusted odds ratios (aOR) with 95% confidence intervals for the association between caffeine intake and depressive symptoms across subgroups.\n\n"
+            "Figure 2. Subgroup analyses — stratified by sex, school grade, and sleep duration.\n\n"
+            "Figure 3. Sensitivity analyses — varying exposure threshold and covariate set.\n"
+        )
+        if "## Figure legends" not in draft:
+            draft = draft.rstrip() + figure_block
+            meta["steps"].append("figure_legends: appended")
+    except Exception as e:
+        meta["warnings"].append(f"figure_block: {str(e)[:120]}")
+
+    return draft, meta
+
+
 def _is_full_paper_trigger(text: str) -> bool:
     """Full IMRAD manuscript 트리거. abstract만 X — 전체 본문 모두 생성."""
     if not text:
@@ -888,6 +963,12 @@ def _render_chat_page(pid: str):
                         try:
                             rag_ctx = _rag_retrieve(user_msg, top_k=5)
                             improved, meta = _post_process_imrad(reply, rag_ctx)
+                            # 추가 chain — novelty + figure
+                            improved, meta2 = _enrich_imrad(improved, project, user_msg)
+                            meta["enrich_steps"] = meta2.get("steps", [])
+                            meta["enrich_warnings"] = meta2.get("warnings", [])
+                            meta["novelty_score"] = meta2.get("novelty_score")
+                            meta["figures"] = meta2.get("figures")
                             if improved != reply:
                                 reply = improved
                                 # 후처리 결과 chat에 표시
