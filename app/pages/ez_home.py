@@ -365,6 +365,113 @@ def _generate_figure(project: dict, figure_type: str) -> tuple[bytes, str] | Non
         return None
 
 
+def _strip_korean_prelude(text: str) -> str:
+    """Manuscript는 영어만 허용 — LLM이 앞에 붙인 한국어 해설 제거.
+
+    첫 번째 영어 markdown 헤더('## Title' / '# Title' / 'Title:' 등) 이후만 살림.
+    """
+    if not text:
+        return text
+    import re
+    # IMRAD 구조 첫 marker
+    patterns = [
+        r"(##?\s*Title\b)",
+        r"(##?\s*Abstract\b)",
+        r"(\*\*Title:?\*\*)",
+        r"(^Title:\s)",
+    ]
+    for pat in patterns:
+        m = re.search(pat, text, re.MULTILINE)
+        if m:
+            return text[m.start():].strip()
+    return text
+
+
+def _hits_to_references(rag_context: str) -> list:
+    """RAG context에서 PMID를 뽑아 Reference 객체 list로 변환.
+
+    citation_workflow.Reference 사용 — minimal metadata지만 inline citation에 충분.
+    """
+    if not rag_context:
+        return []
+    import re
+    try:
+        from src.export.citation_workflow import Reference
+    except Exception:
+        return []
+    pmids = re.findall(r"PMID:(\d+)", rag_context)
+    refs = []
+    seen = set()
+    for pmid in pmids:
+        if pmid in seen:
+            continue
+        seen.add(pmid)
+        refs.append(Reference(pmid=pmid, title=f"PubMed {pmid}",
+                                citation_key=f"PMID{pmid}"))
+    return refs
+
+
+def _post_process_imrad(draft: str, rag_context: str) -> tuple[str, dict]:
+    """Full IMRAD 후처리 chain — language·citation·review 자동 개선.
+
+    1. 한국어 prelude 제거 (language_quality fix)
+    2. RAG hit PMIDs → Reference 객체
+    3. citation_workflow.place_citations로 본문에 [n] 자동 삽입
+    4. citation_grounding.verify_citation_integrity로 검증
+    5. physician_review.review_required로 임상 안전성 flag
+
+    Returns: (개선된 draft, meta dict)
+    """
+    meta = {"steps": [], "warnings": []}
+
+    # 1) 한국어 prelude 제거
+    before_len = len(draft)
+    draft = _strip_korean_prelude(draft)
+    if len(draft) != before_len:
+        meta["steps"].append(f"strip_korean_prelude: removed {before_len-len(draft)} chars")
+
+    # 2) RAG hits → Reference list
+    refs = _hits_to_references(rag_context)
+    meta["refs_count"] = len(refs)
+
+    # 3) Inline citations 자동 삽입 (sections dict로 변환 필요)
+    if refs:
+        try:
+            from src.export.citation_workflow import place_citations
+            # draft 양식 양식 양식 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식
+            # 양식 양식 양식 양식 (heading 양식 양식 split)
+            sections = {"manuscript": draft}
+            new_secs, ordered = place_citations(sections, refs)
+            draft = new_secs.get("manuscript", draft)
+            meta["steps"].append(f"place_citations: {len(ordered)} refs cited")
+            meta["cited_refs"] = [r.pmid for r in ordered]
+        except Exception as e:
+            meta["warnings"].append(f"place_citations: {str(e)[:120]}")
+
+    # 4) Citation integrity check
+    try:
+        from src.safety.citation_grounding import verify_citation_integrity
+        rep = verify_citation_integrity(draft, refs="", check_dois=False, check_rag=False)
+        meta["citation_check"] = {
+            "ok": rep.ok,
+            "orphan_citations": len(rep.orphan_citations),
+            "orphan_references": len(rep.orphan_references),
+            "summary": rep.summary[:200],
+        }
+    except Exception as e:
+        meta["warnings"].append(f"citation_integrity: {str(e)[:120]}")
+
+    # 5) Physician review flag
+    try:
+        from src.safety.physician_review import review_required
+        needs, reasons = review_required(draft)
+        meta["physician_review"] = {"needs": needs, "reasons": reasons[:5]}
+    except Exception as e:
+        meta["warnings"].append(f"physician_review: {str(e)[:120]}")
+
+    return draft, meta
+
+
 def _is_full_paper_trigger(text: str) -> bool:
     """Full IMRAD manuscript 트리거. abstract만 X — 전체 본문 모두 생성."""
     if not text:
@@ -775,6 +882,30 @@ def _render_chat_page(pid: str):
                         f"<div class='msg-asst'>{safe}</div>",
                         unsafe_allow_html=True)
                     reply = full
+
+                    # ★ Full IMRAD 후처리 chain (capability_bench 약점 자동 fix)
+                    if full and not wide and not deep:  # Full IMRAD trigger 일 때만
+                        try:
+                            rag_ctx = _rag_retrieve(user_msg, top_k=5)
+                            improved, meta = _post_process_imrad(reply, rag_ctx)
+                            if improved != reply:
+                                reply = improved
+                                # 후처리 결과 chat에 표시
+                                summary = (f"<div class='msg-asst' style='font-size:0.82rem;color:#475569;'>"
+                                            f"📋 후처리 chain — {meta.get('refs_count',0)} refs cited · "
+                                            f"steps: {len(meta.get('steps',[]))} · "
+                                            f"warnings: {len(meta.get('warnings',[]))}</div>")
+                                st.markdown(summary, unsafe_allow_html=True)
+                                # 수정된 본문도 보여줌
+                                safe2 = reply.replace("<","&lt;").replace(">","&gt;")
+                                placeholder.markdown(
+                                    f"<div class='msg-asst'>{safe2}</div>",
+                                    unsafe_allow_html=True)
+                                # research_state에 메타 저장
+                                rs = project.setdefault("research_state", {})
+                                rs["last_imrad_meta"] = meta
+                        except Exception as _e:
+                            st.caption(f"후처리 skip: {_e}")
 
                 project["messages"].append({"role": "assistant", "content": reply,
                                               "ts": datetime.now().isoformat()})
