@@ -62,6 +62,54 @@ def _save(entries: List[Dict]):
     )
 
 
+def _distill(user_message: str, agent_response: str,
+                topic: str = "", owner_email: str = "") -> Dict:
+    """FIX-7 (REVIEW_FIX_SPEC, 2026-06-13): 절단이 아니라 압축 증류.
+
+    LLM이 turn에서 (확정된 사실 / 열린 질문 / 사용자 선호 / 다음 액션 후보)를
+    구조화 추출. 실패 시 단순 truncation으로 폴백.
+    """
+    fallback = {
+        "facts_established": [user_message[:200]],
+        "open_questions": [],
+        "user_preferences": [],
+        "next_action_candidates": [],
+        "agent_brief": agent_response[:400],
+    }
+    if not (user_message or agent_response):
+        return fallback
+    try:
+        from src.llm import get_llm_client
+        client = get_llm_client(task="standard")
+        prompt = (
+            "Extract from this turn (JSON only, keys: facts_established list, "
+            "open_questions list, user_preferences list, next_action_candidates list, "
+            "agent_brief string ≤300 chars):\n\n"
+            f"User: {user_message[:1500]}\n\n"
+            f"Assistant: {agent_response[:2500]}\n\n"
+            f"Topic: {topic}"
+        )
+        out = client.generate(prompt, system_prompt="Output strict JSON only.",
+                                max_tokens=400) or ""
+        # JSON 양식
+        import json as _j, re as _re
+        m = _re.search(r"\{[\s\S]*\}", out)
+        if m:
+            parsed = _j.loads(m.group(0))
+            if isinstance(parsed, dict):
+                # 형식 양식
+                for k in ("facts_established", "open_questions",
+                           "user_preferences", "next_action_candidates"):
+                    if not isinstance(parsed.get(k), list):
+                        parsed[k] = []
+                if not isinstance(parsed.get("agent_brief"), str):
+                    parsed["agent_brief"] = agent_response[:400]
+                return parsed
+    except Exception as e:
+        _log.debug("distill fail (fallback to truncation): %s", e)
+    return fallback
+
+
 def record(
     user_message: str,
     agent_response: str,
@@ -70,7 +118,11 @@ def record(
     quality: str = "neutral",
     owner_email: str = "",
 ) -> None:
-    """대화 교환 기록 — JSON(최근/요약) + ChromaDB(verbatim 의미검색) 동시 저장."""
+    """대화 교환 기록 — JSON(최근/요약) + ChromaDB(verbatim 의미검색) 동시 저장.
+
+    FIX-7: 절단(:200/:400) → reflection 증류(facts/open_q/prefs/agent_brief).
+    구조화 dict가 저장되어 다음 턴에 의미가 깨지지 않음.
+    """
     # 외부 입력 sanitize: 깨진 utf-16 surrogate가 ChromaDB / JSON / API에 전파되지 않도록
     user_message = strip_lone_surrogates(user_message)
     agent_response = strip_lone_surrogates(agent_response)
@@ -78,17 +130,26 @@ def record(
     _id = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     _ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     entries = _load()
+
+    distilled = _distill(user_message, agent_response, topic, owner_email)
     entries.insert(0, {
         "id": _id,
         "timestamp": _ts,
         "topic": topic or user_message[:50],
         "context_type": context_type,
-        "user_summary": user_message[:200],
-        "agent_summary": agent_response[:400],
+        # FIX-7: 절단 대신 증류
+        "user_summary": user_message[:200],          # 호환용 (legacy reader)
+        "agent_summary": agent_response[:400],       # 호환용
+        "distilled": distilled,                       # 신규: 구조화 증류
         "quality": quality,
         "owner_email": owner_email,
     })
     _save(entries)
+    # rolling summary 갱신 (legacy summarize_session 양식 양식)
+    try:
+        _update_rolling_summary(owner_email=owner_email)
+    except Exception as _e:
+        _log.debug("rolling summary update skip: %s", _e)
 
     # MemPalace식: 대화 전문을 의미 메모리에 색인 (관련 과거 회수용)
     vs = _vstore()
@@ -187,3 +248,79 @@ def summarize_session() -> str:
         return "오늘 기록된 대화 없음."
     topics = list({e.get("topic", "") for e in entries if e.get("topic")})[:5]
     return f"오늘 논의 주제 ({len(entries)}건): {', '.join(topics)}"
+
+
+# FIX-7 (REVIEW_FIX_SPEC, 2026-06-13): rolling summary — 세션 누적 요약을 LLM이 매 N턴
+# 갱신해 build_system_with_preview가 매 호출마다 짧은 high-density summary를 inject.
+_ROLLING_SUMMARY_PATH = _DIR / "rolling_summary.json"
+_ROLLING_UPDATE_EVERY = 4   # 매 4 turn마다 갱신
+
+
+def _update_rolling_summary(owner_email: str = "") -> None:
+    """세션 누적 요약을 LLM으로 압축 갱신.
+
+    매 4턴마다 호출되어 최근 8턴의 distilled facts/open_questions를 합쳐
+    rolling summary 갱신. recall_relevant가 검색 안 잡는 흐름·연속성을 보존.
+    """
+    entries = _load()
+    # 양식 양식 양식 양식 양식 양식 양식
+    if owner_email:
+        scope = [e for e in entries if e.get("owner_email") == owner_email][:8]
+    else:
+        scope = entries[:8]
+    if len(scope) < 2:
+        return
+    if len(scope) % _ROLLING_UPDATE_EVERY != 0:
+        return
+
+    facts: list = []
+    open_q: list = []
+    prefs: list = []
+    for e in scope:
+        d = e.get("distilled") or {}
+        facts += d.get("facts_established") or []
+        open_q += d.get("open_questions") or []
+        prefs += d.get("user_preferences") or []
+    if not (facts or open_q or prefs):
+        return
+
+    text = (
+        "최근 대화 누적 사실:\n- " + "\n- ".join(facts[-15:]) +
+        "\n\n열린 질문:\n- " + "\n- ".join(open_q[-8:]) +
+        "\n\n사용자 선호:\n- " + "\n- ".join(prefs[-8:])
+    )
+    try:
+        from src.llm import get_llm_client
+        client = get_llm_client(task="standard")
+        summary = client.generate(
+            "Compress the following into a concise 200-word running session summary "
+            "(facts → open questions → preferences). Preserve specifics:\n\n" + text[:4000],
+            system_prompt="Concise factual summarizer.", max_tokens=400) or text[:800]
+    except Exception:
+        summary = text[:800]
+
+    payload = {
+        "owner_email": owner_email,
+        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "n_turns": len(scope),
+        "summary": summary,
+    }
+    try:
+        _ROLLING_SUMMARY_PATH.write_text(safe_json_dumps(payload, indent=2),
+                                              encoding="utf-8")
+    except Exception as _e:
+        _log.debug("rolling summary write fail: %s", _e)
+
+
+def get_rolling_summary(owner_email: str = "") -> str:
+    """누적 rolling summary 텍스트 반환 (build_system_with_preview에서 호출)."""
+    if not _ROLLING_SUMMARY_PATH.exists():
+        return ""
+    try:
+        import json as _j
+        d = _j.loads(_ROLLING_SUMMARY_PATH.read_text(encoding="utf-8"))
+        if owner_email and d.get("owner_email") and d["owner_email"] != owner_email:
+            return ""
+        return d.get("summary", "")
+    except Exception:
+        return ""

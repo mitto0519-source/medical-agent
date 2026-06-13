@@ -301,6 +301,63 @@ class RAGPipeline:
         rest.sort(key=lambda x: x["final_score"], reverse=True)
         return forced + rest[: max(0, n_final - len(forced))]
 
+    # ------------------------------------------------------------------
+    # FIX-6 (REVIEW_FIX_SPEC, 2026-06-13) — HyDE + cross-encoder rerank
+    # ------------------------------------------------------------------
+
+    def search_hyde(self, query: str, *, n_final: int = 5, n_pool: int = 30,
+                     hyde_max_tokens: int = 220) -> List[Dict]:
+        """HyDE retrieval — query → LLM이 가상 답변 생성 → 그걸로 dense search.
+
+        의학 질의에서 효과 큼: 사용자 질문이 짧을 때 LLM이 expected answer를 만들어
+        그 답변의 임베딩이 실제 paper와 더 잘 매칭됨.
+        """
+        hyde_doc = ""
+        try:
+            from src.llm import get_llm_client
+            client = get_llm_client(task="standard")
+            sys_prompt = ("You are a medical research assistant. Given a question, write a "
+                           "short hypothetical answer paragraph (3-5 sentences) as if you were "
+                           "citing actual papers. Do not fabricate specific numbers; describe "
+                           "expected findings and methodology.")
+            hyde_doc = client.generate(query, system_prompt=sys_prompt,
+                                          max_tokens=hyde_max_tokens) or ""
+        except Exception as e:
+            _log.debug("HyDE generation fail: %s", e)
+
+        # 가상 문서가 있으면 query + hyde_doc로 expanded search
+        expanded = (query + "\n\n" + hyde_doc) if hyde_doc else query
+        return self.search_multistage(expanded, n_final=n_final, n_pool=n_pool)
+
+    def search_with_rerank(self, query: str, *, n_final: int = 5, n_pool: int = 30,
+                             use_hyde: bool = False,
+                             rerank_model: str = "ms-marco-MiniLM-L-6-v2") -> List[Dict]:
+        """Cross-encoder rerank — dense top-N → cross-encoder로 query-chunk 재정렬.
+
+        sentence-transformers가 있으면 사용, 없으면 multistage로 폴백.
+        """
+        # Stage 1: HyDE or plain query → multistage dense+lex
+        if use_hyde:
+            pool = self.search_hyde(query, n_final=n_pool, n_pool=n_pool * 2)
+        else:
+            pool = self.search_multistage(query, n_final=n_pool, n_pool=n_pool)
+        if not pool:
+            return []
+
+        # Stage 2: Cross-encoder rerank (있으면)
+        try:
+            from sentence_transformers import CrossEncoder
+            ce = CrossEncoder(f"cross-encoder/{rerank_model}")
+            pairs = [(query, it.get("text", "")[:512]) for it in pool]
+            ce_scores = ce.predict(pairs)
+            for i, sc in enumerate(ce_scores):
+                pool[i]["ce_score"] = float(sc)
+            pool.sort(key=lambda x: x.get("ce_score", 0), reverse=True)
+            return pool[:n_final]
+        except Exception as e:
+            _log.debug("cross-encoder rerank skip (using multistage): %s", e)
+            return pool[:n_final]
+
 
 def _simple_tokens(s: str) -> List[str]:
     import re

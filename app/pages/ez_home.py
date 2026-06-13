@@ -721,7 +721,13 @@ def _rag_retrieve(query: str, top_k: int = 5) -> str:
             cache["fail"] = True
             return ""
     try:
-        hits = cache["pipeline"].search(query, n_results=top_k) or []
+        # FIX-6 (2026-06-13): search_with_rerank 우선. 미구현/실패 시 search 폴백.
+        pipe = cache["pipeline"]
+        if hasattr(pipe, "search_with_rerank"):
+            hits = pipe.search_with_rerank(query, n_final=top_k, n_pool=20,
+                                              use_hyde=False) or []
+        else:
+            hits = pipe.search(query, n_results=top_k) or []
         if not hits:
             return ""
         blocks = []
