@@ -107,14 +107,16 @@ def measure_truth() -> dict:
     except Exception as e:
         result["ontology"] = {"error": str(e)[:120]}
 
-    # 5) 페르소나·시드
+    # 5) 페르소나·시드 (key는 'papers_analysed', 'papers' 아님)
     try:
         yp = ROOT / "data" / "author_profiles" / "yoosun_cho.json"
         if yp.exists():
             yd = json.loads(yp.read_text(encoding="utf-8"))
             result["yoosun_seed"] = {
-                "analyzed_papers": len(yd.get("papers") or []),
+                "analyzed_papers": len(yd.get("papers_analysed") or yd.get("papers") or []),
                 "raw_examples": len(yd.get("raw_examples") or []),
+                "vocabulary_items": len(yd.get("vocabulary") or []),
+                "study_focus_items": len(yd.get("study_focus") or []),
                 "system_prompt_chars": len(yd.get("system_prompt", "") or ""),
             }
     except Exception as e:
