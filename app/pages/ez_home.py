@@ -434,12 +434,27 @@ def _post_process_imrad(draft: str, rag_context: str) -> tuple[str, dict]:
     refs = _hits_to_references(rag_context)
     meta["refs_count"] = len(refs)
 
-    # 3) Inline citations 자동 삽입 (sections dict로 변환 필요)
+    # 3a) PMID → [n] 자동 변환 (LLM이 [PMID:xxx] 박은 걸 numbered citation으로)
     if refs:
         try:
+            from src.export.citation_workflow import convert_pmid_inline_to_numbered
+            draft, ordered_pmid, n_converted = convert_pmid_inline_to_numbered(draft, refs)
+            if n_converted:
+                meta["steps"].append(f"pmid_to_numbered: {n_converted} PMIDs → [n]")
+                meta["pmid_cited"] = [r.pmid for r in ordered_pmid]
+                # References 섹션 자동 생성 (ordered_pmid 순서)
+                from src.export.citation_workflow import reference_list_markdown
+                rs = ordered_pmid
+                ref_block = "\n\n## References\n\n" + reference_list_markdown(rs)
+                if "## References" not in draft:
+                    draft = draft.rstrip() + ref_block
+        except Exception as e:
+            meta["warnings"].append(f"pmid_to_numbered: {str(e)[:120]}")
+
+    # 3b) Sentence-level place_citations fallback (PMID 없는 RAG hits 양식 양식)
+    if refs and "pmid_to_numbered" not in " ".join(meta["steps"]):
+        try:
             from src.export.citation_workflow import place_citations
-            # draft 양식 양식 양식 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식
-            # 양식 양식 양식 양식 (heading 양식 양식 split)
             sections = {"manuscript": draft}
             new_secs, ordered = place_citations(sections, refs)
             draft = new_secs.get("manuscript", draft)

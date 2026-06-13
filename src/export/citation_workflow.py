@@ -170,6 +170,57 @@ def place_citations(sections: Dict[str, str],
     return new, ordered
 
 
+def convert_pmid_inline_to_numbered(
+    text: str, refs: List["Reference"]
+) -> Tuple[str, List["Reference"], int]:
+    """본문의 [PMID:38542705] 토큰을 [n] 번호 인용으로 변환.
+
+    LLM이 출력한 inline PMID를 첫 등장 순서대로 번호 매김. References list는
+    그 순서로 재정렬되어 반환. 본문↔References 자동 동기화의 핵심 함수.
+
+    Args:
+        text: 본문 (manuscript draft)
+        refs: 사용 가능한 Reference 객체 리스트 (RAG hits에서 변환된 것)
+
+    Returns:
+        (변환된 text, 사용 순서대로 정렬된 refs, 매칭된 count)
+    """
+    import re
+    if not text or not refs:
+        return text, [], 0
+
+    # PMID by reference
+    by_pmid = {r.pmid: r for r in refs if r.pmid}
+
+    # 본문에서 PMID 인용 토큰 모두 찾기 (등장 순서 보존)
+    # 지원 패턴: [PMID:12345], [PMID: 12345], [PMID 12345], (PMID:12345)
+    pattern = re.compile(r"[\[\(]\s*PMID[:\s]+(\d+)\s*[\]\)]")
+    matches = list(pattern.finditer(text))
+    if not matches:
+        return text, [], 0
+
+    # 첫 등장 순서로 PMID → 번호 매핑
+    pmid_to_num: Dict[str, int] = {}
+    ordered: List["Reference"] = []
+    for m in matches:
+        pmid = m.group(1)
+        if pmid not in pmid_to_num and pmid in by_pmid:
+            pmid_to_num[pmid] = len(ordered) + 1
+            ordered.append(by_pmid[pmid])
+
+    if not pmid_to_num:
+        return text, [], 0
+
+    # 본문 전체 치환 — 같은 PMID 여러 번 등장하면 모두 같은 번호로
+    def _repl(m: "re.Match") -> str:
+        pmid = m.group(1)
+        n = pmid_to_num.get(pmid)
+        return f"[{n}]" if n else m.group(0)
+
+    new_text = pattern.sub(_repl, text)
+    return new_text, ordered, len(pmid_to_num)
+
+
 # ── Multi-style formatters — 저널마다 다른 reference style 지원 ─────────────
 def _authors_short(authors: List[str], max_n: int = 6) -> str:
     if not authors:

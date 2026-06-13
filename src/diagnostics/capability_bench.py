@@ -43,13 +43,24 @@ class BenchmarkResult:
     language_quality: float = 0.0
     novelty_alignment: float = 0.0
     figure_completeness: float = 0.0
-    overall: float = 0.0
+    overall: float = 0.0            # 7-dim 평균 (legacy)
+    overall_6dim: float = 0.0       # ★ 신규: figure 제외 6-dim 평균 (정직 보고용)
+    figure_measured: bool = False   # ★ 신규: figure dim 실측 여부
     weak_areas: List[str] = None
     improvement_notes: str = ""
+    # ★ 신규 — 측정 출처 메타 (P2 fix, 정직성)
+    used_model: str = ""            # 예: "meta-llama/llama-3.3-70b-instruct:free"
+    used_provider: str = ""         # 예: "openrouter"
+    rag_hits: int = 0               # RAG retrieve로 inject된 paper chunks 수
+    rag_pmids: List[str] = None     # 실제 RAG hit PMID 목록
+    prompt_chars: int = 0           # system prompt 총 길이 (양식 양식)
+    draft_chars: int = 0            # 생성된 draft 길이
 
     def __post_init__(self):
         if self.weak_areas is None:
             self.weak_areas = []
+        if self.rag_pmids is None:
+            self.rag_pmids = []
         scores = [
             self.citation_accuracy, self.stats_completeness,
             self.methodology_quality, self.structure_score,
@@ -57,6 +68,9 @@ class BenchmarkResult:
             self.figure_completeness,
         ]
         self.overall = round(sum(scores) / len(scores), 1)
+        # 6-dim: figure 제외
+        scores_6 = [s for s in scores[:-1]]  # 마지막은 figure_completeness
+        self.overall_6dim = round(sum(scores_6) / len(scores_6), 1)
         self.weak_areas = [
             name for name, score in zip(
                 ["인용정확도", "통계완성도", "방법론품질", "논문구조",
@@ -368,12 +382,38 @@ def run_capability_bench(
     topic: dict,
     figures: dict = None,
     novelty_score: float = 0.0,
+    *,
+    used_model: str = "",
+    used_provider: str = "",
+    rag_hits: int = 0,
+    rag_pmids: Optional[List[str]] = None,
+    prompt_chars: int = 0,
 ) -> BenchmarkResult:
-    """편의 함수 — 논문 파이프라인 종료 시 자동 호출."""
-    return CapabilityBench().evaluate(
+    """편의 함수 — 논문 파이프라인 종료 시 자동 호출.
+
+    P2 fix (2026-06-13): 측정 출처 메타 (used_model/provider/rag_hits/rag_pmids/prompt_chars)
+    필수 기록. 점수만 남기고 출처 불명인 상태 차단.
+    """
+    result = CapabilityBench().evaluate(
         draft=draft,
         stat_result=stat_result,
         topic=topic,
         figures=figures,
         novelty_score=novelty_score,
     )
+    # 메타 inject
+    result.used_model = used_model or ""
+    result.used_provider = used_provider or ""
+    result.rag_hits = int(rag_hits or 0)
+    result.rag_pmids = rag_pmids or []
+    result.prompt_chars = int(prompt_chars or 0)
+    result.draft_chars = len(draft or "")
+    result.figure_measured = bool(figures)  # figures dict 들어왔으면 측정함
+    # 다시 6-dim 재계산 (post-init 양식 양식 양식)
+    scores = [result.citation_accuracy, result.stats_completeness,
+              result.methodology_quality, result.structure_score,
+              result.language_quality, result.novelty_alignment,
+              result.figure_completeness]
+    result.overall = round(sum(scores) / len(scores), 1)
+    result.overall_6dim = round(sum(scores[:-1]) / 6, 1)
+    return result
