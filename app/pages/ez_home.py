@@ -1041,6 +1041,30 @@ def _render_chat_page(pid: str):
                             meta["enrich_warnings"] = meta2.get("warnings", [])
                             meta["novelty_score"] = meta2.get("novelty_score")
                             meta["figures"] = meta2.get("figures")
+                            # ★ 검증 게이트 4종 inline warning ("올바른 마찰만" — 비전 2026-06-13)
+                            try:
+                                import re as _re
+                                pmid_in_rag = _re.findall(r"PMID:(\d+)", rag_ctx or "")
+                                from src.safety.inline_warnings import (run_all_gates,
+                                                                          report_to_chat_blocks)
+                                gates_rep = run_all_gates(
+                                    improved,
+                                    known_pmids=pmid_in_rag,
+                                    novelty_score=meta2.get("novelty_score"),
+                                    topic={"title": project.get("title")},
+                                )
+                                gate_blocks = report_to_chat_blocks(gates_rep)
+                                meta["gates"] = {"total_issues": gates_rep.total_issues,
+                                                  "blocks": gate_blocks}
+                                # chat에 1줄 요약 박스로 표시
+                                for b in gate_blocks:
+                                    st.markdown(
+                                        f"<div class='msg-asst' style='font-size:0.82rem;"
+                                        f"background:#FEF3C7;border-left:3px solid #F59E0B;"
+                                        f"padding:8px 12px;'>{b.replace('<','&lt;').replace('>','&gt;')}</div>",
+                                        unsafe_allow_html=True)
+                            except Exception as _eg:
+                                meta.setdefault("warnings", []).append(f"gates: {_eg}")
                             if improved != reply:
                                 reply = improved
                                 # 후처리 결과 chat에 표시

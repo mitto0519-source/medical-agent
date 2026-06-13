@@ -1,0 +1,31 @@
+{
+  "owner_email": "test@x.com",
+  "sample_size_papers": 1,
+  "sample_size_sentences": 8,
+  "sample_size_words": 83,
+  "avg_sent_len": 10.38,
+  "std_sent_len": 2.13,
+  "median_sent_len": 10.0,
+  "p25_sent_len": 9.0,
+  "p75_sent_len": 12.0,
+  "p95_sent_len": 14.0,
+  "hedge_ratio": 0.0723,
+  "hedge_top5": [
+    "may",
+    "suggested",
+    "potential",
+    "might",
+    "suggesting"
+  ],
+  "passive_ratio": 0.5,
+  "clause_density": 0.12,
+  "vocab_top10": [
+    "with",
+    "research"
+  ],
+  "vocab_full": {
+    "with": 0.155077,
+    "research": 0.103385
+  },
+  "extracted_at": "2026-06-13T17:39:02.625103"
+}

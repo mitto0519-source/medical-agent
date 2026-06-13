@@ -120,6 +120,78 @@ def ensure_bootstrap(
     return result
 
 
+# ── push-back (write 영속) ──────────────────────────────────────────
+# RULE-9 (online-first) 완성: 컨테이너 디스크가 휘발성이라도 사용자 상태가
+# HF Datasets로 주기 push되어 재배포 후 복구된다.
+
+_PUSH_TARGETS = [
+    "data/runtime",
+    "data/agent_self",
+    "data/change_log",
+    "data/working_papers",
+    "data/profiles",      # per-user StyleProfile
+    "data/chromadb",      # conversation_memory (대용량이라 ENABLE_HF_PUSH_CHROMA=1일 때만)
+]
+
+
+def push_runtime_to_hf(repo_id: str | None = None, token: str | None = None,
+                          folders: Iterable[str] | None = None,
+                          include_chroma: bool | None = None) -> dict:
+    """data/runtime + agent_self + working_papers + profiles 를 HF Datasets로 push.
+
+    환경변수:
+        ENABLE_HF_PUSHBACK=0     → 전면 비활성 (default: 1)
+        ENABLE_HF_PUSH_CHROMA=1  → chromadb 포함 (default: 0, 용량 큼)
+
+    Returns: {pushed: [...], skipped: [...], failed: [...]}
+    """
+    if os.environ.get("ENABLE_HF_PUSHBACK", "1") == "0":
+        return {"pushed": [], "skipped": ["disabled by ENABLE_HF_PUSHBACK=0"], "failed": []}
+
+    try:
+        from huggingface_hub import HfApi
+    except ImportError:
+        return {"pushed": [], "skipped": [], "failed": ["huggingface_hub not installed"]}
+
+    rid = repo_id or os.environ.get("HF_DATASET_ID", DEFAULT_DATASET_ID)
+    tok = token or os.environ.get("HF_TOKEN", "")
+    if not tok:
+        return {"pushed": [], "skipped": [], "failed": ["HF_TOKEN missing"]}
+
+    if include_chroma is None:
+        include_chroma = os.environ.get("ENABLE_HF_PUSH_CHROMA", "0") == "1"
+
+    targets = list(folders) if folders else _PUSH_TARGETS
+    if not include_chroma:
+        targets = [t for t in targets if "chromadb" not in t]
+
+    api = HfApi(token=tok)
+    pushed, skipped, failed = [], [], []
+    import time as _time
+    for local in targets:
+        lp = Path(local)
+        if not lp.exists() or not any(lp.iterdir()):
+            skipped.append(local)
+            continue
+        try:
+            t0 = _time.time()
+            api.upload_folder(
+                repo_id=rid,
+                repo_type="dataset",
+                folder_path=str(lp),
+                path_in_repo=lp.name,
+                commit_message=f"runtime push {lp.name} ({_time.strftime('%Y-%m-%d %H:%M:%S')})",
+                ignore_patterns=["*.pyc", "__pycache__/*", "*.tmp", "*-wal", "*-shm",
+                                  ".DS_Store"],
+            )
+            _log.info("[push] %s → %s (%.1fs)", local, rid, _time.time() - t0)
+            pushed.append(local)
+        except Exception as e:
+            _log.warning("[push] %s FAIL: %s", local, str(e)[:200])
+            failed.append(f"{local}: {str(e)[:120]}")
+    return {"pushed": pushed, "skipped": skipped, "failed": failed}
+
+
 def cli():
     """python -m src.runtime.hf_bootstrap [--profile standard] [--force]"""
     import argparse

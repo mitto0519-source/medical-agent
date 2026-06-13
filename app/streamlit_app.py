@@ -84,6 +84,17 @@ def _supabase_migrate_once():
         return {"error": str(e)}
 _MIGRATE_RESULT = _supabase_migrate_once()
 
+# ★ HF push-back atexit hook — session 종료 시 runtime 영속 (RULE-9 완성)
+import atexit as _atexit
+def _push_runtime_atexit():
+    try:
+        from src.runtime.hf_bootstrap import push_runtime_to_hf
+        result = push_runtime_to_hf()
+        print(f"[atexit] hf push-back: {result}")
+    except Exception as e:
+        print(f"[atexit] push-back fail: {e}")
+_atexit.register(_push_runtime_atexit)
+
 # NOTE: Sapphire Glass (EZ-style) UI는 별도 entry `app/sapphire_app.py`로 완전 분리됨
 # (2026-05-27, 사용자 요청). 본 streamlit_app.py는 기존 단위 기능 UI만 담당.
 # 새 UI 접속: http://localhost:8502 (docker-compose의 sapphire-ui 서비스)

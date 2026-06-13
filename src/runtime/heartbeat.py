@@ -129,6 +129,16 @@ def _job_notify_drain() -> dict:
         return {"error": str(e)[:200]}
 
 
+def _job_hf_pushback() -> dict:
+    """주기적 HF Datasets 양방향 영속 — RULE-9 완성.
+    ENABLE_HF_PUSHBACK=0 시 비활성."""
+    try:
+        from src.runtime.hf_bootstrap import push_runtime_to_hf
+        return push_runtime_to_hf()
+    except Exception as e:
+        return {"error": str(e)[:200]}
+
+
 JOBS = [
     Job("task_recover",     interval_sec=3600,      fn=_job_task_recover),
     Job("budget_snapshot",  interval_sec=3600,      fn=_job_budget_snapshot),
@@ -137,6 +147,7 @@ JOBS = [
     Job("trend_learn",      interval_sec=24 * 3600, fn=_job_trend_learn),
     Job("backlog_drain",    interval_sec=5 * 60,    fn=_job_backlog_drain),
     Job("notify_drain",     interval_sec=5 * 60,    fn=_job_notify_drain),
+    Job("hf_pushback",      interval_sec=15 * 60,   fn=_job_hf_pushback),   # ★ 15분 양식 영속
 ]
 
 
