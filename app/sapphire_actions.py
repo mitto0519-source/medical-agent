@@ -375,7 +375,10 @@ def _dlg_yoosun(**ctx):
                 from src.agent.prompt_loader import load_yoosun_with_exemplars
                 from src.llm import get_llm_client
                 client = get_llm_client(task="paper_writing")
-                sys_prompt = load_yoosun_with_exemplars()
+                # FIX-1: per-user StyleProfile 우선 (yoosun 폴백)
+                _owner = (st.session_state.get("user") or {}).get("email") or \
+                          st.session_state.get("user_email", "") or None
+                sys_prompt = load_yoosun_with_exemplars(owner_email=_owner)
                 out = client.generate(
                     f"Rewrite the following paragraph in Yoosun Cho style "
                     f"(preserve all numbers, citations, statistics):\n\n{src}",

@@ -97,9 +97,12 @@ class WritingOrchestrator:
     # ── A2A 핵심 메서드 ─────────────────────────────────────────────────────
 
     def apply_author_style(self, text: str, *, author_style: str = "yoosun_cho",
-                             llm_client=None) -> str:
+                             llm_client=None, owner_email: str | None = None) -> str:
         """② Style layer — 합성된 substance text에 저자 voice 입힘.
-        prompts/yoosun_style.md + raw_examples를 system prompt로 LLM 호출."""
+
+        FIX-1: owner_email 있으면 StyleProfiler.load(owner_email) 우선,
+        없으면 yoosun_style.md + raw_examples로 폴백.
+        """
         if not text:
             return ""
         try:
@@ -107,7 +110,8 @@ class WritingOrchestrator:
                 from src.llm import get_llm_client
                 llm_client = get_llm_client(task="paper_writing")
             from src.agent.prompt_loader import load_yoosun_with_exemplars
-            sys_p = load_yoosun_with_exemplars() if author_style == "yoosun_cho" \
+            sys_p = load_yoosun_with_exemplars(owner_email=owner_email) \
+                if author_style == "yoosun_cho" \
                 else "Rewrite preserving all numbers, citations, statistics."
             return llm_client.generate(
                 f"Rewrite the following paragraph in {author_style} style "

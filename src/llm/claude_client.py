@@ -18,15 +18,19 @@ from src.config.models import get_model, thinking_config
 _log = get_logger(__name__)
 
 
-def build_base_system(base_prompt: str, task: str = "general") -> str:
+def build_base_system(base_prompt: str, task: str = "general",
+                        owner_email: str | None = None) -> str:
     """페르소나 + medical seed + 인사이트 + 리뷰어 패턴 + 자기개선 + base를 합친
     시스템 프롬프트 문자열. ClaudeClient와 GeminiClient/OpenAIClient가 공유해
-    어떤 LLM으로 폴백돼도 페르소나 일관성을 유지한다 (규칙 9)."""
-    # 1. 페르소나 (항상 최우선)
+    어떤 LLM으로 폴백돼도 페르소나 일관성을 유지한다 (규칙 9).
+
+    FIX-1 (2026-06-13): owner_email 인자 추가. paper_write 계열은 StyleProfile 우선.
+    """
+    # 1. 페르소나 (항상 최우선) — per-user persona 우선
     persona_prompt = ""
     try:
         from src.agent.persona import get_system_prompt
-        persona_prompt = get_system_prompt(task=task)
+        persona_prompt = get_system_prompt(task=task, owner_email=owner_email)
     except Exception:
         pass
     # 2. 의학 지식 프리앰블
@@ -86,10 +90,10 @@ def build_base_system(base_prompt: str, task: str = "general") -> str:
     versioned_block = ""
     try:
         from src.agent.prompt_loader import load_prompt
-        # paper_writing alias → paper_write composition
+        # paper_writing alias → paper_write composition. owner_email로 per-user style.
         _task_map = {"paper_writing": "paper_write", "paper_review": "paper_write"}
         pl_task = _task_map.get(task, task)
-        versioned_block = load_prompt(pl_task) or ""
+        versioned_block = load_prompt(pl_task, owner_email=owner_email) or ""
     except Exception as _e:
         # 안전망: prompt_loader 실패해도 페르소나/베이스는 그대로 살아있음
         pass

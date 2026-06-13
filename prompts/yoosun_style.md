@@ -1,11 +1,17 @@
 ---
 name: yoosun_style
-version: 1.0.0
+version: 1.0.1
 applies_to: [paper_write]
 extends: medical_core
 source: data/author_profiles/yoosun_cho.json (11 actual papers analysed)
-last_updated: 2026-05-27
+last_updated: 2026-06-13
+role: fallback_seed
 ---
+
+<!-- FIX-1 (REVIEW_FIX_SPEC, 2026-06-13): 이 파일은 fallback seed임.
+사용자 본인 StyleProfile이 있으면 (data/profiles/{owner_hash}/style_profile.json)
+prompt_loader가 이 시드를 미주입하고 본인 프로파일을 우선 inject한다.
+본인 프로파일이 없을 때만 이 yoosun 시드가 사용됨 (하위호환). -->
 
 # 조유선(Yoosun Cho) 스타일 가이드
 

@@ -1092,9 +1092,10 @@ def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
 
         handler = make_tool_handler(get_project, set_project, append_chat_event)
 
-        base_system = load_prompt("paper_write")
-        # ★ user_msg 전달 — build_system_with_preview의 trigger_analyzer/cognitive_activation/
-        #   recall_all_layers/conversation_memory.recall_relevant 활성화 (이전엔 다 skip됐음)
+        # FIX-1: owner_email로 per-user StyleProfile 우선 (yoosun 폴백)
+        _owner = (st.session_state.get("user") or {}).get("email") or \
+                  st.session_state.get("user_email", "") or None
+        base_system = load_prompt("paper_write", owner_email=_owner)
         system = build_system_with_preview(
             base_system + f"\n\nMode: {mode}.", project, user_msg=prompt)
 
@@ -1199,7 +1200,10 @@ def _delegate_to_writer(prompt: str, project: dict, mode: str,
         from src.llm.claude_client import ClaudeClient
         from src.agent.prompt_loader import load_prompt
         from app.agentic_loop import build_system_with_preview
-        base = load_prompt("paper_write")
+        # FIX-1: per-user StyleProfile 우선
+        _owner = (st.session_state.get("user") or {}).get("email") or \
+                  st.session_state.get("user_email", "") or None
+        base = load_prompt("paper_write", owner_email=_owner)
         sys_prompt = build_system_with_preview(
             base + f"\n\nMode: {mode}.", project, user_msg=prompt)
         prior_ctx = _build_prior_context(project.get("messages", [])[:-1], k=8)

@@ -105,9 +105,36 @@ def list_prompts() -> list:
     return out
 
 
-def load_prompt(task: str = "standard", *, include_yoosun_exemplars: bool = False) -> str:
-    """task에 맞는 system prompt 합성. 항상 medical_core + safety_constraints 포함."""
-    names = _TASK_COMPOSITION.get(task, _TASK_COMPOSITION["standard"])
+def load_prompt(task: str = "standard", *,
+                  include_yoosun_exemplars: bool = False,
+                  owner_email: str | None = None) -> str:
+    """task에 맞는 system prompt 합성. 항상 medical_core + safety_constraints 포함.
+
+    FIX-1 (REVIEW_FIX_SPEC, 2026-06-13): owner_email 인자 추가.
+    paper_write 계열 + owner_email 있으면 StyleProfiler.load(owner_email)로 본인 문체 프로파일을 조회.
+    - 프로파일 있음 → 정량 지표 inject + yoosun_style 미주입 (페이지 단위 격리)
+    - 프로파일 없음 → 기존 yoosun_style + raw_examples 폴백 (하위호환)
+
+    yoosun_style.md는 삭제하지 않고 "기본 폴백 시드"로 유지.
+    """
+    is_paper = task in ("paper_write", "paper_writing", "paper_polish")
+
+    # FIX-1: per-user StyleProfile 우선 — 있으면 yoosun_style 제외
+    user_style_block = None
+    if is_paper and owner_email:
+        try:
+            from src.ingestion.style_profiler import StyleProfiler
+            profile = StyleProfiler.load(owner_email)
+            if profile and profile.sample_size_sentences > 0:
+                user_style_block = StyleProfiler.to_prompt_block(profile)
+        except Exception as e:
+            _log.debug("style_profiler.load fail: %s", e)
+
+    names = list(_TASK_COMPOSITION.get(task, _TASK_COMPOSITION["standard"]))
+    if user_style_block:
+        # 본인 프로파일 활성 — yoosun_style 미주입
+        names = [n for n in names if n != "yoosun_style"]
+
     parts = []
     versions = []
     for n in names:
@@ -116,8 +143,13 @@ def load_prompt(task: str = "standard", *, include_yoosun_exemplars: bool = Fals
             parts.append(f"# === {fm.get('name', n)} v{fm.get('version', '?')} ===\n\n{body}")
             versions.append(f"{n}@{fm.get('version', '?')}")
 
-    # paper_write 시 yoosun_cho.json의 raw_examples 첨부
-    if include_yoosun_exemplars or "yoosun_style" in names:
+    # 본인 문체 프로파일 우선 — yoosun raw_examples 폴백 차단
+    if user_style_block:
+        parts.append(f"# === USER STYLE PROFILE (per-user, replaces yoosun seed) ===\n"
+                     + user_style_block)
+        versions.append(f"user_style_profile@{owner_email[:10] if owner_email else '?'}")
+    elif include_yoosun_exemplars or "yoosun_style" in names:
+        # 폴백: yoosun_cho.json raw_examples 첨부 (기존 동작 유지)
         try:
             prof_path = Path(os.environ.get("AGENT_SELF_DIR", "data/author_profiles")) / ".."
             prof_path = (prof_path / "author_profiles" / "yoosun_cho.json").resolve()
@@ -127,8 +159,9 @@ def load_prompt(task: str = "standard", *, include_yoosun_exemplars: bool = Fals
                 prof = json.loads(prof_path.read_text(encoding="utf-8"))
                 exemplars = prof.get("raw_examples", [])[:3]
                 if exemplars:
-                    parts.append("# === Author's actual writing (few-shot exemplars) ===\n\n"
+                    parts.append("# === Author's actual writing (yoosun fallback exemplars) ===\n\n"
                                  + "\n\n---\n\n".join(e[:1200] for e in exemplars))
+                    versions.append("yoosun_fallback_exemplars")
         except Exception as e:
             _log.debug("yoosun raw_examples 첨부 실패: %s", e)
 
@@ -138,9 +171,10 @@ def load_prompt(task: str = "standard", *, include_yoosun_exemplars: bool = Fals
     return composed
 
 
-def load_yoosun_with_exemplars() -> str:
-    """paper_write 단축 — 항상 exemplars 포함."""
-    return load_prompt("paper_write", include_yoosun_exemplars=True)
+def load_yoosun_with_exemplars(owner_email: str | None = None) -> str:
+    """paper_write 단축 — 항상 exemplars 포함. owner_email 있으면 per-user 우선."""
+    return load_prompt("paper_write", include_yoosun_exemplars=True,
+                         owner_email=owner_email)
 
 
 # NOTE: 과거에 있었던 compose_runtime_system_prompt()는 제거됨 (2026-05-27).
