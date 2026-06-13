@@ -145,6 +145,65 @@ class PeerReviewer:
     # Public API
     # ------------------------------------------------------------------
 
+    def revise_with_critique(
+        self,
+        paper_text: str,
+        topic: str,
+        dataset: str = "KYRBS/KNHANES",
+        stat_result: dict | None = None,
+        max_iterations: int = 2,
+        target_pct: float = 80.0,
+    ) -> tuple[str, list[ReviewResult]]:
+        """FIX-8 (REVIEW_FIX_SPEC, 2026-06-13) — generate → critique → revise 반복 루프.
+
+        peer_reviewer를 원샷 채점에서 반복 개선 루프로 승격. 약한 모델에서 깊이를
+        만드는 최대 배율. 매 iteration:
+          1. review → ReviewResult (점수 + major_concerns)
+          2. score ≥ target_pct이면 종료 (조기 종료)
+          3. critique를 system prompt로 LLM이 paper_text를 revise
+          4. 다음 iteration으로 (max_iterations까지)
+
+        Args:
+            paper_text: 초기 draft
+            target_pct: 이 점수 넘으면 더 안 돌림 (기본 80%)
+            max_iterations: 최대 반복 (기본 2)
+
+        Returns:
+            (final_text, [ReviewResult per iteration])
+        """
+        history: list[ReviewResult] = []
+        current = paper_text
+        for it in range(max_iterations):
+            r = self.review(current, topic, dataset, stat_result,
+                              suggest_revision=False)
+            history.append(r)
+            if r.error:
+                break
+            if r.pct >= target_pct:
+                break
+            # major_concerns 기반 revise
+            critique = (
+                "Revise the manuscript addressing these reviewer concerns. "
+                "Preserve all numbers/citations/statistics exactly:\n\n"
+                "MAJOR CONCERNS:\n- " + "\n- ".join((r.major_concerns or [])[:6]) +
+                "\n\nMINOR CONCERNS:\n- " + "\n- ".join((r.minor_concerns or [])[:4]) +
+                "\n\nSUGGESTED ANALYSES:\n- " + "\n- ".join((r.suggested_analyses or [])[:4])
+            )
+            try:
+                revised = self._client.generate(
+                    f"Topic: {topic}\nDataset: {dataset}\n\n"
+                    f"=== CURRENT DRAFT ===\n{current[:8000]}\n\n=== REVISION INSTRUCTIONS ===\n{critique}",
+                    system_prompt=(
+                        "You are a medical manuscript editor. Apply reviewer feedback while "
+                        "preserving every statistic, citation marker, and reference. Return "
+                        "the full revised manuscript text only."),
+                    max_tokens=4500) or current
+                current = revised
+            except Exception as e:
+                history[-1].error = f"revise step fail: {e}"
+                break
+        return current, history
+
     def review(
         self,
         paper_text: str,
