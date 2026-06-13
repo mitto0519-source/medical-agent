@@ -252,7 +252,7 @@ def summarize_session() -> str:
 
 # FIX-7 (REVIEW_FIX_SPEC, 2026-06-13): rolling summary — 세션 누적 요약을 LLM이 매 N턴
 # 갱신해 build_system_with_preview가 매 호출마다 짧은 high-density summary를 inject.
-_ROLLING_SUMMARY_PATH = _DIR / "rolling_summary.json"
+_ROLLING_SUMMARY_PATH = _FILE.parent / "rolling_summary.json"
 _ROLLING_UPDATE_EVERY = 4   # 매 4 turn마다 갱신
 
 
