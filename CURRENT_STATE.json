@@ -59,7 +59,15 @@
     "data/chromadb": "262 MB (papers=20894 chunks)",
     "data/medical_knowledge_seed": "6 MB (typology + humanize + vocabulary catalogs)",
     "data/knowledge_graph": "13 MB (10005 nodes NetworkX)",
-    "data/runtime": "14 MB (events + tasks + budget)"
+    "data/runtime": "14 MB (events + tasks + budget)",
+    "oa_papers_full_text": 12625,
+    "oa_papers_full_text_above_5kb": 12294,
+    "oa_papers_meta_stubs": 12625,
+    "chromadb_embeddings": 27671,
+    "chromadb_queue_pending": 893,
+    "knowledge_graph_nodes": 10134,
+    "knowledge_graph_edges": 54131,
+    "medical_ontology_concepts": 27
   },
   "known_seed_bias": "OA papers fetched from Europe PMC OA Subset → over-represented: public health, environmental health, nutrition, epidemiology. Under-represented: pharmacology, clinical guidelines, surgical outcomes, oncology RCT. When user requests clinical topic, supplement reasoning beyond seed retrieval.",
   "single_entry_points": {
@@ -84,5 +92,179 @@
     "Do not assume data files exist locally. Bootstrap from HF Datasets if missing.",
     "Do not test only on local docker. Verify on external URL before claiming done."
   ],
-  "deployment_target": "external URL (HF Spaces / Cloud Run / hosted), with HF Datasets as persistent data store. Local Docker is dev only."
+  "deployment_target": "external URL (HF Spaces / Cloud Run / hosted), with HF Datasets as persistent data store. Local Docker is dev only.",
+  "verified_counts": {
+    "measured_at": "2026-06-13 21:13:16",
+    "papers": {
+      "meta_json_files": 12625,
+      "full_text_files": 12625,
+      "full_text_above_5kb": 12294,
+      "full_text_completion_pct": 97.4,
+      "comment": "1 paper = 1 .meta.json + 1 .txt pair. ~3% of .txt are stubs <5KB."
+    },
+    "chromadb": {
+      "embeddings": 27671,
+      "queue_pending": 893,
+      "embedding_metadata_rows": 314673
+    },
+    "knowledge_graph": {
+      "file": "data/knowledge_graph/graph.json",
+      "nodes_total": 10134,
+      "node_types": {
+        "paper": 10105,
+        "concept": 27,
+        "dataset": 2
+      },
+      "edges_total": 54131,
+      "edge_relations": {
+        "HAS_CONCEPT": 51652,
+        "USES_DATASET": 1991,
+        "RELATED_TO": 108,
+        "null": 380
+      }
+    },
+    "ontology": {
+      "concept_count": 27,
+      "sample": [
+        {
+          "domain_id": "D_population",
+          "concept_id": "C_adolescent",
+          "label": "Adolescent (청소년)",
+          "domain_label": "Population",
+          "keywords": [
+            "adolescent",
+            "youth",
+            "teenager",
+            "student",
+            "청소년",
+            "학생",
+            "중고생"
+          ],
+          "mesh": "D000293"
+        },
+        {
+          "domain_id": "D_population",
+          "concept_id": "C_child",
+          "label": "Child (아동)",
+          "domain_label": "Population",
+          "keywords": [
+            "child",
+            "children",
+            "pediatric",
+            "아동",
+            "소아"
+          ],
+          "mesh": "D002648"
+        },
+        {
+          "domain_id": "D_population",
+          "concept_id": "C_adult",
+          "label": "Adult (성인)",
+          "domain_label": "Population",
+          "keywords": [
+            "adult",
+            "working-age",
+            "성인",
+            "직장인"
+          ],
+          "mesh": "D000328"
+        },
+        {
+          "domain_id": "D_population",
+          "concept_id": "C_elderly",
+          "label": "Elderly (노인)",
+          "domain_label": "Population",
+          "keywords": [
+            "elderly",
+            "older adult",
+            "senior",
+            "aged",
+            "노인",
+            "고령"
+          ],
+          "mesh": "D000368"
+        },
+        {
+          "domain_id": "D_population",
+          "concept_id": "C_korean",
+          "label": "Korean population",
+          "domain_label": "Population",
+          "keywords": [
+            "Korean",
+            "Korea",
+            "한국",
+            "KYRBS",
+            "KNHANES"
+          ],
+          "mesh": null
+        },
+        {
+          "domain_id": "D_behavior",
+          "concept_id": "C_sleep",
+          "label": "Sleep (수면)",
+          "domain_label": "Health Behavior",
+          "keywords": [
+            "sleep",
+            "insomnia",
+            "sleep duration",
+            "sleep quality",
+            "sleep deprivation",
+            "circadian",
+            "수면",
+            "불면",
+            "수면시간"
+          ],
+          "mesh": "D012895"
+        },
+        {
+          "domain_id": "D_behavior",
+          "concept_id": "C_physical_activity",
+          "label": "Physical Activity (신체활동)",
+          "domain_label": "Health Behavior",
+          "keywords": [
+            "physical activity",
+            "exercise",
+            "sedentary",
+            "screen time",
+            "신체활동",
+            "운동",
+            "좌식",
+            "스크린타임"
+          ],
+          "mesh": "D015444"
+        },
+        {
+          "domain_id": "D_behavior",
+          "concept_id": "C_diet",
+          "label": "Diet / Nutrition (식이)",
+          "domain_label": "Health Behavior",
+          "keywords": [
+            "diet",
+            "nutrition",
+            "eating",
+            "dietary",
+            "food intake",
+            "식이",
+            "영양",
+            "식사",
+            "식습관",
+            "mukbang",
+            "먹방"
+          ],
+          "mesh": "D004435"
+        }
+      ]
+    },
+    "yoosun_seed": {
+      "analyzed_papers": 0,
+      "raw_examples": 10,
+      "system_prompt_chars": 6170
+    },
+    "style_profiles": {
+      "per_user_profiles": 1
+    },
+    "supabase": {
+      "cloud_available": false
+    }
+  }
 }

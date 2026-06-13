@@ -25,10 +25,32 @@ def count_files_in(path):
     return len([f for f in files if f.is_file()])
 
 print(f"\n[2] 데이터 자산")
-print(f"  OA Papers: {count_files_in(data_dir / 'oa_papers')} files")
-print(f"  Knowledge Graph: {count_files_in(data_dir / 'knowledge_graph')} files")
-print(f"  Library/Components: {count_files_in(data_dir / 'library')} files")
-print(f"  Author Profiles: {count_files_in(data_dir / 'author_profiles')} files")
+# FIX-0 (REVIEW_FIX_SPEC): reconcile_state.measure_truth 재사용 (중복 카운터 X, 규칙10)
+try:
+    from scripts.reconcile_state import measure_truth
+    _truth = measure_truth()
+    _p = _truth.get("papers", {})
+    _ch = _truth.get("chromadb", {})
+    _kg = _truth.get("knowledge_graph", {})
+    print(f"  OA Papers: full-text {_p.get('full_text_files')}, "
+          f">5KB {_p.get('full_text_above_5kb')} "
+          f"({_p.get('full_text_completion_pct')}%), "
+          f"meta_json {_p.get('meta_json_files')}")
+    print(f"  ChromaDB: embeddings {_ch.get('embeddings')}, "
+          f"queue {_ch.get('queue_pending')}")
+    print(f"  Knowledge Graph: {_kg.get('nodes_total')} nodes / "
+          f"{_kg.get('edges_total')} edges  "
+          f"(types: {_kg.get('node_types', {})})")
+    print(f"  Author Profiles: {count_files_in(data_dir / 'author_profiles')} files")
+    print(f"  Style Profiles (per-user): "
+          f"{_truth.get('style_profiles', {}).get('per_user_profiles', 0)}")
+    print(f"  Ontology Concepts: {_truth.get('ontology', {}).get('concept_count')}")
+except Exception as _e:
+    # fallback: 양식 count
+    print(f"  OA Papers: {count_files_in(data_dir / 'oa_papers')} files (reconcile 양식 양식: {_e})")
+    print(f"  Knowledge Graph: {count_files_in(data_dir / 'knowledge_graph')} files")
+    print(f"  Library/Components: {count_files_in(data_dir / 'library')} files")
+    print(f"  Author Profiles: {count_files_in(data_dir / 'author_profiles')} files")
 
 # 3. Documentation
 docs_count = count_files_in(Path('docs'))
