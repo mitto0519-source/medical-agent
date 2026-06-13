@@ -1098,8 +1098,9 @@ def _run_agentic_step(prompt: str, project: dict, pid: str, mode: str):
         system = build_system_with_preview(
             base_system + f"\n\nMode: {mode}.", project, user_msg=prompt)
 
-        cc = ClaudeClient(task="paper_writing")
-        # ★ 직전 대화를 user_message에 묶어 주입 — ClaudeClient single-turn 한계 우회
+        # RULE-12: get_llm_client(failover+persona) 경유 — 이전 ClaudeClient 직접 생성 폐기
+        from src.llm import get_llm_client
+        cc = get_llm_client(task="paper_writing")
         prior_ctx = _build_prior_context(messages[:-1], k=8)  # 방금 추가된 user 메시지 제외
         user_msg = (prior_ctx + "\n\n# CURRENT REQUEST\n" + prompt) if prior_ctx else prompt
 
@@ -1204,10 +1205,11 @@ def _delegate_to_writer(prompt: str, project: dict, mode: str,
         prior_ctx = _build_prior_context(project.get("messages", [])[:-1], k=8)
         user_msg = (prior_ctx + "\n\n# CURRENT REQUEST\n" + prompt) if prior_ctx else prompt
 
-        # ── Streaming (2026-05-30) — Anthropic이면 token streaming, 그 외는 일반 호출 ──
+        # ── Streaming (2026-05-30) — RULE-12: get_llm_client(failover+persona) ──
         if stream_to is not None:
             try:
-                client = ClaudeClient(task="paper_writing")
+                from src.llm import get_llm_client
+                client = get_llm_client(task="paper_writing")
                 buf = []
                 for chunk in client.generate_streamed(
                         user_msg, system_prompt=sys_prompt, max_tokens=2000):

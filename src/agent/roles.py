@@ -169,7 +169,9 @@ def dispatch_role(role_name: str, inputs: Dict[str, Any]) -> Dict[str, Any]:
                 lambda: proj_state, lambda p: proj_state.update(p),
                 lambda t, p: chat_events.append({"type": t, **p}))
 
-            cc = ClaudeClient(task=role.fallback_llm_task)
+            # RULE-12: 직접 ClaudeClient X — get_llm_client(failover+persona)
+            from src.llm import get_llm_client
+            cc = get_llm_client(task=role.fallback_llm_task)
             result = cc.generate_with_tools(
                 user_message=user_msg, tools=schemas,
                 tool_handler=handler, system_prompt=role.system_prompt,

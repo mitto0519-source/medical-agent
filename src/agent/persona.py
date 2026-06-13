@@ -403,15 +403,50 @@ Return JSON:
 
 
 _singleton: Optional[PersonaManager] = None
+_per_user_personas: Dict[str, PersonaManager] = {}
 
 
-def get_persona() -> PersonaManager:
+def get_persona(owner_email: Optional[str] = None) -> PersonaManager:
+    """전역 또는 per-user 페르소나 manager 반환.
+
+    owner_email 없으면 기존 전역 (super_admin) 페르소나.
+    있으면 per-user persona_{hash}.json 파일을 로드 (없으면 전역 fallback).
+    """
     global _singleton
+    if owner_email:
+        from hashlib import sha256
+        h = sha256(owner_email.strip().lower().encode("utf-8")).hexdigest()[:16]
+        if h in _per_user_personas:
+            return _per_user_personas[h]
+        from pathlib import Path
+        per_path = Path(f"data/agent_self/persona_{h}.json")
+        if per_path.exists():
+            try:
+                pm = PersonaManager(persona_path=str(per_path))
+                _per_user_personas[h] = pm
+                return pm
+            except Exception:
+                pass
+        # fallback: 전역 페르소나 (yoosun 시드)
     if _singleton is None:
         _singleton = PersonaManager()
     return _singleton
 
 
-def get_system_prompt(task: str = "general") -> str:
-    """편의 함수: 현재 페르소나 기반 시스템 프롬프트 반환."""
-    return get_persona().build_system_prompt(task=task)
+def get_system_prompt(task: str = "general", owner_email: Optional[str] = None) -> str:
+    """편의 함수: per-user 페르소나 + StyleProfile 합성 시스템 프롬프트.
+
+    1. PersonaManager(per-user 또는 전역) base prompt
+    2. StyleProfiler.load(owner_email) → 본인 문체 프로파일 inject (있으면)
+    """
+    base = get_persona(owner_email=owner_email).build_system_prompt(task=task)
+    if owner_email:
+        try:
+            from src.ingestion.style_profiler import StyleProfiler
+            profile = StyleProfiler.load(owner_email)
+            block = StyleProfiler.to_prompt_block(profile) if profile else ""
+            if block:
+                base = base + block
+        except Exception:
+            pass
+    return base

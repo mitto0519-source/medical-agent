@@ -964,13 +964,18 @@ def llm_with_tools(message: str, tool_names_csv: str = "search_papers,check_nove
                 "description": getattr(t, "description", n),
                 "input_schema": getattr(t, "input_schema", {"type": "object", "properties": {}}),
             })
-        client = get_llm_client(task="standard")
-        # ClaudeClient 우회 (failover wrapper) — 직접 anthropic이 필요
+        # RULE-12: get_llm_client 경유. tool-use는 ClaudeClient 전용이므로 failover wrapper의
+        # _active(또는 직접) ClaudeClient만 사용. anthropic 죽으면 명시적 fail.
+        client = get_llm_client(task="standard", provider="anthropic")
+        active = getattr(client, "_active", client)
         from src.llm.claude_client import ClaudeClient
-        cc = client if isinstance(client, ClaudeClient) else ClaudeClient(task="standard")
-        result = cc.generate_with_tools(message, tools=tools_spec,
-                                          tool_handler=lambda n, i: str(run_tool(n, i)),
-                                          max_iters=max_iters)
+        if not isinstance(active, ClaudeClient):
+            _log.warning("mcp tool-use: anthropic 필요한데 active=%s — 호출 skip",
+                          type(active).__name__)
+            return {"error": "tool_use requires anthropic; provider unavailable"}
+        result = active.generate_with_tools(message, tools=tools_spec,
+                                              tool_handler=lambda n, i: str(run_tool(n, i)),
+                                              max_iters=max_iters)
         return result
     except Exception as e:
         return {"error": str(e)[:300]}

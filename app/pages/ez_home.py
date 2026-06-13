@@ -224,6 +224,12 @@ def _sidebar():
         st.session_state["sg_initial_prompt"] = None
         st.rerun()
 
+    # ★ 내 논문 업로드 (StyleProfiler) — "AI같지 않게" 핵심 엔진
+    _owner = (st.session_state.get("user") or {}).get("email") or \
+              st.session_state.get("user_email", "") or ""
+    if _owner:
+        _render_my_papers_uploader(_owner)
+
     st.sidebar.markdown("<div style='margin:24px 0 6px 0;color:#94A3B8;"
                          "font-size:0.72rem;letter-spacing:0.08em;'>RECENT</div>",
                          unsafe_allow_html=True)
@@ -735,10 +741,17 @@ def _rag_retrieve(query: str, top_k: int = 5) -> str:
 
 
 def _build_full_system(project: dict, user_msg: str) -> str:
-    """단일 코어 system prompt 합성 (CLAUDE.md 규칙 12) + RAG retrieve."""
+    """단일 코어 system prompt 합성 (CLAUDE.md 규칙 12) + RAG retrieve + per-user style.
+
+    2026-06-13: owner_email 양식 양식 양식 양식 — yoosun 단일 시드 양식 양식 양식 양식
+    사용자 본인 문체 프로파일 (StyleProfiler)이 있으면 system prompt에 자동 inject.
+    """
+    import streamlit as _st
+    owner_email = (_st.session_state.get("user") or {}).get("email") or \
+                   _st.session_state.get("user_email", "") or ""
     try:
         from src.agent.persona import get_system_prompt
-        base_sys = get_system_prompt(task="paper_writing")
+        base_sys = get_system_prompt(task="paper_writing", owner_email=owner_email or None)
     except Exception:
         base_sys = "당신은 의학 연구 코파일럿입니다."
     try:
@@ -842,6 +855,50 @@ def _render_msg(role: str, content: str):
     safe = (content or "").replace("<", "&lt;").replace(">", "&gt;")
     cls = "msg-user" if role == "user" else "msg-asst"
     st.markdown(f"<div class='{cls}'>{safe}</div>", unsafe_allow_html=True)
+
+
+def _render_my_papers_uploader(owner_email: str) -> None:
+    """사이드바: 사용자 본인 논문 업로드 → StyleProfiler 자동 실행."""
+    import streamlit as _st
+    from pathlib import Path
+    if not owner_email:
+        return
+    with _st.sidebar.expander("📚 내 논문 업로드 (문체 그라운딩)", expanded=False):
+        try:
+            from src.ingestion.style_profiler import StyleProfiler, extract_and_save_for_user
+            existing = StyleProfiler.load(owner_email)
+            if existing and existing.sample_size_sentences > 0:
+                _st.caption(
+                    f"✅ 프로파일 활성 — {existing.sample_size_papers}편 / "
+                    f"avg sent {existing.avg_sent_len}w, hedge {existing.hedge_ratio*100:.1f}%")
+                if _st.button("프로파일 재추출", key="restyle_reextract"):
+                    _st.session_state["_style_force_reextract"] = True
+            else:
+                _st.caption("아직 업로드된 논문이 없습니다. .docx/.pdf/.txt 1편 이상 올리면 본인 문체로 글이 나옵니다.")
+
+            files = _st.file_uploader(
+                "본인 논문 업로드",
+                type=["docx", "pdf", "txt"],
+                accept_multiple_files=True,
+                key="my_paper_upload",
+                label_visibility="collapsed",
+            )
+            if files:
+                upload_dir = Path("data/uploads/style_corpus") / owner_email.replace("@", "_at_")
+                upload_dir.mkdir(parents=True, exist_ok=True)
+                saved_paths = []
+                for f in files:
+                    target = upload_dir / f.name
+                    target.write_bytes(f.getbuffer())
+                    saved_paths.append(str(target))
+                with _st.spinner("문체 추출 중…"):
+                    profile = extract_and_save_for_user(saved_paths, owner_email=owner_email)
+                _st.success(
+                    f"✅ 추출 완료 — {profile.sample_size_papers}편 / {profile.sample_size_sentences} 문장 / "
+                    f"avg sent {profile.avg_sent_len}w / hedge {profile.hedge_ratio*100:.1f}% / "
+                    f"top vocab: {', '.join(profile.vocab_top10[:5]) or '(generic)'}")
+        except Exception as _e:
+            _st.caption(f"style_profiler unavailable: {_e}")
 
 
 def _render_chat_page(pid: str):

@@ -70,12 +70,9 @@ class RAGPipeline:
         if llm_client is not None:
             self._llm = llm_client
         else:
-            try:
-                from src.llm import get_llm_client
-                self._llm = get_llm_client(api_key=api_key, task="standard")
-            except Exception:
-                # 폴백: 팩토리 실패 시 직접 ClaudeClient (가시성 위해 raise 허용)
-                self._llm = ClaudeClient(api_key=api_key)
+            # RULE-12: get_llm_client만 사용 (failover+persona 자동). 폴백 직접 생성 X.
+            from src.llm import get_llm_client
+            self._llm = get_llm_client(api_key=api_key, task="standard")
 
     @property
     def _store(self):

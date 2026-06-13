@@ -9,13 +9,14 @@ import uuid
 from pathlib import Path
 
 import streamlit as st
-from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 os.chdir(str(Path(__file__).parent.parent.parent))
 os.environ['HF_HUB_DISABLE_SYMLINKS_WARNING'] = '1'
 
-load_dotenv()
+# RULE: 단일 .env 로드 (src.config.env.bootstrap)
+from src.config.env import bootstrap
+bootstrap()
 
 from src.research.research_workflow import ResearchWorkflow, STAGES, STAGE_LABELS
 

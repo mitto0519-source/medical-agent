@@ -1,9 +1,10 @@
 """Application configuration"""
 
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
+# RULE: 단일 .env 로드 — src.config.env.bootstrap()가 entry point에서 처리.
+# 여기서 직접 load_dotenv() 호출 제거 (override 충돌 + RULE-5 위반).
+from src.config.env import bootstrap
+bootstrap()
 
 class Config:
     """Base configuration"""

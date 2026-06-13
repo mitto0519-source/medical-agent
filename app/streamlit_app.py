@@ -14,11 +14,13 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ['HF_HUB_DISABLE_SYMLINKS_WARNING'] = '1'
 os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] = 'python'
 
-from dotenv import load_dotenv
 from pathlib import Path as _Path
-# Explicit path — works regardless of Streamlit's working directory
+# RULE: 단일 .env 로드 — bootstrap()가 explicit path 처리 + override 일관성 보장
 _root = _Path(__file__).parent.parent
-load_dotenv(dotenv_path=_root / ".env", override=True)
+import sys as _sys
+_sys.path.insert(0, str(_root))
+from src.config.env import bootstrap
+bootstrap()
 
 import streamlit as st
 import json
