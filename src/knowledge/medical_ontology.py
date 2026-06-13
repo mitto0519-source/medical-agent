@@ -15,6 +15,10 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Set
 
+from src.config.logging_config import get_logger
+
+_log = get_logger(__name__)
+
 # ── 온톨로지 정의 ─────────────────────────────────────────────────────────────
 
 ONTOLOGY: Dict[str, Dict] = {
