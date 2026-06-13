@@ -94,7 +94,7 @@
   ],
   "deployment_target": "external URL (HF Spaces / Cloud Run / hosted), with HF Datasets as persistent data store. Local Docker is dev only.",
   "verified_counts": {
-    "measured_at": "2026-06-13 23:36:55",
+    "measured_at": "2026-06-13 23:49:09",
     "papers": {
       "meta_json_files": 12625,
       "full_text_files": 12625,
