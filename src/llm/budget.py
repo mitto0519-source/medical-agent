@@ -35,7 +35,8 @@ _LOCK = threading.Lock()
 
 # 모델별 1M 토큰당 USD (input, output) — 보수적 추정. 환경변수로 재정의 가능.
 _DEFAULT_PRICES: dict[str, tuple[float, float]] = {
-    # Anthropic Claude
+    # Anthropic Claude (최신 우선)
+    "claude-opus-4-8": (15.0, 75.0),
     "claude-opus-4-7": (15.0, 75.0),
     "claude-opus-4-6": (15.0, 75.0),
     "claude-sonnet-4-6": (3.0, 15.0),
