@@ -213,10 +213,103 @@ python -c "import json;g=json.load(open('data/knowledge_graph/graph.json'));prin
 
 ---
 
+---
+
+# 깊이 보강 FIX-6~8 — "초고급 논문 에이전트" 체감을 만드는 3층
+
+> 전제: 골격(멀티롤 DAG planner/researcher/writer/stylist/critic/statistician/citation_auditor)은 이미 있음.
+> 약점은 구조가 아니라 **검색·기억·비평의 깊이**. 무료 LLM 제품이 똑똑해 보이는 비결 = 컨텍스트 엔지니어링.
+> **셋 다 "신규 생성"이 아니라 "기존 부품 확장"이다. 새 모듈을 만들면 그 자체가 규칙10 위반(중복).**
+
+## ⚠ 중복·충돌 방지 매트릭스 (착수 전 필독)
+
+| 신규 FIX | 건드리는 파일 | 이미 있는 부품(중복 주의) | 다른 FIX와 충돌/순서 |
+|---|---|---|---|
+| FIX-6 검색깊이 | `src/rag/pipeline.py`, `src/config/models.py`, `src/vectordb/store.py` | `semantic_search.py`=키워드 overlap(메모리용, **RAG와 별개**, 병합 금지) | **임베딩 교체는 FIX-3보다 먼저.** 안 그러면 12.6k를 MiniLM으로 넣고 또 재임베딩=2회 인제스트 |
+| FIX-7 기억증류 | `src/memory/conversation_memory.py` | `summarize_session()`(주제나열만, **업그레이드 대상**), `record()[:200/:400]` | **같은 파일을 FIX-1(owner_email)·FIX-5(영속)도 수정** → 한 사람이 순서대로, 동시 금지 |
+| FIX-8 비평루프 | `app/agentic_loop.py`, `src/research/peer_reviewer.py` | `peer_reviewer`=100점 루브릭+`revised_abstract` **이미 존재**(새 리뷰어 금지, 루프로 감싸기) | writing 파이프라인·`ResearchPipeline` continuity 로깅(self_model 권고)과 겹침 |
+
+---
+
+## FIX-6 — 검색 깊이 (rerank + query rewrite + 도메인 임베딩) ★1순위
+
+**문제**: `src/rag/pipeline.py`에 rerank·query rewrite·hybrid·MMR **전무**(grep 0건). 단순 벡터 top-k + 임베딩 `all-MiniLM-L6-v2`(384d, 범용). self_model 약점 avg_dist=0.515의 직접 원인. 연구 에이전트에서 검색품질=지능.
+
+**변경 (4개, 기존 경로 위에 얹기 — 새 검색기 만들지 말 것)**:
+1. **Query rewrite/HyDE**: `pipeline.py` 검색 진입에서 질의→가상답변문 생성(get_llm_client, task="qa") 후 그 텍스트로 임베딩 검색. 옵션 플래그로 on/off.
+2. **Cross-encoder rerank**: top-30 회수→재정렬→top-5. 신규 의존 1개(sentence-transformers cross-encoder). `pipeline.py` 검색 결과 후처리 단계로만 삽입(저장 경로 무변경).
+3. **MMR + 메타데이터 필터**: ChromaDB `where`로 연도/디자인 필터, 결과 다양화. `vectordb/store.py:add_chunks` 메타에 그 필드가 있는지 먼저 확인(없으면 FIX-3 인제스트 때 메타 추가).
+4. **임베딩 교체**: `src/config/models.py:get_embedding_model()`(중앙) 한 곳만 바꾸면 `store.py:45`·`supabase_store.py:24` 동시 반영. 의학 임베더(예: PubMedBERT/MedCPT 계열 또는 bge-large)로.
+
+**다운스트림 연계 (★여기가 사고 지점)**:
+- **임베딩을 바꾸면 차원이 바뀐다(384→768 등)** → `get_embedding_dim()` 갱신 + **기존 27,671 청크 전부 무효 → 전 재임베딩 필수** → **반드시 FIX-3(대량 인제스트)보다 먼저 임베딩을 확정**한다. 순서 어기면 12.6k를 두 번 인제스트.
+- Supabase 사용 시 pgvector 컬럼 차원도 동일 변경 → **FIX-5 마이그레이션과 묶기**.
+- rerank/rewrite는 **질의시점**이라 인제스트와 독립 → 임베딩 교체 없이 먼저 넣어도 안전(저위험 우선).
+
+**검증**:
+```bash
+# rerank 전후 동일 쿼리 관련성 비교(있으면 scripts/diagnose_novelty.py 류로 avg_dist)
+python -c "from src.rag.pipeline import <검색함수>; print([h['distance'] for h in <검색함수>('zero-calorie beverage depression adolescent', k=5)])"
+python scripts/test_rag_smoke.py   # 12/12
+```
+**판정**: rerank 적용 후 top-5 평균 distance가 의미 있게 하락하면 PASS.
+**롤백**: `pipeline.py`/`models.py` `git checkout`. 임베딩 되돌리면 재임베딩 필요 → `data/chromadb.bak` 복원.
+
+---
+
+## FIX-7 — 기억 증류 (절단→reflection + rolling summary) ★2순위
+
+**문제**: `conversation_memory.record()`가 `user_summary[:200]`/`agent_summary[:400]`로 **문자열 절단**(86-87행). `summarize_session()`(182행)은 **주제 나열만**(진짜 요약 아님). 흐름·연속성·깊이가 여기서 끊긴다.
+
+**변경 (기존 함수 업그레이드 — 새 모듈 금지)**:
+1. `record()`에 **reflection 필드** 추가: 교환 후 LLM(get_llm_client, task="standard")이 "확정 사실 / 열린 질문 / 사용자 선호"를 구조화 추출해 entry에 저장. 절단 문자열은 보조로만.
+2. `summarize_session()`을 **rolling summary**로 교체: 누적 요약을 LLM으로 갱신·저장하고, 매 턴 system에 재주입.
+3. `recall_relevant`은 그대로 두되(벡터), reflection 구조화 사실을 우선 노출.
+
+**다운스트림 연계**:
+- **같은 파일을 FIX-1(owner_email 인자)·FIX-5(클라우드 영속)도 수정** → **한 번에 한 FIX만**, 순서 FIX-1 → FIX-7 → FIX-5 권장(시그니처 충돌 방지).
+- rolling summary 주입 지점 = `app/agentic_loop.py:build_system_with_preview` (이미 recall 주입함, 거기에 summary 슬롯 추가). FIX-측 컨텍스트 토큰 예산(아래 백로그 4번)과 함께.
+- 추가 LLM 호출 비용↑ → reflection은 turn마다 말고 N턴/세션종료에 배치 가능.
+
+**검증**:
+```bash
+python -c "from src.memory import conversation_memory as cm; cm.record('우울 지표 KYRBS로 보자','aOR 1.04...', owner_email='mitto0519@gmail.com'); print(cm.summarize_session())"
+# summary가 주제나열이 아니라 사실/스레드 문장이면 PASS
+python scripts/test_rag_smoke.py
+```
+**롤백**: `conversation_memory.py` `git checkout`. 데이터 손실 없음(append 구조).
+
+---
+
+## FIX-8 — 비평 루프 반복화 (원샷 채점→generate·critique·revise ×N) ★3순위
+
+**문제**: `peer_reviewer.py`에 100점 루브릭·section_scores·major_concerns·`revised_abstract`가 **이미 있다**(채점기 존재). 빠진 건 **반복**: 한 번 채점하고 끝. 약한 모델에서 깊이를 만드는 최대 배율이 이 루프다.
+
+**변경 (peer_reviewer 재사용 — 새 리뷰어 만들지 말 것)**:
+1. `agentic_loop`의 `critic` 롤/writing 경로에 루프: **생성 → `peer_reviewer` 채점 → 점수<임계 또는 major_concern 있으면 → 수정 재생성 → 재채점**, 최대 2~3회.
+2. 루브릭에 논문 특화 게이트 추가: STROBE 항목(`_h_strobe` 재사용)·통계 가정 위반·**인용 실재성**·과대주장. (백로그 "검증 게이트 4종"과 동일물 → **여기로 통합, 중복 생성 금지**.)
+3. 종료조건·최대횟수·비용상한 명시(무한루프/크레딧 폭주 방지).
+
+**다운스트림 연계**:
+- `peer_reviewer`는 LLM 필요 → `get_llm_client(task="paper_review")` 경유(직접 client 금지, 규칙5). `_TASK_TIER`에 `paper_review` 없으면 `src/config/models.py`에 추가.
+- 루프가 도는 writing 경로 = `src/research/research_pipeline.py`/`agentic_loop._h_run_plan` → **self_model이 지적한 "ResearchPipeline.write_paper continuity 로깅 미연결"을 이때 함께 연결**(중복 작업 방지).
+- 백로그의 "검증 게이트 4종"은 **FIX-8에 흡수** → 백로그에서 제거.
+
+**검증**:
+```bash
+python -c "from src.research.peer_reviewer import <리뷰함수>; r=<리뷰함수>('<초안텍스트>'); print(r.pct, len(r.major_concerns))"
+# 루프 1회 후 점수 상승 + major_concern 감소 확인(실측 표)
+python scripts/test_rag_smoke.py
+```
+**판정**: revise 1회 후 total_score가 오르면 루프 작동 PASS. 안 오르면 critique→revise 프롬프트 미반영.
+**롤백**: `agentic_loop.py` `git checkout`. peer_reviewer는 원래 동작 보존(루프만 외부 추가).
+
+---
+
 ## 백로그 (별도 사이클 — 지금 건드리지 말 것)
 
 - **persona/self_model/insights/knowledge_graph per-user 분리**: 현재 전역 단일 파일. "그 사람에게 최적화"가 다중사용자로 가면 필요. 단일사용자 운영이면 보류.
-- **검증 게이트 4종**(통계가정·인용실재·신규성·과대주장)을 프리뷰 인라인 경고로 — "올바른 마찰". 토대(FIX-0~5) 후.
+- ~~검증 게이트 4종~~ → **FIX-8에 흡수됨**(중복 생성 금지). 프리뷰 인라인 경고 UI만 별도 작업으로 남김.
 - **최상위 일회성 스크립트 20개 + scripts 59개 + app/_archive 정리**: `app/main.py` Flask 레거시 제거(self_model이 이미 권고), `delete_main.py/do_commit.py/prepare_commit.py` 등 잔여물 archive 이동.
 - **app/streamlit_app.py.tmp.32032.* 7개 삭제**(동시편집 잔여물, gitignore돼 git엔 안 잡힘).
 - **규칙위반 정리**: ClaudeClient 직접호출 5곳(roles.py:172, rag/pipeline.py:78, project_workspace.py:1101/1210, mcp_server.py:970), `except: pass`(planner.py 6곳 등), load_dotenv 분산.
@@ -226,14 +319,19 @@ python -c "import json;g=json.load(open('data/knowledge_graph/graph.json'));prin
 ## 실행 순서 요약 (의존성 그래프)
 
 ```
-FIX-0 (reconcile, 독립) ──────────────┐
-FIX-5 (영속) ──┐                       │
-               ├─> FIX-2 (온톨로지) ──> FIX-3 (재인제스트, 본문) ──> FIX-0 재실행(카운트 갱신)
-FIX-4 (더미제거, 독립) ────────────────┘
-FIX-1 (문체 배선, 독립) ── 언제든
+FIX-0 (reconcile, 독립) ────────────────────────┐
+FIX-6 임베딩결정 ─★먼저★─┐                        │
+FIX-5 (영속/차원) ──┐    │                        │
+                    ├─> FIX-2(온톨로지) ─> FIX-3(재인제스트,본문+새임베딩) ─> FIX-0 재실행
+FIX-4 (더미제거, 독립) ──┘                        │
+FIX-1 (문체 배선) ─> FIX-7 (기억증류) ─> FIX-5  (※ conversation_memory.py 공유 → 순서 고정)
+FIX-6 rerank/rewrite (질의시점, 독립) ── 언제든(저위험, 먼저 넣어도 됨)
+FIX-8 (비평루프) ── writing 안정화 후
 ```
-- **먼저**: FIX-0 → FIX-1(체감 큼, 독립) → FIX-4(저위험).
-- **묶음**: FIX-5 ↔ FIX-2 ↔ FIX-3 은 함께(영속 없이 인제스트=헛수고, 온톨로지 없이 재인제스트=개념층 안 참).
+- **먼저(저위험·독립)**: FIX-0 → FIX-1 → FIX-4 → FIX-6의 rerank/rewrite 부분.
+- **임베딩 차원 결정은 FIX-3보다 반드시 앞**(안 그러면 12.6k 2회 인제스트). 차원 바뀌면 FIX-5 pgvector 마이그레이션과 묶기.
+- **conversation_memory.py 공유 3개(FIX-1·7·5)는 순서 고정, 동시 금지.**
+- **묶음**: FIX-6(임베딩) → FIX-2 → FIX-3 → FIX-5 함께.
 - 각 FIX 후 `change_log.log()` + smoke 12/12 확인.
 
 > 작성 기준 데이터는 2026-06-13 실측. 코드가 그새 바뀌었으면 FIX 착수 전 해당 파일을 다시 읽고 라인 보정할 것(규칙7).
