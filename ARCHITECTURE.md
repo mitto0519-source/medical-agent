@@ -1,386 +1,126 @@
-# Medical-Agent 아키텍처 레지스트리
+# ARCHITECTURE.md — Auto-generated
 
-> **이 파일의 목적**: 세션이 새로 열릴 때마다 "이 기능은 어디에 있는가", "이미 만든 것인가 아닌가",
-> "같은 것인가 다른 것인가"를 즉시 판단할 수 있도록 한다.
->
-> **규칙**: 새 모듈을 만들기 전에 반드시 이 파일을 확인한다.
-> 모듈을 추가/변경/삭제할 때마다 이 파일을 업데이트한다.
->
-> Last updated: 2026-05-30 (Vibe paper full overhaul — UI sapphire + auto-agentic + StatBridge binarize + PaperWriter author_profile fix + pid='new' 저장 구멍 + _orchestrated_paper_run 5섹션 보장 + References 탭 + 4포맷 Export + Supabase 프로젝트 sync + 자료 자동선택 + kyrbs_stat 캐시 + intent_sensor 무의식 임프린트 + style_polish 학술 cliché 정리 + provenance/tracing/preregistration/unified wiring)
+> Last regenerated: 2026-06-13 17:20:52
+> Source: `scripts/regenerate_architecture.py`
+> 수동 편집 금지 — 인벤토리·파일명·count는 실 파일 시스템에서 매번 다시 채움.
+> 디자인·아키텍처 결정 같은 prose는 별도 ARCHITECTURE_SHORT.md 에 작성.
 
----
+## src/ — Python modules (auto-enumerated)
 
-## 모듈 맵 (기능 → 정규 위치)
-
-### 1. 데이터 수집/로딩
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| KYRBS .sav 실제 로더 | `src/data/kyrbs_raw_loader.py` → `KYRBSLoader` | ✅ active | 2005~2025 21개 차수 지원 |
-| KNHANES .sav 실제 로더 | `src/data/kyrbs_raw_loader.py` → `KNHANESLoader` | ✅ active | 같은 파일에 동거 |
-| KYRBS 다운로드 자동화 | `scripts/download_kyrbs.py` | ✅ active | KDCA 21개 차수 + 코드북 |
-
-### 2. 통계 분석
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| **논문용 OR/CI 회귀분석** | `src/data/stat_bridge.py` → `StatBridge` | ✅ active | 로지스틱/GEE/Cox/PSM/다수준/선형/민감도. 논문 파이프라인 전용 |
-| **컬럼명 자동 매핑** | `src/data/col_name_resolver.py` → `ColNameResolver` | ✅ active | 18개 표준변수 패턴매칭 + LLM 폴백 → spec 자동 remapping |
-| **UI 대화형 통계** | `src/statistics/medical_stats.py` → `MedicalStatistics` | ✅ active | 기술통계/t검정/카이제곱/ANOVA. Streamlit UI 전용 |
-| **연구 설계 패턴 자산** | `src/library/design_template.py` → `DesignTemplate` | ✅ active | 논문 설계 패턴(모델링 전략/공변량 분류/Table·Figure 구조) 자산화. 조유선 KYRBS 단면연구 시드. build_context로 논문 작성 시 '구조 라인' 주입 |
-
-> **stat_bridge vs medical_stats 구분**:
-> - `stat_bridge` = 논문 파이프라인 (run_full → 실 데이터 → OR/CI → 논문 본문 자동 주입)
-> - `medical_stats` = Streamlit UI의 "데이터 탐색" 탭 (사용자가 직접 컬럼 선택 → 빠른 통계)
-> 둘은 다른 용도이므로 공존 정당함.
-
-### 3. 논문 생산 파이프라인
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| **원스톱 논문 파이프라인** | `src/research/research_pipeline.py` → `ResearchPipeline` | ✅ active | run_full() = 주제→신규성→통계→논문→심사 |
-| 논문 작성 (섹션별) | `src/research/paper_writer.py` → `PaperWriter` | ✅ active | pipeline이 내부적으로 호출 |
-| 단계별 UI 워크플로우 | `src/research/research_workflow.py` → `ResearchWorkflow` | ✅ active | app/pages/workflow.py 전용 상태머신 |
-| 신규성 확인 (PubMed) | `src/research/novelty_checker.py` → `NoveltyChecker` | ✅ active | pipeline이 내부적으로 호출 |
-| 동료 심사 | `src/research/peer_reviewer.py` → `PeerReviewer` | ✅ active | pipeline이 내부적으로 호출 |
-| 연구 프로젝트 관리 | `src/research/project_manager.py` → `ProjectManager` | ✅ active | data/projects/ 영속 추적, 단계별 상태+파일 경로 관리 |
-| **자율 연구 루프 (Phase A)** | `src/research/autonomous_research_loop.py` → `AutonomousResearchLoop` | ✅ active | Google Deep Research 수준. 반복 PubMed탐색+가설수정. **write_paper_with_stats(deep_research=True)로 연결** — 주제 유지(통계 일관성) + 근거만 reference_context에 보강 |
-
-> **research_pipeline vs research_workflow 구분**:
-> - `research_pipeline` = 완전 자동화 백엔드 파이프라인 (코드로 직접 실행)
-> - `research_workflow` = Streamlit pages/workflow.py의 단계별 UI 상태 관리
-> 둘은 다른 용도이므로 공존 정당함.
-
-### 4. LLM 클라이언트
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| Claude API 호출 | `src/llm/claude_client.py` → `ClaudeClient` | ✅ active | 페르소나 주입. `build_base_system()` 공유함수(전 LLM 일관 주입) |
-| OpenAI API 호출 | `src/llm/openai_client.py` → `OpenAIClient` | ✅ active | fallback용 |
-| Gemini API 호출 | `src/llm/gemini_client.py` → `GeminiClient` | ✅ active | 무료티어 폴백. ClaudeClient와 동일 generate() 시그니처 |
-| LLM 팩토리 (자동선택) | `src/llm/factory.py` → `get_llm_client()` | ✅ active | 항상 이걸 통해서 호출. 3중 연쇄폴백(Claude→OpenAI→Gemini) + 건강도 자동 우선순위 |
-| LLM 건강도 추적 | `src/llm/health.py` → `order_by_health()` | ✅ active | 작동하는 provider 자동 우선 + 품질순위. data/diagnostics/llm_health.json |
-
-### 5. 메모리 / 장기기억
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| 작업 이력 로그 | `src/memory/change_log.py` | ✅ active | 모든 유의미한 작업 후 기록 |
-| 자가 진단/점수 | `src/memory/self_model.py` | ✅ active | smoke test + git 상태 기반 |
-| 자가 학습 인사이트 | `src/memory/agent_insight.py` | ✅ active | |
-| 자가 반성/기록 | `src/memory/auto_learn.py` | ✅ active | 각 파이프라인 단계 후 자동 호출 |
-| 세션 간 대화 맥락 | `src/memory/conversation_memory.py` | ✅ active | |
-| 연속성 관리 | `src/memory/continuity.py` | ✅ active | |
-| 의미론적 기억 검색 | `src/memory/semantic_search.py` | ✅ active | insights.json + 이력 키워드 유사도 검색 → LLM 프롬프트 주입 |
-| **역량 자기평가 벤치마크 (Phase C)** | `src/diagnostics/capability_bench.py` → `CapabilityBench` | ✅ active | 논문 완성 후 7개 차원 자동 평가. 약점 → capability_insights.json 누적. **루프 닫힘**: `get_improvement_context()` → `_build_system()` 주입으로 다음 작성에 자동 반영 |
-| **실 리뷰어 피드백 저장소** | `src/memory/user_feedback_store.py` → `FeedbackStore` | ✅ active | 실제 저널 리뷰어 코멘트 누적. 키워드 오버랩 검색 → `build_context()`/`get_reviewer_patterns()`. `_build_system()` + paper_writer에 자동 주입. data/feedback/feedback_store.json |
-| 페르소나 | `src/agent/persona.py` + `data/agent_self/persona.json` | ✅ active | 절대 비활성화 금지 |
-
-### 6. RAG / 지식 베이스
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| 벡터 검색 (RAG) | `src/rag/pipeline.py` → `RAGPipeline` | ✅ active | ChromaDB 기반 |
-| 벡터 스토어 (로컬) | `src/vectordb/store.py` → `VectorStore` | ✅ active | ChromaDB wrapper |
-| 벡터 스토어 (클라우드) | `src/vectordb/supabase_store.py` → `SupabaseVectorStore` | ✅ active | Supabase pgvector |
-| PubMed 수집 + 그래프 | `src/knowledge/trend_learner.py` | ✅ active | periodic_learn.py가 호출 |
-| 지식 그래프 (의학) | `src/knowledge/medical_graph.py` | ✅ active | 10,005 노드. NetworkX. PubMed 자동수집 자가발전 |
-| 지식 그래프 (코드) | `src/knowledge/code_graph.py` → `CodeGraph` | ✅ active | 코드 구조 자산화(ast, NetworkX). 981노드. 고아/끊긴import/ARCHITECTURE대조 자가진단 → e2e_diagnose 연계. 규칙10 자동화 |
-| 의학 온톨로지 | `src/knowledge/medical_ontology.py` | ✅ active | |
-| 문서 청킹/인제스트 | `src/ingestion/document_reader.py`, `chunker.py` | ✅ active | |
-| **멀티에이전트 병렬 풀 (Phase B)** | `src/agent/agent_pool.py` → `AgentPool` | ✅ active | StatAgent/LitAgent/WritingAgent/ReviewAgent. ThreadPoolExecutor 기반. **write_paper_with_stats(parallel=True)로 연결** — _parallel_pre_collect()가 PMC다운로드(I/O)+신규성(LLM) 동시 실행 |
-| PubMed 검색 | `src/ingestion/evidence_reader.py` | ✅ active | novelty_checker가 호출 |
-| **PMC 오픈액세스 전문 다운로더** | `src/ingestion/pmc_downloader.py` → `PMCDownloader` | ✅ active | PMC 오픈액세스 논문 전문 XML 다운로드 → data/pmc_papers/ 캐시 → RAGPipeline.ingest_file() 자동 인덱싱. write_paper_with_stats() 호출 전 자동 실행. |
-| **기존 논문 파서 (개선 모드)** | `src/ingestion/paper_ingester.py` → `PaperIngester` | ✅ active | DOCX/PDF/TXT 파싱 → IMRAD 섹션 분리 → IngestedPaper. Streamlit "기존 논문 개선" 페이지에서 사용. data/drafts/uploaded/ 캐시. |
-
-### 7. 클라우드 / 인프라
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| Supabase 연결 | `src/cloud/db.py` → `cloud_available()`, `get_engine()` | ✅ active | |
-| 사용자 인증 | `src/auth/users.py` | ✅ active | `is_admin()` super_admin 2명+admin role = full access |
-| 스토리지 매니저(참고문헌 RAG) | `src/storage/manager.py` | ✅ active | NotebookLM/RAG 적재 |
-| **작성 논문 영속 저장** | `src/storage/working_paper_store.py` | ✅ active | 작업실 6섹션을 계정 귀속 저장/불러오기(data/working_papers, 로컬+클라우드 best-effort). manager.py와 별개 |
-| **State Registry (논문 JSON AST)** | `src/research/research_state.py` → `ResearchState` | ✅ active | 논문 단일 진실원본: 섹션별 content+status(empty/draft/verified/locked) + study + stat + citations. 잠긴 섹션은 자동생성이 덮어쓰기 금지(drift 차단). 작업실 🔒 토글, 저장 시 meta._status 영속 |
-| **데이터 단일 해결** | `app/streamlit_app.py` → `_ensure_raw_df()`, `_raw_data_available()` | ✅ active | 전 페이지 공유: 세션→data/raw 자동로드(_find_real_data). 업로드 강요 제거 |
-| **대화 영속 메모리(MemPalace식)** | `src/memory/conversation_memory.py` → `record()`, `recall_relevant()` | ✅ active | verbatim 저장 + ChromaDB 의미검색 회수(계정격리). 요약/최근만이 아니라 '관련 과거'를 회수 |
-| **메모리 위생 게이트** | `src/memory/memory_gate.py` → `assess()` | ✅ active | self-pollution 차단: 너무짧음/중복/환각마커=quarantine(저장거부), tier(verified/auto) 부여. agent_insight·persona가 commit 전 호출. LLM무관 |
-| **계층 RAG 청킹** | `src/ingestion/hierarchical_chunker.py` → `chunk_paper()` | ✅ active | 섹션 인식 청킹 + 메타(section/rhetorical_role/citation_density/statistical_method/evidence_level). trend_learner 인제스트가 사용. 일반 token chunk 대체 |
-| **누적 지식 위키(OpenKB식)** | `src/knowledge/research_wiki.py` → `ResearchWiki` | ✅ active | 개념 페이지 누적(생성/추가)+[[링크]]+lint. add_source/build_context/query. 작업실 글쓰기에 주입+저장시 백그라운드 흡수. data/wiki/{owner}/ |
-| 컨테이너화 | `Dockerfile`, `docker-compose.yml`, `.dockerignore` | ✅ active | code-in-image + data/ 볼륨. OneDrive 환경함정 근본차단. `docker compose up -d --build` |
-
-### 8. UI
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| 메인 Streamlit 앱 | `app/streamlit_app.py` | ✅ active | 진입점. Before/After 수정 비교 UI + 그림 갤러리 + 리뷰어 피드백 저장 + 기존 논문 개선 모드 포함 |
-| AI 패널 | `app/ai_panel.py` | ✅ active | |
-| 워크플로우 페이지 | `app/pages/workflow.py` | ✅ active | ResearchWorkflow 사용 |
-| 시각화 | `src/visualization/medical_plots.py` → `MedicalVisualizer` | ✅ active | |
-| 활동 로그 (UI용) | `src/activity/logger.py` | ✅ active | |
-
-### 9. 내보내기
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| DOCX 생성 | `src/export/word_exporter.py` | ✅ active | paper_writer가 호출 |
-| 저널 DOCX 생성 | `src/export/journal_docx_exporter.py` | ✅ active | JournalStyle 적용, EndNote XML+BibTeX 동시 생성 |
-| 저널 레지스트리 | `src/export/journal_registry.py` | ✅ active | data/journals/styles/*.json, 미등록 시 LLM 자동 생성 |
-| 참고문헌 라이브러리 | `src/export/reference_library.py` | ✅ active | PubMed API, Vancouver/APA 포맷, EndNote XML, BibTeX |
-| STATA do-file 생성 | `src/export/stata_exporter.py` | ✅ active | 연구 스펙→STATA 분석 코드(svy:logistic+Table1+subgroup+sensitivity) |
-| 그림 생성 + Forest Plot | `src/export/figure_builder.py` | ✅ active | `stat_result_to_forest_plot()` — StatBridge 결과→PNG 자동 저장. Malgun Gothic 한글 폰트 |
-| **출판용 전체 그림/표 생성** | `src/export/publication_figure_generator.py` → `PublicationFigureGenerator` | ✅ active | FigureLabs 수준. Forest/ROC/유병률/서브그룹/Table1/Table2/계수플롯 300dpi PNG+SVG |
-| 표 생성 | `src/export/table_builder.py` | ✅ active | |
-| 커버 레터 생성 | `src/export/cover_letter_writer.py` | ✅ active | 저널+주제+리뷰 결과 기반 영문 커버 레터 LLM 생성 |
-
-### 10. 검증 / 자가진단 (Eval — 다층)
-
-> Anthropic 'evals for AI agents' 방식의 다층 검증. 코드 무결성(LLM무관) + 실통계 회귀 + 실브라우저 회귀.
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| 코드 무결성 진단 | `scripts/e2e_diagnose.py` | ✅ active | import전수+심볼+self_model+code_graph (LLM무관) |
-| 통계엔진 회귀(실데이터) | `scripts/prove_stata_e2e.py` | ✅ active | 실 KYRBS→StatBridge→표/그림. ZCB aOR 재현 |
-| **UI 회귀 eval(브라우저)** | `scripts/ui_eval.py` | ✅ active | Playwright admin 로그인→페이지별 grader+워크플로 outcome(채팅→섹션, 저장→복원). 45 assertions |
-| RAG/모듈 스모크 | `scripts/test_rag_smoke.py` | ✅ active | 임포트+ChromaDB 절대기준 |
-
-### 11. 운영 런타임 (Operational Runtime) — 2026-05-25 신규
-
-> 24/7 안정 운영을 위한 인프라 레이어. SQLite + asyncio 기반 — 외부 의존(Redis/Temporal) 없음.
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| **Event Sourcing** (append-only 감사로그) | `src/runtime/events.py` | ✅ active | SQLite WAL, replay/find/span. LLM·메모리쓰기·작업전이 전부 기록. 환각 추적 핵심 |
-| **TaskRun State Machine** (durable workflow) | `src/runtime/tasks.py` | ✅ active | CREATED→RUNNING→...→COMPLETED/FAILED, idempotency_key 캐시 24h, stale recover, steps 누적 |
-| **Idempotency Cache** | `src/runtime/idempotency.py` | ✅ active | PubMed/CrossRef/LLM 같은 입력 재호출 캐시. `@idempotent(ns, key_fn)` 데코레이터 |
-| **Reasoning Budget** | `src/llm/budget.py` | ✅ active | 일/주 비용 ceiling + 80% 도달 시 google 자동 다운그레이드. events 기반 집계 |
-| **Memory Router** (typed write) | `src/memory/router.py` | ✅ active | episodic/semantic/procedural/goal 라우팅. memory_gate + scorer 통과 후 저장 |
-| **Memory Scorer** | `src/memory/scorer.py` | ✅ active | importance/novelty/recurrence/trust 산출 → gate 결정(store/review/quarantine/skip) |
-| **Memory Lifecycle** (TTL/decay/충돌) | `src/memory/lifecycle.py` | ✅ active | 일별 confidence decay, 만료 archive, 천단위콤마/소수/% 충돌 감지+supersede |
-| **Heartbeat** (정기 작업 단일 진입) | `src/runtime/heartbeat.py` | ✅ active | 부팅 catch-up + 분단위 polling. task_recover/lifecycle_tick/idempotency_gc/budget_snapshot/trend_learn 흡수 |
-| EndNote CWYW docx 빌더 | `scripts/build_endnote_docx.py` | ✅ active | EN.CITE 필드(travelling library 임베드) Word docx 생성 |
-
-> **연결 흐름**: heartbeat가 lifecycle/budget/task를 정기 실행 · 모든 LLM/메모리/도구 호출은 events로 감사 · TaskRun이 작업 중복방지+크래시 복구 · 라우터가 메모리 쓰기 단일 진입.
-
-### 12. Safety + Prompt + Eval 레이어 — 2026-05-27 신규
-
-> LLM 출력의 환각/임상의사결정/모순/품질을 자동 차단·검증·개선하는 레이어.
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| **Versioned prompts** (medical_core / safety / yoosun) | `prompts/*.md` + `src/agent/prompt_loader.py` | ✅ active | YAML frontmatter md 3종 v1.0.0. **`claude_client.build_base_system`이 매 LLM 호출에서 합성** (paper_write task에 yoosun_style.md + raw_examples 자동 첨부) |
-| **Citation grounding** (DOI/orphan/연도 검증) | `src/safety/citation_grounding.py` | ✅ active | CrossRef 24h cache, parse_references, check_year_consistency, check_rag_grounding |
-| **Truth hierarchy** (SYSTEM>VERIFIED>PROJECT>SESSION>TEMP) | `src/safety/truth_hierarchy.py` | ✅ active | `memory/router.py`가 write 시 자동 classify+injectable 부착 |
-| **Physician review queue** (임상 키워드 자동 격리) | `src/safety/physician_review.py` | ✅ active | `paper_writer._generate()` 산출물 자동 검사 + `tools/export_citations` 게이팅 |
-| **Audit trail** (events.db 기반 safety 사건) | `src/safety/audit_trail.py` | ✅ active | `memory_gate.assess` quarantine, citation_grounding orphan, physician queue, consistency_check_fail, figure_validation_fail 자동 기록 |
-| **Cross-section consistency** (n/OR-CI/P-value/연도 일관성) | `src/safety/consistency_checker.py` | ✅ active | 정규식 기반 정형 검증 — LLM이 못 잡는 모순 자동 발견. fail 시 audit |
-| **Vision figure validator** (출력 figure 재검증) | `src/safety/figure_validator.py` | ✅ active | Claude Vision으로 axis/CI bar/legend 자동 검사 (`document_reader._image_ocr` vision client 재사용) |
-| **Reporting checklist** (STROBE 22항목) | `src/research/reporting_checklist.py` | ✅ active | `peer_reviewer.review` 결과에 자동 흡수 — free-form 리뷰에 정형 보완 |
-| **Eval benchmark** (5축 정량) | `scripts/eval_benchmark.py` | ✅ active | memory/hallucination/stat/figure/citation. eval_report.json → `capability_bench.get_improvement_context`가 fail 항목을 다음 LLM prompt에 자동 주입 (Eval→Prompt 루프) |
-| **Replay CLI** (events 시간순 재구성) | `scripts/replay_task.py` | ✅ active | `events.replay(task_id)` 활용 — LLM/도구/메모리/safety 사후 추적 |
-| **Tool-use agentic loop** | `src/llm/claude_client.py:generate_with_tools()` | ✅ active | Claude function calling. tool_handler로 `src.tools.run_tool` 직결. 각 step events에 기록 → replay 가능 |
-| **Multi-stage RAG** (dense + lexical + recency rerank) | `src/rag/pipeline.py:search_multistage()` | ✅ active | 기본 search 옆 보강 — top-N 후보풀 → Jaccard token rerank + recency_boost + must_cite 강제 포함 |
-| **Citation graph** (co-citation/bridging/missing seminal) | `src/knowledge/citation_graph.py` | ✅ active | PubMed eLink로 cited_by 빌드 + NetworkX 분석. reference_library/medical_graph 결합 |
-| **Cost/latency observability** | `src/llm/budget.py:latency_summary()` | ✅ active | budget.record(latency_ms=) → p50/p95/max provider별 집계. snapshot에 포함 → heartbeat 누적 |
-| **Prompt A/B + bandit** | `src/diagnostics/prompt_ab.py` | ✅ active | epsilon-greedy variant 선택 + eval 점수 누적. `data/diagnostics/prompt_ab.json` |
-| **Self-consistency ensemble** | `src/llm/self_consistency.py` | ✅ active | n회 sample → 다수결/agreement. critical 통계 해석에서 hallucination ↓ |
-| **Wiring audit** (dead code 차단) | `scripts/audit_wiring.py` | ✅ active | git diff 추가 심볼 → 호출부 grep. 0 callers = FAIL 보고. **모든 신규 모듈 작성 후 의무 실행** |
-| **Text sanitize** (lone UTF-16 surrogate + ctrl-char 차단) | `src/utils/text_sanitize.py` | ✅ active | 2026-05-30 사고(`API 400 no low surrogate`, 6.6MB 요청 본문 영구 차단) 방어. `strip_lone_surrogates` / `sanitize_obj` / `safe_json_dumps` / `is_safe` / `scan_lone_surrogates`. **3개 저장 진입점에 wiring**: `change_log._write_local`, `conversation_memory._save`+`record`, `project_workspace._save_project`. `scripts/audit_text_safety.py`로 data/ 전체 스캔 + `--fix` |
-| **Safety unified gate** (모든 safety 게이트 단일 진입점) | `src/safety/unified.py` → `check_all` | ✅ active | citation_grounding + consistency + causal + physician_review + figure_validator 한 번에 호출 → `SafetyReport(overall=ok/warn/fail)`. **paper_writer._generate + project_workspace._orchestrated_paper_run에 wiring**. audit_trail에 자동 적재. |
-| **Reproducibility provenance** (git_sha + model_ver + prompt_hash + dataset_md5 + seed) | `src/runtime/provenance.py` | ✅ active | `build_fingerprint` / `record` / `auto_record_llm_call` / `auto_record_stats` / `seed_for`. **claude_client.generate에 자동 wiring** (`_prov.auto_record_llm_call`). events.db `provenance` 타입 기록 |
-| **Distributed tracing span tree** | `src/runtime/tracing.py` | ✅ active | `trace_span` 컨텍스트매니저, 자동 parent-child, latency/tokens 자동 기록. **claude_client.generate에 자동 wiring** (`llm.anthropic.generate` span). `trace_tree(trace_id)` / `recent_traces(n)` |
-| **Analysis preregistration** (LLM 우회 통계 계획 잠금) | `src/research/analysis_preregistration.py` | ✅ active | `AnalysisPlan` dataclass + `register` (canonical_hash) + `verify` (spec mismatch detect) + `run_locked` (RuntimeError on violation). **_orchestrated_paper_run + MCP `preregister_analysis` tool**에 wiring. events `analysis_plan_registered`/`_violation`/`_result` |
-| **Intent sensor** (사용자 의도/뉘앙스/페르소나 무의식 임프린트) | `src/agent/intent_sensor.py` | ✅ active | 5+2차원 (emphasis/avoidance/reader/tone/persona/prior/lang) 휴리스틱 + LLM 추론. **모든 LLM 호출에 자동 픽업** (claude_client._build_system → get_current). 영구 저장 (disk + Supabase ma_intent_history). 외부 패턴 파일 `data/agent_self/intent_patterns.json` |
-| **Paper Orientation** (논문이 추구하는 유형 → 톤앤매너 자동 조정) | `src/research/emphasis_profile.py` → `PaperOrientation` | ✅ active | 2026-05-31. 5 대표 유형 카탈로그 (novelty/consistency/innovation/public_health/methodological_rigor) + custom_notes 자유 양식. `apply_to_intent()` → IntentSignal(implicit_emphasis=imprint_labels, voice_tone=voice_tone) → set_current → **모든 LLM 호출의 build_base_system → get_current로 자동 픽업**. UI: `app/pages/project_workspace.py` `🎯 추구 유형` popover. organism flow 정상 연결 (검증 완료) |
-| **Style polish** (학술 cliché 정리 + AI 양식 점수) | `src/safety/style_polish.py` + `prompts/style_polish.md` | ✅ active | `ai_style_score` (0-100) + `polish_text(gentle/aggressive)` + `polish_paper`. **_orchestrated_paper_run 끝에 gentle polish 자동 적용** + workspace References 탭의 ✨ Polish 버튼. style_polish.md는 prompt_loader가 paper_write task에 자동 합성 |
-| **Word 표준 템플릿** (zcb_dep_v5 양식) | `data/templates/manuscript_template.json` + `src/export/word_exporter.py` | ✅ active | JSON spec이 단일 진실원본 — 모든 논문 docx가 동일 양식. inline label / Vancouver / italic P / 학술지 세 줄 표 |
-| **학술지 세 줄 표** | `src/export/table_builder.py:render_publication_table()` | ✅ active | NEJM/Lancet 표준 — top/header-bottom/bottom horizontal only, 세로선 없음, p-value italic P |
-| **Figure 양식 통일** | `src/export/publication_figure_generator.py` | ✅ active | template JSON figures 섹션 read → TNR + spine 깔끔 + grid off + 색팔레트 통일 |
-
-> **★ 추적 가능성 = events → replay**: tool_use loop의 각 step / memory_gate quarantine /
-> citation orphan / physician queue / consistency fail / figure_validation fail / budget downgrade
-> 모두 `events.db`에 기록 → `python scripts/replay_task.py --task=...`로 사후 재구성.
-
-### 16. Online-First 배포 토폴로지 — 2026-06-05 신규
-
-> 사용자 원칙 (RULE-9): 모든 Agent는 외부 URL 접속에서 작동해야 함. 로컬 docker는 DEV/BACKUP only.
-
-**데이터 분리**
-
-| 종류 | 위치 | 용도 |
+| Module | py files | content |
 |---|---|---|
-| 정적 큰 파일 (KYRBS sav, chromadb 임베딩, knowledge_graph, OA papers, seed catalogs) | **HF Datasets** `cave87/medical-agent-runtime` (private) | snapshot 양식 read-mostly. 컨테이너 부팅 시 download |
-| 라이브 사용자 상태 (auth, drafts, intent, activity, change_log, working_papers, agent_insights, ...) | **Supabase** 12 ma_* 테이블 | per-user concurrent write, ACID |
-| Runtime in-container (events.db, tasks.db, idempotency cache) | sqlite local volume | 컨테이너 lifetime, 옵션적으로 HF에 backup |
+| `activity/` | 1 | logger |
+| `agent/` | 14 | agent_pool, cognitive_activation, harness, intent_sensor, medical_agent … |
+| `auth/` | 1 | users |
+| `citation/` | 1 | manager |
+| `cloud/` | 2 | db, migrate |
+| `collaboration/` | 1 | access |
+| `config/` | 3 | env, logging_config, models |
+| `data/` | 4 | col_name_resolver, kyrbs_raw_loader, stat_bridge, survey_loader |
+| `diagnostics/` | 7 | capability_bench, improvement_engine, longitudinal_eval, prompt_ab, quality_tracker … |
+| `export/` | 13 | citation_workflow, cover_letter_writer, figure_builder, image_gen, journal_docx_exporter … |
+| `ingestion/` | 9 | chunker, document_reader, evidence_reader, hierarchical_chunker, oa_bulk_fetcher … |
+| `knowledge/` | 11 | citation_graph, code_graph, humanize_extractor, medical_graph, medical_ontology … |
+| `library/` | 5 | component_extractor, components, dataset_library, design_template, methods_library |
+| `llm/` | 10 | budget, claude_client, factory, gemini_client, health … |
+| `memory/` | 15 | agent_insight, auto_learn, change_log, continuity, conversation_memory … |
+| `notebooklm/` | 2 | client, paper_sync |
+| `profile/` | 1 | author_profile |
+| `rag/` | 1 | pipeline |
+| `research/` | 14 | analysis_preregistration, autonomous_research_loop, emphasis_profile, long_horizon, novelty_checker … |
+| `runtime/` | 10 | backlog, events, heartbeat, hf_bootstrap, idempotency … |
+| `safety/` | 10 | anti_ai_filter, audit_trail, causal_checker, citation_grounding, consistency_checker … |
+| `statistics/` | 1 | medical_stats |
+| `storage/` | 2 | manager, working_paper_store |
+| `tools/` | 0 |  |
+| `utils/` | 1 | text_sanitize |
+| `vectordb/` | 2 | store, supabase_store |
+| `visualization/` | 1 | medical_plots |
 
-**Bootstrap chain (컨테이너 부팅 시)**
+## data/ — Storage layout (auto-enumerated)
 
-```
-streamlit_app.py 진입
-  → _hf_bootstrap_once()    : data/ 누락 폴더 HF에서 download
-  → _supabase_migrate_once(): 12 ma_* CREATE TABLE IF NOT EXISTS + verify
-  → _login_gate()           : HF OAuth 또는 ma_users 조회
-  → render pages            : ez_home (chat-first) / project_workspace
-```
-
-**환경변수 (배포 시 secret)**
-
-| 변수 | 필수? | 용도 |
+| Folder | file count | extensions (top 4) |
 |---|---|---|
-| `HF_TOKEN` | 권장 | private dataset download (없으면 minimal 프로파일만) |
-| `HF_DATASET_ID` | 옵션 | 기본 `cave87/medical-agent-runtime` |
-| `MEDICAL_AGENT_BOOTSTRAP_PROFILE` | 옵션 | `minimal` / `standard` / `full` (기본 standard) |
-| `SUPABASE_DB_URL` | 필수 (online) | 라이브 상태 저장. 없으면 cloud_available()=False → 모든 ma_* 호출 skip (로컬 모드) |
-| `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` / `GOOGLE_API_KEY` | 1개+ | LLM (3중 폴백) |
-| `NCBI_EMAIL` | 권장 | PubMed API 양식 |
+| `data/_ux_shots/` | 39 | .png:39 |
+| `data/activity/` | 1 | .json:1 |
+| `data/agent_self/` | 7 | .json:6, .2026-06-04:1 |
+| `data/assets/` | 3 | .json:2, .do:1 |
+| `data/author_profiles/` | 2 | .json:2 |
+| `data/change_log/` | 1 | .json:1 |
+| `data/chromadb/` | 14 | .bin:12, .sqlite3:1, .pickle:1 |
+| `data/chromadb_test/` | 9 | .bin:8, .sqlite3:1 |
+| `data/diagnostics/` | 7 | .json:6, .txt:1 |
+| `data/drafts/` | 43 | .png:16, .svg:15, .txt:7, .docx:3 |
+| `data/exports/` | 56 | .docx:13, .png:12, .md:9, .html:6 |
+| `data/journals/` | 5 | .json:5 |
+| `data/knowledge_graph/` | 5 | .json:5 |
+| `data/libraries/` | 3 | .json:3 |
+| `data/library/` | 1 | .db:1 |
+| `data/logs/` | 5 | .log:4, .1:1 |
+| `data/medical_knowledge_seed/` | 28 | .json:28 |
+| `data/oa_papers/` | 50504 | .metadata:25251, .json:12625, .txt:12625, .sqlite:1 |
+| `data/papers/` | 8 | .docx:6, .pptx:2 |
+| `data/pmc_papers/` | 6 | .txt:6 |
+| `data/projects/` | 1 | .json:1 |
+| `data/raw/` | 45 | .zip:22, .sav:21, .md:1, .json:1 |
+| `data/runtime/` | 15 | .db:8, .db-shm:2, .db-wal:2, .json:2 |
+| `data/templates/` | 1 | .json:1 |
+| `data/wiki/` | 12 | .md:12 |
+| `data/workflows/` | 1 | .json:1 |
+| `data/working_papers/` | 24 | .json:24 |
 
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| **HF Datasets bootstrap** | `src/runtime/hf_bootstrap.py` → `ensure_bootstrap()` | ✅ active | 3 profile (minimal/standard/full), 누락 폴더만 snapshot_download |
-| **Supabase migration** | `src/cloud/migrate.py` → `ensure_all_tables()` | ✅ active | 12 ma_* CREATE + SELECT 양식 verify, idempotent |
-| **Streamlit entry wiring** | `app/streamlit_app.py` → `_hf_bootstrap_once()` + `_supabase_migrate_once()` | ✅ active | st.cache_resource로 1회만 실행 |
-| **deployment target** | HF Spaces / Cloud Run / hosted Docker | 🚧 spec only | Dockerfile은 기존, Space metadata 별도 작성 필요 |
+## data/runtime/ — Single-core memory backend (full inventory)
 
-> **트러블슈팅**:
-> - 컨테이너 부팅 후 `data/raw/kyrbs2025.sav` missing → `HF_TOKEN` env 미설정, 또는 `MEDICAL_AGENT_BOOTSTRAP_PROFILE=full` 필요
-> - login fail → `SUPABASE_DB_URL` 누락 또는 `ma_users` 비어있음 (super_admin 시드 필요)
-> - LLM 호출 fail → 모든 API key 누락 (3중 폴백 다 무효)
-
----
-
-### 15. 시드 자산화 3단계 파이프라인 — 2026-06-01 신규
-
-> 사용자 비전 (2026-06-01): "12,301편 OA 시드를 자산화·구조화해서 의학적 사고흐름·전개·골격을
-> 여러 유형화 표현법으로 익히고 → AI 같지 않도록 필터링 → 조유선 스타일로 최종 변환."
-> ★ 사고: 자산은 690MB 12,301편 + ChromaDB 262MB 20,894 chunks로 다 있었는데
-> `paper_writer.rag_pipeline=None` 기본값으로 회로가 끊겨 한 줄도 retrieve 안 됨. FIX 10-15로 연결.
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| **본문 12,301편 저장소** | `data/oa_papers/` (689 MB) + `manifest.sqlite` | ✅ active | `oa_bulk_fetcher.py`가 채움. 본문 txt + meta.json |
-| **ChromaDB 인덱싱** | `data/chromadb/` 안 `papers` collection (count=20,894) | ✅ active | hierarchical_chunker 산출, search_multistage가 호출 |
-| **자동 RAG attach** | `paper_writer.PaperWriter.__init__` (FIX 10) | ✅ active | `rag_pipeline=None`이면 자동으로 RAGPipeline() 부착. 호출자가 안 줘도 회로 살아있음 |
-| **섹션별 RAG 발췌 user_prompt 박기** | `paper_writer.write_full_paper` (FIX 11) | ✅ active | introduction/methods/results/discussion 4 query × search_multistage → 4 발췌 user_prompt에 박힘. `pubmed:` 식별자 + 텍스트 |
-| **Typology 카탈로그 (섹션×유형)** | `src/knowledge/paper_typology.py` → `build_typology_catalog()` | ✅ active | 12,145편 IMRAD 분해 + 5 유형/섹션 × 20 예문 = 400 패턴. `data/medical_knowledge_seed/typology_catalog.json` |
-| **Orientation → typology mix & match** | `paper_typology.mix_and_match()` + `get_typology_block_for_orientation()` | ✅ active | 사용자가 말한 "강조/톤"(PaperOrientation novelty/consistency/...) → 섹션별 typology slug 자동 선택. 사용자에게 typology slug 비노출 |
-| **Humanize 카탈로그 (문장 단위)** | `src/knowledge/humanize_extractor.py` → `build_humanize_catalog()` | ✅ active | 12,301편 → 7 kind × 80 예문 = 560 문장. statistical_reporting / figure_table_citation / hedged_claim / emphasis_injection / methodological_decision / synthetic_bridge / specific_detail |
-| **Humanize block system_prompt 주입** | `paper_writer._generate` (FIX 13) | ✅ active | 매 LLM 호출 system_prompt에 humanize_block 자동 합성 (sample_per_kind=1) |
-| **Anti-AI 필터** | `src/safety/anti_ai_filter.py` → `ai_score`, `filter_text` | ✅ active | 점수 산출(generic_openers/hedge_clusters/meta_phrases/ai_cliches/transition_overuse/tricolon/rhythm) + gentle/aggressive 정리. 검증: 76→24 (-52점). `paper_writer._generate`에 wiring (FIX 14, score>25일 때만) |
-| **Yoosun 최종 변환 stage** | `src/research/yoosun_finalize.py` → `finalize()`, `finalize_paper()` | ✅ active | 본문 생성+필터 후 별도 LLM 호출로 Yoosun voice 변환. 수치/citations 보존. paper_writer가 Introduction+Discussion만 변환 (비용 절감) — FIX 15 |
-
-> **전체 파이프라인 (paper_writer.write_full_paper 1회 호출 시)**:
-> 1. RAG search_multistage × 4 섹션 → user_prompt에 발췌 박힘 (FIX 11)
-> 2. PaperOrientation → typology slug 자동 mix → user_prompt에 패턴 박힘 (FIX 12)
-> 3. _generate가 humanize_block + anti_meta를 system_prompt에 자동 합성 (FIX 13)
-> 4. LLM 호출 → 출력 → _strip_llm_meta + anti_ai_filter(score>25) (FIX 14)
-> 5. write_full_paper 끝에 Introduction+Discussion만 Yoosun voice 변환 (FIX 15)
-> 6. safety unified gate + physician_review queue
->
-> **회로 검증**: anti-AI 정상화 differential 76→24 / RAG attach log "chunks≈1801" / typology block sample 출력 확인.
-
----
-
-### 14. Harness 통합 진입점 — 2026-06-01 신규
-
-> 외부 harness 엔지니어링 사례(Anthropic claude-agent-sdk 패턴, OmX 공개 PHILOSOPHY) 검토 결과
-> "컴포넌트는 다 있는데 사용처마다 import + wiring 중복"이 진짜 부족분으로 확인 →
-> 단일 facade `AgentHarness`로 모든 하네스 컴포넌트를 묶음. 신규 구현 0건, 기존 호출 통합만.
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| **Single-entry facade** | `src/agent/harness.py` → `AgentHarness`, `get_harness()` | ✅ active | events/tasks/budget/memory/persona/safety/llm/tools/pool/planner/knowledge/writing 단일 객체 노출. `run_step`이 events.start/end + safety.check_all + memory.write 자동 wiring |
-| **Team review (병렬 다중 perspective)** | `src/agent/agent_pool.py:AgentPool.team_review()` | ✅ active | 동일 content를 N reviewer (statistical_rigor / clinical_relevance / writing_clarity / novelty_check / policy_translation) 병렬 평가 → 합의/이견 정리. OmX `$team` 양식 등가 |
-
-> **신규 작성 시 권장 진입점**: `from src.agent.harness import get_harness; h = get_harness(owner_email, task)` —
-> 그러면 events/budget/safety/memory/persona/intent_sensor가 자동 wire-up. 직접 `src.llm.get_llm_client`
-> 호출은 정당하지만 facade 우회 시 events/memory wiring을 수동으로 챙겨야 함.
-
----
-
-### 13. Orchestrator + Multi-agent + Planner DAG — 2026-05-28 신규
-
-> "tool-rich workflow" → "autonomous agent" 격상. 두 Orchestrator A2A 통신 + 7 roles + DAG.
-
-| 기능 | 정규 모듈 | 상태 | 비고 |
-|------|----------|------|------|
-| **Knowledge Orchestrator** (graph+vector+ontology+citation 동시 ingest) | `src/knowledge/orchestrator.py` | ✅ active | `oa_bulk_fetcher` 자동 호출. 단일 PMID → 4 자산 통합 |
-| **Writing Orchestrator** + A2A contract | `src/agent/writing_orchestrator.py` | ✅ active | KnowledgeRequest/Response schema, gather_components, apply_author_style |
-| **Planner DAG** (hierarchical decomposition + topological execute + retry/skip) | `src/agent/planner.py` | ✅ active | TaskNode/ExecutionGraph, Introduction/Methods/Results 별 룰 base DAG |
-| **Multi-agent roles** (planner/researcher/writer/stylist/critic/statistician/citation_auditor) | `src/agent/roles.py` | ✅ active | 7 roles + ACTION_TO_ROLE + 도구 화이트리스트. ClaudeClient.generate_with_tools 위임 |
-| **Tool consensus** (n-sample + parallel branches + contradiction + rollback) | `src/llm/tool_consensus.py` | ✅ active | `_h_consensus` 호출 |
-| **Sandbox** (subprocess isolation + autonomous repair loop + regression compare) | `src/runtime/sandbox.py` | ✅ active | `_h_sandbox` + agentic tool |
-| **Causal checker** (cross-sectional 등 design별 causal claim 적합성) | `src/safety/causal_checker.py` | ✅ active | `_h_causal` + mcp |
-| **Longitudinal eval** (시계열 trend + regression alert) | `src/diagnostics/longitudinal_eval.py` | ✅ active | `eval_benchmark.py` 끝, `capability_bench.get_improvement_context` 흡수 |
-| **ComponentLibrary** (CONTENT_KINDS + STYLE_KINDS 2-layer pipeline 자산) | `src/library/components.py` + `component_extractor.py` | ✅ active | `KnowledgeOrchestrator.ingest`에서 자동 추출 |
-| **OA bulk fetcher** (Europe PMC 풀텍스트 5만편 인프라) | `src/ingestion/oa_bulk_fetcher.py` | ✅ active | backlog `oa_bulk_fetch` job → Orchestrator |
-| **Backlog queue** (JobKind + budget-aware drain) | `src/runtime/backlog.py` | ✅ active | heartbeat 5min cron |
-
-### 14. Vision Continuity — 2026-05-28 신규 (vision 다이어그램 정렬)
-
-> Vision 다이어그램의 "AI Agent Continuity 시스템" 컴포넌트 명시 wire. 흐름 = 유기체.
-
-| Vision 컴포넌트 | 모듈 | 상태 |
+| File | Bytes | Purpose hint |
 |---|---|---|
-| **트리거 분석기** (의도/주제/감정/우선순위/긴급도) | `src/agent/trigger_analyzer.py` | ✅ — agentic_loop.build_system_with_preview 자동 호출 |
-| **인지 활성화 엔진 5-layer** (fragment→propagation→routing→flow→policy) | `src/agent/cognitive_activation.py` | ✅ — build_system_with_preview 자동 호출 |
-| **Multi-layer Memory facade** (Working+Episodic+Semantic+Procedural+Goal) | `src/memory/__init__.py` (facade) + `procedural.py` + `schemas.py` + 기존 11개 | ✅ — `recall_all_layers` / `stats` 통합 |
-| **Memory Explorer UI** | `app/pages/memory_explorer.py` | ✅ — `/memory_explorer` 자동 |
-| **Agent Dashboard UI** (5층 memory + backlog + budget + longitudinal + notification) | `app/pages/dashboard.py` | ✅ — `/dashboard` 자동 |
-| **알림 시스템** (notification + webhook + heartbeat drain) | `src/runtime/notifier.py` | ✅ — heartbeat `notify_drain` 5min |
-| **메모리 schema versioning** (Pydantic) | `src/memory/schemas.py` | ✅ v1.0.0 |
-| **MCP 노출** (trigger_analyze/cognitive_activate/memory_recall_5layers/memory_stats_5layers/notify_list/sandbox_python/causal_check_paper/longitudinal_summary/list_agent_roles/plan_section_dag/llm_with_tools) | `mcp_server.py` | ✅ 11+ tools |
+| `alerts.log` | 64 | Runtime alerts |
+| `events.db` | 10,280,960 | Append-only audit log (CLAUDE.md 규칙 12) |
+| `events.db-shm` | 32,768 | Append-only audit log (CLAUDE.md 규칙 12) |
+| `events.db-wal` | 716,912 | Append-only audit log (CLAUDE.md 규칙 12) |
+| `heartbeat_state.json` | 274 | Heartbeat 7 jobs catch-up state |
+| `idempotency.db` | 4,096 | Tool call cache (재현성) |
+| `idempotency.db-shm` | 32,768 | Tool call cache (재현성) |
+| `idempotency.db-wal` | 45,352 | Tool call cache (재현성) |
+| `lifecycle.db` | 28,672 | Memory TTL + decay scheduler |
+| `longitudinal.db` | 20,480 | Time-series trends |
+| `memory.db` | 0 | Typed memory (scorer/lifecycle/gate) |
+| `notifications.json` | 270 | Pending user notifications |
+| `physician_review.db` | 32,768 | Review queue + decisions |
+| `procedural.db` | 20,480 | Procedural memory (5층 중 4번째) |
+| `tasks.db` | 176,128 | TaskRun state machine |
 
-#### 흐름 (유기체 — feedback_organism_flow)
+## data/knowledge_graph/ — Graphs (actual filenames)
 
-```
-user_msg
-  → trigger_analyzer.analyze (intent/topic/sentiment/priority/urgency)
-  → cognitive_activation.activate (5-layer: fragments/propagation/routing/flow/policy)
-  → memory.recall_all_layers (working/episodic/semantic/procedural/goal)
-  → build_system_with_preview (위 3 + change_log + longitudinal + preview snapshot)
-  → ClaudeClient.generate_with_tools (17 tools agentic loop)
-    → tool_handler → src.* (KnowledgeOrch / WritingOrch / planner.execute / roles.dispatch_role
-                              / patch_preview / kyrbs_stat / consensus / sandbox / causal / ...)
-  → patch_preview → consistency_checker + causal_checker + citation_grounding
-  → audit_trail + events.db
-  → memory.router.write + conversation_memory.record + procedural rule (해당 시)
-  → longitudinal_eval.record_eval + capability_bench.get_improvement_context
-  → 다음 build_base_system에 자동 주입 (자가발전 회로 닫힘)
-```
+| File | Bytes | Type |
+|---|---|---|
+| `citation_graph.json` | 222,181 | Citation network (paper ↔ paper) |
+| `code_graph.json` | 467,524 | Code asset graph (e2e_diagnose 자가진단) |
+| `graph.json` | 13,426,465 | Main medical knowledge graph (NetworkX) |
+| `meta.json` | 108 | Graph metadata + last_updated |
+| `trend_state.json` | 34,082 | PubMed 24h trend cache |
 
----
+## data/oa_papers/ — OA paper collection (정직 통계)
 
-## 삭제된 모듈 (왜 없는지 기록)
+- Total metadata sweep: **0** papers
+- Full text collected (.txt): **12,625** (0.0%)
+- Metadata-only (no body): **-12,625** ← backfill 대상
+- Sidecar JSON: 12,625
+- Other (sqlite/.gitignore): 1
 
-| 모듈 | 삭제일 | 삭제 이유 | 대체 모듈 |
-|------|--------|----------|----------|
-| `src/database/db_manager.py` | 2026-05-19 | cloud/db.py로 대체, 미참조 | `src/cloud/db.py` |
-| `src/nlp/novelty_detector.py` | 2026-05-19 | research/novelty_checker.py로 대체, 미참조 | `src/research/novelty_checker.py` |
-| `src/papergen/manuscript_gen.py` | 2026-05-19 | research/paper_writer.py로 대체, 미참조 | `src/research/paper_writer.py` |
-| `src/learning/meta_learner.py` | 2026-05-19 | memory/auto_learn.py가 실제 사용, learning/ 전체 미참조 | `src/memory/auto_learn.py` |
-| `src/learning/finetune_manager.py` | 2026-05-19 | 위와 동일 | `src/memory/auto_learn.py` |
-| `src/learning/knowledge_distiller.py` | 2026-05-19 | 위와 동일 | `src/memory/auto_learn.py` |
-| `src/learning/outcome_tracker.py` | 2026-05-19 | 위와 동일 | `src/memory/auto_learn.py` |
-| `examples/` (전체) | 2026-05-19 | 삭제된 모듈만 참조, 유지 가치 없음 | — |
-| `src/statistics/auto_analyzer.py` | 2026-05-19 | 미호출 dead code. stat_bridge가 OR/CI 담당 | `src/data/stat_bridge.py` |
-| `src/statistics/results_writer.py` | 2026-05-19 | 미호출 dead code. paper_writer가 직접 처리 | `src/research/paper_writer.py` |
-| `SurveyLoader.generate_synthetic()` | 2026-05-19 | 합성 데이터 생성 전면 금지. 실제 원시자료만 허용 | `src/data/kyrbs_raw_loader.py` |
-| `StatBridge.quick_demo()` | 2026-05-19 | 합성 데이터 기반 demo 함수. 동일 사유 삭제 | — |
-| `src/agent/prompt_loader.compose_runtime_system_prompt` | 2026-05-27 | dead code — `claude_client.build_base_system`이 같은 합성 수행 → 단일화 | `src.llm.claude_client.build_base_system` |
 
----
+## prompts/ — Versioned system prompts (each auto-injected via prompt_loader)
 
-## 새 모듈 추가 프로세스
+| File | Bytes | Role |
+|---|---|---|
+| `curated_seed.md` | 8,178 | Curated 2,100 paper seed exemplars |
+| `medical_core.md` | 1,972 | Core medical persona |
+| `safety_constraints.md` | 2,686 | Hard safety bounds |
+| `style_polish.md` | 5,092 | Polish patterns (NEJM/Lancet) |
+| `yoosun_style.md` | 2,369 | 조유선 writing style |
 
-새 기능을 만들기 전에 반드시:
-1. 이 파일에서 같은 기능이 이미 있는지 확인
-2. 없으면 추가하되 표에 먼저 기재 (status: 🔨 building)
-3. 완성 후 status: ✅ active로 변경
-4. 기존 모듈을 대체하는 경우: 기존 것 삭제 + "삭제된 모듈" 표에 기록
+## text_sanitize canonical path (정정)
 
----
+실 위치 (1 file): `src\utils\text_sanitize.py`
 
-## 현재 ⚠️ 정리 대기 중
+이전 문서가 `src/safety/text_sanitize.py` 도 있다고 표기한 건 환각. canonical 위치는 위 한 곳뿐.
 
-| 항목 | 내용 | 계획 |
-|------|------|------|

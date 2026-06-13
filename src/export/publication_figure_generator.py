@@ -795,7 +795,12 @@ def generate_figures_for_paper(
     out_base: str = "data/drafts/figures",
     dpi: int = 300,
 ) -> Dict[str, Dict]:
-    """편의 함수 — 논문 파이프라인에서 직접 호출."""
+    """편의 함수 — 논문 파이프라인에서 직접 호출.
+
+    P3 fix (2026-06-13): 들어온 stat_result가 단순 schema면 _normalize_stat_result로
+    generator 내부 schema로 자동 매핑. 이전엔 schema 불일치 → 매번 빈 dict 반환.
+    """
+    normalized = _normalize_stat_result(stat_result or {})
     return PublicationFigureGenerator(out_base=out_base, dpi=dpi).generate_all(
-        stat_result, safe_title
+        normalized, safe_title
     )
