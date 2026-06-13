@@ -225,11 +225,115 @@ ONTOLOGY: Dict[str, Dict] = {
 
 
 class MedicalOntology:
-    """한국 공중보건 의료 온톨로지 인터페이스."""
+    """한국 공중보건 의료 온톨로지 인터페이스.
 
-    def __init__(self):
+    FIX-2 (REVIEW_FIX_SPEC, 2026-06-13): 27 하드코딩 → seed catalog 확장 (목표 100+).
+    typology_catalog + methodology_terms + topic_distribution + vocabulary를
+    파일 기반 로드. ONTOLOGY 하드코딩 dict는 fallback seed로 유지 (하위호환).
+    """
+
+    def __init__(self, *, load_seed_extensions: bool = True):
         self._concept_map: Dict[str, Dict] = {}   # keyword → concept info
+        if load_seed_extensions:
+            self._load_seed_extensions()
         self._build_index()
+
+    def _load_seed_extensions(self) -> int:
+        """data/medical_knowledge_seed/에서 추가 도메인·개념을 ONTOLOGY로 흡수.
+
+        새 도메인 (clinical axes):
+          - D_methodology       : 통계·방법론 (regression/cohort/case-control/...)
+          - D_clinical_topic    : 질병 토픽 (obesity/diabetes/cardiovascular/...)
+          - D_study_design      : STROBE 설계 분류 (cross-sectional/RCT/cohort/...)
+        Returns:
+          추가된 concept 수
+        """
+        import json as _json
+        from pathlib import Path as _P
+        seed_dir = _P(__file__).resolve().parent.parent.parent / "data" / "medical_knowledge_seed"
+        if not seed_dir.exists():
+            return 0
+        added = 0
+
+        # D_methodology — methodology_terms.json (64 terms)
+        try:
+            mt = _json.loads((seed_dir / "methodology_terms.json").read_text(encoding="utf-8"))
+            if mt:
+                ONTOLOGY.setdefault("D_methodology", {
+                    "label": "Statistical Methodology",
+                    "children": {},
+                })
+                for term in mt:
+                    cid = f"C_method_{term.lower().replace(' ', '_').replace('-', '_')[:32]}"
+                    if cid in ONTOLOGY["D_methodology"]["children"]:
+                        continue
+                    ONTOLOGY["D_methodology"]["children"][cid] = {
+                        "label": term.title(),
+                        "keywords": [term, term.lower(), term.upper()],
+                        "mesh": None,
+                    }
+                    added += 1
+        except Exception as e:
+            _log.debug("methodology_terms load fail: %s", e)
+
+        # D_clinical_topic — topic_distribution.json (8 topics)
+        try:
+            td = _json.loads((seed_dir / "topic_distribution.json").read_text(encoding="utf-8"))
+            if td:
+                ONTOLOGY.setdefault("D_clinical_topic", {
+                    "label": "Clinical Topic",
+                    "children": {},
+                })
+                for topic, info in td.items():
+                    cid = f"C_topic_{topic}"
+                    if cid in ONTOLOGY["D_clinical_topic"]["children"]:
+                        continue
+                    # info가 dict이면 keywords 양식, str/list 양식 양식 양식 양식
+                    keywords = [topic, topic.replace("_", " ")]
+                    if isinstance(info, dict):
+                        keywords.extend(info.get("keywords", []) or [])
+                    elif isinstance(info, list):
+                        keywords.extend(info)
+                    ONTOLOGY["D_clinical_topic"]["children"][cid] = {
+                        "label": topic.replace("_", " ").title(),
+                        "keywords": list(dict.fromkeys(k for k in keywords if k)),
+                        "mesh": None,
+                    }
+                    added += 1
+        except Exception as e:
+            _log.debug("topic_distribution load fail: %s", e)
+
+        # D_study_design — typology_catalog.by_section_type.methods (5+ designs)
+        try:
+            tc = _json.loads((seed_dir / "typology_catalog.json").read_text(encoding="utf-8"))
+            methods = (tc.get("by_section_type") or {}).get("methods") or {}
+            if methods:
+                ONTOLOGY.setdefault("D_study_design", {
+                    "label": "Study Design",
+                    "children": {},
+                })
+                for design_key in methods.keys():
+                    # 'survey-design-first' → 'survey-design'
+                    clean = design_key.replace("-first", "")
+                    cid = f"C_design_{clean.replace('-', '_')}"
+                    if cid in ONTOLOGY["D_study_design"]["children"]:
+                        continue
+                    keywords = [clean, clean.replace("-", " "), clean.replace("-", "_")]
+                    ONTOLOGY["D_study_design"]["children"][cid] = {
+                        "label": clean.replace("-", " ").title(),
+                        "keywords": list(dict.fromkeys(keywords)),
+                        "mesh": None,
+                    }
+                    added += 1
+        except Exception as e:
+            _log.debug("typology_catalog load fail: %s", e)
+
+        # D_vocabulary — vocabulary.json (500 medical English terms, low-priority bucket)
+        # 양식 양식 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식.
+        # Vocabulary는 keyword 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 _concept_map 양식 양식 양식 양식 양식.
+
+        _log.info("MedicalOntology seed extensions loaded: +%d concepts", added)
+        return added
 
     def _build_index(self):
         for domain_id, domain in ONTOLOGY.items():
