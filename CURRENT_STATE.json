@@ -65,9 +65,9 @@
     "oa_papers_meta_stubs": 12625,
     "chromadb_embeddings": 27671,
     "chromadb_queue_pending": 893,
-    "knowledge_graph_nodes": 10134,
-    "knowledge_graph_edges": 54131,
-    "medical_ontology_concepts": 27
+    "knowledge_graph_nodes": 10129,
+    "knowledge_graph_edges": 54121,
+    "medical_ontology_concepts": 114
   },
   "known_seed_bias": "OA papers fetched from Europe PMC OA Subset → over-represented: public health, environmental health, nutrition, epidemiology. Under-represented: pharmacology, clinical guidelines, surgical outcomes, oncology RCT. When user requests clinical topic, supplement reasoning beyond seed retrieval.",
   "single_entry_points": {
@@ -94,7 +94,7 @@
   ],
   "deployment_target": "external URL (HF Spaces / Cloud Run / hosted), with HF Datasets as persistent data store. Local Docker is dev only.",
   "verified_counts": {
-    "measured_at": "2026-06-13 21:43:26",
+    "measured_at": "2026-06-13 22:52:48",
     "papers": {
       "meta_json_files": 12625,
       "full_text_files": 12625,
@@ -109,22 +109,22 @@
     },
     "knowledge_graph": {
       "file": "data/knowledge_graph/graph.json",
-      "nodes_total": 10134,
+      "nodes_total": 10129,
       "node_types": {
-        "paper": 10105,
         "concept": 27,
-        "dataset": 2
+        "dataset": 2,
+        "paper": 10100
       },
-      "edges_total": 54131,
+      "edges_total": 54121,
       "edge_relations": {
-        "HAS_CONCEPT": 51652,
-        "USES_DATASET": 1991,
         "RELATED_TO": 108,
-        "null": 380
+        "HAS_CONCEPT": 51643,
+        "null": 380,
+        "USES_DATASET": 1990
       }
     },
     "ontology": {
-      "concept_count": 27,
+      "concept_count": 114,
       "sample": [
         {
           "domain_id": "D_population",
