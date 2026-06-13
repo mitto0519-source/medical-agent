@@ -46,8 +46,8 @@ try:
           f"{_truth.get('style_profiles', {}).get('per_user_profiles', 0)}")
     print(f"  Ontology Concepts: {_truth.get('ontology', {}).get('concept_count')}")
 except Exception as _e:
-    # fallback: 양식 count
-    print(f"  OA Papers: {count_files_in(data_dir / 'oa_papers')} files (reconcile 양식 양식: {_e})")
+    # fallback: raw file count only (reconcile unavailable)
+    print(f"  OA Papers: {count_files_in(data_dir / 'oa_papers')} files (reconcile fallback, reason: {_e})")
     print(f"  Knowledge Graph: {count_files_in(data_dir / 'knowledge_graph')} files")
     print(f"  Library/Components: {count_files_in(data_dir / 'library')} files")
     print(f"  Author Profiles: {count_files_in(data_dir / 'author_profiles')} files")
