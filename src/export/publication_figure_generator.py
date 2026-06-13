@@ -145,6 +145,85 @@ def _save(fig, out_dir: Path, stem: str, dpi: int = 300) -> Tuple[bytes, str, st
 
 
 # ─────────────────────────────────────────────────────────────────────
+# stat_result schema normalizer — P3 fix (2026-06-13)
+# bench·간이 사용자가 넘기는 단순 dict ({primary_outcome, covariates, ...})를
+# 본 generator가 요구하는 schema (model_vars, model_metrics, outcome_label,
+# subgroup_results 등)로 자동 매핑.
+# ─────────────────────────────────────────────────────────────────────
+
+def _normalize_stat_result(raw: dict) -> dict:
+    """단순 dict → publication_figure_generator 스키마.
+
+    지원 입력 양식 (1개라도 매칭되면 채움):
+      raw = {
+        "primary_outcome": {"or": 1.46, "ci": [1.21, 1.76], "p": 0.0003, "n": 23456},
+        "covariates": ["age","sex","ses"],
+        "outcome_label": "Depression",
+        "subgroup": {"male": {"or":1.5,"ci":[1.2,1.9]}, "female": {...}},
+      }
+
+    출력 (generator 호환):
+      {
+        "model_vars": [{"variable": "Primary exposure", "or": 1.46, "ci_lo":1.21,
+                         "ci_hi":1.76, "p":0.0003, "ci": [1.21,1.76]}, ...covariates],
+        "model_metrics": {},
+        "outcome_label": "Depression",
+        "outcome_rate": 0.0,
+        "n_total": 23456,
+        "descriptive_stats": {},
+        "subgroup_results": {...} or {},
+      }
+    """
+    if not raw:
+        return {}
+    if "model_vars" in raw:
+        return raw  # 이미 normalized
+
+    out = dict(raw)
+    po = raw.get("primary_outcome") or {}
+    if po:
+        ci = po.get("ci") or [None, None]
+        ci_lo, ci_hi = (ci + [None, None])[:2] if isinstance(ci, list) else (None, None)
+        primary_var = {
+            "variable": raw.get("exposure_label") or "Primary exposure",
+            "or": float(po.get("or") or po.get("aor") or 1.0),
+            "ci": ci,
+            "ci_lo": float(ci_lo) if ci_lo is not None else None,
+            "ci_hi": float(ci_hi) if ci_hi is not None else None,
+            "p": float(po.get("p") or po.get("p_value") or 1.0),
+        }
+        out["model_vars"] = [primary_var]
+        # covariates 양식 placeholder var (forest plot 양식)
+        for cov in raw.get("covariates") or []:
+            out["model_vars"].append({
+                "variable": str(cov),
+                "or": 1.0, "ci": [None, None],
+                "ci_lo": None, "ci_hi": None, "p": None,
+            })
+        out["n_total"] = int(po.get("n") or 0)
+
+    out.setdefault("outcome_label", raw.get("outcome_label") or "Outcome")
+    out.setdefault("outcome_rate", float(raw.get("outcome_rate") or 0.0))
+    out.setdefault("model_metrics", raw.get("model_metrics") or {})
+    out.setdefault("descriptive_stats", raw.get("descriptive_stats") or {})
+
+    # subgroup 양식 — {label: {or, ci}} → subgroup_results 양식
+    if raw.get("subgroup") and not raw.get("subgroup_results"):
+        sgr = {}
+        for label, vals in raw["subgroup"].items():
+            sgr[label] = [{
+                "variable": out["model_vars"][0]["variable"] if out.get("model_vars") else "exposure",
+                "or": float(vals.get("or") or 1.0),
+                "ci": vals.get("ci") or [None, None],
+                "ci_lo": (vals.get("ci") or [None])[0],
+                "ci_hi": (vals.get("ci") or [None, None])[1],
+            }]
+        out["subgroup_results"] = sgr
+
+    return out
+
+
+# ─────────────────────────────────────────────────────────────────────
 # 1. Forest Plot (출판용 강화버전)
 # ─────────────────────────────────────────────────────────────────────
 
