@@ -15,28 +15,36 @@ from datetime import datetime
 ROOT = Path(__file__).resolve().parent.parent
 GRAPH = ROOT / "data" / "knowledge_graph" / "graph.json"
 
-# 실 PMID는 7-8 digit, PMC는 PMC + 7-8 digit
-_VALID_PMID = re.compile(r"^\d{7,9}$")
+# PMID 1~5 digit이 명백히 placeholder. 6~9 digit은 모두 valid (오래된 PMC 포함).
+_VALID_PMID = re.compile(r"^\d{6,9}$")
 _VALID_PMCID = re.compile(r"^PMC\d{6,9}$")
+_TEST_TITLE = re.compile(r"^Test:|^TEST:|^test:|placeholder|^Dummy:", re.IGNORECASE)
 
 
 def is_dummy_node(node: dict) -> tuple[bool, str]:
-    """더미 판정 + 사유 반환."""
+    """더미 판정 + 사유 반환.
+
+    제거 대상:
+      - title이 'Test:'로 시작 (콜론 양식 — 'Testing' 같은 정상 paper와 구분)
+      - pmid가 placeholder ('12345', '00000', '1', '99999' 등 1~5 digit)
+      - pmid가 명백히 비PMID 형식
+    제외 (정상):
+      - 'Testing the...' 같은 정상 paper 양식
+      - 244666 같은 6-digit PMID (old PubMed)
+    """
     title = str(node.get("title", "")).strip()
     pmid = str(node.get("pmid", "")).strip()
-    node_id = str(node.get("id", "")).strip()
     typ = node.get("type", "")
 
-    # paper 노드만 검사
     if typ != "paper":
         return False, ""
 
-    if title.startswith("Test:") or title.startswith("test:"):
-        return True, f"title starts with 'Test:': {title[:60]}"
-    if pmid == "12345" or pmid == "00000":
+    if _TEST_TITLE.match(title):
+        return True, f"test title: {title[:60]}"
+    if pmid == "12345" or pmid == "00000" or pmid == "1":
         return True, f"placeholder pmid: {pmid}"
     if pmid and not (_VALID_PMID.match(pmid) or _VALID_PMCID.match(pmid)):
-        # 짧은 임의 숫자 (1~5 digit) 같은 비정상 pmid
+        # 5 digit 이하 또는 비숫자
         return True, f"invalid pmid format: {pmid}"
     return False, ""
 
