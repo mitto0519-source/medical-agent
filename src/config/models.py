@@ -110,18 +110,52 @@ def get_vision_model() -> tuple[str, str]:
 
 
 def get_embedding_model() -> str:
-    """임베딩 모델명 반환 (sentence-transformers 호환)."""
+    """임베딩 모델명 반환 (sentence-transformers 호환).
+
+    외부 진단 (2026-06-13): 의학 RAG에서 MiniLM(범용 384d)은 약함. 도메인 임베더로 교체 시
+    검색 관련성이 구조적으로 향상. 후보:
+      - PubMedBERT (microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext) 768d
+      - MedCPT  (ncbi/MedCPT-Query-Encoder) 768d — PubMed 검색 특화
+      - bge-large-en-v1.5 (BAAI) 1024d — 범용 SOTA, 의학에도 양호
+
+    ★ 차원 변경 시 FIX-3 인제스트 전에 결정해야 함 (안 그러면 27,671 chunks 두 번 임베딩).
+    환경변수 EMBEDDING_MODEL 로 런타임 변경 가능.
+    """
     return os.environ.get("EMBEDDING_MODEL", _DEFAULT_EMBEDDING)
 
 
 def get_embedding_dim() -> int:
-    """임베딩 출력 차원 반환."""
+    """임베딩 출력 차원 반환 (pgvector 마이그레이션·collection rebuild 판단용)."""
     _dims = {
+        # 384d
         "all-MiniLM-L6-v2":         384,
-        "all-mpnet-base-v2":         768,
         "paraphrase-MiniLM-L3-v2":   384,
+        # 768d 도메인 임베더
+        "all-mpnet-base-v2":         768,
+        "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext": 768,
+        "ncbi/MedCPT-Query-Encoder":  768,
+        "ncbi/MedCPT-Article-Encoder": 768,
+        # 1024d
+        "BAAI/bge-large-en-v1.5":   1024,
     }
     return _dims.get(get_embedding_model(), 384)
+
+
+def embedding_swap_safe() -> dict:
+    """임베딩 모델 교체 안전성 점검 — 차원 변경 시 사전 경고."""
+    import json
+    from pathlib import Path
+    current_dim = get_embedding_dim()
+    # ChromaDB 양식 양식 dim 확인 (HNSW 구성 양식 양식)
+    cmd_path = Path("data/chromadb/chroma.sqlite3")
+    note = []
+    if cmd_path.exists():
+        note.append(f"ChromaDB exists at {cmd_path} — 차원 변경 시 전 청크 재임베딩 필요")
+    return {
+        "current_model": get_embedding_model(),
+        "current_dim": current_dim,
+        "warning": note or ["ChromaDB 미생성, 새 모델 free 적용 가능"],
+    }
 
 
 def thinking_config(task: str = "standard") -> Optional[dict]:
