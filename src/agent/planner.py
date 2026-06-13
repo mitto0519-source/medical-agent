@@ -287,7 +287,8 @@ class Planner:
                                         {"graph_id": graph.id, "node_id": node.id,
                                          "action": node.action, "attempt": node.n_attempts},
                                         actor="planner")
-                    except Exception: pass
+                    except Exception as _ee:
+                        _log.warning("planner_node_start emit fail: %s", _ee)
                 node_t0 = time.time()
                 try:
                     result = executor(node)
@@ -307,10 +308,12 @@ class Planner:
                                              "est_human_review_sec": node.human_review_time_sec,
                                              "pace_mode": graph.pace_mode},
                                             actor="planner")
-                        except Exception: pass
+                        except Exception as _ee:
+                        _log.warning("planner_node_start emit fail: %s", _ee)
                     if on_step:
                         try: on_step(node, result)
-                        except Exception: pass
+                        except Exception as _ee:
+                        _log.warning("planner_node_start emit fail: %s", _ee)
                 except Exception as e:
                     node.error = str(e)[:300]
                     if node.n_attempts < node.max_attempts:
@@ -323,10 +326,12 @@ class Planner:
                                                 {"graph_id": graph.id, "node_id": node.id,
                                                  "error": node.error},
                                                 actor="planner")
-                            except Exception: pass
+                            except Exception as _ee:
+                        _log.warning("planner_node_start emit fail: %s", _ee)
                         if on_fail:
                             try: on_fail(node, e)
-                            except Exception: pass
+                            except Exception as _ee:
+                        _log.warning("planner_node_start emit fail: %s", _ee)
                         # 의존 노드 skip
                         for other in graph.nodes.values():
                             if node.id in other.deps and other.state == "pending":
@@ -348,7 +353,8 @@ class Planner:
                                  "n_done": sum(1 for n in graph.nodes.values() if n.state == "done"),
                                  "n_failed": sum(1 for n in graph.nodes.values() if n.state == "failed")},
                                 actor="planner")
-            except Exception: pass
+            except Exception as _ee:
+                _log.warning("planner_dag_done emit fail: %s", _ee)
         return graph
 
 

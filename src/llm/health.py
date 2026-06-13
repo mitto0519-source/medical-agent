@@ -90,9 +90,14 @@ def order_by_health(providers: List[str]) -> List[str]:
         last_success = e.get("last_success", 0)
         fail_count = e.get("fail_count", 0)
         in_cooldown = (now - last_fail) < _COOLDOWN_SEC if last_fail else False
-        # 1차: 쿨다운 여부(작동하는 것 먼저). 2차: 실패횟수.
-        # 3차: 품질 우선순위(작동하는 것 중 고품질 모델 우선). 4차: 최근 성공.
-        return (1 if in_cooldown else 0, fail_count, _QUALITY_RANK.get(p, 9), -last_success)
+        # ★ 2026-06-13 fix: cooldown 끝난 paid frontier가 fail_count 1점 때문에
+        # free 모델 뒤로 밀려 의학 reasoning이 toy로 떨어지던 버그.
+        # 우선순위 재정렬:
+        # 1) 쿨다운 안 끝났으면 후순위
+        # 2) 쿨다운 끝났으면 quality_rank 우선 (paid frontier가 fail_count > 0이어도 prefer)
+        # 3) 같은 quality면 fail_count 적은 것
+        # 4) 최근 성공
+        return (1 if in_cooldown else 0, _QUALITY_RANK.get(p, 9), fail_count, -last_success)
 
     ordered = sorted(providers, key=sort_key)
     if ordered != providers:

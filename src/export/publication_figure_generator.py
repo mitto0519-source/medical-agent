@@ -207,21 +207,24 @@ def _normalize_stat_result(raw: dict) -> dict:
     out.setdefault("model_metrics", raw.get("model_metrics") or {})
     out.setdefault("descriptive_stats", raw.get("descriptive_stats") or {})
 
-    # subgroup mapping — {label: {or, ci}} → subgroup_results dict of dict
-    # make_subgroup_forest는 {label: {variable: or}} dict 형태를 기대함 (list X)
+    # subgroup mapping — make_subgroup_forest는 다음 schema 기대:
+    #   subgroup_results = {sg_var: {sg_val: [varresult_dict, ...]}}
+    # raw input: {"subgroup": {"male": {"or":1.5,"ci":[..]}, "female": {...}}}
     if raw.get("subgroup") and not raw.get("subgroup_results"):
-        sgr = {}
         var_name = out["model_vars"][0]["variable"] if out.get("model_vars") else "exposure"
+        sg_var_label = raw.get("subgroup_variable") or "stratum"
+        inner = {}
         for label, vals in raw["subgroup"].items():
             ci = vals.get("ci") or [None, None]
-            sgr[label] = {
+            inner[label] = [{
                 "variable": var_name,
                 "or": float(vals.get("or") or 1.0),
                 "ci": ci,
                 "ci_lo": float(ci[0]) if ci[0] is not None else None,
                 "ci_hi": float(ci[1]) if ci[1] is not None else None,
-            }
-        out["subgroup_results"] = sgr
+                "p": float(vals.get("p") or 1.0),
+            }]
+        out["subgroup_results"] = {sg_var_label: inner}
 
     return out
 
