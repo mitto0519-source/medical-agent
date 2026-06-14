@@ -29,15 +29,22 @@ _LOCK = threading.Lock()
 
 # task → prompts to compose (medical_core + safety_constraints 항상 포함)
 # 2026-05-30: style_polish 추가 — paper_write에서 의미 단위 재창조  가이드
+# 2026-06-14: chat_style 추가 — UX_CHAT_DESIGN_SPEC §1 — 채팅 task에만 주입
+#   (paper_write 계열엔 미포함; 거기는 IMRaD 문서체 유지)
 _TASK_COMPOSITION = {
     "paper_write":  ["medical_core", "safety_constraints", "yoosun_style", "style_polish"],
     "paper_writing":["medical_core", "safety_constraints", "yoosun_style", "style_polish"],
     "paper_polish": ["medical_core", "safety_constraints", "yoosun_style", "style_polish"],
-    "chat":         ["medical_core", "safety_constraints"],
-    "qa":           ["medical_core", "safety_constraints"],
-    "fast":         ["medical_core", "safety_constraints"],
-    "summary":      ["medical_core", "safety_constraints"],
-    "standard":     ["medical_core", "safety_constraints"],
+    "paper_section":["medical_core", "safety_constraints", "yoosun_style", "style_polish"],
+    "paper_full_best":["medical_core", "safety_constraints", "yoosun_style", "style_polish"],
+    # ── chat 계열: chat_style 주입 (결론 먼저 / 거대 헤더 금지 / 짧은 문단) ──
+    "chat":            ["medical_core", "safety_constraints", "chat_style"],
+    "qa":              ["medical_core", "safety_constraints", "chat_style"],
+    "topic_explore":   ["medical_core", "safety_constraints", "chat_style"],
+    "chat_orchestrate":["medical_core", "safety_constraints", "chat_style"],
+    "fast":            ["medical_core", "safety_constraints", "chat_style"],
+    "summary":         ["medical_core", "safety_constraints", "chat_style"],
+    "standard":        ["medical_core", "safety_constraints", "chat_style"],
 }
 
 

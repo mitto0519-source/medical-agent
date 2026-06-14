@@ -14,10 +14,15 @@ _log = get_logger(__name__)
 
 
 def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") -> str:
-    """Single-core system prompt: persona → RAG inject → rule overlay."""
+    """Single-core system prompt: persona → RAG inject → rule overlay.
+
+    Per UX_CHAT_DESIGN_SPEC §1: chat 말풍선엔 chat_style 주입(결론 먼저, 거대헤더 금지,
+    짧은 문단). paper_writing이 아닌 chat task로 호출 → prompt_loader가 chat_style
+    합성 → 응답 톤이 문서체 → 대화체로 전환.
+    """
     try:
         from src.agent.persona import get_system_prompt
-        base_sys = get_system_prompt(task="paper_writing", owner_email=owner_email or None)
+        base_sys = get_system_prompt(task="chat", owner_email=owner_email or None)
     except Exception as e:
         _log.warning("persona load fail: %s", e)
         base_sys = "당신은 의학 연구 코파일럿입니다."

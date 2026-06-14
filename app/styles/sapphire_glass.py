@@ -382,11 +382,66 @@ html, body, [data-testid="stApp"] {{
   background: rgba(219, 234, 254, 0.55);   /* blue-100 옅게 */
   border: 1px solid rgba(59, 130, 246, 0.18);
   border-radius: 12px;
-  padding: 11px 14px;
+  padding: 13px 16px;
   margin: 8px 0;
   color: var(--sg-text);
-  font-size: 0.92rem;
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 74ch;
 }}
+/* UX_CHAT_DESIGN_SPEC §6.1 — 채팅 말풍선 내부 타이포 (문서급 거대 헤더 차단) */
+.sg-msg-assistant h1, .sg-msg-assistant h2 {{
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 14px 0 6px;
+  line-height: 1.3;
+  color: var(--sg-text);
+  border: none;
+  padding: 0;
+}}
+.sg-msg-assistant h3 {{
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 12px 0 4px;
+  color: var(--sg-text);
+}}
+.sg-msg-assistant p {{
+  margin: 0 0 10px;
+  line-height: 1.65;
+  text-indent: 0;       /* 문서체 들여쓰기 무시 (대화는 일반 단락) */
+  text-align: left;
+}}
+.sg-msg-assistant ul, .sg-msg-assistant ol {{
+  margin: 6px 0 10px;
+  padding-left: 22px;
+}}
+.sg-msg-assistant li {{ margin: 2px 0; }}
+.sg-msg-assistant table {{
+  font-size: 0.88rem;
+  border-collapse: collapse;
+  margin: 8px 0;
+}}
+.sg-msg-assistant th, .sg-msg-assistant td {{
+  padding: 4px 8px;
+  border: 1px solid rgba(59, 130, 246, 0.18);
+}}
+.sg-msg-assistant code {{
+  font-size: 0.86em;
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  background: rgba(15, 23, 42, 0.04);
+  padding: 1px 5px;
+  border-radius: 4px;
+}}
+.sg-msg-assistant pre {{
+  background: rgba(15, 23, 42, 0.04);
+  padding: 10px 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 8px 0;
+}}
+.sg-msg-assistant strong, .sg-msg-assistant b {{ font-weight: 700; }}
+/* 사용자 말풍선도 동일 타이포 안전망 */
+.sg-msg-user {{ max-width: 74ch; line-height: 1.55; }}
 
 .sg-action-card {{
   background: var(--sg-surface);

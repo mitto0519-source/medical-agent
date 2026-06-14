@@ -609,13 +609,36 @@ def _render_chat_page(pid: str):
     st.markdown("""
     <style>
     .msg-user { background:#0F172A; color:#FFFFFF; border-radius:14px 14px 4px 14px;
-                 padding:10px 14px; margin:8px 0 8px auto; max-width:85%;
-                 width:fit-content; font-size:0.92rem; line-height:1.5;
+                 padding:10px 14px; margin:8px 0 8px auto; max-width:74ch;
+                 width:fit-content; font-size:15px; line-height:1.55;
                  white-space:pre-wrap; word-wrap:break-word; }
     .msg-asst { background:#F1F5F9; color:#0F172A; border-radius:14px 14px 14px 4px;
-                 padding:10px 14px; margin:8px auto 8px 0; max-width:92%;
-                 width:fit-content; font-size:0.92rem; line-height:1.55;
+                 padding:13px 16px; margin:8px auto 8px 0; max-width:74ch;
+                 width:fit-content; font-size:15px; line-height:1.65;
                  white-space:pre-wrap; word-wrap:break-word; }
+    /* UX_CHAT_DESIGN_SPEC §6.1 — 채팅 말풍선 헤더/타이포 규율 (문서급 거대 헤더 차단) */
+    .msg-asst h1, .msg-asst h2 { font-size:1.05rem; font-weight:700;
+                                  margin:14px 0 6px; line-height:1.3;
+                                  color:#0F172A; border:none; padding:0; }
+    .msg-asst h3 { font-size:0.95rem; font-weight:600; margin:12px 0 4px;
+                    color:#0F172A; }
+    .msg-asst p  { margin:0 0 10px; line-height:1.65; text-indent:0;
+                    text-align:left; }
+    .msg-asst ul, .msg-asst ol { margin:6px 0 10px; padding-left:22px; }
+    .msg-asst li { margin:2px 0; line-height:1.6; }
+    .msg-asst table { font-size:0.88rem; border-collapse:collapse; margin:8px 0; }
+    .msg-asst th, .msg-asst td { padding:4px 8px;
+                                  border:1px solid rgba(15,23,42,0.12); }
+    .msg-asst code { font-size:0.86em;
+                      font-family:ui-monospace,"SF Mono",Consolas,monospace;
+                      background:rgba(15,23,42,0.05); padding:1px 5px;
+                      border-radius:4px; }
+    .msg-asst pre { background:rgba(15,23,42,0.05); padding:10px 12px;
+                     border-radius:8px; overflow-x:auto; margin:8px 0; }
+    .msg-asst strong, .msg-asst b { font-weight:700; }
+    .msg-asst blockquote { margin:8px 0; padding:6px 12px;
+                            border-left:3px solid rgba(15,23,42,0.18);
+                            background:rgba(15,23,42,0.03); }
     .preview-box { background:#FFFFFF; border:1px solid rgba(15,23,42,0.08);
                     border-radius:12px; padding:32px; min-height:600px;
                     box-shadow:0 1px 3px rgba(15,23,42,0.04); }
