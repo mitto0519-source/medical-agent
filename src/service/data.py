@@ -30,17 +30,27 @@ def load_kyrbs(year: int):
 
 
 def available_kyrbs_years() -> list[int]:
-    """Glob data/datasets/kyrbs/raw/*.sav and parse years from filenames."""
+    """Glob data/raw/kyrbs*.sav (canonical) and data/datasets/kyrbs/raw/*.sav (legacy)."""
     import re
-    root = Path("data/datasets/kyrbs/raw")
-    if not root.exists():
-        return []
     years: set[int] = set()
-    for p in root.glob("*.sav"):
-        m = re.search(r"20\d{2}", p.name)
-        if m:
-            years.add(int(m.group(0)))
+    for root in (Path("data/raw"), Path("data/datasets/kyrbs/raw")):
+        if not root.exists():
+            continue
+        for p in root.glob("kyrbs*.sav"):
+            m = re.search(r"20\d{2}", p.name)
+            if m:
+                years.add(int(m.group(0)))
     return sorted(years)
+
+
+def available_knhanes_years() -> list[int]:
+    """Delegate to knhanes_raw_loader."""
+    try:
+        from src.data import knhanes_raw_loader as kl
+        return kl.list_available_years()
+    except Exception as e:
+        _log.warning("available_knhanes_years fail: %s", e)
+        return []
 
 
 def load_dataset(label: str, year: Optional[int] = None):
@@ -52,8 +62,14 @@ def load_dataset(label: str, year: Optional[int] = None):
         return load_kyrbs(year)
     if label_u == "KNHANES":
         try:
-            from src.data import knhanes_loader as kl
-            df = kl.load_knhanes_year(year) if year else None
+            from src.data import knhanes_raw_loader as kl
+            if year is None:
+                avail = kl.list_available_years()
+                if not avail:
+                    return None, {"error": "no KNHANES .sav in data/raw/knhanes/. "
+                                              "Drop HN<YY>_ALL.sav files there."}
+                year = avail[-1]
+            df = kl.load_knhanes_year(year)
             meta = {"dataset": "KNHANES", "year": year,
                      "n_rows": len(df) if df is not None else 0}
             return df, meta
@@ -63,4 +79,5 @@ def load_dataset(label: str, year: Optional[int] = None):
     return None, {"error": f"unknown dataset: {label}"}
 
 
-__all__ = ["load_kyrbs", "available_kyrbs_years", "load_dataset"]
+__all__ = ["load_kyrbs", "available_kyrbs_years",
+           "available_knhanes_years", "load_dataset"]

@@ -1,0 +1,252 @@
+# KNHANES Dataset Variable Registry — single source of truth
+# MASTER_UPGRADE §2. Mirrors KYRBS registry schema.
+#
+# How to populate raw files:
+#   1. Apply at https://knhanes.kdca.go.kr (KDCA approval required)
+#   2. Download HN<year>_ALL.sav per wave
+#   3. Place at:  data/raw/knhanes/HN<year>_ALL.sav  (e.g. HN23_ALL.sav for 2023)
+#   4. Loader src/data/knhanes_raw_loader.py reads this YAML to resolve raw names
+#
+# Schema (same as KYRBS registry):
+#   std_name / axis / year_map / coding / unit / value_labels / status
+
+dataset: KNHANES
+version: 0.1.0
+description: Korea National Health and Nutrition Examination Survey (국민건강영양조사)
+year_coverage: "1998-2024"
+documentation: https://knhanes.kdca.go.kr
+provider: KDCA (Korea Disease Control & Prevention Agency)
+file_pattern: "HN{year:02d}_ALL.sav"   # e.g. HN23_ALL.sav
+
+# Survey-design variables — CRITICAL for survey-weighted analysis
+# KNHANES uses stratified 2-stage cluster sampling with probability weights.
+survey_design:
+  strata:
+    std_name: strata
+    axis: D_design
+    year_map:
+      "2007-2024": kstrata
+    note: Stratification variable
+    status: O
+  cluster:
+    std_name: cluster
+    axis: D_design
+    year_map:
+      "2007-2024": psu
+    note: Primary sampling unit
+    status: O
+  weight_interview:
+    std_name: wt_itvex
+    axis: D_design
+    year_map:
+      "2007-2024": wt_itvex
+    note: Interview survey weight (행태조사 가중치)
+    status: O
+  weight_exam:
+    std_name: wt_examy
+    axis: D_design
+    year_map:
+      "2007-2024": wt_ex
+    note: Health examination weight (검진조사 가중치)
+    status: O
+  weight_nutrition:
+    std_name: wt_ntex
+    axis: D_design
+    year_map:
+      "2007-2024": wt_ntex
+    note: Nutrition survey weight (영양조사 가중치)
+    status: O
+
+# Demographics
+demographics:
+  age:
+    std_name: age
+    axis: D_demographic
+    year_map:
+      "2007-2024": age
+    unit: year
+    status: O
+  sex:
+    std_name: sex
+    axis: D_demographic
+    year_map:
+      "2007-2024": sex
+    coding:
+      "2007-2024":
+        1: male
+        2: female
+    status: O
+  education:
+    std_name: education
+    axis: D_demographic
+    year_map:
+      "2007-2024": edu
+    coding:
+      "2007-2024":
+        1: elementary_or_less
+        2: middle_school
+        3: high_school
+        4: college_or_above
+    status: O
+  household_income:
+    std_name: income_q
+    axis: D_demographic
+    year_map:
+      "2007-2024": incm
+    coding:
+      "2007-2024":
+        1: q1_lowest
+        2: q2
+        3: q3
+        4: q4_highest
+    status: O
+
+# Health examination (검진)
+exam:
+  bmi:
+    std_name: bmi
+    axis: D_outcome
+    year_map:
+      "2007-2024": HE_BMI
+    unit: kg/m²
+    status: O
+  sbp:
+    std_name: sbp
+    axis: D_outcome
+    year_map:
+      "2007-2024": HE_sbp
+    unit: mmHg
+    status: O
+  dbp:
+    std_name: dbp
+    axis: D_outcome
+    year_map:
+      "2007-2024": HE_dbp
+    unit: mmHg
+    status: O
+  hba1c:
+    std_name: hba1c
+    axis: D_outcome
+    year_map:
+      "2007-2024": HE_HbA1c
+    unit: "%"
+    status: O
+  ldl:
+    std_name: ldl
+    axis: D_outcome
+    year_map:
+      "2007-2024": HE_LDLc
+    unit: mg/dL
+    status: O
+  hdl:
+    std_name: hdl
+    axis: D_outcome
+    year_map:
+      "2007-2024": HE_HDLc
+    unit: mg/dL
+    status: O
+  glucose_fasting:
+    std_name: glucose
+    axis: D_outcome
+    year_map:
+      "2007-2024": HE_glu
+    unit: mg/dL
+    status: O
+
+# Behavior / lifestyle
+behavior:
+  smoking_current:
+    std_name: smoking_current
+    axis: D_exposure
+    year_map:
+      "2007-2024": BS3_1
+    coding:
+      "2007-2024":
+        1: daily
+        2: occasional
+        3: not_current
+        8: never
+    status: O
+  alcohol_freq:
+    std_name: alcohol_freq
+    axis: D_exposure
+    year_map:
+      "2007-2024": BD1_11
+    status: O
+  physical_activity_vig:
+    std_name: pa_vig
+    axis: D_lifestyle
+    year_map:
+      "2007-2024": BE3_71
+    status: O
+  sleep_hours:
+    std_name: sleep_hours
+    axis: D_lifestyle
+    year_map:
+      "2007-2024": BP16_1
+    unit: hour
+    status: O
+
+# Nutrition (1-day 24h recall)
+nutrition:
+  energy_kcal:
+    std_name: energy_kcal
+    axis: D_exposure
+    year_map:
+      "2007-2024": N_EN
+    unit: kcal/day
+    status: O
+  protein:
+    std_name: protein_g
+    axis: D_exposure
+    year_map:
+      "2007-2024": N_PROT
+    unit: g/day
+    status: O
+  fat:
+    std_name: fat_g
+    axis: D_exposure
+    year_map:
+      "2007-2024": N_FAT
+    unit: g/day
+    status: O
+  sodium:
+    std_name: sodium_mg
+    axis: D_exposure
+    year_map:
+      "2007-2024": N_NA
+    unit: mg/day
+    status: O
+
+# Disease history
+disease:
+  diabetes_dx:
+    std_name: diabetes_dx
+    axis: D_outcome
+    year_map:
+      "2007-2024": DE1_dg
+    coding:
+      "2007-2024":
+        0: no
+        1: yes
+    status: O
+  hypertension_dx:
+    std_name: hypertension_dx
+    axis: D_outcome
+    year_map:
+      "2007-2024": DI1_dg
+    coding:
+      "2007-2024":
+        0: no
+        1: yes
+    status: O
+  dyslipidemia_dx:
+    std_name: dyslipidemia_dx
+    axis: D_outcome
+    year_map:
+      "2007-2024": DI2_dg
+    coding:
+      "2007-2024":
+        0: no
+        1: yes
+    status: O
