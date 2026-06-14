@@ -672,6 +672,28 @@ def _render_chat_page(pid: str):
             for m in project.get("messages", []):
                 _render_msg(m.get("role", "assistant"), m.get("content", ""))
 
+            # ★ Auto-scroll anchor (2026-06-14) — 새 메시지·스트리밍 chunk마다 최하단으로
+            # st.container(height=...)의 내부 div가 [data-testid='stVerticalBlockBorderWrapper']
+            # 아래에 있어 직접 scrollTop 강제. anchor 자체는 보이지 않음.
+            st.markdown(
+                "<div id='chat-bottom-anchor' style='height:1px;'></div>"
+                "<script>"
+                "(function(){"
+                " const doc = window.parent ? window.parent.document : document;"
+                " const a = doc.getElementById('chat-bottom-anchor');"
+                " if(!a) return;"
+                " let p = a.parentElement;"
+                " while(p && p !== doc.body){"
+                "  if(p.scrollHeight > p.clientHeight + 5){ p.scrollTop = p.scrollHeight; break; }"
+                "  p = p.parentElement;"
+                " }"
+                " // also try scrollIntoView for browsers that ignore manual scrollTop on inner div"
+                " try { a.scrollIntoView({block:'end', behavior:'instant'}); } catch(e){}"
+                "})();"
+                "</script>",
+                unsafe_allow_html=True,
+            )
+
             # 2) 새 사용자 입력 처리 (같은 run 안에서 스트리밍)
             if user_msg:
                 if not project.get("title") or project["title"] == "새 작업":
@@ -933,6 +955,16 @@ def _render_chat_page(pid: str):
                                               "ts": datetime.now().isoformat()})
                 _save_project(project)
                 _post_turn_hooks(project, user_msg, reply, owner_email)
+
+                # ★ Post-turn auto-scroll (응답 완료 직후 최하단으로)
+                st.markdown(
+                    "<script>"
+                    "(function(){"
+                    " const doc = window.parent ? window.parent.document : document;"
+                    " const a = doc.getElementById('chat-bottom-anchor');"
+                    " if(a){ try{a.scrollIntoView({block:'end'});}catch(e){} }"
+                    "})();"
+                    "</script>", unsafe_allow_html=True)
 
     with col_preview:
         sections = project.get("sections") or {}
