@@ -101,13 +101,27 @@ class MedicalGraph:
                          added_at=datetime.now().strftime("%Y-%m-%d"))
         return node_id
 
-    def add_concept(self, concept_id: str, label: str, domain: str = "") -> str:
+    def add_concept(self, concept_id: str, label: str, domain: str = "",
+                     *, cui: str | None = None, mesh: str | None = None,
+                     snomed: str | None = None, axis: str | None = None,
+                     discipline: list | None = None) -> str:
+        """KNOWLEDGE_MODEL_SPEC v2 — concept node with standard anchors.
+
+        Backward compat: cui/mesh/snomed/axis/discipline are kw-only optional.
+        Old callers (add_concept(cid, label, domain)) still work.
+        """
         if not _NX_OK:
             return concept_id
         node_id = f"concept:{concept_id}"
         if not self._G.has_node(node_id):
-            self._G.add_node(node_id, type="concept",
-                             concept_id=concept_id, label=label, domain=domain)
+            attrs = {"type": "concept", "concept_id": concept_id,
+                      "label": label, "domain": domain}
+            if axis: attrs["axis"] = axis
+            if cui: attrs["cui"] = cui
+            if mesh: attrs["mesh"] = mesh
+            if snomed: attrs["snomed"] = snomed
+            if discipline: attrs["discipline"] = discipline
+            self._G.add_node(node_id, **attrs)
         return node_id
 
     def add_dataset(self, name: str) -> str:
@@ -130,12 +144,32 @@ class MedicalGraph:
             return
         self._G.add_edge(paper_node, dataset_node, relation="USES_DATASET", weight=1.0)
 
-    def link_concepts(self, c1: str, c2: str, weight: float = 0.5):
-        """같은 도메인 개념 간 연결 (양방향)."""
+    def link_concepts(self, c1: str, c2: str, weight: float = 0.5,
+                        *, rel: str = "RELATED_TO",
+                        attrs: dict | None = None):
+        """개념 간 연결.
+
+        KNOWLEDGE_MODEL_SPEC v2: rel 인자로 EDGE_CATALOG 타입 지정 가능
+        (EXPOSURE_TO_OUTCOME, MECHANISM_OF, SHARED_MECHANISM 등).
+        기본은 RELATED_TO (양방향, 하위호환).
+        attrs: effect_measure, estimate, ci_low, ci_high, p, direction 등.
+        """
         if not _NX_OK:
             return
-        self._G.add_edge(c1, c2, relation="RELATED_TO", weight=weight)
-        self._G.add_edge(c2, c1, relation="RELATED_TO", weight=weight)
+        # 양식 양식 양식 (없는 rel은 RELATED_TO로 폴백)
+        try:
+            from src.knowledge.schema_v2 import is_known_edge
+            if not is_known_edge(rel):
+                rel = "RELATED_TO"
+        except Exception:
+            pass
+        edge_attrs = {"relation": rel, "weight": weight}
+        if attrs:
+            edge_attrs.update(attrs)
+        self._G.add_edge(c1, c2, **edge_attrs)
+        # 양방향은 RELATED_TO에만 (방향성 있는 엣지는 단방향 유지)
+        if rel == "RELATED_TO":
+            self._G.add_edge(c2, c1, relation=rel, weight=weight)
 
     # ── 쿼리 ─────────────────────────────────────────────────────────────────
 
