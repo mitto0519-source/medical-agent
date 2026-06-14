@@ -254,26 +254,27 @@ class KnowledgeOrchestrator:
                     concept_dicts.append({"concept_id": str(c), "label": str(c)})
 
             # axis-keyed buckets for cross-edge inference
+            # FIX-10b: schema_v2 canonical axis 우선 (`axis` 키), legacy `domain_id` fallback
             by_axis: dict = {}
             for c in concept_dicts:
                 cid = c.get("concept_id") or c.get("label")
                 if not cid:
                     continue
-                axis = c.get("domain_id") or c.get("axis")
+                canonical_axis = c.get("axis") or c.get("domain_id")
                 discipline = c.get("discipline")
                 if isinstance(discipline, str):
                     discipline = [discipline]
                 try:
                     cnode = g.add_concept(
                         cid, label=c.get("label", cid),
-                        domain=axis or c.get("domain_label", ""),
+                        domain=canonical_axis or c.get("domain_label", ""),
                         cui=c.get("cui"), mesh=c.get("mesh"),
-                        snomed=c.get("snomed"), axis=axis,
+                        snomed=c.get("snomed"), axis=canonical_axis,
                         discipline=discipline,
                     )
                     g.link_paper_concept(paper_id, cnode, weight=1.0)
-                    if axis:
-                        by_axis.setdefault(axis.upper(), []).append(cnode)
+                    if canonical_axis:
+                        by_axis.setdefault(canonical_axis.upper(), []).append(cnode)
                 except TypeError:
                     # legacy add_concept(3 arg) fallback
                     try:

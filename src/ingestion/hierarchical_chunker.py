@@ -227,14 +227,19 @@ def _detect_sample_size(body: str) -> int | None:
 
 
 def _extract_concept_cuis(body: str) -> dict:
-    """ontology.extract_concepts → axis별 CUI(or concept_id) list."""
+    """ontology.extract_concepts → schema_v2 canonical axis별 CUI(or concept_id) list.
+
+    FIX-10b: `axis` 우선 (canonical), `domain_id` fallback. axis 키는 schema_v2
+    chunk meta 필드명과 매핑 (exposure / outcome / population / disease / mechanism / ...).
+    """
     try:
         from src.knowledge.medical_ontology import get_ontology
         ont = get_ontology()
         concepts = ont.extract_concepts(body)
         out: dict = {}
         for c in concepts:
-            axis_key = c.get("domain_id", "").lower().replace("d_", "")
+            axis_full = c.get("axis") or c.get("domain_id", "")
+            axis_key = axis_full.lower().replace("d_", "")
             cid = c.get("cui") or c.get("concept_id") or c.get("label", "")
             if axis_key and cid:
                 out.setdefault(axis_key, []).append(cid)

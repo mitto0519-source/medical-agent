@@ -332,20 +332,48 @@ class MedicalOntology:
         except Exception as e:
             _log.debug("typology_catalog load fail: %s", e)
 
-        # D_vocabulary — vocabulary.json (500 medical English terms, low-priority bucket)
-        # 양식 양식 양식 양식 양식 양식 양식 — 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식.
-        # Vocabulary는 keyword 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 양식 _concept_map 양식 양식 양식 양식 양식.
+        # D_vocabulary — vocabulary.json (500 medical English terms)
+        # 단순 단어 목록이라 concept으로는 부적합. 키워드 보조용으로만 활용 가능.
+        # 별도 인덱스 만들 경우 _concept_map에 직접 주입 (현재는 미적용).
 
         _log.info("MedicalOntology seed extensions loaded: +%d concepts", added)
         return added
 
+    # FIX-10b (2026-06-14): canonical axis remap.
+    # 기존 domain_id (D_behavior/D_disease 등)는 그대로 두고, schema_v2 canonical axis를
+    # 별도 부여 — extract_concepts 결과에 둘 다 들어가 orchestrator가 cross-axis edge 생성.
+    _AXIS_REMAP = {
+        # 기존 도메인 → schema_v2 canonical axis
+        "D_population":     "D_population",
+        "D_behavior":       "D_exposure",       # sleep/PA/diet/smoking/alcohol/screen → 모두 exposure
+        "D_disease":        "D_outcome",        # 질환은 결과/outcome (D_outcome으로 격상)
+        "D_design":         "D_study_design",
+        "D_statistics":     "D_methodology",
+        "D_dataset":        "D_data_source",
+        "D_methodology":    "D_methodology",    # seed extension (그대로)
+        "D_clinical_topic": "D_disease",        # 임상 토픽은 질환축으로
+        "D_study_design":   "D_study_design",   # seed extension (그대로)
+    }
+
+    # FIX-10b concept_id 별 세부 axis override (특정 concept 양식 양식 양식 양식)
+    _CONCEPT_AXIS_OVERRIDE = {
+        # mental_health은 outcome이 더 맞음 (depression/anxiety는 결과 변수)
+        "C_mental_health": "D_outcome",
+    }
+
+    def _resolve_axis(self, domain_id: str, concept_id: str) -> str:
+        return self._CONCEPT_AXIS_OVERRIDE.get(
+            concept_id, self._AXIS_REMAP.get(domain_id, domain_id))
+
     def _build_index(self):
         for domain_id, domain in ONTOLOGY.items():
             for concept_id, concept in domain["children"].items():
+                canonical_axis = self._resolve_axis(domain_id, concept_id)
                 for kw in concept.get("keywords", []):
                     self._concept_map[kw.lower()] = {
                         "concept_id": concept_id,
-                        "domain_id": domain_id,
+                        "domain_id": domain_id,            # legacy (하위호환)
+                        "axis": canonical_axis,             # FIX-10b canonical
                         "label": concept["label"],
                         "domain_label": domain["label"],
                         "mesh": concept.get("mesh"),
@@ -385,12 +413,13 @@ class MedicalOntology:
         return list(kws)
 
     def all_concepts(self) -> List[Dict]:
-        """전체 개념 목록 반환 (domain + concept 포함)."""
+        """전체 개념 목록 반환 — FIX-10b: schema_v2 canonical axis 동반 노출."""
         result = []
         for domain_id, domain in ONTOLOGY.items():
             for concept_id, concept in domain["children"].items():
                 result.append({
                     "domain_id": domain_id,
+                    "axis": self._resolve_axis(domain_id, concept_id),
                     "concept_id": concept_id,
                     "label": concept["label"],
                     "domain_label": domain["label"],
