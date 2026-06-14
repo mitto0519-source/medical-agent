@@ -720,8 +720,63 @@ def _render_chat_page(pid: str):
     </style>
     """, unsafe_allow_html=True)
 
-    # 입력은 컨테이너 위에서 받음 (chat_input은 페이지 하단 고정)
+    # ★ 채팅 컴포저 (2026-06-15 UX_CHAT_DESIGN_SPEC §4) — 첨부 + 모델 picker + 입력
+    # 입력은 페이지 하단 고정(st.chat_input), 그 바로 위에 컴포저 액션 표시.
     initial = st.session_state.pop("sg_initial_prompt", None)
+
+    # 컴포저 액션 row (입력창 위에 작게)
+    _composer_col1, _composer_col2, _composer_col3 = st.columns([0.42, 0.34, 0.24])
+    with _composer_col1:
+        with st.popover("📎 첨부 (파일/이미지/논문)",
+                          use_container_width=True):
+            up = st.file_uploader(
+                "PDF·DOCX·논문·이미지·CSV·.sav 등",
+                type=["pdf", "docx", "doc", "txt", "md", "csv",
+                       "sav", "dta", "png", "jpg", "jpeg"],
+                accept_multiple_files=True,
+                key=f"composer_upload_{pid}",
+                label_visibility="collapsed",
+            )
+            if up:
+                try:
+                    _enqueue_uploaded_files(
+                        up, prompt_hint=f"project:{pid}")
+                    st.success(f"✅ {len(up)}개 첨부 — 백로그에 enqueue (자동 처리)")
+                except Exception as _e:
+                    st.warning(f"첨부 큐 실패: {_e}")
+            # 첨부 패널 안 + 사용자 본인 논문(StyleProfiler) 진입점도
+            owner_for_uploader = (st.session_state.get("user") or {}).get("email") or \
+                                   st.session_state.get("user_email", "")
+            if owner_for_uploader:
+                st.caption("📚 본인 논문 PDF는 사이드바 '내 논문 업로드'에 두면 문체 그라운딩됩니다")
+
+    with _composer_col2:
+        _model_choices = {
+            "auto":    "🤖 자동 (균형)",
+            "fast":    "⚡ Haiku — 빠름·간단",
+            "premium": "🏆 Opus — 최고 품질·느림",
+        }
+        cur = st.session_state.get("sg_model_override", "auto")
+        sel = st.selectbox(
+            "모델",
+            options=list(_model_choices.keys()),
+            index=list(_model_choices.keys()).index(cur) if cur in _model_choices else 0,
+            format_func=lambda k: _model_choices.get(k, k),
+            key=f"composer_model_{pid}",
+            label_visibility="collapsed",
+        )
+        if sel != st.session_state.get("sg_model_override"):
+            st.session_state["sg_model_override"] = sel
+            # service.chat 이 읽도록 환경변수에도 설정 (process-wide)
+            import os as _os
+            if sel == "auto":
+                _os.environ.pop("LLM_MODEL_OVERRIDE", None)
+            else:
+                _os.environ["LLM_MODEL_OVERRIDE"] = sel  # "fast" / "premium"
+
+    with _composer_col3:
+        st.caption(f"📊 model: **{_model_choices.get(sel,sel).split('—')[0].strip()}**")
+
     user_msg = st.chat_input("메시지를 입력하세요…", key=f"chat_input_{pid}")
     if not user_msg and initial and not project["messages"]:
         user_msg = initial
