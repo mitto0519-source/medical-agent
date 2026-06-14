@@ -63,10 +63,10 @@
     "oa_papers_full_text": 12625,
     "oa_papers_full_text_above_5kb": 12294,
     "oa_papers_meta_stubs": 12625,
-    "chromadb_embeddings": 27671,
-    "chromadb_queue_pending": 893,
-    "knowledge_graph_nodes": 10139,
-    "knowledge_graph_edges": 54170,
+    "chromadb_embeddings": 28400,
+    "chromadb_queue_pending": 1622,
+    "knowledge_graph_nodes": 10203,
+    "knowledge_graph_edges": 54302,
     "medical_ontology_concepts": 114
   },
   "known_seed_bias": "OA papers fetched from Europe PMC OA Subset → over-represented: public health, environmental health, nutrition, epidemiology. Under-represented: pharmacology, clinical guidelines, surgical outcomes, oncology RCT. When user requests clinical topic, supplement reasoning beyond seed retrieval.",
@@ -94,7 +94,7 @@
   ],
   "deployment_target": "external URL (HF Spaces / Cloud Run / hosted), with HF Datasets as persistent data store. Local Docker is dev only.",
   "verified_counts": {
-    "measured_at": "2026-06-13 23:49:09",
+    "measured_at": "2026-06-14 10:46:45",
     "papers": {
       "meta_json_files": 12625,
       "full_text_files": 12625,
@@ -103,23 +103,23 @@
       "comment": "1 paper = 1 .meta.json + 1 .txt pair. ~3% of .txt are stubs <5KB."
     },
     "chromadb": {
-      "embeddings": 27671,
-      "queue_pending": 893,
-      "embedding_metadata_rows": 314673
+      "embeddings": 28400,
+      "queue_pending": 1622,
+      "embedding_metadata_rows": 323421
     },
     "knowledge_graph": {
       "file": "data/knowledge_graph/graph.json",
-      "nodes_total": 10139,
+      "nodes_total": 10203,
       "node_types": {
-        "concept": 27,
+        "concept": 41,
         "dataset": 2,
-        "paper": 10110
+        "paper": 10160
       },
-      "edges_total": 54170,
+      "edges_total": 54302,
       "edge_relations": {
         "RELATED_TO": 108,
         "HAS_CONCEPT": 51690,
-        "null": 380,
+        "null": 512,
         "USES_DATASET": 1992
       }
     },
