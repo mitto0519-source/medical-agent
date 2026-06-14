@@ -18,6 +18,62 @@ from src.config.models import get_model, thinking_config
 _log = get_logger(__name__)
 
 
+def _ground_truth_block() -> str:
+    """FIX-9 (2026-06-14): 로컬 PS1 훅이 prepend하던 ground-truth를 런타임에서 합성.
+
+    PowerShell 훅 (.claude/hooks/preprompt_memory_inject.ps1) 은 로컬 VS Code 전용.
+    HF Spaces 같은 웹 런타임은 PS1이 없어 CURRENT_STATE.json / CLAUDE.md 규칙을
+    못 읽음 → 로컬 vs 웹 컨텍스트 불일치.
+
+    이 함수가 파이썬으로 동일 ground-truth를 합성해 build_base_system에 주입.
+    """
+    import json
+    from pathlib import Path
+    root = Path(__file__).resolve().parent.parent.parent
+    parts = []
+
+    # 1. CURRENT_STATE.json — verified_counts (진실원본)
+    try:
+        cs = json.loads((root / "CURRENT_STATE.json").read_text(encoding="utf-8"))
+        vc = cs.get("verified_counts", {})
+        if vc:
+            kab = cs.get("key_assets_by_size", {})
+            line = (
+                f"# GROUND TRUTH (auto-injected, measured {vc.get('measured_at', '?')}):\n"
+                f"- OA papers full-text: {vc.get('papers',{}).get('full_text_files','?')} "
+                f"(>5KB: {vc.get('papers',{}).get('full_text_above_5kb','?')}, "
+                f"{vc.get('papers',{}).get('full_text_completion_pct','?')}%)\n"
+                f"- RAG chunks (ChromaDB): {vc.get('chromadb',{}).get('embeddings','?')} "
+                f"+ queue {vc.get('chromadb',{}).get('queue_pending','?')}\n"
+                f"- Knowledge graph: {vc.get('knowledge_graph',{}).get('nodes_total','?')} nodes / "
+                f"{vc.get('knowledge_graph',{}).get('edges_total','?')} edges "
+                f"(file: {vc.get('knowledge_graph',{}).get('file','?')})\n"
+                f"- Medical ontology: {vc.get('ontology',{}).get('concept_count','?')} concepts\n"
+                f"- Yoosun seed: {vc.get('yoosun_seed',{}).get('analyzed_papers','?')} papers analysed\n"
+                f"- Per-user style profiles: {vc.get('style_profiles',{}).get('per_user_profiles','?')}\n"
+                f"- Supabase live: {vc.get('supabase',{}).get('cloud_available', False)}\n"
+            )
+            parts.append(line)
+    except Exception:
+        pass
+
+    # 2. CLAUDE.md core rules (압축 추출 — 핵심 12 규칙 요약만)
+    rules = (
+        "# PROJECT RULES (CLAUDE.md compressed):\n"
+        "- RULE-7: NO placeholder words like '양식' in Korean output.\n"
+        "- RULE-8: VIBE PAPER — user-driven, AI assists, no auto-pipeline unless user says '알아서 해'.\n"
+        "- RULE-9: ONLINE-FIRST — all features must work from external URL.\n"
+        "- RULE-11: NO LIES — if not done, report 'not done + reason'. No fake completion claims.\n"
+        "- RULE-12: SINGLE CORE — persona/prompts/memory/events/router all share one backend.\n"
+        "- Stats: LLM does NOT compute statistics. Use stat_bridge for OR/CI/p/n.\n"
+        "- Citations: only PMIDs that exist in graph or RAG. Fabrication = reject.\n"
+        "- Manuscript: English only. Chat: Korean OK.\n"
+    )
+    parts.append(rules)
+
+    return "\n\n".join(parts) if parts else ""
+
+
 def build_base_system(base_prompt: str, task: str = "general",
                         owner_email: str | None = None) -> str:
     """페르소나 + medical seed + 인사이트 + 리뷰어 패턴 + 자기개선 + base를 합친
@@ -25,6 +81,8 @@ def build_base_system(base_prompt: str, task: str = "general",
     어떤 LLM으로 폴백돼도 페르소나 일관성을 유지한다 (규칙 9).
 
     FIX-1 (2026-06-13): owner_email 인자 추가. paper_write 계열은 StyleProfile 우선.
+    FIX-9 (2026-06-14): 웹 런타임 ground-truth 주입 — CURRENT_STATE.json + CLAUDE.md
+        핵심 규칙을 파이썬으로 합성해 로컬 PS1 훅과 동등화.
     """
     # 1. 페르소나 (항상 최우선) — per-user persona 우선
     persona_prompt = ""
@@ -110,7 +168,14 @@ def build_base_system(base_prompt: str, task: str = "general",
     except Exception:
         pass
 
-    parts = [p for p in [persona_prompt, versioned_block, preamble, intent_block,
+    # FIX-9: ground-truth (CURRENT_STATE.json + CLAUDE.md rules) — 항상 최상단
+    ground_truth = ""
+    try:
+        ground_truth = _ground_truth_block()
+    except Exception:
+        pass
+
+    parts = [p for p in [ground_truth, persona_prompt, versioned_block, preamble, intent_block,
                          insight_block, reviewer_block, improvement_block,
                          design_block, base_prompt or ""] if p]
     return "\n\n---\n\n".join(parts) if parts else "You are a helpful medical research assistant."
