@@ -1,0 +1,175 @@
+# KYRBS Dataset Variable Registry — single source of truth
+# MASTER_UPGRADE §2. Loader reads from here; do NOT duplicate _VAR_MAP in code.
+#
+# Schema per variable:
+#   std_name      : canonical name used downstream
+#   axis          : KNOWLEDGE_MODEL ontology axis (D_demographic/D_exposure/D_outcome/D_lifestyle/...)
+#   year_map      : {year_range: raw_name_in_sav}
+#   coding        : {year_range: {raw_value: meaning}}
+#   derivation    : computed variable formula (optional)
+#   unit          : "year" | "kg" | "min/day" | ...
+#   value_labels  : free-text dictionary
+#   status        : O (verified) | △ (partial) | - (missing) | ? (unknown)
+#
+# This file is the source — `kyrbs_raw_loader` reads it, and `scripts/register_dataset.py`
+# diffs new waves against it.
+
+dataset: KYRBS
+version: 1.0.0
+description: Korea Youth Risk Behavior Survey (질병관리청 청소년건강행태조사)
+year_coverage: "2005-2025"
+documentation: KYRBS_VARIABLE_COMPATIBILITY.md
+provider: KDCA (Korea Disease Control & Prevention Agency)
+
+# Survey-design variables (CRITICAL — must be used in complex-sample analysis)
+survey_design:
+  strata:
+    std_name: strata
+    axis: D_design
+    year_map:
+      "2005-2025": STRATA
+    note: Required for complex-survey weighted analysis (KYRBS uses stratified clustering)
+    status: O
+  cluster:
+    std_name: cluster
+    axis: D_design
+    year_map:
+      "2005-2025": CLUSTER
+    note: Primary sampling unit
+    status: O
+  weight:
+    std_name: weight
+    axis: D_design
+    year_map:
+      "2005-2025": W
+    note: Sample weight (required for population-representative estimates)
+    status: O
+
+# Demographics
+demographics:
+  age:
+    std_name: age
+    axis: D_demographic
+    year_map:
+      "2005-2025": AGE
+    unit: year
+    status: O
+  sex:
+    std_name: sex
+    axis: D_demographic
+    year_map:
+      "2005-2025": SEX
+    coding:
+      "2005-2025":
+        1: male
+        2: female
+    status: O
+  grade:
+    std_name: grade
+    axis: D_demographic
+    year_map:
+      "2005-2025": GRADE
+    coding:
+      "2005-2025":
+        1: middle_1
+        2: middle_2
+        3: middle_3
+        4: high_1
+        5: high_2
+        6: high_3
+    status: O
+  school_type:
+    std_name: school_type
+    axis: D_demographic
+    year_map:
+      "2005-2025": SCH_TYPE
+    status: O
+
+# Exposures (KYRBS-frequent)
+exposures:
+  caffeine_intake:
+    std_name: caffeine_freq
+    axis: D_exposure
+    year_map:
+      "2009-2025": F_CAFFEINE
+    coding:
+      "2009-2025":
+        1: never
+        2: monthly
+        3: weekly_1_2
+        4: weekly_3_4
+        5: daily
+    status: O
+  zcb_freq:
+    std_name: zcb_freq
+    axis: D_exposure
+    year_map:
+      "2022-2025": F_ZCB
+    note: Zero-calorie beverage frequency (new since 2022)
+    status: △
+  smoking_current:
+    std_name: smoking_current
+    axis: D_exposure
+    year_map:
+      "2005-2025": ECIG_30DAYS
+    status: O
+  alcohol_current:
+    std_name: alcohol_current
+    axis: D_exposure
+    year_map:
+      "2005-2025": DRINK_30DAYS
+    status: O
+  screen_time:
+    std_name: screen_time_min
+    axis: D_exposure
+    year_map:
+      "2015-2025": INT_TIME_WEEKDAY
+    unit: min/day
+    status: O
+  physical_activity:
+    std_name: pa_vig
+    axis: D_lifestyle
+    year_map:
+      "2005-2025": PA_VIG
+    status: O
+  sleep_hours:
+    std_name: sleep_hours
+    axis: D_lifestyle
+    year_map:
+      "2005-2025": SLEEP_HR
+    unit: hour
+    status: O
+
+# Outcomes
+outcomes:
+  depressive_symptom:
+    std_name: dep_2wk
+    axis: D_outcome
+    year_map:
+      "2005-2025": M_SAD
+    coding:
+      "2005-2025":
+        1: yes
+        2: no
+    note: 2-week persistent depressive symptom
+    status: O
+  suicide_ideation:
+    std_name: suicide_ideation
+    axis: D_outcome
+    year_map:
+      "2005-2025": M_SUI_CON
+    status: O
+  bmi:
+    std_name: bmi
+    axis: D_outcome
+    derivation: weight_kg / (height_m ** 2)
+    year_map:
+      "2005-2025": [HE_WT, HE_HT]
+    unit: kg/m²
+    status: O
+  perceived_stress:
+    std_name: stress
+    axis: D_outcome
+    year_map:
+      "2005-2025": M_STR
+    status: O

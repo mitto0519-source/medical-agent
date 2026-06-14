@@ -1,7 +1,42 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "created": "2026-06-13",
+  "updated": "2026-06-14",
   "purpose": "Quality eval harness — gold queries with expected PMIDs and style fingerprints. self-improvement loop는 이 gold set 위 점수가 오르는 방향으로 학습.",
+  "labelling_note": "★ 이 파일은 mitto(또는 의학 도메인 reviewer)가 직접 expected_pmids/concepts를 채워야 한다. 자동생성 금지 — 채점의 기울기는 사람 라벨링에서만 나온다.",
+  "axes_to_label": ["retrieval@5", "citation_realism", "stat_traceability", "claim_evidence_entailment", "survey_design_correctness", "style_match", "language_clean", "novelty"],
+  "claim_evidence_pairs": [
+    {
+      "id": "ce_caffeine_dep",
+      "claim": "High caffeine intake is associated with depressive symptoms in Korean adolescents.",
+      "evidence_pmids": [],
+      "label": "TODO_supports|contradicts|neutral",
+      "note": "Fill after corpus ingest finishes. Each pair must be hand-labelled (NLI-quality)."
+    },
+    {
+      "id": "ce_zcb_obesity",
+      "claim": "Zero-calorie sweetened beverages reduce adolescent BMI compared to sugar-sweetened drinks.",
+      "evidence_pmids": [],
+      "label": "TODO_supports|contradicts|neutral"
+    },
+    {
+      "id": "ce_screen_sleep",
+      "claim": "Daily screen time over 4 hours significantly reduces sleep duration in middle-school students.",
+      "evidence_pmids": [],
+      "label": "TODO_supports|contradicts|neutral"
+    }
+  ],
+  "survey_design_test_cases": [
+    {
+      "id": "sd_kyrbs_logistic",
+      "spec": {"design": "logistic", "outcome": "M_SAD", "exposure": "F_CAFFEINE",
+               "covariates": ["AGE", "SEX", "GRADE"],
+               "strata": "STRATA", "cluster": "CLUSTER", "weight": "W"},
+      "expected_engine": "statsmodels.SurveyDesign + svy.logit",
+      "expected_var_estimator": "Taylor linearization",
+      "must_not_use": "naive sm.Logit (would give wrong SE)"
+    }
+  ],
   "queries": [
     {
       "id": "q_caffeine_depression",
