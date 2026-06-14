@@ -678,6 +678,8 @@ def _render_chat_page(pid: str):
                     project["title"] = user_msg[:60]
                 project["messages"].append({"role": "user", "content": user_msg,
                                               "ts": datetime.now().isoformat()})
+                # ★ user msg 즉시 영속화 (assistant 응답 도중 끊겨도 user 입력은 살아남음)
+                _save_project(project)
                 _render_msg("user", user_msg)
 
                 # 트리거 분기 — autopilot / Full IMRAD / Figure / Go wide / Go deep / 일반
@@ -1040,17 +1042,38 @@ def render() -> None:
     """홈 렌더링 — 항상 chat(좌) + preview(우) 고정 2-split.
 
     Hero / chips / 우측 RECENT grid / FAB 모두 제거. 단일 항상-고정 레이아웃.
-    active project 없으면 새 pid 자동 생성 (사용자 입력 즉시 누적 시작).
+
+    Project ID resolution (F5 safe — 2026-06-14 사고 fix):
+      1) URL query param ?pid=...   (F5 후에도 살아남는 진짜 진실원본)
+      2) session_state sg_active_project  (같은 탭 내 폴백)
+      3) 새 UUID 생성 (그리고 즉시 URL에 박음)
     """
     import uuid as _uuid
     inject_sapphire_glass()
     _sidebar()
 
-    # active 없으면 새로 만들어 즉시 chat 영역으로
-    active = st.session_state.get("sg_active_project")
+    # 1) URL query → 가장 강한 진실원본 (F5 후에도 보존)
+    try:
+        qp = st.query_params
+        url_pid = qp.get("pid") if hasattr(qp, "get") else None
+        if isinstance(url_pid, list):
+            url_pid = url_pid[0] if url_pid else None
+    except Exception:
+        url_pid = None
+
+    # 2) URL 우선, 없으면 session_state
+    active = url_pid or st.session_state.get("sg_active_project")
+
+    # 3) 둘 다 없거나 "new"면 새 UUID
     if not active or active == "new":
         active = f"chat_{_uuid.uuid4().hex[:10]}"
-        st.session_state["sg_active_project"] = active
+
+    # 4) URL + session_state 동기화 → 다음 F5도 안전
+    try:
+        st.query_params["pid"] = active
+    except Exception:
+        pass
+    st.session_state["sg_active_project"] = active
 
     _render_chat_page(active)
 
