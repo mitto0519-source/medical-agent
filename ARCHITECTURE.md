@@ -1,6 +1,6 @@
 # ARCHITECTURE.md — Auto-generated
 
-> Last regenerated: 2026-06-14 21:05:35
+> Last regenerated: 2026-06-15 08:26:58
 > Source: `scripts/regenerate_architecture.py`
 > 수동 편집 금지 — 인벤토리·파일명·count는 실 파일 시스템에서 매번 다시 채움.
 > 디자인·아키텍처 결정 같은 prose는 별도 ARCHITECTURE_SHORT.md 에 작성.
@@ -17,11 +17,11 @@
 | `cloud/` | 2 | db, migrate |
 | `collaboration/` | 1 | access |
 | `config/` | 3 | env, logging_config, models |
-| `data/` | 5 | col_name_resolver, knhanes_raw_loader, kyrbs_raw_loader, stat_bridge, survey_loader |
+| `data/` | 7 | col_name_resolver, knhanes_patterns, knhanes_raw_loader, knhanes_subgroup, kyrbs_raw_loader … |
 | `diagnostics/` | 7 | capability_bench, improvement_engine, longitudinal_eval, prompt_ab, quality_tracker … |
-| `evolution/` | 2 | anchor, ledger |
+| `evolution/` | 3 | anchor, gate, ledger |
 | `export/` | 13 | citation_workflow, cover_letter_writer, figure_builder, image_gen, journal_docx_exporter … |
-| `ingestion/` | 10 | chunker, document_reader, evidence_reader, hierarchical_chunker, oa_bulk_fetcher … |
+| `ingestion/` | 11 | chunker, document_reader, evidence_reader, hierarchical_chunker, oa_bulk_fetcher … |
 | `knowledge/` | 12 | citation_graph, code_graph, humanize_extractor, medical_graph, medical_ontology … |
 | `library/` | 5 | component_extractor, components, dataset_library, design_template, methods_library |
 | `llm/` | 10 | budget, claude_client, factory, gemini_client, health … |
@@ -33,7 +33,7 @@
 | `research/` | 14 | analysis_preregistration, autonomous_research_loop, emphasis_profile, long_horizon, novelty_checker … |
 | `runtime/` | 10 | backlog, events, heartbeat, hf_bootstrap, idempotency … |
 | `safety/` | 13 | anti_ai_filter, audit_trail, causal_checker, citation_grounding, claim_evidence_nli … |
-| `service/` | 9 | chat, data, export, figures, paper … |
+| `service/` | 10 | chat, data, events, export, figures … |
 | `statistics/` | 1 | medical_stats |
 | `storage/` | 2 | manager, working_paper_store |
 | `tools/` | 0 |  |
@@ -45,7 +45,6 @@
 
 | Folder | file count | extensions (top 4) |
 |---|---|---|
-| `data/_ux_shots/` | 39 | .png:39 |
 | `data/activity/` | 1 | .json:1 |
 | `data/agent_self/` | 7 | .json:6, .2026-06-04:1 |
 | `data/assets/` | 3 | .json:2, .do:1 |
@@ -53,47 +52,50 @@
 | `data/change_log/` | 1 | .json:1 |
 | `data/chromadb/` | 19 | .bin:16, .pickle:2, .sqlite3:1 |
 | `data/chromadb_test/` | 5 | .bin:4, .sqlite3:1 |
-| `data/diagnostics/` | 11 | .json:7, .txt:2, .png:2 |
+| `data/diagnostics/` | 12 | .json:7, .txt:3, .png:2 |
 | `data/drafts/` | 63 | .png:26, .svg:25, .txt:7, .docx:3 |
-| `data/exports/` | 56 | .docx:13, .png:12, .md:9, .html:6 |
+| `data/exports/` | 1 | .docx:1 |
 | `data/journals/` | 5 | .json:5 |
 | `data/knowledge_graph/` | 7 | .json:7 |
 | `data/libraries/` | 3 | .json:3 |
-| `data/library/` | 3 | .db:1, .db-shm:1, .db-wal:1 |
+| `data/library/` | 1 | .db:1 |
 | `data/logs/` | 7 | .log:6, .1:1 |
-| `data/medical_knowledge_seed/` | 28 | .json:28 |
-| `data/oa_papers/` | 50504 | .metadata:25251, .json:12625, .txt:12625, .sqlite:1 |
+| `data/medical_knowledge_seed/` | 21 | .json:21 |
+| `data/oa_papers/` | 25253 | .metadata:25251, (no-ext):1, .tag:1 |
 | `data/papers/` | 8 | .docx:6, .pptx:2 |
-| `data/pmc_papers/` | 6 | .txt:6 |
 | `data/profiles/` | 1 | .json:1 |
 | `data/projects/` | 1 | .json:1 |
-| `data/raw/` | 214 | .zip:128, .sav:35, .pdf:25, .xlsx:13 |
+| `data/raw/` | 212 | .zip:128, .sav:35, .pdf:25, .xlsx:13 |
 | `data/registry/` | 2 | .yaml:2 |
-| `data/runtime/` | 15 | .db:8, .db-shm:2, .db-wal:2, .json:2 |
+| `data/runtime/` | 19 | .db:8, .db-shm:4, .db-wal:4, .json:2 |
 | `data/templates/` | 1 | .json:1 |
 | `data/wiki/` | 12 | .md:12 |
 | `data/workflows/` | 1 | .json:1 |
-| `data/working_papers/` | 24 | .json:24 |
+| `data/working_papers/` | 12 | .json:12 |
 
 ## data/runtime/ — Single-core memory backend (full inventory)
 
 | File | Bytes | Purpose hint |
 |---|---|---|
 | `alerts.log` | 64 | Runtime alerts |
-| `events.db` | 12,001,280 | Append-only audit log (CLAUDE.md 규칙 12) |
+| `events.db` | 12,279,808 | Append-only audit log (CLAUDE.md 규칙 12) |
 | `events.db-shm` | 32,768 | Append-only audit log (CLAUDE.md 규칙 12) |
 | `events.db-wal` | 4,157,112 | Append-only audit log (CLAUDE.md 규칙 12) |
-| `heartbeat_state.json` | 274 | Heartbeat 7 jobs catch-up state |
+| `heartbeat_state.json` | 307 | Heartbeat 7 jobs catch-up state |
 | `idempotency.db` | 4,096 | Tool call cache (재현성) |
 | `idempotency.db-shm` | 32,768 | Tool call cache (재현성) |
 | `idempotency.db-wal` | 45,352 | Tool call cache (재현성) |
 | `lifecycle.db` | 28,672 | Memory TTL + decay scheduler |
+| `lifecycle.db-shm` | 32,768 | Memory TTL + decay scheduler |
+| `lifecycle.db-wal` | 24,752 | Memory TTL + decay scheduler |
 | `longitudinal.db` | 20,480 | Time-series trends |
 | `memory.db` | 0 | Typed memory (scorer/lifecycle/gate) |
 | `notifications.json` | 270 | Pending user notifications |
 | `physician_review.db` | 32,768 | Review queue + decisions |
 | `procedural.db` | 20,480 | Procedural memory (5층 중 4번째) |
 | `tasks.db` | 176,128 | TaskRun state machine |
+| `tasks.db-shm` | 32,768 | TaskRun state machine |
+| `tasks.db-wal` | 0 | TaskRun state machine |
 
 ## data/knowledge_graph/ — Graphs (actual filenames)
 
@@ -103,23 +105,24 @@
 | `code_graph.json` | 467,524 | Code asset graph (e2e_diagnose 자가진단) |
 | `graph.bak.20260613_225247.json` | 13,426,465 | — |
 | `graph.bak.20260613_233654.json` | 13,436,093 | — |
-| `graph.json` | 15,097,251 | Main medical knowledge graph (NetworkX) |
+| `graph.json` | 13,437,723 | Main medical knowledge graph (NetworkX) |
 | `meta.json` | 108 | Graph metadata + last_updated |
 | `trend_state.json` | 34,082 | PubMed 24h trend cache |
 
 ## data/oa_papers/ — OA paper collection (정직 통계)
 
 - Total metadata sweep: **0** papers
-- Full text collected (.txt): **12,625** (0.0%)
-- Metadata-only (no body): **-12,625** ← backfill 대상
-- Sidecar JSON: 12,625
-- Other (sqlite/.gitignore): 1
+- Full text collected (.txt): **0** (0.0%)
+- Metadata-only (no body): **0** ← backfill 대상
+- Sidecar JSON: 0
+- Other (sqlite/.gitignore): 0
 
 
 ## prompts/ — Versioned system prompts (each auto-injected via prompt_loader)
 
 | File | Bytes | Role |
 |---|---|---|
+| `chat_style.md` | 2,766 | — |
 | `curated_seed.md` | 8,178 | Curated 2,100 paper seed exemplars |
 | `medical_core.md` | 1,972 | Core medical persona |
 | `safety_constraints.md` | 2,686 | Hard safety bounds |

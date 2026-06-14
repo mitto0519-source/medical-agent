@@ -79,3 +79,18 @@ ASCII 영문 hook이 가장 안전.
 **증상**: `pd.read_stata` / `pyreadstat.read_dta` 모두 UTF-8/cp949 모두 fail
 **원인**: 한국 STATA 파일은 STRL 인코딩 손상이 흔함
 **예방**: STATA 통합본은 메인 path로 가정 금지. 개별 .sav를 primary로 두고 .dta는 옵션.
+
+## P-15 HF Space CONFIG_ERROR 침묵 (2026-06-15)
+**증상**: GitHub push는 성공 + git push hf 성공인데도 HF Space lastModified가 4일 전 그대로, 새 코드 안 반영
+**원인**: README.md에 HF Space frontmatter (title/sdk/app_port 등) 누락 → 빌드 시 CONFIG_ERROR → 옛 빌드 유지
+**예방**: HF Space에 push할 때 README.md 첫줄 frontmatter 의무. HF API runtime.stage 항상 확인 (RUNNING/APP_STARTING/CONFIG_ERROR/RUNTIME_ERROR).
+
+## P-16 HF Space default branch mismatch (2026-06-15)
+**증상**: `git push hf master` 성공 표시되지만 빌드 안 됨
+**원인**: HF Space default branch는 `main`. push가 master refs로 가면 활성화 안 됨.
+**예방**: `git push hf master:main --force` 사용. origin은 master:master 유지.
+
+## P-17 auto-sync git add -A 거대 데이터 오염 (2026-06-14 FIX-11)
+**증상**: KNHANES raw 2.5GB가 git history에 박혀 push 영원히 reject
+**원인**: scripts/auto_sync.py가 `git add -A`로 .gitignore 미존재 path까지 통째로 commit
+**예방**: FIX-11 가드 — banned path/ext skip + 50MB 사이즈 가드 + whitelist add. filter-repo로 history 영구 제거 + force push.

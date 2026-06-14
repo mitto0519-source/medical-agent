@@ -13,11 +13,23 @@ short_description: Vibe paper copilot for clinical/translational medicine
 # Medical-Agent
 
 > **바이브 논문**(vibe paper) 코파일럿 — 사람이 의학 논문을 써내려가는 흐름을 AI가 실시간으로 거든다.
-> KYRBS/KNHANES 공중보건 데이터 → StatBridge 통계 → Figure → Word/EndNote 풀셋.
+> KYRBS/KNHANES 공중보건 데이터 → 실시간 통계(survey-weighted) → Figure → Word/EndNote 풀셋.
 
 [![Tests](https://img.shields.io/badge/smoke-13%2F13-brightgreen)](scripts/test_rag_smoke.py)
 [![UI Eval](https://img.shields.io/badge/Playwright-49%2F49-brightgreen)](scripts/ui_eval.py)
 [![Function E2E](https://img.shields.io/badge/E2E-10%2F10-brightgreen)](scripts/e2e_functions.py)
+
+## ✨ 핵심 기능 (2026-06-15 현재)
+
+- 🗨 **채팅 우선 UX** — 좌측 대화 + 우측 실시간 docx 프리뷰. assistant 응답마다 `📌 핀 → 9 sections` 박기 → 양방향 binding (다음 turn에 LLM이 본문 snapshot 보고 응답).
+- 🧰 **Native tool-use 디스패치** — Anthropic tool_use 블록으로 patch_preview / kyrbs_stat / pubmed_search / strobe_check / rag_search 등 **18 tool 자동 호출** (regex 파싱 0).
+- 📎 **컴포저 (30+ 확장자)** — PDF/DOCX/PPTX/XLSX/SPSS .sav/STATA .dta/이미지(Vision LLM)/노트북/CSV. `markitdown` + 전용 fallback.
+- 🤖 **모델 picker** — Haiku(빠름) / Sonnet(균형, 기본) / Opus(최고품질) 칩 선택. `LLM_MODEL_OVERRIDE` 환경변수로 라우팅.
+- 📊 **KNHANES domain (KYRBS 동격)** — 12 wave (2013-2024) + FLI/HSI/**MASLD/MetALD/ALD 2023 신정의** 자동 분류 + IDF MetSx + eGFR CKD-EPI 2021 + Asian BMI cat + study phase (IV-IX) + survey-weighted preset (kstrata/psu/wt_itvex).
+- 🔍 **라이브 PubMed novelty** — NCBI eutils 라이브 호출 (evidence_reader). 검색 0편이면 검증 query를 chat에 제시.
+- 🧠 **단일 정본 ResearchState (RESEARCH_STATE_SPEC)** — manuscript.sections 유일 진실원본 + provenance에 `dataset_version` + `registry_version` 핀 = 결정적 재실행. events.db 기반 checkpoint/restore/branch/resume — "git for research".
+- 🌐 **3-Lane streaming** — HOT(<300ms status) / STREAM(tool 이벤트+토큰) / BACKGROUND(confidence/provenance 사후 배지). 빈 spinner 0.
+- 🔐 **F5 / 핸드오프 안전** — `?pid=` URL query param + Supabase mirror + auto-scroll. 새로고침해도 같은 대화 복원.
 
 ---
 

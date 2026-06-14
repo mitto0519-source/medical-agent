@@ -60,14 +60,14 @@
     "data/medical_knowledge_seed": "6 MB (typology + humanize + vocabulary catalogs)",
     "data/knowledge_graph": "13 MB (10005 nodes NetworkX)",
     "data/runtime": "14 MB (events + tasks + budget)",
-    "oa_papers_full_text": 12625,
-    "oa_papers_full_text_above_5kb": 12294,
-    "oa_papers_meta_stubs": 12625,
-    "chromadb_embeddings": 70193,
-    "chromadb_queue_pending": 943,
-    "knowledge_graph_nodes": 13508,
-    "knowledge_graph_edges": 61438,
-    "medical_ontology_concepts": 119
+    "oa_papers_full_text": 0,
+    "oa_papers_full_text_above_5kb": 0,
+    "oa_papers_meta_stubs": 0,
+    "chromadb_embeddings": 75239,
+    "chromadb_queue_pending": 969,
+    "knowledge_graph_nodes": 10141,
+    "knowledge_graph_edges": 54186,
+    "medical_ontology_concepts": 32
   },
   "known_seed_bias": "OA papers fetched from Europe PMC OA Subset → over-represented: public health, environmental health, nutrition, epidemiology. Under-represented: pharmacology, clinical guidelines, surgical outcomes, oncology RCT. When user requests clinical topic, supplement reasoning beyond seed retrieval.",
   "single_entry_points": {
@@ -94,38 +94,37 @@
   ],
   "deployment_target": "external URL (HF Spaces / Cloud Run / hosted), with HF Datasets as persistent data store. Local Docker is dev only.",
   "verified_counts": {
-    "measured_at": "2026-06-14 21:07:54",
+    "measured_at": "2026-06-15 08:26:59",
     "papers": {
-      "meta_json_files": 12625,
-      "full_text_files": 12625,
-      "full_text_above_5kb": 12294,
-      "full_text_completion_pct": 97.4,
+      "meta_json_files": 0,
+      "full_text_files": 0,
+      "full_text_above_5kb": 0,
+      "full_text_completion_pct": 0.0,
       "comment": "1 paper = 1 .meta.json + 1 .txt pair. ~3% of .txt are stubs <5KB."
     },
     "chromadb": {
-      "embeddings": 70193,
-      "queue_pending": 943,
-      "embedding_metadata_rows": 820426
+      "embeddings": 75239,
+      "queue_pending": 969,
+      "embedding_metadata_rows": 880713
     },
     "knowledge_graph": {
       "file": "data/knowledge_graph/graph.json",
-      "nodes_total": 13508,
+      "nodes_total": 10141,
       "node_types": {
-        "concept": 79,
-        "dataset": 2,
-        "paper": 13427
+        "paper": 10112,
+        "concept": 27,
+        "dataset": 2
       },
-      "edges_total": 61438,
+      "edges_total": 54186,
       "edge_relations": {
-        "RELATED_TO": 102,
-        "EXPOSURE_TO_OUTCOME": 15,
-        "HAS_CONCEPT": 58817,
-        "null": 512,
-        "USES_DATASET": 1992
+        "HAS_CONCEPT": 51704,
+        "USES_DATASET": 1994,
+        "RELATED_TO": 108,
+        "null": 380
       }
     },
     "ontology": {
-      "concept_count": 119,
+      "concept_count": 32,
       "sample": [
         {
           "domain_id": "D_population",

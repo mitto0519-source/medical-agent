@@ -569,7 +569,10 @@ def _pin_to_section(project: dict, content: str, section: str,
         new = (cur_text + "\n\n" + content).strip() if (mode == "append" and cur_text) else content
         secs[section] = new
     # research_state.manuscript_text도 동시 갱신 (autopilot이 쓰는 키)
-    project.setdefault("research_state", {})["manuscript_text"] = secs.get(section)
+    # ★ RESEARCH_STATE_SPEC §1: manuscript_text 이중쓰기 제거.
+    # sections가 유일 정본 — manuscript_text는 더 이상 저장하지 않음 (파생 getter 사용).
+    # legacy 키는 None으로 명시(이전 저장본 호환), 새로 저장하지 않음.
+    project.setdefault("research_state", {})["manuscript_text"] = None
     _save_project(project)
 
 
@@ -870,11 +873,11 @@ def _render_chat_page(pid: str):
                                 "<div class='msg-asst'>" +
                                 "<br>".join(l.replace("<", "&lt;").replace(">", "&gt;") for l in reply_lines) +
                                 "</div>", unsafe_allow_html=True)
-                            # Save manuscript_text to sections live → 우측 프리뷰 즉시 표시
+                            # Save manuscript to sections live → 우측 프리뷰 즉시 표시
+                            # RESEARCH_STATE_SPEC §1: sections만 정본. manuscript_text 이중쓰기 제거.
                             mt = event.get("manuscript_text")
                             if mt:
                                 project.setdefault("sections", {})["full"] = mt
-                                project.setdefault("research_state", {})["manuscript_text"] = mt
                                 _save_project(project)
                     except Exception as e:
                         reply_lines.append(f"⚠ autopilot 예외: {str(e)[:200]}")

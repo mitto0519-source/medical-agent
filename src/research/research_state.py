@@ -174,3 +174,294 @@ class ResearchState:
                     ("exposure", "outcome", "population", "dataset", "summary", "title")}
         st.stat_result = ss.get("stat_result_for_paper")
         return st
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# ★ RESEARCH_STATE_SPEC 확장 (2026-06-15) — 단일 정본 + 체크포인트/브랜치/resume
+# 기존 ResearchState class는 그대로 유지(호환성). module-level 함수로 확장.
+# ═══════════════════════════════════════════════════════════════════════════
+
+import json as _json
+import uuid as _uuid
+from dataclasses import dataclass as _dc, field as _df, asdict as _asdict
+from pathlib import Path as _Path
+from typing import Optional as _Opt
+
+SCHEMA_VERSION = "1.0.0"
+_STATE_DIR = _Path("data/research_states")
+
+
+@_dc
+class ResearchProject:
+    """단일 정본 (RESEARCH_STATE_SPEC §1) — ez_home project dict 흡수, 이중쓰기 차단.
+
+    manuscript['sections']가 유일 sections 정본.
+    manuscript_text는 property(파생, 저장 X) — 드리프트 차단.
+    """
+    id: str
+    owner_email: str = ""
+    title: str = "새 연구"
+    schema_version: str = SCHEMA_VERSION
+    rq: Dict = _df(default_factory=dict)
+    dataset: Dict = _df(default_factory=dict)            # name/year/dataset_version/registry_version
+    variable_selection: Dict = _df(default_factory=dict)
+    analysis_spec: Dict = _df(default_factory=dict)
+    results: Dict = _df(default_factory=dict)
+    manuscript: Dict = _df(default_factory=lambda: {"sections": {}})
+    citations: List[Dict] = _df(default_factory=list)
+    gates: Dict = _df(default_factory=dict)
+    provenance_ids: List[int] = _df(default_factory=list)
+    checkpoint_id: str = ""
+    parent_checkpoint: _Opt[str] = None
+    messages: List[Dict] = _df(default_factory=list)
+    attachments: List[Dict] = _df(default_factory=list)
+    updated_at: str = ""
+
+    @property
+    def sections(self) -> Dict:
+        return (self.manuscript or {}).setdefault("sections", {})
+
+    @property
+    def manuscript_text(self) -> str:
+        secs = self.sections
+        out: list = []
+        for key in ("Abstract", "Introduction", "Methods", "Results",
+                      "Discussion", "Conclusion", "References"):
+            v = secs.get(key) or secs.get(key.lower())
+            if not v:
+                continue
+            if isinstance(v, dict):
+                for sk, sv in v.items():
+                    if sv: out.append(f"### {sk}\n{sv}")
+            else:
+                out.append(f"## {key}\n{v}")
+        return "\n\n".join(out)
+
+    def project_to_dict(self) -> Dict:
+        d = _asdict(self)
+        d["_derived_manuscript_text_len"] = len(self.manuscript_text)
+        return d
+
+
+def _path_for(state_id: str) -> _Path:
+    _STATE_DIR.mkdir(parents=True, exist_ok=True)
+    return _STATE_DIR / f"{state_id}.json"
+
+
+def new_project(*, owner_email: str = "", title: str = "새 연구") -> ResearchProject:
+    return ResearchProject(
+        id=f"rs_{_uuid.uuid4().hex[:12]}",
+        owner_email=owner_email,
+        title=title[:200],
+        updated_at=time.strftime("%Y-%m-%dT%H:%M:%S"),
+    )
+
+
+def project_save(state: ResearchProject, *, cloud: bool = True) -> None:
+    """로컬 먼저 + Supabase 베스트 에프트."""
+    state.updated_at = time.strftime("%Y-%m-%dT%H:%M:%S")
+    try:
+        _path_for(state.id).write_text(
+            _json.dumps(state.project_to_dict(), ensure_ascii=False, indent=2),
+            encoding="utf-8")
+    except Exception:
+        pass
+    if not cloud:
+        return
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if not cloud_available():
+            return
+        from sqlalchemy import text as _sql
+        with get_engine().begin() as conn:
+            conn.execute(_sql(
+                "INSERT INTO ma_research_state "
+                "(id, owner_email, title, schema_version, data_json, updated_at) "
+                "VALUES (:id, :oe, :ti, :sv, :dj, :ts) "
+                "ON CONFLICT (id) DO UPDATE SET "
+                "title=:ti, schema_version=:sv, data_json=:dj, updated_at=:ts"),
+                {"id": state.id, "oe": state.owner_email,
+                 "ti": state.title[:200], "sv": state.schema_version,
+                 "dj": _json.dumps(state.project_to_dict(), ensure_ascii=False),
+                 "ts": int(time.time())})
+    except Exception:
+        pass
+
+
+def project_load(state_id: str) -> _Opt[ResearchProject]:
+    """Supabase 먼저 → 로컬 fallback."""
+    try:
+        from src.cloud.db import cloud_available, get_engine
+        if cloud_available():
+            from sqlalchemy import text as _sql
+            with get_engine().begin() as conn:
+                row = conn.execute(_sql(
+                    "SELECT data_json FROM ma_research_state WHERE id=:id"),
+                    {"id": state_id}).fetchone()
+                if row and row[0]:
+                    return _project_from_dict(_json.loads(row[0]))
+    except Exception:
+        pass
+    p = _path_for(state_id)
+    if not p.exists():
+        return None
+    try:
+        return _project_from_dict(_json.loads(p.read_text(encoding="utf-8")))
+    except Exception:
+        return None
+
+
+def _project_from_dict(d: Dict) -> ResearchProject:
+    fields = {f.name for f in ResearchProject.__dataclass_fields__.values()}
+    clean = {k: v for k, v in (d or {}).items() if k in fields}
+    return ResearchProject(**clean)
+
+
+def from_project_dict(project: Dict) -> ResearchProject:
+    """ez_home project dict → ResearchProject. 이중쓰기 흡수."""
+    rs = ResearchProject(
+        id=project.get("id") or f"rs_{_uuid.uuid4().hex[:12]}",
+        owner_email=project.get("owner_email", ""),
+        title=project.get("title", "새 연구")[:200],
+        messages=project.get("messages") or [],
+        attachments=project.get("attachments") or [],
+        updated_at=project.get("updated", ""),
+    )
+    rs.manuscript = {"sections": project.get("sections") or {}}
+    legacy = project.get("research_state") or {}
+    if legacy.get("pico"):
+        rs.rq = {"pico": legacy["pico"]}
+    if legacy.get("dataset"):
+        rs.dataset = {
+            "name": legacy.get("dataset"),
+            "year_range": legacy.get("year"),
+            "dataset_version": legacy.get("dataset_version", ""),
+            "registry_version": legacy.get("registry_version", ""),
+        }
+    if legacy.get("stat_result"):
+        rs.results["estimates"] = legacy["stat_result"]
+    if legacy.get("stat_spec"):
+        rs.analysis_spec = legacy["stat_spec"]
+    if legacy.get("novelty"):
+        rs.gates["novelty"] = legacy["novelty"]
+    refs = project.get("references") or legacy.get("references") or []
+    rs.citations = refs if isinstance(refs, list) else []
+    return rs
+
+
+def to_project_dict(state: ResearchProject) -> Dict:
+    """ResearchProject → ez_home project dict (호환성)."""
+    return {
+        "id": state.id,
+        "owner_email": state.owner_email,
+        "title": state.title,
+        "messages": state.messages,
+        "attachments": state.attachments,
+        "sections": state.sections,
+        "references": state.citations,
+        "research_state": {
+            "pico": (state.rq or {}).get("pico"),
+            "dataset": (state.dataset or {}).get("name"),
+            "year": (state.dataset or {}).get("year_range"),
+            "dataset_version": (state.dataset or {}).get("dataset_version"),
+            "registry_version": (state.dataset or {}).get("registry_version"),
+            "stat_spec": state.analysis_spec,
+            "stat_result": (state.results or {}).get("estimates"),
+            "novelty": (state.gates or {}).get("novelty"),
+            # ★ manuscript_text는 파생 — 저장 X (state.manuscript_text 속성)
+        },
+        "updated": state.updated_at,
+    }
+
+
+# ── 체크포인트 / 브랜치 / resume (events.db append-only) ────────────────────
+
+def _events():
+    from src.runtime import events as _e
+    return _e
+
+
+def checkpoint(state: ResearchProject, label: str = "auto",
+                  *, provenance_id: _Opt[int] = None) -> str:
+    cp_id = f"cp_{_uuid.uuid4().hex[:12]}"
+    state.checkpoint_id = cp_id
+    project_save(state)
+    try:
+        _events().append(
+            type="research_checkpoint",
+            payload={
+                "cp_id": cp_id, "state_id": state.id, "label": label,
+                "snapshot": state.project_to_dict(),
+                "parent": state.parent_checkpoint,
+                "provenance_id": provenance_id, "ts": time.time(),
+            },
+            task_id=state.id, actor="research_state",
+        )
+    except Exception:
+        pass
+    return cp_id
+
+
+def list_checkpoints(state_id: str, *, limit: int = 50) -> List[Dict]:
+    try:
+        items = _events().find(type="research_checkpoint",
+                                  task_id=state_id, limit=limit * 2)
+    except Exception:
+        return []
+    return [{
+        "cp_id": (ev.get("payload") or {}).get("cp_id"),
+        "label": (ev.get("payload") or {}).get("label"),
+        "ts": (ev.get("payload") or {}).get("ts"),
+        "parent": (ev.get("payload") or {}).get("parent"),
+    } for ev in items[:limit]]
+
+
+def restore(cp_id: str) -> _Opt[ResearchProject]:
+    try:
+        items = _events().find(type="research_checkpoint", limit=500)
+    except Exception:
+        return None
+    for ev in items:
+        pl = ev.get("payload") or {}
+        if pl.get("cp_id") == cp_id and pl.get("snapshot"):
+            state = _project_from_dict(pl["snapshot"])
+            state.parent_checkpoint = cp_id
+            project_save(state)
+            return state
+    return None
+
+
+def branch(cp_id: str, new_title: str = "분기") -> _Opt[ResearchProject]:
+    state = restore(cp_id)
+    if state is None:
+        return None
+    state.id = f"rs_{_uuid.uuid4().hex[:12]}"
+    state.title = f"{new_title} ({state.title})"[:200]
+    state.parent_checkpoint = cp_id
+    project_save(state)
+    try:
+        _events().append(
+            type="research_branch",
+            payload={"new_state_id": state.id, "from_cp": cp_id, "ts": time.time()},
+            task_id=state.id, actor="research_state",
+        )
+    except Exception:
+        pass
+    return state
+
+
+def resume(state_id: str) -> _Opt[ResearchProject]:
+    return project_load(state_id)
+
+
+def diff(cp_a: str, cp_b: str) -> Dict:
+    sa = restore(cp_a)
+    sb = restore(cp_b)
+    if sa is None or sb is None:
+        return {"error": "checkpoint missing"}
+    da, db = sa.project_to_dict(), sb.project_to_dict()
+    changed = {}
+    for k in set(da.keys()) | set(db.keys()):
+        if da.get(k) != db.get(k):
+            changed[k] = "differ"
+    return {"cp_a": cp_a, "cp_b": cp_b, "changed_fields": changed}

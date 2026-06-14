@@ -149,6 +149,8 @@ def build_fingerprint(
     provider: str | None = None,
     dataset_path: str | Path | None = None,
     dataset_label: str | None = None,
+    dataset_version: str | None = None,    # ★ RESEARCH_STATE_SPEC §4 — 결정적 재실행 필수
+    registry_version: str | None = None,   # ★ 변수 레지스트리 버전 (KNHANES/KYRBS variables.yaml)
     seed: int | None = None,
     extra: dict | None = None,
 ) -> dict:
@@ -156,6 +158,11 @@ def build_fingerprint(
 
     scope 예: "llm_call", "stat_analysis", "rag_search", "paper_section".
     seed 가 None이면 (scope, prompt_hash)로 결정론적 seed 자동 부여.
+
+    ★ dataset_version / registry_version (2026-06-15 추가):
+        변수가 연도·레지스트리 버전마다 바뀌니(KNHANES/KYRBS),
+        레지스트리 버전을 안 박으면 레지스트리 갱신 시 "같은 분석이 다른 숫자"로
+        조용히 재현이 깨진다 — 의료 OS의 결정적 한 수.
     """
     p_hash = text_hash(prompt) if prompt is not None else ""
     s_hash = text_hash(system_prompt) if system_prompt is not None else ""
@@ -172,6 +179,8 @@ def build_fingerprint(
         "system_prompt_sha": s_hash,
         "dataset_md5": ds_md5,
         "dataset_label": dataset_label or "",
+        "dataset_version": dataset_version or "",      # ★ 신규
+        "registry_version": registry_version or "",    # ★ 신규
         "seed": int(auto_seed),
     }
     if extra:
