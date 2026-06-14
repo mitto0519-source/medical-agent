@@ -306,6 +306,76 @@ python scripts/test_rag_smoke.py
 
 ---
 
+---
+
+# 진행 현황 업데이트 (2026-06-14) — VS Code 실행 + 독립검증 반영
+
+| FIX | 상태 | 검증 메모 |
+|---|---|---|
+| FIX-0 reconcile | ✅ 완료 | `reconcile_state.py` measure_truth 재사용, 컴파일 OK |
+| FIX-1 문체 배선 | ✅ 완료 | load_prompt(owner_email) 5곳 관통, StyleProfiler.load/to_prompt_block 실존 |
+| FIX-2 온톨로지 | ✅ 27→114 | `_load_seed_extensions`. (내 마운트 stale로 27 보였음 — 로컬 114 확인 권장) |
+| FIX-3 인제스트 | ⚠ **50편만** | 전체 12,625는 ★아래 차단조건 충족 후 |
+| FIX-4 더미제거 | ✅ | pmid=12345 제거, 단 **graph.json 로컬 파싱 유효성 직접 확인 필요**(내 마운트 2회 torn read) |
+| FIX-5 영속 | ✅ HF push-back | 15분 손실창 존재, Supabase 단일화는 별도 |
+| FIX-6 검색깊이 | ✅ rerank+HyDE / ⚠ 임베딩 | **PubMedBERT 768d 활성** — 단 ★레거시 컬렉션 고아(아래) |
+| FIX-7 기억증류 | ✅ | _distill + rolling summary |
+| FIX-8 비평루프 | ✅ | revise_with_critique (max2, target80%) |
+| FIX-9 ground-truth 주입 | ✅ 완료 | `_ground_truth_block()` build_base_system:174, 985자 블록 주입 확인 |
+| FIX-10 schema 실배선 | ❌ **미착수** | schema_v2는 정의만, chunker/orchestrator 미통합 → ★전체 인제스트 차단 |
+
+## ★★ 차단조건 2개 — 전체 12,625 인제스트 전에 반드시 해소
+
+**차단 A — 레거시 27,618청크가 고아다.** PubMedBERT 활성 시 에이전트는 `papers_pubmedbert_768d`만 질의(store.py:31-38이 EMBEDDING_MODEL로 컬렉션명 결정). 옛 `papers_minilm_384d`(27,618)는 **다른 컬렉션이라 질의 안 됨**. 지금 검색 가능 코퍼스 = 50편(~782청크)뿐. **전체 재인제스트 끝나기 전까지 RAG는 이전보다 나쁨 → 데모/배포 금지.**
+
+**차단 B — schema_v2 미배선 상태로 전체 인제스트하면 3.5시간 2회 낭비.** 아래 FIX-10이 선행돼야 새 메타/엣지로 한 번에 박힌다.
+
+→ **전체 인제스트 순서: §9 확정 → FIX-10 → (그때) 전체 12,625 인제스트 1회.**
+
+---
+
+## FIX-9 — ground-truth 런타임 주입 [✅ 완료, 참고용]
+
+**한 일**: `src/llm/claude_client.py:_ground_truth_block()`(21)이 `CURRENT_STATE.json:verified_counts` + CLAUDE.md 압축 규칙을 build_base_system(174)에서 매 호출 주입. PowerShell 훅 의존 제거 → 웹=로컬 동등.
+**잔여 검증**: 웹 진입(streamlit/agentic_loop)에서도 이 블록이 실제 system 최상단에 들어가는지 1회 확인(로컬 hook과 중복주입 없는지도).
+
+---
+
+## FIX-10 — schema_v2 파이프라인 실배선 (★전체 인제스트 차단 선행조건)
+
+**문제 (고아 정의)**: `src/knowledge/schema_v2.py`는 정의·검증기만 있고 파이프라인과 **완전 분리**(orchestrator·chunker에 `schema_v2/validate_chunk_meta/effect_measure/axis/cui` grep 0건). 결과:
+- `hierarchical_chunker.chunk_paper`(112-116)는 아직 **5개 키만**(section/rhetorical_role/citation_density/statistical_method/evidence_level) 출력. §5의 population/exposure/outcome/effect_measure/sample_size/discipline/mechanism/cui **없음**.
+- `orchestrator._index_chunks`(169-215)의 ChromaDB metadata도 옛 필드(pmid/doi/title/year/journal/concepts/section/chunk_id)뿐.
+- `_add_to_graph`(229)는 `add_concept`/`link_concepts`에 cui/axis/rel을 안 넘김 → 그래프가 여전히 HAS_CONCEPT 평면 태깅.
+
+즉 **50편 인제스트는 옛 스키마로 박혔다.** 전체 인제스트 전에 이걸 실배선해야 한다.
+
+**변경 (기존 심볼 확장 — 새 모듈 금지)**:
+1. **chunker**: `hierarchical_chunker.chunk_paper`가 `schema_v2.CHUNK_META_FIELDS` 전체를 채우도록 확장. 정량 추출(effect_measure/estimate/CI/sample_size)·축 태깅(population/exposure/outcome/discipline/mechanism)을 §4 하이브리드(키워드→UMLS링킹→임베딩+LLM)로. 채운 뒤 `schema_v2.validate_chunk_meta(meta)`로 검증(에러 로깅). 못 채운 필드는 `None`(거짓 채움 금지, 규칙11).
+2. **orchestrator._index_chunks**: chunk meta 전체를 ChromaDB metadata로 전달(현재는 일부만). ChromaDB 메타는 스칼라만 허용 → list는 콤마 join, dict는 평탄화.
+3. **orchestrator._add_to_graph**: `extract_concepts` 결과를 `medical_graph.add_concept(concept_id, label, domain, cui=, axis=)`(104, 확장됨)로, 관계는 `link_concepts(c1, c2, weight, rel=<schema_v2.EDGE_TYPES>)`(147, 확장됨)로. 엣지 weight = `schema_v2.edge_confidence(sample_size, evidence_level)`(220). 미지 엣지/축은 `is_known_edge/is_known_axis`로 게이트.
+
+**다운스트림 연계 (전수 — 누락 시 에러/무효)**:
+- ChromaDB metadata 스키마 변경 → **검색 필터(FIX-6 메타 필터)가 새 필드를 참조**하므로 함께 반영. `where={"study_design":...}` 등.
+- `reconcile_state.py`에 엣지 타입 분포·`with_cui` 비율·메타 충전율 카운트 추가(진실원본에 스키마 상태 노출).
+- **컬렉션 일원화**: 전체 인제스트는 `papers_pubmedbert_768d`로. 끝난 뒤 레거시 `papers_minilm_384d` 컬렉션은 **dead → drop**(규칙10, 고아 제거). drop 전 검색이 768d만 보는지 확인.
+- `validate_chunk_meta`의 통제값(RHETORICAL_ROLES/SECTION_LABELS/EFFECT_MEASURES)과 chunker 출력 enum 일치 확인(불일치 시 전수 검증 실패).
+- §9 USER_DEFAULTS(이미 schema_v2에 conservative 기본값)가 이 배선에 주입되므로 **§9 확정을 FIX-10 착수 전에**.
+
+**검증 (50편 재인제스트로 양식 먼저)**:
+```bash
+# 새 메타가 실제로 ChromaDB에 박히나
+python -c "import chromadb;c=chromadb.PersistentClient('data/chromadb');col=[x for x in c.list_collections() if '768' in x.name][0];import json;print(col.get(limit=1,include=['metadatas'])['metadatas'])"
+# 메타에 effect_measure/discipline/axis/cui 키가 보이고 값이 채워졌는지
+python -c "from src.knowledge.medical_ontology import MedicalOntology as O;c=O().all_concepts();print('with_cui',sum(1 for x in c if x.get('cui')),'/',len(c))"
+python -c "import json,collections;g=json.load(open('data/knowledge_graph/graph.json'));print(collections.Counter(e.get('relation') for e in g['links']).most_common())"  # HAS_CONCEPT 외 타입 ≥5종
+python scripts/test_rag_smoke.py
+```
+**판정**: 새 컬렉션 메타에 §5 정량/축 필드가 채워지고, 그래프 엣지 타입이 ≥5종으로 다양화되면 PASS. 그제서야 **전체 12,625 인제스트 1회** 진행.
+**롤백**: chunker/orchestrator `git checkout`. 50편 재인제스트분만 영향(컬렉션 비우고 재실행). medical_graph는 kwarg default라 하위호환 유지.
+
+---
+
 ## 백로그 (별도 사이클 — 지금 건드리지 말 것)
 
 - **persona/self_model/insights/knowledge_graph per-user 분리**: 현재 전역 단일 파일. "그 사람에게 최적화"가 다중사용자로 가면 필요. 단일사용자 운영이면 보류.
@@ -319,19 +389,26 @@ python scripts/test_rag_smoke.py
 ## 실행 순서 요약 (의존성 그래프)
 
 ```
-FIX-0 (reconcile, 독립) ────────────────────────┐
-FIX-6 임베딩결정 ─★먼저★─┐                        │
-FIX-5 (영속/차원) ──┐    │                        │
-                    ├─> FIX-2(온톨로지) ─> FIX-3(재인제스트,본문+새임베딩) ─> FIX-0 재실행
-FIX-4 (더미제거, 독립) ──┘                        │
-FIX-1 (문체 배선) ─> FIX-7 (기억증류) ─> FIX-5  (※ conversation_memory.py 공유 → 순서 고정)
-FIX-6 rerank/rewrite (질의시점, 독립) ── 언제든(저위험, 먼저 넣어도 됨)
-FIX-8 (비평루프) ── writing 안정화 후
+[완료] FIX-0,1,2,4,5,6(rerank+임베딩),7,8,9
+[남은 핵심 경로 — 전체 인제스트로 가는 유일한 정답 순서]
+
+   graph.json/chroma 로컬 유효성 확인
+            │
+   §9 결정 5개 확정 (USER_DEFAULTS 덮어쓸지)
+            │
+   FIX-10 (schema_v2 → chunker/orchestrator/graph 실배선)   ←★전체 인제스트 차단기
+            │
+   50편 재인제스트로 새 메타/엣지 PASS 검증
+            │
+   전체 12,625 인제스트 1회 (papers_pubmedbert_768d, ~3.5h)
+            │
+   레거시 papers_minilm_384d 컬렉션 drop  +  reconcile_state 재실행
+            │
+   quality_harness gold_set 실 PMID 채우기
 ```
-- **먼저(저위험·독립)**: FIX-0 → FIX-1 → FIX-4 → FIX-6의 rerank/rewrite 부분.
-- **임베딩 차원 결정은 FIX-3보다 반드시 앞**(안 그러면 12.6k 2회 인제스트). 차원 바뀌면 FIX-5 pgvector 마이그레이션과 묶기.
-- **conversation_memory.py 공유 3개(FIX-1·7·5)는 순서 고정, 동시 금지.**
-- **묶음**: FIX-6(임베딩) → FIX-2 → FIX-3 → FIX-5 함께.
+- **지금 하면 안 되는 것**: 전체 12,625 인제스트(차단 A·B 미해소 → 3.5h 2회 낭비 + 검색코퍼스 공백).
+- **다음 한 수**: §9 확정 → **FIX-10**. 이게 전체 인제스트의 단일 선행조건.
+- **conversation_memory.py 공유(FIX-1·7·5)·임베딩-인제스트 선후**는 이미 반영됨(완료).
 - 각 FIX 후 `change_log.log()` + smoke 12/12 확인.
 
 > 작성 기준 데이터는 2026-06-13 실측. 코드가 그새 바뀌었으면 FIX 착수 전 해당 파일을 다시 읽고 라인 보정할 것(규칙7).
