@@ -114,14 +114,16 @@ class KnowledgeOrchestrator:
         if not pmid:
             return {"error": "empty pmid"}
 
-        # 1. ontology 매핑
-        concepts: List[str] = []
+        # 1. ontology 매핑 (FIX-10: full dict 보존 — cui/axis/discipline/mesh를 graph로 관통)
+        concepts: List = []
+        concept_ids: List[str] = []   # legacy: vector index에 flat id list 같이
         try:
             text_for_concept = f"{title}\n{abstract}"[:4000]
             if self.ontology:
                 ext = self.ontology.extract_concepts(text_for_concept) or []
-                concepts = [c.get("id") or c.get("concept_id") or "" for c in ext if c]
-                concepts = [c for c in concepts if c]
+                concepts = [c for c in ext if c]
+                concept_ids = [c.get("id") or c.get("concept_id") or "" for c in ext if c]
+                concept_ids = [c for c in concept_ids if c]
         except Exception as e:
             _log.debug("concept extract fail %s: %s", pmid, e)
 
@@ -228,27 +230,93 @@ class KnowledgeOrchestrator:
 
     def _add_to_graph(self, pmid: str, title: str, abstract: str,
                        year: Optional[int], journal: str,
-                       concepts: List[str]) -> str:
-        """graph에 paper node + concept edges."""
+                       concepts) -> str:
+        """graph에 paper node + concept edges.
+
+        FIX-10 (2026-06-14): concepts가 str list가 아니라 ontology.extract_concepts()
+        dict list로 들어오면 cui/axis/discipline를 add_concept에 관통.
+        같은 paper에서 Exposure × Outcome 공출현 시 EXPOSURE_TO_OUTCOME 엣지 자동 생성.
+        Mechanism 개념이 있으면 그 엣지에 MECHANISM_OF로 연결.
+        """
         g = self.graph
         if g is None:
             return _paper_node(pmid)
         try:
             paper_id = g.add_paper(pmid, title=title, abstract=abstract,
                                     year=year, journal=journal)
-            for cid in concepts:
+
+            # concepts가 str list (legacy) or dict list (FIX-10 신규)
+            concept_dicts = []
+            for c in (concepts or []):
+                if isinstance(c, dict):
+                    concept_dicts.append(c)
+                else:
+                    concept_dicts.append({"concept_id": str(c), "label": str(c)})
+
+            # axis-keyed buckets for cross-edge inference
+            by_axis: dict = {}
+            for c in concept_dicts:
+                cid = c.get("concept_id") or c.get("label")
+                if not cid:
+                    continue
+                axis = c.get("domain_id") or c.get("axis")
+                discipline = c.get("discipline")
+                if isinstance(discipline, str):
+                    discipline = [discipline]
                 try:
-                    cnode = g.add_concept(cid, label=cid)
-                    if hasattr(g, "_G"):
-                        g._G.add_edge(paper_id, cnode, type="mentions")
+                    cnode = g.add_concept(
+                        cid, label=c.get("label", cid),
+                        domain=axis or c.get("domain_label", ""),
+                        cui=c.get("cui"), mesh=c.get("mesh"),
+                        snomed=c.get("snomed"), axis=axis,
+                        discipline=discipline,
+                    )
+                    g.link_paper_concept(paper_id, cnode, weight=1.0)
+                    if axis:
+                        by_axis.setdefault(axis.upper(), []).append(cnode)
+                except TypeError:
+                    # legacy add_concept(3 arg) fallback
+                    try:
+                        cnode = g.add_concept(cid, label=c.get("label", cid),
+                                                domain=axis or "")
+                        g.link_paper_concept(paper_id, cnode, weight=1.0)
+                    except Exception:
+                        continue
                 except Exception:
                     continue
-            # 저장 (있으면)
+
+            # FIX-10: cross-axis edges (Exposure × Outcome → EXPOSURE_TO_OUTCOME)
+            from src.knowledge.schema_v2 import edge_confidence
+            exposures = by_axis.get("D_EXPOSURE", [])
+            outcomes  = by_axis.get("D_OUTCOME", [])
+            mechs     = by_axis.get("D_MECHANISM", [])
+            ev_level  = "low"  # default; future: extract from chunk meta
+            conf = edge_confidence(sample_size=0, evidence_level=ev_level, source_count=1)
+            for ex in exposures:
+                for ou in outcomes:
+                    try:
+                        g.link_concepts(ex, ou, weight=conf,
+                                          rel="EXPOSURE_TO_OUTCOME",
+                                          attrs={"confidence": conf, "via_paper": paper_id,
+                                                  "evidence_level": ev_level})
+                    except TypeError:
+                        # legacy link_concepts(c1,c2,weight) signature
+                        g.link_concepts(ex, ou, weight=conf)
+                    except Exception:
+                        continue
+                # Mechanism → Exposure (MECHANISM_OF, simplified)
+                for mech in mechs:
+                    try:
+                        g.link_concepts(mech, ex, weight=conf, rel="MECHANISM_OF",
+                                          attrs={"via_paper": paper_id})
+                    except TypeError:
+                        g.link_concepts(mech, ex, weight=conf)
+                    except Exception:
+                        continue
+
             if hasattr(g, "save"):
-                try:
-                    g.save()
-                except Exception:
-                    pass
+                try: g.save()
+                except Exception: pass
             return paper_id
         except Exception as e:
             _log.warning("graph add fail %s: %s", pmid, e)

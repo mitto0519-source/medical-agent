@@ -81,7 +81,11 @@ def _split_structured_abstract(text: str) -> Dict[str, str]:
 
 def chunk_paper(text: str, base_meta: Optional[dict] = None,
                 structured: bool = True) -> List[dict]:
-    """논문 텍스트 → 섹션 인식 청크 리스트 [{text, metadata}, ...]."""
+    """논문 텍스트 → 섹션 인식 청크 리스트 [{text, metadata}, ...].
+
+    FIX-10 (2026-06-14): 5 키 → schema_v2.CHUNK_META_FIELDS 전체 추출.
+    빈 필드는 null (거짓 채움 금지). 추출기는 regex/사전 기반 (빠르게, 보수적).
+    """
     from src.ingestion.chunker import TextChunker
 
     base = dict(base_meta or {})
@@ -89,7 +93,7 @@ def chunk_paper(text: str, base_meta: Optional[dict] = None,
     if not text:
         return []
 
-    # 1) 섹션 분할: 본문이 길면 paper_ingester 섹션분할, 짧으면 구조화 초록
+    # 1) 섹션 분할
     sections: Dict[str, str] = {}
     if structured and len(text) > 600:
         try:
@@ -100,23 +104,199 @@ def chunk_paper(text: str, base_meta: Optional[dict] = None,
     if not sections:
         sections = _split_structured_abstract(text)
 
-    # 2) 섹션별 메타 부여 + 청킹 (짧은 섹션은 통째로 = 의미단위 보존)
+    # 2) 섹션별 메타 부여 + 청킹
     out: List[dict] = []
     tc = TextChunker(chunk_size=700, overlap=80)
     for sec, body in sections.items():
         body = (body or "").strip()
         if len(body) < 20:
             continue
-        meta = {
-            **base,
-            "section": sec,
-            "rhetorical_role": _ROLE_BY_SECTION.get(sec, "other"),
-            "citation_density": _citation_density(body),
-            "statistical_method": _detect(body, _STAT_METHODS),
-            "evidence_level": _detect(body, _EVIDENCE) or base.get("evidence_level", ""),
-        }
+        meta = _build_full_meta(base, sec, body)
         if len(body) <= 900:
             out.append({"text": body, "metadata": meta})
         else:
-            out.extend(tc.chunk(body, metadata=meta))
+            for chunk in tc.chunk(body, metadata=meta):
+                # TextChunker가 metadata 복제할 때 deepcopy 안 하므로 명시 갱신
+                out.append(chunk)
     return out
+
+
+# ──────────────────────────────────────────────────────────────────────
+# FIX-10 — extraction helpers (schema_v2 메타 채우기)
+# ──────────────────────────────────────────────────────────────────────
+
+import re as _re
+
+# Effect measure detection
+_EFFECT_PATTERNS = [
+    (r"\baOR\s*[=:]?\s*([\d.]+)\b", "aOR"),
+    (r"\bOR\s*[=:]?\s*([\d.]+)\b", "OR"),
+    (r"\baHR\s*[=:]?\s*([\d.]+)\b", "aHR"),
+    (r"\bHR\s*[=:]?\s*([\d.]+)\b", "HR"),
+    (r"\baRR\s*[=:]?\s*([\d.]+)\b", "aRR"),
+    (r"\bRR\s*[=:]?\s*([\d.]+)\b", "RR"),
+    (r"\bIRR\s*[=:]?\s*([\d.]+)\b", "IRR"),
+    (r"\bSMD\s*[=:]?\s*([\d.-]+)\b", "SMD"),
+    (r"\bMD\s*[=:]?\s*([\d.-]+)\b", "MD"),
+    (r"\bAUC\s*[=:]?\s*([\d.]+)\b", "AUC"),
+]
+_CI_PATTERN = _re.compile(r"95\s*%?\s*CI\s*[:=]?\s*\[?\s*([\d.]+)\s*[-–to,]\s*([\d.]+)", _re.IGNORECASE)
+_P_PATTERN = _re.compile(r"\bp\s*[<>=]\s*(0?\.\d+)\b", _re.IGNORECASE)
+_N_PATTERN = _re.compile(r"\bn\s*=\s*(\d[\d,]*)\b", _re.IGNORECASE)
+
+# Study design detection
+_DESIGN_PATTERNS = {
+    "cross-sectional":   r"\bcross[-\s]?sectional\b",
+    "cohort":            r"\bcohort\s+(?:study|design)\b",
+    "case-control":      r"\bcase[-\s]?control\b",
+    "randomized":        r"\brandomi[sz]ed\b.{0,30}\btrial\b",
+    "systematic-review": r"\bsystematic\s+review\b",
+    "meta-analysis":     r"\bmeta[-\s]?analysis\b",
+    "target-trial":      r"\btarget[-\s]?trial\b",
+    "MR":                r"\bmendelian[-\s]?randomi[sz]ation\b",
+    "ITS":               r"\binterrupted[-\s]?time[-\s]?series\b",
+}
+
+# Discipline keyword detection (subset of schema_v2.DISCIPLINES)
+_DISCIPLINE_KW = {
+    "cardiology": ["cardiovascular", "heart failure", "coronary", "stroke", "myocardial"],
+    "endocrinology": ["diabetes", "insulin", "thyroid", "obesity", "metabolic"],
+    "psychiatry": ["depression", "anxiety", "PHQ", "GAD-7", "psychiatric", "mental health"],
+    "nephrology": ["kidney", "renal", "eGFR", "dialysis", "CKD"],
+    "neurology": ["stroke", "dementia", "alzheimer", "parkinson", "neurodegenerat"],
+    "oncology": ["cancer", "tumor", "neoplasm", "carcinoma", "malignan"],
+    "pulmonology": ["asthma", "COPD", "lung", "pulmonary"],
+    "nutrition": ["dietary", "nutrition", "intake", "consumption", "food", "beverage"],
+    "epidemiology": ["population", "prevalence", "incidence", "epidemiolog"],
+    "pediatrics": ["adolescent", "child", "pediatric", "youth"],
+    "preventive-medicine": ["screening", "prevention", "vaccination", "lifestyle"],
+}
+
+
+def _detect_effect(body: str) -> tuple[str | None, dict | None]:
+    """Returns (effect_measure, {value, ci_low, ci_high, p} or None)."""
+    for pat, measure in _EFFECT_PATTERNS:
+        m = _re.search(pat, body, _re.IGNORECASE)
+        if not m:
+            continue
+        est = {"value": float(m.group(1))}
+        ci = _CI_PATTERN.search(body)
+        if ci:
+            try:
+                est["ci_low"] = float(ci.group(1))
+                est["ci_high"] = float(ci.group(2))
+            except ValueError:
+                pass
+        p = _P_PATTERN.search(body)
+        if p:
+            try:
+                est["p"] = float(p.group(1))
+            except ValueError:
+                pass
+        return measure, est
+    return None, None
+
+
+def _detect_design(body: str) -> str | None:
+    for label, pat in _DESIGN_PATTERNS.items():
+        if _re.search(pat, body, _re.IGNORECASE):
+            return label
+    return None
+
+
+def _detect_disciplines(body: str, base: dict) -> list:
+    found = []
+    text_lower = body.lower()
+    for disc, kws in _DISCIPLINE_KW.items():
+        if any(kw in text_lower for kw in kws):
+            found.append(disc)
+    # Inherit from base if no hit
+    if not found and base.get("discipline"):
+        return base["discipline"] if isinstance(base["discipline"], list) else [base["discipline"]]
+    return found
+
+
+def _detect_sample_size(body: str) -> int | None:
+    m = _N_PATTERN.search(body)
+    if not m:
+        return None
+    try:
+        return int(m.group(1).replace(",", ""))
+    except ValueError:
+        return None
+
+
+def _extract_concept_cuis(body: str) -> dict:
+    """ontology.extract_concepts → axis별 CUI(or concept_id) list."""
+    try:
+        from src.knowledge.medical_ontology import get_ontology
+        ont = get_ontology()
+        concepts = ont.extract_concepts(body)
+        out: dict = {}
+        for c in concepts:
+            axis_key = c.get("domain_id", "").lower().replace("d_", "")
+            cid = c.get("cui") or c.get("concept_id") or c.get("label", "")
+            if axis_key and cid:
+                out.setdefault(axis_key, []).append(cid)
+        return out
+    except Exception:
+        return {}
+
+
+def _build_full_meta(base: dict, sec: str, body: str) -> dict:
+    """schema_v2.CHUNK_META_FIELDS 전체를 채우는 메타 생성기."""
+    measure, estimate = _detect_effect(body)
+    design = _detect_design(body)
+    disciplines = _detect_disciplines(body, base)
+    n = _detect_sample_size(body)
+    concept_buckets = _extract_concept_cuis(body)
+
+    meta = {
+        # provenance (from base)
+        "pmid": base.get("pmid"),
+        "pmcid": base.get("pmcid"),
+        "doi": base.get("doi"),
+        "journal": base.get("journal"),
+        "year": base.get("year"),
+        "section_char_span": base.get("section_char_span"),
+        # section / rhetorical
+        "section": sec,
+        "subsection": base.get("subsection"),
+        "rhetorical_role": _ROLE_BY_SECTION.get(sec, "other"),
+        # study identification
+        "study_design": design or base.get("study_design"),
+        # extracted concepts (axis-keyed lists) — flat join for ChromaDB compat
+        "population": ",".join(concept_buckets.get("population", [])) or None,
+        "exposure":   ",".join(concept_buckets.get("exposure", [])) or None,
+        "outcome":    ",".join(concept_buckets.get("outcome", [])) or None,
+        "intervention": ",".join(concept_buckets.get("intervention", [])) or None,
+        "biomarker":  ",".join(concept_buckets.get("biomarker_lab", [])) or None,
+        "drug":       ",".join(concept_buckets.get("drug", [])) or None,
+        "gene":       ",".join(concept_buckets.get("genetics", [])) or None,
+        # statistical
+        "statistical_method": _detect(body, _STAT_METHODS) or None,
+        "effect_measure": measure,
+        "effect_estimate": str(estimate) if estimate else None,
+        "sample_size": n,
+        "events": None,
+        "follow_up": None,
+        "covariates": None,
+        # evidence
+        "evidence_level": _detect(body, _EVIDENCE) or base.get("evidence_level") or None,
+        "risk_of_bias": None,
+        # cross-axis
+        "discipline": ",".join(disciplines) if disciplines else None,
+        "mechanism": ",".join(concept_buckets.get("mechanism", [])) or None,
+        # text features
+        "citation_density": _citation_density(body),
+    }
+    # Validate (warnings only, not enforcement — preserve current behavior)
+    try:
+        from src.knowledge.schema_v2 import validate_chunk_meta
+        errs = validate_chunk_meta(meta)
+        if errs:
+            meta["_meta_warnings"] = ";".join(errs)[:200]
+    except Exception:
+        pass
+    # Strip None values (ChromaDB metadata limits)
+    return {k: v for k, v in meta.items() if v is not None}
