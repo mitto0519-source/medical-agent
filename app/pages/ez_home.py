@@ -846,6 +846,26 @@ def _render_chat_page(pid: str):
                     from src.service.chat import stream_turn
                     activity = st.empty()    # 활동 로그 (hot)
                     preview_ph = st.empty()  # 우측 프리뷰 mirror (token)
+
+                    # ★ 즉시 시각 피드백 (2026-06-15) — 사용자 사고: "대답 전 로딩 표시 없음"
+                    # build_full_system이 RAG retrieve + persona 합성으로 0.5~3s 걸리니까,
+                    # stream_turn 첫 status event 전에 미리 spinner 메시지 표시.
+                    activity.markdown(
+                        "<div class='msg-asst' style='font-size:0.82rem;"
+                        "background:#F1F5F9;padding:8px 12px;'>"
+                        "<span class='loading-dot'>●</span>"
+                        "<span class='loading-dot'>●</span>"
+                        "<span class='loading-dot'>●</span> "
+                        "응답 준비 중 — RAG 검색 + 컨텍스트 합성</div>"
+                        "<style>"
+                        "@keyframes blink { 0%,100% {opacity:0.2;} 50% {opacity:1;} }"
+                        ".loading-dot { display:inline-block; margin:0 1px;"
+                        " animation: blink 1.4s infinite; color:#3B82F6; }"
+                        ".loading-dot:nth-child(2) { animation-delay:0.2s; }"
+                        ".loading-dot:nth-child(3) { animation-delay:0.4s; }"
+                        "</style>",
+                        unsafe_allow_html=True)
+
                     tool_log: list[str] = []
                     body_buf: list[str] = []
                     confidence_msg = ""
@@ -1033,6 +1053,17 @@ def _render_chat_page(pid: str):
                     "})();"
                     "</script>", unsafe_allow_html=True)
 
+                # ★ tool dispatch가 sections에 박은 결과를 우측 프리뷰에 즉시 반영 (2026-06-15)
+                # patch_preview tool이 호출되면 project.sections 변경됨 →
+                # rerun 한 번 더 돌려서 col_preview가 새 sections 읽어 다시 그림.
+                # 사용자 사고: "프리뷰에 바로바로 연동 안 됨"의 진짜 원인.
+                if (project.get("sections") and
+                    st.session_state.get("_last_preview_hash") !=
+                    hash(repr(project.get("sections", {})))):
+                    st.session_state["_last_preview_hash"] = hash(
+                        repr(project.get("sections", {})))
+                    st.rerun()
+
     with col_preview:
         sections = project.get("sections") or {}
         rs = project.get("research_state") or {}
@@ -1173,12 +1204,31 @@ def render() -> None:
     _sidebar()
 
     # 1) URL query → 가장 강한 진실원본 (F5 후에도 보존)
+    # 2026-06-15: Streamlit 버전에 따라 qp가 dict-like 또는 legacy QueryParams
+    url_pid = None
     try:
         qp = st.query_params
-        url_pid = qp.get("pid") if hasattr(qp, "get") else None
-        if isinstance(url_pid, list):
-            url_pid = url_pid[0] if url_pid else None
+        # 새 API (Streamlit ≥1.30)
+        if hasattr(qp, "get_all"):
+            vals = qp.get_all("pid")
+            url_pid = vals[0] if vals else None
+        elif hasattr(qp, "get"):
+            v = qp.get("pid")
+            if isinstance(v, list):
+                url_pid = v[0] if v else None
+            else:
+                url_pid = v
+        # __getitem__ fallback
+        if not url_pid:
+            try:
+                v = qp["pid"]
+                url_pid = v[0] if isinstance(v, list) else v
+            except (KeyError, TypeError):
+                pass
     except Exception:
+        url_pid = None
+    # 빈 문자열 / "None" / "null" 정규화
+    if url_pid in (None, "", "None", "null"):
         url_pid = None
 
     # 2) URL 우선, 없으면 session_state

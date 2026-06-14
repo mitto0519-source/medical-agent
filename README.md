@@ -1,3 +1,15 @@
+---
+title: Medical-Agent
+emoji: 🔬
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 8501
+pinned: false
+license: mit
+short_description: Vibe paper copilot for clinical/translational medicine
+---
+
 # Medical-Agent
 
 > **바이브 논문**(vibe paper) 코파일럿 — 사람이 의학 논문을 써내려가는 흐름을 AI가 실시간으로 거든다.
