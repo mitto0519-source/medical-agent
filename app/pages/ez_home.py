@@ -541,11 +541,77 @@ def _post_turn_hooks(project: dict, user_msg: str, full_reply: str, owner_email:
     post_turn_hooks(project, user_msg, full_reply, owner_email=owner_email)
 
 
-def _render_msg(role: str, content: str):
-    """단일 메시지를 chat bubble HTML 로 렌더."""
+_PIN_SECTIONS = ("Abstract", "Introduction", "Methods", "Results",
+                  "Discussion", "Conclusion", "Tables", "Figures", "References")
+
+
+def _pin_to_section(project: dict, content: str, section: str,
+                       *, mode: str = "append") -> None:
+    """assistant 응답(또는 선택 블록)을 sections에 박는 핵심 액션.
+
+    mode='append': 기존 내용 뒤에 \\n\\n+content
+    mode='overwrite': 통째로 교체
+    저장 후 _save_project → 우측 프리뷰 즉시 반영 + 다음 turn에 build_system_with_preview가
+    sections snapshot으로 LLM 컨텍스트에 자동 주입(=양방향 binding).
+    """
+    if not content or not section:
+        return
+    secs = project.setdefault("sections", {})
+    cur = secs.get(section) or ""
+    if isinstance(cur, dict):
+        # 기존 구조가 dict (Abstract.Background 등) — _appended 슬롯에 추가
+        cur_text = str(cur.get("_appended", "") or "")
+        new = (cur_text + "\n\n" + content).strip() if (mode == "append" and cur_text) else content
+        cur["_appended"] = new
+        secs[section] = cur
+    else:
+        cur_text = str(cur or "")
+        new = (cur_text + "\n\n" + content).strip() if (mode == "append" and cur_text) else content
+        secs[section] = new
+    # research_state.manuscript_text도 동시 갱신 (autopilot이 쓰는 키)
+    project.setdefault("research_state", {})["manuscript_text"] = secs.get(section)
+    _save_project(project)
+
+
+def _render_msg(role: str, content: str, *, msg_idx: int = -1,
+                  project: dict = None, allow_pin: bool = True) -> None:
+    """단일 메시지를 chat bubble HTML 로 렌더 + assistant 메시지엔 📌 핀 row 추가.
+
+    msg_idx: messages 리스트 인덱스 — Streamlit button key 고유성 보장용
+    project: 핀 적용 대상 project dict
+    allow_pin: False면 핀 row 생략 (스트리밍 중간 표시 등 일회성 렌더)
+    """
     safe = (content or "").replace("<", "&lt;").replace(">", "&gt;")
     cls = "msg-user" if role == "user" else "msg-asst"
     st.markdown(f"<div class='{cls}'>{safe}</div>", unsafe_allow_html=True)
+
+    # 핀 row — assistant 메시지에만, project 제공된 경우만
+    if role != "assistant" or not allow_pin or project is None or not content:
+        return
+    if msg_idx < 0:
+        msg_idx = abs(hash(content)) % 100000
+    key_prefix = f"pin_{project.get('id','x')}_{msg_idx}"
+
+    with st.container():
+        st.markdown(
+            "<div style='font-size:0.74rem;color:#64748B;margin:2px 0 4px 0;"
+            "padding-left:4px;'>📌 프리뷰에 박기:</div>",
+            unsafe_allow_html=True)
+        # 9 sections in 3 rows of 3
+        cols_r1 = st.columns(3)
+        cols_r2 = st.columns(3)
+        cols_r3 = st.columns(3)
+        rows = [cols_r1, cols_r2, cols_r3]
+        for i, sec in enumerate(_PIN_SECTIONS):
+            row, col = divmod(i, 3)
+            with rows[row][col]:
+                if st.button(sec, key=f"{key_prefix}_{sec}",
+                              use_container_width=True,
+                              help=f"이 응답을 {sec} 섹션에 추가"):
+                    _pin_to_section(project, content, sec, mode="append")
+                    st.toast(f"📌 {sec}에 박았습니다 ({len(content):,}자)",
+                              icon="✅")
+                    st.rerun()
 
 
 def _render_my_papers_uploader(owner_email: str) -> None:
@@ -668,9 +734,10 @@ def _render_chat_page(pid: str):
         # 고정 높이 스크롤 박스 — 무한정 늘어나지 않음
         msgs_box = st.container(height=600, border=False)
         with msgs_box:
-            # 1) 누적된 과거 메시지
-            for m in project.get("messages", []):
-                _render_msg(m.get("role", "assistant"), m.get("content", ""))
+            # 1) 누적된 과거 메시지 (assistant 메시지엔 📌 핀 row 자동)
+            for _i, m in enumerate(project.get("messages", [])):
+                _render_msg(m.get("role", "assistant"), m.get("content", ""),
+                              msg_idx=_i, project=project)
 
             # ★ Auto-scroll anchor (2026-06-14) — 새 메시지·스트리밍 chunk마다 최하단으로
             # st.container(height=...)의 내부 div가 [data-testid='stVerticalBlockBorderWrapper']
