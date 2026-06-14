@@ -1109,13 +1109,34 @@ def _render_chat_page(pid: str):
             except Exception as _e:
                 st.caption(f"export 양식 미준비: {_e}")
 
-            # Manuscript body
+            # Manuscript body — case-insensitive lookup (2026-06-15)
+            # 📌 핀 UX가 박는 Title Case("Abstract") + 기존 lowercase("abstract") 모두 인식
             html_parts = [f"<div class='preview-box'><h1>{project.get('title','')[:80]}</h1>"]
-            for key in ["abstract", "introduction", "methods", "results", "discussion", "conclusion"]:
-                if key in sections and sections[key]:
-                    body = str(sections[key]).replace("<", "&lt;").replace(">", "&gt;")
-                    body_html = "".join(f"<p>{para}</p>" for para in body.split("\n\n") if para.strip())
-                    html_parts.append(f"<h2>{key.capitalize()}</h2>{body_html}")
+            def _get_section(name: str):
+                for k in (name, name.lower(), name.capitalize(), name.upper()):
+                    if k in sections and sections[k]:
+                        return sections[k]
+                return None
+            for key in ["Abstract", "Introduction", "Methods", "Results",
+                          "Discussion", "Conclusion", "Tables", "Figures"]:
+                v = _get_section(key)
+                if not v:
+                    continue
+                # dict 섹션(Abstract.Background 등) — flatten 표시
+                if isinstance(v, dict):
+                    sub_parts = []
+                    for sk, sv in v.items():
+                        if not sv:
+                            continue
+                        sv_s = str(sv).replace("<", "&lt;").replace(">", "&gt;")
+                        sub_parts.append(f"<p><b>{sk}:</b> {sv_s}</p>")
+                    body_html = "".join(sub_parts)
+                else:
+                    body = str(v).replace("<", "&lt;").replace(">", "&gt;")
+                    body_html = "".join(f"<p>{para}</p>"
+                                          for para in body.split("\n\n") if para.strip())
+                if body_html:
+                    html_parts.append(f"<h2>{key}</h2>{body_html}")
 
             # References block (저널별 style 적용)
             if refs:

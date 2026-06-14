@@ -868,7 +868,9 @@ def build_system_with_preview(base_prompt: str, project: dict,
                     parts.append(f"**{k}**: {str(v)[:600]}")
         else:
             parts.append(str(ab)[:1000])
-    for sec in ("Introduction", "Methods", "Results", "Discussion"):
+    # 2026-06-14: ez_home 📌 핀 UX가 박는 9 sections 전부 합성 (양방향 binding 완전 closure)
+    for sec in ("Introduction", "Methods", "Results", "Discussion",
+                 "Conclusion", "Figures", "References"):
         body = sections.get(sec)
         if not body:
             continue
@@ -878,9 +880,13 @@ def build_system_with_preview(base_prompt: str, project: dict,
                 parts.append(f"### {sk}\n{str(sv)[:600]}")
         else:
             parts.append(str(body)[:1200])
+    # Tables: sections["Tables"]도 핀 가능 + project["tables"] 메타 둘 다 노출
+    tbl_section = sections.get("Tables")
+    if tbl_section:
+        parts.append(f"## Tables\n{str(tbl_section)[:1200]}")
     tables = project.get("tables", [])
     if tables:
-        parts.append(f"## Tables ({len(tables)} 개) 등록됨")
+        parts.append(f"(+ {len(tables)}개 구조화 표 등록)")
     supp = project.get("supplement", {}) or {}
     if supp:
         parts.append(f"## Supplement blocks: {list(supp.keys())}")
