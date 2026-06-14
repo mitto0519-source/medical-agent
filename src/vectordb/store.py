@@ -23,8 +23,19 @@ class VectorStore:
     def __init__(
         self,
         persist_dir: str = "data/chromadb",
-        collection_name: str = "papers",
+        collection_name: str | None = None,
     ):
+        # ★ Phase-Next: 임베딩 모델별 collection 분리 (차원 충돌 방지)
+        # 예: papers_minilm_384d, papers_pubmedbert_768d, papers_medcpt_768d
+        # 같은 ChromaDB 인스턴스에서 여러 모델 collection 공존 가능.
+        if collection_name is None:
+            import os, re
+            model = os.environ.get("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+            from src.config.models import get_embedding_dim
+            dim = get_embedding_dim()
+            # 모델 이름 단축
+            tag = re.sub(r"[^a-z0-9]", "", model.lower().split("/")[-1])[:24]
+            collection_name = f"papers_{tag}_{dim}d"
         try:
             import chromadb
             from chromadb.config import Settings

@@ -1047,7 +1047,7 @@ def _render_chat_page(pid: str):
                             meta["enrich_warnings"] = meta2.get("warnings", [])
                             meta["novelty_score"] = meta2.get("novelty_score")
                             meta["figures"] = meta2.get("figures")
-                            # ★ 검증 게이트 4종 inline warning ("올바른 마찰만" — 비전 2026-06-13)
+                            # ★ 검증 게이트 4종 inline warning + provenance hard audit
                             try:
                                 import re as _re
                                 pmid_in_rag = _re.findall(r"PMID:(\d+)", rag_ctx or "")
@@ -1062,13 +1062,54 @@ def _render_chat_page(pid: str):
                                 gate_blocks = report_to_chat_blocks(gates_rep)
                                 meta["gates"] = {"total_issues": gates_rep.total_issues,
                                                   "blocks": gate_blocks}
-                                # chat에 1줄 요약 박스로 표시
                                 for b in gate_blocks:
                                     st.markdown(
                                         f"<div class='msg-asst' style='font-size:0.82rem;"
                                         f"background:#FEF3C7;border-left:3px solid #F59E0B;"
                                         f"padding:8px 12px;'>{b.replace('<','&lt;').replace('>','&gt;')}</div>",
                                         unsafe_allow_html=True)
+
+                                # ★ Phase-Next #2: provenance hard audit ("근거 없는 문장 출력 금지")
+                                try:
+                                    from src.safety.provenance_guard import audit as _prov_audit
+                                    rs = project.get("research_state") or {}
+                                    prov = _prov_audit(
+                                        improved,
+                                        stat_result=rs.get("stat_result"),
+                                        rag_context=rag_ctx,
+                                        rag_pmids=pmid_in_rag,
+                                    )
+                                    meta["provenance"] = {
+                                        "ok": prov.ok,
+                                        "citation_realism": prov.citation_realism_rate,
+                                        "stat_traceability": prov.stat_traceability_rate,
+                                        "strong_claims": prov.strong_claim_count,
+                                        "issues": [{"severity": i.severity, "kind": i.kind,
+                                                      "detail": i.detail[:200]}
+                                                     for i in prov.issues[:10]],
+                                    }
+                                    severity_bg = "#FEE2E2" if not prov.ok else "#ECFDF5"
+                                    severity_bd = "#DC2626" if not prov.ok else "#10B981"
+                                    label = "❌ PROVENANCE BLOCK" if not prov.ok else "✅ PROVENANCE OK"
+                                    summary_html = (
+                                        f"<div class='msg-asst' style='font-size:0.82rem;"
+                                        f"background:{severity_bg};border-left:3px solid {severity_bd};"
+                                        f"padding:8px 12px;'>"
+                                        f"<b>{label}</b> · citation realism {prov.citation_realism_rate:.0%} "
+                                        f"({prov.citations_total} cites) · stat traceability "
+                                        f"{prov.stat_traceability_rate:.0%} ({prov.stats_total} stats) · "
+                                        f"strong claims {prov.strong_claim_count}"
+                                    )
+                                    if not prov.ok and prov.issues:
+                                        summary_html += "<br>" + "<br>".join(
+                                            f"• [{i.severity}] {i.kind}: {i.detail[:150]}".replace(
+                                                "<", "&lt;").replace(">", "&gt;")
+                                            for i in prov.issues[:5]
+                                        )
+                                    summary_html += "</div>"
+                                    st.markdown(summary_html, unsafe_allow_html=True)
+                                except Exception as _ep:
+                                    meta.setdefault("warnings", []).append(f"provenance: {_ep}")
                             except Exception as _eg:
                                 meta.setdefault("warnings", []).append(f"gates: {_eg}")
                             if improved != reply:
