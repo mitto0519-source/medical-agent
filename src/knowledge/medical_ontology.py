@@ -108,6 +108,39 @@ ONTOLOGY: Dict[str, Dict] = {
                 "keywords": ["substance", "drug", "substance abuse", "약물", "마약"],
                 "mesh": "D019966",
             },
+            # FIX-10b polish (2026-06-14): D_exposure 양식 양식 양식 양식 양식 양식 양식
+            "C_caffeine": {
+                "label": "Caffeine intake (카페인)",
+                "keywords": ["caffeine", "caffeinated", "coffee", "energy drink",
+                              "high-caffeine", "카페인", "에너지 음료", "커피"],
+                "mesh": "D002110",
+            },
+            "C_sweetened_beverage": {
+                "label": "Sweetened beverage / ZCB (가당·제로칼로리 음료)",
+                "keywords": ["sweetened beverage", "sugary drink", "soft drink", "soda",
+                              "zero-calorie beverage", "zcb", "artificial sweetener",
+                              "가당 음료", "탄산음료", "제로 칼로리", "인공 감미료"],
+                "mesh": "D008029",
+            },
+            "C_screen_time": {
+                "label": "Screen time / Digital media use",
+                "keywords": ["screen time", "smartphone use", "social media",
+                              "digital media", "video games", "스마트폰", "스크린 타임",
+                              "소셜미디어", "디지털 미디어", "게임"],
+                "mesh": "D000067288",
+            },
+            "C_air_pollution": {
+                "label": "Air pollution / Particulate matter",
+                "keywords": ["air pollution", "PM2.5", "PM10", "particulate matter",
+                              "ambient air", "대기오염", "초미세먼지", "미세먼지"],
+                "mesh": "D000393",
+            },
+            "C_occupational": {
+                "label": "Occupational exposure / Shift work",
+                "keywords": ["occupational", "shift work", "night shift", "workplace",
+                              "직업", "교대근무", "야간근무"],
+                "mesh": "D016273",
+            },
         },
     },
 
