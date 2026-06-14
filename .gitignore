@@ -21,6 +21,12 @@ data/medical_knowledge_seed/raw/
 # ★ REVIEW_FIX-11 (2026-06-14): 81fc357 사고 후 전면 차단. raw data는 git 영구 추방.
 data/raw/
 data/oa_papers/
+# ★ 추가: SQLite/대용량 라이브러리 (HF 10MB 한계)
+data/library/
+data/library/*.db*
+**/*.db
+**/*.db-shm
+**/*.db-wal
 # 그래도 명시 안전망 (위에 모두 포함되지만 future drift 방지)
 **/*.sav
 **/*.sas7bdat
