@@ -108,7 +108,7 @@ ONTOLOGY: Dict[str, Dict] = {
                 "keywords": ["substance", "drug", "substance abuse", "약물", "마약"],
                 "mesh": "D019966",
             },
-            # FIX-10b polish (2026-06-14): D_exposure 양식 양식 양식 양식 양식 양식 양식
+            # FIX-10b (2026-06-14): KYRBS/KNHANES-frequent exposures added to D_exposure bucket
             "C_caffeine": {
                 "label": "Caffeine intake (카페인)",
                 "keywords": ["caffeine", "caffeinated", "coffee", "energy drink",
