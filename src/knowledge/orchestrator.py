@@ -127,11 +127,11 @@ class KnowledgeOrchestrator:
         except Exception as e:
             _log.debug("concept extract fail %s: %s", pmid, e)
 
-        # 2. vector 색인 (chunk + metadata에 pmid/concepts 같이)
+        # 2. vector 색인 (chunk + metadata에 pmid/concepts 같이) — flat ids
         chunks_added = self._index_chunks(pmid, full_text or abstract, title,
-                                            concepts, year, journal, doi)
+                                            concept_ids, year, journal, doi)
 
-        # 3. graph 노드 (paper + concept edges)
+        # 3. graph 노드 (paper + concept edges) — full dicts로 cui/axis 관통 (FIX-10)
         graph_node = self._add_to_graph(pmid, title, abstract, year, journal,
                                           concepts)
 
@@ -161,7 +161,7 @@ class KnowledgeOrchestrator:
         except Exception:
             pass
 
-        return {"pmid": pmid, "concepts": concepts,
+        return {"pmid": pmid, "concepts": concept_ids,
                 "n_chunks": chunks_added, "graph_node": graph_node,
                 "citation_added": cited_added,
                 "n_components": n_components}
