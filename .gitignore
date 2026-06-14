@@ -17,16 +17,21 @@ data/drafts/
 data/agent_memory.json
 data/medical_knowledge_seed/raw/
 
-# 원시데이터 (용량 크고 재다운로드 가능)
-# KNHANES
-data/raw/knhanes/*.sas7bdat
-data/raw/knhanes/*.sav
-data/raw/knhanes/*.csv
-data/raw/knhanes/extracted_variables.json
-# KYRBS (2005~2025 .sav + .zip, 합계 2.7GB — 재다운로드: scripts/download_kyrbs.py)
-data/raw/kyrbs*.sav
-data/raw/kyrbs*.zip
-data/raw/kyrbs_codebook*.zip
+# 원시데이터 (용량 크고 재다운로드 가능 + KDCA 정책상 public 게재 금지)
+# ★ REVIEW_FIX-11 (2026-06-14): 81fc357 사고 후 전면 차단. raw data는 git 영구 추방.
+data/raw/
+data/oa_papers/
+# 그래도 명시 안전망 (위에 모두 포함되지만 future drift 방지)
+**/*.sav
+**/*.sas7bdat
+**/*.dta
+**/*.zip
+**/HN*_ALL*
+**/통합본*
+**/통합파일*
+**/지침서*
+# pubmed_refs.json (작은 메타 JSON)만 살림 — 명시적 화이트리스트
+!data/raw/knhanes/pubmed_refs.json
 
 # 민감 데이터 (API 키 포함)
 data/users.json

@@ -119,12 +119,48 @@ def sync_cycle():
 
     # 1) local WIP가 있으면 먼저 commit
     if changed:
-        summary = ", ".join(changed[:5])
-        if len(changed) > 5:
-            summary += f" 외 {len(changed)-5}개"
+        # ★ REVIEW_FIX-11 (2026-06-14): git add -A 폐기.
+        # 81fc357 사고 (KNHANES raw 2.5GB git 오염) 후 가드 박음.
+        # (a) .gitignore 존중: git status로 보이는 것만 stage 후보
+        # (b) 50MB 사이즈 가드: 단일 파일이 50MB 넘으면 skip + log
+        # (c) 데이터 path 명시 차단 (data/raw/, data/oa_papers/, *.sav, *.dta, *.zip)
+        BANNED_PATHS = ("data/raw/", "data/oa_papers/", "data/chromadb/",
+                          "data/runtime/", "data/.hf_cache/")
+        BANNED_EXTS = (".sav", ".dta", ".sas7bdat", ".zip")
+        SIZE_CAP = 50 * 1024 * 1024  # 50MB
+        safe_files: list[str] = []
+        skipped: list[str] = []
+        for f in changed:
+            # banned path/ext
+            if any(f.startswith(b) or f.replace("\\", "/").startswith(b)
+                   for b in BANNED_PATHS):
+                skipped.append(f"path:{f}")
+                continue
+            if any(f.lower().endswith(e) for e in BANNED_EXTS):
+                skipped.append(f"ext:{f}")
+                continue
+            # size guard
+            try:
+                fp = BASE_DIR / f
+                if fp.exists() and fp.is_file() and fp.stat().st_size > SIZE_CAP:
+                    skipped.append(f"size:{f} ({fp.stat().st_size//1024//1024}MB)")
+                    continue
+            except Exception:
+                pass
+            safe_files.append(f)
+        if skipped:
+            log(f"  ⚠ banned/oversized skip ({len(skipped)}): {skipped[:3]} ...")
+        if not safe_files:
+            log("  • no safe files to stage (all skipped) — cycle 끝")
+            return
+        summary = ", ".join(safe_files[:5])
+        if len(safe_files) > 5:
+            summary += f" 외 {len(safe_files)-5}개"
         ts = datetime.now().strftime("%m/%d %H:%M")
         msg = f"Auto-sync [{ts}]: {summary}"
-        git(["add", "-A"])
+        # whitelist add (not -A)
+        for f in safe_files:
+            git(["add", "--", f])
         out, err, code = git(["commit", "-m", msg])
         if code != 0:
             log(f"  커밋 스킵 (no diff/hook): {err or out}")

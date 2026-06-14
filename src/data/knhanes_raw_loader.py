@@ -16,6 +16,10 @@ _log = get_logger(__name__)
 
 _RAW_DIR = Path("data/raw/knhanes")
 _REGISTRY_PATH = Path("data/registry/knhanes/variables.yaml")
+# User-organised subfolders (2026-06-14 drop):
+_SAV_SUBDIR = Path("data/raw/knhanes/통합파일(SPSS기준만들기)")
+_STATA_SUBDIR = Path("data/raw/knhanes/통합본(STATA)")
+_GUIDE_SUBDIR = Path("data/raw/knhanes/지침서")
 
 
 @lru_cache(maxsize=1)
@@ -32,31 +36,57 @@ def _load_registry() -> dict:
 
 
 def list_available_years() -> list[int]:
-    """Detect downloaded HN<YY>_ALL.sav files."""
-    if not _RAW_DIR.exists():
-        return []
+    """Detect downloaded HN<YY>_all.sav files in canonical or user subfolder."""
     import re
     out: set[int] = set()
-    for p in _RAW_DIR.glob("HN*_ALL.sav"):
-        m = re.match(r"HN(\d{2})_ALL\.sav$", p.name, re.IGNORECASE)
-        if m:
-            yy = int(m.group(1))
-            year = 2000 + yy if yy < 80 else 1900 + yy
-            out.add(year)
+    search_dirs = [_SAV_SUBDIR, _RAW_DIR]
+    for d in search_dirs:
+        if not d.exists():
+            continue
+        for p in d.iterdir():
+            if p.suffix.lower() != ".sav":
+                continue
+            m = re.match(r"HN(\d{2})_ALL\.sav$", p.name, re.IGNORECASE)
+            if m:
+                yy = int(m.group(1))
+                year = 2000 + yy if yy < 80 else 1900 + yy
+                out.add(year)
     return sorted(out)
 
 
 def _file_for_year(year: int) -> Optional[Path]:
-    yy = str(year)[2:]
-    p = _RAW_DIR / f"HN{yy}_ALL.sav"
-    if p.exists():
-        return p
-    # also try variants people sometimes use
-    for variant in (f"hn{yy}_all.sav", f"HN{yy}.sav", f"knhanes{year}.sav"):
-        q = _RAW_DIR / variant
-        if q.exists():
-            return q
+    yy = str(year)[2:].zfill(2)
+    search_dirs = [_SAV_SUBDIR, _RAW_DIR]
+    variants = [
+        f"HN{yy}_ALL.sav", f"HN{yy}_all.sav", f"hn{yy}_all.sav",
+        f"HN{yy}.sav", f"knhanes{year}.sav",
+    ]
+    for d in search_dirs:
+        if not d.exists():
+            continue
+        for v in variants:
+            q = d / v
+            if q.exists():
+                return q
+        # case-insensitive scan as last resort
+        for p in d.iterdir():
+            if p.name.lower() == f"hn{yy}_all.sav":
+                return p
     return None
+
+
+def stata_integrated_path() -> Optional[Path]:
+    """Pre-built KNHANES 2013-2024 STATA integrated file (user dropped)."""
+    p = _STATA_SUBDIR / "KNHANES_2013_2024.dta"
+    return p if p.exists() else None
+
+
+def guide_pdfs() -> list[Path]:
+    """KNHANES official guide PDFs (지침서). For RAG indexing."""
+    if not _GUIDE_SUBDIR.exists():
+        return []
+    return sorted([p for p in _GUIDE_SUBDIR.iterdir()
+                    if p.suffix.lower() == ".pdf"])
 
 
 def _expected_raw_names(year: int) -> Dict[str, str]:
@@ -135,4 +165,26 @@ def variable_compatibility_summary() -> dict:
     return summary
 
 
-__all__ = ["load_knhanes_year", "list_available_years", "variable_compatibility_summary"]
+def load_knhanes_integrated_stata():
+    """Load pre-built KNHANES 2013-2024 STATA integrated file (single DataFrame).
+
+    Faster than year-by-year reading when full multi-year analysis is needed.
+    """
+    p = stata_integrated_path()
+    if p is None:
+        _log.warning("KNHANES STATA integrated file not present: %s", _STATA_SUBDIR)
+        return None
+    try:
+        import pandas as pd
+        df = pd.read_stata(str(p), convert_categoricals=False)
+        _log.info("KNHANES STATA integrated loaded: %d rows, %d cols", len(df), len(df.columns))
+        return df
+    except Exception as e:
+        _log.error("STATA load fail: %s", e)
+        return None
+
+
+__all__ = ["load_knhanes_year", "list_available_years",
+            "variable_compatibility_summary",
+            "stata_integrated_path", "guide_pdfs",
+            "load_knhanes_integrated_stata"]

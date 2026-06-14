@@ -154,6 +154,57 @@ def task_save_restore(page, browser) -> list:
     return res
 
 
+def task_kyrbs_survey_logistic(page: Page) -> list:
+    """J4 (E2E_PILOT_TEST_PLAN) — KYRBS 2023 survey-weighted logistic → 표 → 프리뷰.
+
+    SELF_EVOLUTION_SPEC gold_set.survey_design_test_cases와 동일 spec:
+       outcome=M_SAD, exposure=F_CAFFEINE, covariates=[AGE,SEX,GRADE],
+       strata=STRATA, cluster=CLUSTER, weight=W
+
+    Litmus test: 'KYRBS 2023으로 로지스틱 돌려 표 만들어'가 끝까지(load→survey
+    stats→table→preview 삽입) 가는지가 뇌 embed의 첫 그린.
+    """
+    res = []
+    nav(page, "논문 작업실")
+    try:
+        ta = page.locator('textarea, [contenteditable="true"]').first
+        ta.click(timeout=4000)
+        ta.fill("KYRBS 2023 데이터로 caffeine 섭취와 우울증의 로지스틱 회귀를 "
+                "복합표본설계(strata/cluster/weight) 반영해서 돌리고 "
+                "결과를 표(Table 2)로 만들어줘. covariates는 age, sex, grade.")
+        page.keyboard.press("Enter")
+        res.append(("j4_prompt_sent", True, "KYRBS 2023 survey-weighted logistic"))
+    except Exception as e:
+        res.append(("j4_prompt_sent", False, str(e)[:120]))
+        return res
+
+    # Wait for response — long-running stat call
+    table_appeared = False
+    survey_engine_mentioned = False
+    deadline = time.time() + 90
+    while time.time() < deadline:
+        page.wait_for_timeout(3000)
+        body = page.locator("body").inner_text()[:30000]
+        # Sentinels — table markers + survey engine mention
+        if any(k in body for k in ("Table 2", "표 2", "aOR", "Adjusted OR")):
+            table_appeared = True
+        if any(k in body for k in ("SurveyDesign", "Taylor", "survey-weighted",
+                                       "복합표본", "wt_itvex", "W ", "weights")):
+            survey_engine_mentioned = True
+        if table_appeared and survey_engine_mentioned:
+            break
+        if not g_no_error_text(page)[0]:
+            break
+
+    page.screenshot(path=str(OUT / "j4_kyrbs_survey_logistic.png"), full_page=True)
+    res.append(("j4_table_produced(outcome)", table_appeared, ""))
+    res.append(("j4_survey_engine_used", survey_engine_mentioned,
+                  "expected: SurveyDesign / Taylor / wt_itvex"))
+    res.append(("j4_no_error", *g_no_error_text(page)))
+    res.append(("j4_no_exception", *g_no_exception(page)))
+    return res
+
+
 def task_citation_fullset(page: Page) -> list:
     """워크플로 — 인용/레퍼런스 모드: PMID 검수 → 풀셋(Word/EndNote) 생성(outcome)."""
     res = []
@@ -229,6 +280,8 @@ def main() -> int:
         suite.append(("flow:chat_write", task_chat_write(page)))
         suite.append(("flow:save_restore", task_save_restore(page, browser)))
         suite.append(("flow:citation_fullset", task_citation_fullset(page)))
+        # J4 (E2E_PILOT_TEST_PLAN) — KYRBS survey-weighted logistic litmus test
+        suite.append(("j4:kyrbs_survey_logistic", task_kyrbs_survey_logistic(page)))
 
         # 관리자 단위 페이지 렌더 회귀 (관리자 모드 ON)
         for sel in ['[data-testid="stCheckbox"]', 'label:has-text("관리자 모드")']:

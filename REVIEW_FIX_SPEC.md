@@ -376,6 +376,66 @@ python scripts/test_rag_smoke.py
 
 ---
 
+## FIX-11 — 데이터 git 추방 + auto-sync 가드 (push 차단 해소 + 재발 방지 + 정책 준수)
+
+**문제**: auto-sync commit `81fc357`이 KNHANES raw ZIP 80+개(각 100MB+, ≈2.5GB)를 git에 통째 커밋 → GitHub 100MB 단일파일 한계 + push 페이로드 초과 → `remote end hung up`. 코드패치 4개(dbaba2b/a913c48/85ae017)가 같은 미푸시 페이로드에 묶여 **동반 reject**. 부차: **KDCA 재배포 정책상 KNHANES raw .sav를 public GitHub에 두면 안 됨**.
+
+**근본원인**: `scripts/auto_sync.py`가 **`git add -A`**(7행 docstring / ~120행)로 데이터/바이너리까지 무차별 stage·commit. → history 고쳐도 1분 뒤 재오염.
+
+**※ LFS 기각**: LFS도 GitHub에 업로드 → 정책 위반 그대로. 데이터는 git이 아니라 데이터플레인(비공개)으로.
+
+**변경 (순서 중요 — ①출혈차단 → ②퍼지 → ③push → ④데이터 이전)**:
+
+① **출혈 차단 (먼저, 안 하면 퍼지 후 재오염)**
+```bash
+# .gitignore 추가
+printf '\ndata/raw/\ndata/oa_papers/\ndata/chromadb/\n*.sav\n*.dta\n*.zip\n' >> .gitignore
+git rm -r --cached data/raw data/oa_papers data/chromadb   # 디스크 유지, 추적만 해제
+```
++ `scripts/auto_sync.py`: **`git add -A` → 화이트리스트/사이즈 가드로 교체**:
+```python
+# add -A 금지. 코드만 + 50MB 초과·data/raw·*.sav·*.zip는 절대 stage 금지.
+git(["add", "--", "*.py", "*.md", "*.json", "*.yaml", "*.toml", "prompts", "src", "app", "scripts"])
+# 가드: staged 중 50MB↑ 있으면 abort+경고(재발 즉시 차단)
+big = [f for f in staged_files() if size(f) > 50*1024*1024]
+if big: log(f"ABORT: 거대파일 staged {big}"); git(["reset"]); return
+```
+
+② **history 퍼지 (push 미완료라 안전 — 로컬 재작성)**
+```bash
+git branch backup-before-purge                       # ★ 백업 필수
+pip install git-filter-repo
+git filter-repo --path data/raw --path data/oa_papers --path data/chromadb --invert-paths --force
+# → 데이터 blob 전 history 제거, 코드 4패치 보존
+```
+> 단일 커밋 확인: `git log --oneline --stat | grep -iE "knhanes|\.zip|\.sav" | head`. 여러 커밋에 퍼졌으면(매분 auto-sync) filter-repo가 정답.
+
+③ **push**
+```bash
+git remote add origin <url>    # filter-repo가 origin 제거 → 재설정
+git push origin master         # 페이로드 작아져 통과
+```
+
+④ **데이터 → 데이터플레인 (정책·용량 영구 해결, MASTER §1)**
+KNHANES/KYRBS raw를 **비공개 HF Dataset(private) 또는 S3/R2/Supabase Storage**에 업로드. 기존 `src/runtime/hf_bootstrap.py`가 컨테이너 시작 시 download(이미 있음). git엔 코드만.
+
+**다운스트림 연계**:
+- `hf_bootstrap` repo_id를 **private**로 + 토큰. raw 폴더 download 대상 유지.
+- MASTER_ROADMAP §1(2-plane): 이 작업이 데이터플레인 분리의 첫 실행분.
+- 모든 auto-sync 후속 커밋이 가드 적용받음(재발 0).
+
+**검증**:
+```bash
+git push origin master && echo PUSH_OK
+git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectsize) %(rest)' | awk '$2>104857600' | head   # 100MB↑ 0건이어야
+# auto-sync 가드: data/raw에 더미 .sav 두고 1 cycle → commit 안 됨 확인
+python scripts/test_rag_smoke.py
+```
+**판정**: push 성공 + history에 100MB↑ blob 0 + auto-sync가 .sav를 skip하면 PASS.
+**롤백**: `backup-before-purge` 브랜치로 복원. filter-repo 전 클론 백업 권장.
+
+---
+
 ## 백로그 (별도 사이클 — 지금 건드리지 말 것)
 
 - **persona/self_model/insights/knowledge_graph per-user 분리**: 현재 전역 단일 파일. "그 사람에게 최적화"가 다중사용자로 가면 필요. 단일사용자 운영이면 보류.

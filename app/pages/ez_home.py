@@ -295,20 +295,9 @@ def _save_project(project: dict) -> None:
 
 
 def _is_go_wide_trigger(text: str) -> bool:
-    """Figma-style 'Go wide' — 같은 주제를 여러 방향으로 동시 탐색.
-
-    Medical 도메인: 3-5개 PICO 변형 (population/intervention/outcome 축 변경)을
-    카드 양식으로 chat에 출력. 사용자가 카드 클릭 → Go deep으로 진입.
-    """
-    if not text:
-        return False
-    t = text.strip().lower()
-    triggers = [
-        "여러 방향", "여러 변형", "여러 양식", "3가지", "5가지", "3-5개",
-        "다양한 pico", "여러 pico", "wide", "go wide", "동시 탐색",
-        "병렬 탐색", "비교해줘", "변형 만들어", "옵션 펼쳐", "여러 옵션",
-    ]
-    return any(k in t for k in triggers)
+    """Delegate → src.service.paper.is_go_wide_trigger (Phase1 extraction)."""
+    from src.service.paper import is_go_wide_trigger
+    return is_go_wide_trigger(text)
 
 
 def _detect_figure_request(text: str) -> str | None:
@@ -418,286 +407,51 @@ def _hits_to_references(rag_context: str) -> list:
 
 
 def _post_process_imrad(draft: str, rag_context: str) -> tuple[str, dict]:
-    """Full IMRAD 후처리 chain — language·citation·review 자동 개선.
-
-    1. 한국어 prelude 제거 (language_quality fix)
-    2. RAG hit PMIDs → Reference 객체
-    3. citation_workflow.place_citations로 본문에 [n] 자동 삽입
-    4. citation_grounding.verify_citation_integrity로 검증
-    5. physician_review.review_required로 임상 안전성 flag
-
-    Returns: (개선된 draft, meta dict)
-    """
-    meta = {"steps": [], "warnings": []}
-
-    # 1) 한국어 prelude 제거
-    before_len = len(draft)
-    draft = _strip_korean_prelude(draft)
-    if len(draft) != before_len:
-        meta["steps"].append(f"strip_korean_prelude: removed {before_len-len(draft)} chars")
-
-    # 2) RAG hits → Reference list
-    refs = _hits_to_references(rag_context)
-    meta["refs_count"] = len(refs)
-
-    # 3a) PMID → [n] 자동 변환 (LLM이 [PMID:xxx] 박은 걸 numbered citation으로)
-    if refs:
-        try:
-            from src.export.citation_workflow import convert_pmid_inline_to_numbered
-            draft, ordered_pmid, n_converted = convert_pmid_inline_to_numbered(draft, refs)
-            if n_converted:
-                meta["steps"].append(f"pmid_to_numbered: {n_converted} PMIDs → [n]")
-                meta["pmid_cited"] = [r.pmid for r in ordered_pmid]
-                # References 섹션 자동 생성 (ordered_pmid 순서)
-                from src.export.citation_workflow import reference_list_markdown
-                rs = ordered_pmid
-                ref_block = "\n\n## References\n\n" + reference_list_markdown(rs)
-                if "## References" not in draft:
-                    draft = draft.rstrip() + ref_block
-        except Exception as e:
-            meta["warnings"].append(f"pmid_to_numbered: {str(e)[:120]}")
-
-    # 3b) Sentence-level place_citations fallback (PMID 없는 RAG hits 양식 양식)
-    if refs and "pmid_to_numbered" not in " ".join(meta["steps"]):
-        try:
-            from src.export.citation_workflow import place_citations
-            sections = {"manuscript": draft}
-            new_secs, ordered = place_citations(sections, refs)
-            draft = new_secs.get("manuscript", draft)
-            meta["steps"].append(f"place_citations: {len(ordered)} refs cited")
-            meta["cited_refs"] = [r.pmid for r in ordered]
-        except Exception as e:
-            meta["warnings"].append(f"place_citations: {str(e)[:120]}")
-
-    # 4) Citation integrity check
-    try:
-        from src.safety.citation_grounding import verify_citation_integrity
-        rep = verify_citation_integrity(draft, refs="", check_dois=False, check_rag=False)
-        meta["citation_check"] = {
-            "ok": rep.ok,
-            "orphan_citations": len(rep.orphan_citations),
-            "orphan_references": len(rep.orphan_references),
-            "summary": rep.summary[:200],
-        }
-    except Exception as e:
-        meta["warnings"].append(f"citation_integrity: {str(e)[:120]}")
-
-    # 5) Physician review flag
-    try:
-        from src.safety.physician_review import review_required
-        needs, reasons = review_required(draft)
-        meta["physician_review"] = {"needs": needs, "reasons": reasons[:5]}
-    except Exception as e:
-        meta["warnings"].append(f"physician_review: {str(e)[:120]}")
-
-    return draft, meta
+    """Delegate → src.service.paper.post_process_imrad."""
+    from src.service.paper import post_process_imrad
+    return post_process_imrad(draft, rag_context)
 
 
 def _enrich_imrad(draft: str, project: dict, user_msg: str) -> tuple[str, dict]:
-    """추가 chain — novelty + figure section 자동 inject (capability_bench 약점 2개 fix).
-
-    1. NoveltyChecker.check → "## Novelty" 섹션을 Introduction 뒤에 삽입
-    2. generate_figures_for_paper → "## Figure 1 / Figure 2" caption을 Results 뒤에 삽입
-       (stat_result가 있으면 실제 PNG 생성, 없으면 placeholder caption만)
-    """
-    meta = {"steps": [], "warnings": []}
-    rs = project.get("research_state") or {}
-    pico = rs.get("pico") or {}
-
-    # 1) Novelty section
-    try:
-        from src.research.novelty_checker import NoveltyChecker
-        nc = NoveltyChecker()
-        nov = nc.check(
-            topic=project.get("title", "")[:120] or user_msg[:120],
-            exposure=pico.get("I", "") or pico.get("E", ""),
-            outcome=pico.get("O", ""),
-            population=pico.get("P", ""),
-            dataset=rs.get("dataset", "KYRBS"),
-            design=rs.get("design", "cross-sectional"),
-        )
-        score = float(nov.get("novelty_score", 0) or 0)
-        gap = nov.get("novelty_gap", "") or nov.get("gap_summary", "")
-        block = (
-            f"\n\n## Novelty and contribution\n\n"
-            f"Novelty score: {score:.2f}/1.0 (based on PubMed prior-work scan).\n\n"
-            f"{(gap or 'See gap analysis in supplementary materials.')[:600]}\n"
-        )
-        # Insert after Introduction
-        import re
-        if "## 2. Methods" in draft:
-            draft = draft.replace("## 2. Methods", block + "\n## 2. Methods", 1)
-        elif "## Methods" in draft:
-            draft = draft.replace("## Methods", block + "\n## Methods", 1)
-        else:
-            draft = draft.rstrip() + block
-        meta["steps"].append(f"novelty: score={score:.2f}")
-        meta["novelty_score"] = score
-    except Exception as e:
-        meta["warnings"].append(f"novelty: {str(e)[:120]}")
-
-    # 2) Figure section
-    try:
-        from src.export.publication_figure_generator import generate_figures_for_paper
-        stat_result = rs.get("stat_result") or {}
-        figs_made = []
-        if stat_result:
-            try:
-                figs = generate_figures_for_paper(
-                    stat_result=stat_result,
-                    safe_title=str(project.get("id", "paper"))[:40],
-                ) or {}
-                figs_made = list(figs.keys())
-                meta["steps"].append(f"figures: {len(figs_made)} generated")
-                meta["figures"] = figs_made
-            except Exception as e:
-                meta["warnings"].append(f"figure_gen: {str(e)[:120]}")
-        # caption block — 항상 양식 (실 PNG 없어도)
-        figure_block = (
-            "\n\n## Figure legends\n\n"
-            "Figure 1. Forest plot — adjusted odds ratios (aOR) with 95% confidence intervals for the association between caffeine intake and depressive symptoms across subgroups.\n\n"
-            "Figure 2. Subgroup analyses — stratified by sex, school grade, and sleep duration.\n\n"
-            "Figure 3. Sensitivity analyses — varying exposure threshold and covariate set.\n"
-        )
-        if "## Figure legends" not in draft:
-            draft = draft.rstrip() + figure_block
-            meta["steps"].append("figure_legends: appended")
-    except Exception as e:
-        meta["warnings"].append(f"figure_block: {str(e)[:120]}")
-
-    return draft, meta
+    """Delegate → src.service.paper.enrich_imrad."""
+    from src.service.paper import enrich_imrad
+    return enrich_imrad(draft, project, user_msg)
 
 
 def _is_full_paper_trigger(text: str) -> bool:
-    """Full IMRAD manuscript 트리거. abstract만 X — 전체 본문 모두 생성."""
-    if not text:
-        return False
-    t = text.strip().lower()
-    triggers = [
-        "논문 작성", "논문 써", "논문 만들", "manuscript", "full draft",
-        "full paper", "전체 논문", "본문 작성", "본문 써", "imrad",
-        "실제 논문으로", "완성된 논문", "drafting", "지금까지로 논문",
-    ]
-    return any(k in t for k in triggers)
+    """Delegate → src.service.paper.is_full_paper_trigger."""
+    from src.service.paper import is_full_paper_trigger
+    return is_full_paper_trigger(text)
 
 
 def _full_paper_prompt(project: dict) -> str:
-    """Full IMRAD system prompt — data verification 선행 + 모든 섹션 영어."""
-    rs = project.get("research_state") or {}
-    target_journal = rs.get("target_journal", "")
-    reference_style = rs.get("reference_style", "Vancouver")
-    journal_hint = f"Target journal: {target_journal}. Reference style: {reference_style}." if target_journal else "Reference style: Vancouver (default; change when target journal is set)."
-
-    return f"""You are writing a FULL medical research manuscript, not just an abstract.
-
-CRITICAL RULES:
-1. **NEVER fabricate numbers.** All sample sizes, prevalence, OR, 95% CI, p-values, table values MUST come from actual stat_bridge output or cited papers (verbatim). If a number is unknown, STOP and ASK the user instead of inventing.
-2. **All manuscript sections MUST be in ENGLISH.** Chat replies stay Korean, but Title/Abstract/Introduction/Methods/Results/Discussion/Conclusion/References/Tables/Figure captions are all English.
-3. **Complete IMRAD structure required.** Do NOT stop at abstract. Generate in order: Title → Abstract → Introduction → Methods → Results → Discussion → Conclusion → References. If a section requires data not yet provided, mark `[NEEDS DATA: <specific question>]` inline and continue with remaining sections.
-4. **Reference style follows the target journal**, not Vancouver by default. {journal_hint}
-5. Use in-text citation markers [n] (Vancouver/AMA) or (Author, year) (Harvard/APA) consistent with the chosen style. Each citation MUST correspond to a real PMID/DOI that will be verified post-hoc.
-6. Tables/Figures are described in numbered placeholders (Table 1, Figure 1) with full captions and footnotes; actual data values come from stat_bridge.
-
-OUTPUT FORMAT (English manuscript):
-
-## Title
-<concise informative title, ≤25 words>
-
-## Abstract
-**Background:** ...
-**Objective:** ...
-**Methods:** ...
-**Results:** ...
-**Conclusion:** ...
-
-## 1. Introduction
-<3-5 paragraphs: rationale, gap, objective>
-
-## 2. Methods
-### 2.1 Study design
-### 2.2 Data source and study population
-### 2.3 Variables
-### 2.4 Statistical analysis
-### 2.5 Ethics
-
-## 3. Results
-### 3.1 Baseline characteristics (Table 1)
-### 3.2 Primary outcome
-### 3.3 Secondary outcomes and subgroup analyses
-### 3.4 Sensitivity analyses
-
-## 4. Discussion
-### 4.1 Main findings
-### 4.2 Comparison with prior literature
-### 4.3 Mechanistic interpretation
-### 4.4 Strengths and limitations
-
-## 5. Conclusion
-
-## References
-<numbered list, {reference_style} style>
-
-## Tables
-Table 1. <caption>...
-
-## Figure legends
-Figure 1. <caption>...
-
-If any required data is missing, STOP that section and write `[NEEDS DATA: question to user]`. Do NOT fabricate numbers to fill gaps."""
+    """Delegate → src.service.paper.full_paper_prompt."""
+    from src.service.paper import full_paper_prompt
+    return full_paper_prompt(project)
 
 
 def _is_go_deep_trigger(text: str) -> bool:
-    """Figma-style 'Go deep' — 한 방향을 깊게 다듬기 + 내부화 토론 (Latent Agents).
-
-    Medical 도메인: 선택된 PICO에 대해 단일 LLM 호출 내부에서
-    <Epidemiologist> + <Biostatistician> + <Clinician> 3관점 토론 → 합의점.
-    """
-    if not text:
-        return False
-    t = text.strip().lower()
-    triggers = [
-        "이 방향 깊게", "깊게 다듬", "구체화", "정밀하게",
-        "go deep", "deep dive", "더 자세히", "더 깊게",
-        "전문가 토론", "관점 비교", "다각도", "비판적으로",
-    ]
-    return any(k in t for k in triggers)
+    """Delegate → src.service.paper.is_go_deep_trigger."""
+    from src.service.paper import is_go_deep_trigger
+    return is_go_deep_trigger(text)
 
 
 def _go_wide_prompt(user_msg: str) -> str:
-    """Go wide system prompt — 의학 PICO 양식 3-5개 변형 생성."""
-    return (
-        "사용자가 던진 의학 연구 주제를 받아 3-5개의 PICO 변형을 카드 양식으로 제시하세요. "
-        "각 카드는 다음 양식:\n\n"
-        "### Variant {n}: <짧은 제목>\n"
-        "- **P**opulation: ...\n"
-        "- **I/E**xposure/Intervention: ...\n"
-        "- **C**omparison: ...\n"
-        "- **O**utcome: ...\n"
-        "- **Dataset hint**: KYRBS / KNHANES / NHIS / HIRA / PubMed RCT meta\n"
-        "- **연구 가치**: 한 줄로 왜 흥미로운지\n\n"
-        "변형은 서로 다른 축(다른 outcome / 다른 population age / 다른 exposure 지표)을 잡아 정말 wide하게 펼치세요. "
-        "복붙이 아니라 진짜 다른 방향이어야 합니다. 마지막에 '어느 방향을 깊게 다듬어볼까요?'로 마무리."
-    )
+    """Delegate → src.service.paper.go_wide_prompt."""
+    from src.service.paper import go_wide_prompt
+    return go_wide_prompt(user_msg)
 
 
 def _go_deep_prompt(user_msg: str, project: dict) -> str:
-    """Go deep system prompt — Latent Agents 양식 3관점 내부화 토론."""
-    return (
-        "선택된 PICO 또는 직전 응답을 더 깊게 다듬기 위해 다음 3관점을 한 번의 응답 안에서 내부적으로 토론하세요:\n\n"
-        "**<Epidemiologist>**: 역학·인과추론 관점 (confounder, bias, generalizability)\n"
-        "**<Biostatistician>**: 통계 방법 관점 (model choice, sample size, multiple testing)\n"
-        "**<Clinician>**: 임상 적용 관점 (clinical relevance, effect size 해석, 임상 의사결정에 어떤 의미)\n\n"
-        "각 관점이 한 두 문장씩 의견 제시 → 합의점 + 남은 disagreement 정리. 마지막에 '다음 단계' 한 줄 (어떤 데이터 확보, 어떤 분석 모델, 어떤 sensitivity)."
-    )
+    """Delegate → src.service.paper.go_deep_prompt."""
+    from src.service.paper import go_deep_prompt
+    return go_deep_prompt(user_msg, project)
 
 
 def _is_autopilot_trigger(text: str) -> bool:
-    if not text:
-        return False
-    t = text.strip().lower()
-    triggers = ["알아서 해", "알아서해", "go ahead", "그냥 해", "그냥해",
-                 "전체 진행", "끝까지", "한번에", "full run", "auto run"]
-    return any(k in t for k in triggers)
+    """Delegate → src.service.paper.is_autopilot_trigger."""
+    from src.service.paper import is_autopilot_trigger
+    return is_autopilot_trigger(text)
 
 
 def _rag_retrieve(query: str, top_k: int = 5) -> str:
@@ -782,41 +536,9 @@ def _stream_reply(project: dict, user_msg: str, extra_system: str = "", max_toke
 
 
 def _post_turn_hooks(project: dict, user_msg: str, full_reply: str, owner_email: str = ""):
-    """채팅 한 턴 완료 후 단일 코어 누적 (best-effort)."""
-    try:
-        from src.memory.conversation_memory import record as _cm_record
-        _cm_record(user_message=user_msg, agent_response=full_reply,
-                    topic=project.get("title", "")[:80],
-                    context_type="ez_home_chat", quality="neutral",
-                    owner_email=owner_email or "")
-    except Exception:
-        pass
-    try:
-        from src.runtime.events import append as _evt
-        _evt(type="ez_home_chat_turn",
-              payload={"pid": project.get("id"), "user": user_msg[:300],
-                       "resp_len": len(full_reply)},
-              actor=owner_email or "anon")
-    except Exception:
-        pass
-    try:
-        from src.memory.router import write as _mem_write
-        _mem_write(f"[chat:{project.get('id','')}] {user_msg[:200]} || {full_reply[:400]}",
-                    type="episodic", source="ez_home_chat",
-                    owner_email=owner_email or None,
-                    extra_meta={"project_id": project.get("id"),
-                                  "project_title": project.get("title", "")[:80]})
-    except Exception:
-        pass
-    try:
-        from src.memory import change_log as _cl
-        _cl.log(title=f"chat turn: {user_msg[:50]}",
-                 action_type="chat",
-                 description=f"pid={project.get('id')} user={user_msg[:200]}",
-                 why_better="user dialogue accumulated for cross-session context",
-                 impact={"project_id": project.get("id")})
-    except Exception:
-        pass
+    """Delegate → src.service.chat.post_turn_hooks."""
+    from src.service.chat import post_turn_hooks
+    post_turn_hooks(project, user_msg, full_reply, owner_email=owner_email)
 
 
 def _render_msg(role: str, content: str):
@@ -964,10 +686,33 @@ def _render_chat_page(pid: str):
                                  f"분석 결과 dict가 준비되면 한 번에 7종(forest/subgroup/coef/roc/prev/table1/table2) 그림을 만들 수 있습니다.")
                         _render_msg("assistant", reply)
                 elif _is_autopilot_trigger(user_msg):
-                    reply = ("알겠습니다. 지금까지 합의된 PICO·데이터·통계 조건으로 "
-                              "파이프라인을 시작합니다. 진행 상황을 이 채팅과 우측 프리뷰로 알려드릴게요.\n\n"
-                              "(현 단계: 실제 파이프라인 hookup은 다음 작업)")
-                    _render_msg("assistant", reply)
+                    # REAL HOOKUP (2026-06-14): service.paper.autopilot_run generator
+                    # 각 stage event를 chat에 표시 + 단계별 sections/manuscript에 박음
+                    from src.service.paper import autopilot_run as _autopilot
+                    reply_lines: list[str] = []
+                    progress_box = st.empty()
+                    try:
+                        for event in _autopilot(project, user_msg):
+                            stage = event.get("stage", "?")
+                            status = event.get("status", "?")
+                            msg = event.get("message", "")
+                            reply_lines.append(f"[{stage}/{status}] {msg}")
+                            progress_box.markdown(
+                                "<div class='msg-asst'>" +
+                                "<br>".join(l.replace("<", "&lt;").replace(">", "&gt;") for l in reply_lines) +
+                                "</div>", unsafe_allow_html=True)
+                            # Save manuscript_text to sections live → 우측 프리뷰 즉시 표시
+                            mt = event.get("manuscript_text")
+                            if mt:
+                                project.setdefault("sections", {})["full"] = mt
+                                project.setdefault("research_state", {})["manuscript_text"] = mt
+                                _save_project(project)
+                    except Exception as e:
+                        reply_lines.append(f"⚠ autopilot 예외: {str(e)[:200]}")
+                        progress_box.markdown(
+                            "<div class='msg-asst'>" + "<br>".join(reply_lines) + "</div>",
+                            unsafe_allow_html=True)
+                    reply = "\n".join(reply_lines)
                 else:
                     # 트리거별 system prompt overlay
                     extra_system = ""
@@ -982,22 +727,87 @@ def _render_chat_page(pid: str):
                         extra_system = _go_deep_prompt(user_msg, project)
                         badge = "🔬 Go deep — 3관점 내부화 토론\n\n"
 
-                    # 스트리밍 — placeholder를 토큰 단위로 갱신
-                    placeholder = st.empty()
-                    full = badge
-                    _mt = 4500 if full else 1200
-                    for chunk in _stream_reply(project, user_msg, extra_system=extra_system, max_tokens=_mt):
-                        full += chunk
-                        safe = full.replace("<", "&lt;").replace(">", "&gt;")
-                        placeholder.markdown(
-                            f"<div class='msg-asst'>{safe}▌</div>",
-                            unsafe_allow_html=True)
-                    # 커서 제거 + 최종
-                    safe = full.replace("<", "&lt;").replace(">", "&gt;")
-                    placeholder.markdown(
+                    # ★ stream_turn event generator (2026-06-14): FRONTEND_MIGRATION §5.5
+                    # 3-Lane HOT(<300ms status) / STREAM(tool 이벤트+토큰) / BACKGROUND(배지)
+                    from src.service.chat import stream_turn
+                    activity = st.empty()    # 활동 로그 (hot)
+                    preview_ph = st.empty()  # 우측 프리뷰 mirror (token)
+                    tool_log: list[str] = []
+                    body_buf: list[str] = []
+                    confidence_msg = ""
+
+                    _mt = 4500 if full else 2000
+                    for evt in stream_turn(
+                            project, user_msg,
+                            owner_email=owner_email,
+                            save_project_fn=_save_project,
+                            max_tokens=_mt, max_iters=6):
+                        et = evt.type
+                        d = evt.data or {}
+                        if et == "status":
+                            tool_log.append(f"⏱ {d.get('msg','')}")
+                            activity.markdown(
+                                "<div class='msg-asst' style='font-size:0.78rem;"
+                                "background:#F1F5F9;padding:6px 10px;'>" +
+                                "<br>".join(l.replace("<","&lt;") for l in tool_log[-6:]) +
+                                "</div>", unsafe_allow_html=True)
+                        elif et == "tool_start":
+                            tool_log.append(f"🔧 {d.get('tool','?')} start")
+                            activity.markdown(
+                                "<div class='msg-asst' style='font-size:0.78rem;"
+                                "background:#F1F5F9;padding:6px 10px;'>" +
+                                "<br>".join(l.replace("<","&lt;") for l in tool_log[-6:]) +
+                                "</div>", unsafe_allow_html=True)
+                        elif et == "tool_result":
+                            tool_log.append(f"✓ {d.get('tool','?')}")
+                            activity.markdown(
+                                "<div class='msg-asst' style='font-size:0.78rem;"
+                                "background:#F1F5F9;padding:6px 10px;'>" +
+                                "<br>".join(l.replace("<","&lt;") for l in tool_log[-6:]) +
+                                "</div>", unsafe_allow_html=True)
+                        elif et == "token":
+                            body_buf.append(d.get("text", ""))
+                            safe = "".join(body_buf).replace("<","&lt;").replace(">","&gt;")
+                            preview_ph.markdown(
+                                f"<div class='msg-asst'>{safe}▌</div>",
+                                unsafe_allow_html=True)
+                        elif et == "warning":
+                            st.markdown(
+                                f"<div class='msg-asst' style='font-size:0.78rem;"
+                                f"background:#FEF3C7;border-left:3px solid #F59E0B;"
+                                f"padding:4px 8px;'>⚠ {d.get('kind','')}: "
+                                f"{(d.get('msg','') or '')[:200].replace('<','&lt;')}</div>",
+                                unsafe_allow_html=True)
+                        elif et == "badge":
+                            kind = d.get("kind", "")
+                            val = d.get("value", "")
+                            confidence_msg = f"🏷️ {kind}={val}"
+                            st.markdown(
+                                f"<div class='msg-asst' style='font-size:0.78rem;"
+                                f"background:#ECFDF5;border-left:3px solid #10B981;"
+                                f"padding:4px 8px;'>{confidence_msg}</div>",
+                                unsafe_allow_html=True)
+                        elif et == "error":
+                            st.markdown(
+                                f"<div class='msg-asst' style='font-size:0.82rem;"
+                                f"background:#FEE2E2;border-left:3px solid #DC2626;"
+                                f"padding:6px 10px;'>❌ {d.get('where','?')}: "
+                                f"{(d.get('msg','') or '')[:200]}</div>",
+                                unsafe_allow_html=True)
+                        elif et == "done":
+                            elapsed = d.get("elapsed_ms", 0)
+                            tool_log.append(f"✓ done ({elapsed}ms)")
+                            activity.markdown(
+                                "<div class='msg-asst' style='font-size:0.78rem;"
+                                "background:#F1F5F9;padding:6px 10px;'>" +
+                                "<br>".join(l.replace("<","&lt;") for l in tool_log[-6:]) +
+                                "</div>", unsafe_allow_html=True)
+
+                    reply = (badge + "".join(body_buf)).strip()
+                    safe = reply.replace("<","&lt;").replace(">","&gt;")
+                    preview_ph.markdown(
                         f"<div class='msg-asst'>{safe}</div>",
                         unsafe_allow_html=True)
-                    reply = full
 
                     # ★ Full IMRAD 후처리 chain (capability_bench 약점 자동 fix)
                     if full and not wide and not deep:  # Full IMRAD trigger 일 때만

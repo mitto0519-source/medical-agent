@@ -59,3 +59,23 @@ ASCII 영문 hook이 가장 안전.
 **증상**: `_strip_llm_meta`가 본문 첫 단락을 통째로 삭제
 **원인**: 키워드 매칭이 본문 중간 정상 표현까지 잡음
 **예방**: 키워드는 "단락 시작 prefix 30자"로만 좁히기. 반복 횟수 5→2로 축소.
+
+## P-11 양식/placeholder 단어 반복 출력 (2026-06-14)
+**증상**: 한국어 답변에 "양식" 같은 placeholder 단어가 반복 등장
+**원인**: LLM 출력 미검열 → 사용자 격노 트리거 ("양식양식 안고칠꺼냐")
+**예방**: 한국어 답변 작성 후 send 전 "양식" 문자열 출현 0회 자기검열. 영어 우선 전환.
+
+## P-12 ARCHITECTURE.md 동기화 누락 (2026-06-14 CLAUDE.md 규칙10 위반)
+**증상**: 새 패키지 5개(service/reliability/evolution/analysis/data·knhanes_raw_loader) 만들고 ARCHITECTURE.md/SHORT 미갱신 → 사용자 지적 "절대규칙에 항시 동기화"
+**원인**: 작업량 많아질수록 동기화 의무 잊음. 규칙10 위반.
+**예방**: 새 src/ 패키지 생성 시 즉시 (1) `scripts/regenerate_architecture.py` 실행 (2) ARCHITECTURE_SHORT.md에 prose 한 줄. 작업 종료 직전 의무 체크.
+
+## P-13 외부 라이센스 데이터 자동 다운로드 단정 (2026-06-14)
+**증상**: KNHANES "신청서·본인인증 우회 가능" 단정
+**원인**: KDCA 정책(승인+본인인증) 사전 확인 안 함
+**예방**: 외부 데이터 자동 다운로드 시도 전 약관·인증 정책 확인. 안 되면 정직히 "수동 다운로드 + 폴더 드롭 자동 인식" 패턴으로 안내.
+
+## P-14 STATA .dta 한국어 STRL 인코딩 가정 (2026-06-14)
+**증상**: `pd.read_stata` / `pyreadstat.read_dta` 모두 UTF-8/cp949 모두 fail
+**원인**: 한국 STATA 파일은 STRL 인코딩 손상이 흔함
+**예방**: STATA 통합본은 메인 path로 가정 금지. 개별 .sav를 primary로 두고 .dta는 옵션.

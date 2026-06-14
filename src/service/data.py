@@ -17,7 +17,7 @@ def load_kyrbs(year: int):
     """Load KYRBS for given year via existing kyrbs_raw_loader. Returns (df, meta) or (None, {})."""
     try:
         from src.data import kyrbs_raw_loader as krl
-        df = krl.load_kyrbs_year(year)
+        df = krl.load_kyrbs(year)
         meta = {
             "dataset": "KYRBS", "year": year,
             "n_rows": len(df) if df is not None else 0,

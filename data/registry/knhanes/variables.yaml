@@ -46,15 +46,24 @@ survey_design:
     std_name: wt_examy
     axis: D_design
     year_map:
-      "2007-2024": wt_ex
-    note: Health examination weight (검진조사 가중치)
+      "2007-2013": wt_ex
+      "2014-2024": wt_itvex
+    note: Health examination weight (검진조사 가중치). 2014+ merged into wt_itvex.
     status: O
   weight_nutrition:
     std_name: wt_ntex
     axis: D_design
     year_map:
-      "2007-2024": wt_ntex
-    note: Nutrition survey weight (영양조사 가중치)
+      "2007-2013": wt_ntex
+      "2014-2024": wt_ntr
+    note: Nutrition survey weight. Renamed wt_ntex → wt_ntr in HN14+.
+    status: O
+  weight_total:
+    std_name: wt_total
+    axis: D_design
+    year_map:
+      "2014-2024": wt_tot
+    note: Combined (interview+exam+nutrition) weight. HN14+ only.
     status: O
 
 # Demographics
@@ -135,14 +144,18 @@ exam:
     std_name: ldl
     axis: D_outcome
     year_map:
-      "2007-2024": HE_LDLc
+      "2007-2018": HE_LDLc
+      "2019-2024": HE_LDL_drct
+    note: HE_LDLc until 2018; direct measurement HE_LDL_drct from 2019.
     unit: mg/dL
     status: O
   hdl:
     std_name: hdl
     axis: D_outcome
     year_map:
-      "2007-2024": HE_HDLc
+      "2007-2018": HE_HDLc
+      "2019-2024": HE_HDL_st2
+    note: HE_HDLc until 2018; standardised HE_HDL_st2 from 2019.
     unit: mg/dL
     status: O
   glucose_fasting:
@@ -183,9 +196,12 @@ behavior:
     std_name: sleep_hours
     axis: D_lifestyle
     year_map:
-      "2007-2024": BP16_1
+      "2007-2017": BP16_1
+      "2018-2024": [BP16_11, BP16_12, BP16_13, BP16_14]
+    derivation: "weekday: (BP16_13*60+BP16_14) - (BP16_11*60+BP16_12); convert mins→hours, +24 if negative (crossed midnight)."
+    note: 2018+ stores bedtime/wake separately as hour/minute pairs.
     unit: hour
-    status: O
+    status: △
 
 # Nutrition (1-day 24h recall)
 nutrition:

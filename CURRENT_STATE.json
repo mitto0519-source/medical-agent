@@ -63,11 +63,11 @@
     "oa_papers_full_text": 12625,
     "oa_papers_full_text_above_5kb": 12294,
     "oa_papers_meta_stubs": 12625,
-    "chromadb_embeddings": 28400,
-    "chromadb_queue_pending": 1622,
-    "knowledge_graph_nodes": 10203,
-    "knowledge_graph_edges": 54302,
-    "medical_ontology_concepts": 114
+    "chromadb_embeddings": 70193,
+    "chromadb_queue_pending": 943,
+    "knowledge_graph_nodes": 13508,
+    "knowledge_graph_edges": 61438,
+    "medical_ontology_concepts": 119
   },
   "known_seed_bias": "OA papers fetched from Europe PMC OA Subset → over-represented: public health, environmental health, nutrition, epidemiology. Under-represented: pharmacology, clinical guidelines, surgical outcomes, oncology RCT. When user requests clinical topic, supplement reasoning beyond seed retrieval.",
   "single_entry_points": {
@@ -94,7 +94,7 @@
   ],
   "deployment_target": "external URL (HF Spaces / Cloud Run / hosted), with HF Datasets as persistent data store. Local Docker is dev only.",
   "verified_counts": {
-    "measured_at": "2026-06-14 10:52:54",
+    "measured_at": "2026-06-14 21:07:54",
     "papers": {
       "meta_json_files": 12625,
       "full_text_files": 12625,
@@ -103,31 +103,33 @@
       "comment": "1 paper = 1 .meta.json + 1 .txt pair. ~3% of .txt are stubs <5KB."
     },
     "chromadb": {
-      "embeddings": 28400,
-      "queue_pending": 1622,
-      "embedding_metadata_rows": 323421
+      "embeddings": 70193,
+      "queue_pending": 943,
+      "embedding_metadata_rows": 820426
     },
     "knowledge_graph": {
       "file": "data/knowledge_graph/graph.json",
-      "nodes_total": 10203,
+      "nodes_total": 13508,
       "node_types": {
-        "concept": 41,
+        "concept": 79,
         "dataset": 2,
-        "paper": 10160
+        "paper": 13427
       },
-      "edges_total": 54302,
+      "edges_total": 61438,
       "edge_relations": {
-        "RELATED_TO": 108,
-        "HAS_CONCEPT": 51690,
+        "RELATED_TO": 102,
+        "EXPOSURE_TO_OUTCOME": 15,
+        "HAS_CONCEPT": 58817,
         "null": 512,
         "USES_DATASET": 1992
       }
     },
     "ontology": {
-      "concept_count": 114,
+      "concept_count": 119,
       "sample": [
         {
           "domain_id": "D_population",
+          "axis": "D_population",
           "concept_id": "C_adolescent",
           "label": "Adolescent (청소년)",
           "domain_label": "Population",
@@ -144,6 +146,7 @@
         },
         {
           "domain_id": "D_population",
+          "axis": "D_population",
           "concept_id": "C_child",
           "label": "Child (아동)",
           "domain_label": "Population",
@@ -158,6 +161,7 @@
         },
         {
           "domain_id": "D_population",
+          "axis": "D_population",
           "concept_id": "C_adult",
           "label": "Adult (성인)",
           "domain_label": "Population",
@@ -171,6 +175,7 @@
         },
         {
           "domain_id": "D_population",
+          "axis": "D_population",
           "concept_id": "C_elderly",
           "label": "Elderly (노인)",
           "domain_label": "Population",
@@ -186,6 +191,7 @@
         },
         {
           "domain_id": "D_population",
+          "axis": "D_population",
           "concept_id": "C_korean",
           "label": "Korean population",
           "domain_label": "Population",
@@ -200,6 +206,7 @@
         },
         {
           "domain_id": "D_behavior",
+          "axis": "D_exposure",
           "concept_id": "C_sleep",
           "label": "Sleep (수면)",
           "domain_label": "Health Behavior",
@@ -218,6 +225,7 @@
         },
         {
           "domain_id": "D_behavior",
+          "axis": "D_exposure",
           "concept_id": "C_physical_activity",
           "label": "Physical Activity (신체활동)",
           "domain_label": "Health Behavior",
@@ -235,6 +243,7 @@
         },
         {
           "domain_id": "D_behavior",
+          "axis": "D_exposure",
           "concept_id": "C_diet",
           "label": "Diet / Nutrition (식이)",
           "domain_label": "Health Behavior",

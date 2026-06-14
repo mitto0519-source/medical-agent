@@ -335,6 +335,129 @@ def enrich_imrad(draft: str, project: dict, user_msg: str) -> Tuple[str, Dict]:
     return draft, meta
 
 
+def autopilot_run(project: dict, user_msg: str):
+    """Real autopilot — generator yielding status events, terminal event has manuscript_text.
+
+    Each yield: {"stage", "status", "message", "data"?, "manuscript_text"?}
+    Stages: pico → novelty → stat → write → polish → save
+
+    No Streamlit calls inside. ez_home wraps each event with st.status / preview update.
+    """
+    rs = project.setdefault("research_state", {})
+    pico = rs.get("pico") or {}
+    topic = project.get("title", "") or user_msg[:120]
+
+    yield {"stage": "pico", "status": "running",
+            "message": f"📋 PICO 합의: {topic[:80]}"}
+
+    # 1) Novelty
+    try:
+        from src.research.novelty_checker import NoveltyChecker
+        nc = NoveltyChecker()
+        nov = nc.check(
+            topic=topic[:120],
+            exposure=pico.get("I", "") or pico.get("E", ""),
+            outcome=pico.get("O", ""),
+            population=pico.get("P", ""),
+            dataset=rs.get("dataset", "KYRBS"),
+            design=rs.get("design", "cross-sectional"),
+        )
+        rs["novelty"] = nov
+        score = float(nov.get("novelty_score", 0) or 0)
+        yield {"stage": "novelty", "status": "done",
+                "message": f"🔍 신규성 검토 완료 (score={score:.2f}/1.0)",
+                "data": {"score": score}}
+    except Exception as e:
+        _log.warning("autopilot novelty fail: %s", e)
+        yield {"stage": "novelty", "status": "skip",
+                "message": f"⚠ novelty skip: {str(e)[:80]}"}
+
+    # 2) Stat (survey-weighted if KYRBS/KNHANES + design columns present)
+    stat_result = None
+    try:
+        from src.service.data import load_dataset
+        from src.service.stats import analyze
+        ds = rs.get("dataset", "KYRBS")
+        year = rs.get("year")
+        df, dmeta = load_dataset(ds, year=year)
+        if df is None:
+            yield {"stage": "stat", "status": "skip",
+                    "message": f"⚠ 데이터 로드 실패: {dmeta.get('error','no data')[:80]}"}
+        else:
+            spec = rs.get("stat_spec") or {
+                "design": "logistic",
+                "outcome": pico.get("O", "M_SAD"),
+                "exposure": pico.get("I", "") or pico.get("E", "F_CAFFEINE"),
+                "covariates": ["AGE", "SEX", "GRADE"],
+                "strata": "STRATA", "cluster": "CLUSTER", "weight": "W",
+            }
+            stat_result = analyze(spec, df=df)
+            rs["stat_result"] = stat_result
+            engine = stat_result.get("engine", "?") if isinstance(stat_result, dict) else "?"
+            yield {"stage": "stat", "status": "done",
+                    "message": f"📊 통계 완료 (engine={engine}, n_rows={len(df):,})",
+                    "data": {"stat_result": stat_result}}
+    except Exception as e:
+        _log.warning("autopilot stat fail: %s", e)
+        yield {"stage": "stat", "status": "skip",
+                "message": f"⚠ 통계 skip: {str(e)[:80]}"}
+
+    # 3) Writer — full IMRAD via paper_writer
+    manuscript_text = ""
+    try:
+        from src.research.paper_writer import PaperWriter
+        pw = PaperWriter()
+        manuscript_text = pw.write_full(
+            topic=topic,
+            stat_result=stat_result or {},
+            rag_pipeline=None,
+            target_journal=rs.get("target_journal", ""),
+        ) or ""
+        rs["manuscript_text"] = manuscript_text
+        yield {"stage": "write", "status": "done",
+                "message": f"✍️ 초안 작성 완료 ({len(manuscript_text):,}자)",
+                "manuscript_text": manuscript_text}
+    except Exception as e:
+        _log.warning("autopilot write fail: %s", e)
+        yield {"stage": "write", "status": "fail",
+                "message": f"⚠ 초안 작성 실패: {str(e)[:120]}"}
+
+    # 4) Polish (post_process_imrad — citation/cleanup)
+    if manuscript_text:
+        try:
+            from src.service.rag import retrieve_as_text_block
+            rag_ctx = retrieve_as_text_block(topic + " " + user_msg, top_k=5)
+            improved, meta = post_process_imrad(manuscript_text, rag_ctx)
+            improved, meta2 = enrich_imrad(improved, project, user_msg)
+            rs["manuscript_text"] = improved
+            rs["post_meta"] = {**meta, "enrich": meta2}
+            manuscript_text = improved
+            yield {"stage": "polish", "status": "done",
+                    "message": (f"🧹 인용 + 신규성 + 그림 캡션 통합 완료 "
+                                  f"(refs={meta.get('refs_count', 0)})"),
+                    "manuscript_text": improved}
+        except Exception as e:
+            _log.warning("autopilot polish fail: %s", e)
+            yield {"stage": "polish", "status": "skip",
+                    "message": f"⚠ polish skip: {str(e)[:80]}"}
+
+    # 5) Save to working_paper_store
+    try:
+        from src.storage.working_paper_store import save as wps_save
+        wps_save(project_id=project.get("id"),
+                  owner_email=project.get("owner_email", ""),
+                  manuscript_text=manuscript_text,
+                  meta={"title": topic, "stage": "autopilot_done"})
+        yield {"stage": "save", "status": "done",
+                "message": "💾 저장 완료 — 우측 프리뷰 + 재세션 복원 활성"}
+    except Exception as e:
+        _log.warning("autopilot save fail: %s", e)
+        yield {"stage": "save", "status": "skip",
+                "message": f"⚠ 저장 skip: {str(e)[:80]}"}
+
+    # Terminal — caller can read .manuscript_text from project["research_state"]
+
+
 def generate_figure(project: dict, figure_type: str) -> Optional[Tuple[bytes, str]]:
     """Generate one publication figure from research_state.stat_result. Returns (png_bytes, caption)."""
     try:

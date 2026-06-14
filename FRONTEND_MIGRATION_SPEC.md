@@ -184,6 +184,116 @@ src/service/*  ── 순수 로직(프레임워크 무관): chat_turn, rag, sta
 
 ---
 
+## 5.5 스트리밍·이벤트 아키텍처 (★ Lovable형 체감속도 — 전 계층 관통)
+
+> 원칙: **체감속도 = 토큰속도가 아니라 progressive disclosure.** "보여주기"와 "정확하기"를 분리한다.
+> 초안+진행로그는 즉시(hot), 검증(신뢰성 계층)은 백그라운드 → 배지로 사후 갱신. regex 파싱 폐기 → 네이티브 tool-use.
+
+### 5.5.1 3-레인 + 지연 예산 (황금 비율)
+
+| 레인 | 무엇 | 블로킹? | 모델 | 예산 |
+|---|---|---|---|---|
+| **HOT** | 의도파싱 → status emit → plan | 블로킹 | 룰/Haiku | 첫 이벤트 <300ms, 첫 토큰 <1.5s |
+| **STREAM** | tool_start/result 이벤트 + 초안 토큰 | 스트림 | Sonnet | 연속 |
+| **BACKGROUND** | RAG rerank 정밀화·reflection·critique·provenance·confidence | **논블로킹** | Haiku/Sonnet | 사후 배지 |
+
+규칙: **BACKGROUND는 첫 출력(HOT)을 절대 막지 않는다.** 검증을 빠르게 하는 게 아니라 핫패스에서 빼는 것.
+
+### 5.5.2 이벤트 프로토콜 (서비스→API→프론트 단일 계약)
+
+`src/service/events.py`에 **타입드 이벤트** 정의(전 계층 공유):
+```python
+@dataclass
+class ChatEvent:
+    type: Literal["status","plan","tool_start","tool_result","token",
+                  "section_done","warning","badge","done","error"]
+    data: dict           # 타입별 페이로드
+    ts: float
+    seq: int             # 순서보장(SSE 재연결 대비)
+```
+| type | data | UI 매핑 |
+|---|---|---|
+| `status` | {msg} | 활동 로그 한 줄 |
+| `plan` | {steps:[...]} | 단계 칩(진행바) |
+| `tool_start` | {tool, args_brief} | 로그 + 패널 스피너 |
+| `tool_result` | {tool, payload} | 패널/프리뷰 삽입(stat표·figure·refs) |
+| `token` | {section, text} | 우측 프리뷰 해당 섹션 append |
+| `section_done` | {section} | 섹션 완료 체크 |
+| `warning` | {kind, msg} | 인라인 배지(survey_weight/citation) |
+| `badge` | {kind, value} | confidence/provenance 사후 배지 |
+| `done` | {confidence, provenance_id, cost} | 마무리 |
+| `error` | {where, msg} | 에러 토스트 + 로그 |
+
+### 5.5.3 서비스 계층 — 이벤트 generator (네이티브 tool-use)
+
+`src/service/chat.py`:
+```python
+def stream_turn(project: dict, msg: str, *, owner_email: str) -> Iterator[ChatEvent]:
+    yield ChatEvent("status", {"msg":"이해 중"}, ...)          # HOT, 즉시(모델 안 기다림)
+    sys = build_system(project, msg, owner_email)              # 5.5.5 슬림/캐시
+    # 네이티브 tool-use: agentic_loop의 18개 스키마 그대로 tools= 로 전달
+    for ev in run_with_tools(sys, msg, tools=TOOL_SCHEMAS,
+                             handler=make_tool_handler(...)):    # tool_use 블록→실행→이벤트
+        yield ev                                                # tool_start/tool_result/token
+    # 검증은 여기서 끝내지 말고 백그라운드로(5.5.4)
+    schedule_background(post_turn_verify, project, reply)
+    yield ChatEvent("done", {...}, ...)
+```
+> ★ regex `patch_preview` 파서(ez_home:747-780) **삭제**. 모델이 구조화 `tool_use`를 반환 → `make_tool_handler`(agentic_loop:298)가 실행 → `tool_result` 이벤트로 프리뷰 갱신. J3 버그의 정식 해결.
+
+### 5.5.4 신뢰성 계층 = BACKGROUND 이벤트 (속도↔신뢰 분리)
+
+`post_turn_verify`(논블로킹)가 끝나는 대로 `badge`/`warning` 이벤트 추가 emit:
+- `provenance.auto_record_llm_call` → `badge{provenance_id}` (MASTER #2)
+- confidence aggregator → `badge{confidence:0.87}` (MASTER #6)
+- critique 루프(`peer_reviewer.revise_with_critique`) → 필요 시 `warning` + 수정 `token`
+- `cost_optimizer` → 변경유형별 reviewer만(전체 재실행 금지, MASTER #3)
+→ 초안은 이미 화면에 있고, 신뢰 신호가 *뒤따라 붙는다*. 사용자는 안 기다린다.
+
+### 5.5.5 모델 라우팅 + 시스템프롬프트 (핫패스 다이어트)
+
+`src/config/models.py:_TASK_TIER` 조정:
+```
+chat_orchestrate → Haiku   (의도·툴선택·status)
+paper_section    → Sonnet  (본문)
+paper_full_best  → Opus    ("최고품질" 명시 시만)
+verify_bg        → Haiku   (백그라운드)
+```
+`build_system_with_preview`(agentic_loop:801) 9층 분리:
+- **캐시**(세션 동안 불변): persona·versioned prompts·medical_seed → 1회 빌드 후 재사용.
+- **핫패스 최소**: 현재 preview snapshot + 직전 turn 요약만.
+- **백그라운드/온디맨드**: recall_relevant·rerank·change_log → 필요 시 비동기.
+- 18k 시스템프롬프트 → 토큰 예산 큐레이션(관련도순 절단). `LLM_DISABLE_THINKING=1` 대화 턴.
+
+### 5.5.6 API 계약 — `/chat` SSE (§5 보강)
+
+```
+POST /chat  (Accept: text/event-stream)
+  body: {project_id, message}
+  resp: SSE 스트림, 각 줄:  data: {"type":"token","data":{...},"seq":N}\n\n
+  재연결: Last-Event-ID 헤더 → seq 이후부터 재전송
+```
+서비스 `stream_turn`의 `ChatEvent`를 그대로 SSE 프레이밍(직렬화만). API는 로직 0.
+
+### 5.5.7 Next.js 소비 (§6 연계)
+
+```
+EventSource('/chat') → reducer(event) → 상태:
+  status/plan/tool_start → 좌측 활동로그 + 진행칩
+  tool_result/token/section_done → 우측 프리뷰 + 도킹 패널(stat/figure/refs)
+  warning/badge → 인라인 배지(confidence/survey)  done → 마무리
+```
+프리뷰 에디터(TipTap)는 `section`별 토큰을 해당 노드에 append. 활동로그는 접을 수 있는 "작업 중…" 패널(Lovable의 빌드로그 느낌).
+
+### 5.5.8 검증 (J3~J6를 이벤트로)
+- J3: `token`/`tool_result(patch_preview)` 이벤트로 프리뷰 채워짐 — regex 0.
+- J4/J5/J6: `tool_result(kyrbs_stat/figure/refs)` 이벤트가 패널에 박힘.
+- 첫 `status` <300ms, 첫 `token` <1.5s 측정(E2E_PILOT_TEST_PLAN 지연 지표).
+
+> 연계 요약: **이벤트 프로토콜이 service(§4)→API(§5)→Next.js(§6)→신뢰성(MASTER)→검증(E2E)을 하나로 꿰는 척추다.** Phase1 추출 시 `stream_turn`을 이 이벤트 generator 모양으로 만들면 Phase2/3가 그대로 따라온다.
+
+---
+
 ## 6. Phase 3 — Next.js (web/)
 
 - 스택: **Next.js(App Router) + TypeScript + Tailwind** (sapphire_glass의 색·라운드·폰트를 Tailwind theme로 이식 → 디자인 연속성).

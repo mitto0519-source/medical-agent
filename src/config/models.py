@@ -56,6 +56,11 @@ _TASK_TIER: dict[str, str] = {
     "author_profile":   "premium",
     "synthesis":        "premium",
     "abstract":         "premium",
+    # FRONTEND_MIGRATION §5.5.5 — 3-lane model routing
+    "chat_orchestrate": "fast",      # HOT lane: intent/tool-select/status → Haiku
+    "paper_section":    "standard",  # STREAM lane: section body → Sonnet
+    "paper_full_best":  "premium",   # only when user asks "최고품질" → Opus
+    "verify_bg":        "fast",      # BACKGROUND lane: confidence/critique → Haiku
 }
 
 # ── thinking 지원 모델 목록 ───────────────────────────────────────────────────
