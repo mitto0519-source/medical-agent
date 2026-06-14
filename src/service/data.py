@@ -79,5 +79,65 @@ def load_dataset(label: str, year: Optional[int] = None):
     return None, {"error": f"unknown dataset: {label}"}
 
 
+def load_knhanes(year: int, *, add_derived: bool = True):
+    """Single-wave KNHANES with optional derived (bmi_cat, age_grp, MASLD class…)."""
+    from src.data import knhanes_raw_loader as kl
+    df = kl.load_knhanes_year(year)
+    if df is None:
+        return None, {"error": f"KNHANES {year} 파일 없음"}
+    if add_derived:
+        try:
+            from src.data import knhanes_subgroup as sg
+            df = sg.add_all(df, year=year)
+        except Exception as e:
+            _log.debug("knhanes_subgroup.add_all fail: %s", e)
+        try:
+            from src.data import knhanes_patterns as kp
+            df["fli"] = kp.fli(df)
+            df["hsi"] = kp.hsi(df)
+            df["alc_g_week"] = kp.alcohol_g_week(df)
+            df["cmd_risk_count"] = kp.cardiometabolic_risk_count(df)
+            df["masld_class"] = kp.masld_classification(df)
+            df["MetSx"] = kp.metsx_idf_asian(df)
+            df["eGFR"] = kp.egfr_ckd_epi_2021(df)
+            df["ckd_stage"] = kp.ckd_stage(df)
+        except Exception as e:
+            _log.debug("knhanes_patterns fail: %s", e)
+    return df, {"dataset": "KNHANES", "year": year,
+                  "n_rows": len(df), "derived": add_derived}
+
+
+def load_knhanes_pooled(years: list, *, add_derived: bool = True,
+                            phase: str = None):
+    """다연도 KNHANES pool (survey_year/study_phase 추가).
+
+    phase='IV'..'IX' 지정 시 그 phase 연도만 자동 선택.
+    """
+    from src.data import knhanes_subgroup as sg
+    if phase:
+        phase_map = {"IV": range(2007, 2010), "V": range(2010, 2013),
+                       "VI": range(2013, 2016), "VII": range(2016, 2019),
+                       "VIII": range(2019, 2022), "IX": range(2022, 2025)}
+        years = list(phase_map.get(phase.upper(), years or []))
+    dfs = {}
+    for y in years:
+        df, _ = load_knhanes(y, add_derived=add_derived)
+        if df is not None:
+            dfs[y] = df
+    if not dfs:
+        return None, {"error": "no waves loaded"}
+    pooled = sg.pool_years(dfs)
+    return pooled, {"dataset": "KNHANES pooled", "years": list(dfs.keys()),
+                       "n_rows": len(pooled), "phase": phase}
+
+
+def load_attachment(path):
+    """범용 파일 로더 — text + (optional) vision data URI 반환."""
+    from src.ingestion.universal_loader import load
+    return load(path)
+
+
 __all__ = ["load_kyrbs", "available_kyrbs_years",
-           "available_knhanes_years", "load_dataset"]
+            "available_knhanes_years",
+            "load_knhanes", "load_knhanes_pooled",
+            "load_dataset", "load_attachment"]

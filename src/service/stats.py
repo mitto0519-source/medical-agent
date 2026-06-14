@@ -33,6 +33,40 @@ def analyze(spec: dict, df=None, *, dataset_path: Optional[str] = None) -> dict:
         return {"error": str(e)[:200]}
 
 
+def analyze_knhanes(spec: dict, df=None) -> dict:
+    """KNHANES preset — strata=kstrata, cluster=psu, weight=wt_itvex 자동 적용.
+
+    spec 의 strata/cluster/weight 키 비어 있으면 KNHANES 표준으로 채움.
+    이후 survey_weighted.fit_logit_svy 호출.
+    """
+    spec = dict(spec or {})
+    spec.setdefault("strata", "kstrata")
+    spec.setdefault("cluster", "psu")
+    spec.setdefault("weight", "wt_itvex")
+    spec.setdefault("design", "logistic")
+    try:
+        from src.analysis import survey_weighted as svy
+        if spec["design"] == "logistic":
+            res = svy.fit_logit_svy(
+                df, spec.get("outcome", ""), spec.get("exposure", ""),
+                spec.get("covariates"),
+                strata=spec["strata"], cluster=spec["cluster"], weight=spec["weight"])
+        else:
+            res = svy.fit_linear_svy(
+                df, spec.get("outcome", ""), spec.get("exposure", ""),
+                spec.get("covariates"),
+                strata=spec["strata"], cluster=spec["cluster"], weight=spec["weight"])
+        try:
+            from src.runtime.provenance import auto_record_stats
+            auto_record_stats(spec)
+        except Exception as e:
+            _log.debug("knhanes provenance fail: %s", e)
+        return res if isinstance(res, dict) else {"raw": res}
+    except Exception as e:
+        _log.warning("analyze_knhanes fail: %s", e)
+        return {"error": str(e)[:200]}
+
+
 def sensitivity_panel(spec: dict, df=None) -> dict:
     """Run multiple sensitivity specs (complete-case / MI / restricted model)."""
     try:
@@ -43,4 +77,4 @@ def sensitivity_panel(spec: dict, df=None) -> dict:
         return {"error": str(e)[:200]}
 
 
-__all__ = ["analyze", "sensitivity_panel"]
+__all__ = ["analyze", "analyze_knhanes", "sensitivity_panel"]
