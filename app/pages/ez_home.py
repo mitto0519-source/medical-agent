@@ -700,48 +700,11 @@ def _is_autopilot_trigger(text: str) -> bool:
     return any(k in t for k in triggers)
 
 
-_RAG_PIPELINE_CACHE = {"pipeline": None, "fail": False}
-
-
 def _rag_retrieve(query: str, top_k: int = 5) -> str:
-    """ChromaDB 양식 paper chunks retrieval — 실제 의학 지식을 LLM에 inject.
-
-    이전: 회로 끊겨 있어서 답변이 generic. 이제 매 채팅 턴마다 RAG 검색 실행.
-    """
-    if not query or len(query.strip()) < 6:
-        return ""
-    cache = _RAG_PIPELINE_CACHE
-    if cache["fail"]:
-        return ""
-    if cache["pipeline"] is None:
-        try:
-            from src.rag.pipeline import RAGPipeline
-            cache["pipeline"] = RAGPipeline()
-        except Exception:
-            cache["fail"] = True
-            return ""
+    """Delegate to src.service.rag — single-source pure logic for future FastAPI reuse."""
     try:
-        # FIX-6 (2026-06-13): search_with_rerank 우선. 미구현/실패 시 search 폴백.
-        pipe = cache["pipeline"]
-        if hasattr(pipe, "search_with_rerank"):
-            hits = pipe.search_with_rerank(query, n_final=top_k, n_pool=20,
-                                              use_hyde=False) or []
-        else:
-            hits = pipe.search(query, n_results=top_k) or []
-        if not hits:
-            return ""
-        blocks = []
-        for i, h in enumerate(hits, 1):
-            text = (h.get("text", "") or "").strip().replace("\n", " ")[:600]
-            meta = h.get("metadata") or {}
-            pmid = meta.get("pmid", "")
-            title = (meta.get("title", "") or meta.get("source", ""))[:120]
-            tag = f"[RAG#{i}"
-            if pmid: tag += f" PMID:{pmid}"
-            if title: tag += f" — {title}"
-            tag += "]"
-            blocks.append(f"{tag}\n{text}")
-        return "\n\n".join(blocks)
+        from src.service.rag import retrieve_as_text_block
+        return retrieve_as_text_block(query, top_k=top_k, max_text_per_hit=600)
     except Exception:
         return ""
 
