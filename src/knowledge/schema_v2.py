@@ -160,6 +160,9 @@ NODE_TYPES = [
     "Paper", "Author", "Journal", "Dataset", "Study",
     "Concept",   # subtype = axis
     "Finding", "Hypothesis", "Method", "Guideline", "Discipline",
+    # MASTER_UPGRADE §3 #1 — Evidence Graph close: Claim sits between generated
+    # manuscript sentences and the Finding/Paper/Dataset/Citation chain.
+    "Claim",
 ]
 
 
@@ -213,6 +216,16 @@ EDGE_CATALOG = {
     # ── legacy compat (current graph) ───────────────────
     "HAS_CONCEPT":          {"from": "Paper",      "to": "Concept"},
     "RELATED_TO":           {"from": "Concept",    "to": "Concept"},
+
+    # ── Evidence Graph close (MASTER_UPGRADE §3 #1) ─────
+    # Claim emitted by writer → traceable chain to Finding/Paper/Dataset.
+    "CLAIMS":               {"from": "Paper",      "to": "Claim"},          # manuscript→claim
+    "EVIDENCED_BY":         {"from": "Claim",      "to": "Finding"},        # claim → prior finding
+    "DERIVED_FROM":         {"from": "Claim",      "to": "Dataset",
+                              "attrs": ["n", "year_range"]},                # claim → own dataset
+    "CITES_FOR":            {"from": "Claim",      "to": "Paper"},          # claim → cited paper
+    "CONFIDENCE_OF":        {"from": "Claim",      "to": "Confidence",
+                              "attrs": ["overall", "citation", "stat", "novelty"]},
 }
 
 

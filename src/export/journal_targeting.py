@@ -48,7 +48,18 @@ class JournalTargeting:
     reader_assumption: str = ""   # 가정 독자 (reviewer 양식)
     voice_tone: str = ""          # 권장 톤
     section_priorities: dict = field(default_factory=dict)   # 섹션별 강조 weight
-    avoid: List[str] = field(default_factory=list)           # 회피 
+    avoid: List[str] = field(default_factory=list)           # 회피
+    # MASTER_UPGRADE §3 #7 — Journal Intelligence: 작성/제출 룰
+    word_limit_total: Optional[int] = None        # full manuscript word cap
+    word_limit_abstract: Optional[int] = None
+    reference_style: str = ""                     # "Vancouver"|"AMA"|"APA"|"Harvard"
+    reference_max: Optional[int] = None
+    figure_max: Optional[int] = None
+    table_max: Optional[int] = None
+    structured_abstract: bool = False
+    requires_strobe: bool = False
+    submission_url: str = ""
+    acceptance_rate_hint: str = ""                # e.g. "~25%" / "competitive"
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -81,6 +92,29 @@ class JournalTargeting:
             lines += ["", "## 피해야 할 양식"]
             for a in self.avoid:
                 lines.append(f"- {a}")
+        # 제출 룰 블록 (#7 확장)
+        rule_lines = []
+        if self.word_limit_total:
+            rule_lines.append(f"- Manuscript word limit: {self.word_limit_total}")
+        if self.word_limit_abstract:
+            rule_lines.append(f"- Abstract word limit: {self.word_limit_abstract}")
+        if self.reference_style:
+            rule_lines.append(f"- Reference style: {self.reference_style}")
+        if self.reference_max:
+            rule_lines.append(f"- Max references: {self.reference_max}")
+        if self.figure_max is not None:
+            rule_lines.append(f"- Max figures: {self.figure_max}")
+        if self.table_max is not None:
+            rule_lines.append(f"- Max tables: {self.table_max}")
+        if self.structured_abstract:
+            rule_lines.append("- Structured abstract required (Background/Methods/Results/Conclusions)")
+        if self.requires_strobe:
+            rule_lines.append("- STROBE checklist required (observational design)")
+        if self.acceptance_rate_hint:
+            rule_lines.append(f"- Acceptance rate hint: {self.acceptance_rate_hint}")
+        if rule_lines:
+            lines += ["", "## Submission rules"] + rule_lines
+
         lines += ["",
                   "→ 위 strength를 단순 나열이 아니라 의미 단위로 본문에 살려라. "
                   "Discussion의 implication·Abstract의 첫 문장에서 가장 두드러져야 한다."]
@@ -118,6 +152,13 @@ JOURNALS: dict[str, JournalTargeting] = {
             "Abstract": "발달 시기 + 성별 차이  두 문장에 명시",
         },
         avoid=["성인 데이터와 단순 비교", "general adult literature  의존"],
+        # Submission rules (#7) — Journal of Adolescent Health 2024 guidelines
+        word_limit_total=4500, word_limit_abstract=275,
+        reference_style="AMA", reference_max=50,
+        figure_max=5, table_max=5,
+        structured_abstract=True, requires_strobe=True,
+        submission_url="https://www.editorialmanager.com/jah/",
+        acceptance_rate_hint="~25% (competitive)",
     ),
 
     "jama_open": JournalTargeting(
@@ -146,6 +187,12 @@ JOURNALS: dict[str, JournalTargeting] = {
             "Discussion": "public health implication + policy hook",
         },
         avoid=["narrow specialist jargon", "본 연구 한계를 첫 단락에 두는 양식"],
+        word_limit_total=4000, word_limit_abstract=350,
+        reference_style="AMA", reference_max=75,
+        figure_max=6, table_max=5,
+        structured_abstract=True, requires_strobe=True,
+        submission_url="https://manuscripts.jamanetwork.com/jamanetworkopen",
+        acceptance_rate_hint="~13% (very competitive)",
     ),
 
     "appetite": JournalTargeting(
@@ -173,6 +220,12 @@ JOURNALS: dict[str, JournalTargeting] = {
         },
         avoid=["sweetener의 생화학적 직접 효과를 1순위로 두는 양식",
                 "neural reward 가설을 충분한 근거 없이 단정"],
+        word_limit_total=6000, word_limit_abstract=250,
+        reference_style="APA", reference_max=80,
+        figure_max=8, table_max=5,
+        structured_abstract=False, requires_strobe=False,
+        submission_url="https://www.editorialmanager.com/appetite/",
+        acceptance_rate_hint="~30%",
     ),
 
     "nutrients": JournalTargeting(
@@ -200,6 +253,12 @@ JOURNALS: dict[str, JournalTargeting] = {
             "Discussion": "robustness — multiple sensitivity analysis 결과 정리 + 추정의 안정성",
         },
         avoid=["mechanism speculation을 통계 결과보다 앞세우는 양식"],
+        word_limit_total=8000, word_limit_abstract=200,
+        reference_style="MDPI/Harvard", reference_max=120,
+        figure_max=10, table_max=8,
+        structured_abstract=False, requires_strobe=True,
+        submission_url="https://susy.mdpi.com/user/manuscripts/upload?journal=nutrients",
+        acceptance_rate_hint="~45%",
     ),
 
     # ── 확장 후보 (추후 keys 추가) ──

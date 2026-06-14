@@ -110,6 +110,16 @@ class OpenRouterClient:
                     if m != self.model:
                         _log.info("OpenRouter 모델 순환: %s → %s", self.model, m)
                         self.model = m
+                    try:
+                        from src.runtime import provenance as _prov
+                        _prov.auto_record_llm_call(
+                            provider="openrouter", model=m,
+                            prompt=user_message, system_prompt=system_prompt or "",
+                            response_sha=_prov.text_hash(out),
+                            tokens_in=0, tokens_out=0, latency_ms=0,
+                        )
+                    except Exception:
+                        pass
                     return out
             except Exception as e:
                 last_err = e

@@ -82,7 +82,23 @@ class OpenAIClient:
             messages=messages,
             max_tokens=max_tokens,
         )
-        return resp.choices[0].message.content.strip()
+        text = resp.choices[0].message.content.strip()
+
+        # Provenance — reuse runtime.provenance helper, graceful on fail.
+        try:
+            from src.runtime import provenance as _prov
+            u = getattr(resp, "usage", None)
+            _prov.auto_record_llm_call(
+                provider="openai", model=self.model,
+                prompt=user_message, system_prompt=system_prompt or "",
+                response_sha=_prov.text_hash(text),
+                tokens_in=int(getattr(u, "prompt_tokens", 0) or 0),
+                tokens_out=int(getattr(u, "completion_tokens", 0) or 0),
+                latency_ms=0,
+            )
+        except Exception:
+            pass
+        return text
 
     # ── 전문 논문 작업 (ClaudeClient와 동일 인터페이스) ───────────────────────
 

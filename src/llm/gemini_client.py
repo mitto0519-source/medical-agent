@@ -109,6 +109,16 @@ class GeminiClient:
                     if mname != self.model:
                         _log.info("Gemini 모델 순환: %s → %s (쿼터/오류 회피)", self.model, mname)
                     self.model = mname  # 다음 호출은 성공한 모델 우선
+                    try:
+                        from src.runtime import provenance as _prov
+                        _prov.auto_record_llm_call(
+                            provider="google", model=mname,
+                            prompt=user_message, system_prompt=full_system or "",
+                            response_sha=_prov.text_hash(text),
+                            tokens_in=0, tokens_out=0, latency_ms=0,
+                        )
+                    except Exception:
+                        pass
                     return text
             except Exception as e:
                 last_err = e
