@@ -152,9 +152,49 @@ def stream_turn(project: dict, msg: str, *,
         client = get_llm_client(task="chat_orchestrate")
         active = getattr(client, "_active", client)
 
-        if not hasattr(active, "generate_with_tools"):
-            # Plain streamed text fallback (no tool dispatch capable)
-            yield ev.warning("no_tools", "active client lacks tool-use, text fallback")
+        # ★ Streaming + tools (2026-06-15) — 토큰 단위 yield로 Claude/VS Code 양식 효과
+        if hasattr(active, "generate_with_tools_streamed"):
+            text_acc: list = []
+            for chunk in active.generate_with_tools_streamed(
+                    user_message=msg, tools=TOOL_SCHEMAS, tool_handler=handler,
+                    system_prompt=full_sys, max_tokens=max_tokens, max_iters=max_iters):
+                ct = chunk.get("type")
+                if ct == "text_delta":
+                    text_acc.append(chunk.get("text", ""))
+                    yield ev.token("body", chunk.get("text", ""))
+                elif ct == "tool_start":
+                    yield ev.tool_start(chunk.get("tool", "?"),
+                                          args_brief=str(chunk.get("input", ""))[:120])
+                elif ct == "tool_result":
+                    yield ev.tool_result(chunk.get("tool", "?"),
+                                            {"preview": (chunk.get("result_preview") or "")[:300]})
+                elif ct == "error":
+                    yield ev.warning("stream_partial", chunk.get("msg", "")[:200])
+                elif ct == "done":
+                    # captured preview_patched 등 chat events flush
+                    for e in _tool_events: yield e
+                    _tool_events.clear()
+            text = "".join(text_acc)
+        elif hasattr(active, "generate_with_tools"):
+            # Non-streaming tool-use fallback
+            result = active.generate_with_tools(
+                user_message=msg, tools=TOOL_SCHEMAS, tool_handler=handler,
+                system_prompt=full_sys, max_tokens=max_tokens, max_iters=max_iters,
+            )
+            text = result.get("text", "")
+            trace = result.get("trace") or []
+            for t in trace:
+                yield ev.tool_start(t.get("tool", "?"),
+                                      args_brief=str(t.get("input", ""))[:120])
+                yield ev.tool_result(t.get("tool", "?"),
+                                       {"preview": (t.get("result_preview") or "")[:400]})
+            for e in _tool_events:
+                yield e
+            if text:
+                yield ev.token("body", text)
+        else:
+            # Plain streamed text fallback
+            yield ev.warning("no_tools", "client lacks tool-use, text-only stream")
             buf = []
             for chunk in client.generate_streamed(msg, system_prompt=full_sys,
                                                       max_tokens=max_tokens):
@@ -162,27 +202,10 @@ def stream_turn(project: dict, msg: str, *,
                     buf.append(chunk)
                     yield ev.token("body", chunk)
             text = "".join(buf)
-        else:
-            result = active.generate_with_tools(
-                user_message=msg, tools=TOOL_SCHEMAS, tool_handler=handler,
-                system_prompt=full_sys, max_tokens=max_tokens, max_iters=max_iters,
-            )
-            text = result.get("text", "")
-            trace = result.get("trace") or []
-            # Emit tool_start/tool_result per traced call
-            for t in trace:
-                yield ev.tool_start(t.get("tool", "?"),
-                                      args_brief=str(t.get("input", ""))[:120])
-                yield ev.tool_result(t.get("tool", "?"),
-                                       {"preview": (t.get("result_preview") or "")[:400]})
-            # Emit captured preview_patched events
-            for e in _tool_events:
-                yield e
-            # Final text as one token event (already complete — could split per section later)
-            if text:
-                yield ev.token("body", text)
     except Exception as e:
-        yield ev.error("dispatch", str(e)[:200])
+        # 에러 출력은 silent log + UI에는 한 줄만
+        _log.warning("dispatch fail: %s", str(e)[:300])
+        yield ev.error("dispatch", str(e)[:150])
         yield ev.done()
         return
 

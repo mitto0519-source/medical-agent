@@ -315,6 +315,132 @@ class ClaudeClient:
                 pass
             return text
 
+    def generate_with_tools_streamed(
+        self,
+        user_message: str,
+        tools: List[dict],
+        tool_handler: callable,
+        system_prompt: str = "",
+        max_tokens: int = 4096,
+        max_iters: int = 6,
+        task: Optional[str] = None,
+    ):
+        """★ Streaming + tools generator (2026-06-15).
+
+        토큰 단위 yield → 사용자가 텍스트 한 글자씩 흘러나오는 효과 (Claude/VS Code 양식).
+        tool_use 블록은 streaming 끝난 후 dispatch → tool_start/tool_result yield.
+
+        Yields:
+            {"type":"text_delta", "text": "..."} — 토큰 청크
+            {"type":"tool_start", "tool": "...", "input": {...}}
+            {"type":"tool_result", "tool": "...", "result_preview": "..."}
+            {"type":"done", "text": "...전체...", "trace": [...]}
+        """
+        effective_task = task or self._task
+        system = self._build_system(system_prompt, None, task=effective_task)
+        messages = [{"role": "user", "content": user_message}]
+        trace: list = []
+        full_text_parts: list = []
+
+        for it in range(max_iters):
+            tool_uses: list = []
+            text_in_iter: list = []
+            assistant_blocks: list = []
+            current_text_block: list = []
+
+            try:
+                kwargs = dict(model=self.model, max_tokens=max_tokens,
+                                system=system, messages=messages, tools=tools)
+                with self._client.messages.stream(**kwargs) as stream:
+                    for event in stream:
+                        et = getattr(event, "type", None)
+                        # input_json_delta는 tool_use 인자를 stream으로 보냄 → 무시
+                        if et == "content_block_start":
+                            block = getattr(event, "content_block", None)
+                            btype = getattr(block, "type", None)
+                            if btype == "tool_use":
+                                tool_uses.append({"id": getattr(block, "id", ""),
+                                                    "name": getattr(block, "name", ""),
+                                                    "input": {}})
+                                if current_text_block:
+                                    assistant_blocks.append({
+                                        "type": "text",
+                                        "text": "".join(current_text_block)})
+                                    current_text_block = []
+                        elif et == "content_block_delta":
+                            d = getattr(event, "delta", None)
+                            dtype = getattr(d, "type", None)
+                            if dtype == "text_delta":
+                                txt = getattr(d, "text", "")
+                                if txt:
+                                    text_in_iter.append(txt)
+                                    current_text_block.append(txt)
+                                    yield {"type": "text_delta", "text": txt}
+                            elif dtype == "input_json_delta":
+                                # tool input 누적 (json delta)
+                                pj = getattr(d, "partial_json", "")
+                                if tool_uses and pj:
+                                    tool_uses[-1].setdefault("_buf", "")
+                                    tool_uses[-1]["_buf"] += pj
+                        elif et == "content_block_stop":
+                            # tool_use 마감 — buf → json
+                            if tool_uses and tool_uses[-1].get("_buf") is not None:
+                                try:
+                                    import json as _j
+                                    tool_uses[-1]["input"] = _j.loads(tool_uses[-1].pop("_buf"))
+                                except Exception:
+                                    tool_uses[-1]["input"] = {}
+                    # Get final message for stop_reason
+                    final = stream.get_final_message()
+                    stop_reason = getattr(final, "stop_reason", "")
+            except Exception as e:
+                _log.warning("stream + tools fail iter %d: %s", it, e)
+                yield {"type": "error", "msg": str(e)[:200]}
+                break
+
+            # Close out text in iter
+            if current_text_block:
+                assistant_blocks.append({"type": "text",
+                                            "text": "".join(current_text_block)})
+
+            full_text_parts.extend(text_in_iter)
+
+            # No tools called → done
+            if not tool_uses:
+                yield {"type": "done", "text": "".join(full_text_parts),
+                        "trace": trace, "stop_reason": stop_reason, "iters": it + 1}
+                return
+
+            # Append tool_use blocks to assistant + dispatch
+            for tu in tool_uses:
+                assistant_blocks.append({"type": "tool_use",
+                                            "id": tu["id"], "name": tu["name"],
+                                            "input": tu.get("input", {})})
+            messages.append({"role": "assistant", "content": assistant_blocks})
+
+            tool_results = []
+            for tu in tool_uses:
+                yield {"type": "tool_start", "tool": tu["name"],
+                        "input": tu.get("input", {})}
+                try:
+                    result = tool_handler(tu["name"], tu.get("input", {}))
+                except Exception as e:
+                    result = f"ERROR: {e}"
+                rs = result if isinstance(result, str) else str(result)
+                trace.append({"tool": tu["name"], "input": tu.get("input", {}),
+                                "result_preview": rs[:200]})
+                yield {"type": "tool_result", "tool": tu["name"],
+                        "result_preview": rs[:400]}
+                tool_results.append({"type": "tool_result",
+                                       "tool_use_id": tu["id"],
+                                       "content": rs[:8000]})
+            messages.append({"role": "user", "content": tool_results})
+
+        # Hit max_iters
+        yield {"type": "done", "text": "".join(full_text_parts),
+                "trace": trace, "stop_reason": "max_iters", "iters": max_iters}
+
+
     def generate_with_tools(
         self,
         user_message: str,
