@@ -624,6 +624,103 @@ _PIN_SECTIONS = ("Abstract", "Introduction", "Methods", "Results",
                   "Discussion", "Conclusion", "Tables", "Figures", "References")
 
 
+# ★ UX-1: 빈 채팅 환영 화면 — 사용자가 "연구 아이디어 한 줄" 입력으로 시작하게
+_EXAMPLE_TOPICS = [
+    "청소년 제로음료와 우울",
+    "KNHANES UPF × MASLD (2023 신정의)",
+    "수면 시간과 자살 생각 KYRBS 분석",
+    "카페인 섭취와 대사증후군",
+    "신체활동 빈도와 우울감 코호트",
+]
+
+
+def _render_welcome_chat(project: dict, owner_email: str = "") -> None:
+    """빈 채팅 환영 카드. 5개 예시 chip + 알아서 해 버튼 + 최근 3개 프로젝트.
+
+    여기 채팅 메시지가 한 건이라도 있으면 표시 안 됨.
+    """
+    st.markdown(
+        "<div class='msg-asst' style='background:#F8FAFC;border:none;'>"
+        "<div style='font-size:1.0rem;font-weight:600;color:#0F172A;margin-bottom:6px;'>"
+        "👋 무엇을 연구하시겠어요?</div>"
+        "<div style='font-size:0.86rem;color:#475569;margin-bottom:14px;'>"
+        "연구 아이디어 한 줄만 입력하면 PICO·변수·통계·신규성·저널까지 자동으로 정리합니다. "
+        "막막하면 아래 예시를 누르세요.</div>"
+        "</div>", unsafe_allow_html=True)
+
+    # 예시 chip 5개
+    cols = st.columns(min(3, len(_EXAMPLE_TOPICS[:3])))
+    for i, topic in enumerate(_EXAMPLE_TOPICS[:3]):
+        with cols[i]:
+            if st.button(f"💡 {topic}", key=f"sg_ex_{i}",
+                          use_container_width=True):
+                st.session_state["sg_initial_prompt"] = topic
+                st.session_state["sg_active_project"] = "new"
+                st.rerun()
+    cols2 = st.columns(min(2, len(_EXAMPLE_TOPICS[3:])))
+    for i, topic in enumerate(_EXAMPLE_TOPICS[3:]):
+        with cols2[i]:
+            if st.button(f"💡 {topic}", key=f"sg_ex2_{i}",
+                          use_container_width=True):
+                st.session_state["sg_initial_prompt"] = topic
+                st.session_state["sg_active_project"] = "new"
+                st.rerun()
+
+    # 알아서 해 버튼 (옵션 — 주제 입력 후 자동 트리거 안내)
+    st.markdown(
+        "<div style='margin-top:14px;padding:10px 14px;background:#EFF6FF;"
+        "border-left:3px solid #3B82F6;border-radius:6px;font-size:0.82rem;"
+        "color:#1E40AF;'>"
+        "🚀 주제 입력 후 <b>'알아서 해'</b>라고 말씀하시면 PICO·통계·초안까지 한 번에 진행합니다."
+        "</div>", unsafe_allow_html=True)
+
+    # 최근 3개 프로젝트
+    try:
+        projs = _load_projects()
+        # owner 필터 + 메시지 있는 것만
+        if owner_email:
+            projs = [p for p in projs
+                      if (p.get("owner_email") == owner_email
+                          or not p.get("owner_email"))]
+        projs = [p for p in projs if p.get("title") and p["title"] != "새 작업"]
+        if projs:
+            st.markdown(
+                "<div style='margin:18px 0 6px 0;font-size:0.78rem;color:#94A3B8;"
+                "letter-spacing:0.08em;'>최근 프로젝트</div>",
+                unsafe_allow_html=True)
+            for p in projs[:3]:
+                if st.button(f"📄 {p['title'][:60]}", key=f"sg_recent_w_{p['id']}",
+                              use_container_width=True):
+                    st.session_state["sg_active_project"] = p["id"]
+                    st.rerun()
+    except Exception:
+        pass
+
+
+def _friendly_error(kind: str, raw_msg: str,
+                       alternatives: list = None) -> str:
+    """★ UX-5: 에러 메시지 친절화 — 원인 + 대안.
+
+    kind: stat / data / llm / network / file
+    """
+    titles = {
+        "stat": "📊 통계 분석 실패",
+        "data": "💾 데이터 로드 실패",
+        "llm":  "🤖 AI 호출 실패",
+        "network": "🌐 외부 연결 실패",
+        "file": "📁 파일 처리 실패",
+    }
+    title = titles.get(kind, "⚠ 작업 실패")
+    msg = f"<b>{title}</b><br>"
+    msg += f"<span style='color:#475569;font-size:0.84rem;'>원인: {raw_msg[:200]}</span>"
+    if alternatives:
+        msg += "<br><b style='font-size:0.84rem;'>해결책:</b><ul style='margin:4px 0 0 20px;font-size:0.84rem;'>"
+        for alt in alternatives[:4]:
+            msg += f"<li>{alt}</li>"
+        msg += "</ul>"
+    return msg
+
+
 def _pin_to_section(project: dict, content: str, section: str,
                        *, mode: str = "append") -> None:
     """assistant 응답(또는 선택 블록)을 sections에 박는 핵심 액션.
@@ -911,6 +1008,10 @@ def _render_chat_page(pid: str):
         # 고정 높이 스크롤 박스 — 무한정 늘어나지 않음
         msgs_box = st.container(height=600, border=False)
         with msgs_box:
+            # ★ UX-1 (2026-06-15): 빈 채팅 환영 화면 — 연구 시작 발견성·연결성 우선
+            if not project.get("messages"):
+                _render_welcome_chat(project, owner_email)
+
             # 1) 누적된 과거 메시지 (assistant 메시지엔 📌 핀 row 자동)
             for _i, m in enumerate(project.get("messages", [])):
                 _render_msg(m.get("role", "assistant"), m.get("content", ""),
@@ -978,20 +1079,59 @@ def _render_chat_page(pid: str):
                         _render_msg("assistant", reply)
                 elif _is_autopilot_trigger(user_msg):
                     # REAL HOOKUP (2026-06-14): service.paper.autopilot_run generator
-                    # 각 stage event를 chat에 표시 + 단계별 sections/manuscript에 박음
+                    # ★ UX-2: 5단계 진행도 시각화 (✅완료/⏳진행중/⏸대기)
                     from src.service.paper import autopilot_run as _autopilot
-                    reply_lines: list[str] = []
+                    _STAGES_ORDER = ["pico", "novelty", "stat", "write", "polish", "save"]
+                    _stage_state = {s: "pending" for s in _STAGES_ORDER}
+                    _stage_msgs = {}
                     progress_box = st.empty()
+
+                    def _render_progress():
+                        rows = []
+                        for s in _STAGES_ORDER:
+                            st_ = _stage_state[s]
+                            icon = {"pending": "⏸", "running": "⏳",
+                                      "done": "✅", "skip": "⏭", "fail": "❌"}.get(st_, "⏸")
+                            label = {"pico": "1) PICO 합의",
+                                       "novelty": "2) 신규성 검토",
+                                       "stat": "3) 통계 분석",
+                                       "write": "4) 초안 작성",
+                                       "polish": "5) 후처리(인용·그림)",
+                                       "save": "6) 저장 + 프리뷰"}[s]
+                            color = {"done": "#10B981", "running": "#3B82F6",
+                                       "fail": "#DC2626", "pending": "#94A3B8",
+                                       "skip": "#94A3B8"}.get(st_, "#94A3B8")
+                            extra = f"<span style='color:#64748B;font-size:0.78rem;margin-left:8px;'>{_stage_msgs.get(s,'').replace('<','&lt;')[:120]}</span>" if _stage_msgs.get(s) else ""
+                            rows.append(
+                                f"<div style='padding:4px 0;color:{color};font-size:0.86rem;'>"
+                                f"{icon} <b>{label}</b>{extra}</div>")
+                        progress_box.markdown(
+                            "<div class='msg-asst' style='padding:12px 16px;'>"
+                            "<div style='font-size:0.78rem;color:#94A3B8;margin-bottom:6px;'>"
+                            "🚀 알아서 해 파이프라인</div>" +
+                            "".join(rows) +
+                            "</div>", unsafe_allow_html=True)
+
+                    _render_progress()  # 초기 (모두 ⏸ 대기)
+                    reply_lines = []
                     try:
                         for event in _autopilot(project, user_msg):
                             stage = event.get("stage", "?")
                             status = event.get("status", "?")
                             msg = event.get("message", "")
                             reply_lines.append(f"[{stage}/{status}] {msg}")
-                            progress_box.markdown(
-                                "<div class='msg-asst'>" +
-                                "<br>".join(l.replace("<", "&lt;").replace(">", "&gt;") for l in reply_lines) +
-                                "</div>", unsafe_allow_html=True)
+                            # state machine update
+                            if stage in _stage_state:
+                                if status in ("running",):
+                                    _stage_state[stage] = "running"
+                                elif status == "done":
+                                    _stage_state[stage] = "done"
+                                elif status == "skip":
+                                    _stage_state[stage] = "skip"
+                                elif status in ("fail", "error"):
+                                    _stage_state[stage] = "fail"
+                                _stage_msgs[stage] = msg
+                            _render_progress()
                             # Save manuscript to sections live → 우측 프리뷰 즉시 표시
                             # RESEARCH_STATE_SPEC §1: sections만 정본. manuscript_text 이중쓰기 제거.
                             mt = event.get("manuscript_text")
