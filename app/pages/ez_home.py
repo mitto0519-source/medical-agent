@@ -242,10 +242,43 @@ def _sidebar():
                 st.switch_page("pages/project_workspace.py")
             except Exception:
                 st.rerun()
-            try:
-                st.switch_page("pages/project_workspace.py")
-            except Exception:
-                st.rerun()
+
+    # ★ LOOP_ENGINEERING_SPEC §2.3·§2.4 — Triage Inbox + Today View
+    try:
+        from src.loops.triage import inbox as _inbox
+        from src.loops.state_view import today_view as _tv
+        ib = _inbox(owner_email=_owner or None)
+        tv = _tv(owner_email=_owner or None)
+        totals = ib.get("totals", {})
+        with st.sidebar.expander(
+                f"📥 Triage ({totals.get('urgent',0)}🔴 "
+                f"{totals.get('today',0)}🟠 {totals.get('background',0)}⚙)",
+                expanded=False):
+            if ib.get("urgent"):
+                st.markdown("**🔴 긴급**")
+                for i in ib["urgent"][:3]:
+                    st.caption(f"• {i.get('kind','?')}: {str(i.get('reason') or i.get('title') or '')[:60]}")
+            if ib.get("today"):
+                st.markdown("**🟠 오늘 봐야**")
+                for i in ib["today"][:3]:
+                    st.caption(f"• {i.get('kind','?')}: {str(i.get('claim') or i.get('candidate_event_id') or '')[:60]}")
+            if ib.get("background"):
+                st.caption(f"⚙ 백그라운드: {len(ib['background'])} 작업 진행 중")
+        with st.sidebar.expander("🗂 오늘 상태", expanded=False):
+            ing = tv.get("ingest") or {}
+            if ing.get("running"):
+                st.caption(f"🔄 RAG 인제스트: ok={ing.get('last_ok','?')}")
+            elif ing.get("last_ok"):
+                st.caption(f"✓ 인제스트 완료: {ing.get('last_ok')}편")
+            gs = tv.get("gold_set") or {}
+            if gs.get("total"):
+                st.caption(f"📝 골드셋 라벨: {gs['labelled']}/{gs['total']} ({gs.get('pct',0):.0f}%)")
+            na = tv.get("next_action")
+            if na:
+                st.caption(f"➡ 다음: {str(na)[:80]}")
+    except Exception as _e:
+        st.sidebar.caption(f"triage unavailable: {str(_e)[:80]}")
+
     return None, None, projects
 
 
@@ -780,11 +813,51 @@ def _render_chat_page(pid: str):
     with _composer_col3:
         st.caption(f"📊 model: **{_model_choices.get(sel,sel).split('—')[0].strip()}**")
 
-    user_msg = st.chat_input("메시지를 입력하세요…", key=f"chat_input_{pid}")
+    user_msg = st.chat_input("메시지를 입력하세요… (/help 슬래시 명령)",
+                                key=f"chat_input_{pid}")
     if not user_msg and initial and not project["messages"]:
         user_msg = initial
         if not project.get("title") or project["title"] == "새 작업":
             project["title"] = initial[:60]
+
+    # ★ LOOP_ENGINEERING_SPEC §4 — slash 명령 dispatch (/loop /goal /triage /state /...)
+    if user_msg and user_msg.strip().startswith("/"):
+        try:
+            from src.loops.commands import dispatch_slash
+            parts = user_msg.strip().split(maxsplit=1)
+            cmd = parts[0]
+            args = parts[1] if len(parts) > 1 else ""
+            result = dispatch_slash(cmd, args, project=project,
+                                       owner_email=(st.session_state.get("user") or {}).get("email", ""))
+            # chat에 명령 + 결과 박음 (messages에 append 안 — 1회용 표시)
+            st.markdown(
+                f"<div class='msg-user'>{user_msg}</div>",
+                unsafe_allow_html=True)
+            title = result.get("title", "")
+            body = result.get("body", "")
+            kind = result.get("kind", "text")
+            if kind == "json":
+                import json as _j
+                body_html = f"<pre style='font-size:0.78rem;background:#F1F5F9;padding:8px;border-radius:6px;overflow-x:auto;'>{_j.dumps(body, indent=2, ensure_ascii=False, default=str)[:3000]}</pre>"
+            elif kind == "table":
+                rows = result.get("rows") or []
+                if rows:
+                    headers = list(rows[0].keys())
+                    body_html = "<table style='font-size:0.82rem;border-collapse:collapse;'><tr>" + \
+                                  "".join(f"<th style='border:1px solid #cbd5e1;padding:4px 8px;background:#f1f5f9;'>{h}</th>" for h in headers) + "</tr>" + \
+                                  "".join("<tr>" + "".join(f"<td style='border:1px solid #cbd5e1;padding:4px 8px;'>{str(r.get(h,''))[:80]}</td>" for h in headers) + "</tr>" for r in rows) + "</table>"
+                else:
+                    body_html = "<i>(빈 카탈로그)</i>"
+            else:
+                body_html = f"<div>{str(body).replace(chr(10), '<br>')}</div>"
+            st.markdown(
+                f"<div class='msg-asst'><b>{title}</b><br>{body_html}</div>",
+                unsafe_allow_html=True)
+        except Exception as _e:
+            st.markdown(
+                f"<div class='msg-asst' style='background:#FEE2E2;'>"
+                f"slash 명령 실패: {_e}</div>", unsafe_allow_html=True)
+        user_msg = None  # 일반 LLM 흐름 안 타게
 
     col_chat, col_preview = st.columns([0.46, 0.54], gap="medium")
 

@@ -61,6 +61,10 @@ _TASK_TIER: dict[str, str] = {
     "paper_section":    "standard",  # STREAM lane: section body → Sonnet
     "paper_full_best":  "premium",   # only when user asks "최고품질" → Opus
     "verify_bg":        "fast",      # BACKGROUND lane: confidence/critique → Haiku
+    # LOOP_ENGINEERING_SPEC §5 — sub-agent diversity (self-bias 차단)
+    "critic_review":    "premium",   # ★ 검사 AI — writer(Sonnet)와 다른 tier로 self-bias 회피
+    "physician_review": "premium",   # 임상 안전성 검토 — 가장 보수적
+    "stat_review":      "premium",   # 통계 가정·survey-weight 검증
 }
 
 # ── thinking 지원 모델 목록 ───────────────────────────────────────────────────
