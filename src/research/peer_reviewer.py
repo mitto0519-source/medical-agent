@@ -173,10 +173,40 @@ class PeerReviewer:
         """
         history: list[ReviewResult] = []
         current = paper_text
+
+        # ★ LOOP_ENGINEERING_SPEC §2.2 — self-bias guard (writer↔critic 다양성)
+        try:
+            from src.safety.self_bias_guard import warn_if_self_review
+            from src.config.models import get_model
+            writer_provider, writer_model = get_model(task="paper_section")
+            critic_provider, critic_model = get_model(task="critic_review")
+            bias_rep = warn_if_self_review(writer_model, critic_model)
+            if bias_rep.severity != "ok":
+                from src.runtime.events import append as _evt
+                _evt(type="self_bias_warning",
+                      payload={"writer": writer_model, "critic": critic_model,
+                                 "severity": bias_rep.severity,
+                                 "msg": bias_rep.msg,
+                                 "recommended_provider": bias_rep.recommended_critic_provider},
+                      actor="peer_reviewer")
+        except Exception:
+            pass
+
         for it in range(max_iterations):
             r = self.review(current, topic, dataset, stat_result,
                               suggest_revision=False)
             history.append(r)
+            # ★ learning hook — score를 quality_tracker/failure_kb에 emit
+            try:
+                from src.reliability.learning_hooks import emit_review_score
+                emit_review_score(
+                    score_pct=r.pct,
+                    components={k: v.score for k, v in (r.section_scores or {}).items()},
+                    writer_model=locals().get("writer_model", ""),
+                    reviewer_model=locals().get("critic_model", ""),
+                )
+            except Exception:
+                pass
             if r.error:
                 break
             if r.pct >= target_pct:

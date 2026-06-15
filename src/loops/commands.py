@@ -32,13 +32,24 @@ def dispatch_slash(cmd: str, args: str = "", *, project: Dict = None,
                 "title": f"🔁 loop '{a}' 실행", "body": r}
 
     if c == "goal":
-        # goal-loop: 완료 조건 만족까지 반복 (가벼운 manual ver — heartbeat 위)
+        # goal-loop: 완료 조건 만족까지 반복 — backlog enqueue로 실 hookup
         if not a:
             return {"ok": False, "kind": "text",
                     "body": "사용법: /goal <목표 문장>. 예: /goal 카페인-우울 표 채우기"}
-        return {"ok": True, "kind": "text",
-                "title": f"🎯 goal 등록: {a[:80]}",
-                "body": f"이 목표는 heartbeat 백로그에 추가됩니다 (완료 시까지 반복 시도)."}
+        try:
+            from src.runtime.backlog import enqueue
+            job_id = enqueue(
+                kind="quality_eval",   # 가장 가까운 기존 핸들러
+                payload={"goal": a, "project_id": project.get("id") if project else None,
+                          "owner_email": owner_email},
+                priority=5,
+            )
+            return {"ok": True, "kind": "text",
+                    "title": f"🎯 goal 등록: {a[:80]}",
+                    "body": f"job_id={job_id} backlog enqueue됨. heartbeat(5min)가 완료 조건 만족까지 시도."}
+        except Exception as e:
+            return {"ok": False, "kind": "text",
+                    "body": f"backlog enqueue 실패 (로컬 메모리만): {e}"}
 
     if c == "triage":
         from src.loops.triage import inbox

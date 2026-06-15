@@ -264,6 +264,52 @@ def _sidebar():
                     st.caption(f"• {i.get('kind','?')}: {str(i.get('claim') or i.get('candidate_event_id') or '')[:60]}")
             if ib.get("background"):
                 st.caption(f"⚙ 백그라운드: {len(ib['background'])} 작업 진행 중")
+        # ★ LOOP_ENGINEERING_SPEC §3 — 인지적 항복 방지 알림
+        try:
+            _alerts: list[str] = []
+            # 1) 5턴 연속 자동 turn 후 사용자 검토 없음
+            _msgs = project.get("messages", []) if 'project' in dir() else []
+            asst_streak = 0
+            for m in reversed(_msgs[-12:]):
+                if m.get("role") == "assistant":
+                    asst_streak += 1
+                else:
+                    break
+            if asst_streak >= 5:
+                _alerts.append(f"🟡 5턴+ 자동 응답 — 한 번 직접 본문 점검 권장")
+            # 2) 골드셋 0건 + 10턴 경과
+            gs = tv.get("gold_set") or {}
+            if gs.get("labelled", 0) == 0 and len(_msgs) >= 10:
+                _alerts.append("📝 골드셋 라벨 0 — 자가발전 기준점 0 (SELF_EVOLUTION §2)")
+            # 3) self-bias warning 최근
+            try:
+                from src.runtime import events as _e
+                bias_events = _e.find(type="self_bias_warning", limit=3) or []
+                if bias_events:
+                    _alerts.append(f"⚠ self-bias 감지 {len(bias_events)}건 — critic 모델 교체 권장")
+            except Exception:
+                pass
+            # 4) confidence < 0.6 최근
+            try:
+                from src.runtime import events as _e
+                conf_evts = _e.find(type="confidence_calibration", limit=5) or []
+                low = [e for e in conf_evts
+                        if (e.get("payload") or {}).get("predicted", 1.0) < 0.6]
+                if low:
+                    _alerts.append(f"🔴 confidence < 0.6 ({len(low)}건) — 사용자 검토 필수")
+            except Exception:
+                pass
+            if _alerts:
+                st.sidebar.markdown(
+                    "<div style='margin:8px 0;padding:8px 10px;"
+                    "background:#FEF3C7;border-left:3px solid #F59E0B;"
+                    "border-radius:6px;font-size:0.78rem;color:#92400E;'>"
+                    "<b>👤 사용자 검토 필요</b><br>" +
+                    "<br>".join(_alerts[:4]) + "</div>",
+                    unsafe_allow_html=True)
+        except Exception as _e:
+            pass
+
         with st.sidebar.expander("🗂 오늘 상태", expanded=False):
             ing = tv.get("ingest") or {}
             if ing.get("running"):

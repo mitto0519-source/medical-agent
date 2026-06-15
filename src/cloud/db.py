@@ -110,6 +110,29 @@ def _init_tables(engine) -> None:
         )
         """,
         "CREATE INDEX IF NOT EXISTS ma_drafts_author_idx ON ma_drafts (author_email, created_at DESC)",
+        # ★ RESEARCH_STATE_SPEC §2 — ma_research_state (단일 정본)
+        """
+        CREATE TABLE IF NOT EXISTS ma_research_state (
+            id              TEXT        PRIMARY KEY,
+            owner_email     TEXT        NOT NULL DEFAULT '',
+            title           TEXT        NOT NULL DEFAULT '새 연구',
+            schema_version  TEXT        NOT NULL DEFAULT '1.0.0',
+            data_json       JSONB       NOT NULL DEFAULT '{}',
+            updated_at      BIGINT      NOT NULL DEFAULT 0
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS ma_research_state_owner_idx ON ma_research_state (owner_email, updated_at DESC)",
+        # ma_working_papers (ez_home project dict 호환 — F5 안전 mirror)
+        """
+        CREATE TABLE IF NOT EXISTS ma_working_papers (
+            id           TEXT        PRIMARY KEY,
+            owner_email  TEXT        NOT NULL DEFAULT '',
+            title        TEXT        NOT NULL DEFAULT '새 작업',
+            data_json    JSONB       NOT NULL DEFAULT '{}',
+            updated_at   BIGINT      NOT NULL DEFAULT 0
+        )
+        """,
+        "CREATE INDEX IF NOT EXISTS ma_working_papers_owner_idx ON ma_working_papers (owner_email, updated_at DESC)",
         """
         CREATE TABLE IF NOT EXISTS ma_workflows (
             workflow_id  TEXT        PRIMARY KEY,

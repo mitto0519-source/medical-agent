@@ -100,6 +100,13 @@ def run_gate(kind: str, id: str, payload: dict,
                                       candidate.get("axes") or {},
                                       baseline.get("axes") or {},
                                       decision, delta=delta, notes=notes)
+        # ★ learning hook — promotion decision emit
+        try:
+            from src.reliability.learning_hooks import emit_promotion_decision
+            emit_promotion_decision(decision=decision, delta=float(delta),
+                                       axes_dropped=axis_drops, candidate_id=cand_id)
+        except Exception:
+            pass
         if decision == "promote":
             _ledger.promote(cand_id)
         elif decision == "rollback":
