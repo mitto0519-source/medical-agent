@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12223004",
+  "pmid": "40603975",
+  "title": "The effectiveness of explainable AI on human factors in trust models.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cheung JC, Ho SS.",
+  "doi": "10.1038/s41598-025-04189-9",
+  "figures": [
+    "Hypothesized theoretical model.",
+    "Structural model with standardized estimated coefficients.  Note . Controlled for demographic variables, prior drone use, and trust in AI system. Dotted lines denote nonsignificant paths. ***  p  &lt; .001, **  p  &lt; .01."
+  ],
+  "tables": [
+    "Exact item wording and descriptive statistics.",
+    "Assessment of respondents.",
+    "Zero-order correlation matrix of study variables."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007153.3996243
+}

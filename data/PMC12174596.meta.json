@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12174596",
+  "pmid": "40483957",
+  "title": "Precision targeting of right dorsolateral prefrontal cortex with neuronavigated rTMS alleviates chronic insomnia via functional connectivity reorganization: a randomized neuroimaging trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gong L, Yang X, He Y, Li H, Zhou W, Liu D, Zhang B, Xi C.",
+  "doi": "10.1016/j.nicl.2025.103815",
+  "figures": [
+    "CONSORT flow diagram of the study.",
+    "The primary outcome of rTMS compared to waitlist CID groups. A.  The PSQI scores changes in rTMS and waitlist groups.  B.  Comparison of response and remission rates between the rTMS group (blue) and the waitlist control group (orange). Abbreviations: rTMS, repeated transcranial magnetic stimulation; CID, chronic insomnia disorder, PSQI, Pittsburgh Sleep Quality Index. (For interpretation of the r",
+    "Group × Time Interaction effects on target-based FC network in CID patients.  ( Top ) Brain regions shown significant Group × Time interactive effects on DLPFC FC network, including the left DLPFC, right DLPFC, MCC and aCbv. Color bar represent  F  values (threshold-free cluster enhancement correction,  p  &lt; 0.05). ( Bottom ) Violin plots showing FC values alterations in rTMS and waitlist group",
+    "Mediation analysis results. A.  Conceptual model depicting the relationships between rTMS treatment, ISI changes, and DLPFC FC changes. The arrows indicate the direct and indirect pathways through which rTMS influences ISI.  B.  Estimated effects from the mediation analysis. The ACME and ADE are shown with their confidence intervals, along with the Total Effect of rTMS on ISI changes.  C.  Sensiti"
+  ],
+  "tables": [
+    "Baseline characteristics of study completers.",
+    "Summary of repeated-measures ANOVA of clinical outcomes.",
+    "The time × group effect on the DLPFC FC network.",
+    "Mediation analysis of altered right DLPFC FC as a Mediator in rTMS-induced ISI changes."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059939.278763
+}

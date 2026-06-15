@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12273237",
+  "pmid": "40676606",
+  "title": "Pooled prevalence of anaemia and its associated factors among adolescent girls in East and West Africa: a systematic review and meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Belay DG, Amlak BT, Chilot D, Alem AZ, Merid MW.",
+  "doi": "10.1186/s12889-025-23701-4",
+  "figures": [
+    "Flow diagram of the included studies for the systematic review and meta-analysis of prevalence and associated factors of anemia among adolescent girls in East and West countries",
+    "The pooled prevalence of anemia among adolescent girls in East and West African countries",
+    "Sensitivity analysis before omitted studies among adolescent girls in East and West African countries",
+    "Egger plot assesses publication bias among adolescent girls in East and West African countries"
+  ],
+  "tables": [
+    "Characteristics of included studies and quality assessment for systematic review and meta-analysis of the prevalence of anemia and its associated factors among adolescent girls in East and West African countries",
+    "Subgroup analysis of anemia among adolescent girls in East and West African countries",
+    "Univariate and multivariate meta-regression analysis of anaemia among adolescent girls in East and West Africa",
+    "Factors associated with anemia among dolescent girls in East and West African coutries"
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004812.6198134
+}

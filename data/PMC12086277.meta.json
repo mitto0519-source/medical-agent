@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12086277",
+  "pmid": "39971283",
+  "title": "Persistence to growth hormone treatment and clinical characteristics of pediatric patients with growth hormone deficiency: A retrospective cohort study of data from the Japan Medical Data Center claims database.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dateki S, Sato Y, Tsuboi S, Mori J.",
+  "doi": "10.1507/endocrj.ej24-0225",
+  "figures": [
+    "Histograms of age at diagnosis by sex.",
+    "Kaplan-Meier plot of persistence to growth hormone replacement therapy stratified by sex. Events were defined as follows: (a) treatment discontinuation: the first prescription-free period of 182 days or more in the follow-up period and (b) treatment completion: a prescription-free period of 182 days or more after the last prescription of GH.  GHD, growth hormone deficiency; GHRT, growth hormone re",
+    "Histograms of age at the last prescription of GH by sex in patients who have completed GHRT.",
+    "Result of Cox regression exploring factors affecting persistence to growth hormone therapy. Events were defined as follows: (a) treatment discontinuation: the first prescription-free period of 182 days or more in the follow-up period and (b) treatment completion: a prescription-free period of 182 days or more after the last prescription of GH.  a: More than the median number of patients per facili",
+    "Stratified Kaplan-Meier plot of persistence to growth hormone therapy stratified by sex and age category (agec). (For male patients, 3 or less: agec = 1; 4 to 11: agec = 2; 12 or more: agec = 3. For female patients, 3 or less: agec = 1; 4 to 10: agec = 2; 11 or more: agec = 3). Treatment discontinuation was defined as the first prescription-free period of 182 days (6 months) or more in the follow-",
+    "Stratified Kaplan-Meier plot of persistence to growth hormone replacement therapy stratified by use of other pituitary hormone treatment before the start of GHRT (without other pituitary hormone treatment: Other_hormones = 0; with other pituitary hormone treatment: Other_hormones = 1). Treatment discontinuation was defined as the first prescription-free period of 182 days (6 months) or more in the",
+    "Stratified Kaplan-Meier plot of persistence to growth hormone replacement therapy stratified by facility size category (sizec) (facility with a number of patients fewer than the median number of patients: sizec = 0; facility with a number of patients equal to or more than the median number of patients: sizec = 1). Treatment discontinuation was defined as the first prescription-free period of 182 d",
+    "Stratified Kaplan-Meier plot of persistence to growth hormone replacement therapy stratified by drug number category (drugc) grouped by mean number of concomitant drugs other than hormone treatment prescribed past 12 months before the start of GHRT (less than 2: drugc = 0; 2 or more: drugc = 1). Treatment discontinuation was defined as the first prescription-free period of 182 days (6 months) or m",
+    "Kaplan-Meier plot of persistence to growth hormone replacement therapy by sex in the sensitivity analysis that excludes patients with three or more GH stimulation tests. Events were defined as follows: (a) treatment discontinuation: the first prescription-free period of 182 days or more in the follow-up period and (b) treatment completion: a prescription-free period of 182 days or more after the l"
+  ],
+  "tables": [
+    "Demographics and clinical characteristics of patients. ( N  = 1,020)",
+    "Age at diagnosis by year of diagnosis",
+    "Comorbidities at diagnosis",
+    "Disease codes for pediatric growth hormone deficiency",
+    "Demographics and clinical characteristics of patients included in the sensitivity analysis that includes patients with more than two GH stimulation tests. ( N  = 1,607)"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013077.3920789
+}

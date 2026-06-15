@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11927120",
+  "pmid": "40119402",
+  "title": "Grey matter volume differences in pediatric obsessive-compulsive disorder: a meta-analysis of voxel-based morphometry studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Li L, Liu Y, Luo T, Tao Y, Zhao S, Liu P, Yang Z, Jiang Y, Zhang M, Duan X, Situ M, Huang Y.",
+  "doi": "10.1186/s12888-025-06711-9",
+  "figures": [
+    "Flowchart of the selection of VBM studies in patients with OCD for meta-analysis",
+    "Meta-analysis results. GM volume differences in pediatric patients with OCD relative to HCS.  a  pediatric OCD patients vs. HCS (GM from left to right: SFG (orbital part), insula, MOG, IFG, IPG, STG);  b  Spatial visualization of the differential GM;  c  Treatment-naive pediatric OCD patients vs. HCS (GM from left to right: SFG (orbital part), MOG, IPG);  d  Treatment pediatric OCD patients vs. HC",
+    "Meta-regression analysis results.  a  GM volume in the left IFG was significantly negatively associated with the mean age in pediatric OCD patients.  b  GM volume in the left MOG was significantly negatively associated with the male ratio in pediatric OCD patients.  c  GM volume in the left SFG (orbital part) was significantly positively associated with CYBOCS score in pediatric OCD patients.  d  "
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of the pediatric OCD participants in the study in the meta-analysis",
+    "Grey matter alterations in pediatric patients with OCD compared with controls in the pooled meta-analysis",
+    "Regional differences of grey matter changes between pediatric patients with OCD and HCS in the subgroup meta-analysis"
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046896.6240344
+}

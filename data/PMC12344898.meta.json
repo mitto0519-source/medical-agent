@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12344898",
+  "pmid": "40804666",
+  "title": "Risk factors for implant failure of PFNA-II in the treatment of intertrochanteric fractures (AO/OTA 31 A1 and A2).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Li Z, Gao J, Wu X, Chang Z, Liu X, Zhang L, Li M, Nie S.",
+  "doi": "10.1186/s12891-025-09035-7",
+  "figures": [
+    "The research flow chart describing the process of patient inclusion and exclusion",
+    "Cortical support is shown in a typical case.  a  perioperative radiographs of intertrochanteric fracture.  b  postoperative radiographs showed that the medical cortex of the head-neck fragment was supported by the medical cortex of the femur (red arrow).  c  radiographs of six months after surgery showed fracture union without reduction loss (red arrow)",
+    "Helical blade support shown in radiographs.  a  intertrochanteric fracture with lesser trochanter free.  b  The radiographs on the second day postoperative showed that the inferior cortex of head-neck fragment was blocked to varus by the helical blade (long red arrow). A gap was formed in fracture site (short red arrow).  c  The femoral cervicodiaphyseal angle in three months was consistent with t",
+    "Nail support shown in radiographs.  a  intertrochanteric fracture with lateral wall less than 25 mm.  b  postoperative radiographs showed that the fracture reduction was acceptable, and the continuity of medial cortex was restored (red arrow).  c  The reduction loss was showed in radiographs 3 months postoperative. The head-neck fragment was varus, and the inferior cortex was blocked by the nail ("
+  ],
+  "tables": [
+    "Parameters of the assignment",
+    "Demographic data for implant failure and non-failure groups",
+    "The perioperative data of the two matched groups",
+    "Multi factor analysis on risk factors of implant failure of PFNA-II"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035994.2970698
+}

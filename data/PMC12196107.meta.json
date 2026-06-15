@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12196107",
+  "pmid": "40573068",
+  "title": "Identification of Priority Nutrients in the US: Targeting Malnutrition to Address Diet-Related Disease Across the Lifespan.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Starck CS, Cassettari T, Beckett E, Duve E, Fayet-Moore F.",
+  "doi": "10.3390/nu17121957",
+  "figures": [
+    "Overview of the five-step methodological approach used to identify priority nutrients for the US.",
+    "The number of demographic groups with each of ( A ) inadequate intake; ( B ) increased needs; and ( C ) association with health priorities, for each identified nutrient. Both beneficial (gray bars) and adverse (red bars) health associations are presented for each applicable nutrient. Abbreviations: omega-3, omega-3 fatty acids; omega-6, and omega-6 fatty acids.",
+    "The priority nutrients for ( A ) each demographic group; and ( B ) the total population, including sub-scores for each of dietary intake (red), revised needs (light gray), and association with health priorities (dark gray). The highest priority nutrients for the overall population (left of dashed line, ( B ) are vitamin D, vitamin E, dietary fiber, calcium, and magnesium. Abbreviations: Omega-3, o",
+    "Comparison to the DRI (RDA or AI, as applicable, dashed line) for each population-level priority nutrient, for dietary intake (red bars), suggested level of revised needs (light gray bars), and minimum dose showing an association with a health priority (dark gray bars). Columns represent the mean proportional intake across all demographic groups, with error bars indicating the associated SD. Abbre"
+  ],
+  "tables": [
+    "Nutrients included in the assessment.",
+    "Quantitative scoring matrix for nutrient prioritization.",
+    "Health priorities and included health outcomes for each demographic group.",
+    "Nutrients identified as either having inadequate intakes  1 , increased needs  2 , or association with health priorities  3  by demographic group.",
+    "Summary of intake  1 , suggested increase  2 , dose range associated with a beneficial effect on a health priority  3 , and estimation of proportional intake  4  for each priority nutrient for each demographic group.",
+    ""
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003222.942842
+}

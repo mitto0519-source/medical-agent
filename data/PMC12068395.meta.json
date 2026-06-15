@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12068395",
+  "pmid": "40356871",
+  "title": "Developing a Process for Preference Measures in Pediatric Growth Hormone Deficiency: Challenges and Solutions.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Brod M, Pfeiffer KM, Alolga SL, Beck JF, Murphy M, Bruchey AK, Maniatis A, Pitukcheewanont P.",
+  "doi": "10.2147/ppa.s500330",
+  "figures": [
+    "Study Process Flow Chart. Concept Elicitation and Cognitive Debriefing Assessment (Content Validity).",
+    "Examples of shared items from the GHD-PRM Child version.",
+    "Example items asked of caregivers regarding themselves about their treatment preference from the GHD-PRM Caregiver version.",
+    "Example items from the GHD-ATM Child version."
+  ],
+  "tables": [
+    "Expert Interview Findings",
+    "Demographic Characteristics and General Health Characteristics",
+    "Caregiver Interview Findings",
+    "Demographic and General Health Characteristics: Child Concept Elicitation Participants",
+    "Demographic Characteristics: Caregivers of Child Concept Elicitation Participants",
+    "Child Interview Findings"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012606.9631076
+}

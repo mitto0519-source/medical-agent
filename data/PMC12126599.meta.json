@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12126599",
+  "pmid": "40452817",
+  "title": "Prevalence, Risk Factors, Lung Function, and Associated Comorbidities of Adult Preserved Ratio Impaired Spirometry: A Meta-Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang H, Yang R, Liu D, Li W.",
+  "doi": "10.1002/mco2.70235",
+  "figures": [
+    "PRISMA flow diagram of this study.",
+    "Forest plot of the prevalence of PRISm. IV: inverse variance; CI: confidence interval.",
+    "Sensitivity analysis of the prevalence of PRISm by including only general population. IV: inverse variance; CI: confidence interval.",
+    "Funnel plot of the prevalence of PRISm."
+  ],
+  "tables": [
+    "Main characteristics of included studies.",
+    "Meta‐regression for the prevalence of PRISm.",
+    "Risk factors, lung function, and associated comorbidities of PRISm."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037697.431029
+}

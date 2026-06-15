@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12008668",
+  "pmid": "40255411",
+  "title": "Strengthening health technology assessment for cancer treatments in Europe by integrating causal inference and target trial emulation.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Bucher HC, Chammartin F.",
+  "doi": "10.1016/j.lanepe.2025.101294",
+  "figures": [
+    "Process flow chart in causal inference.",
+    "Different types of structural causal models and related functions."
+  ],
+  "tables": [
+    "Potential outcome framework.",
+    "Factual and counterfactual outcomes."
+  ],
+  "query": "G-methods time-varying confounding",
+  "fetched_at": 1780025611.1836917
+}

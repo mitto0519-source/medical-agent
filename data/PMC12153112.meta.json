@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12153112",
+  "pmid": "40495159",
+  "title": "Cycling infrastructure as a determinant of cycling for recreation and transportation in Montréal, Canada: a natural experiment using the longitudinal national population health survey.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Prince SA, Thomas T, Apparicio P, Rodrigue L, Jobson C, Walker KL, Butler GP, Wasfi R.",
+  "doi": "10.1186/s12966-025-01767-y",
+  "figures": [
+    "Cycling infrastructure expansion in the Montréal Census Metropolitan Area, Québec, 1991 to 2016",
+    "Cycling infrastructure length ( a ) and prevalence of cycling ( b ) over time, the Montréal Census Metropolitan Area, Québec"
+  ],
+  "tables": [
+    "Cycling infrastructure and cycling outcome dataset years",
+    "Baseline participant characteristics",
+    "Associations between access to time varying cycling infrastructure within distance thresholds and any cycling ( N  = 776)",
+    "Associations between cumulative years of exposure to cycling infrastructure within distance thresholds and any cycling ( N  = 776)",
+    "Associations between shortest distance to type of time varying cycling infrastructure from centroid of dissemination area and any cycling ( N  = 776)",
+    "Associations between access to time varying cycling infrastructure within distance thresholds and log minutes per week of recreational cycling ( N  = 379)",
+    "Associations between cumulative years of exposure to cycling infrastructure within a distance threshold and log minutes per week of recreational cycling ( N  = 379)",
+    "Associations between shortest distance to time varying cycling infrastructure and log minutes per week of recreational cycling ( N  = 379)"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007680.4626262
+}

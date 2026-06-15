@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11999690",
+  "pmid": "40235828",
+  "title": "SCD and asthma comorbidity: the potential role of adverse childhood experiences.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Pernell B, Perumean-Chaney SE, Washington T, Deshane J, Epel E, Tita A, Baskin ML, Levitan EB.",
+  "doi": "10.1093/jscdis/yoaf007",
+  "figures": [],
+  "tables": [
+    "Descriptive statistics of entire cohort.",
+    "Baseline characteristics by ACE category.",
+    "Distribution of asthma by ACE category",
+    "Distribution of asthma by age and ACE categorization group",
+    "Poisson regressions with robust standard errors modeled to estimate prevalence ratios of asthma.",
+    "Logistic regressions modeled to predict the odds of asthma."
+  ],
+  "query": "asthma adolescent prevalence",
+  "fetched_at": 1780013537.5201068
+}

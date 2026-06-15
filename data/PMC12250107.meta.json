@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12250107",
+  "pmid": "40648814",
+  "title": "The Associations Between Chronotype and Mental Health in Nursing Students.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ibáñez-Del Valle V, Navarro-Martínez R, Cauli O.",
+  "doi": "10.3390/jcm14134440",
+  "figures": [
+    "Correlation analyses between Goldberg scale (total score) and chronotype.",
+    "Correlation analyses between anxiety subscale and chronotype.",
+    "Correlation analyses between depression subscale and chronotype.",
+    "Correlation analyses between self-perceived stress and chronotype."
+  ],
+  "tables": [
+    "Multivariate regression analysis."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780000910.77047
+}

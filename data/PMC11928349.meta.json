@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11928349",
+  "pmid": "40117068",
+  "title": "Decreasing prevalence or increase in unregistered cases of bulimia nervosa in children and adolescents in Germany? A comparison using representative claims data pre- vs. intra-COVID-19 pandemic.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Leickert J, Zillmer S, Bachmann CJ, Vivirito A, Enders D, Pintsch J, Correll CU, Jaite C.",
+  "doi": "10.1007/s40519-025-01738-z",
+  "figures": [
+    "Quarterly incidence (%) of bulimia nervosa by age group before vs. during the COVID-19 pandemic"
+  ],
+  "tables": [
+    "Prevalence, incidence and comorbidities of bulimia nervosa in girls and boys pre- vs. intra-COVID, stratified by age groups",
+    "Outpatient treatment in girls and boys with bulimia nervosa pre- vs. intra-COVID, stratified by age groups",
+    "Inpatient treatment in girls and boys with bulimia nervosa pre- vs. intra-COVID, stratified by age groups"
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780056952.9382546
+}

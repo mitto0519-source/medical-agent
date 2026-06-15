@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12301306",
+  "pmid": "40727447",
+  "title": "Effects of olympic combat sports on physical fitness in non-athlete students: a systematic review with meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hernandez-Martinez J, Cid-Calfucura I, Guzmán-Muñoz E, Herrera-Valenzuela T, Delgado-Floody P, Nuñez-Espinosa C, Branco BM, Mota J, Nobari H, Perez-Carcamo J, Vásquez-Carrasco E, Valdés-Badilla P.",
+  "doi": "10.3389/fphys.2025.1620621",
+  "figures": [
+    "Flowchart of the review process. Legends: Based on the PRISMA guidelines( Page et al., 2021 ).",
+    "(A)  Risk of bias within studies. Legends: D1: randomization process; D2: deviations from the intended interventions; D3: missing outcome data; D4: measurement of the outcome; D5: selection of the reported result.  (B) . Risk of bias summary: review authors’ judgments about each risk of bias item for each included study.",
+    "Forest plot of changes in Maximal isometric handgrip strength in students practicing Olympic combat sports compared to an active control group. Values shown correspond to effect sizes (Hedges’ g) with 95% confidence intervals (CI). The squares represent the effect sizes of each study, while the size of each square reflects the statistical weight of each study within the meta-analysis. Positive val",
+    "Forest plot of changes in performance on the Sargent Jump test in students practicing Olympic combat sports compared to an active control group. The values shown correspond to effect sizes (Hedges’ g) with 95% confidence intervals (CI). The squares represent the effect sizes of each study, while the size of each square reflects the statistical weight of each study within the meta-analysis. Positiv",
+    "Forest plot of changes in performance on the Standing Long Jump test in students practicing Olympic combat sports compared to an active control group. The values shown correspond to effect sizes (Hedges’ g) with 95% confidence intervals (CI). The squares represent the effect sizes of each study, while the size of each square reflects the statistical weight of each study within the meta-analysis. P",
+    "Forest plot of changes in spirometry parameters in students practicing Olympic combat sports compared with an active control group. Values shown correspond to effect sizes (Hedges’ g) with 95% confidence intervals (CI). The squares represent the effect sizes of each study, while the size of each square reflects the statistical weight of each study within the meta-analysis. Positive values favor st",
+    "Forest plot of changes in performance on the 20-m shuttle run test in students practicing Olympic combat sports compared to an active control group. The values shown correspond to effect sizes (Hedges’ g) with 95% confidence intervals (CI). The squares represent the effect sizes of each study, while the size of each square reflects the statistical weight of each study within the meta-analysis. Pos",
+    "Forest plot of changes in performance on the Sit-and reach test in students practicing Olympic combat sports compared to an active control group. The values shown correspond to effect sizes (Hedges’ g) with 95% confidence intervals (CI). The squares represent the effect sizes of each study, while the size of each square reflects the statistical weight of each study within the meta-analysis. Positi"
+  ],
+  "tables": [
+    "Selection criteria used in the systematic review.",
+    "Study quality assessment according to the TESTEX scale.",
+    "Studies report the effects of Olympic combat sports on physical fitness in non-athlete students.",
+    "Effects of Olympic combat sports vs control groups on physical fitness in non-athlete students.",
+    "Effects of olympic combat sports vs control groups muscle strength and flexibility in non-athlete students.",
+    "GRADE assessment for the certainty of evidence."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011424.8790839
+}

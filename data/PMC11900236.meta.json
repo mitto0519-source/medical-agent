@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11900236",
+  "pmid": "40076636",
+  "title": "Long-Term IGF-1 Maintenance in the Upper-Normal Range Has Beneficial Effect on Low-Grade Inflammation Marker in Adults with Growth Hormone Deficiency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Klinc A, Janež A, Jensterle M.",
+  "doi": "10.3390/ijms26052010",
+  "figures": [
+    "Association between IGF-1 SDS and inflammation marker (hs-CRP). ( A ): Distribution of hs-CRP levels in patients categorized into lower-normal (−2 to 0) and upper-normal (0 to +2) IGF-1 SDS ranges. ( B ): Negative correlation between 5-year mean IGF-1 SDS and hs-CRP levels. Legend: hs-CRP—high-sensitive C-reactive protein, IGF-1—insulin-like growth factor 1, SDS—standard deviation score.",
+    "Association between IGF-1 SDS range and body fat percentage. The association between IGF-1 SDS range and body fat percentage was statistically significant ( p  = 0.008); however, after adjusting for sex, the significance was lost ( p  = 0.394), indicating that sex played a key role in this relationship. To visually depict the influence of sex, different symbols are used: squares represent male val"
+  ],
+  "tables": [
+    "Baseline characteristics.",
+    "Associations of IGF-1 SDS range with patient characteristics, cardiovascular risk factors, and vascular parameters."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013022.3550067
+}

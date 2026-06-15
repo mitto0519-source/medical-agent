@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12149526",
+  "pmid": "40502730",
+  "title": "Loneliness After Bereavement: The Role of Survivor Gender and Caregiving Involvement.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park S, Kim J.",
+  "doi": "10.1093/geroni/igaf035",
+  "figures": [
+    "Trajectories of loneliness over time relative to spousal loss, by gender. Ninety-five percent confidence intervals are shown.",
+    "Trajectories of loneliness over time relative to spousal loss, by gender and spousal caregiving. Ninety-five percent confidence intervals are shown."
+  ],
+  "tables": [
+    "Descriptive Statistics, KLoSA",
+    "Effect of Time to Spousal Loss, by Gender",
+    "Effect of Time to Spousal Loss, by Gender and Spousal Caregiving"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039737.8156922
+}

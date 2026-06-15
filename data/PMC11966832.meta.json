@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11966832",
+  "pmid": "40175942",
+  "title": "Association between internet addiction and insomnia among college freshmen: the chain mediation effect of emotion regulation and anxiety and the moderating role of gender.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yu Y, Zhang L, Su X, Zhang X, Deng X.",
+  "doi": "10.1186/s12888-025-06778-4",
+  "figures": [
+    "Hypothesized model",
+    "Diagram of Moderated Mediation Effect",
+    "Simple slope plots  The moderating role of gender in the relationship between IA and insomnia",
+    "Simple slope plots  The moderating role of gender in the relationship between IA and ER"
+  ],
+  "tables": [
+    "Demographic characteristics of study participants ( n  = 7353)",
+    "Pearson’s correlation coefficients between all study variables ( n  = 7353)",
+    "Regression results of the chain mediating effects model ( n  = 7353)",
+    "Results and comparison of chain mediating effect ( n  = 7353)",
+    "Analysis of moderated mediation",
+    "Moderation effect across gender"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001606.9961624
+}

@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12128421",
+  "pmid": "40458781",
+  "title": "Effect of acceptance and commitment therapy for adolescent depression: a meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yu X, Zhao B, Yin T, Qu H, Zhang J, Cheng X, Chen X.",
+  "doi": "10.3389/fpsyt.2025.1506822",
+  "figures": [
+    "PRISMA flow diagram of the study selection process.",
+    "Risk of bias summary.",
+    "Publication bias of included studies.",
+    "Effect of ACT post-test on depressive symptoms in adolescents after sensitivity analysis.",
+    "Effect of ACT follow-up test on depressive symptoms in adolescents after sensitivity analysis.",
+    "Scatter plot for meta-regression of depression outcome (psychological flexibility as predictor variable).",
+    "Subgroup analyses of different control treatments.",
+    "Subgroup analyses of different forms of intervention.",
+    "Subgroup analyses of different staffing settings.",
+    "Subgroup analyses of different types of samples.",
+    "Sensitivity analysis of ACT on psychological flexibility in adolescents."
+  ],
+  "tables": [
+    "Data extraction table of study characteristics.",
+    "Publication bias analyses results.",
+    "Results of the meta-regressions."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999380.268992
+}

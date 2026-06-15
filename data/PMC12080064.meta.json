@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12080064",
+  "pmid": "40369622",
+  "title": "Bibliometric and visual analysis of circadian rhythms in depression from 2004 to 2024.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhou C, Ji S, Zhang A, Yu H, Liu C, Li S.",
+  "doi": "10.1186/s12991-025-00565-x",
+  "figures": [
+    "Trends in the published articles and citation counts of circadian rhythms in depression from 2004 to 2024  ( A ) The annual publication quantity and citation frequency of circadian rhythms in depression from 2004 to 2024  ( B ) The annual publication quantity, cumulative publication quantity, and their polynomial fitting curves for researches of circadian rhythms in depression from 2004 to 2024",
+    "Keywords co-occurrence network mapping of circadian rhythms in depression from 2004 to 2024  ( A ) The keyword map of circadian rhythms in depression visually displays the connections among studied keywords. Nodes, distinguished by various colors, represent different keyword clusters. Node size reflects co-occurrence frequency, and connections between nodes depict relationships among keywords  ( B",
+    "Highly cited references co-citation network mapping of circadian rhythms in depression from 2004 to 2024  ( A ) Application of citespace, literature relation network diagram. The different colors of the nodes indicate additional years, from blue to red, the later. The node size indicates the frequency of the reference  ( B ) The keyword heatmap displays topics, with smaller numbers indicating larg"
+  ],
+  "tables": [
+    "Ranking of the top fifteen major highly cited references of circadian rhythms in depression from 2004 to 2024"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001270.0361314
+}

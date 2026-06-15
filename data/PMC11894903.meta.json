@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11894903",
+  "pmid": "39846352",
+  "title": "Directed Acyclic Graphs in Decision-Analytic Modeling: Bridging Causal Inference and Effective Model Design in Medical Decision Making.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dijk SW, Korf M, Labrecque JA, Pandya A, Ferket BS, Hallsson LR, Wong JB, Siebert U, Hunink MGM.",
+  "doi": "10.1177/0272989x241310898",
+  "figures": [
+    "Illustration of a directed acyclic graph (DAG). An intervention influences an outcome variable through a “frontdoor path,” where the arrows (usually) lead from the intervention to the outcome. The green arrows (edges) from the exposure to the outcome represent the frontdoor path on the direct causal pathway, often referred to as the “direct effect.” When the exposure influences the outcome through"
+  ],
+  "tables": [
+    "First Example of an Application of Directed Acyclic Graphs in Decision-Analytic Modeling \n a",
+    "Second Example of an Application of Directed Acyclic Graphs in Decision-Analytic Modeling \n a"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020866.7312858
+}

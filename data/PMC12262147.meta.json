@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12262147",
+  "pmid": "40627549",
+  "title": "COVID-19-Relevant Insights Into the Elevated Risk of Accidental Injuries in Survivors of SARS and Their Relatives in Taiwan: Retrospective Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sung C, Chung CH, Sun CA, Tsao CH, Ng DY, Weng TH, Fann LY, Lin FH, Chien WC.",
+  "doi": "10.2196/70608",
+  "figures": [
+    "Flowchart detailing the selection of survivors of severe acute respiratory syndrome (SARS) and their first-degree relatives and matched control cohorts from the National Health Insurance Research Database in a nationwide retrospective cohort study conducted in Taiwan (2000‐2015).",
+    "Kaplan-Meier survival curves illustrating the cumulative incidence of injury among the survivors of severe acute respiratory syndrome (SARS) and matched controls aged 18 years or older in a nationwide retrospective cohort study (Taiwan, 2000–2015). Statistical significance was determined using the log-rank test ( P &lt;.001).",
+    "Kaplan-Meier survival curves demonstrating the cumulative incidence of injury among first-degree relatives of survivors of severe acute respiratory syndrome (SARS) compared to matched controls aged 18 years or older in a nationwide retrospective cohort study (Taiwan, 2000‐2015). Statistical significance was evaluated by the log-rank test ( P &lt;.001)."
+  ],
+  "tables": [
+    "Baseline demographic and clinical characteristics of survivors of SARS, first-degree relatives, and matched controls in a nationwide retrospective cohort study (Taiwan, 2000‐2015)  a  .",
+    "AHRs  a   for factors associated with injury risk among survivors of severe acute respiratory syndrome (SARS) and their first-degree relatives compared to matched controls using Fine and Gray’s competing risk model in a nationwide retrospective cohort study (Taiwan, 2000‐2015)  b  .",
+    "Sensitivity analysis of injury risk excluding early injury events in survivors of severe acute respiratory syndrome (SARS) and their first-degree relatives compared to matched controls using Fine and Gray’s competing risk model in a nationwide retrospective cohort study (Taiwan, 2000‐2015)  a  ."
+  ],
+  "query": "Taiwan adolescent mental health",
+  "fetched_at": 1780049556.421851
+}

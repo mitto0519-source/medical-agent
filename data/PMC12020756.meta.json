@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12020756",
+  "pmid": "40275874",
+  "title": "Does the reduction in obstetric hospitals result in an unintended decreased in-hospital delivery utilisation? A causal multilevel analysis in China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen N, Coyte PC, Pan J.",
+  "doi": "10.1136/bmjph-2024-001683",
+  "figures": [
+    "Directed Acyclic Graph illustrating the assumed causal relationship between distance and in-hospital delivery rate."
+  ],
+  "tables": [
+    "Descriptive characteristics of study counties",
+    "Time trend of two distance indicators",
+    "Results of multilevel regression models"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021395.8948076
+}

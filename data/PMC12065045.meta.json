@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12065045",
+  "pmid": "40343695",
+  "title": "Safety of Stimulants Across Patient Populations: A Meta-Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Oliva HNP, Prudente TP, Mayerson TF, Mignosa MM, Oliva IO, Potenza MN, Jegede OO, Angarita GA.",
+  "doi": "10.1001/jamanetworkopen.2025.9492",
+  "figures": [
+    "PRISMA Flow Diagram of Studies",
+    "Forest Plot Comparing the Mean Changes in Systolic Blood Pressure in Patients Receiving Stimulants vs Placebo  Diamonds represent the pooled mean difference (MD) estimates for systolic blood pressure for each stimulant subgroup and the overall analysis. Squares represent individual study estimates. Error bars represent 90% CIs.",
+    "Forest Plot Comparing the Mean Changes in Diastolic Blood Pressure in Patients Receiving Stimulants vs Placebo  Diamonds represent the pooled mean difference (MD) estimates for diastolic blood pressure for each stimulant subgroup and the overall analysis. Squares represent individual study estimates. Error bars represent 90% CIs.",
+    "Forest Plot Comparing the Mean Changes in Heart Rate in Patients Receiving Stimulants vs Placebo  Diamonds represent the pooled mean difference (MD) estimates for heart rate for each stimulant subgroup and the overall analysis. Squares represent individual study estimates. Error bars represent 90% CIs."
+  ],
+  "tables": [
+    "Stimulant Safety Randomized Clinical Trial Summary"
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058396.5851398
+}

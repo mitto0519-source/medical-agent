@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12312353",
+  "pmid": "40739545",
+  "title": "Clinical, thyroid metabolic, and inflammatory features in pediatric patients with post-acute COVID-19 neuropsychiatric symptoms.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yin P, Zhang D, Li B, Lei G, Fu X.",
+  "doi": "10.1186/s12879-025-11333-3",
+  "figures": [
+    "Flowchart of patients included in the study.  COVID-19  Coronavirus disease 2019;  NP-COVID-19  COVID-19 associated neuropsychiatric symptoms;  CSF  Cerebrospinal fluid;  QAlb  CSF/serum albumin ratio"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of patients with neuropsychiatric symptoms after COVID-19",
+    "Hematological and metabolic parameters in patients with post-COVID-19 neuropsychiatric symptoms (NP-COVID-19) and healthy controls",
+    "Blood inflammatory and autoimmune markers in patients with post-COVID-19 neuropsychiatric symptoms (NP-COVID-19) and healthy controls",
+    "Thyroid function and antibodies in patients with post-COVID-19 neuropsychiatric symptoms (NP-COVID-19) and healthy controls",
+    "CSF findings in patients with post-COVID-19 neuropsychiatric symptoms (NP-COVID-19) and controls with migraine"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048881.0687416
+}

@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12306085",
+  "pmid": "40722070",
+  "title": "Impact of mobile health-based nutritional education on hemoglobin levels in anemic adolescent girls in rural Bangladesh: a randomized controlled trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Rahman MJ, Rahman MM, Sarker MHR, Matsuyama R, Kakehashi M, Tsunematsu M, Ali M, Ahmed A, Hawlader MDH, Kawasaki H, Shimpuku Y.",
+  "doi": "10.1186/s12889-025-23687-z",
+  "figures": [
+    "Conceptual framework of mHealth education on anemia and health outcomes",
+    "CONSORT flowchart of study participants",
+    "Anemia categories with changes in levels over the intervention period",
+    "Knowledge, attitude, and practice (KAP) with changes in scores after the intervention period"
+  ],
+  "tables": [
+    "Study activity",
+    "Intervention components",
+    "Baseline sociodemographic characteristics of study participants",
+    "Mixed-effects model was performed to estimate the effect between control and intervention groups over time",
+    "Changes the knowledge, attitude, and practice scores in the intervention and control groups",
+    "GEE was performed to estimate the effect of health education between control and intervention groups over time"
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004716.742853
+}

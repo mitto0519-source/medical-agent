@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12328441",
+  "pmid": "40777225",
+  "title": "Timing matters! Academic assessment changes throughout the day.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Vicario CM, Nitsche MA, Lucifora C, Perconti P, Salehinejad MA, Tomaiuolo F, Massimino S, Avenanti A, Mucciardi M.",
+  "doi": "10.3389/fpsyg.2025.1605041",
+  "figures": [
+    "Number of assessments and respective percentages per type of degree course.",
+    "Decision tree diagram obtained by the CHAID. The terminal nodes represent the optimal partitioning of the initial data set (Node 0). The “mean” term in the terminal node indicates the pass rate."
+  ],
+  "tables": [
+    "Number of assessments and respective percentages per type of degree course.",
+    "Fit statistics for the relation of the observed distribution to a Gaussian distribution.",
+    "One–way ANOVA test.",
+    "Passing rates by hour of the day: this table shows the number of examinations conducted, along with respective standard errors (S.E.) and standard deviations (S.D.).",
+    "Post hoc  tests with Bonferroni correction."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780000935.687276
+}

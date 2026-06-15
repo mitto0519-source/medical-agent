@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11913087",
+  "pmid": "38747483",
+  "title": "Controlled Antenatal Thyroid Screening Study III: Effects of Gestational Thyroid Status on Adolescent Brain Morphology.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Scholz A, McNabb CB, Bloomfield L, Bhargava R, Hales C, Dayan CM, Taylor PN, Lazarus JH, Okosieme O, Ludgate M, Jones DK, Rees DA.",
+  "doi": "10.1210/clinem/dgae338",
+  "figures": [
+    "Flow of participants through the CATS studies. Illustrates the initial recruitment in South Wales, UK, for CATS I, when mothers were randomly assigned to screening and treatment for SGTF or not. In CATS I child IQ was assessed at age 3 years; the follow-up study, CATS II, in which child IQ and behavior was assessed at age 9 years; and CATS III, when children underwent magnetic resonance imaging (M",
+    "Global brain tissue volumes within each treatment group. Box plots represent medians and interquartile ranges. GTF, gestational thyroid function; SGTF, suboptimal gestational thyroid function."
+  ],
+  "tables": [
+    "Baseline characteristics of the CATS III study cohort",
+    "Effects of baseline (12 weeks’ gestation) maternal thyrotropin and free thyroxine levels on global brain volumes"
+  ],
+  "query": "thyroid function adolescent",
+  "fetched_at": 1780012482.88716
+}

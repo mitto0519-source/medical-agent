@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12287635",
+  "pmid": "40709002",
+  "title": "Estimated activity levels in dogs at population scale with linear and causal modeling.",
+  "year": 2025,
+  "journal": "",
+  "authors": "O'Rourke A, Haydock R, Butterwick RF, German AJ, Carson A, Lyle S, O'Flynn C.",
+  "doi": "10.3389/fvets.2025.1572794",
+  "figures": [
+    "Hypothesized data generating process for activity of an individual dog in a day, displayed in a directed acyclic graph (DAG), created in the web-based application DAGitty ( 66 ). Blue circles represent observed variables, grey circles represent unobserved variables, and arrows indicate direction of hypothesized causality. In order to have a causal effect, a causal variables must precede the effect",
+    "Flow diagram illustrating the steps used in data cleaning and generation of the final study data. Yellow boxes depict the datasets used, grey boxes depict the actions undertaken, blue boxes depict the data available at each stage, whilst the green boxes show the final “all-visits” and “healthy-visits” datasets. “Whistle” refers to the data from the accelerometer, including dog demographic data and",
+    "Summarization of active minutes within the all-visits dataset.  (A)  Distribution of active minutes recorded per activity record in the study population, with number of records on a log scale. The bin width is 10 min, the solid vertical line shows the mean value, and the dashed vertical lines show one standard deviation from the mean.  (B)  Active minutes recorded over the data collection period f",
+    "Relationship between active minutes as a function of age for dogs of each breed size group, whilst holding all other relevant variables (body condition score, neuter status, sex, location and owner age) constant, estimated using a linear mixed-effects (LM; blue) and Bayesian additive regression trees (BART; red) models. The ribbons show either the 95% confidence intervals or 95% credible intervals",
+    "Relationship between active minutes as a function of season and climate, whilst holding all other relevant variables (location, latitude, owner age and day type) constant, estimated using linear mixed-effects (LM; blue) and Bayesian additive regression trees (BART; red) models. The ribbons show either the 95% confidence intervals or 95% credible intervals for of those predictions (LM and BART, res",
+    "Relationship between active minutes as a function of owner age for each day type (weekday or weekend), whilst holding all other relevant variables (season, climate, location and latitude) constant, estimated using a linear mixed-effects (LM; blue) and a Bayesian additive regression trees (BART; red) models. The LM predictions (blue) are for categories of owner age, where the points represent the m"
+  ],
+  "tables": [
+    "Summary of the datasets used in the study stratified by breed size and compared with the Banfield population to evaluate potential selection bias.",
+    "Linear mixed-effects model of log-transformed activity as a function of dog-related variables, whilst controlling for owner age and location (urban or rural), using the final dataset.",
+    "Linear mixed-effects model of log-transformed activity as a function of dog-related variables, whilst controlling for owner age and location (urban or rural), using the healthy visit dataset.",
+    "Linear mixed-effects model of log-transformed activity as a function of owner and environmental variables using the all-visits dataset."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021874.2418945
+}

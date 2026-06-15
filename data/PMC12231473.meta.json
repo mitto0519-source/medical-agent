@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12231473",
+  "pmid": "40372798",
+  "title": "Increasingly dependent on habit? A study on the electrophysiological mechanisms of goal-directed and habitual control in internet gaming disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gao X, Lu J, Huang Y, Wang L.",
+  "doi": "10.1556/2006.2024.00084",
+  "figures": [
+    "Demographic information and group differences",
+    "Stimulus-locked ERPs during the slips-of-action test between IGD (black line) and RGU (red line). ERPs at Fz, Cz and Pz time-locked to stimuli preceding responses to valuable outcomes preceding slips of action and preceding inhibitions to devalued outcomes. Topographies depict the differences between stimuli preceding inhibitions to devalued at the indicated time windows",
+    "Stimulus-locked ERPs during the slips-of-action test. ERPs at Fz, Cz and Pz time-locked to stimuli preceding slips of action (black line) and preceding inhibitions to devalued outcomes (red line). Topographies depict the differences between stimuli preceding inhibitions to devalued and slips of action at the indicated time windows",
+    "Response-locked ERPs during the slips-of-action test. ERPs at Fz, Cz and Pz time-locked to responses to valuable outcomes (black line) and slips of action (red line). Topographies depict the differences between slips of action and responses to valuable outcomes at the indicated time windows",
+    "The correlation between various variables. DSM-5: IGD Diagnostic scale from Diagnostic and Statistical manual of Mental Disorders-5; IAT: Internet addiction test; SPAN: Working memory span; OCI: Degree of obsessive-compulsive disorder; EX1: Correct response of the last block in instrumental learning phase; EX2:Correct response during the action-outcome test; Fz-N2: The N2 mean amplitude at the Fz ",
+    ""
+  ],
+  "tables": [
+    "Demographic information and group differences",
+    "Electrophysiological data and group differences for N200 and P300",
+    "Group differences in mean and peak amplitude for ERN and P E"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998063.5723948
+}

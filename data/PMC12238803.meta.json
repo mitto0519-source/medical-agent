@@ -1,0 +1,15 @@
+{
+  "pmcid": "PMC12238803",
+  "pmid": "40365731",
+  "title": "Did the COVID-19 pandemic increase the long-term care insurance certification rate in Japan? An interrupted time-series analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Seino S, Hata T, Mori H, Shinkai S, Fujiwara Y, Kobayashi E.",
+  "doi": "10.1111/ggi.70061",
+  "figures": [
+    "The results of an interrupted time‐series analysis of the monthly long‐term care insurance (LTCI) certification rate in Japan. The solid line represents the regression curve, adjusted for seasonality, for nationwide LTCI certification rates before (January 2018 to February 2020) and during (March 2020 onwards) the coronavirus disease 2019 pandemic. The dotted line indicates predicted values based "
+  ],
+  "tables": [],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032329.409538
+}

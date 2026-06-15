@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12128232",
+  "pmid": "40457175",
+  "title": "The association between quality and quantity of carbohydrate with sleep, mood, anxiety, depression and stress among elderly.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ghosn B, Abbasi H, Dehnavi MK, Hajian PN, Azadbakht L.",
+  "doi": "10.1186/s12877-025-06068-4",
+  "figures": [
+    "Forest plot of associations between carbohydrate quality (Fiber Content and Glycemic Load) and sleep and menta health outcomes"
+  ],
+  "tables": [
+    "General characteristics based on the quality of carbohydrate",
+    "Dietary intake based on the quality of carbohydrate across carbohydrate quality indicators",
+    "The association between sleep quality, mood, depression, anxiety and stress based on carbohydrate amount (%)",
+    "The association between Sleep quality, mood, depression, anxiety and stress based on carbohydrate quality"
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003911.5050716
+}

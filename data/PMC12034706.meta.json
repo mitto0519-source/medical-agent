@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12034706",
+  "pmid": "40297593",
+  "title": "Bullying and cyberbullying is associated with low levels of cognitive and metacognitive learning strategies in young people.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Solas-Martínez JL, De la Torre-Cruz MJ, Rusillo-Magdaleno A, Martínez-López EJ.",
+  "doi": "10.3389/fpsyg.2025.1569400",
+  "figures": [
+    "Differences between non-victims and victims of bullying in cognitive and metacognitive learning strategies in boys and girls.",
+    "Differences between non-victims and victims of cyberbullying in cognitive and metacognitive learning strategies in boys and girls.",
+    "Differences between non-aggressors and aggressors in bullying in cognitive and metacognitive learning strategies in boys and girls.",
+    "Differences between non-aggressors and aggressors in cyberbullying in cognitive and metacognitive learning strategies in boys and girls."
+  ],
+  "tables": [
+    "Biometric characteristics and socio-demographic data of participants segmented by sex.",
+    "Binary logistic regression for bullying and cyberbullying victimization (1 = never - 5 = more than once/week) according to categorized indicators (high vs. low) of cognitive and metacognitive learning strategies in adolescent boys and girls.",
+    "Binary logistic regression for bullying and cyberbullying aggression (1 = never - 5 = more than once/week) according to categorized indicators (high vs. low) of cognitive and metacognitive learning strategies in adolescent boys and girls.",
+    "Extracted results of bullying and cyberbullying in youth aged 10–16 years.",
+    "Study-based recommendations, differentiated by gender, type of aggression (bullying or cyberbullying), and role (victim or aggressor) to maximize the impact of interventions."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017225.198576
+}

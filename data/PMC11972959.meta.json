@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11972959",
+  "pmid": "39939824",
+  "title": "The 14-year cumulative genetic high blood pressure and risk of type 2 diabetes in Korean: observational and Mendelian randomization evidence.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jeon J, Jung KJ, Kimm H, Lee JY, Nam CM, Jee SH.",
+  "doi": "10.1038/s41440-025-02099-x",
+  "figures": [
+    "A schematic frame for 2 sample MR analysis. A schematic figure of the bidirectional association between FBS and SBP inferred from Mendelian randomization. Genetically determined high FBS would be significantly associated with an increase in SBP risk without the influence of confounders and vice versa",
+    "The bidirectional effects of FBS and SBP from Observational and Mendelian randomization analyses testing. FBS fasting blood sugar, SBP systolic blood pressure, IV instrument variant, IVW inverse variance weighted, MR mendelian randomization.  * Weak instrument variable test between genetic variable and exposure variable. †Tests of endogeneity is Wu-Hausman test, Ho: variables are exogenous",
+    "Scatter plots for associations between genetic instrument variants and each phenotype based on Mendelian randomization analysis ( A  is for the direction of SBP to FBS, and  B  is the direction of FBS to SBP). FBS fasting blood sugar, SBP systolic blood pressure, IV instrument variant, IVW inverse variance weighted, MR mendelian randomization",
+    "A  is for the 14 years’ trajectories of FBS, and  B  is for the 14 years’ trajectories of SBP"
+  ],
+  "tables": [
+    "The bidirectional results between FBS and SBP based on Sensitivity Mendelian Randomization analysis using genetic instrument variables",
+    "Association between trajectories and subsequence hypertension or Type 2 diabetes incidents based on Cox proportional-hazards model"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037189.9523187
+}

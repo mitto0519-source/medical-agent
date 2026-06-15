@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12303778",
+  "pmid": "40443280",
+  "title": "Effects of substituting TV-watching time with physical activities or sleep on incident major depression. Results from the lifelines cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Palazuelos-González R, Oude Voshaar RC, Liefbroer AC, Smidt N.",
+  "doi": "10.1192/j.eurpsy.2025.10045",
+  "figures": [
+    "Flow chart of selected participants."
+  ],
+  "tables": [
+    "Descriptive characteristics of the analytic sample at baseline",
+    "Compositional arithmetic and geometric mean (%) of time spent in movement activities",
+    "1:Many time reallocations of TV-watching with the other activities",
+    "1:1 time reallocations of TV-watching with specific movement activities"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007194.7988539
+}

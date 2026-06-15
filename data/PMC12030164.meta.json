@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12030164",
+  "pmid": "40284261",
+  "title": "Multiomics Analysis of a Micronutrient-Rich Dietary Pattern and the Aging Genotype 9p21 on the Plasma Proteome of Young Adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mahdavi S, Rosychuk K, Jenkins DJA, Percy AJ, Borchers CH, El-Sohemy A.",
+  "doi": "10.3390/nu17081398",
+  "figures": [
+    "Gene–diet interaction effects on Complement C4-γ. A low Prudent dietary score was associated with a significantly higher concentration of Complement C4-γ in the high genetic risk group (GG) compared to the low genetic risk group (AA+AG) ( p  = 0.02). * Indicates significantly different between AA+AG and GG genotypes in the low diet adherence group."
+  ],
+  "tables": [
+    "Subject characteristics according to 9p21 genotype (rs2383206, n = 1280).",
+    "Average protein concentration by 9p21 genotype (rs2383206) and Prudent dietary score (n = 1280).",
+    "Summary of 9p21 genotype and Prudent dietary pattern interactions on significant plasma proteins.",
+    "Micronutrient correlations with Prudent dietary patterns."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053484.7545655
+}

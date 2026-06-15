@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12105540",
+  "pmid": "40375535",
+  "title": "Bidirectional Relationship Between Atopic Dermatitis and Psychiatric Comorbidities in Individuals of European Ancestry: A Mendelian Randomization Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wu Z, Wu C, Chen X, Qian Q, Yao Z.",
+  "doi": "10.2340/actadv.v105.43133",
+  "figures": [
+    "Bidirectional Mendelian randomization (MR) design.  MR analyses require 3 core assumptions. In the forward MR analysis (red arrows), atopic dermatitis (AD) is treated as the exposure and psychiatric comorbidities (PC) as the outcome. In the reverse MR analysis (blue arrows), PC is treated as the exposure and AD as the outcome.",
+    "Mendelian randomization (MR) flowchart.  The flowchart outlines the analytical pipeline used in the Mendelian randomization (MR) study. The process begins with selecting exposure data, represented by total SNPs, and follows with quality control measures to exclude confounding factors using the LDtrait tool and SNPs with weak instrumental strength (F &lt; 10). Subsequently, SNPs linked to outcome d"
+  ],
+  "tables": [
+    "Overview of the source of data",
+    "Forward Mendelian randomization analysis: effects of atopic dermatitis on psychiatric comorbidities",
+    "Reverse Mendelian randomization analysis: effects of psychiatric comorbidities on atopic dermatitis"
+  ],
+  "query": "atopic dermatitis depression",
+  "fetched_at": 1780014343.0714307
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12344915",
+  "pmid": "40804658",
+  "title": "Metabolomic insights into late-life depression: a systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gao Y, Hu JZ, Wen ZP, Dong T, Du XZ, Liu ZF, Liu S.",
+  "doi": "10.1186/s12877-025-06256-2",
+  "figures": [
+    "Flow diagram of literature search and study selection for differential metabolites of late-life depression",
+    "Number of studies reporting differential metabolites by change trends",
+    "Venn diagrams of metabolic biomarkers analysis.  A  Differential metabolites by biological specimen.  B  Differential metabolites by analytical platform (GC including GC, GC–MS, and GC–MS/MS and LC including LC–MS/MS, HPLC, and HPLC-ESI-MS).  C  Differential metabolites by metabolomics approach.  D  Differential metabolites by study design",
+    "Forest and Baujat plot analysis results. Meta Forest Plot: Displays the statistical effect sizes, confidence intervals, and model weight proportions of individual studies in the meta-analysis.  A  Forest plot for tryptophan;  B  Forest plot for kynurenine. Baujat Plot: Used to identify sources of heterogeneity in meta-analysis data. Each point in the plot represents a study, with the x-axis indica",
+    "Metabolic pathway analysis and enrichment analysis for metabolite markers.  A  Metabolic pathway analysis a Glyoxylate and dicarboxylate metabolism (b) Glycine, serine and threonine metabolism (c) Biosynthesis of unsaturated fatty acids (d) Glycerolipid metabolism (e) Galactose metabolism (f) Alanine, aspartate and glutamate metabolism (g) Glutathione metabolism (h) Arginine and proline metabolism"
+  ],
+  "tables": [
+    "Characteristics of selected studies",
+    "Predictive and diagnostic potential of metabolite biomarkers"
+  ],
+  "query": "tryptophan kynurenine pathway depression",
+  "fetched_at": 1780045258.8363469
+}

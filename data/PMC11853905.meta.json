@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11853905",
+  "pmid": "39994673",
+  "title": "Metabolic outcomes in non-alcoholic and alcoholic steatotic liver disease among Korean and American adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim Y, Lee TS, Oh CM.",
+  "doi": "10.1186/s12876-025-03687-4",
+  "figures": [
+    "Associations between chronic metabolic disease and metabolic parameters.  (A)  Research scheme for data normalization, association, and causality analysis for the three cohorts.  (B)  Circos plot of associations between chronic metabolic diseases and metabolic parameters in the KNHANES cohort.  (C)  Circos plot of associations between chronic metabolic diseases and metabolic parameters in the NHAN",
+    "Disease prevalence according to hepatic steatosis in the KNHANES cohort. ( A ,  B ) Chronic metabolic disease prevalence according to the hepatic steatosis index (HSI) in men  (A)  and women  (B) . ( C ,  D ) Hazard ratio of chronic metabolic disease according to steatotic liver status in multiple logistic regression analysis in men  (C)  and women  (D) . MASLD, metabolic dysfunction-associated st",
+    "Disease prevalence according to hepatic steatosis in the NHANES cohort. ( A ,  B ) Chronic metabolic disease prevalence according to the hepatic steatosis index (HSI) in men  (A)  and women  (B) . ( C ,  D ) Hazard ratio of chronic metabolic disease according to steatotic liver status in multiple logistic regression analysis in men  (C)  and women  (D) . MASLD, metabolic dysfunction-associated ste",
+    "Causal relationship between chronic metabolic disease and steatotic liver status in the KoGES cohort.  (A)  Hazard ratio of chronic metabolic disease according to steatotic liver status in Cox regression analysis in men.  (B)  Hazard ratio of chronic metabolic disease according to steatotic liver status in Cox regression analysis in women. Causality: Cox regression analysis was performed to assess"
+  ],
+  "tables": [
+    "General characteristics of the participants in the KNHANES cohort according to steatotic liver status",
+    "General characteristics of the participants in the NHANES cohort according to steatotic liver status"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037175.1477132
+}

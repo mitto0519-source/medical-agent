@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12279001",
+  "pmid": "40384623",
+  "title": "Sex-Based Differences in Prenatal and Perinatal Predictors of Autism Spectrum Disorder Using Machine Learning With National Health Data.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Heo JS, Yang SW, Lee S, Lee KS, Ahn KH.",
+  "doi": "10.1002/aur.70054",
+  "figures": [
+    "Summary",
+    "SHapley Additive exPlanations summary plot. (a) Total (b) male (c) female.",
+    "Shapley Additive Explanations dependence plot. (1) Body mass index: (a) total, (b) male, (c) female. (2) Socioeconomic status: (a) total, (b) male, (c) female. (3) Maternal age at birth: (a) total, (b) male, (c) female. (4) Institution level: (a) total, (b) male, (c) female."
+  ],
+  "tables": [
+    "Patients' demographics and baseline characteristics.",
+    "Ability of machine learning models to predict autism spectrum disorder."
+  ],
+  "query": "autism spectrum disorder Korea",
+  "fetched_at": 1779995859.6688476
+}

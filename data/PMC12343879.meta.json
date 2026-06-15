@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12343879",
+  "pmid": "40796700",
+  "title": "Bidirectional crosstalk between the gut microbiota and cellular compartments of brain: Implications for neurodevelopmental and neuropsychiatric disorders.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jabbari Shiadeh SM, Chan WK, Rasmusson S, Hassan N, Joca S, Westberg L, Elfvin A, Mallard C, Ardalan M.",
+  "doi": "10.1038/s41398-025-03504-2",
+  "figures": [
+    "Gut microbiota-mediated modulation of CNS glial cell function.  This schematic illustrates the influence of gut microbiota-derived SCFAs specifically butyrate, propionate, and acetate on central nervous system (CNS) glial cells. SCFAs are produced through the microbial fermentation of dietary fiber and act on host receptors such as GPR41 and GPR43. These metabolites modulate immune responses by pr",
+    "Impact of the gut microbiota on ASD and ADHD.  The GM significantly influences neurodevelopmental disorders such as ASD and ADHD. Individuals with ASD exhibit reduced diversity in the gut microbiota, with decreased levels of  Coprococcus, Prevotella , and  Akkermansia muciniphila , which are linked to increased gut permeability and increased levels of metabolites, affecting neurobehavioral outcome",
+    "Influence of the gut microbiota on neuropsychiatric disorders.  Alterations in the gut microbiota contribute to depression through mechanisms involving inflammation and the kynurenine pathway. Dysbiosis influences the availability of tryptophan for serotonin synthesis and impacts SCFA levels, which are linked to mood regulation and depressive symptoms. Blockade of caspase-1 has been found to affec",
+    "Influence of the gut microbiota on neurodegenerative disorders.  The GM significantly influences neurodegenerative disorders such as AD and PD. In AD, a decrease in anti-inflammatory species and an increase in proinflammatory bacteria may be linked to amyloidosis and cognitive decline. Certain bacteria, such as  Clostridium butyricum , and microbial metabolites, including SCFAs, have demonstrated "
+  ],
+  "tables": [
+    "Summary of gut microbiota alterations by disorder."
+  ],
+  "query": "tryptophan kynurenine pathway depression",
+  "fetched_at": 1780045821.4060802
+}

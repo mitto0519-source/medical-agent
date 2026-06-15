@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12110256",
+  "pmid": "40422311",
+  "title": "Bullying and Cyberbullying Are Associated with Inappropriate Use of the Internet, Cell Phones, and Video Games in Children and Adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Moral-García JE, Rusillo-Magdaleno A, Patiño-Villada FA, Martínez-López EJ.",
+  "doi": "10.3390/ejihpe15050082",
+  "figures": [
+    "Association of victimization and perpetration in bullying and cyberbullying with respect to internet use.",
+    "Association of victimization and perpetration in bullying and cyberbullying with respect to cell phone use.",
+    "Association of victimization and perpetration in bullying and cyberbullying with respect to the use of video games."
+  ],
+  "tables": [
+    "Biometric characteristics; sociodemographic data of participants; average MVPA; bullying and cyberbullying variables; and Internet, cell phone, and video game use segmented by sex.",
+    "Odds ratio (OR) and confidence intervals (95% CI) for levels of victimization/perpetration in bullying and cyberbullying. Internet, cell phone and video game use were included in the logistic regression as a categorical variable (low vs. high). The OR was adjusted for age, body mass index, mother’s educational level and average weekly physical activity."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017404.1112154
+}

@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11910582",
+  "pmid": "40089467",
+  "title": "Neurotransmitters' white matter mapping unveils the neurochemical fingerprints of stroke.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Alves PN, Nozais V, Hansen JY, Corbetta M, Nachev P, Martins IP, Thiebaut de Schotten M.",
+  "doi": "10.1038/s41467-025-57680-2",
+  "figures": [
+    "Representative map of the neurotransmitter systems white matter projections.  The map was colored according to the neurotransmitter system of the map with the highest value at a voxel level. ATR anterior thalamic radiations, Cb cerebellum, CC corpus callosum, DLPFR dorsolateral prefrontal region, FST frontostriatal tracts, L left, LPR lateral parietal region, LTR lateral temporal region, OFR orbit",
+    "Representative map of the neurotransmitter systems location densities.  The cortical (top row), basal ganglia (middle row), and brainstem and cerebellar (bottom row) surfaces are represented on the left (first column), right (second column), superior (third column), and inferior (fourth column) views. The map was colored according to the neurotransmitter system of the map (either receptor or trans",
+    "Neuronal model and synaptic ratios.   a  Schematic representation of the synapse basic structure.  b  Illustration of predominantly presynaptic and postsynaptic injuries.",
+    "Two example cases of pre and postsynaptic ratio calculation.  Top row – Lesion mask of two left hemisphere stroke lesions. Middle row – Percentage of each neurotransmitter system disrupted by the lesion, according to the receptor and transporter location density (location maps injury) and white matter projections (tract maps injury). Bottom row – Synaptic ratios presented in a natural logarithmic ",
+    "Clusters of stroke lesions pre and postsynaptic ratios.   a  Training set. The sample sizes for clusters 1 to 8 are, respectively, 255, 89, 96, 452, 87, 121, 67, and 166.  b  Validation set. The sample sizes for clusters 1 to 8 are, respectively, 32, 18, 5, 39, 10, 19, 2, and 18. Ratios are presented in a natural logarithmic scale. The box plots display the data distribution with the following ele",
+    "Behavioral and motor profiles by neurochemical cluster (3 months post-stroke assessment).   a  Distribution of composite scores by neurochemical cluster. The box plots display the data distribution with the following elements: the central line represents the median (50th percentile); the box bounds indicate the interquartile range (25th and 75th percentiles); the whiskers extend to the minima and ",
+    "Anatomical patterns of neurochemical clusters.  Statistical maps of the comparison between the lesion topography (upper rows) and structural disconnectome (lower rows) maps of each neurochemical cluster with the remaining clusters, in the validation set. The orange-red and the cyan-blue colourmaps represent the significantly higher or lower probability of lesion/disconnection, respectively (nonpar"
+  ],
+  "tables": [
+    "Fiber tracts selection criteria for the Functionnectome anatomical priors’ generation",
+    "Effect sizes of the statistically significant associations in the validation set",
+    "Predicted and observed response of stroke patients to neurotransmitter-modulating drugs"
+  ],
+  "query": "frontostriatal circuit development",
+  "fetched_at": 1779991529.4341965
+}

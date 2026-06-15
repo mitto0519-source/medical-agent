@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12214705",
+  "pmid": "40595480",
+  "title": "Genetic risk predicts adolescent mood pathology via sexual differentiation of brain function and physiological aging.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Petrican R, Fornito A, Murgatroyd C, Boyland E, Hardman CA.",
+  "doi": "10.1038/s41467-025-60686-5",
+  "figures": [
+    "Schematic representation of our conceptual framework.  In the ABCD sample, we set out to test the causal sequence underpinning the relationship between polygenic risk (panel  A ) and differential vulnerability to internalizing vs externalizing spectrum disorders (panel  D ) via neurobiological maturation processes: sexual differentiation of brain function (panel  B ), and systemic aging (panel  C ",
+    "Outline of our workflow.  Analysis 1: In the ABCD sample, CCA related psychiatric disorder symptoms assessed with CBCL scores at Time 2 and change in CBCL scores from Time 2 to Time 3 to sex-dependent patterns of pubertal development (i.e., self-reported and hormonally derived adrenarche/gonadarche) and physiological aging (i.e., PhenoAge) assessed at Time 2. Analysis 2: A PLS correlation analysis",
+    "Disorder-specific two-year follow-up (“_T2) and two- to three-year follow-up change (“_T2_T3”) scores linked by CCA to sex, PhenoAge, as well as self-reported and hormonally based indices of adrenarche and gonadarche in the ABCD sample.  Panel  A  The horizontal graph shows the partial correlation coefficients describing the relationship between the observed disorder-specific scores and the predic",
+    "The brain LV from the behavioral-PLS analysis linking the psychopathology and physiology variates from CCA 1 (cf. Figure  3 ) to neural sexual differentiation in the ABCD sample.  Panel  A  shows the correlations of the two CCA 1 variates with the Time 1 and Time 2 brain LV scores in the discovery PLS analysis. Panel  B  shows the correlations of the two CCA 1 variates with the predicted Time 1 an",
+    "Serial mediational model testing the roles of Time 1 neural sexual differentiation (cf Fig.  4 ) and the Time 2 CCA Physiology variate (cf. Fig.  3B ), in mediating the impact of genetic risk on psychopathology (cf. Fig  3A ) in the ABCD sample.  The mediation model anchored in the ANX PRS is depicted in panel A, whereas panel B shows the mediation model anchored in the MDD PRS. In both panels, th",
+    "The sexual differentiation brain LV from Analysis 2 linked by CCA to sex, individual differences in psychiatric disorder risk and maturation-relevant factors (panels A, B), as well as psychiatric disorder- and maturation-relevant neural sexual differentiation patterns in the HCP-D sample (panels C, D).  The horizontal graph in panel ( A ) contains the correlation coefficients describing the relati",
+    "STROBE flowchart describing sample selection for the ABCD and HCP-D cohorts.  For the resting state fMRI data from the ABCD study, “good quality” was defined based on the “_pc_score” (corresponding to each of the 3 runs analyzed) and the “iqc_rsfmri_ok_ser “ variable in the “mri_y_qc_raw_rsfmr.csv” file from the data release 5.1 as participants who had at least 3 complete protocol compliant time s"
+  ],
+  "tables": [
+    "Summary Statistics for the Pubertal Development Measures Collected at Time 1 and Time 2",
+    "Descriptive Statistics for the CBCL Subscales Analyzed in the Two Developmental Samples"
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053649.7273998
+}

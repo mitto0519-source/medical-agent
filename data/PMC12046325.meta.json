@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12046325",
+  "pmid": "40079752",
+  "title": "The Causal Relationship between Telomere Length and Cancer Risk: A Two-Sample Mendelian Randomization.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee SH, Song DS, Kim UC, Jee SH, Lee K.",
+  "doi": "10.1158/1055-9965.epi-24-1168",
+  "figures": [
+    "MR design overview. The summary data for MR analysis were obtained from three biobanks. SCHS, Singapore Chinese Health Study.",
+    "Combined effect of TL with cancer in three biobanks (KCPS-II, KoGES and BBJ). Results of the meta-analysis combining data from three biobanks are illustrated. Overall, longer TL was associated with a 1.36-fold increase in the risk of all cancers."
+  ],
+  "tables": [
+    "MR results of TL with cancer in KCPS-II and KoGES.",
+    "MR results (sensitivity analysis) of the association of TL (SCHS East Asian individuals) with cancer (KCPS-II).",
+    "MR results and sensitivity analysis of TL with cancer in BBJ ( N  = 201,800)."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036579.9326377
+}

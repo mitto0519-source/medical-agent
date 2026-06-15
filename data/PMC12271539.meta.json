@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12271539",
+  "pmid": "40676203",
+  "title": "Negative control-calibrated difference-in-difference analyses: addressing unmeasured confounding in RWD with application to racial/ethnic differences.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang D, Zhang B, Wang H, Lu Y, Wolock CJ, Hu W, Wang L, Hripcsak G, Chen Y.",
+  "doi": "10.1038/s41746-025-01821-w",
+  "figures": [
+    "Geographical distribution and racial/ethnic disparities in pediatric COVID-19 outcomes.   a  Geographical distribution of the eight sites across seven states in the United States. Green-highlighted states include Washington (WA), Colorado (CO), Illinois (IL), Ohio (OH), Pennsylvania (PA), Delaware (DE), and Florida (FL), representing diverse geographic regions.  b  Risk ratio differences for Non-H",
+    "Workflow for the proposed method NC-DiD.  It contains three steps. The first step is to implement the DiD method without the calibration and to obtain the estimated        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\odd",
+    "Results from 1000 synthetic datasets.   a  Illustrated the Type-I error rate from the proposed method NC-DiD.  b  Stated the statistical power for the value of        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidem",
+    "Results from 1000 synthetic datasets under the scenario of partial validity of negative control outcomes (NCOs).  We compared the calibration methods based on the empirical posterior mean and the median for estimating systematic bias. Boxplots display the distribution of bias under three conditions: before calibration (gray), after calibration using the mean (orange), and after calibration using t",
+    "Results for the scientific question of investigating the racial/ethnic disparities after the COVID-19 infection by the proposed calibration method via the empirical posterior mean.   a  Showed the systematic bias in RR scale of the NHB, Hispanic, and AAPI compared with NHW.  b  Demonstrated the results of the NC-DiD. The error bars represent the 95% confidence interval for the estimation from each"
+  ],
+  "tables": [],
+  "query": "G-methods time-varying confounding",
+  "fetched_at": 1780025688.8744462
+}

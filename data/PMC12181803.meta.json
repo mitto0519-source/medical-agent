@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12181803",
+  "pmid": "40542606",
+  "title": "Further Practical Guidance on Adjusting Time-To-Event Outcomes for Treatment Switching.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Watkins C, Kleine E, Miranda M, Bourmaud E, Doehring O.",
+  "doi": "10.1002/pst.70019",
+  "figures": [
+    "Diagram to illustrate preservation of the  p ‐value with RPSFTM adjustment to remove the effect of control arm switching from a hazard ratio for survival.",
+    "G‐estimation of the causal parameter ψ.",
+    "Example of information loss due to full recensoring in RPSFTM (blue curve) in the ZUMA‐7 study of axicabtagene ciloleucel versus standard of care therapy (SOCT) in diffuse large B‐cell lymphoma."
+  ],
+  "tables": [
+    "Programming syntax for IPCW Cox models in R and SAS.",
+    "Reporting checklist for general outputs—all treatment switch adjustment methods.",
+    "Reporting checklist for outputs specific to treatment switching adjustment method.",
+    "Key features of rank preserving structural failure time models (RPSFTM), two‐stage estimation (TSE), and inverse probability of censoring weighting (IPCW) methods."
+  ],
+  "query": "G-methods time-varying confounding",
+  "fetched_at": 1780026110.2661934
+}

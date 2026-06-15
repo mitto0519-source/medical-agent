@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12123469",
+  "pmid": "40440014",
+  "title": "Psychiatric Health Risks in North Korean Refugee Youths Resettled in South Korea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee R, Lee SM, Hong M, Oh IH.",
+  "doi": "10.1001/jamanetworkopen.2025.12941",
+  "figures": [
+    "Event-Free Probability of Psychiatric Morbidity  NKR indicates North Korean refugee; SK, South Korean."
+  ],
+  "tables": [
+    "Baseline Characteristics of the Study Participants",
+    "Incidence and Risk of Psychiatric Morbidity by Age Group",
+    "Subanalysis for Risk of Individual Psychiatric Disorders"
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779997471.2809994
+}

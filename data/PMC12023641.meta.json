@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12023641",
+  "pmid": "40275345",
+  "title": "Relative validity of the Chrono-Nutrition Behavior Questionnaire (CNBQ) against 11-day event-based ecological momentary assessment diaries of eating.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Murakami K, Shinozaki N, McCaffrey TA, Livingstone MBE, Masayasu S, Sasaki S.",
+  "doi": "10.1186/s12966-025-01740-9",
+  "figures": [
+    "Schedule of the 5 W study. 5 W study, Who, What, When, Where, and Why for Healthy Eating study; CNBQ, Chrono-Nutrition Behavior Questionnaire; MDHQ, Meal-based Diet History Questionnaire; EMA, ecological momentary assessment. In the present analysis, data derived from the 2nd and 3rd questionnaires were not used",
+    "Flow diagram of participant selection in the present analysis. 5 W study, Who, What, When, Where, and Why for Healthy Eating study; CNBQ, Chrono-Nutrition Behavior Questionnaire; EMA, ecological momentary assessment",
+    "Bland–Altman plots assessing agreement between the CNBQ and EMA food diaries for selected variables. CNBQ, Chrono-Nutrition Behavior Questionnaire; EMA, ecological momentary assessment; SD, standard deviation. All time-related variables are shown in decimal format, with the unit of  clock time; decimal  (e.g., 8.50 means 8:30 AM, while 16.75 means 4:45 PM) or  hours; decimal  (e.g., 2.19 means 2 h"
+  ],
+  "tables": [
+    "Basic characteristics of study participants ( n  = 1050)  a",
+    "Sleep and temporal patterns of eating variables on workdays  a",
+    "Sleep and temporal patterns of eating variables on non-workdays  a",
+    "Social and eating jetlag variables and chronotype  a"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001351.7309952
+}

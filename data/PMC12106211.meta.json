@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12106211",
+  "pmid": "40432908",
+  "title": "A good move for health?: Analyzing urban exposure trajectories of residential relocation and mental health in populations in Bradford.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Subiza-Pérez M, Mebrahtu TF, Krenz K, Watmuff A, Yang T, Vaughan L, Wright J, McEachan RRC.",
+  "doi": "10.1097/ee9.0000000000000397",
+  "figures": [
+    "Directed acyclic graph regarding the expected associations between change in environmental exposures and mental health in the follow-up. The arrows indicate causal paths. All the relationships were defined based on previous literature and discussions among the authors. Variables preceded by a “(U)” are unobserved variables."
+  ],
+  "tables": [
+    "Description of study variables in the study samples",
+    "Characterization of changes in environmental exposures due to residential moves and comparison of moving patterns between participants with and without preexisting prescriptions",
+    "Models showing the associations between changes in environmental exposures and mental health in the follow-up"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021368.4680853
+}

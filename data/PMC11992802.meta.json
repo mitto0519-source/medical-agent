@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11992802",
+  "pmid": "40221786",
+  "title": "Meal skipping among adolescents in the Philippines: prevalence, associated factors, and associations with dietary, mental health, and health risk behavioural outcomes.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Pengpid S, Peltzer K, Nguyen-Thi TT, Jayasvasti I.",
+  "doi": "10.1186/s12937-025-01118-4",
+  "figures": [],
+  "tables": [
+    "Description of global School-based student health survey (GSHS) study variables",
+    "Sample characteristics by most meal skipping status, school adolescents, Philippines, 2019",
+    "Multinomial logistic regression with skipping breakfast, skipping lunch, and skipping dinner (with no meal skipping as reference category) (unadjusted risk ratios), and binary logistic regression with any meal skipping (with no meal skipping as reference category) (unadjusted odds ratios)",
+    "Multinomial logistic regression with skipping breakfast, skipping lunch, and skipping dinner (with no meal skipping as reference category) (adjusted risk ratios), and binary logistic regression with any meal skipping (with no meal skipping as reference category) (adjusted odds ratios)",
+    "Binary logistic regression between the exposure of meal skipping categories (skipping breakfast, skipping lunch, skipping dinner, and skipping any meal) with dietary, mental health and health risk behaviour outcomes"
+  ],
+  "query": "US adolescent soft drink depression",
+  "fetched_at": 1779992315.6039534
+}

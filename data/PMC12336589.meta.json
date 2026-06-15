@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12336589",
+  "pmid": "40791265",
+  "title": "Determinants of influenza vaccination uptake among older adults in Catalonia using a longitudinal population study: the role of public health campaigns.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mora T, Martinez-Marcos M, Cabezas C.",
+  "doi": "10.1136/bmjph-2025-002698",
+  "figures": [
+    "Vaccination rates across age, sex and seasonal influenza campaigns in Catalonia (2014–2021): heatplots.",
+    "Concentration and normalised mutual information indices for vaccination across sociodemographic characteristics and Catalan influenza campaigns (2014–2021).",
+    "RDD estimates for the jump in probability around the recommended age for influenza vaccination and heterogeneous results for Catalonia (campaigns 2014–2021). RDD, Regression Discontinuity Design.",
+    "Logit longitudinal fixed effects: ORs. Catalan vaccination campaigns (2014–2021)."
+  ],
+  "tables": [
+    "Descriptive statistics on sociodemographic characteristics for the population (administrative registers for Catalonia, campaigns 2014–2021)"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035415.2331069
+}

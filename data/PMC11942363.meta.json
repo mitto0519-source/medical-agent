@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11942363",
+  "pmid": "40141237",
+  "title": "Identification of Novel Genetic Variants and Food Intake Factors Associated with Type 2 Diabetes in South Korean Adults, Using an Illness-Death Model.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Oh J, Cha J, Choi S.",
+  "doi": "10.3390/ijms26062597",
+  "figures": [
+    "Kaplan–Meier survival curves for prediabetes risk based on SNP allele counts. Kaplan–Meier survival curves illustrate cumulative probability of transitioning from normal glucose tolerance (NGT) to prediabetes (PD) over a 14-year follow-up period, based on allele counts of two SNPs:  rs4607517  in  GCK  gene and  rs758982  in  CAMK2B  gene. Separate curves are presented for individuals with 0 (uppe",
+    "Flow diagram of participant inclusion and exclusion criteria. This figure outlines inclusion and exclusion criteria applied to participants from Ansan/Ansung cohort in Korean Genome and Epidemiology Study (KoGES). Diagram details participant selection from baseline through follow-up surveys, highlighting exclusions due to incomplete data, pre-existing conditions, or extreme energy intake levels, p",
+    "Framework of multi-State illness–death model for type 2 diabetes progression. This figure depicts multi-state illness–death model used to analyze transitions between type 2 diabetes states: normal glucose tolerance (NGT), prediabetes (PD), and type 2 diabetes (T2D). Model includes three transitions: NGT → PD, NGT → T2D, and PD → T2D. Arrows represent possible transitions between states during the "
+  ],
+  "tables": [
+    "Hazard ratios (HRs) for transitions between glucose tolerance states, by dietary intake tertiles. This table shows hazard ratios (HRs) and 95% confidence intervals (CIs) for transitions between normal glucose tolerance (NGT), prediabetes (PD), and type 2 diabetes (T2D), based on dietary intake tertiles. Dietary intake was classified into tertiles based on weekly consumption levels for each food gr",
+    "Characteristics of identified novel variants associated with transitions between glucose tolerance states. This table summarizes characteristics of single-nucleotide polymorphisms (SNPs) identified as significantly associated with transitions between glucose tolerance states: normal glucose tolerance (NGT), prediabetes (PD), and type 2 diabetes (T2D). Table includes information on chromosome numbe",
+    "Functional prediction scores for identified SNPs. Table includes information on chromosome position, SNP identifiers, nearest genes, and two key prediction scores: Combined Annotation-Dependent Depletion (CADD) and Deleterious Annotation using Neural Networks (DANN). Higher CADD and DANN scores indicate greater pathogenic potential of variants. These results highlight the functional impact of gene"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037204.7190363
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11933750",
+  "pmid": "40063947",
+  "title": "Development of a Voice-Activated Virtual Assistant to Improve Insomnia Among Young Adult Cancer Survivors: Mixed Methods Feasibility and Acceptability Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Groninger H, Arem H, Ayangma L, Gong L, Zhou E, Greenberg D.",
+  "doi": "10.2196/64869",
+  "figures": [
+    "The More SHEEP (More Sleep Hours Electronic Education Program) system connects a smart speaker, smart lighting, and unique internet router to provide tailored cognitive behavioral therapy for insomnia (CBT-I) and individualized screen use data to individuals with chronic insomnia."
+  ],
+  "tables": [
+    "Focus group questions aimed at understanding chronic insomnia of young adult cancer survivors and portable technology habits.",
+    "Sample scripts for MORE Sheep modules",
+    "The authors enrolled 15 young adult cancer survivors to participate in a single-arm feasibility-acceptability study of the More SHEEP prototype that included qualitative data collection to inform future prototype development. Participant-generated themes inform prototype feasibility, acceptability, and areas for potential improvement."
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001279.8497653
+}

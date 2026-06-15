@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12235569",
+  "pmid": "40590419",
+  "title": "Impact of Long-term Stability on Mental Health in Adults with Atopic Dermatitis: A Cohort Study with Unsupervised Cluster Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nymand LK, Nielsen ML, Christensen MO, Thomsen SF, Thyssen JP, Egeberg A.",
+  "doi": "10.2340/actadv.v105.43071",
+  "figures": [
+    "Anxiety and depression median score for the 4 clusters.",
+    "PO-SCORAD and DLQI score for the 4 time points for the 4 clusters.",
+    "Average number of flares at the 4 time points for the 4 clusters.",
+    "Differences in anxiety and depression scores for the stable and unstable severity groups."
+  ],
+  "tables": [
+    "Basic characteristics for the overall AD patient cohort and divided into the 4 clusters"
+  ],
+  "query": "atopic dermatitis depression",
+  "fetched_at": 1780014434.0018702
+}

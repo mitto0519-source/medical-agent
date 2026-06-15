@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12092224",
+  "pmid": "40400704",
+  "title": "Genome-wide approach to study gene-nutrient intake interactions in type 2 diabetes mellitus in a large Korean cohort.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park JM, Choi JE, Song Y, Kwon YJ, Lee JW, Hong KW.",
+  "doi": "10.3389/fnut.2025.1538813",
+  "figures": [
+    "Scheme of the study. GWAS, genome-wide association study; SNP, single-nucleotide polymorphism; DRI, daily reference intake.",
+    "Miami plots presenting the results of the GWAS. Miami plots presenting the results of the GWAS on the risk of T2DM prevalence in the high nutrient-intake group (red graph) and low nutrient-intake group (blue graph). The horizontal axis of each graph is the SNP position from chromosomes 1 to 22 and the vertical axis is the −log 10  transformation of the statistical significance ( p -value) for T2DM",
+    "Signal plots for the statistically significant SNP regions confirmed in a specific diet group. The lead SNPs identified in the GWAS and the ±400-kbp region were plotted. The horizontal axis represents the base pair position on the chromosome where the SNPs are located and the left vertical axis represents the  p -value transformed into −log10. The vertical axis on the right represents the region w"
+  ],
+  "tables": [
+    "Characteristics of the study population.",
+    "Single-nucleotide polymorphisms (SNPs) showing significant interactions with nutrients associated with diabetes."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036660.370198
+}

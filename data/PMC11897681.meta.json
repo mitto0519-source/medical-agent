@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11897681",
+  "pmid": "39998871",
+  "title": "More Cyberbullying, Less Happiness, and More Injustice-Psychological Changes During the Pericyberbullying Period: Quantitative Study Based on Social Media Data.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu X, Liu M, Kang X, Han N, Liao Y, Ren Z.",
+  "doi": "10.2196/64451",
+  "figures": [
+    "Network structure diagram. ICU1_oh_s: Oxford Happiness; ICU2_pp_s: positive emotion; ICU3_nn_s: negative emotion; lCU4_em_s: environmental mastery; lCU5_pr_s: positive relations with others; ICU6_au_s: autonomy; lCU7_pg_s: personal growth; lCU8_sa_s: self-acceptance; lCU9_pl_s: purpose in life; ICU10_FairnessVice_bs: FairnessVice; ICU11_COMM_bs: communication; ICU12_C5_bs: self-regulation; ICU13_C",
+    "Strength centrality of each node in the network. ICU1_oh_s: Oxford Happiness; ICU2_pp_s: positive emotion; ICU3_nn_s: negative emotion; lCU4_em_s: environmental mastery; lCU5_pr_s: positive relations with others; ICU6_au_s: autonomy; lCU7_pg_s: personal growth; lCU8_sa_s: self-acceptance; lCU9_pl_s: purpose in life; ICU10_FairnessVice_bs: FairnessVice; ICU11_COMM_bs: communication ; ICU12_C5_bs: s"
+  ],
+  "tables": [
+    "Participant demographic characteristics.",
+    "The difference in psychological characteristics between the survivor group and the control group at T2 and T1."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017545.4307222
+}

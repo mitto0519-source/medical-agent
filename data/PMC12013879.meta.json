@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12013879",
+  "pmid": "40261920",
+  "title": "The effects of an app to prevent negative outcomes of cyberbullying: A cluster randomized controlled trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Høgsdal H, Kaiser S, Mabille G, Breivik K, Adolfsen F, Martinussen M, Kyrrestad H.",
+  "doi": "10.1371/journal.pdig.0000819",
+  "figures": [
+    "Enrollment and randomization.",
+    "Hyperactivity problem-scores among per-protocol groups during the study period. Note. The estimates shown are calculated with the average age of the sample (M = 12.20 years)."
+  ],
+  "tables": [
+    "Descriptive Statistics at Baseline.",
+    "Attrition analyses to predict participation at T3.",
+    "Mixed Effect Models Predicting Mental Health with the Different SDQ Subscales.",
+    "Mixed Effect Models Predicting Mental health. Cyberbullying, Bullying Others and Negative Online Incidents."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017239.2068574
+}

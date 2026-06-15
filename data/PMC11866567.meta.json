@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11866567",
+  "pmid": "40016835",
+  "title": "BIA-derived muscle indicator thresholds for malnutrition risk prediction in children with β-thalassemia: a cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang L, Long J, Wang L, Zhang L, Yang Y, Patil S.",
+  "doi": "10.1186/s40001-025-02392-y",
+  "figures": [
+    "Patient recruitment process",
+    "Correlation analysis between muscle mass indicators and their changes to WHZ/BMI-Z",
+    "Correlation analysis between muscle mass indicators and their changes to HAZ",
+    "Comparison of AUC values for muscle mass indicators before and after matching",
+    "Optimal cutoff values for nutritional status indicators in children with β-thalassemia"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of children with β-thalassemia in the matched and unmatched groups",
+    "Evaluation of diagnostic performance at the optimal cutoff value"
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053596.016238
+}

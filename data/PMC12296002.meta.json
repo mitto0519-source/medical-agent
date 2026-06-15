@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12296002",
+  "pmid": "40710769",
+  "title": "Obesity Report: Distribution and Pattern by Age and Sex in Heart Failure Cohort over 10 Years in Korea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim J, Park G, Pak H, Kim H, Jang JY, Lee H, Park JK, Oh SJ, Yoon SJ.",
+  "doi": "10.3390/jcdd12070244",
+  "figures": [
+    "BMI distribution in heart failure (4 subgroups). Distribution of BMI subgroups (4 subgroups) in general health check-up population and heart failure patients. The obese group accounted for 43.3% of the HF population, and it was higher than that of the general health check-up population (32.9%). General health check-up data of National health insurance service from Korean Statistical Information Se",
+    "BMI and sex distribution in heart failure. Distribution of BMI subgroups (4 subgroups) by sex in general health check-up population and heart failure patients. The proportion of obese people with a BMI over 25 kg/m 2  in HF was 42.3 and 44.2% in men and women, respectively, and it was also higher than that of the general health check-up population (38.5 and 26.2% in men and women, respectively) ( ",
+    "Distribution of BMI subgroups by age in heart failure. Analysis by age in heart failure patients ( A ) and general health check-up population ( B ). The combined frequency of obesity and extreme obesity groups was the highest in those in their 60s (4561), followed by those in their 70s (3719) and 50s (3658), respectively, in the HF group. However, in the same age group, the proportion of obesity a",
+    "Distribution of BMI subgroups by age and sex in heart failure (2006–2015). Analysis by age and sex in heart failure patients ( A , B ) and general health check-up population ( C ). In the same age group, the proportion of obesity was the highest in men in their 40s (57.7%) and 30s (57.3%), and women in their 60s (52.2%) in heart failure. The proportion of the obese group has declined with age in o",
+    "Distribution of age and sex according to BMI subgroups in heart failure. The underweight group increases with age in both men and women, and the proportion of high-aged group (over 80 years old; dark blue bar) in the underweight group of women is much higher than that of men ( A ). The underweight group (red line) is gradually increasing as the patients get older in both men and women ( B )."
+  ],
+  "tables": [
+    "BMI and sex distribution in heart failure.",
+    "Distribution of BMI subgroups by age in heart failure.",
+    "Distribution of BMI subgroups by age and sex in heart failure."
+  ],
+  "query": "Korean National Health Insurance NHIS cohort",
+  "fetched_at": 1780039293.246762
+}

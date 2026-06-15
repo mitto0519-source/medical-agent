@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC12334745",
+  "pmid": "40781349",
+  "title": "Application of causal forest double machine learning (DML) approach to assess tuberculosis preventive therapy's impact on ART adherence.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mengistu AK, Yeneakale KA, Baykemagn ND, Melese ZY, Gedefaw AE.",
+  "doi": "10.1038/s41598-025-14460-8",
+  "figures": [
+    "Causal graph of TPT and ART adherence",
+    "Propensity score distribution before trimming.",
+    "Propensity score distribution after trimming (20–80%).",
+    "Estimated conditional average treatment effects (CATE).",
+    "Heterogeneous treatment effects by TPT group.",
+    "Estimated treatment effects by WHO stage.",
+    "Estimated treatment effects by CD4 category.",
+    "Waterfall plot of feature contributions (TPT → Adherence)."
+  ],
+  "tables": [
+    "Causal assumptions checklist for causal forest DML",
+    "Socio-demographic variables.",
+    "Clinical-related variables.",
+    "Model performance comparison by 95% CI."
+  ],
+  "query": "negative control causal inference",
+  "fetched_at": 1780023186.8716013
+}

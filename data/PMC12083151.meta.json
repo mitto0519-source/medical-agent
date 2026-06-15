@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12083151",
+  "pmid": "40375235",
+  "title": "Association of omega-3, omega-6 fatty acids intakes and omega-6: omega-3 ratio with the prevalence of suicidal ideation: mediating role of C-reactive protein.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lin H, Bai Z, Wu D, Yang Q, Qu S.",
+  "doi": "10.1186/s12944-025-02587-6",
+  "figures": [
+    "Flowchart of the sample selection from the 1999–2018 NHANES",
+    "( A )Feature selection process for suicidal ideation based on Boruta’s algorithm, including dietary omega-3 intake. ( B ) Feature selection process for suicidal ideation based on Boruta’s algorithm, including diet omega-6 intake",
+    "Dietary omega intake levels in participants with or without suicidal ideation",
+    "Restricted cubic spline fitting for the association between suicidal ideation and ( A )dietary omega-3 intake, ( B ) dietary omega-6 intake, ( C ) dietary omega-6/3 ratio",
+    "Association between suicidal ideation and ( A )dietary omega-3 intake, ( B ) dietary omega-6 intake, ( C ) dietary omega-6/3 ratio in various subgroups",
+    "Mediated analysis model path diagram. Notes: dietary omega-3, omega-6 intake was defined as the independent variable; suicidal ideation as the dependent variable; and CRP as the mediating variable"
+  ],
+  "tables": [
+    "Characteristics of the study population based on suicidal ideation",
+    "Associations between dietary Omega fatty acids intake and the prevalence of suicidal ideation",
+    "Threshold effect analysis of dietary Omega fatty acids intake and suicidal ideation using the two-piecewise linear regression model"
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003254.5291827
+}

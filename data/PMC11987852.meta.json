@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11987852",
+  "pmid": "40225035",
+  "title": "Morningness and Conscientiousness: A Meta-analysis, Online Survey and Resting fMRI Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Buzoku D, Esmat S, Norbury R.",
+  "doi": "10.5334/jcr.240",
+  "figures": [
+    "Left image shows the DMN determined by Yeo (2011), on the right the DMN determined from the current data (N = 43). Image is in neurological format (left brain on the right side), sagittal, coronal and axial views displayed.",
+    "Study selection process. WoS = Web of science. Numbers in parentheses show original articles identified.",
+    "Forest plot of standardised effect sizes from each study. The overall effect is indicated in blue, prediction interval in red.",
+    "Contour funnel plot. Vertical dotted line shows mean effect size. Black dots individual study effect sizes.",
+    "Scatter plot showing the relationship between conscientiousness and diurnal preference. Grey shaded areas shows standard error.",
+    "Johnson-Neyman plot showing observed values for the moderator (DMN connectivity) and the threshold for significance of the effect of diurnal preference on conscientiousness (blue shaded area)."
+  ],
+  "tables": [
+    "Study details (including the current online data) included in the initial random effects analysis. Chronotype measure: rMEQ = Morningness Eveningness a Reduced Scale, MESSi = Morningness-Eveningness-Stability-Scale improved (sign reversed as higher scores indicate increasing eveningness), MEQ = Morningnesss Eveningness Questionnaire, CSM = Composite Scale of Morningness CCQ = Caen chronotype quest",
+    "Q-test for between study heterogeneity, p value for subgroup differences."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001165.8778787
+}

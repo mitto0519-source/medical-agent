@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12204318",
+  "pmid": "40584809",
+  "title": "New-Onset Primary Hypothyroidism in a 14-year-old Girl Presenting as Hemorrhagic Shock From Severe Menorrhagia.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Arias G, Parulekar J, Jacobs AS, Sims EK.",
+  "doi": "10.1210/jcemcr/luaf098",
+  "figures": [
+    "THS and hemoglobin levels plotted over time. Serial measurements of TSH (blue line) and hemoglobin (Hgb, orange line) levels in our single patient starting from day of hospitalization admission (day 1) and continuing through subsequent days. TSH levels showed a decreasing trend, while Hgb levels gradually increased over time following initiation of levothyroxine therapy. TSH is plotted on the left"
+  ],
+  "tables": [
+    "Height, weight, BMI, and vital signs at presentation",
+    "Anemia-related labs collected upon presentation"
+  ],
+  "query": "thyroid function adolescent",
+  "fetched_at": 1780012472.9509435
+}

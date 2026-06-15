@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12293431",
+  "pmid": "40723105",
+  "title": "Mapping the Fat: How Childhood Obesity and Body Composition Shape Obstructive Sleep Apnoea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zaffanello M, Pietrobelli A, Piacentini G, Zoller T, Nosetti L, Guzzo A, Antoniazzi F.",
+  "doi": "10.3390/children12070912",
+  "figures": [
+    "Estimated probability of severe paediatric OSA (AHI ≥ 10 events·h −1 ) derived from multivariable logistic regression according to combinations of BMI &gt; 29.2 kg·m −2 , neck circumference &gt; 35.8 cm, and waist circumference ≥ 93.5 cm (n = 152). Bars represent predicted probability (%) with 95% confidence intervals; dashed horizontal lines mark 25%, 50%, and 75% probability thresholds. Abbrevia",
+    "Standardised mean differences (Cohen’s d) in anthropometric and craniofacial parameters between children with and without obstructive sleep apnoea (OSA). The bars show differences in neck, waist, and hip circumferences (cm), and cervicomental and maxillomandibular angles (degrees). Bar colours indicate certainty of evidence: green = high, orange = low, red = very low [ 101 ]. Abbreviations: NC, ne",
+    "Adjusted odds ratios (aORs) and 95% confidence intervals (CIs) for various body composition indicators and their association with paediatric obstructive sleep apnoea (OSA). Indicators: CFMI = central fat mass index; FFMI = fat-free mass index; FMI = fat mass index; FMR = fat-to-muscle mass ratio. Bar colour coding: red = highly significant ( p  &lt; 0.001); blue = significant ( p  &lt; 0.05); grey",
+    "Pearson correlation coefficients between the log-transformed apnoea–hypopnoea index (log AHI)/obstructive apnoea–hypopnoea index (log oAHI) and adiposity indicators. Variables: BMI z-score (zBMI), total fat mass (FM), body fat percentage (BF%), neck-to-abdominal fat percentage ratio (NAF%). Bars display correlation coefficients, with p-values shown above each bar. Significant associations are indi",
+    "Adjusted odds ratios (aORs) and 95% confidence intervals (CIs) for body composition indicators associated with paediatric OSA risk. Indicators: FMR = fat-to-muscle mass ratio; zBMI = BMI z-score; FMI = fat mass index; CFMI = central fat mass index; FM% = fat mass percentage. The dashed vertical line at aOR = 1.0 represents no association. Statistically significant predictors are shown in blue; non",
+    "Flow-chart of a five-step clinical pathway for stratification and integrated management of paediatric OSA in children with obesity: (1) initial clinical assessment, (2) anthropometric evaluation (BMI, NC, NHR), (3) instrumental screening (overnight oximetry or PSG if ODI ≥ 7.9 h −1 ), (4) body composition analysis (DXA, BIA, ADP), and (5) multidisciplinary management (ENT specialist, pulmonologist"
+  ],
+  "tables": [
+    "Anthropometric parameters and otorhinolaryngological comorbidities associated with paediatric obstructive sleep apnoea. The table lists body-mass-related indices (BMI, zBMI), cervical measures (NC, NHR), central adiposity markers (NWR, waist circumference) and upper-airway conditions (adenotonsillar hypertrophy, Mallampati grade). For each variable, we report (i) the key supporting evidence, (ii) ",
+    "Instrumental assessment tools for paediatric obstructive sleep apnoea and their main strengths. The table summarises overnight polysomnography (PSG), the oxygen desaturation index (ODI), pulse oximetry, body composition techniques (dual-energy X-ray absorptiometry [DXA], bioelectrical impedance analysis [BIA], air-displacement plethysmography [ADP]), and ancillary evaluations (Mallampati scoring, ",
+    "Stepwise triage algorithm for the assessment and management of paediatric obstructive sleep apnoea (OSA) in obesity. The flow chart integrates six sequential steps: (i) clinical history and symptom screening, (ii) anthropometric thresholds (BMI z-score, neck circumference, neck-to-height ratio), (iii) overnight oximetry/polysomnography criteria, (iv) ear–nose–throat evaluation, (v) body compositio",
+    "Validated anthropometric and body composition predictors of paediatric OSA (n = 152): operational definitions, sex-specific cut-offs, strengths, and methodological limitations."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002342.4218633
+}

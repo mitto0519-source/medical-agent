@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12296260",
+  "pmid": "40709539",
+  "title": "No effect of additional education on long-term brain structure, a preregistered natural experiment in thousands of individuals.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Judd N, Kievit R.",
+  "doi": "10.7554/elife.101526",
+  "figures": [
+    "Regression discontinuity (RD) plot of monthly averaged ( a ) total surface area, ( b ) average cortical thickness, ( c ) total brain volume, and ( d ) weighted fractional anisotropy plotted by the participant’s date of birth in months (our running variable).  Each dot reflects the average value for individuals born in that month. The dashed line corresponds to September 1957, the date of birth inc",
+    "This regression discontinuity plot shows the effect of the law on the percentage of students staying an additional year in school (Y) by date of birth monthly averaged bins.  This is the first stage in the two-stage fuzzy regression discontinuity analysis. This increased attendance by roughly 10%. See ‘first stage’ in  Supplementary file 2  for coefficient estimates.",
+    "Regression discontinuity plots of monthly averaged.  ( a ) cerebrospinal fluid volume and, ( b ) white matter hyperintensities plotted by the participant’s date of birth in months (X; our running variable). The dashed line corresponds to September 1957 when ROSLA came into effect. Dark blue dots represent the mean-squared error-optimized bandwidths. Linear model fits (in red) on either side of the",
+    "Regression discontinuity plots of monthly averaged ( a ) total surface area, ( b ) cerebrospinal fluid volume, ( c ) average cortical thickness, ( d ) white matter hyperintensities, ( e ) total brain volume, and ( f ) weighted fractional anisotropy, plotted by the participant’s date of birth in months (X; our running variable).  The dashed line corresponds to September 1957, the date of birth incl",
+    "Bayes factors for surface area per region using a local randomization analysis with a 5-month window around the onset of ROSLA (September 1, 1957).  Illustrating widespread evidence against the effect of a year of education on total surface area. The regionally specific analysis of these Bayes factors [reported prior: normal(0, 1)] was not preregistered and serves to illustrate our global neural f",
+    "Bayesian Heat Plot: Bayesian evidentiary strength (x-axis) for causal (circles) and correlational (triangles) estimates reflecting the impact of one additional year of education on global neuroimaging measures (y-axis; average cortical thickness [CT], white matter hyperintensities [WMh], total brain volume normalized for head size [TBV], mean weighted fractional anisotropy [wFA], total surface are",
+    "An overview of eight cohorts/subsets (plus the original 5-month local randomization cohort; s1957) spaced 2 years apart with 10-month windows of included subjects in panel  a .  The running variable is the date of birth centered around the start of the ROSLA natural experiment (0 = September 1957) indicated by the dashed line. Panel  b  illustrates educational attainment distributions for the nine",
+    "Illustrates the posterior of the associational effect of educational attainment on neuroimaging measures across nine 10-month subcohorts of UK Biobank data spaced 2 years apart.  For this post hoc analysis, a normally distributed prior with a mean of zero and an SD of one was used. The cohort’s 1957’ is our initial preregistered associational analysis, which is centered on the ROSLA cutoff allowin"
+  ],
+  "tables": [],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035307.9041202
+}

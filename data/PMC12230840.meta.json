@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC12230840",
+  "pmid": "40630447",
+  "title": "A Predictive Model and Scoring System for All-Cause Mortality in Patients With Atrial Fibrillation Combined With Obstructive Sleep Apnea Syndrome: A Retrospective Case-Control Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang X, Wei M, Xue P, Lu Y, Tang B.",
+  "doi": "10.31083/rcm36467",
+  "figures": [
+    "Flowchart outlining the screening process for study \nsubjects . OSAS, obstructive sleep apnea syndrome; AF, atrial fibrillation.",
+    "Variable trajectory and selection process of Lasso regression . \n(A) shows the variable trajectory diagram; (B) shows the selection flowchart of \nLasso regression.",
+    "Results of the prediction model for all-cause mortality in \npatients with AF + OSAS . (A) ROC curves of the training ( n  = 285) and \ntesting sets ( n  = 123); (B) Diagnostic nomogram of the all-cause \nmortality model; (C) DCA curves of the training set; (D) DCA curves of the \ntesting set; (E) Diagnostic calibration curves of the training set; (F) \nDiagnostic calibration curves of the testing set.",
+    "Mortality rates based on risk score values . (A) the survival \nand mortality rates for each risk level in the training set. (B) the survival and \nmortality rates for each risk level in the testing set. LR, low risk; MR, medium \nrisk; HR, high risk."
+  ],
+  "tables": [
+    "Dummy variable assignment table for each variable .",
+    "Comparison of original data between training and testing sets \nof patients with AF + OSAS .",
+    "Comparison of dummy variable assignment between training and \ntesting sets of patients with AF + OSAS .",
+    "Analysis of original data contrasting survival and death groups \nin the training set .",
+    "Comparison of dummy variable assignment in the training set \nbetween survival and death groups .",
+    "Presentation of single-factor and multiple-factor logistic \nregression results in the training set .",
+    "Model evaluation of patients with AF + OSAS in the training and \ntesting sets .",
+    "Calibration-performance results of the training and testing \nsets .",
+    "Confusion-matrix results of the training and testing sets .",
+    "Risk scoring table for all-cause mortality of patients with AF \n+ OSAS .",
+    "Death and survival rate of patients with AF + OSAS in the \ntrain and test sets at different scores ."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780001867.6098094
+}

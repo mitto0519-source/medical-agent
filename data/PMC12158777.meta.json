@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12158777",
+  "pmid": "40057559",
+  "title": "Composite variable bias: causal analysis of weight outcomes.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ali R, Prestwich A, Ge J, Griffiths C, Allmendinger R, Shahgholian A, Chen YW, Mansournia MA, Gilthorpe MS.",
+  "doi": "10.1038/s41366-025-01732-6",
+  "figures": [
+    "Directed acyclic graph (DAG) illustrating the temporal order of the variables.  Observed variables are depicted in squares or rectangles while unobserved (latent) variables are depicted in circles or ellipses. The socioeconomic (economic status) and psychological (malaise score) variables in the NCDS data are composite measures of a latent construct that are treated as observed variables; they lie",
+    "A comparison of the results for different weight outcomes for different exposure variables of interest—the dotted vertical line separates the birth variables from the baseline (age 23) variables (see Supplementary Table  S2  for explanation of differences in causal interpretation).  The effect of ethnicity and sex differences on follow-up weight were ten-fold greater than the coefficients shown in"
+  ],
+  "tables": [
+    "Data summary (variables with their definitions)."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021307.2327783
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12185899",
+  "pmid": "40387842",
+  "title": "Association Between ACL Continuity on Magnetic Resonance Imaging at 5 Years After an Acute ACL Rupture and 11-Year Outcomes: A Secondary Analysis From the KANON Trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Filbay SR, Roemer F, Roos EM, Turkiewicz A, Frobell R, Lohmander LS, Englund M.",
+  "doi": "10.1177/03635465251339061",
+  "figures": [
+    "Individual and group mean values of Knee Injury and Osteoarthritis Outcome Score (KOOS) subscale scores at baseline and 2, 5, and 11 years’ follow-up by 5-year anterior cruciate ligament (ACL) continuity and treatment status. ACLR, anterior cruciate ligament reconstruction; QOL, quality of life; Sport/Rec, sports and recreation.",
+    "Proportion of participants meeting the Patient Acceptable Symptomatic State (PASS) and treatment failure thresholds for Knee Injury and Osteoarthritis Outcome Score (KOOS) subscales at 11 years. Thresholds (PASS and treatment failure, respectively): KOOS pain (89 and 57), KOOS symptoms (83 and 56), KOOS sports and recreation (Sport/Rec) (72 and 57), and KOOS quality of life (QOL) (73 and 28). ACL,",
+    "Individual and group mean values of Knee Injury and Osteoarthritis Outcome Score (KOOS 4 ) scores at baseline and 2, 5, and 11 years’ follow-up by 5-year anterior cruciate ligament (ACL) continuity and treatment status. ACLR, anterior cruciate ligament reconstruction."
+  ],
+  "tables": [
+    "Participant Characteristics \n \n \n a",
+    "11-Year Outcomes \n \n \n a",
+    "Adjusted Mean Differences in 11-Year KOOS 4  Scores \n \n \n a"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035706.503556
+}

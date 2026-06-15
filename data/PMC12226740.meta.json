@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12226740",
+  "pmid": "40425394",
+  "title": "Directed acyclic graphs to minimise bias and optimise causal inference in SNAP-3: an observational cohort study of frailty, multimorbidity, and delirium in older surgical patients.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Swarbrick CJ, Blake HA, Martin P, Partridge JSL, Moppett IK.",
+  "doi": "10.1016/j.bja.2025.04.027",
+  "figures": [
+    "Simple example directed acyclic graph (DAG). Example DAG to illustrate the basic DAG structure. DAG, directed acyclic graph.",
+    "Types of causal pathways and key types of variables on noncausal pathways in a directed acyclic graph (DAG). Simplified example DAGs to demonstrate the concepts and structure of DAGs. DAG, directed acyclic graph.",
+    "Directed acyclic graph (DAG) illustrating the relationship between frailty and multimorbidity with morbidity. An example DAG illustrates the exposure–outcome relationship between frailty and multimorbidity (as a joint exposure or interacting exposures) with postoperative (postop) morbidity (outcome) as shown in DAGitty. The joint exposures, frailty and multimorbidity, are represented by green node"
+  ],
+  "tables": [
+    "Steps required in creating and effectively using DAGs in observational studies. This table has been developed from the following resources.  3   ,  6 ,  7 ,  8  ,   10   ,   11   DAG, directed acyclic graph.",
+    "Questions to assess whether a DAG is effective. This is a suggested list of questions which may be helpful in determining the efficacy of DAGs within observational research.  7   ,   8   DAG, directed acyclic graph."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020758.1348016
+}

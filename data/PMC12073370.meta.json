@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12073370",
+  "pmid": "40362847",
+  "title": "Mode and Mechanism of Action of Omega-3 and Omega-6 Unsaturated Fatty Acids in Chronic Diseases.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xu R, Molenaar AJ, Chen Z, Yuan Y.",
+  "doi": "10.3390/nu17091540",
+  "figures": [
+    "Metabolic pathways for synthesis of omega-6 unsaturated fatty acids and omega-3 unsaturated fatty acids. The abbreviation in the picture, Linoleic Acid: LA; Gamma-Linlenic Acid: GLA; Dihomo-Gamma-Linlenic: DGLA; Arachidonic Acid: AA; Alpha-Linolenic Acid: ALA; Stearidonic Acid: SDA; Eicosatetraenoic Acid: EStA; Eicosapentaenoic Acid: EPA; Docosapentaenoic Acid: DPA.",
+    "Relationship between elevated free fatty acids (FFAs) and insulin resistance: Insulin binding to receptors is blocked during insulin resistance, HSL is activated, and FFA levels in the liver are elevated. After some FFA in the liver is absorbed and lipidized, monoglycerides and FFA are formed under the action of LPL hydrolysis. This cycle continues to increase FFA in the blood.",
+    "Effect of unsaturated fatty acids on cancer: EPA and DHA increase mitochondrial membrane potential (ΔΨm), peroxidized EPA and DHA inhibit iNOS, and then produce NO. The increase in the AA-DHA ratio inhibits ATP production; the low omega-6 unsaturated fatty acid/omega-3 unsaturated fatty acid ratio increases the expression of tumor suppressor SMAR1 and reduces the expression of tumor activator MARB",
+    "Schematic diagram of the mechanism of omega-3 unsaturated fatty acids affecting acne: TLR-2 and TLR-4 activate the NF-κB and MAPK pathways, producing cytokines such as IL-1, IL-6, IL-8, and TNF-α; omega-3 unsaturated fatty acids increase IGFBP-3, preventing IGF-1 from binding to its receptors; omega-3 unsaturated fatty acids inhibit NF-κB activation; omega-3 unsaturated fatty acids inhibit the act",
+    "Food sources of CLA.",
+    "Overview of this article."
+  ],
+  "tables": [
+    "Roles and Mechanisms of Omega-3 and Omega-6 polyunsaturated Fatty Acids in Cardiovascular Diseases, Diabetes, Cancer, Dermatological Disorders, Neurodegenerative Diseases, and Depression.",
+    ""
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003688.8846169
+}

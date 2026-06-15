@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11918974",
+  "pmid": "40225646",
+  "title": "Exploring the Associations between Chronotype, Night Shift Work Schedule, Quality of Work Life, and Sleep Quality among Maternal and Child Health Nurses: A Multicentre Cross-Sectional Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Li JN, Chen XQ, Jiang XM, Zheng QX, Pan YQ, Zhu Y, Huang L, Liu RL.",
+  "doi": "10.1155/2023/1811732",
+  "figures": [
+    "Rates of poor sleep components on each group classified by chronotype and night shift work schedule ( n  = 1426).   ∗   P  &lt; 0.05.   ∗∗   P  &lt; 0.01.   ∗∗∗   P  &lt; 0.001. (a) Rates of poor sleep components on each chronotype. (b) Rates of poor sleep components on each night shift work schedule.",
+    "Quality of work life on good and poor sleep groups ( n  = 1426). Error bar: mean ± standard deviations.   ∗∗∗   P   &lt; 0.001. WSC: working conditions; SAW: stress at work; CAW: control at work; HWI: home-work interface; EEN: employment evaluation of nurse; GWB: general well-being; JCS: job and career satisfaction.",
+    "Heat map of Pearson correlation between quality of work life and sleep quality among MCH nurses ( n  = 1426).   ∗   P  &lt; 0.05.   ∗∗   P  &lt; 0.01. PSQI: the Pittsburgh Sleep Quality Index, PSQI1: subjective sleep quality, PSQI2: sleep latency, PSQI3: sleep duration, PSQI4: sleep efficiency, PSQI5: sleep disturbance, PSQI6: sleep medication, and PSQI7: daytime dysfunction; QWL: the Work-Related"
+  ],
+  "tables": [
+    "Demographic characteristics of participants ( n  = 1426).",
+    "PSQI and its component score among MCH nurses ( n  = 1426).",
+    "Binary logistic regression analysis for poor sleep based on chronotype, night shift work schedule, and quality of work life."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001719.5477242
+}

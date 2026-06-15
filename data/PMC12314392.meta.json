@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12314392",
+  "pmid": "40755855",
+  "title": "Daughter's college completion and parents' psychosocial wellbeing: quasi-experimental evidence from South Korea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee AR, Romero KRF, Torres J.",
+  "doi": "10.1016/j.ssmph.2025.101846",
+  "figures": [
+    "College Completion Rates by Index Child Birth Cohort, Overall and by Child Sex/Gender  Notes: The figures show college completion rates of the oldest and the most highly educated children on either side of the 1974 cutoff, the first cohort affected by the 1993 education reform. See  Table S2  for the first-stage estimates of the two-stage least squares (2SLS) IV estimator, which predicts the proba",
+    "Beta Coefficients and 95% Confidence Intervals from Two-Stage Least Squares (2SLS) Regression for Predicting Parents' Depressive Symptoms and Risk of Depression Based on Daughters' Education, by Type of Index Child (Highest-educated vs. Oldest)  Notes: The CES-D 10 scale measures depressive symptoms over the past two weeks, with scores ranging from 0 to 30, with higher scores indicating a greater ",
+    "Beta Coefficients and 95% Confidence Intervals from Two-Stage Least Squares (2SLS) Regression for Predicting Parents' Depressive Symptoms Based on Daughters' Education, By Parents' Sex/Gender and Socioeconomic Characteristics  Notes: 1) The CES-D 10 scale measures depressive symptoms over the past two weeks, with scores ranging from 0 to 30, with higher scores indicating a greater frequency of neg",
+    "Beta Coefficients and 95% Confidence Intervals from 2SLS Regression for Predicting Intergenerational Support from and Relationships with Daughters and Parents' Life Satisfaction, by Parents' Sex/Gender  Notes: We defined a binary variable, assigning a value of 1 to those parents who had contact with their children more than once a month (“contact”), who received a non-financial gift from children "
+  ],
+  "tables": [],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039691.9746654
+}

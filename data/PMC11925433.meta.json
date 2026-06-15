@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11925433",
+  "pmid": "39967303",
+  "title": "KASL clinical practice guidelines for the management of metabolic dysfunction-associated steatotic liver disease 2025.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sohn W, Lee YS, Kim SS, Kim JH, Jin YJ, Kim GA, Sung PS, Yoo JJ, Chang Y, Lee EJ, Lee HW, Choi M, Yu SJ, Jung YK, Jang BK, Korean Association for the Study of the Liver (KASL).",
+  "doi": "10.3350/cmh.2025.0045",
+  "figures": [
+    "Evolution and nomenclature of fatty liver disease. NASH, nonalcoholic steatohepatitis; NAFLD, nonalcoholic fatty liver disease; MAFLD, metabolic dysfunction-associated fatty liver disease; APASL, Asian Pacific Association for the Study of the Liver; MASLD, metabolic dysfunction-associated steatotic liver disease; KASL, Korean Association for the Study for the Liver.",
+    "Diagnostic algorithm for MASLD. The specific etiology of SLD includes drug-induced liver injury (e.g., corticosteroids, tamoxifen, amiodarone, irinotecan, methotrexate, lomitapide, valproate, and 5-fluorouracil), monogenic diseases (e.g., lysosomal acid lipase deficiency, Wilson’s disease, hypobetalipoproteinemia, inborn errors of metabolism), and other conditions such as HCV genotype 3 infection,",
+    "Clinical manifestations and prognosis of MASLD. MASLD, metabolic dysfunction-associated steatotic liver disease.",
+    "MASLD-related extrahepatic malignancies. MASLD, metabolic dysfunction-associated steatotic liver disease.",
+    "Intrahepatic mechanism of action of selective thyroid hormone receptor-β agonists. THR, thyroid hormone receptor; T4, thyroxine; T3, tri-iodothyronine; DNL, de novo lipogenesis; LDL, low-density lipoprotein; Apo B, apolipoprotein B; Lp(a), low lipoprotein(a); CoA, coenzyme A; RXR, retinoid X receptor; THR, thyroid hormone receptor; TRE, tetracyclin-responsive element; CPT1a, carnitine palmitoyltra",
+    "Steatotic liver disease and subgroup in pediatrics."
+  ],
+  "tables": [
+    "GRADE (Grading of Recommendation, Assessment, Development, and Evaluation) system",
+    "Comparison of the definitions and diagnostic criteria of NAFLD, MAFLD, and MASLD",
+    "Drugs for treating MASH in phase III clinical trials (as of December 18, 2024)",
+    "Diagnostic criteria of cardiometabolic factors in MASLD in children and adolescents"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041273.8768005
+}

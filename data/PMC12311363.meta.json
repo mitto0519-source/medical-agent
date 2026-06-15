@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12311363",
+  "pmid": "40461021",
+  "title": "Continuity of active commuting to school across two generations: the Cardiovascular Risk in Young Finns Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Suominen TH, Kukko T, Yang X, Pahkala K, Rovio S, Hirvensalo M, Kähönen M, Raitakari O, Tammelin TH, Salin K.",
+  "doi": "10.1093/eurpub/ckaf084",
+  "figures": [
+    "Distributions of home–school distances among G1 and G2 generations according to school grade (primary school  n  = 381, lower secondary school  n  = 155, and upper secondary school  n  = 124, for both G1 and G2).",
+    "Unadjusted proportions of active commuters among G1 and G2 generations according to distance to school, separately for the school grades (primary school  n  = 381, lower secondary school  n  = 155, and upper secondary school  n  = 124, for both G1 and G2).",
+    "Directed acyclic graph of the path model ( n  = 660, for both G1 and G2) of ACS across two generations with its covariates. Values are standardized regression coefficients (SE). Model fit: X 2  = 9.9 (df 11);  P  = .538; CFI = 1; TLI = 1; RMSEA = 0; and SRMR = 0.066."
+  ],
+  "tables": [
+    "Characteristics of participants according to generation"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007104.7829108
+}

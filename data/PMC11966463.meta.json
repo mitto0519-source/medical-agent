@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11966463",
+  "pmid": "40182201",
+  "title": "Neural markers of methylphenidate response in children with attention deficit hyperactivity disorder and the impact on executive function.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang A, Yang H, Yang Y, Yang J, Yang X, Wen Q, Wang Q, Liu H, Luo R.",
+  "doi": "10.3389/fpsyt.2025.1475889",
+  "figures": [
+    "Go/Nogo task design.",
+    "Changes in P300 composition after MPH treatment in children with ADHD. The horizontal coordinate is the time (ms), and the vertical coordinate is the amplitude of the waves (mV)."
+  ],
+  "tables": [
+    "EEG processing steps.",
+    "Demographic characteristics.",
+    "Methylphenidate treatment BRIEF2 and DST change in children with ADHD.",
+    "Changes in Go/NoGo task and CGI score after methylphenidate treatment.",
+    "Comparison of Fz, Cz, and Pz Electrode Nogo-P300 after methylphenidate treatment in Children with ADHD."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058954.4537523
+}

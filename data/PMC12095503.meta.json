@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12095503",
+  "pmid": "40399353",
+  "title": "Association between muscular strength, abdominal obesity, and incident nonalcoholic fatty liver disease in a Korean population.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park JH, Park HY.",
+  "doi": "10.1038/s41598-025-00377-9",
+  "figures": [
+    "Flow diagram illustrating participant inclusion and exclusion.  CVD  cardiovascular disease,  HGS  handgrip strength.",
+    "Hazard ratios for new-onset NAFLD based on sex-specific tertiles of rHGS and ABO. Adjusted for age, drinking, smoking, educational level, T-Chol, ALT, PA time, hypertension, and diabetes mellitus.  NAFLD  nonalcoholic fatty liver disease,  rHGS  relative handgrip strength,  ABO  abdominal obesity,  T-Chol  total cholesterol,  ALT  alanine aminotransferase,  PA time  total time of regular participa"
+  ],
+  "tables": [
+    "Baseline characteristics of study participants.",
+    "Hazard ratios for the new-onset NAFLD according to sex-specific tertiles of rHGS.",
+    "Hazard ratios for the new-onset NAFLD according to ABO and sex."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037271.150969
+}

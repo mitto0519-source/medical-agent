@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12275416",
+  "pmid": "40684146",
+  "title": "Racial disparities in diabetes care and outcomes for people with visual impairment: a descriptive analysis of the TriNetX research network.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Madlock-Brown C, Lee A, Seltzer J, Solomonides A, Mathews N, Phuong J, Weiskopf N, Adams WG, Lehmann H, Espinoza J.",
+  "doi": "10.1186/s12889-025-23606-2",
+  "figures": [
+    "a  AA or Black chronic pulmonary disease prevalence comparison.  b  White chronic pulmonary disease prevalence comparison.  c  Asian chronic pulmonary disease prevalence comparison",
+    "The DAG features an arrow from ‘Disability (Visual Impairment)’ to ‘Uncontrolled Diabetes,’ illustrating the hypothesized direct causal effect"
+  ],
+  "tables": [
+    "Demography and diabetes prevalence",
+    "Analysis of the proportion of patients with 3+ Ambulatory visits",
+    "Analysis of the proportion of patients with 1+ A1C measurements",
+    "Analysis of the proportion of patients with 1+ GFR measurements"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020964.512252
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12024346",
+  "pmid": "40282104",
+  "title": "Dropout in Online Education: A Longitudinal Multilevel Analysis of Elementary Students' Extracurricular English Course Engagement in China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tan H, Li X.",
+  "doi": "10.3390/bs15040483",
+  "figures": [
+    "Data structure for the research analysis. The time-invariant level indicates that the independent variable did not change over time at this level, while the time-variant level indicates that the independent variable changed over time at this level.",
+    "The simple slope plot of the interaction between time and the cliff effect.",
+    "Plotting rate of dropout (%) at each week, taking cliff into consideration and controlling other covariates at their means. The grey area represents the 95% confidence interval. The red dashed line indicates the times with chapter transition.",
+    "The simple slope plot of the three-way interaction between time, grade, and semester. The left subplot, labeled “First”, represents the simple slopes of time × grade for the first semester, while the right subplot, labeled “Second”, represents the simple slopes of time × grade for the second semester. Different lines represent different grades.",
+    "The simple slope plot of the three-way interaction between cliff, grade, and semester. The left subplot, labeled “First”, represents the simple slopes of cliff × grade for the first semester, while the right subplot, labeled “Second”, represents the simple slopes of cliff × grade for the second semester. Different lines represent different grades.",
+    "The simple slope plot of the three-way interaction between time, cliff and semester. The left subplot, labeled “First”, represents the simple slopes of time × cliff for the first semester, while the right subplot, labeled “Second”, represents the simple slopes of time × cliff for the second semester. Different lines represent different chapter types."
+  ],
+  "tables": [
+    "Multilevel models predicting student dropout trends over the semester."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019365.6248243
+}

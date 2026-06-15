@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12322588",
+  "pmid": "40762595",
+  "title": "Correlation of Income Instability With 12 Non-Communicable Disease Risks in Korea: A Prospective Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cho J, Son Y, Kim S, Park J, Lee K, Jo H, Kim TH, Lee H, Lee S, Oh J, Cho H, Woo HG, Pizzol D, Woo S, Yon DK.",
+  "doi": "10.3346/jkms.2025.40.e180",
+  "figures": [
+    "Ansan-Anseong study population.",
+    "Association between income volatility, income trajectory, and disease risks. The numbers in bold indicate significant differences ( P  &lt; 0.05).  CI = confidence interval.",
+    "Associations between income volatility levels and specific disease risks. The numbers in bold indicate significant differences ( P  &lt; 0.05).  CI = confidence interval."
+  ],
+  "tables": [
+    "Baseline characteristics of participants from the Ansan-Anseong cohort",
+    "Correlation between income volatility and the risk of diseases across different income levels",
+    "Correlation between sociodemographic factors, lifestyle behaviors, biomarkers, and income trajectory"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036654.967337
+}

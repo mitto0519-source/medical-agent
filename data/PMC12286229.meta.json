@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12286229",
+  "pmid": "40700252",
+  "title": "ChronobioticsDB: The Database of Drugs and Compounds Modulating Circadian Rhythms.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Solovev IA, Golubev DA, Yagovkina AI, Kotelina NO.",
+  "doi": "10.3390/clockssleep7030030",
+  "figures": [
+    "The analysis of ChronobioticsDB content according to pharmacological functional groups and targets.",
+    "The ChronobioticDB user front-end illustrating the Django-powered interface for a chronobiotic card. By segregating the public and admin interfaces, ChronobioticDB streamlines the contribution process for experts while maintaining an up-to-date, reliable repository that is readily accessible to the broader community for research and reference; nevertheless, the access windows have almost the same ",
+    "Basic statistics of ChronobioticsDB content.",
+    "Detailed ChronobioticsDB record for melatonin. The figure displays the administrator-only “Change chronobiotic” form that underpins every compound entry. The header shows breadcrumbs, the object name, and a History link for full audit tracing. The first block contains core chemical identifiers:  Gname  (canonical name and primary key),  SMILES , URL-friendly  Linkname , and the molecular formula a",
+    "The example of the Search function in the main table of the database using the term of target MT1—melatonin receptor. This image represents both the target-oriented search and the main table of ChronobioticsDB. The search query is applied simultaneously to all columns of the main table."
+  ],
+  "tables": [
+    "Criteria of inclusion and exclusion of articles/sources in ChronobioticsDB."
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001202.7185793
+}

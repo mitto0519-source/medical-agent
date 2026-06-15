@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12095989",
+  "pmid": "40400175",
+  "title": "Risks and Protective Factors Associated to Homophobic Cyberbullying Among Youth.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Amadori A, Sherwood SH, Russell ST, Brighi A.",
+  "doi": "10.1002/ab.70034",
+  "figures": [
+    "Moderating effect of homophobic social norms on the relationship between social dominance orientation and homophobic cyberbullying. Low homophobic social norms: 1 SD below the mean; high homophobic social norms: 1 SD above the mean.",
+    "Moderating effect of socio‐emotional competencies on the relationship between social dominance orientation and homophobic cyberbullying. Low socio‐emotional competencies: 1 SD below the mean; high socio‐emotional competencies: 1 SD above the mean.",
+    "Moderating effect of socio‐emotional competencies on the relationship between homophobic social norms and homophobic cyberbullying. Low socio‐emotional competencies: 1 SD below the mean; high socio‐emotional competencies: 1 SD above the mean.",
+    "Three‐way interaction effect of socio‐emotional competencies, homophobic social norms, and social dominance orientation on homophobic cyberbullying. Low homophobic social norms: 1 SD below the mean; high homophobic social norms: 1 SD above the mean. Low socio‐emotional competencies: 1 SD below the mean; high socio‐emotional competencies: 1 SD above the mean."
+  ],
+  "tables": [
+    "Descriptive statistics of social dominance orientation, homophobic social norms, socio‐emotional competencies, and homophobic cyberbullying by gender identity and sexual orientation.",
+    "Spearman's correlation matrix.",
+    "Multiple linear regression models of variables associated with homophobic cyberbullying."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017088.0411706
+}

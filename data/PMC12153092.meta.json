@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12153092",
+  "pmid": "40500768",
+  "title": "Association of food insecurity with anemia in children and adolescents: a systematic review and meta-analysis of observational studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Moosavian SP, Ghodsi M, Farzanehnejad P, Ghanbari N, Mirlohi SH, Moradi S.",
+  "doi": "10.1186/s41043-025-00966-4",
+  "figures": [
+    "PRISMA flowchart of the studies examined and included in the meta-analysis",
+    "Forest plot showing odds ratio with 95% confidence interval of the association between food insecurity and anemia risk among 0 to 5 years olds children",
+    "Forest plot showing odds ratio with 95% confidence interval of the association between food insecurity and anemia risk among 6 to 18 years olds children",
+    "Funnel plot representing publication bias in the studies reporting the association between food insecurity and anemia risk among 0 to 5 years olds children",
+    "Funnel plot representing publication bias in the studies reporting the association between food insecurity and anemia risk among 6 to 18 years olds children"
+  ],
+  "tables": [
+    "Characteristics of studies included in the systematic review and meta-analysis",
+    "Subgroup analyses of food insecurity and risk of anemia among 0–5 years old children (Highest vs. lowest category meta-analysis)",
+    "Subgroup analyses of food insecurity and risk of anemia among older children aged 6–18 years (Highest vs. lowest category meta-analysis)"
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004619.2868524
+}

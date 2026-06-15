@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11870597",
+  "pmid": "39983049",
+  "title": "Association Among BMI, Self-Esteem, and Nonsuicidal Self-Injury in Young Adults to Understand the Influence of Socioenvironmental Factors: Longitudinal Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang Y, Ying R, Lu W, Liu X, Hu K, Feng Q, Yu Z, Wang Z, Lu F, Miao Y, Ma N, Tao F, Jiang T, Zhang Q.",
+  "doi": "10.2196/52928",
+  "figures": [
+    "A flowchart for the enrollment and follow-up of participants.",
+    "A directed acyclic graph showing the covariates. NSSI: nonsuicidal self-injury."
+  ],
+  "tables": [
+    "The distribution of the nonsuicidal self-injury (NSSI) variables considering demographic characteristics.",
+    "Multilevel linear regression between independent variables and nonsuicidal self-injury (NSSI).",
+    "Testing the mediation-moderation effects of BMI  a   and chronotype on the nonsuicidal self-injury (NSSI)  b   among college students.",
+    "Bootstrap method showing the conditional direct and indirect effects between self-esteem, chronotype, and nonsuicidal self-injury (NSSI).",
+    "Testing the mediation-moderation effects of BMI  a   and anxiety on the nonsuicidal self-injury (NSSI)  b   among college students.",
+    "Bootstrap method showing the conditional direct and indirect effects between self-esteem, anxiety, and nonsuicidal self-injury (NSSI).",
+    "Bootstrap method showing the conditional direct and indirect effects self-esteem, depression, and nonsuicidal self-injury (NSSI).",
+    "Testing the mediation-moderation effects of BMI  a   and depression on the nonsuicidal self-injury (NSSI)  b   among college students."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001080.9638624
+}

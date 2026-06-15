@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12043001",
+  "pmid": "40305557",
+  "title": "Airway Inflammation Responses to Walking Roadside and Park Routes After School: A Real-World Crossover Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Moloney S, Devereux G.",
+  "doi": "10.1002/ejsc.12280",
+  "figures": [
+    "Schematic of the data collection session structure and study design.",
+    "Air quality management areas (2) and (3) in Ipswich (Suffolk, UK), shaded in red, and the location of the primary school partner (X).",
+    "Roadside (A) and park (B) walking routes identified by red lines. The school location, the start and end point are identified (X). Credit to OpenStreetMap as displayed in the copyright notice, and data are available under the Open Database License.",
+    "Group mean (with 95% CI) baseline and pre‐walk FeNO (ppb) values for all six walks.",
+    "Significant reductions in pre‐walk  vs . post‐walk FeNO for both roadside ( p  = 0.006) and park ( p  = 0.008) routes. Data are presented as group mean ± SD.",
+    "Group mean (with 95% CI) change in fractional exhaled nitric oxide (FeNO) for all three roadside and three park walking routes. There were no significant differences in FeNO change scores after each walk ( p  &gt; 0.05)."
+  ],
+  "tables": [
+    "Pollutant concentrations and meteorological variables (mean ± SD)."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007213.713262
+}

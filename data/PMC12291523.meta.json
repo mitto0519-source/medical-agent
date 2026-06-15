@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12291523",
+  "pmid": "40713680",
+  "title": "Psychoactive substances: novel molecular insights and therapeutic potential for Alzheimer's disease.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Fu C, Li X, Liu X, Zheng Y, Ma X, Zhang B, Chen S, Hu L, Su S, Wang X, Sun J, Yin Q, Wang Y, Fu X, Bao Y, Xue Y, Xin T, Lu L, Zou G.",
+  "doi": "10.1186/s40035-025-00498-1",
+  "figures": [
+    "Schematic of molecular insights into AD etiology and psychoactive substances. Excessive Aβ aggregation, tau protein phosphorylation and APOE are the main characteristics of AD pathogenesis. Other risk factors include aging, head injury, vascular disease, infection and environmental factors. Briefly, altered APP processing leads to overproduction of Aβ, particularly the more aggregable isoform Aβ42",
+    "Schematic representation of the biphasic effects of CNS depressants.  a  Schematic showing mechanisms of action of BDZs in AD. BDZs function as positive allosteric modulators of GABA A R and enhance inhibitory GABAergic neurotransmission. BDZs cause calcium homeostasis imbalance, nerve damage, insulin resistance and cognitive impairment by enhancing Aβ and tau deposition, decreasing BDNF levels an",
+    "Schematic showing the mechanisms of CNS stimulants.  a  Caffeine effectively inhibits A2AR activation by competing with adenosine binding sites. This process decreases the conversion rate of AMP to cAMP and the level of PKA.  b  By activating nAChR and PI3K/Akt signaling pathways, nicotine may improve learning and memory and protect against neurological dysfunction and inflammatory processes cause",
+    "Schematic of the neuroprotective effects of THC and CBD. While THC has a similar affinity for CB 1/2 R and its psychoactive effects are primarily associated with CB 1 R activation, CBD has a very low affinity for CB 1/2 R and tends to act on GlyR and TRPV. THC and CBD inhibit Aβ aggregation, tau protein phosphorylation and neuronal hyperexcitation, showing excellent therapeutic effects on AD",
+    "Schematic of the neuroprotective effects of AEA and 2-AG. Endocannabinoids are synthesized based on the demand of the body. Their concentrations are regulated by decomposition. Endocannabinoids have modulatory effects on CB 1 Rs and TRPV1, which exert anti-inflammatory and neuroprotective effects",
+    "Schematic of the beneficial effects of psychedelics and ketamine. Most psychedelics such as DMT have a high affinity to 5-HT 1/2 R, especially the 5-HT 2A R. In addition, DMT can reduce Aβ-induced neuroinflammation through sigma-1 receptors. Higher concentrations of DMT inhibit voltage-sensitive ion channels by triggering the transfer of sigma-1 receptors from the mitochondria-associated endoplasm"
+  ],
+  "tables": [],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059805.5719383
+}

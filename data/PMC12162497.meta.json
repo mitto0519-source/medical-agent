@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12162497",
+  "pmid": "40520290",
+  "title": "Gut-brain-liver axis in growth hormone deficiency: role of microbiota-derived short-chain fatty acids in ethnic variability and therapeutic development.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Meng D, Kong W, Cheng S, Liu H, Huang C.",
+  "doi": "10.3389/fpubh.2025.1541654",
+  "figures": [
+    "The gut microbiota modulates the hypothalamic GHRH/somatostatin balance via SCFA-GPR41/43-cAMP signaling and enhances hepatic IGF-1 through butyrate-GPR109A-IL-6 pathways. Key pathways: GH suppression via cAMP/PKA/CREB; IGF-1 upregulation via HDAC inhibition. IGF-1, insulin-like growth factor-1; SCFAs, short-chain fatty acids; TNF-α, tumor necrosis factor-α.",
+    "SCFAs promote IGF-1 secretion through various mechanisms (e.g., GPR109A-IL-6 pathway), which act on target organs and affect growth and development. IGF-1, insulin-like growth factor-1; SCFAs, short-chain fatty acids; cAMP/PK, cyclic adenosine monophosphate/protein kinases; GnRH, gonadotropin-releasing hormone; GPR, G-protein-coupled receptor; IL-6, interleukin-6."
+  ],
+  "tables": [
+    "Summary of research on GHD and gut microbiota.",
+    "Evidence hierarchy of gut microbiota-based interventions for GHD."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012843.9773402
+}

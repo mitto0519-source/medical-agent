@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12084770",
+  "pmid": "40315452",
+  "title": "Development of a Predictive Model for Metabolic Syndrome Using Noninvasive Data and its Cardiovascular Disease Risk Assessments: Multicohort Validation Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park JH, Jeong I, Ko GJ, Jeong S, Lee H.",
+  "doi": "10.2196/67525",
+  "figures": [
+    "Flowchart for the study cohort formation. The gray background represents the cohort used for model training and validation, while the blue background indicates the cohort used for statistical evaluation of CVD risk. CVD: cardiovascular disease; KNHANES: Korea National Health and Nutrition Examination Survey; KoGES: Korean Genome and Epidemiology Study; METS: metabolic syndrome.",
+    "CVD HRs by continuous variables. Solid lines represent adjusted HRs and shaded regions indicate 95% CIs from restricted cubic spline regression. The CVD HR was calculated for patients predicted to have metabolic syndrome using this model. The HRs were adjusted for sex, age, alcohol consumption, smoking status, and income level. (A) The HR based on BMI, with a reference value of 25. (B) The HR base",
+    "Kaplan-Meier survival curves for cardiovascular disease according to metabolic syndrome risk groups."
+  ],
+  "tables": [
+    "Baseline characteristics.",
+    "AUROC a  performance of models in internal, external validation 1, and external validation 2 datasetsb.",
+    "Statistics for the statistical analysis cohort.",
+    "HRs a  for cardiovascular disease by characteristics."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036755.1499052
+}

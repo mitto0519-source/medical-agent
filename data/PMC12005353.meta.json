@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12005353",
+  "pmid": "40248526",
+  "title": "Examining 12 Years of Pedestrian Injuries and Fatalities in Wichita, Kansas: A Retrospective Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Aguila Gonzalez AI, Ablah E.",
+  "doi": "10.7759/cureus.80766",
+  "figures": [
+    "Crashes With Pedestrians in Wichita From 2008 Through 2019",
+    "Hit-and-Run Crashes by Year",
+    "Pedestrian Fatalities From 2008 Through 2019"
+  ],
+  "tables": [
+    "Pedestrian and Driver Demographics",
+    "Pedestrian and Driver Injuries and Fatalities",
+    "Pedestrian Serious or Fatal Injuries Bivariate Analyses"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008285.614152
+}

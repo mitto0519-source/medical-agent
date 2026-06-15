@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11882526",
+  "pmid": "40051764",
+  "title": "Exploring the relationships among online social capital, Internet self-efficacy, mental health, and cyberbully-victim roles in adolescents: a structural equation model.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen Q, Guo S, Chan KL.",
+  "doi": "10.3389/fpsyt.2025.1427655",
+  "figures": [
+    "Demographic characteristics by cyberbullying experiences.",
+    "Public school model. ** p &lt;.01, *** p &lt;.001. CB, cyber bully-victim; OSC, online social capital; ISE, internet self-efficacy; MH, mental health problems."
+  ],
+  "tables": [
+    "Demographic characteristics by cyberbullying experiences.",
+    "Correlations among online social capital, online self-efficacy, and cyberbully-victim.",
+    "Model Fit statistics.",
+    "Indirect effects and estimated bootstrap CIs."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017550.0452473
+}

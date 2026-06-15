@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12306083",
+  "pmid": "40721795",
+  "title": "The effect of recurrent mobility on air pollution exposure and mortality burden in Catalonia.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Navarro-Martínez A, Hajji M, Armengol JM, Soret A, Ponce-de-León M, Valencia A.",
+  "doi": "10.1186/s12942-025-00410-0",
+  "figures": [
+    "Map of the area of study, Catalonia. The districts (mobility areas) are coloured by population on the        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\log _{10}$$\\end{docum",
+    "Temporal patterns of the mobile population fractions of the 584 districts in 2022. ( A ) Average mobile population fraction by hour of the day for each area (thin black lines). Distribution across areas shown on boxplots. ( B ) Average of daily maximum mobile population fractions by day of the week for each area (thin black lines). Distribution across areas shown on boxplots. ( C ) Daily maximum m",
+    "Spatial patterns of air pollutant concentrations by district in 2022. ( A ) Annual average NO       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$_2$$\\end{document}     2       ",
+    "Annual average effect of recurrent mobility on air pollution exposure for the whole population, by district in 2022. Effect computed as the difference (dynamic minus static) of exposure estimates. Results for NO       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs",
+    "Annual average effect of recurrent mobility on air pollution exposure for the mobile population, by district in 2022. Effect computed as the difference (dynamic minus static) of exposure estimates. Results for NO       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsf",
+    "Overlay of air quality values and mobile population flows for two areas with relevant effects of recurrent mobility on air pollution exposure. In both subfigures, districts are coloured by the annual average NO       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}",
+    "Effect of recurrent mobility on the attributable mortality rate (per 100,000 people) of 2022 for the different air pollutants, by district. Effect computed as the difference (dynamic minus static) of the attributable mortality rates. Results for NO       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepac"
+  ],
+  "tables": [
+    "Composition of the trips taking place within Catalonia regarding mobility type",
+    "Estimated effects of recurrent mobility on exposure and attributable mortality to the air pollutants NO       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$_2$$\\end{document}   "
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007901.2495534
+}

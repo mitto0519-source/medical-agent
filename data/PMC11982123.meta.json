@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11982123",
+  "pmid": "40205238",
+  "title": "Epigenetic profiles integrated with transcriptomic reveal the difference between COPD and PRISm in KOCOSS-NIH.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Choi EA, Kim HJ, Kim Y, Jang HB, Hwang YI, Kim YY, Yoo KH, Lee HJ.",
+  "doi": "10.1007/s10142-025-01593-2",
+  "figures": [
+    "Venn diagram showing differential methylation sites with or without difference expression"
+  ],
+  "tables": [
+    "General characteristics of patients in DNA methylation and RNA sequencing groups",
+    "Characteristics of KoGES Ansan and Ansung study subgroup",
+    "The genes that show differential methylation",
+    "The genes that show differential expression"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037369.6725776
+}

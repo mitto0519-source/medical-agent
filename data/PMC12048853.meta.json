@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12048853",
+  "pmid": "40314942",
+  "title": "Cost-Effectiveness of Universal Routine Depression Screening for Adolescents in Primary Care.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Doan TT, Hutton DW, Wright DR, Prosser LA.",
+  "doi": "10.1001/jamahealthforum.2025.0711",
+  "figures": [
+    "Decision-Analytic Tree Model for Universal Routine Screening of Major Depression for Adolescents in Primary Care Settings",
+    "Cost-Effectiveness Acceptability Curve of Universal Routine Depression Screening Options Compared With Usual Care"
+  ],
+  "tables": [
+    "Model Inputs for Cost-Effectiveness Analysis",
+    "Projected Total and Incremental Costs, Depression-Free Days, and Quality-Adjusted Life-Years (QALYs) per 1000 US Adolescents Young Adults From Ages 12 to 22 Years",
+    "Base Case Analysis Showing Incremental Cost-Effectiveness Ratios Among 1000 US Adolescents From Age 12 to 22 Years"
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780052043.0936549
+}

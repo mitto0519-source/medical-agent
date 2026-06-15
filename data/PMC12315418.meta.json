@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12315418",
+  "pmid": "40745299",
+  "title": "Unraveling the link: exploring what risk factor for sleep disorders among paediatric migraine.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang B, Li L, Feng S, Yu L, Feng S.",
+  "doi": "10.1186/s12883-025-04310-5",
+  "figures": [
+    "Flow chart of patient inclusion",
+    "ROC curve of serum vitamin D for predicting sleep disorder in migraine"
+  ],
+  "tables": [
+    "Demographic data and results of biochemical analyses",
+    "The prevalence of the sleep disorders in migraine patients",
+    "Correlation between serum vitamin D and clinical characteristics of migraine",
+    "Regression analysis of serum vitamin D and the risk of developing sleep disorder in migraine"
+  ],
+  "query": "vitamin D deficiency adolescent depression",
+  "fetched_at": 1780001973.4119039
+}

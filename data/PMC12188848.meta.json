@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12188848",
+  "pmid": "40574763",
+  "title": "Risk factors for anxiety and depression in patients with atopic dermatitis and their impact on prognosis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu K, Gao W, Lu HG, Chen ZG.",
+  "doi": "10.5498/wjp.v15.i6.104738",
+  "figures": [],
+  "tables": [
+    "Comparison of hospital anxiety and depression scale assesses anxiety and depression scores among patients with different baseline data",
+    "Binary logistic regression analysis of risk factors for anxiety in patients with atopic dermatitis",
+    "Binary logistic regression analysis of risk factors for depression in patients with atopic dermatitis",
+    "Comparison of the scoring atopic dermatitis and dermatology life quality index scores among patients with different emotional symptoms",
+    "Bivariate correlation between each factor and quality of life score (dermatology life quality index)"
+  ],
+  "query": "atopic dermatitis depression",
+  "fetched_at": 1780014203.0808136
+}

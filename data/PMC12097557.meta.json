@@ -1,0 +1,35 @@
+{
+  "pmcid": "PMC12097557",
+  "pmid": "40402949",
+  "title": "Do political parties matter for property taxes?",
+  "year": 2025,
+  "journal": "",
+  "authors": "Aldunate F, Diaz C, Truffa S.",
+  "doi": "10.1371/journal.pone.0319994",
+  "figures": [
+    "Property tax rates.",
+    "Density test: 2018 reassessment.  This figure shows density estimators for the RD running variable, which is the margin obtained by the mayor of each coalition for the 2016 municipal election. A significant difference in the density near the cutoff would provide evidence of coalitions having a systematic impact on election results.",
+    "Regression discontinuity design using municipal elections.  This figure shows regression discontinuity results for close elections (2012 and 2016 municipal elections) and their subsequent effect on property appraisals. The running variable is the margin between the top two candidates in the election, so plots on the right side of the cutoff are elected candidates. The bottom row only includes obse",
+    "RD 2014 - Age of elected mayor.  This figure shows density estimators for the RD running variable, which is the margin obtained by the mayor of each coalition for the 2012 municipal election. A significant difference in the density near the cutoff would provide evidence of coalitions having a systematic impact on election results.",
+    "RD 2014 - Gender of elected mayor (female =1).  This figure shows density estimators for the RD running variable, which is the margin obtained by the mayor of each coalition for the 2012 municipal election. A significant difference in the density near the cutoff would provide evidence of coalitions having a systematic impact on election results."
+  ],
+  "tables": [
+    "Property tax rates.",
+    "Appraisal changes by reassessment year",
+    "Election summary statistics",
+    "Election margins of mayoral candidates by coalition",
+    "Balance test for relevant variables before elections",
+    "Manipulation test applied to municipal elections",
+    "Regression discontinuity results - Pooling 2014 and 2018",
+    "Regression discontinuity results - Optimal bandwidth in each estimation",
+    "Regression discontinuity results for 2014 - Compensating differential analyses",
+    "Sensitivity of main results to bandwidth selection",
+    "Regression discontinuity results (including controls)",
+    "Falsification test: Effects on income",
+    "Forbearance hypothesis Effects on constructed surface",
+    "Regression discontinuity results controlling for commercial prices",
+    "Incumbent analysis"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035497.0216403
+}

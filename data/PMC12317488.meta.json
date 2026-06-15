@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12317488",
+  "pmid": "40753225",
+  "title": "The association of status transitions from school to work with leisure-time physical activity on weekdays: a longitudinal analysis of data from the German Socio-Economic Panel.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Bau JT, Götz S, Loerbroks A, Pischke CR.",
+  "doi": "10.1186/s12889-025-23739-4",
+  "figures": [
+    "Pathways to employment in Germany",
+    "Physical activity before and after transitions: McNemar’s test a"
+  ],
+  "tables": [
+    "Individual characteristics of the subsample used from the German Socio-Economic panel, waves 2014–2020",
+    "Main effects of status transitions on physical activity. Results of logistic fixed-effects regression"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007823.5056975
+}

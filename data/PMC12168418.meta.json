@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12168418",
+  "pmid": "40524160",
+  "title": "The dual impact of ictal and interictal burden in migraine: an analysis from the ObserVational survey of the Epidemiology, tReatment, and Care Of MigrainE (OVERCOME) Japan second study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Takizawa T, Danno D, Ishii R, Suzuki S, Miura M, Tanizawa Y, Osaga S, Okada M, Hashimoto C, Komori M.",
+  "doi": "10.1186/s10194-025-02079-z",
+  "figures": [
+    "Headache symptoms and allodynia in the overall cohort and in the Severe, High Interictal Burden, High Ictal Burden, and Milder subgroups. HIT-High subgroups are shown in blue, and HIT-Low subgroups are shown in green. MIBS-High subgroups are shown in dark colors, and MIBS-Low subgroups are shown in light colors.  A  MHD.  B  Pain duration. As the distribution of pain duration was skewed, these dat",
+    "A  MIDAS total score.  B  Frequency of concern about headaches during the interictal period.  C  MSQ score.  D  WPAI-M score among all participants (Activity Impairment) or participants who are employed (overall  n  = 11,891 for Presenteeism and Work Productivity Loss; overall  n  = 11,981 for Absenteeism). HIT-High subgroups are shown in blue, and HIT-Low subgroups are shown in green. MIBS-High s",
+    "Distribution of  A  MIDAS grade (overall  n  = 19,474) and  B  IMPAC grade (among participants with partners/spouses and/or children under 8 years of age; overall  n  = 12,775) in the overall cohort and in the Severe, High Interictal Burden, High Ictal Burden, and Milder subgroups. Abbreviations: IMPAC, Impact of Migraine on Partners and Adolescent Children Scale; MIDAS, Migraine Disability Assess",
+    "A  Experience with medical treatment and diagnosis.  B  Experience with drugs.  C  mTOQ-6 score (in participants who had used OTC and/or prescription acute treatment for headache within the past year; overall  n  = 17,094). HIT-High subgroups are shown in blue, and HIT-Low subgroups are shown in green. MIBS-High subgroups are shown in dark colors, and MIBS-Low subgroups are shown in light colors. "
+  ],
+  "tables": [
+    "Subgroup definitions based on HIT-6 and MIBS-4 scores",
+    "Demographics and clinical characteristics",
+    "Economic burden of migraine"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048224.7773318
+}

@@ -1,0 +1,35 @@
+{
+  "pmcid": "PMC11852728",
+  "pmid": "40002535",
+  "title": "Challenging Cognitive Load Theory: The Role of Educational Neuroscience and Artificial Intelligence in Redefining Learning Efficacy.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gkintoni E, Antonopoulou H, Sortwell A, Halkiopoulos C.",
+  "doi": "10.3390/brainsci15020203",
+  "figures": [
+    "Flowchart of PRISMA methodology.",
+    "Risk of bias assessment visualization.",
+    "Circular network graph of CLT, EdNeuro.",
+    "Heatmap of AI, ML, CLT, EdNeuro, and LE alignment in Learning Optimization.",
+    "Related methodological approaches across metrics.",
+    "Conceptual framework: AI-powered AL for cognitive load optimization.",
+    "Heatmap: relationship between cognitive load optimization and learning outcomes.",
+    "Heatmap: AI-driven personalization metrics in STEM and professional education.",
+    "Layered spider chart: AI impact on high cognitive load learning domains.",
+    "Ethical considerations in AI and ML education.",
+    "Cognitive state detection accuracy over time.",
+    "Correlation between cognitive monitoring methods.",
+    "Key study outcomes related to AI/ML applications in education.",
+    "Three-dimensional scatter plot depicting 103 research studies across three dimensions: AI complexity, learning outcome impact, and scalability potential.",
+    "Intrinsic, extraneous, and GCL types.",
+    "Heatmap of ethical and practical challenges across study domains."
+  ],
+  "tables": [
+    "Inclusion and exclusion criteria for systematic review.",
+    "Research articles of systematic analysis (N = 103).",
+    "Comparison of CLT, SRL, and PBL in AI-driven learning environments.",
+    ""
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019737.158693
+}

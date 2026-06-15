@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12215242",
+  "pmid": "39658313",
+  "title": "Impact of the visceral adipose tissue on bone quality in patients with untreated mild-to-severe obstructive sleep apnea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sartori G, Bertoldo F, Gretter A, Lovati FM, Caprino R, Viterale G, Crisafulli E.",
+  "doi": "10.1111/jsr.14397",
+  "figures": [
+    "Study flow chart. CPAP, continuous positive airway pressure; DXA, dual‐energy X‐ray absorptiometry; OHS, obesity hypoventilation syndrome; OSA, obstructive sleep apnea; VAT, visceral adipose tissue.",
+    "Scatterplot between VAT and TBS lumbar spine L1–L4. TBS, trabecular bone score; (i)(n)VAT, (increased) (normal) visceral adipose tissue.",
+    "Boxplots concerning the bone microarchitecture alterations and the vertebral fractures. SDI, spine deformity index; TBS, trabecular bone score; VAT, visceral adipose tissue.",
+    "Prevalence of vertebral fractures and related sites and grades.",
+    "Examples of lumbar spine fractures evaluated by lateral view chest X‐ray.",
+    "Distribution of ST90 (min) and number of lumbar spine fractures. Data were analysed in patients with lateral chest X‐rays and males only ( N  = 31). *Adjusted according to the presence of obesity (body mass index ≥30 kg/m 2 ); **Adjusted according to the presence of visceral adipose tissue (VAT) categories (normal VAT and increased VAT). ANOVA, analysis of variance; ST90, sleep time with oxygen sa"
+  ],
+  "tables": [
+    "General characteristics according to the level of the visceral adipose tissue.",
+    "Correlation analyses concerning the visceral adipose tissue.",
+    "Linear regression models predicting bone quality."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002147.452563
+}

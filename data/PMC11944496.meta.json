@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11944496",
+  "pmid": "40290053",
+  "title": "Prospective Associations of Dietary Antioxidant Vitamin Intake and 8-Year Risk of Elevated Serum &lt;i&gt;C&lt;/i&gt;-Reactive Protein Levels.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Baik I.",
+  "doi": "10.3390/nu17061020",
+  "figures": [
+    "Multivariable hazard ratio for the risk of elevated serum high-sensitivity  C -reactive protein concentrations (&gt;3 mg/L) in the associations of DRI 1 -based groups (&lt;60%, 60–79%, 80–119%, and ≥120% of DRI) for antioxidant vitamins. Abbreviations: DRI, dietary reference intake; hsCRP, high-sensitivity  C -reactive protein. The multivariable model includes age, sex, residential district (urban"
+  ],
+  "tables": [
+    "Baseline characteristics of 7695 study participants according to quartile groups of serum  C -reactive protein concentrations.",
+    "Associations between dietary antioxidant vitamin intake and the 8-year risk of elevated high-sensitivity  C -reactive protein concentrations (&gt;3 mg/L).",
+    "Stepwise analysis of multivariable associations between risk-related variables and the 8-year risk of elevated high-sensitivity  C -reactive protein concentrations (&gt;3 mg/L).",
+    "Stratification analysis results for multivariable associations between vitamin C consumption and the 8-year risk of elevated high-sensitivity  C -reactive protein concentrations (&gt;3 mg/L)."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041311.7800384
+}

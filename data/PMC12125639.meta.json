@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12125639",
+  "pmid": "40445599",
+  "title": "Medicare Eligibility and Health Care Use Among Adults With Psychological Distress.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park S, Koh KA, Liu M, Wadhera RK.",
+  "doi": "10.1001/jamahealthforum.2025.1089",
+  "figures": [
+    "Health Insurance Coverage Among Adults With Psychological Distress (Aged 59 to 71 Years), 2009-2019  Individuals who scored 3 or higher on the 2-item Patient Health Questionnaire or 13 or higher on the 6-item Kessler Psychological Distress Scale were classified as having psychological distress. Medicare coverage and/or health insurance coverage by any payer (eg, private health insurance, military ",
+    "Mental Health Service Use Among Adults With Psychological Distress (Aged 59 to 71 Years), 2009-2019  Individuals who scored 3 or higher on the 2-item Patient Health Questionnaire or 13 or higher on the 6-item Kessler Psychological Distress Scale were classified as having psychological distress. A, Outpatient mental health visits were identified if the reason for the visit was to receive treatment ",
+    "General Health Service Use and Acute Care Use Among Adults With Psychological Distress (Aged 59-71 Years), 2009-2019  Individuals who scored 3 or higher on the 2-item Patient Health Questionnaire or 13 or higher on the 6-item Kessler Psychological Distress Scale were classified as having psychological distress. Survey weights were used to adjust sample characteristics to be representative of the U"
+  ],
+  "tables": [
+    "Characteristics of 3970 Adults With Psychological Distress Before and After Medicare Eligibility at Age 65 Years, 2009-2019",
+    "Association of Medicare Eligibility at Age 65 Years and Health Insurance and Health Care Use Among Adults With Psychological Distress, 2009-2019  a"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035439.5982268
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12080805",
+  "pmid": "40373017",
+  "title": "Association of the cardiometabolic index with sarcopenia among U.S. adults: NHANES 2011-2018 findings.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao Q, Xu Y, Chen X.",
+  "doi": "10.1371/journal.pone.0323905",
+  "figures": [
+    "Flow chart of the study population.",
+    "The smooth curve fitting plot of the association between CMI and sarcopenia."
+  ],
+  "tables": [
+    "Weighted baseline characteristics by CMI tertile groups (NHANES 2011-2018).",
+    "Univariate logistics regression analysis.",
+    "Relationships between the CMI and sarcopenia risk.",
+    "Subgroup analysis investigating the connection between sarcopenia and CMI."
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006868.6485202
+}

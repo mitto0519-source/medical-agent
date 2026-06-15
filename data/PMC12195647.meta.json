@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12195647",
+  "pmid": "40573262",
+  "title": "Unveiling the Anti-Inflammatory Effects of Antidepressants: A Systematic Review of Human Studies over the Last Decade.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Bleibel L, Sokołowska P, Henrykowska G, Owczarek J, Wiktorowska-Owczarek A.",
+  "doi": "10.3390/ph18060867",
+  "figures": [
+    "Changes in the main pro- and anti-inflammatory factors in depression. The red arrow represents pro-inflammatory factors and their increase in depression, while the green arrow represents anti-inflammatory factors and their decrease in depression. Created with Biorender.",
+    "Reported effects of SSRIs, SNRIs, ketamine, and esketamine on cytokine levels. Numbers in the columns indicate how many studies found an increase, decrease, or no effect/no significant effect in cytokine levels after treatment with each type of antidepressant. CRP: C-reactive protein; IL-1RA: IL-1 receptor antagonist;  TNF-α: Tumor Necrosis Factor Alpha; IFN-γ: interferon gamma .",
+    "The Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) [ 309 ] flowchart."
+  ],
+  "tables": [
+    "The effect (decrease (↓), increase (↑), or no statistically significant effect (↔)) of antidepressants (SSRIs, SNRIs, ketamine, and esketamine) on inflammatory and non-inflammatory factors; all studies were conducted in serum.  TNF-α: Tumor Necrosis Factor Alpha; NLRP3: Nod-like receptor pyrin-containing 3; IFN-γ: interferon gamma; hsCRP: high-sensitivity C-reactive protein; MDD: major depressive "
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055363.3976183
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12145346",
+  "pmid": "40481998",
+  "title": "Exploring the Effects of Lifestyle Disruptions on Physical Fitness in Children and Adolescents: a Systematic Scoping Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dambel L, Del Sordo G, Saidi O, Duché P.",
+  "doi": "10.1186/s40798-025-00883-0",
+  "figures": [
+    "PRISMA Flow chart of study literature search. (Page MJ, McKenzie JE, Bossuyt PM, Boutron I, Hoffmann TC, Mulrow CD, et al. The PRISMA 2020 statement: an updated guideline for reporting systematic reviews. BMJ 2021;372:n71. doi: 10.1136/bmj.n71)",
+    "Breakdown of data points. ( Panel A ) Breakdown by disruptive situation and by physical fitness component. ( Panel B ) Breakdown by disruptive situation, gender, and age range",
+    "Traffic light analysis of pre- to post-disruption changes on physical fitness (PF) components.  (Panel A)  From pre- to post-lockdown.  (Panel B)  From pre- to post-vacations.  (Panel C)  From pre- to post- training cessation  *The bars represent the percentage of data points reporting significant increases (green), significant decreases (red), or no changes (yellow) in physical fitness components",
+    "Pre- to post-disruption changes in physical fitness components across participants age  (Panel A)  In cardiorespiratory fitness.  (Panel B)  In muscle strength.  (Panel C)  In explosive power.  (Panel D)  In speed",
+    "Pre- to post-disruption changes in physical fitness components across duration of the disruptions  (Panel A)  In cardiorespiratory fitness.  (Panel B)  In muscle strength.  (Panel C)  In explosive power.  (Panel D)  In speed",
+    "VO 2max  baseline levels and pre- to post-disruption changes"
+  ],
+  "tables": [],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780010936.0910218
+}

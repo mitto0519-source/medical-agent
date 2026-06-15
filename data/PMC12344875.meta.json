@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12344875",
+  "pmid": "40804380",
+  "title": "Adolescent loneliness as a predictor of adult obesity: a longitudinal analysis from the HUNT study, Norway.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Rangul V, Brennsaeter M, Eik-Nes TT, Kvaløy K, Friis J.",
+  "doi": "10.1186/s12889-025-23872-0",
+  "figures": [
+    "Flow chart of participants across the Young-HUNT3-HUNT4 surveys",
+    "Variation in obesity rates (BMI ≥ 30) from adolescence (YH3) to young adulthood (HUNT4) among individuals who reported being rarely lonely versus lonely during adolescence"
+  ],
+  "tables": [
+    "Baseline characteristics of participants according to categories of loneliness ( n  = 2 134; females  n  = 1 257, males  n  = 877)",
+    "Prevalence trends in BMI, waist circumference and loneliness from YH3 to HUNT4",
+    "The association between loneliness in adolescence and BMI in adulthood ( N  = 2 017; females  n  = 1 253, males  n  = 764)",
+    "Multiple linear regression association between loneliness in adolescence and waist circumference in adulthood"
+  ],
+  "query": "loneliness isolation adolescent mental",
+  "fetched_at": 1779999603.1084666
+}

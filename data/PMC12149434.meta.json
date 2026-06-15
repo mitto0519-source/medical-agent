@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12149434",
+  "pmid": "40491255",
+  "title": "Risk Assessment of Tuberculosis in Patients With Chronic Mental Illness and Related Factors: A Population-Based Cohort Study in Taiwan.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hung LC, Kung PT, Tsai TH, Tsai WC, Huang KH.",
+  "doi": "10.1111/crj.70088",
+  "figures": [
+    "Screening process for the study subjects.",
+    "The cumulative incidence rate of the risk of developing tuberculosis between mental illness patients and the general public (log rank test &lt; 0.001)."
+  ],
+  "tables": [
+    "Distribution of basic characteristics of mental illness patients and normal patients after matching.",
+    "Incidence of tuberculosis in mental illness patients and normal patients per 100 000 person‐years.",
+    "Relative risk of developing tuberculosis between mental illness patients and normal patients."
+  ],
+  "query": "Taiwan adolescent mental health",
+  "fetched_at": 1780049175.3739119
+}

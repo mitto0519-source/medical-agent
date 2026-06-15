@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11985763",
+  "pmid": "40224639",
+  "title": "Exploring the severity and risk factors of non-alcoholic fatty liver disease using the SAF scoring system.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Li X, Wang S, Zhang Z, Deng W, Zhang Y, Cao W, Wei X, Gao Z, Yao L, Wang S, Yi W, Xie Y, Li M.",
+  "doi": "10.3389/fmed.2025.1510679",
+  "figures": [
+    "Patient enrollment flowchart."
+  ],
+  "tables": [
+    "General demographic data of study subjects.",
+    "History of metabolic diseases, family history, and BMI data in three groups.",
+    "Comparison of laboratory indicators between the three groups.",
+    "Pairwise comparison results using Dunn’s test.",
+    "Sensitivity analysis results of regression models before and after excluding underage patients."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995055.5274415
+}

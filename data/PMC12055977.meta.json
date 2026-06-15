@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12055977",
+  "pmid": "40328752",
+  "title": "Perinatal SSRI exposure impacts innate fear circuit activation and behavior in mice and humans.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zanni G, van Dijk MT, Cagliostro MC, Sepulveda P, Pini N, Rose AL, Kesin AL, Lugo-Candelas C, Goncalves PD, MacKay AS, Iigaya K, Kulkarni P, Ferris CF, Weissman MM, Talati A, Ansorge MS, Gingrich JA.",
+  "doi": "10.1038/s41467-025-58785-4",
+  "figures": [
+    "Postnatal fluoxetine (PND2-11) increases freezing to a predator.   A  Timeline of the adult mouse behavioral study. Created in BioRender. Zanni, G. (2025)  https://BioRender.com/m34p441 .  B  Manual freezing score during habituation early and late phases.  C  Manual freezing score during context re-exposure and during predator odor.  D  Latency to freeze expressed as percent change of habituation ",
+    "Postnatal fluoxetine (PND2-11) increases innate fear circuit activation.   A  Timeline of the adult mouse fMRI study. Created in BioRender. Zanni, G. (2025)  https://BioRender.com/s15z123 .  B  Shown are the different components of the mouse imaging system. Below are sagittal and axial views of an awake mouse brain. Note the linearity along the Z-axis. The axial images taken from a 22-slice RARE s",
+    "Effects of  in utero  SSRI exposure in human adolescents.   A  The experimental timeline. At baseline mothers reported on their pregnancy and demographics. Children underwent an MRI scan approximately two years post-baseline, and mothers filled out the Child Behavioral Checklist (CBCL) to assess symptoms at that time and one year post-MRI. Created in BioRender. Zanni, G. (2025)  https://BioRender."
+  ],
+  "tables": [
+    "Left and right amygdala activity in response to fearful vs neutral faces predicts concurrent and future depressive symptomatology"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055299.2784483
+}

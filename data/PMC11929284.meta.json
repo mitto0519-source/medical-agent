@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11929284",
+  "pmid": "40119361",
+  "title": "Parental neighbourhood perceptions and active commuting to school in children according to their sex using a self-organised map approach: a cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Molina-García J, García-Massó X, Menescardi C, Estevan I, Queralt A.",
+  "doi": "10.1186/s12889-025-22309-y",
+  "figures": [
+    "Component planes of the input variables for boys and profiles found using the  k -means algorithm.  A  component planes;  B  Davies–Bouldin index used to select the number of clusters in the  k -means analysis;  C  number of participants per cluster;  D  clusters and hit map (in every neuron, the bigger the grey shadow, the higher the number of boys included);  E  mean and standard deviation for e",
+    "Component planes of the input variables for girls and profiles found using the  k -means algorithm.  A  component planes;  B  Davies–Bouldin index used to select the number of clusters in the  k -means analysis;  C  number of participants per cluster;  D  clusters and hit map (in every neuron, the bigger the grey shadow, the higher the number of girls included);  E  mean and standard deviation for"
+  ],
+  "tables": [
+    "NEWS-Y-IPEN subscales: description, response options, and scale scores",
+    "Descriptive statistics and comparisons of self-organising map input variables between boys and girls",
+    "Descriptive statistics and comparisons for each variable between clusters of boys",
+    "Descriptive statistics and comparisons for each variable between clusters of girls"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007579.0577257
+}

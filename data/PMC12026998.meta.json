@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12026998",
+  "pmid": "40281873",
+  "title": "Cardiometabolic Disease Risk Factors and Lifestyle Behaviors Among Adolescents: A Latent Class Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "de Faria FR, Miranda VPN, Howe C, Sasaki JE, Amato A, Musumeci G, Amorim PRDS.",
+  "doi": "10.3390/healthcare13080925",
+  "figures": [
+    "Multiple correspondence analysis of variables related to adolescents’ cardiometabolic disease risk factors. Cronbach’s α. BMI: body mass index; BP: blood pressure; BF%: body fat percentage; WC: waist circumference; WHtR: waist-to-height ratio.",
+    "Profile plot of the LCA Model associated with Risk Factors of Cardiometabolic Diseases (CD) of adolescents. Class 1: ‘Low Risk of CD’, Class 2: ‘Moderate Risk of CD’, and Class 3: ‘High Risk of CD’. BMI: body mass index; BP: blood pressure; BF%: body fat percentage; WC: waist circumference; WHtR: waist-to-height ratio.",
+    "Profile plots of the latent class models associated with the cardiometabolic disease risk factors separately by sex. ( A ) AIC = 589.78; BIC = 644.04; χ 2  = 10.56, Degree of Freedom = 14, G 2  = 9.39 ( p -value = 0.805), and entropy = 0.997. ( B ) AIC = 540.52; BIC = 593.73; χ 2  = 1.38, Degree of Freedom = 14, G 2  = 1.55 ( p -value = 0.999), and entropy = 0.917. Class 1: “Low Risk”, Class 2: “M"
+  ],
+  "tables": [
+    "Model fit indexes for latent class models.",
+    "Sex, screen time, and sedentary behavior as predictors of membership prevalence in latent classes associated with cardiometabolic disease risk factors in adolescents.",
+    "Age and lifestyle behaviors according to the latent classes associated with the cardiometabolic disease risk factors among adolescents.",
+    ""
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006889.6909342
+}

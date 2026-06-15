@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12070511",
+  "pmid": "40355837",
+  "title": "The association between a stress-is-enhancing mindset and internet gaming disorder was mediated by behavioral disengagement among medical undergraduate students: a multi-center survey in China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xiang H, Liu L, Su X, Yang Y, Xue H, Liu B, Tu Y, Wang R, Mo X, Luo H, Li L, Tian X, Yang Y, Qiao Z, Li L, Xie T, Li S, Lau JTF, Yu Y.",
+  "doi": "10.1186/s12888-025-06910-4",
+  "figures": [
+    "Diagrams for key research hypotheses. ( a ) Proposed mediation model. ( b ) Proposed moderated mediation model",
+    "Mediating effect of behavioral disengagement between the stress-is-enhancing mindset and IGD. (***,  p  &lt; 0.001. Standardized coefficients were reported. The model was adjusted for background factors, including gender, age, grade, city of study, study major, whether being a local student, and self-rated relative family financial situation)",
+    "The moderation effect of gender on the mediation mechanism. (Standardized coefficients were reported. Solid line = Statistically significant path; Dashed line = Statistically non-significant path. The model was adjusted for background factors, including age, grade, city of study, study major, whether being a local student, self-rated relative family financial situation)"
+  ],
+  "tables": [
+    "Participants’ characteristics",
+    "Logistic regression analyses examining the factors of IGD"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998311.4885669
+}

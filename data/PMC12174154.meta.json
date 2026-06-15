@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12174154",
+  "pmid": "40534699",
+  "title": "Gut microbiota in liver diseases: initiation, development and therapy.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yu JX, Wu J, Chen X, Zang SG, Li XB, Wu LP, Xuan SH.",
+  "doi": "10.3389/fmed.2025.1615839",
+  "figures": [
+    "Manifestations of gut microbiota in the disease process of viral hepatitis.",
+    "Mechanisms of the gut microbiota in the development of LC (by Figdraw). DAO, Diamine oxidase; BA, Bile acids; IL-8, Interleukin-8; SIBO, Small intestinal bacterial overgrowth; TNF-alpha, Tumor necrosis factor-alpha.",
+    "Mechanisms of the gut microbiota in the development of HCC (by Figdraw). ROS, Reactive oxygen species; IL-6, Interleukin-6; M1, Macrophage 1; M2, Macrophage 2; PBP1B, Penicillin binding protein 1B."
+  ],
+  "tables": [
+    "Manifestations of gut microbiota in the disease process of viral hepatitis.",
+    "Gut microbiota-clinical correlations in liver diseases.",
+    "Applications and mechanisms of microbial-based interventions in liver diseases.",
+    "Manifestations of gut microbiota in the disease process of ALD."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995330.8650222
+}

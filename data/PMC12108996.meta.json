@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12108996",
+  "pmid": "40433494",
+  "title": "The Impact of Physical Activity on Negative Affect and Sleep Quality in Adolescents: Network Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang B, Gao J.",
+  "doi": "10.2147/prbm.s516487",
+  "figures": [
+    "Demographic Information",
+    "EBICglasso model based on the item-level network analysis.",
+    "Node expected influence ( A ) and node bridge expected influence ( B )."
+  ],
+  "tables": [
+    "Demographic Information",
+    "Means, Standard Deviations and Partial Correlations Among Variables"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001088.919842
+}

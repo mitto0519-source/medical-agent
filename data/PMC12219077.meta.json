@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12219077",
+  "pmid": "40594326",
+  "title": "An investigation of drug-induced mental disorders in the children and adolescents population utilizing the FDA adverse event reporting system.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tang L, Li Q, Zhao X, Ding L, Li H, Ding C, Teng L.",
+  "doi": "10.1038/s41598-025-06403-0",
+  "figures": [
+    "Flow diagram of data extraction and cleaning.",
+    "Trend Graph of Annually Reported Adverse Event Numbers for Five Drug-Related Mental Disorders from 2004 to Q1-Q2 of 2024."
+  ],
+  "tables": [
+    "Top 15 medications associated with mental disorders in children and adolescents by Frequency.",
+    "Patient characteristics on Drug-Induced mental disorders in children and Adolescents.",
+    "Outcome characteristics of reported cases with Drug-Induced mental disorders in children and Adolescents.",
+    "Indications for Drug-induced mental disorders in children and Adolescents.",
+    "Medication duration associated with Drug-induced mental disorders in children and Adolescents."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056016.6228366
+}

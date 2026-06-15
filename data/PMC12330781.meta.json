@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12330781",
+  "pmid": "40772830",
+  "title": "The Longitudinal Association Between Chronic Back Pain and Cognitive Decline in Older Adults With Mediation Analysis: An Analysis of Four Population-Based Databases.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Huang FF, Zhang Y, Liu L, Hsu CL, Chung R, Wu W, Zheng DKY, Xiong Z, Chang JR, Zheng Y, Ferreira ML, Ferreira PH, Amy FU, Zoubi FAL, Leong HT, Wong AYL.",
+  "doi": "10.1002/ejp.70084",
+  "figures": [
+    "Map of chronic back pain prevalence among older adults by country."
+  ],
+  "tables": [
+    "Characteristics of included participants in the CHARLS, ELSA, HRS, and SHARE.",
+    "Associations between chronic back pain and memory‐related diseases in older adults.",
+    "Association between chronic back pain and cognitive decline (i.e., numeracy, orientation, immediate word recall, delayed word recall memory, and overall cognitive score) in older adults.",
+    "Associations between chronic back pain and subjective cognitive decline in older adults."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021634.9487004
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11992854",
+  "pmid": "40217160",
+  "title": "The impact of a comprehensive strategy on HIV treatment continuum in a highly endemic area of China: an interrupted time series analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liang R, Chen F, Tang H, Wang J, Zhao D, Wang J, Yu J, Li J, Yan J, Liu Z.",
+  "doi": "10.1186/s12879-025-10861-2",
+  "figures": [
+    "Number of newly diagnosed PLHIV per quarter in Liangshan from 2014 to 2021",
+    "Poisson or quasi-Poisson segmented regression models for three outcomes among newly diagnosed PLHIV before and after the Action Plan in Liangshan from 1 January 2014 to 31 December 2021, not accounting for seasonality. 30-day ART initiation = proportion of 30-day ART initiation per month ( A ), 6-month follow-up = proportion of 6-month follow-up per month ( B ), and viral suppression = proportion "
+  ],
+  "tables": [
+    "Characteristics of newly diagnosed PLHIV in Liangshan, 2014 to 2021 ( n  = 37,888)",
+    "Quasi-Poisson segmented regression models of the impact of comprehensive strategy on the proportion of 30-day ART initiation among PLHIV in Liangshan from January 2014 to December 2021, accounting for seasonality",
+    "Poisson segmented regression models of the impact of the comprehensive strategy on the proportion of 6-month follow-up in Liangshan January 2014 to June 2021, accounting for seasonality",
+    "Quasi-Poisson segmented regression models of the impact of the comprehensive strategy on viral suppression in Liangshan January 2015 to December 2021, accounting for seasonality"
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032493.8501961
+}

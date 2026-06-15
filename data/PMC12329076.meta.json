@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12329076",
+  "pmid": "40777884",
+  "title": "Association of human immunodeficiency virus with acute myocardial infarction and presumed sudden cardiac death.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jabre P, Chocron R, Laurenceau T, Chabrol M, Meli U, Youssfi Y, Perier MC, Bougouin W, Beganton F, Loeb T, Revaux F, Jost D, Cariou A, Empana JP, Adnet F, Jouven X.",
+  "doi": "10.1016/j.resplu.2025.101035",
+  "figures": [
+    "Flow chart .  We used the SNDS database to collect medical data spanning the 5 years preceding each PSCD or AMI event, up to the date of occurrence. For the first PSCD patient included in 2011, this retrospective data collection began in 2006.",
+    "Logistic regression evaluating the association between HIV and PSCD compared to HIV and AMI .  HIV: Human Immunodeficiency Virus; PSCD: Presumed Sudden Cardiac Death; AMI: Acute Myocardial Infarction; OR: Odds-Ratio; CI: Confidence Interval. Odds-ratio for HIV was adjusted for potential confounders, including age, sex, smoking abuse, mood disorders excluding depressive episode, drug use and alcoho"
+  ],
+  "tables": [
+    "Patients’ characteristics.",
+    "Characteristics of patients with human immunodeficiency virus."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021725.2802837
+}

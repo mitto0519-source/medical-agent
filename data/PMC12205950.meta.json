@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12205950",
+  "pmid": "40544344",
+  "title": "A surrogate endpoint-based provisional approval causal roadmap, illustrated by vaccine development.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gilbert PB, Peng J, Han L, Lange T, Lu Y, Nie L, Shih MC, Waddy SP, Wiley K, Yann M, Zafari Z, Ghosh D, Follmann D, Juraska M, Díaz I.",
+  "doi": "10.1093/biostatistics/kxaf018",
+  "figures": [
+    "Transportability: Learning about risk of a target outcome       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{document}\n$ Y $\\end{document}   for treatment       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wa",
+    "Causal models for the relationship of treatment       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{document}\n$ A $\\end{document}  , baseline covariates       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasys",
+    "Results for Simulation Study 1 across true VE = 0, 0.5, and 0.9 for the one-step and plug-in estimators. The top, middle, and bottom panels display results for estimating       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{docu",
+    "Results for Simulation Study 2 across true VE = 0, 0.5, and 0.9 for the one-step and plug-in estimators. The top, middle, and bottom panels display results for estimating       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{docu",
+    "Results for Simulation Study 3 across true VE = 0, 0.5, and 0.9 for the one-step and plug-in estimators. The top, middle, and bottom panels display results for estimating       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{docu"
+  ],
+  "tables": [],
+  "query": "negative control causal inference",
+  "fetched_at": 1780022360.1949458
+}

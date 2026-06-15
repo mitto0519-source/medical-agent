@@ -1,0 +1,33 @@
+{
+  "pmcid": "PMC12272457",
+  "pmid": "40688431",
+  "title": "The effect and safety of sleep interventions on suicidal thoughts and behavior - A systematic review and meta-analyses.",
+  "year": 2025,
+  "journal": "",
+  "authors": "von Spreckelsen P, Schouten D, Waslam NG, Katuin P, Heering HD, Planting C, Antypa N, Kivelä L, Lancel M, Schweren LJS.",
+  "doi": "10.1016/j.sleepx.2025.100145",
+  "figures": [
+    "Flow diagram of the Study Inclusion.",
+    "Forest Plot of all Efficacy Studies on Suicidal Ideation   Note.  CBT = psychotherapeutic sleep intervention; Light = light intervention; Med-I = medications against insomnia; Med-O = off-label medication.",
+    "Forest Plot of Efficacy Studies with Psychotherapeutic Sleep Interventions on Suicidal Ideation   Note.  CBT-I = cognitive behavioral therapy for insomnia; CBT-N: cognitive behavioral therapy for nightmares; ERRT = exposure, relaxation, and rescripting therapy; Mind = mindfulness intervention; CBT + Light = psychotherapeutic sleep intervention with light component.",
+    "Forest Plot of Safety Studies with Medications Treating Insomnia on Suicidal Ideation  Note. SXB(ON) = sodium oxybate (once-nightly).",
+    "Forest plot of safety studies with medications treating narcolepsy on suicidal ideation.",
+    "Influence analysis meta-analysis model on suicidal ideation as outcome",
+    "Funnel plot and publication bias correction results (outcome: suicidal ideation)",
+    "Forest Plot of all Efficacy Studies on sleep disturbance",
+    "Influence analysis meta-analysis model on suicidal ideation as outcome",
+    "Risk of Bias Graph for all Efficacy Studies",
+    "Risk of Bias Graph for all Safety Studies"
+  ],
+  "tables": [
+    "Overview of studies included in the systematic review.",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060761.2516298
+}

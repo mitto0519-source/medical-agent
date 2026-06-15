@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11895232",
+  "pmid": "40065395",
+  "title": "Dopamine D1 receptor agonist alleviates post-weaning isolation-induced neuroinflammation and depression-like behaviors in female mice.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao ZW, Wang YC, Chen PC, Tzeng SF, Chen PS, Kuo YM.",
+  "doi": "10.1186/s12993-025-00269-y",
+  "figures": [
+    "SKF alleviated PWI-induced microglial activation and depressive-like behaviors. ( A ) Quantitative results of the immobility time in FST. ( B ) Representative figure showing the needle trajectory for SKF injection into the prelimbic area of the mPFC. The image on the right depicted the needle tract resulting from stereotaxic surgery aimed at targeting the prelimbic area of the mPFC. The symbols (✕",
+    "Eight-week PWI induced depression-like behaviors and microglial activation in FS circuit-related brain regions of mice. ( A ) Results of sucrose preference in SPT after 8 weeks of PWI.  n  = 8 cages of GH and 19 cages of PWI. ( B ) Results of the exhibition of immobility in FST after 8 weeks of PWI.  n  = 19 mice. ( C ,  F , and  I ) Representative micrographs of Iba1 immunostaining in the prelimb",
+    "Iba1 +  area and density are positively correlated with the immobility time in the FST. Correlations between the immobility time in the FST and Iba1 +  areas ( A ,  B , and  C ), as well as between the immobility time in the FST and Iba1 +  cell density ( D ,  E , and  F ) in the mPFC, CPu, and NAc. The Pearson correlation coefficient (r) and its corresponding significant  p  values ( *  p  &lt; 0",
+    "Gene levels of  D1R ,  D2R , and  D5R  were stimulated LPS treatment in BV2 microglial cells. ( A ) Levels of  D1R . ( B ) Levels of  D2R . ( C ) Levels of  D1R/D2R  ratio. ( D ) Levels of  D5R .  n  = 6. Data were expressed as mean ± SD, and analyzed with an unpaired two-tailed Student’s t-test.  *  p  &lt; 0.05 and  ***  p  &lt; 0.001 indicate significant differences compared to PBS treatment",
+    "SKF partially blocked LPS-induced inflammatory responses in BV2 microglial cells. ( A ) The experimental timeline. ( B ) Representative Western blot images. ( C ) Levels of pp38. ( D ) Levels of pERK. ( E ) Levels of pJNK. ( F ) Levels of pp65. ( G ) Levels of IL-6 in conditioned media. ( H ) Levels of TNF in conditioned media.  n  = 9. Data were expressed as mean ± SD. Sidak’s multiple comparison",
+    "SKF induced inflammatory responses in BV2 microglial cells. ( A ) Representative Western blot images. ( B ) Levels of pp38. ( C ) Levels of pERK. ( D ) Levels of pJNNK. ( E ) Levels of pp65.  n  = 9. Data were expressed as mean ± SD. Sidak’s multiple comparisons test was used following two-way ANOVA. Post-hoc results showed that  *  p  &lt; 0.05 indicated significant differences between Veh and SK"
+  ],
+  "tables": [],
+  "query": "frontostriatal circuit development",
+  "fetched_at": 1779991394.027634
+}

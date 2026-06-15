@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12254183",
+  "pmid": "40643764",
+  "title": "Combined Chronic Oral Methylphenidate and Fluoxetine Decreases D2R Levels in the Caudate Putamen and Nucleus Accumbens.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lagamjis G, Lu H, Roeder NM, Richardson BJ, Marion M, Quattrin T, Mastrandrea LD, Hadjiargyrou M, Komatsu DE, Thanos PK.",
+  "doi": "10.1007/s11064-025-04481-0",
+  "figures": [
+    "Diagram detailing dosing schedule for animals from 9:00–17:00. Rats in the MP group received a dosage of 30 mg/kg, rats in the FLX group briefly received a dosage of 20 mg/kg FLX, and rats in the MP + FLX group briefly received a dosage of 30 mg/kg of MP and 20 mg/kg FLX for one hour (9:00–10:00). For the following 7 h, rats in the MP group received a dosage of 60 mg/kg, rats in the FLX group rece",
+    "Representative figures showing D1R binding using [³H] SCH23390 to assess binding levels, with attached atlas figure showing: Dorsomedial Caudate Putamen (DMCPU), Dorsolateral Caudate Putamen (DLCPU), Ventromedial Caudate Putamen (VMCPU), Ventromedial Caudate Putamen (VMCPU), Ventrolateral Caudate Putamen (VLCPU), Nucleus Accumbens Core (NacC), Nucleus Accumbens Shell (NacS), and Olfactory Tubercle",
+    "Mean [³H] SCH 23,390 binding (µCi/g) ± SEM in the Basal Ganglia following 4 weeks of treatment, with  n  = 8/9 per group. Quantitative autoradiography of [³H] 23,390 (D1R-like) binding levels within the Dorsal Caudate putamen (D CPU), Dorsolateral Caudate Putamen (DL CPU), Dorsomedial Caudate Putamen (DM CPU), Nucleus Accumbens Core (Nac Core), Nucleus Accumbens Shell (Nac Sh Shell), Olfactory Tub",
+    "Representative figures showing D2R binding using [³H] spiperone to assess binding levels with attached atlas figure showing: Dorsomedial Caudate Putamen (DMCPU), Dorsolateral Caudate Putamen (DLCPU), Ventromedial Caudate Putamen (VMCPU), Ventrolateral Caudate Putamen (VLCPU), Nucleus Accumbens Core (NacC), Nucleus Accumbens Shell (NacS), and Olfactory Tubercle (OT)",
+    "Mean [³H] spiperone binding (µCi/g) ± SEM in the Basal Ganglia following 4 weeks of treatment, with  n  = 8/9 per group. * Denotes a significant difference ( p  &lt; 0.05) between MP + FLX and Water. $ denotes a significant difference ( p &lt; 0.05) between MP + FLX and FLX. ROIs consisted of the Dorsal Caudate putamen (D CPU), Dorsolateral Caudate Putamen (DL CPU), Dorsomedial Caudate Putamen (DM"
+  ],
+  "tables": [
+    "Table summarizing the percent differences in average binding between the water and MP + FLX groups in regions of significance for D2R mean [³H] spiperone binding (µCi/g). ROIs consist of the dorsal caudate putamen (D CPU), dorsolateral caudate putamen (DL CPU), nucleus accumbens core (Nac core), Ventrolateral caudate putamen (VL CPU), and the Ventromedial caudate putamen (VM CPU). All percents ind"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055774.8846016
+}

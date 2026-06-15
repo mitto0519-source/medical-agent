@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11954233",
+  "pmid": "40156031",
+  "title": "Network analysis of loneliness, mental, and physical health in Czech adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Meier Z, Helvich J, Furstova J, Novak L, Purova D, Zidkova R, Tavel P.",
+  "doi": "10.1186/s13034-025-00884-7",
+  "figures": [
+    "Prevalences of somatic and psychological complaints among Czech adolescents, stratified by sex and grade",
+    "Overall network (left) and node centrality measures (right) were estimated on the full sample of Czech adolescents. For greater clarity, edge weights with absolute values below 0.05 were suppressed in the network plot. Positive edge weights are plotted in blue colour. Shaded areas (pies) surrounding nodes represent the predictability of the nodes. X-axes of centrality measures are scaled as Z-scor",
+    "Networks stratified by grade of Czech adolescents, controlled for sex and FAS. For greater clarity, edge weights with absolute values below 0.05 were suppressed in the network plots. Positive edge weights are plotted in blue colour. Edges with significantly different weights between 5th and 9th grade are plotted in green. Thicker lines represent higher edge weights. To ensure comparability of the ",
+    "Bootstrapped edge weights for pairwise node comparisons in Czech adolescents stratified by grade.  LN  loneliness,  HL  health,  SA  stomach ache,  BA  backache,  DZ  dizzy,  FL  feeling low,  HA  headache,  IR  irritable,  NR  nervous,  DFA  difficulties falling asleep"
+  ],
+  "tables": [
+    "Descriptive characteristics of loneliness and overall health in Czech adolescents"
+  ],
+  "query": "loneliness isolation adolescent mental",
+  "fetched_at": 1779999654.652218
+}

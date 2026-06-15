@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12287441",
+  "pmid": "40702212",
+  "title": "Risk factors for highly pathogenic avian influenza outbreaks in Japan during 2022-2023 season identified by additive Bayesian network modeling.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yamaguchi E, Hayama Y, Kondo S, Yamamoto T.",
+  "doi": "10.1038/s41598-025-13003-5",
+  "figures": [
+    "Geographical distribution of highly pathogenic avian influenza (HPAI) outbreaks in poultry farms during the 2022–2023 season.",
+    "Final directed acyclic graph (DAG). The thickness of each arc represents the link strength (LS) percentage, which is also indicated numerically beside each arc. Solid arcs denote positive associations, while dashed arcs indicate negative associations."
+  ],
+  "tables": [
+    "Variables used in the additive bayesian network analysis of highly pathogenic avian influenza (HPAI).",
+    "Log odds ratios of variables in the optimal directed acyclic graph (DAG) associated with the risk of highly pathogenic avian influenza (HPAI) infection.",
+    "Ban matrix used to restrict implausible structures during the search for the optimal directed acyclic graph (DAG)."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020710.60892
+}

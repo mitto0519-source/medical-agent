@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12260469",
+  "pmid": "40587180",
+  "title": "eHealth Literacy and Adolescent Health in Japanese Female High School Students in Sendai: Cross-Sectional Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Takeda T, Yoshimi K, Kai S, Inoue F.",
+  "doi": "10.2196/73237",
+  "figures": [
+    "Study flowchart. eHEALS: eHealth Literacy Scale; K6: 6-item Kessler Psychological Distress Scale; NRS: numerical rating scale; PSQ: Premenstrual Symptoms Questionnaire; R-UCLA: 3-item Revised UCLA Loneliness Scale; RSES: Rosenberg Self-Esteem Scale."
+  ],
+  "tables": [
+    "Characteristics of the study participants.",
+    "Study participants’ eHealth Literacy Scale (eHEALS) scores by school year level.",
+    "Differences by eHealth literacy level (high [n=292] and low [n=617] literacy) in terms of premenstrual symptoms and level of social impairment.",
+    "Correlations among eHealth literacy, premenstrual symptoms, psychological distress, loneliness, and self-esteem.",
+    "Factors associated with high eHealth literacy (eHealth Literacy Scale≥26; R2=0.04)."
+  ],
+  "query": "loneliness isolation adolescent mental",
+  "fetched_at": 1779999817.4475791
+}

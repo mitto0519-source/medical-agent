@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11899579",
+  "pmid": "40077120",
+  "title": "Influential Attributes on Medical Expense for Korean Older Adults Based on Mental Accounting: Panel Data Analysis Using Korean Longitudinal Study of Aging Data.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim MG, Moon J.",
+  "doi": "10.3390/healthcare13050558",
+  "figures": [
+    "Research model: determinants of medical expense.",
+    "Summary of hypothesis testing results.",
+    "Scatter plot between food and medical expenses.",
+    "Scatter plot between housing and medical expenses.",
+    "Bar chart presentation based on independent  t -test in the case of smoking and drinking."
+  ],
+  "tables": [
+    "Depiction of variables.",
+    "Results of descriptive statistics (n = 7374).",
+    "Results of the correlation matrix.",
+    "Results of hypothesis testing excluding control variables.",
+    "Results of hypothesis testing including control variable."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039901.3977342
+}

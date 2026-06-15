@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12015757",
+  "pmid": "40270574",
+  "title": "How and when screens are used: comparing different screen activities and sleep in Norwegian university students.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hjetland GJ, Skogen JC, Hysing M, Gradisar M, Sivertsen B.",
+  "doi": "10.3389/fpsyt.2025.1548273",
+  "figures": [
+    "Predicted probabilities of insomnia across time screen time, separately for three activity groups. SM, Social media.",
+    "Predicted sleep duration across time screen time, separately for three activity groups. SM, Social media."
+  ],
+  "tables": [
+    "Descriptives for males and females separately, and for the whole group.",
+    "Descriptives for the screen activity groups.",
+    "Binominal regression model, insomnia as outcome variable.",
+    "Multiple linear regression models, sleep duration as outcome."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001477.949155
+}

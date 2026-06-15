@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12191511",
+  "pmid": "40564696",
+  "title": "Nutritional Status and Health Challenges Among Schoolchildren in Nepal's Solukhumbu Valley.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Murillo-Llorente MT, Gil-Cuñat N, Moltó-Dominguez S, Pérez-Murillo J, Tejeda-Adell M, Martínez-Peris M, Tomás-Aguirre F, Legidos-García ME, Pérez-Bermejo M.",
+  "doi": "10.3390/children12060738",
+  "figures": [
+    "BMI z-scores of the children in the sample ( n  = 54). Blue color: boy; pink color: girl; no significant difference in the z-scores of both sexes ( p  = 0.687).",
+    "Average consumption of each food group."
+  ],
+  "tables": [
+    "Food grouping used in dietary pattern analysis.",
+    "Anthropometric characteristics of the study sample stratified by sex ( n  = 54).",
+    "Anthropometric characteristics of the sample stratified by sex and age group ( n  = 54).",
+    "Clinical–nutritional aspects of the children under study ( n  = 54).",
+    "Systolic and diastolic blood pressure values by age range.",
+    "Distribution of BMI-based nutritional categories according to anemia status after altitude adjustment ( n  = 54).",
+    ""
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004765.6748285
+}

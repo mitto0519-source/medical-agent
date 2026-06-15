@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11905656",
+  "pmid": "40082904",
+  "title": "Causal relationship between drug target genes of LDL-cholesterol and coronary artery disease: drug target Mendelian randomization study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jee Y, Shin JW, Ryu M, Song TJ.",
+  "doi": "10.1186/s12944-025-02502-z",
+  "figures": [
+    "Overview of the Mendelian randomization study design",
+    "Meta-analysis results of the effect on CAD per 10 mg/dl reduction in LDL-C by the LDL-C drug target gene. ( A ) PCSK9 gene. ( B ). SNPs in HMGCR gene. ( C ). SNPs in LDLR gene",
+    "Meta-analysis results of the effect on CAD per 10 mg/dl reduction in LDL-C by the combined LDL-C drug target gene. ( A ). SNPs in PCSK9 gene plus HMGCR gene. ( B ). SNPs in PCSK9 gene plus LDLR gene. ( C ). SNPs in HMGCR gene plus LDLR gene. ( D ). SNPs in PCSK9 gene plus HMGCR gene plus LDLR gene"
+  ],
+  "tables": [
+    "Baseline characteristics of the study cohort participants",
+    "Estimated effects of genetic variations in lipid Lowering drug targets on LDL-cholesterol"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036563.7406871
+}

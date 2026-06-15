@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12129115",
+  "pmid": "40458332",
+  "title": "Prolonged Catatonia and Severe Malnutrition in Adolescents Following Bullying-Triggered Stress: A Dual Case Report.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Annor E, Lokireddy VS, Ramasamy D.",
+  "doi": "10.7759/cureus.83415",
+  "figures": [
+    "MRI showed no acute infarction or hemorrhage  No diffuse brain atrophy in the prefrontal cortex and basal ganglia, no diffuse white matter lesions affecting the frontal and temporal lobes, and no alterations in the caudate nucleus and putamen",
+    "Changes in body weight over the course of illness: X-axis (date) and Y-axis (weight in kg)  A – In May, the patient weighed 61.7 kg shortly after the mother noticed signs of decline.  B – Upon presentation to the Emergency Department, the patient's weight had dropped sharply to 43.3 kg. Some improvement was observed following the lorazepam challenge and acute management.  C – The patient initially",
+    "MRI of the brain with contrast showing no acute intracranial abnormality or pathologic enhancement"
+  ],
+  "tables": [
+    "Bush-Francis Catatonia Rating Scale scores over the trajectory of care  Note: Scores &gt; 2 on at least two of the first 14 screening items indicate a positive catatonia diagnosis.  The Bush-Francis Catatonia Rating Scale (BFCRS) assesses severity by scoring symptoms from 0 to 3 across 23 items. Based on cumulative scores, catatonia is categorized as mild (1-9), moderate (10-19), or severe (≥20). ",
+    "Initial laboratory workup on presentation at the ED  The initial workup revealed low levels of magnesium, ceruloplasmin, and vitamin D (25-OH), while vitamin B1, vitamin B12, antinuclear antibodies, 24-hour urinary copper excretion, and ammonia remained within the normal range.",
+    "Initial laboratory workup  The initial workup revealed mildly elevated calcium and creatinine levels, while ethanol, beta-human chorionic gonadotropin serum, thyroid-stimulating hormone, acetaminophen, and salicylate remained within the normal range.",
+    "Comparison of clinical and treatment characteristics in bullying-triggered catatonia cases  SSRI: selective serotonin reuptake inhibitor; SGA: second-generation antipsychotic; ECT: electroconvulsive therapy",
+    "Comparison of nutritional encephalopathy, general encephalopathy, and catatonia  CT: computed tomography; MRI: magnetic resonance imaging; EEG: electroencephalogram"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055602.5901215
+}

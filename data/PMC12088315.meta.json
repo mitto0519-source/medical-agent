@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12088315",
+  "pmid": "40181651",
+  "title": "How do I analyze the role of red blood cell transfusions on clinical outcome in anemic patients? Disentangling the effect of red blood cell transfusions from pre-operative anemia on post-operative outcome.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Loobeek D, Pacnerová L, Twisk J, So-Osman C.",
+  "doi": "10.1111/trf.18224",
+  "figures": [
+    "Causal pathways of intra‐ and post‐operative RBC transfusion as mediator compared to pre‐operative anemia (exposure) and length of stay (outcome). RBC transfusions cannot be regarded as a confounder (see the crossed arrow in the figure), since intra‐ and post‐operative RBC transfusion is a result of the anemia and therefore does not meet the definition of a confounder.",
+    "Directed acyclic graph (DAG) of the association of an exposure and outcome and the causal pathway of the mediator, arrows directing in the same direction.",
+    "Directed acyclic graph (DAG) of a non‐causal pathway in the case of a confounder in the association between an exposure and outcome, arrows directing in opposite directions."
+  ],
+  "tables": [
+    "Summary of mediation pathways, alternative names, and explanations.",
+    "Patient characteristics extracted from the clinical study database. \n 21 \n ,  \n 22",
+    "Mediation model results."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021101.1968105
+}

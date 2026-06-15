@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12318640",
+  "pmid": "40844122",
+  "title": "Use of Antidepressants Decreased After Initiation of ADHD Treatment in Adults-A Finnish Nationwide Register Study Describing Use of ADHD and Non-ADHD Medication in People With and Without ADHD.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Westman E, Prami T, Kallio A, Iso-Mustajärvi I, Jukka J, Raittinen P, Korhonen MJ, Puustjärvi A, Leppämäki S.",
+  "doi": "10.1111/acps.70007",
+  "figures": [
+    "Summary",
+    "Medication pathways in (a) 6–12 years, (b) 13–17 years, and (c) in ≥ 18 years old ADHD patients indicating the first purchase of each drug: ATX, atomoxetine; DX, dexamphetamine; GUA guanfacine; LDX, lisdexamphetamine; MPH (I), methylphenidate (instant release); MPH (S), methylphenidate (sustained‐release), MPH (E), methylphenidate (extended‐release). Only nodes with an absolute frequency of at lea",
+    "Kaplan–Meier estimators for the time until discontinuation of (a) any ADHD medication by age groups (based on the age at the time of the first purchase) and (b) separate ADHD drugs [ATX, atomoxetine; DX, dexamphetamine; GUA guanfacine; LDX, lisdexamphetamine; MPH (I), methylphenidate (instant release); MPH (S), methylphenidate (sustained‐release), MPH (E), methylphenidate (extended‐release)].",
+    "ADHD medication purchasing behavior by calendar months in 2021 divided by gender and age groups."
+  ],
+  "tables": [
+    "Number and proportion of ADHD patients and controls according to the number of distinct psycholeptics, psychoanaleptics (excluding ADHD medication), and drugs used in addictive disorders purchased up to 2 years prior to the index date by gender and age at index. (The age category 0–5 years is excluded from this table to avoid presenting results  n  &lt; 5.).",
+    "Percentage (%) of ADHD patients and controls divided by age groups using the 20 most purchased drugs (the 4th level ATC code subgroup) of ADHD patients 0–12 months prior to the index date, and absolute change (%‐point) in proportion compared to the initial proportion 12–24 months after the index date by Kaplan–Meier estimate. (Months 0–12 after the index date were considered as a respite for the c",
+    "Number of patients purchasing ADHD medication at least once during follow‐up with percentages from ADHD population by gender and age at the index date."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780059130.2008908
+}

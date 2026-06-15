@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11879563",
+  "pmid": "39160637",
+  "title": "Potential biases in test-negative design studies of COVID-19 vaccine effectiveness arising from the inclusion of asymptomatic individuals.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ortiz-Brizuela E, Carabali M, Jiang C, Merckx J, Talbot D, Schnitzer ME.",
+  "doi": "10.1093/aje/kwae288",
+  "figures": [
+    "Causal-directed acyclic graphs for test-negative-design (TND) studies of COVID-19 vaccine effectiveness: (A) the classical TND setting, (B) the alternative TND setting, (C) potential for differential misclassification of outcome status in alternative TND studies. Abbreviations:       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n",
+    "Bias in odds ratio (OR) estimates for symptomatic COVID-19 (      \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{document}\n${\\mathrm{OR}}_{\\mathrm{COVID}}$\\end{document}  ) and SARS-CoV-2 infection (      \\documentclass[12pt]{mi",
+    "Bias in odds ratio (OR) estimates for symptomatic COVID-19 (      \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{document}\n${\\mathrm{OR}}_{\\mathrm{COVID}}$\\end{document}  ) and SARS-CoV-2 infection (      \\documentclass[12pt]{mi",
+    "Bias in odds ratio (OR) estimates for symptomatic COVID-19 (      \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{document}\n${\\mathrm{OR}}_{\\mathrm{COVID}}$\\end{document}  ) and SARS-CoV-2 infection (      \\documentclass[12pt]{mi",
+    "Bias in odds ratio (OR) estimates for symptomatic COVID-19 (      \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{document}\n${\\mathrm{OR}}_{\\mathrm{COVID}}$\\end{document}  ) and SARS-CoV-2 infection (      \\documentclass[12pt]{mi"
+  ],
+  "tables": [
+    "Relevant definitions used in this article.",
+    "Directed acyclic graph for test-negative design studies of COVID-19 vaccine effectiveness (either classical or alternative).",
+    "Mathematical definitions for       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}\n\\begin{document}\n${RR}_{COVID}$\\end{document}  ,       \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\use",
+    "Models used in the simulation study to generate data consistent with the directed acyclic graph shown in  Table 2.",
+    "Suggested strategies for minimizing bias in TND studies conducted during infectious disease outbreaks."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020880.0926385
+}

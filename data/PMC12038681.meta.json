@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12038681",
+  "pmid": "40309579",
+  "title": "Digital cognitive behavioral therapy as a novel treatment for insomnia.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tian XT, Meng Y, Wang RL, Tan R, Liu MS, Xu W, Cui S, Tang YX, He MY, Cai WP.",
+  "doi": "10.5498/wjp.v15.i4.104042",
+  "figures": [
+    "Flowchart depicting flow of participants through the study.  PSQI: Pittsburgh sleep quality index; ISI: Insomnia severity index; DASS-21: Depression anxiety and stress scale.",
+    "Sequence of events.  A: In the go/no-go task; B: In the dot-probe task.",
+    "Line chart comparison of changes.  A: In the Pittsburgh sleep quality index between groups. Scores of Pittsburgh sleep quality index over the treatment period; B: In the insomnia severity index scale between groups. Scores of insomnia severity index over the treatment period; C: In the depression scale of the depression anxiety and stress scale (DASS-21) between groups. Scores of the depression sc",
+    "Histogram comparison of changes in sleep efficiency between groups.  Mean sleep efficiency in two tasks over time by group. Black bars: Go/no-go group, gray bars: Dot-probe group. Post-test = 3 weeks."
+  ],
+  "tables": [
+    "Sample descriptive statistics at pre-test,  n  (%)",
+    "Outcome variables: Short-term effects",
+    "The exact effect sizes for the various measurements indicated in the Figure 3 and Figure 4"
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063384.8187282
+}

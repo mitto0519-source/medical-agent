@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12022785",
+  "pmid": "40262787",
+  "title": "Exploring the Relationship Between Different Pain Patterns and Depressive Symptom Among Older Koreans: Using Latent Growth Model.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jeong KH, Son HG, Kim S, Ryu JH, Lee S.",
+  "doi": "10.30773/pi.2024.0166",
+  "figures": [
+    "Change patterns of pain among older adult."
+  ],
+  "tables": [
+    "Descriptive statistical analysis of major variables (N=1,359)",
+    "Model fit of latent growth modeling for change of pain among older adult",
+    "Model fit of growth mixture modeling (N=1,359)",
+    "Differences of types of pain change among older adult (N=1,359)",
+    "Multiple regression analysis for depressive symptoms (N=1,359)"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039661.0379305
+}

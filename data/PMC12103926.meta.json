@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12103926",
+  "pmid": "40416193",
+  "title": "Comparative Efficacy of Once-Weekly Somatrogon Versus Daily Growth Hormone Therapy in Children With Idiopathic Growth Hormone Deficiency: A Real-World Retrospective Study From Greece.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Katsoudas S, Tsitsekli E, Pichlinski I, Techlemetzi N, Galanopoulou E, Polychroni I, Zosi P.",
+  "doi": "10.7759/cureus.82998",
+  "figures": [
+    "Comparison of age and height velocity between the daily and weekly GH treatment groups at baseline, as well as bone age and height SDS at baseline and six months.  GH: Growth hormone; SDS: Standard deviation score",
+    "Comparison of height, BMI, and IGF-1 levels between the daily and weekly GH treatment groups at baseline and at six-month follow-up, along with mean GH peak values from stimulation tests for both groups.  GH: Growth hormone; IGF-1: Insulin-like growth factor-1; BMI: Body mass index",
+    "Height SDS in the daily and weekly GH treatment groups at baseline and at six-month follow-up.  GH: Growth hormone; SDS: Standard deviation score  ** indicates p &lt; 0.01; *** indicates p &lt; 0.001"
+  ],
+  "tables": [
+    "Summary of baseline characteristics for the daily and weekly GH treatment groups.  GH: Growth hormone; IGF-1: Insulin-like growth factor-1; BMI: Body mass index; SDS: Standard deviation score",
+    "Summary of comparisons between the daily and weekly GH treatment groups in key parameters at six-month follow-up.  GH: Growth hormone; IGF-1: Insulin-like growth factor-1; BMI: Body mass index; SDS: Standard deviation score",
+    "Within-group changes in key growth parameters over six months.  GH: Growth hormone; IGF-1: Insulin-like growth factor-1; BMI: Body mass index; SDS: Standard deviation score  * indicates p &lt; 0.05; ** indicates p &lt; 0.01; *** indicates p &lt; 0.001",
+    "Between-group comparisons of changes (Δ) over six months.  GH: Growth hormone; IGF-1: Insulin-like growth factor-1; BMI: Body mass index; SDS: Standard deviation score"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012968.7976234
+}

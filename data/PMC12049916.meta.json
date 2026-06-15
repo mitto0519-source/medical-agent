@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12049916",
+  "pmid": "40316364",
+  "title": "Use of prescription opioids and other psychotropic drugs during pregnancy and their impact on the mother and developing child: protocol for a cohort study using linked administrative data from Manitoba and British Columbia, Canada.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Singal D, Dahl L, Brownell M, Dormuth C, Bolton JM, Enns JE, Hanlon-Dearman A, Katz A, Katz LY, Kelly LE, Leong C, McGrail K, Nickel NC, Ruth C, Dahl M, Kim J, Chateau D.",
+  "doi": "10.1136/bmjopen-2024-097657",
+  "figures": [
+    "Study design. BC, British Columbia; MB, Manitoba.",
+    "Comparison groups for objectives 2 and 3.",
+    ""
+  ],
+  "tables": [
+    "Drug categories and their Anatomical Therapeutic Chemical (ATC) codes/labels",
+    "Study exposure group composition groups are based on the number of dispensations in each drug category during the prenatal period  *   before and after collapsing concurrent use exposure groups involving anxiolytics, antipsychotics and antidepressants",
+    "Outcome categories for objectives 2 and 3"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059898.0132725
+}

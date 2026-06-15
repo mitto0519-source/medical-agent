@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12250484",
+  "pmid": "40649073",
+  "title": "Factors Related to Hypertension in Pediatric Patients Who Do Not Have Obstructive Sleep Apnea: A Retrospective Chart Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Exarchakis A, Cohen A, Wang P, Rani S, Martinez D.",
+  "doi": "10.3390/jcm14134699",
+  "figures": [
+    "Flowchart for sample section: inclusion and exclusion criteria.",
+    "Non-OSA pediatric patients may develop hypertension. Not all patients with hypertension met the criteria of having OSA. ( A ) Of the 285 charts reviewed, 137 did not meet the criteria for OSA based on polysomnography (PSG) (48.07%). ( B ) Of the 137 non-OSA patients, 32 were hypertensive (23.36%). All 32 had systolic hypertension; 2 patients had both systolic and diastolic hypertension. Data is re",
+    "Anthropometric data between non-hypertensives (NH) and hypertensives (H). ( A ) Birth weight was significantly lower in hypertensives [H, (N = 32, red)] compared to non-hypertensives [NH,(N = 105, blue) (NH: 3.25 ± 0.78 kg vs. H: 2.85 ± 0.83 kg,  p  = 0.0097)]. ( B ) BMI z-score was significantly higher in hypertensives (H, N = 32, red) group compared to non-hypertensives (NH, N = 105, blue) group",
+    "Cardiovascular parameters differ in non-OSA hypertensives and non-hypertensives.  ( A ) Daytime heart rate (HR), measured at clinic visit, was significantly higher in hypertensives (N = 32, red) compared to the NH group (N = 105, blue) [(NH: 86. 4 ± 12.3 vs. H: 96.4 ± 12.9 beats per minute (BPM),  p  = 0.0004)]. ( B ) Systolic blood pressure (BP), measured at clinic visits, was significantly highe",
+    "Nighttime heart rate in polysomnography is increased in those with non-OSA hypertension.  Nighttime heart rate (HR), measured during polysomnography, was significantly higher in hypertensives (H, N = 32, red) compared to non-hypertensives (NH, N = 105, blue) [(NH: 71.2 ± 10.4 vs. H: 79.6 ± 11.5 beats per minute (BPM),  p  = 0.0003)]. Data is reported as mean ± standard deviation. Two-tailed  t -te"
+  ],
+  "tables": [
+    "Demographics of pediatric patients with non-OSA presenting non-hypertensive (NH) or hypertensive (H).",
+    "Personal and family history of certain exposures in pediatric patients with non-OSA presenting non-hypertensive (NH) or hypertensive (H).",
+    "Medical history of pediatric non-OSA with and without hypertension.",
+    "Sleep Parameters of Pediatric Non-OSA With and Without Hypertension.",
+    "Medication usage of pediatric non-OSA with and without hypertension."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002030.166293
+}

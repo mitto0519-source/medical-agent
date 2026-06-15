@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12086978",
+  "pmid": "40387300",
+  "title": "Three Latent Factors in Major Depressive Disorder Base on Functional Connectivity Show Different Treatment Preferences.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang X, Wei X, Shao J, Xue L, Chen Z, Yao Z, Lu Q.",
+  "doi": "10.1002/hbm.70215",
+  "figures": [
+    "The diagram of latent factor analysis.",
+    "The three factor‐specific hyper‐ and hypo‐connectivity pattern. (A) The patterns of hypo‐ and hyper‐connectivity (unthresolded) associated with each factor. (B) Averaged patterns of hypo‐ and hyper‐connectivity within and between networks. (C) Statistical significant and binarized hypo‐ and hyper‐connectivity. (D) Circus plots for significant hyper (red) and hypo‐connectivity (blue).",
+    "(A, C) Factors compositions of responders from four treatments. Each patient corresponds to a dot. The size of the dots indicates the reduction of HAMD. The color of the dots corresponds to different treatments. F1, F2, F3 indicates Pr(Pr (Factor 1 | Patient)) =1, Pr (Factor 2 | Patient) =1, Pr (Factor 3 | Patient) = 1, respectively. The axis 1, axis 2, axis 3 indicated Pr (Factor 1| Patient) = 0,",
+    "Demographic characteristics differences across factors. (A) Age difference; (B) education difference; (C) sex differences. Blue dots are estimated differences between factors, and red bars correspond to standard errors. For example, the first row (F1—F3) in (A) implies that factor 1 was more strongly associated with younger patients than factor 3. F1: Factor1, F2: Factor 2, F3, factor 3.",
+    "Latent factors associated with longitudinal treatment response and baseline clinical characteristics. (A) Correlation between factor 1 loading and HAMD reduction, cognitive symptoms reduction. (B, C) CCA between factor loadings and clinical characteristics. (B) Associations between factor 2 and HAMD. (C) Associations between factor 2 and depression and anxiety symptoms. The upper‐right panel is th"
+  ],
+  "tables": [
+    "Demographic and treatment modalities."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060266.3385088
+}

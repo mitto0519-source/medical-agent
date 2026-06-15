@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12187119",
+  "pmid": "39329345",
+  "title": "Association of Maternal Thyroglobulin With Gestational Thyroid Function and Offspring IQ and Brain Morphology.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mulder TA, Guxens M, Rebagliato ML, Dineva M, Bath SC, Hunziker S, Sunyer J, Delgado-Saborit JM, Irizar Loibide A, Lertxundi N, Muetzel RL, Tiemeier H, Peeters RP, Korevaar TIM.",
+  "doi": "10.1210/clinem/dgae679",
+  "figures": [
+    "Flowchart of the study population.",
+    "Associations of thyroglobulin with maternal thyroid function. Associations are adjusted for national origin (cohort-specific categories), gestational age, maternal age, education, BMI, parity and smoking, and child sex. Tg (ng/mL) and TSH (mU/L) are transformed by the natural logarithm. Back-transformed values for Tg are shown on the x-axis for better interpretation. TSH (mU/L) and FT4 (pmol/L) ar",
+    "Associations of thyroglobulin with IQ. Associations are adjusted for national origin (cohort-specific categories), gestational age, maternal age, education, BMI, parity and smoking, and child sex and age at IQ measurement. Early childhood IQ includes IQ measured at 6.2 years in Generation R and 4.5 years in INMA. Later childhood IQ includes IQ measured at 13.6 years in Generation R and 8.5 years i"
+  ],
+  "tables": [
+    "Descriptive characteristics of the study population"
+  ],
+  "query": "thyroid function adolescent",
+  "fetched_at": 1780012652.4283895
+}

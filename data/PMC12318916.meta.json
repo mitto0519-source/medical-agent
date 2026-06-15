@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12318916",
+  "pmid": "40375759",
+  "title": "Polygenic Risk and Nutrient Intake Interactions on Obesity Outcomes: A Systematic Review and Meta-Analysis of Observational Studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Masip G, Han HY, Meng T, Nielsen DE.",
+  "doi": "10.1111/obr.13941",
+  "figures": [
+    "Flowchart of study selection. Adapted from [ 20 ]. For more information, visit:  http://www.prisma‐statement.org/ . * The search strategy captured a comprehensive set of dietary exposures. The present systematic review focuses on synthesizing evidence for polygenic risk interactions with nutrient intakes on obesity outcomes. Additional dietary exposures will be reported separately.",
+    "Summary of PRS–fat intake interactions on obesity‐related outcomes. * Articles ranked as low quality in the methodological assessment of the quality of genetic associations in complex diseases. † Indicates longitudinal study. “1” indicates that the respective reference assessed PRS–fat intake interaction(s). Green: at least one statistically significant interaction was observed; red: no statistica",
+    "Summary of PRS–nutrient and energy interactions on obesity‐related outcomes. * Articles ranked as low quality in the methodological assessment of the quality of genetic associations in complex diseases. † Indicates longitudinal study. “1” indicates that the respective reference assessed PRS–nutrient and energy intake interaction(s). Green: at least one statistically significant interaction was obs"
+  ],
+  "tables": [
+    "General characteristics of cohort studies.",
+    "Characteristics of dietary exposures and obesity outcomes in cohort studies."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037246.2749915
+}

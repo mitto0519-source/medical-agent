@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11882803",
+  "pmid": "40045046",
+  "title": "Assessment of polygenic risk score performance in East Asian populations for ten common diseases.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jung HU, Jung H, Baek EJ, Kang JO, Kwon SY, You J, Lim JE, Oh B.",
+  "doi": "10.1038/s42003-025-07767-9",
+  "figures": [
+    "Comparison of AUCs for single-population PRS methods across ten common diseases.",
+    "Comparison of AUCs for cross-population PRS methods across ten common diseases.",
+    "The ratio of AUCs between single-population PRSs and cross-population PRSs across eight common diseases.",
+    "Comparison of hazard ratios between single-population PRSs and cross-population PRSs using follow-up data from the KARE Cohort.  HR represents the hazard ratio, and * denotes the statistical significance of the HRs."
+  ],
+  "tables": [
+    "Basic characteristics of ten common diseases in HEXA cohort",
+    "Predictive performance metrics for single-population PRSs",
+    "Predictive performance for the cross-population PRS",
+    "Results of comparison between the PRSs for perSD OR",
+    "Comparative evaluation of PRSs using Cox regression analysis in KARE",
+    "Results of comparison between the PRSs for hazard ratios"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041963.359756
+}

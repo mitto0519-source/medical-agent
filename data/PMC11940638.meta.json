@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11940638",
+  "pmid": "40149620",
+  "title": "A Literature Review of Glutathione Therapy in Ameliorating Hepatic Dysfunction in Non-Alcoholic Fatty Liver Disease.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nguyen MT, Lian A, Guilford FT, Venketaraman V.",
+  "doi": "10.3390/biomedicines13030644",
+  "figures": [
+    "The progression of non-alcoholic fatty liver disease (NAFLD) follows a continuum, influenced by key risk factors such as microbial dysfunction, insulin resistance, and obesity. A healthy liver first develops into non-alcoholic fatty liver (NAFL) due to excessive fat accumulation, or steatosis. Without intervention, NAFL can advance to non-alcoholic steatohepatitis (NASH), characterized by worsenin",
+    "The synthesis of glutathione (GSH), also known as γ-glutamylcysteinylglycine, occurs through an ATP-dependent enzymatic process essential for maintaining cellular redox balance. In the first step, glutamate-cysteine ligase (GCL) catalyzes the rate-limiting conjugation of glutamate and cysteine, forming γ-glutamylcysteine. In the second step, GSH synthase (GS) facilitates the addition of glycine, c",
+    "Glutathione (GSH), a powerful intracellular antioxidant, plays a crucial role in maintaining cellular homeostasis by neutralizing oxidative stress, preventing lipid peroxidation, and protecting cells from free radical-induced damage. As a central component of the body’s detoxification system, GSH supports the elimination of toxins, enhances mitochondrial function, and regulates immune responses. I",
+    "Glutathione (GSH) targets key drivers of NAFLD by mitigating oxidative stress and cellular injury, which are central to inflammation and hepatic dysfunction. This helps improve liver function and modulate biomarkers of liver health, including alanine transaminase (ALT) and γ-glutamyltransferase (GGT), indicators of liver function and oxidative stress, as well as 8-hydroxy-2-deoxyguanosine (8-OHdG)"
+  ],
+  "tables": [
+    "Studies analyzed in this review. 8-OHdG: 8-hydroxy-2-deoxyguanosine, ALT: alanine transaminase, ALP: alkaline phosphatase, AST: aspartate transaminase, CAP: controlled attenuation parameter, GSH: glutathione, GGT: gamma-glutamyl transpeptidase, LSM: liver stiffness measurement, Tbili: total bilirubin."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995003.9345386
+}

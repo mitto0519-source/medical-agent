@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12106832",
+  "pmid": "40419689",
+  "title": "Burst of gyrification in the human brain after birth.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mihailov A, Pron A, Lefèvre J, Deruelle C, Desnous B, Bretelle F, Manchon A, Milh M, Rousseau F, Girard N, Auzias G.",
+  "doi": "10.1038/s42003-025-08155-z",
+  "figures": [
+    "Consistent segmentations across fetal and postnatal participants.  Examples of segmentations for three fetuses and two postnatal participants illustrating the consistency of the anatomical delineation despite large variations in age and developmental stage. eCSF represents external cerebrospinal fluid, cGM represents cortical gray matter, WM represents white matter, dGM represents deep gray matter",
+    "Sharp change at the time of birth across the perinatal trajectory of gyrification and its components.  Plot illustrating the regression discontinuity (effect size = 7.48,  p  = 6.44 × 10 −14 ) of gyrification in ( A ), and the regression discontinuities of its components (surface area: effect size = 3.68,  p  = 2.26 × 10 −4 ; and convex hull area: effect size = 1.26,  p  = 0.21) in ( B ) as a func",
+    "The sharp change in gyrification at birth is illustrated by the relationship between effect size and  p  value.  Effect size as a function of log-transformed  p  value from the regression discontinuity analysis in each feature (a higher effect size indicates a larger discontinuity at our cut-off, i.e., at birth at 37 weeks). Gyrification is shown to have a strikingly high effect size compared to o",
+    "Preterm subjects mapped onto the perinatal trajectory of gyrification.  We show that the neurodevelopment of gyrification as a function of age for preterm participants ( n  = 102) follows a continuous trajectory compared to a jump seen around birth in our typically developing population ( n  = 819)."
+  ],
+  "tables": [
+    "Cohort demographic information",
+    "MRI acquisition settings for the MarsFet dataset",
+    "Exclusion criteria for the MarsFet dataset"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035365.676826
+}

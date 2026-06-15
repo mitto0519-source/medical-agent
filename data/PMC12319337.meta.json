@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12319337",
+  "pmid": "40761439",
+  "title": "Does regular engagement with arts and creative activities improve adolescent mental health and wellbeing? A systematic review and assessment of causality.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hugh-Jones S, Ray S, Wilding A, Sutton M, Humphrey N, Munford L.",
+  "doi": "10.1016/j.ssmph.2025.101845",
+  "figures": [
+    "PRISMA screening and study selection flowchart    Note:   Fig. 1  was generated using the tool created by  Haddaway et al. (2022) . EconLit was also searched but our search strategy identified no studies.",
+    "Harvest plot showing the direction, methodological quality, and support for BH criteria of the 55 results from included studies   Note:  Results are grouped by direction, with positive referring to a result which suggests that arts engagement is associated with improved mental health or reduced symptoms, and negative referring to the opposite. Bar height represents methodological quality, as appra",
+    "Proportions of results from included studies providing 'weak', 'moderate', and 'strong' support for each of the BH viewpoints   Note:  Coloured fill of bars represents the proportion of the 55 results from included studies that provide different levels of support for each BH viewpoint. S = Strong, M = Moderate, W = Weak."
+  ],
+  "tables": [
+    "Bradford Hill viewpoint definitions ( Hill, 1965 ).",
+    "PEO framework for RQ1.",
+    "Study inclusion and exclusion criteria.",
+    "Application of BH criteria and level of application.",
+    "Characteristics of included studies."
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780049907.3483486
+}

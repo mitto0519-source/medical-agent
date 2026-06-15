@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC12191250",
+  "pmid": "40563818",
+  "title": "Sleep in Juvenile Idiopathic Arthritis: An Exploratory Investigation of Heart Rate Variability.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lopes MC, Roizenblatt S, Soster LMA, Spruyt K.",
+  "doi": "10.3390/brainsci15060648",
+  "figures": [],
+  "tables": [
+    "Characteristics of the sample.",
+    "Comparison of macrostructure and arousal index between controls and JIA patients.",
+    "Sleep stages and HRV parameters within each group by Friedman Anova test."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002550.1248045
+}

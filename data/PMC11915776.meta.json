@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11915776",
+  "pmid": "39878301",
+  "title": "Augmenting Circadian Biology Research With Data Science.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Soltani S, Burks JH, Smarr BL.",
+  "doi": "10.1177/07487304241310923",
+  "figures": [
+    "Left: Effects of different sampling rates on the same underlying signal from 1 min sampling (top) to 24 hr sampling (bottom). Right: Effects of different sampling rates on an idealized 24-hour periodicity from 1 min sampling (top) to 24 hr sampling (bottom).",
+    "Types of data missingness and methods of addressing missingness. (a) Data MCAR, MAR, and MNAR depicted as open scatter points. (b) Mean and rolling mean imputation; pale blue lines: artificially missing observations. (c) Forwardfilling and backfilling imputation. (d) Linear interpolation imputation. (e) SARIMA imputation with data downsampled to 288 observations for computational efficiency. (f) T",
+    "Methods for de-noising data. (a) Moving average and exponentially weighted moving average. (b) LOWESS and Savitzky-Golay filter. (c) Continuous WT and (d) continuous WT coefficient magnitudes prior to zeroing coefficients of amplitude &lt;0.20. (e) FFT and (f) FFT scaled amplitude prior to zeroing coefficients of amplitude &lt;0.40.",
+    "Types of outliers and methods for outlier detection. (a) Red dots: artificially added point outliers and (b) local outliers; the original minute-level data was downsampled to 288 observations to emphasize the contribution of outliers to the (c and d) distribution of observations. (e) Downsampled data colored by standard deviations of difference from the sample mean. (f) Downsampled data colored by",
+    "Left: Identifying significant peaks from a periodogram (orange circles) when compared to the null hypothesis noise floor of multiple shuffles (gray shaded area). Middle: Unfiltered logarithm of the absolute amplitude of the continuous wavelet transform for three days of data. Right: Same continuous wavelet transform, but differenced against 1.5 times the interquartile range above the 75th percenti",
+    "Left: Example of EMD algorithm output. EMD produces IMFs in increasing frequencies. As it removes the higher-frequency peak/trough envelopes detected in the time-domain, the IMFs capture lower- frequency oscillatory components. Right: VMD algorithm output. While VMD can concurrently generate the different underlying IMFs of a signal, most algorithms will output the lowest frequency IMF first.",
+    "Left: A time-delay embedding of the mouse temperature with lags of 322 minutes between dimensions. A lag of 322 minutes was chosen by the false nearest neighbors algorithm described in  Rhodes and Morari (1997) . While only three dimensions spatial dimensions can be plotted, the 4th dimension is the color of the points. Middle: A distance plot of the 4-dimensional temperature data where each cell ",
+    "1st Order Markov Model. Left: transition matrix; Right: associated graphical visualization. Nodes/states: purple. Edges/transition probabilities: orange."
+  ],
+  "tables": [
+    "Data sources (with cartoon example questions these could support)."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001535.9935675
+}

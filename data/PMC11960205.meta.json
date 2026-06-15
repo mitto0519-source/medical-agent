@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11960205",
+  "pmid": "39533811",
+  "title": "Impact of Meal Frequency on Insulin Resistance in Middle-Aged and Older Adults: A Prospective Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ryu HE, Lee JH, Park B, Heo SJ, Kwon YJ.",
+  "doi": "10.4093/dmj.2024.0407",
+  "figures": [
+    "",
+    "Flow chart of the study population. KoGES, Korean Genome and Epidemiologic Study; HOMA-IR, homeostasis model assessment of insulin resistance.",
+    "Kaplan-Meier curve showing the difference in cumulative incidence of insulin resistance risk between the two meal frequency groups.",
+    "Forest plot of subgroup analysis stratified by sex, diabetes mellitus (DM), and body mass index (BMI). HR, hazard ratio; CI, confidence interval."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population based on the meal frequency",
+    "Incidence of insulin resistance during the follow-up period",
+    "Multiple Cox proportional hazard regression analysis for HOMA-IR incidence according to meal frequency"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041717.0202916
+}

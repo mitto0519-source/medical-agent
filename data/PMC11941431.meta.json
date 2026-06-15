@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11941431",
+  "pmid": "40150606",
+  "title": "Predictive Factors of Persistent Growth Hormone Deficiency and Impact on Final Height.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Urbano F, Chiarito M, Moscogiuri LA, Lattanzio C, Vitale R, Giannico OV, Annesi G, Zecchino C, Faienza MF.",
+  "doi": "10.3390/children12030324",
+  "figures": [],
+  "tables": [
+    "General characteristics of the enrolled patients.",
+    "Multiple binary logistic regression for persistent GHD.",
+    "Results of multiple linear regression for Δ (FH-MPH) SDS.",
+    "Results of multiple linear regression for Gain SDS."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012621.0314705
+}

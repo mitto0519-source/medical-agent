@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12284872",
+  "pmid": "40663466",
+  "title": "Standardization of TSH and FT4 to gestational age in early pregnancy and associations with clinical outcomes.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Osinga JAJ, Chaker L, van den Berg S, Jaddoe VWV, Steegers EAP, Tiemeier H, Peeters RP, Korevaar T.",
+  "doi": "10.1530/etj-24-0344",
+  "figures": [
+    "Course of hCG, TSH and FT4 during early pregnancy in TPOAb-negative women. The course of median hCG, TSH and FT4 during early pregnancy. The data are shown as the median levels per gestational week after exclusion of TPOAb-positive women.",
+    "The association of gestational age with maternal TSH and FT4 levels.",
+    "The differences between absolute and standardized maternal TSH and FT4 levels."
+  ],
+  "tables": [
+    "Reclassification of abnormal TSH or FT4 according to non-standardized (NS) to gestational age standardized (STD) values. Data are presented as the number (%) of participants.",
+    "The association of standardized (STD) and non-standardized TSH and FT4 with the risk of pre-eclampsia.",
+    "The association of standardized and non-standardized TSH and FT4 with the risk of prematurity."
+  ],
+  "query": "thyroid function adolescent",
+  "fetched_at": 1780012605.5328205
+}

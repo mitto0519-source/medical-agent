@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12189771",
+  "pmid": "40563330",
+  "title": "Current Insight into Biological Markers of Depressive Disorder in Children and Adolescents: A Narrative Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Trebatická J, Vatrál M, Katrenčíková B, Muchová J, Ďuračková Z.",
+  "doi": "10.3390/antiox14060699",
+  "figures": [
+    "Systems involved in the pathophysiology of depressive disorder. HCy—homocysteine; TXB2—thromboxane B2.",
+    "Neurotransmitters in the synapse. NT—neurotransmitter; MAO—monoamine oxidase; SSRI—selective serotonin reuptake inhibitor;      —symbol of inhibition.",
+    "HPA axis and inflammation under physiological conditions and chronic stress. HPA—hypothalamic-pituitary-adrenal axis; CRF—corticotropin-releasing factor; ACTH—adrenocorticotropic hormone; GR—glucocorticoid receptor; IL-6—cytokine IL-6; IL-1β—interleukin-1β; TNF-α—tumor necrosis factor α; ISC—immune system cells; MAT—metabolically active tissue; NCAM—neural cell adhesion molecule; BDNF—brain-derive",
+    "Catabolism of tryptophan (according to [ 15 ]). TDO—tryptophan 2,3-dioxygenase; IDO—indoleamine 2,3-dioxygenase; 5-HT—5-hydroxytryptamine; 5-HIAA—5-hydroxyindolacetic acid; Om3—omega-3 fatty acid; HPA hypothalamic-pituitary-adrenal axis;      —symbol of inhibition.",
+    "Involvement of hyperhomocysteinemia in oxidative stress and depression. ADMA—asymmetric dimethylarginine; DNA—deoxyribonucleic acid; GPx—glutathione peroxidase; GSH—reduced glutathione; HCy—homocysteine; NOS—nitroxide synthase; Om3—omega-3 fatty acids. The direction of the arrow means that one process/substance will affect another process/tissue. Modified according to [ 66 ]."
+  ],
+  "tables": [
+    "Comparative overview of neurotransmitters’ functions and presentations.",
+    "Pathophysiological features related to oxidative stress (data obtained from the literature)."
+  ],
+  "query": "vitamin D deficiency adolescent depression",
+  "fetched_at": 1780002027.3970122
+}

@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12043682",
+  "pmid": "40313622",
+  "title": "Analysis of sedative-hypnotic drug use trends in children and adolescents (2018-2023): a study based on outpatient prescription data from a general hospital.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Qingyu Z, Wenqing J, Le M, Yanbin H, Pingping M, Chen L, Jiaxin M, Ni D, Dalu Y, Kanzhen T, Junting S, Zhenzhen Z, Liemin R, Yunxin J.",
+  "doi": "10.3389/fphar.2025.1563580",
+  "figures": [
+    "Flow chart.",
+    "Annual total usage trends of various sedative-hypnotic drugs.",
+    "Trends in total usage, mean usage per patient, and usage per prescription of sedative-hypnotic drugs.",
+    "Trends in Drug Usage and Drug Usage per Prescription across varying Durations of Medication Use."
+  ],
+  "tables": [
+    "Equivalent dose conversion for sedative-hypnotic drugs.",
+    "Prescription characteristics and analysis of combination therapy.",
+    "Annual usage of sedative-hypnotic drugs.",
+    "Number of Prescriptions and Total Drug Usage across varying Durations of Medication Use.",
+    "DDDs of sedative-hypnotic drugs.",
+    "Analysis of usage by gender.",
+    "Analysis of usage by age group."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059735.5027018
+}

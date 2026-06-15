@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12246009",
+  "pmid": "40119997",
+  "title": "Bidirectional Relationships between Adolescent Aggression and Mental Health Conditions: Longitudinal Evidence from Secondary School Students in China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Li X, Zhu X, Ang RP, Zhang X, Bai Y, Chen D.",
+  "doi": "10.1007/s10964-025-02167-y",
+  "figures": [
+    "RI-CLPM for reactive aggression and depression in the whole / male / female sample. RA reactive aggression. The values in bold represent statistically significant paths at least at  p  &lt; 0.05; † p  &lt; 0.10",
+    "RI-CLPM for proactive aggression and depression in the overall / male / female sample. PA proactive aggression. The values in bold represent statistically significant paths at least at  p  &lt; 0.05; † p  &lt; 0.10",
+    "RI-CLPM for cyberbullying and depression in the overall / male / female sample. CA cyber-aggression. The values in bold represent statistically significant paths at least at  p  &lt; 0.05; † p  &lt; 0.10"
+  ],
+  "tables": [
+    "Descriptive statistics and bivariate correlations for study variables",
+    "Measurement invariance",
+    "Model fit indices for all models in the full ( n  = 1422)/male ( n  = 698)/female ( n  = 724) sample",
+    "Multiple group RICLPM"
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050349.6276636
+}

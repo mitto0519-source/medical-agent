@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12024149",
+  "pmid": "40282176",
+  "title": "Cracking the Code of Cyberbullying Effects: The Spectator Sports Solution for Emotion Management and Well-Being Among Economically Disadvantaged Adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee I, Chang Y, Yoo T, Plunkett E.",
+  "doi": "10.3390/bs15040555",
+  "figures": [
+    "Hypothesized research model.",
+    "Summaries of structural coefficients for non-spectatorship group (NSG). Note:  * p  &lt; 0.05; **  p  &lt; 0.01; ***  p  &lt; 0.001. All four emotion management variables, including other-emotion appraisal, self-emotion appraisal, emotion expression, and emotion control, along with all four endogenous variables, which include absences, school-related offenses, health-related quality of life, and G",
+    "Summaries of structural coefficients for spectatorship-adherent group (SG). Note:  * p  &lt; 0.05; **  p  &lt; 0.01. All four emotion management variables, including other-emotion appraisal, self-emotion appraisal, emotion expression, and emotion control, along with all four endogenous variables, which include absences, school-related offenses, health-related quality of life, and GPA, are allowed "
+  ],
+  "tables": [
+    "Means (M), standard errors (SE), and factor loadings (λ).",
+    "Correlations matrix.",
+    "Summary of fit statistics for testing measurement invariance.",
+    "Summary of fit statistics for testing structural invariance.",
+    "The structural model with standardized path coefficients (β) and standard errors (SE)."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017434.2681208
+}

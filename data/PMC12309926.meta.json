@@ -1,0 +1,32 @@
+{
+  "pmcid": "PMC12309926",
+  "pmid": "40741164",
+  "title": "Risk factors, protective factors, peripheral biomarkers, and neurocognitive markers associated with mood disorders: An umbrella review of 103 meta-analyses and systematic reviews.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang H, Ma L, Zhang M, Zu Z, Wei W, Li N, Yang L, Chen F, Fan C, Wang K, Li X.",
+  "doi": "10.1016/j.bbih.2025.101068",
+  "figures": [
+    "Literature search.",
+    "Summary estimates of meta-analyses of potential environmental risk factors for MDD. (a) Violence as a risk factor for MDD. (b) Work, economy, and education as risk factors for MDD. (c) Disease as a risk factor for MDD. (d) Family relationships as a risk factor for MDD. (e) Abuse as a risk factor for MDD. (f) Support as a risk factor for MDD. (g) Other risk factors for MDD.",
+    "Summary estimates of meta-analyses of potential environmental protective factors for MDD.",
+    "Summary estimates of meta-analyses of peripheral biomarkers for MDD.",
+    "Summary estimates of meta-analyses of peripheral neurocognitive markers for MDD.",
+    "Summary estimates of meta-analyses of potential environmental risk factors for BD.",
+    "Summary estimates of meta-analyses of potential peripheral biomarkers for BD.",
+    "Summary estimates of meta-analyses of neurocognitive markers for BD."
+  ],
+  "tables": [
+    "Level of evidence rating scale.",
+    "Number of articles included, number of factors or biomarkers, relevant information on cases and population.",
+    "Potential environmental risk factors of major depressive disorder.",
+    "Potential environmental protective factors of major depressive disorder.",
+    "Potential peripheral biomarkers of major depressive disorder.",
+    "Potential neurocognitive makers of major depressive disorder.",
+    "Potential environmental risk factors of bipolar disorder.",
+    "Potential peripheral biomarkers of bipolar disorder.",
+    "Potential neurocognitive makers of bipolar disorder."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048122.921348
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12060840",
+  "pmid": "40049149",
+  "title": "Children with Growth Hormone Deficiency Treated with Lonapegsomatropin Demonstrated Sustained Height Improvements for up to 6 Years: enliGHten Trial Final Results.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Maniatis AK, Thornton PS, Nadgir UM, Vlachopapadopoulou E, Malievskiy O, Aghajanova EM, Korpal-Szczyrska M, Woods KA, Mao M, Zhao C, Abdelrahman SG, Huang EA, Komirenko AS, Shu AD, Hofman P.",
+  "doi": "10.1159/000545064",
+  "figures": [
+    "Longitudinal assessments over 4 years of the enliGHten trial (full analysis set).  a  Height SDS. Across enliGHten visits, the number of participants with height SDS data decreased predominantly due to participants completing the trial.  b  IGF-1 SDS. Light blue box represents the protocol-specified target range of IGF-1 SDS 0–2.  c  Lonapegsomatropin dose. Week 0 represents the start of the enliG",
+    "Height SDS at enliGHten baseline and enliGHten last visit for treatment completers. Dashed line indicates mean average parental height SDS (average parental height = height SDS mother  + height SDS father ]/2) for treatment completers ( n  = 81, −0.44).",
+    "AHV during lonapegsomatropin treatment throughout childhood. AHV by age and year of lonapegsomatropin treatment (across the heiGHt, fliGHt, and enliGHten trials) for males ( a ) and females ( b ) in the full analysis set. The number of participants with height assessments for each age and year of lonapegsomatropin treatment is shown below the graph.",
+    "Tanner stage analysis. IGF-1 SDS ( a ), lonapegsomatropin dose ( b ), and AHV ( c ) were estimated by Tanner stage across heiGHt, fliGHt, and enliGHten using a mixed effects repeated measures model with the outcome as the dependent variable, sex as fixed effects, age, Tanner stage, and duration of exposure on lonapegsomatropin as time varying covariates, and random intercept within participant as ",
+    "Safety assessments during the enliGHten trial.  a  TEAEs (regardless of investigator assessment of causality) reported in ≥5% of participants ( N  = 298) in the enliGHten trial full analysis set.  b  Bone age:chronological age (BA:CA) ratio during the enliGHten trial for the full analysis set. COVID-19, coronavirus disease-19; SARS-CoV-2, severe acute respiratory syndrome coronavirus-2."
+  ],
+  "tables": [
+    "Full analysis set: demographics and key data at baseline and the last visit",
+    "Treatment completers: demographics and key data at baseline and at the last visit"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012918.8134208
+}

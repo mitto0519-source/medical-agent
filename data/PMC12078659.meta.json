@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12078659",
+  "pmid": "40369033",
+  "title": "Anti-aging protein α-Klotho is potential for reducing comorbidity risk of cardiometabolic diseases in vulnerable populations and enhancing long-term prognosis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang K, Liu J.",
+  "doi": "10.1038/s41598-025-01580-4",
+  "figures": [
+    "Forest plot for stratified analysis of the association between α-Klotho and cardiometabolic comorbidities  # .  # Adjusted for all factors in full adjustment model except the stratification variable.",
+    "Mediation effect diagram of the effect of T2DM, obesity, CKD, or NAFLD on the association between α-Klotho and CVD # . CVD: cardiovascular disease; T2DM: Type 2 diabetes mellitus; CKD: chronic kidney disease; NAFLD: non-alcoholic fatty liver disease; DE: direct effect; IE: indirect effect; TE: total effect. (*:  P  &lt; 0.05; **:  P  &lt; 0.01; ***:  P  &lt; 0.001).  # Adjusted for all factors in ",
+    "Restricted cubic spline curve for the dose-response relationship of α-Klotho with hazard ratio (HR) of all-cause mortality among participants with (red color) or without (green color) cardiometabolic comorbidities # :  (A-B)  CVD complicated with T2DM;  (C-D)  CVD complicated with Obesity; (E-F)  CVD complicated with CKD; (G-H)  CVD complicated with NAFLD.  # Adjusted for all factors in the full a"
+  ],
+  "tables": [
+    "Basic characteristics of the study participants",
+    "The associations between α-Klotho and cardiometabolic diseases using binary logistic regression",
+    "The association between α-Klotho (log10-transformed) and CVD complicated with metabolic comorbidities using ordered logistic regression",
+    "The associations between α-Klotho(log10-transformed) and risk of all-cause mortality among participants with or without cardiometabolic diseases."
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006795.9864657
+}

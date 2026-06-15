@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12306452",
+  "pmid": "40735362",
+  "title": "Tobacco smoking as an endocrine disrupting chemical: An assessment through biological monitoring.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee HS, Na HK, Chang SS, Kim SY, Kim CS, Kim MJ, Yang M.",
+  "doi": "10.18332/tid/205064",
+  "figures": [
+    "Association between tobacco smoking and oxidative stress as urinary cotinine and MDA levels: a) without creation modification, p&lt;0.01, slope (estimate)=0.21, r 2 =0.01 by regression analysis; b) with creation modification, p&lt;0.01, slope (estimate)=0.45, r 2 =0.12 by regression analysis (N=538)",
+    "Negative association between oxidative stress and growth rate in adolescents: p=0.04, slope= -0.31, r 2 =0.18 by regression analysis (N=129); self-reported growth rate: 0, very slow; 1, slow; 2, normal; 3, fast; 4, very fast",
+    "Protein-protein interactions by STRING 12.0 in SNPs with: a) urinary cotinine levels; b) t,tmuconic acid levels; and c) MDA levels"
+  ],
+  "tables": [
+    "Descriptive characteristics of the subjects based on recruitment site, South Korea",
+    "Differences in exposure biomarker levels between smokers and non-smokers, South Korea",
+    "Alteration of mtDNA by smoking and age",
+    "Association between cotinine and associated SNPs"
+  ],
+  "query": "smoking adolescent Korea",
+  "fetched_at": 1779978102.3112419
+}

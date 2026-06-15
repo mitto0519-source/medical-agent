@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12086727",
+  "pmid": "40114482",
+  "title": "Mediating effects of waist circumference and BMI on the association between meal frequency and mortality.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tan LJ, Shin S.",
+  "doi": "10.1017/s1368980025000357",
+  "figures": [
+    "A single mediator model.",
+    "Kaplan–Meier analysis of the proportion of participants who remained free of\nall-cause mortality or specific-cause mortality.",
+    "WC mediation models of the association between meal frequency and all-cause and\nspecific-cause mortality. WC, weight change."
+  ],
+  "tables": [
+    "Baseline general characteristics of selected study population in current survival\nanalysis",
+    "Adjusted hazard ratios for all-cause and specific-cause mortality according to\ndaily meal frequency among KoGES participants"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037001.9892504
+}

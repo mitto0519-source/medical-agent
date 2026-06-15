@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12296587",
+  "pmid": "40713588",
+  "title": "GPS tracking methods for spatiotemporal air pollution exposure assessment: comparison and challenges in study implementation.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kyriakou K, Flückiger B, Vienneau D, Probst-Hensch N, Jeong A, Imboden M, Karsies A, Schmitz O, Karssenberg D, Vermeulen R, Hoek G, de Hoogh K.",
+  "doi": "10.1186/s12942-025-00405-x",
+  "figures": [
+    "The number of participants enrolled in the study each week for each study center  The x-axis represents the weeks of the year, while the y-axis shows the number of enrollments during each week (blue bars for Switzerland; red bars for the Netherlands)",
+    "Participation-level comparison of NO 2  and PM 2.5  exposures based on GPS readings from the mobile phone app and the SODAQ device, by activity  NO 2  and PM 2.5  exposures were calculated and compared over the whole period (total) and by activity (Home, Socializing, Work/School and Travel). Each point in the scatterplots is a participant of the Swiss (top row) and the Dutch (bottom row) tracking ",
+    "Activity-level comparison of NO 2  and PM 2.5  exposures based on GPS readings from the mobile phone app and the SODAQ device  NO 2  and PM 2.5  exposures were calculated and compared over the whole period (total) and by activity (Home, Socializing, Work/School and Travel). Each point in the scatterplots is an activity of the Swiss (to row) and the Dutch (bottom row) tracking campaign"
+  ],
+  "tables": [
+    "Steps in the tracking campaign in Switzerland and the Netherlands",
+    "Demographics of participants in the Swiss (CH) and Dutch (NL) tracking campaigns compared to National population data (percentages in each category calculated for total population)",
+    "Percentage of time per activity obtained from the tracking campaigns in Switzerland and the Netherlands",
+    "Comparison of percentage of time per commuter mode obtained from the tracking campaigns with National figures for Switzerland and the Netherlands"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008151.2673728
+}

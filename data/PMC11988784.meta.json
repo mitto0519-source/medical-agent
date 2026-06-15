@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11988784",
+  "pmid": "40218007",
+  "title": "Body-Weight Fluctuations and the Association Between the Consumption of Protein-Rich Foods and the Incidence of Metabolic Syndrome Among Middle-Aged Women in Korea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chun H, Ha JH, Oh J, Doo M.",
+  "doi": "10.3390/healthcare13070709",
+  "figures": [
+    "Incidence of metabolic syndrome by body weight fluctuations.  The hazard ratio (95% confidence interval) and  p  value of the LBWF group were calculated using the HBWF group as the reference. *  p  value &lt; 0.001. LBWF, low body weight fluctuation; HBWF, high body weight fluctuation.",
+    "Incidence of metabolic syndrome by protein rich foods and body weight fluctuations.  The hazard ratio (95% confidence interval) and  p  value of the LBWF group were calculated using the HBWF group as a reference after adjustment for age, residence area, education level, household income, current alcohol consumption, current smoking, and physical activity. *  p  value &lt; 0.05; **  p  value &lt; 0"
+  ],
+  "tables": [
+    "Food sources of protein-rich foods in the Korean Genome and Epidemiology Study.",
+    "General characteristics and indices at baseline according to body weight fluctuations.",
+    "Metabolic syndrome-related variables at baseline according to body weight fluctuations.",
+    "Consumption of dietary macronutrients and protein-rich foods at baseline by body weight fluctuation.",
+    ""
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036805.5101554
+}

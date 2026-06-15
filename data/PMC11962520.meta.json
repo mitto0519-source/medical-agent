@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11962520",
+  "pmid": "40143719",
+  "title": "Reliability and Validity of the Korean Version of the Quantitative Checklist for Autism in Toddlers: A Comparison Study Between the Clinical and Community Population.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hong Y, Lee K, Yoo N, Choi J, Kim Y.",
+  "doi": "10.30773/pi.2024.0116",
+  "figures": [
+    "ROC curve for the Korean version of Quantitative Checklist for Autism in Toddlers under 54 months of age. ROC, receiver operating characteristic."
+  ],
+  "tables": [
+    "Descriptive characteristics of the total participants (total N=207)",
+    "Descriptive statistics of Q-CHAT and other screening instruments (SCQ, CARS, and CBCL) for children younger than 54 months of age",
+    "Pearson correlations among ASD screening instruments with Q-CHAT for children younger than 54 months of age",
+    "Item-total correlation of the Q-CHAT for children younger than 54 months of age",
+    "Frequency of each items scored above 2 according to age group",
+    "One-way analysis of variance for the effects of age on the Q-CHAT item scores in Hospital samples",
+    "One-way analysis of variance for the effects of age on the Q-CHAT item scores in community samples"
+  ],
+  "query": "autism spectrum disorder Korea",
+  "fetched_at": 1779996173.2980316
+}

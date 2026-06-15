@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC12043122",
+  "pmid": "40305514",
+  "title": "The influence of after-school tutoring on the mental health of middle school students: A mediating effect test based on sleep deprivation and academic performance.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Fan L, Zhang Z, Li X.",
+  "doi": "10.1371/journal.pone.0321048",
+  "figures": [
+    "Model of mediating effect (where H1-H5 is the hypothesis of mediating effect and + /- is the positive and negative effect of the influence).",
+    "Correlation analysis of variables heatmap.",
+    "Path coefficients between variables.  (*, ** and *** denote signiﬁcance level at the 10%, 5% and 1% levels).",
+    "The results of the robustness test coefficient.  (*, ** and *** denote signiﬁcance level at the 10%, 5% and 1% levels)."
+  ],
+  "tables": [
+    "Summary of Definitions and Descriptions for Variables.",
+    "Descriptive Statistics of Variables ( N  = 3581).",
+    "Correlation Test Table of Dependent Variables, Independent Variables and Mediating Variables.",
+    "Sobel Test of Mediating Pathways of Sleep Deprivation.",
+    "Sobel Test of Mediating Pathways of Sleep Deprivation.",
+    "Statistical table of depressive mood regression analysis in Pathway 2.",
+    "Sobel Test of The Mediating Effect Pathway of Academic Performance.",
+    "Statistical Table of Heterogeneity Test Results."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019248.877852
+}

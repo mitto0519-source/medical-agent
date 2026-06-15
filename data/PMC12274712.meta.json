@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12274712",
+  "pmid": "40645110",
+  "title": "Social profiles among youth with attention-deficit/hyperactivity disorder (ADHD): Evidence from the ABCD study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Pintos Lobo R, Peraza JA, Salo T, Meca A, Smith DD, Feeney KE, Schmarder KM, Sutherland MT, Gonzalez R, Musser ED, Laird AR.",
+  "doi": "10.1016/j.dcn.2025.101591",
+  "figures": [
+    "Analytic Workflow. Participants were selected from the ongoing ABCD Study via items from a behavioral measure (i.e., KSADS-5) to identify ADHD and TD groups (Step 1). Select items related to social functioning were extracted from behavioral questionnaires including the KSADS-5, CBCL, Parent Short-SRS, Youth- and Parent- prosocial behavior survey, and FES - family conflict subscale (Step 2). Social",
+    "Social Functioning Impairment Across Profiles .  Latent profile analysis revealed four profiles of social functioning among ADHD youth in the ABCD Study. These four profiles show distinct levels of social functioning among the domains of Affiliation and Attachment, Social Communication, and Perception and Understanding of Others. Higher scores indicate higher levels of impairment among social doma",
+    "Standardized DAN and SMH Within-Network Connectivity. Estimates of standardized within-network connectivity (95 % confidence intervals) for the Dorsal Attention Network (DAN) and Sensorimotor-Hand Network (SMH) across social functioning profiles of ADHD youth compared to typically developing controls. TD = Typically Developing controls. Profile 1 = Low Social Functioning (blue); Profile 2 = Modera",
+    "Standardized Between-Network Connectivity. Estimates of standardized between-network connectivity (95 % confidence intervals) across social functioning profiles of ADHD youth compared to typically developing controls. Panel A = Auditory and Salience; Panel B = Dorsal Attention and Salience; Panel C = Default Mode and Sensorimotor-Hand; Panel D = Auditory and None; Panel E = Cingulo-Opercular and N",
+    "Comparison of proportion of variance explained between data-driven social profiles and traditional DSM-5 nosology to psychosocial and academic outcomes (Peer Relationships, Family Conflict, Mental Health, Academic Performance)."
+  ],
+  "tables": [
+    "RDoC annotation of social items.",
+    "Annotations related to Psychosocial and Academic Outcomes.",
+    "Latent profile analysis model comparisons.",
+    "Raw estimates and SE across profiles.",
+    "Demographic characteristics for total sample and profiles."
+  ],
+  "query": "ADHD adolescent academic performance",
+  "fetched_at": 1779995952.3233829
+}

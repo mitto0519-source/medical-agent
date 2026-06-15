@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12340101",
+  "pmid": "40809894",
+  "title": "The association between iodine intake and thyroid disease in iodine-replete regions: the Korean Genome and Epidemiology Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park SJ, Chen L, Wallace TC, Lee HJ.",
+  "doi": "10.4162/nrp.2025.19.4.554",
+  "figures": [],
+  "tables": [
+    "Comparison of the general characteristics of participants according to thyroid disease status (n = 190,524)",
+    "Comparison of the anthropometric measurements and biochemical values according to thyroid disease status (n = 190,524)",
+    "Comparison of the nutrient and cruciferous vegetable intake according to thyroid disease status (n = 190,524)",
+    "ORs and 95% CI for thyroid disease according to quintiles of iodine intake (n = 190,524)"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037276.0551221
+}

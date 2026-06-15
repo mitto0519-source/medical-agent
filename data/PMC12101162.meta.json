@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12101162",
+  "pmid": "40407614",
+  "title": "Unraveling Attention-Deficit/Hyperactivity Disorder Etiology: Current Challenges and Future Directions in Treatment.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Poddar A, Gaddam S, Sonnaila S, Bavaraju VSM, Agrawal S.",
+  "doi": "10.3390/neurosci6020041",
+  "figures": [
+    "Overview of ADHD etiology and pathophysiology, highlighting genetic, environmental, and neurobiological factors influencing symptom development. This figure was created using Biorender, referencing [ 33 ].",
+    "Neurodevelopmental differences in the brain of a child with ADHD compared to its typical developing peer. This figure was created using Biorender, referencing [ 33 ].",
+    "Illustration of synaptic terminal activity in ADHD patients before treatment, showing reduced dopamine and norepinephrine signaling. This figure was created using Biorender, referencing [ 33 ].",
+    "Enhanced synaptic terminal function in ADHD patients following methylphenidate and lisdexamfetamine treatment, demonstrating increased neurotransmitter availability. This figure was created using Biorender, referencing [ 33 ]."
+  ],
+  "tables": [
+    "Similarities and differences between stimulant and non-stimulant medications."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780059245.443413
+}

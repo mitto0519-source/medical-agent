@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12206766",
+  "pmid": "40589648",
+  "title": "Network characteristics of the youth's insomnia and emotional symptoms and their gender differences.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu C, Zhou L, Pi XX, Liu B, Zhang XF, Wei WC, Nie SC.",
+  "doi": "10.3389/fpsyt.2025.1597652",
+  "figures": [
+    "Network structure of insomnia, anxiety, and depressive symptoms among youth. In the diagram symptom node with stronger connections are closer to each other. The orange node denotes the ISI items; the skyblue node denotes the PHQ-9 items; the light green node denotes the GAD-7 items. The dark green lines represent positive correlations. The edge thickness represents the strength of the association ",
+    "Node strength in the insomnia, anxiety, and depression network.",
+    "Network structure of insomnia, anxiety, and depressive symptoms showing bridge symptoms in youth.",
+    "Bridge strength in the insomnia, anxiety, and depression network.",
+    "The stability of centrality and bridge centrality indices using case-dropping bootstrap. The x-axis represents the percentage of cases of the original sample used at each step. The y-axis represents the average of correlations between the centrality indices in the original network and the centrality indices from the re-estimated networks after excluding increasing percentages of cases. The line in",
+    "Network comparison of insomnia, anxiety, depressive symptoms between genders."
+  ],
+  "tables": [
+    "Gender differences in scale scores."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048408.3513036
+}

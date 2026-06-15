@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12240082",
+  "pmid": "40636319",
+  "title": "Trends in Pediatric Blood Pressure-Lowering Prescription Fills During 2017-2023.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kumar A, Therrien NL, Ogwuegbu J, He S, Lee JS, Imoisili O, Lundeen EA, Lampley K, Jackson SL.",
+  "doi": "10.1016/j.focus.2025.100356",
+  "figures": [
+    "Percentage of U.S. population aged 3–17 years with prescription fills for generic BP-lowering medications by sex and age group, IQVIA Total Patient Tracker, 2017–2023.  This figure shows the annual trend of individuals with prescription fills for generic BP-lowering medication among males and females aged 3–17 years during 2017–2023 using U.S. population estimates by sex and age group for all year",
+    "Percentage of U.S. population aged 3–17 years with prescription fills for generic BP-lowering medications mentioned in the 2017 AAP guideline for outpatient management of chronic hypertension by sex and age group, IQVIA Total Patient Tracker, 2017–2023.  This figure shows the annual prescription trend of generic BP-lowering medications mentioned in the 2017 AAP guideline among males and females ag"
+  ],
+  "tables": [
+    "Annual Total Number and Population Percentage of Unique Individuals Aged 3–17 Years With Prescription Fills for Generic and Guideline-Recommended BP-Lowering Medications Overall and by Sex and Age groups, IQVIA TPT, 2017–2023 a",
+    "Joinpoint Results for Generic BP-Lowering Prescription Fills in Population Percentage Overall and by Sex and Age Group Among Individuals Aged 3–17 Years, IQVIA Total Patient Tracker, 2017–2023 a"
+  ],
+  "query": "hypertension adolescent prevention",
+  "fetched_at": 1779994052.2560148
+}

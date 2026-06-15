@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12122395",
+  "pmid": "40453517",
+  "title": "Real-world interpretation of procalcitonin to guide antibiotic prescribing: a retrospective cohort study with regression discontinuity analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chockalingam L, Mee T, Gardner T, Grimm E, Baduashvili A.",
+  "doi": "10.1017/ash.2025.72",
+  "figures": [
+    "An ROC curve depicting the relationship between antibiotic treatment decisions and procalcitonin level, labeled with specific procalcitonin cut-points.",
+    "ROC curves depicting the relationship between antibiotic treatment decisions and procalcitonin level, stratified by the highest encounter level of care, each ROC labeled with specific procalcitonin cut-points."
+  ],
+  "tables": [
+    "Patient/encounter baseline characteristics, stratified by the antibiotic treatment decisions",
+    "Discharge diagnoses, stratified by antibiotic treatment decisions",
+    "Encounter characteristics, stratified by the categorization for the regression discontinuity analysis",
+    "Regression discontinuity analyses"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035429.4578824
+}

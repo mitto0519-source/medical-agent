@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12227563",
+  "pmid": "40615492",
+  "title": "Pharmacovigilance analysis of drug-induced hypertrophic rhinitis using FAERS data.",
+  "year": 2025,
+  "journal": "",
+  "authors": "He Y, Yan X, Chen L, Lin Z.",
+  "doi": "10.1038/s41598-025-10336-z",
+  "figures": [
+    "Year, age, and outcome distribution of drug-induced hypertrophic rhinitis reports from the FAERS database (Q1 2004 – Q3 2024). DE: death; OT: other serious; RI: required intervention to prevent permanent impairment/damage; CA: congenital anomaly; DS: disability; HO: hospitalization; LT: life-threatening.",
+    "Signal detection. A: The indications of patients with drug-induced hypertrophic rhinitis (cases ≥ 400); B: A positive x-axis suggests that the adverse effects linked to drug-induced hypertrophic rhinitis were reported more frequently than other adverse effects; a positive y-axis indicates a markedly significant difference. Thus, drugs in this graph’s upper right quadrant had differences and signif",
+    "Single- and multi-factor analysis of drug-induced hypertrophic rhinitis. A: 85 drugs which were independent drug-induced hypertrophic rhinitis risk factors; B: The optimal regularization parameter λ in the Lasso regression model was determined (upper panel), while the evolutionary trajectories of variable coefficients across λ-spectrum were visualized (lower panel).",
+    "AUC of multifactorial logistic regression analysis. AUC: area under the curve of the receiver operating characteristic."
+  ],
+  "tables": [
+    "Clinical characteristics of drug-induced hypertrophic rhinitis reports from the FAERS database (Q1 2004 – Q3 2024)."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002337.2544615
+}

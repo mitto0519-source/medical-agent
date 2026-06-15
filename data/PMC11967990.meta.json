@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11967990",
+  "pmid": "40179036",
+  "title": "Effects of Commuter Cycling on Physical Activity, Cardiometabolic Health and Body Composition.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Novis BJ, Hargreaves EA, Jowett T, Rehrer NJ.",
+  "doi": "10.1002/ejsc.12289",
+  "figures": [
+    "Summary",
+    "Vigorous, moderate and light physical activity (PA) per week from logbooks (mean ± SD) in control (CON) ( n  = 13) and commuter cycling (CYC) groups ( n  = 13) groups. (Mixed linear model differences from wk 0: moderate PA Group  p  = 0.02, Time  p  = 0.11 Interaction  p  = 0.56; light PA Group  p  = 0.55, Time  p  = 0.43, Interaction  p  = 0.81). Data distribution invalidated vigorous PA analysis"
+  ],
+  "tables": [
+    "Physical characteristics (mean ± SD) for cycling and control groups at baseline (week 0) and after the 10‐week cycling intervention.",
+    "Median (upper and lower quartiles) physical activity per week reported from the International Physical Activity Questionnaire in control (CON) and commuter cycling (CYC) groups at baseline (week 0), weeks 4, 8 and 10 of the intervention.",
+    "Mean (±SD) physical activity per week reported from the International Physical Activity Questionnaire in control (CON) and commuter cycling (CYC) groups at baseline (week 0), weeks 4, 8 and 10 of the intervention.",
+    "Physiological and biochemical measures (mean ± SD) at baseline (week 0) and after 10 weeks of commuter cycling (CYC) and in a control group (CON)."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007323.6007173
+}

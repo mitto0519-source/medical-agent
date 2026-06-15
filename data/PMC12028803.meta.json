@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12028803",
+  "pmid": "40333440",
+  "title": "HELIOS-Stack: A Novel Hybrid Ensemble Learning Approach for Precise Joint Roughness Coefficient Prediction in Rock Discontinuity Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Umar IH, Lin H, Liu H, Cao R.",
+  "doi": "10.3390/ma18081807",
+  "figures": [
+    "Geological formation with reddish-brown layers of sedimentary rock exposed on a cliff face.",
+    "Illustrative diagram depicting the core statistical parameters of a roughness profile adapted from existing research on joint characterization [ 25 ].",
+    "Flowchart of HELIOS-Stack (hybrid ensemble learning with integrated optimization and scaling).",
+    "Distribution plots of rock discontinuity roughness parameters using GMMs. The color three clusters (purple for Cluster 0, pink for Cluster 1, and black for Cluster 2).",
+    "Grey correlation grade and ranking.",
+    "Machine learning approaches for JRC comparative prediction: ( a ) HELIOS-Stack training data, ( b ) HELIOS-Stack testing data, ( c ) LGBMRegressor training data, ( d ) LGBMRegressor testing data, ( e ) SVR training data, ( f ) SVR testing data, ( g ) MLPRegressor training data, ( h ) MLPRegressor testing data, ( i ) RFR training data, and ( j ) RFR testing data.",
+    "Comparison of JRC values determined using HELIOS-Stack methodology versus actual JRC values and various empirical models: ( a ) JRC by Z 2 ; Barton and Choubey [ 6 ], Tse and Cruden [ 26 ], Yu and Vayssade [ 27 ], Tatone and Grasselli [ 28 ], and Luo [ 22 ], ( b ) JRC by R p ; Maerz [ 29 ], Bandis [ 30 ], and Luo [ 22 ], ( c ) JRC by SD i ; Abolfazl Fahimifar [ 33 ], and ( d ) JRC by SF; Harrison ",
+    "Comparative analysis evaluation of JRC prediction model metrics across multiple empirical regression models: JRC by Z 2 ; Barton and Choubey [ 6 ], Tse and Cruden [ 26 ], Yu and Vayssade [ 27 ], Tatone and Grasselli [ 28 ], and Luo [ 22 ], JRC by R p ; Maerz [ 29 ], Bandis [ 30 ], and Luo [ 22 ], JRC by SD i ; Abolfazl Fahimifar [ 33 ], and JRC by SF; Harrison and Rasouli [ 31 ], Teshemariam [ 32 ",
+    "LIME feature importance."
+  ],
+  "tables": [
+    "Ten standard roughness profiles developed by Barton.",
+    "JRC prediction using parameter mathematical equations.",
+    "Evaluation standard of the correlation grades.",
+    "Best model parameters.",
+    "Comparative analysis evaluation of JRC prediction models across statistical metrics."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780036065.170607
+}

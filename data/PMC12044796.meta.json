@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12044796",
+  "pmid": "40307902",
+  "title": "Does a growth mindset curb anxiety among Chinese medical students? Validation based on propensity score matching.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang XJ, Gan YT, Wang ZJ, Wang JY, Duan XJ, Ma X, Sun T, Cao DP, Zhang SE.",
+  "doi": "10.1186/s40359-025-02782-1",
+  "figures": [
+    "Density Function of Propensity Scores Before  (A)  and After  (B)  PSM",
+    "Common Support Hypothesis Histogram  (A)  and Covariate Balancing Test (Standard Bias of Covariates)  (B)"
+  ],
+  "tables": [
+    "Definition of the variables",
+    "Demographic characteristics and univariate analysis of participants’ growth mindset, anxiety ( n  = 2,778)",
+    "The Estimation results of OLS model and logit model",
+    "The balance test results of One-to-one nearest neighbor matching",
+    "Sample matching methods and conditional independence assumption",
+    "The net effect of growth mindset on anxiety among Chinese medical students"
+  ],
+  "query": "East Asian academic pressure mental",
+  "fetched_at": 1780055055.7321746
+}

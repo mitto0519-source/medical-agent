@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12238394",
+  "pmid": "40628785",
+  "title": "Structural relationships among physical literacy, mental toughness, athletic mental energy, achievement emotions, and COVID-19-induced negative psychological states in Chinese adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wu J, Kuan G, Zhang X, Lu FJH, Gill DL, Kueh YC.",
+  "doi": "10.1038/s41598-025-06295-0",
+  "figures": [
+    "Hypothesized model constructs.  Note:  PL = Physical Literacy, AEP = Achievement Emotions Positive, AEN = Achievement Emotions Negative, AME = Athletic Mental Energy, MT = Mental Toughness, CINP = COVID-19-Induced Negative Psychological States.",
+    "Structural equation model with standardized path coefficients (see Table  3  for values). Orientation: Physical Literacy (left) → Mediators → CINP (right)."
+  ],
+  "tables": [
+    "Demographic characteristics of people with participants ( n  = 729).",
+    "Path coefficients of structural equation model.",
+    "Structural equation model parameters.",
+    "Mediation effect of Bootstrap."
+  ],
+  "query": "Taiwan adolescent mental health",
+  "fetched_at": 1780049656.2797496
+}

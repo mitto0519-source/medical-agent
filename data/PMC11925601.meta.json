@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11925601",
+  "pmid": "40113345",
+  "title": "Associations Between Cognitive Impairment, Depressive Symptoms, and Work Productivity Loss in Patients With Bipolar Disorder: A Cross-Sectional Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Takaesu Y, Shiroma A, Nosaka T, Maruyama H.",
+  "doi": "10.1002/npr2.70012",
+  "figures": [
+    "Patient disposition.",
+    "Correlations between cognitive impairment and depression (A), cognitive impairment and sleep disturbance (B), and depression and sleep disturbance (C). AIS, Athens Insomnia Scale; COBRA, Cognitive Complaints in Bipolar Disorder Rating Assessment; PHQ‐9, Patient Health Questionnaire‐9;  r , Pearson's correlation coefficient.",
+    "Correlations between cognitive impairment (A), depression (B), and sleep disturbance (C) with work productivity (presenteeism). AIS, Athens Insomnia Scale; COBRA, Cognitive Complaints in Bipolar Disorder Rating Assessment; PHQ‐9, Patient Health Questionnaire‐9;  r , Pearson's correlation coefficient; WPAI‐GH, Work Productivity and Activity Impairment: General Health.",
+    "Correlations between cognitive impairment (A), depression (B), and sleep disturbance (C) with QOL. AIS, Athens Insomnia Scale; COBRA, Cognitive Complaints in Bipolar Disorder Rating Assessment; HUI3, Health Utilities Index Mark 3; PHQ‐9, Patient Health Questionnaire‐9;  r , Pearson's correlation coefficient; QOL, quality of life."
+  ],
+  "tables": [
+    "Participant baseline data.",
+    "Multiple regression analysis: Work productivity (presenteeism).",
+    "Multiple regression analysis: QOL (HUI3)."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048930.7411404
+}

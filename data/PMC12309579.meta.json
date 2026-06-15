@@ -1,0 +1,33 @@
+{
+  "pmcid": "PMC12309579",
+  "pmid": "40741077",
+  "title": "Global Trends in Non-Invasive Techniques for the Diagnosis and Monitoring of Nonalcoholic Fatty Liver Disease: A Bibliometric and Visualization Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cai JW, Wang WL, Lin DL, Ren SF, Jia QQ, He XX, Yang XX, Cai W, Hou H.",
+  "doi": "10.2147/jmdh.s525751",
+  "figures": [
+    "Application of multi-omics techniques for non-invasive diagnosis of NAFLD.",
+    "Screening process flowchart.",
+    "( A ) Line graph of the number of research publications related to non-invasive techniques for the diagnosis and monitoring of NAFLD worldwide. ( B ) Fitted curve of global annual trends in the publication of studies related to non-invasive techniques for the diagnosis and monitoring of NAFLD (R 2  = 0.9319).",
+    "Conceptual structure map of NAFLD research fields. The triangles in the diagram represent different research directions, the double triangles represent major research areas, and the dots indicate specific research related to the topic.",
+    "( A ) A world map of the distribution of research publications related to non-invasive techniques for the diagnosis and monitoring of NAFLD. ( B ) Number of publications by country and total collaboration strength. ( C ) Countries/territories collaboration analysis by VOSviewer.",
+    "( A ) VOSviewer network visualisation for institutional co-authorship analysis. ( B ) Average year of publication by institution in the field of non-invasive techniques for diagnosis and monitoring of NAFLD.",
+    "( A ) Average year of publication in the field of non-invasive techniques for diagnosis and monitoring of NAFLD by journal. ( B ) Journal’ production over time. ( C ) The dual-map overlays of journals.",
+    "( A ) A co-occurrence analysis of researchers with a threshold of at least six publications per author. ( B ) Authors’ production over time.",
+    "( A ) Top 25 references with the strongest citation bursts. ( B ) Literature in the field of non-invasive techniques to diagnose and monitor NAFLD with at least 25 citations. ( C ) Analyzing co-citations to identify the most influential articles.",
+    "Top 25 keywords with the strongest citation bursts.",
+    "( A ) Keyword cloud map. ( B ) Keyword analysis based on the VOSviewer visual map. ( C ) Average citation year based on keyword clustering. ( D ) A timeline view of keywords.",
+    "( A ) Theme evolution: temporal trajectory of NAFLD research. ( B ) Trend analysis of NAFLD research themes. ( C ) Trends in research topics in NAFLD."
+  ],
+  "tables": [
+    "Top 10 Countries in Terms of Publications and Centrality",
+    "Top 10 Institutions with the Most Publications",
+    "Top 10 Journals in Terms of Publications and Citations",
+    "Top 10 the Most Productive Authors Distributed by Publications and Citations",
+    "Top 10 the Most Cited Literature",
+    "Top 10 Keywords in Terms of Publications and Centrality"
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779994678.8214915
+}

@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12328564",
+  "pmid": "40770034",
+  "title": "Epigenome-wide association study of BMI and waist-to-hip ratio and their associations with dietary patterns in Korean adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee J, Choi HK, Park SH, Lee YG, Park JH.",
+  "doi": "10.1038/s41598-025-13868-6",
+  "figures": [
+    "Workflow for DNA methylation analysis in relation to obesity phenotypes. The study initially had 1,528 participants, of which two were excluded (one due to quality control issues and one due to missing smoking data). The remaining 1,526 participants’ DNA methylation data were normalized using the BMIQ method, followed by batch effect correction using the ComBat algorithm and removal of cell-type h",
+    "Methylation patterns of the top differentially methylated positions (DMPs) associated with obesity phenotypes. (A) Box plots showing the methylation levels (β-values) of the top 10 DMPs associated with abdominal obesity. Comparisons are shown between individuals classified as lean and those with abdominal obesity (determined by WHR). Each plot displays the CpG site ID and its corresponding delta-b",
+    "Correlation of DNA methylation levels at the top CpG sites with obesity measures. (A) Scatter plots showing the relationship between the WHR and DNA methylation levels (beta value) at the top 10 WHR-associated CpG sites. Each panel represents a different CpG site (labeled at top), with individual data points colored by the correlation direction (blue for negative, red for positive). The regression",
+    "Hierarchical clustering analysis of correlations between WHR-associated CpG methylation sites and dietary factors. ( A ) Heatmap showing clustered correlations between WHR-associated CpG sites (rows) and food items (columns) commonly consumed in the Korean diet. The color scale represents the correlation strength and direction, with red and blue indicating positive ( r  = 0–0.5) and negative corre",
+    "Hierarchical clustering analysis of the correlations between BMI-associated CpG methylation sites and dietary factors. ( A ) Heatmap showing the clustered correlations between BMI-associated CpG sites (rows) and food items (columns). The color scale represents the correlation strength and direction, with red and blue indicating positive ( r  = 0–0.5) and negative correlations ( r  = 0 to − 0.5), r"
+  ],
+  "tables": [
+    "Comparison of clinical characteristics and biochemical parameters between participants with and without abdominal obesity based on waist-to-hip ratio (WHR).",
+    "Comparison of clinical characteristics and biochemical parameters between participants with and without abdominal obesity based on body-mass index (BMI).",
+    "DMPs associated with abdominal obesity.",
+    "Top 20 DMPs associated with BMI-related obesity."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037482.6423178
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12105394",
+  "pmid": "40420016",
+  "title": "The mediating roles of anxiety, loneliness, stress, and depression in the relationship between cyberbullying and non-suicidal self-injury: propensity score matching and causal mediation analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang W, Ning L, Miao Q, Xu F, Li K, Chen X, Lu H.",
+  "doi": "10.1186/s12888-025-06943-9",
+  "figures": [
+    "The distribution of propensity score before and after PSM analysis",
+    "Pearson correlation analysis of our key variables  Note: All correlation coefficients are significant at  P  &lt; 0.001",
+    "The mediating roles of emotional factors in the cyberbullying-NSSI relationship  Note: *  P  &lt; 0.05 **  P  &lt; 0.01 ***  P  &lt; 0.001"
+  ],
+  "tables": [
+    "Socio-demographic characteristics of participants ( N  = 1751)",
+    "Key variables status of the participants ( N  = 1751)",
+    "Socio-demographic characteristics: comparison between cyberbullied and Non-cyberbullied participants"
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017448.675461
+}

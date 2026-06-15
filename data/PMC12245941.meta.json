@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12245941",
+  "pmid": "40289054",
+  "title": "Healing of the Canoe: Preliminary Suicide Prevention Outcomes Among Participating and Non-Participating Youth.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Perkins T, Lee B, Mackin J, Donovan D, Rushing SC, Caughlan C, Kakuska AG, Walker L.",
+  "doi": "10.1007/s11121-025-01806-x",
+  "figures": [
+    "Estimated marginal means from rANOVA of composite hope scale score for IG versus NIG at Pre-Survey and Post-Survey with 95% confidence intervals. Figure graphics were created using the ggplot2 package in R (Wickham,  2016 )",
+    "Estimated marginal means from rANOVA for mental health score for IG versus NIG at Pre-Survey and Post-Survey with 95% confidence intervals",
+    "Estimated marginal means from rANOVA for mental health score for IG versus NIG, and youth identifying as female or non-binary, at Pre-Survey and Post-Survey with 95% confidence intervals",
+    "Estimated marginal means from rANOVA of composite resilience scale score for IG versus NIG at Pre-Survey and Post-Survey with 95% confidence intervals",
+    "Estimated marginal means from rANOVA for composite help-seeking and helping scale score for IG versus NIG at Pre-Survey and Post-Survey with 95% confidence intervals. IG means went from 3.30 at Pre-Survey (Time 1) to 3.26 at Post-Survey (Time 2). NIG means went from 3.05 at Pre-Survey (Time 1) to 3.08 at Post-Survey (Time 2). Convergent rounding rules were applied in the plot labels"
+  ],
+  "tables": [
+    "Baseline (pre-survey) mean scores",
+    "Self-reported race and gender demographics",
+    "Age and risk score",
+    "Estimated marginal means from rANOVA for composite measure scores for IG versus NIG at Pre-Survey and Post-Survey"
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780052139.7062066
+}

@@ -1,0 +1,28 @@
+{
+  "pmcid": "PMC12283236",
+  "pmid": "40703585",
+  "title": "Research Trends and Hotspots of Acupuncture Therapy on Allergic Diseases From 2004 to 2024: A Bibliometric Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lv Y, Jiang Z, Zhang J, Zheng X, Tian X, Liu J, Yang J.",
+  "doi": "10.2147/jmdh.s528646",
+  "figures": [
+    "Annual number of publication.",
+    "( A ) The countries/regions with more than 10 publications.( B ) Visualization map of the national cooperation network.",
+    "The distribution map of institutions.",
+    "( A ) The distribution map of authors. ( B ) The co-citation map of cited authors.",
+    "Visualization map of co-cited journals network.",
+    "( A ) The clusters of cited references in this study. ( B ) Timeline view of the cited references in this study. ( C ) Top 20 references with the strongest citation burst. ( D ) Dual-map overlay visualization of documents.",
+    "( A ) Network visualization map of keywords related to acupuncture for allergic diseases. ( B ) The keyword co-occurrence map about acupuncture for allergic diseases. ( C ) The clusters of keywords in this study. ( D ) Timeline view of the keywords in this study. ( E ) The top 20 keywords with the strongest citation bursts."
+  ],
+  "tables": [
+    "The Top 10 Institutions with the Most Publications",
+    "The Top 9 Authors with the Most Publications",
+    "The Top 10 Journals with the Most Publications",
+    "The Top 10 Co-Cited References with the Most Citations",
+    "The Top 10 Documents with the Most Citations",
+    "The Top 10 Keywords with the Most Frequency"
+  ],
+  "query": "allergic rhinitis quality life",
+  "fetched_at": 1780014487.2718537
+}

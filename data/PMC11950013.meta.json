@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11950013",
+  "pmid": "40146308",
+  "title": "High-Density Lipoprotein Cholesterol Trajectories and Lung Function Decline: A Prospective Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yoo B, Jung SH, Bae SH, Kim YS, Lee C.",
+  "doi": "10.1007/s00408-025-00809-3",
+  "figures": [
+    "Flow chart of participant selection. This flowchart illustrates the selection process of participants from the baseline cohort",
+    "HDL-C Trajectories Based on Age for the Model with Five Groups. Each line represents the estimated HDL-C trajectory for one of the five HDL-C trajectory groups across ages. Shaded areas indicate 95% confidence intervals. Single dots represent individual data points. HDL-C levels are measured in mg/dL.  HDL-C  high-density lipoprotein cholesterol",
+    "Estimated Differences in Annual Decline Rates of FVC and FEV 1  According to Five HDL-C Trajectory Groups. Estimated differences in the annual decline rates of ( A ) FVC and ( B ) FEV 1  changes in the five-group HDL-C trajectory model. Results from generalized linear mixed models adjusted for sex, centered age, height, BMI, BMI 2 , residential area, smoking exposure (pack-years), history of dysli"
+  ],
+  "tables": [
+    "Baseline characteristics of the study participants based on the model with five HDL-C trajectory groups",
+    "Association between HDL-C and lung function in cohort data by cross-sectional analysis"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041146.4105668
+}

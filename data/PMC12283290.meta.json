@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12283290",
+  "pmid": "40704309",
+  "title": "Dietary soy and isoflavone intake and mortality in Korean adults: a prospective cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Song S, Jun S, Joung H, Lee JE.",
+  "doi": "10.3389/fnut.2025.1613685",
+  "figures": [
+    "Hazard ratios and 95% confidence intervals for all-cause mortality according to quartiles of dietary isoflavone intake, stratified by demographic and lifestyle factors. HR, hazard ratio; CI, confidence interval. Model was stratified by age group and adjusted for age in years, sex, education level, current alcohol drinking, smoking status, regular exercise, body mass index, history of diabetes, ene"
+  ],
+  "tables": [
+    "Baseline characteristics of Korean adults according to quartiles of dietary isoflavone intake.",
+    "Hazard ratios and 95% confidence intervals for all-cause, cancer, and CVD mortality according to quartiles of dietary intakes of isoflavones, soy protein, and soy foods.",
+    "Hazard ratios and 95% confidence intervals for all-cause, cancer, and CVD mortality according to sex-specific quartiles of dietary intakes of isoflavones, soy protein, and soy foods."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037007.3700433
+}

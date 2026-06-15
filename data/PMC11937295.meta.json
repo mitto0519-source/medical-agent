@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11937295",
+  "pmid": "40133630",
+  "title": "Brazilian adults in urban areas with longer commuting time to work had lower fruit consumption.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Costa GLC, Mululo ACV, Araujo MC.",
+  "doi": "10.1038/s41598-025-94495-z",
+  "figures": [
+    "Flowchart of the study population.",
+    "Mean (in grams) and 95% confidence interval of fruits ( a ), meat ( b ), and tubers ( c ) intake by commuting time to work and macro-regions of the country among Brazilian adults in urban areas (n = 16,967), National Dietary Survey (NDS), 2017–2018."
+  ],
+  "tables": [
+    "Frequency* (95% confidence interval—95% CI) of commuting time to work according to the sociodemographic characteristics of Brazilian adults (20–59 years old) (n = 69,713).",
+    "Mean* gram or ml per capita (95% confidence interval—95% CI) of food by commuting time categories for Brazilian adults in urban areas (n = 16,967), National Food Survey (NFS), 2017–2018.",
+    "Adjusted* mean per capita** (95% confidence interval—95%CI) of food by commuting time categories for Brazilian adults in urban areas (n = 16,967), National Food Survey (NFS), 2017–2018.",
+    "Crude and adjusted* odds ratio** and 95% confidence interval (95% CI) of the prevalence of overweight*** by commuting time to work for the total sample and stratified by sex of Brazilian adults in urban areas (n = 16,967), National Food Survey (NFS), 2017–2018."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008316.5037014
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11972974",
+  "pmid": "40189831",
+  "title": "Addressing overfitting bias due to sample overlap in polygenic risk scoring.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jeong S, Shivakumar M, Jung SH, Won HH, Nho K, Huang H, Davatzikos C, Saykin AJ, Thompson PM, Shen L, Kim YJ, Kim BJ, Lee S, Kim D.",
+  "doi": "10.1002/alz.70109",
+  "figures": [
+    "Overview of OA PRS. A, B, Summary information preparation step with publicly released GWAS and overlapped sample summary C, Reconstruction of GWAS summary with OA‐PRS. D, Validation and visual diagnostics of adjusted PRS. AUROC, area under the receiver operating characteristic; GWAS, genome‐wide association study; OA PRS, overlap‐adjusted polygenic risk score.",
+    "Results from simulation studies using the UKB‐CAD dataset. A, Inflation in AUROC values for overlap, non‐overlap, and target (overlap + non‐overlap) data as the proportion of overlap samples increases and with adjustment by three methods—IVW,  Z  score, and EraSOR. Training and target data splits are shown above the plots (50:50, 60:40, 70:30, 80:20, and 90:10). The  y  axis plots AUROC and the  x",
+    "Visual diagnostics for the adjustment using AGEN‐T2D—KoGES samples. Only the AS cohort ( n  = 5490) in KoGES was adjusted. In this case, there are no results on non‐overlapped samples because the KoGES study completely includes the AGEN‐T2D consortium. AGEN‐T2D, Asian Genetic Epidemiology Network Type 2 Diabetes; AS, Ansan/Ansung; AUROC, area under the receiver operating characteristic; EraSOR, Er",
+    "Results from real data analysis using the IGAP—ADNI. A, Inflation of AUROC values in overlap, non‐overlap, and target (overlap + non‐overlap) IGAP—ADNI samples without and with adjustment by three methods—IVW,  Z  score, and EraSOR. The corresponding OR values are in the parentheses. B, Visual diagnostics for the analysis in (A). High significant variants and neighbors are filtered at  P  = 1e‐4. ",
+    "Model –log10  P  value of AD PRS for predicting 28 cognitive and neuroimaging phenotypes. Overlapped samples were removed from unadjusted PRS while  Z  score adjustment included all samples. On both models which incorporate either PRS only or PRS and  APOE  genotypes,  P  values were lower when using adjusted AD PRS. AD, Alzheimer's disease;  APOE , apolipoprotein E; PRS, polygenic risk score."
+  ],
+  "tables": [],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036624.4765534
+}

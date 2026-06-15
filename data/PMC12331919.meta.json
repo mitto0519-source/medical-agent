@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12331919",
+  "pmid": "40775298",
+  "title": "Maternal stress, cord blood zinc and attention deficit hyperactivity disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Takahashi N, Nishimura T, Okumura A, Iwabuchi T, Harada T, Rahman MS, Nomura Y, Newcorn JH, Tsuchiya KJ.",
+  "doi": "10.1038/s44184-025-00149-3",
+  "figures": [
+    "Correlation analysis between serum zinc and IL-6 in cord blood.  Red line indicates best fitted line in regression analysis.",
+    "Directed acyclic graph between mother’s perinatal stress, serum zinc and A DHD symptoms.  Numbers represents standardized beta by regression analysis. Numbers in [] represents standard error. * P  &lt; 0.05, ** P  &lt; 0.01, *** P  &lt; 0.001."
+  ],
+  "tables": [
+    "Summary of the cohorts used in the analyses"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021204.6231017
+}

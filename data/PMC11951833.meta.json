@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11951833",
+  "pmid": "40148970",
+  "title": "The effectiveness of new urban trail infrastructure on physical activity and active transportation: a systematic review and meta-analysis of natural experiments.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Fast I, Nashed C, Lotscher J, Askin N, De Visser HS, McGavock J.",
+  "doi": "10.1186/s12966-025-01729-4",
+  "figures": [
+    "Flow chart of systematic selection of studies",
+    "Meta-analysis of 11 studies that reported changes in minutes of physical activity following implementation ofa new urban trail"
+  ],
+  "tables": [
+    "Study characteristics for natural experiments with controlled per-post designs that Met inclusion criteria",
+    "Summary of studies examining effectiveness of urban trails on changes in active transportation",
+    "Effectiveness of urban trails on changes in cycling traffic"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007893.2229257
+}

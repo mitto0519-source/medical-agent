@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12204317",
+  "pmid": "40534212",
+  "title": "The potential bias introduced into COVID-19 vaccine effectiveness studies at primary care level due to the availability of SARS-CoV-2 tests in the general population.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lanièce Delaunay C, Nunes B, Monge S, de Lange M, Túri G, Machado A, Latorre-Margalef N, Mlinarić I, Lazar M, Botella Rocamora P, Erdwiens A, Sève N, Domegan L, Martínez-Baz I, Hooiveld M, Oroszi B, Guiomar R, Sperk M, Kurečić Filipović S, Pascu C, Linares Dopido JA, Dürrwald R, Rameix-Welti MA, McKenna A, Castilla J, van Hagen C, Knol M, Bacci S, Kaczmarek M, Kissling E, VEBIS Primary Care Vaccine Effectiveness Group.",
+  "doi": "10.1093/ije/dyaf086",
+  "figures": [
+    "Directed acyclic graph representing hypothesized causal relationships between key variables in a test-negative design study of COVID-19 vaccine effectiveness at primary care level, in the absence of self-test use. The effect of interest is that of COVID-19 vaccination on SARS-CoV-2 infection.",
+    "Directed acyclic graph representing hypothesized causal relationships between variables in a test-negative design study of COVID-19 vaccine effectiveness at primary care level, in the context of self-test use, (A) without adjustment for self-testing and (B) with adjustment for self-testing. The effect of interest is that of COVID-19 vaccination on SARS-CoV-2 infection.",
+    "Difference between the estimated VE and the true VE (mean bias), in a simulated primary care-based test-negative design study, under different scenarios defined by key parameters, in the context of self-test use, without adjustment for self-testing. The first set of plots presents results of simulations varying the probability of GP consultation after a positive self-test result (expressed relativ",
+    "Difference between the estimated VE and the true VE (mean bias), in a simulated primary care-based test-negative design study, with a probability ratio of self-testing of 2.5 among the vaccinated, 30% self-testing in the unvaccinated, and no effect of positive result on GP consultation, in the context of self-test use, with adjustment for self-testing. The probability of consultation after a negat"
+  ],
+  "tables": [
+    "Input parameter values for simulation to calculate the magnitude of potential bias in COVID-19 vaccine effectiveness related to self-testing"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021268.854462
+}

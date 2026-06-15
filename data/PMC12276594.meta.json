@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12276594",
+  "pmid": "40349722",
+  "title": "Mental health mediates the association between cardiorespiratory fitness and academic performance in European schoolchildren.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Muntaner-Mas A, Valenzuela PL, Pinto-Escalona T, Erickson KI, Martínez-de-Quel Ó.",
+  "doi": "10.1016/j.jped.2024.10.013",
+  "figures": [
+    "Mental health mediation model of the relationship between cardiorespiratory fitness with grade point average.  Results are shown as regression coefficients along with 95 % confidence interval. Statistically significant values are shown in bold. p-value =  a  p  &lt; 0.01 and * p  &lt; 0.05.  IE (95 %CI), Indirect Effect (95 % Confidence Interval): %Med, percentage mediated by the proposed mediator"
+  ],
+  "tables": [
+    "Characteristics of the study participants.",
+    "Linear regression analyses between cardiorespiratory fitness, mental health and academic performance in children.",
+    "Total, direct, and indirect effects of the mediation analyses investigating mental health as a mediator between cardiorespiratory fitness and academic performance, controlling for sex and socioeconomic level."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011439.380262
+}

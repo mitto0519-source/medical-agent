@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12119941",
+  "pmid": "40437034",
+  "title": "Cross-lagged analysis of physical fitness and cognitive control in Chinese early adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xu L, Zhang F, Zhu J.",
+  "doi": "10.1038/s41598-025-03747-5",
+  "figures": [
+    "Test schedule chart.",
+    "Stroop color-word task flow chart.",
+    "Go/no go task flow chart.",
+    "Task-cueing paradigm task flow chart.",
+    "Cross-lagged relationship model between physical fitness and interference inhibition in Chinese early adolescents.",
+    "Cross-lagged relationship model between physical fitness and impulse control in Chinese early adolescents.",
+    "Cross-lagged relationship model between physical fitness and cognitive flexibility in Chinese early adolescents."
+  ],
+  "tables": [
+    "Descriptive statistics of physical fitness and cognitive control in Chinese early adolescents.",
+    "Correlation matrix between physical fitness and cognitive control in Chinese early adolescents."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011215.3880708
+}

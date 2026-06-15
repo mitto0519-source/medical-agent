@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12318650",
+  "pmid": "40844121",
+  "title": "Treatment of Early-Onset Specified and Unspecified Bipolar Disorders: A Systematic Review and Strategies for Identifying and Managing a Thermally Dysregulated Subtype in Children.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Papolos DF, Teicher MH, Post RM.",
+  "doi": "10.1111/acps.13817",
+  "figures": [
+    "PRISMA flowchart for AI–guided literature search of PubMed.",
+    "PRISMA flowchart for subsequent AI–guided literature search of EMBASE.",
+    "Clinical flags that indicate that a child might have TSDD rather than the typical BP‐NOS subtype of USBD."
+  ],
+  "tables": [
+    "Psychopharmacological studies.",
+    "Psychotherapeutic studies.",
+    "A preliminary treatment paradigm for the S‐USBP subtype of TSDD."
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779997439.1527095
+}

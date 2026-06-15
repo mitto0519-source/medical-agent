@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12250241",
+  "pmid": "40656034",
+  "title": "An observational study on gray matter volume and white matter integrity in suicide attempters with bipolar I disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Vishwakarma A, Pankaj, Deep R, Kumaran SS, Sharan P.",
+  "doi": "10.4103/indianjpsychiatry_966_24",
+  "figures": [
+    "(a) coronal image and (b) sagittal image at same axial level, depicting the right inferior fronto-occipital fasciculus (IFOF) region with significantly lower white matter anisotropy in BD with lifetime suicide attempts compared to BD without lifetime suicidality ( P  &lt; 0.001 GRF-corrected)"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of the study groups",
+    "Voxel-wise ROI analysis for gray matter volume across study groups",
+    "Comparison of FA values across study groups I and II ( n =16 each)"
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780051788.0198019
+}

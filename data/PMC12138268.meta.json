@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12138268",
+  "pmid": "40468942",
+  "title": "Association Between Waist-to-Height Ratio Estimated Fat Mass Categories and Incident Fractures.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cho Y, Jhee JH, Hong N, Park HS.",
+  "doi": "10.1002/jcsm.13834",
+  "figures": [
+    "Kaplan–Meier curves for incident fracture incidence among WHtR tertile groups (A: overall fracture, B: vertebral fracture, C: hip fracture and D: wrist or humerus fracture).",
+    "Cubic spline plot for incident overall fracture according to WHtR (A), BMI (B) and WC (C).  Note:  The blue line represents the hazard ratio, and the grey surface area represents the 95% confidence interval. The curve is adjusted for age and sex. Abbreviations: BMI, body mass index; WC, waist circumference; WHtR, waist‐to‐height ratio."
+  ],
+  "tables": [
+    "Baseline characteristics of the patients according to WHtR tertiles.",
+    "Association between WHtR and incident fractures.",
+    "Association between BMI, WC and incident fractures.",
+    "Association between WHtR estimated fat categories and incident fractures."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037266.1670766
+}

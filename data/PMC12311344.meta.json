@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12311344",
+  "pmid": "40581614",
+  "title": "Effect of COVID-19 vaccination appointment letters on uptake by sociodemographic characteristics: a regression discontinuity analysis in Sweden, December 2020 to September 2021.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Varotsis G, Hammar U, Bonander C, Lundmark P, Kennedy B, Gomez MF, Martinell M, Dyar OJ, Sarkadi A, Kristiansson R, Svaleryd H, Fall T.",
+  "doi": "10.1093/eurpub/ckaf097",
+  "figures": [
+    "Regression discontinuity plot with a linear regression slope superimposed on both sides of the cut-off line illustrating the proportion of individuals (%) vaccinated within 90 days post-eligibility, with regression lines with 95% confidence intervals. Each point on the plot represents the proportion of vaccinated individuals within a 1-month age range. The intervention group (Appointment Letter) a",
+    "Estimated intervention effect on the total population and within sociodemographic groups based on the optimal bandwidths. Data are odds ratios (95% confidence interval) and percentage point change (95% confidence interval) for the estimated effect of vaccination appointment letters for total population and different sub-groups, and percentage of individuals vaccinated among those born in 1972, jus",
+    "Figure 2 . Stratification of the regression discontinuity plot with a linear regression slope superimposed on both sides of the cut-off by potential moderators. The plots show the proportion of individuals (%) vaccinated within 90 days post-eligibility, with regression lines with 95% confidence intervals. Each point on the plot represents the proportion of vaccinated individuals within a 1-month a"
+  ],
+  "tables": [
+    "Baseline characteristics"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035205.8341277
+}

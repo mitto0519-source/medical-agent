@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12120798",
+  "pmid": "40344520",
+  "title": "Disentangling the Switching Behavior in Functional Connectivity Dynamics in Autism Spectrum Disorder: Insights from Developmental Cohort Analysis and Molecular-Cellular Associations.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Li W, Qiu X, Chen J, Chen K, Chen M, Wang Y, Sun W, Su J, Chen Y, Liu X, Chu C, Wang J.",
+  "doi": "10.1002/advs.202403801",
+  "figures": [
+    "Overview of the method pipeline. First, calculation of RFSI at the individual level. Second, harmonization of multi‐site data. Third, categorization of subjects into children, adolescents, and adults based on age and into ASD and typical control TC groups based on disease status. Finally, exploring the cellular and molecular mechanisms underlying aberrant switching behaviors. Partial brain map fro",
+    "MANOVA revealed the abnormal RFSI. A) The Age and Group effects mapping to the cerebral cortex, where Age and Group effects were FDR‐corrected  p  &lt; 0.05 corrected to obtain mapping maps with thresholds. The red areas of the centermost map indicate brain regions where Age and Group effects overlap after FDR correction (children: 253 ASD and 345 TC; adolescents: 274 ASD and 283 TC; adults: 293 A",
+    "Interpretation of abnormal RFSI A) Decoding of Group effect in Brain Function. Relationships between Group effect  F ‐map and 24 cognitive components based on the NeuroSynth meta‐analysis database. Each row indicates that the components were sorted from left to right by five percent increments of the  F ‐statistic and each column indicates that cognitive components were sorted by the weighted aver",
+    "Similarity analysis of brain RFSI differences between ASD macaques and adults with ASD. A) The RFSI for ASD monkey models (ASD) and wild type (WT) monkeys at the group level, as well as spatial  t ‐map of ASD‐WT differences are shown (unpaired two‐sample  t ‐tests). B) Comparison of similar regions in the pattern of differences between ASD‐WT in monkeys and ASD‐TC in adults.",
+    "From macro‐cortical abnormal dynamics to cell type‐specific gene expression. A) Differences in the left dorsolateral prefrontal RFSI between the ASD and TC groups in children, adolescents, and adults (unpaired two‐sample  t ‐tests). B) Clustering of snRNA‐seq data using the SSN algorithm and cell types were annotated according to the expression of known marker genes. Key annotations: OPC, Oligoden",
+    "Differential gene enrichment analysis. A) Upregulated DEGs per clusters. B) Downregulated DEGs per cluster. C) Displaying the average expression of specific gene sets within the transects across cell types. D) GO enrichment of overlapping DEGs across age groups. E) GO enrichment of upregulated and downregulated DEGs across age groups. The colors of the circles represent different classifications a",
+    "Single‐cell transcription factor analysis and trajectory analysis. A) Heatmap of RAS activity of cell‐level regulons in each group with each column indicating a different regulon and each row indicating a different grouping. The color from blue to red indicates the RAS activity score from low to high. The higher the score of RAS, the stronger the activity of regulon in that group. B) Ranking of RS"
+  ],
+  "tables": [],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046771.0263188
+}

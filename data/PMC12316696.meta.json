@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12316696",
+  "pmid": "40713168",
+  "title": "Association of grey matter cerebral blood flow with white matter integrity in relation to youth bipolar disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Grigorian A, Zou Y, Kennedy KG, Dimick MK, MacIntosh BJ, Goldstein BI.",
+  "doi": "10.1503/jpn.250019",
+  "figures": [
+    "Relationship between cerebral blood flow (CBF) in the anterior cingulate cortex (ACC) and fractional anisotropy (FA) in the cingulum, covariate-adjusted for age and sex, among youth with bipolar disorder. This plot demonstrates a significant positive relationship, whereby higher ACC CBF predicted higher cingulum FA in BD.",
+    "Relationship between cerebral blood flow (CBF) in the anterior cingulate cortex (ACC) and fractional anisotropy (FA) in the cingulum, covariate-adjusted for age and sex, among asymptomatic female youth with bipolar disorder. The plot demonstrates a significant positive relationship, whereby higher ACC CBF predicted higher cingulum FA."
+  ],
+  "tables": [
+    "Demographic characteristics",
+    "Descriptive clinical characteristics",
+    "Summary of exploratory analyses to parse heterogeneity in CBF and CBF–FA associations within bipolar disorder  *"
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779996571.1311479
+}

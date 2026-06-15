@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11930830",
+  "pmid": "40129672",
+  "title": "Associations of body roundness index and sugar-sweetened beverage consumption with psychological symptoms in adolescents: a multicenter cross-sectional survey based on Chinese adolescents aged 12-18 years old.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen L, Zheng W, Wei C, Ling J, Kong Q.",
+  "doi": "10.3389/fnut.2025.1505491",
+  "figures": [
+    "Sampling flow of Chinese adolescent participants.",
+    "Trends in ORs of logistic regression analysis of psychological symptoms in adolescents with different BRI and SSB consumption.",
+    "Trends in ORs of ordered logistic regression analysis of psychological symptoms in adolescents with different BRI and SSB consumption."
+  ],
+  "tables": [
+    "Basic situation of adolescents aged 12–18 in China.",
+    "Comparison of psychological symptoms among adolescents with different BRI and SSB consumption in China.",
+    "Logistic regression analysis of psychological symptoms in Chinese adolescents with different BRI and SSB consumption.",
+    "Ordered logistic regression analysis of psychological symptoms in Chinese adolescents with different BRI and SSB consumption."
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975619.955312
+}

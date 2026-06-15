@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12122822",
+  "pmid": "40442103",
+  "title": "Prevalence and risk factors for hypertension among children and adolescents in Shaanxi province, Northwestern China, according to the three hypertension guidelines.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Li M, Yang N, Zhao J, Wang X, Wang Q, Hui T, Shi W, Bai R.",
+  "doi": "10.1038/s41598-025-01039-6",
+  "figures": [
+    "UPR of factors associated with hypertension according to NHCC, ESH and AAP guideline.  UPR  unadjusted prevalence ratio,  NHCC  National Health Commission of the People’s Republic of China,  ESH  European Society of Hypertension,  AAP  American Academy of Pediatrics.",
+    "Sampling flowchart."
+  ],
+  "tables": [
+    "NHCC, ESH and AAP definitions of pediatric hypertension.",
+    "Basic characteristic of all participants.",
+    "Hypertension prevalence as defined in ESH, AAP guidelines, and HNC standard stratified by demographic characteristics.",
+    "Predictors of hypertension among children and adolescents using an adjusted log-binomial regression."
+  ],
+  "query": "hypertension adolescent prevention",
+  "fetched_at": 1779993981.382032
+}

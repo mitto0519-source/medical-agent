@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12319034",
+  "pmid": "40761882",
+  "title": "Tryptophan metabolic reprogramming modulates cytokine networks in nucleos(t)ide analogue-treated chronic hepatitis B patients.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gao X, Wu X, Li Y, Dai X, Cai B.",
+  "doi": "10.3389/fcimb.2025.1643636",
+  "figures": [
+    "Baseline clinical characteristics and laboratory parameters.",
+    "Differential analysis of cytokines across groups. FC, Functional cure group (n = 29); HBeAg-, HBeAg-negative group (n = 40); HBeAg+, HBeAg-positive group (n = 37); HC, Healthy Control group (n = 29). * P  &lt; 0.05, ** P  &lt; 0.01, *** P  &lt; 0.001.",
+    "(A)  Correlation between tryptophan metabolites and cytokines in NAs-treated HBV patients. The correlations with statistical significance are marked with asterisks (*).  (B)  Linear regression plots of parameters significantly associated with IAld. * P  &lt; 0.05, ** P  &lt; 0.01, *** P  &lt; 0.001."
+  ],
+  "tables": [
+    "Baseline clinical characteristics and laboratory parameters.",
+    "Logistic regression analysis of tryptophan metabolites and cytokines on the functional cure of hepatitis B \n a \n ."
+  ],
+  "query": "tryptophan kynurenine pathway depression",
+  "fetched_at": 1780045961.2525747
+}

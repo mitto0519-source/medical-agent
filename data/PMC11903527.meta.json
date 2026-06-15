@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11903527",
+  "pmid": "39751727",
+  "title": "Exposure to Lead, Cadmium, Mercury and Arsenic Among Asian and Non-Asian Children and Adolescents in the United States: NHANES 2015-2018.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Song L, von Ehrenstein OS.",
+  "doi": "10.1007/s10903-024-01634-1",
+  "figures": [
+    "Distribution of metals concentrations by parental education levels for non-Asian and Asian participants aged 1–19 years in NHANES 2015–2018.  Note  NHANES = National Health and Nutrition Examination Survey. Figures are labeled with geometric means, and error bars (± 1 and ± 2 geometric standard deviations)",
+    "Adjusted percentage difference in metal concentration geometric means among Asian compared to non-Asian children/adolescents in NHANES 2015–2018.  Note  The points represent the percentage difference, and the error bars indicate the 95% confidence intervals. A percentage difference above 0 indicates higher metal concentrations among Asians compared to non-Asians. Metals include lead (Pb), cadmium "
+  ],
+  "tables": [
+    "Characteristics of children and adolescents in NHANES 2015–2018 (n = 5293)",
+    "Relative association between Asian identification, parental education, and their interaction on metal exposure, unadjusted and adjusted for potential confounders"
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053490.2172375
+}

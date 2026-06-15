@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12312917",
+  "pmid": "40743247",
+  "title": "Independent association of weight-adjusted waist index with asthma in U.S. adolescents: Mediating roles of eosinophil percentage, total cholesterol, and HDL cholesterol.",
+  "year": 2025,
+  "journal": "",
+  "authors": "He L, Deng Y, Liu X, Wang Y, Tang J.",
+  "doi": "10.1371/journal.pone.0328796",
+  "figures": [
+    "Baseline characteristics of adolescent participants according to WWI quartiles.",
+    "RCS analysis of the association between WWI and odds of asthma in adolescents.",
+    "Schematic representation of the effect of WWI on adolescent asthma through mediating variables (EOS%, TC, and HDL-C).",
+    "Stratified analysis of the association between WWI and asthma according to selected covariates (Age, sex, race, PIR, family history of asthma, anti-asthma medication use, household smokers).",
+    "Stratified analysis of the association between WWI and asthma according to BMI in adolescents."
+  ],
+  "tables": [
+    "Baseline characteristics of adolescent participants according to WWI quartiles.",
+    "Baseline characteristics of adolescent participants with and without current asthma.",
+    "Association between WWI and prevalence of current asthma in adolescents."
+  ],
+  "query": "asthma adolescent prevalence",
+  "fetched_at": 1780012988.7016923
+}

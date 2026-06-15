@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12085932",
+  "pmid": "40385775",
+  "title": "A Family With Factor VII Deficiency: A Possible Autosomal Dominant Transmission.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Song Z, Garcia S, Nandhagopal T, Kim S.",
+  "doi": "10.7759/cureus.82526",
+  "figures": [
+    "Patient family pedigree with each member's factor VII activity  Red arrow: patient"
+  ],
+  "tables": [
+    "Laboratory findings  RBC: red blood cells; Hbg: hemoglobin; MCV: mean corpuscular volume; WBC: white blood cells; HCT: hematocrit; MCHC: mean corpuscular hemoglobin concentration; RDW: red cell distribution width; APTT: activated partial thromboplastin time; mm³: cubic millimeter; gm/dL: grams per deciliter",
+    "Lab results among family members (Daughter 1 is the patient)  PT: prothrombin time; INR: international normalized ratio; PTT: partial thromboplastin time, activated"
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004457.665574
+}

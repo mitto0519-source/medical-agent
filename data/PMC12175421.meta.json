@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12175421",
+  "pmid": "40533794",
+  "title": "Stress, loneliness, depression, anxiety and problematic smartphone use among a sample of Syrian refugee adolescents: a network approach.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yetim O, Tamam L, Efe A, Alleil İS, Çakır R.",
+  "doi": "10.1186/s13034-025-00936-y",
+  "figures": [
+    "Estimated network structure of stress, loneliness, depression, anxiety subdimensions, and smartphone addiction. Edge thickness indicates the strength of the association, while blue edges indicate positive correlations and red edges indicate negative correlations.  ScAv  School avoidance,  PanDis  Panic disorder,  SepAnx  Seperation anxiety,  SocAnx  Social anxiety,  GenAnx  Generalized anxiety,  S",
+    "Expected influence (EI; left graph) and bridge expected influence (bEI; right graph) for every node. For each plot,  y  axis represent the nodes and  x  axis represent the EI and bEI.  ScAv  School avoidance,  PanDis  Panic disorder,  SepAnx  Seperation anxiety,  SocAnx  Social anxiety,  GenAnx  Generalized anxiety,  STR  Stress,  SPA  Smartphone addiction,  Lon  Loneliness,  Dep  Depression"
+  ],
+  "tables": [
+    "Sample characteristics"
+  ],
+  "query": "loneliness isolation adolescent mental",
+  "fetched_at": 1779999649.473263
+}

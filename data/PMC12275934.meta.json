@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12275934",
+  "pmid": "40581089",
+  "title": "Advancing precision diagnosis in autism: Insights from large-scale genomic studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim SW, An JY.",
+  "doi": "10.1016/j.mocell.2025.100248",
+  "figures": [
+    "Cell-type-specific expression patterns of ASD risk genes. (A) Summary of ASD risk genes identified in recent large-scale studies ( Fu et al., 2022 ,  Satterstrom et al., 2020 ,  Trost et al., 2022 ,  Avila et al., 2025 ), annotated by sex specificity ( Kim et al., 2024c ), functional category, and cell-type enrichment. Each column represents an ASD risk gene, and rows indicate study support, funct",
+    "Experimental validation status of ASD-associated genes identified through automated NLP analysis of PubMed abstracts. (A) A systematic PubMed search was conducted from January 2010 to June 2025 using the keywords (“autism spectrum disorder”[Title/Abstract] OR autism[Title/Abstract] OR ASD[Title/Abstract]) AND (gene[Title/Abstract] OR mutation[Title/Abstract]). Abstracts were processed with OpenAI’",
+    "Illustrative models of ASD liability. (A) Diagram of the liability threshold model in ASD. ASD is diagnosed when cumulative genetic burden—comprising de novo, rare, and common variants—exceeds a diagnostic threshold on a normally distributed liability curve. Variant effect sizes are represented as objects of different volumes added to a jar, symbolizing the additive nature of genetic risk. A singl",
+    "Whole-genome sequencing enables regulatory variant discovery, genetic risk modeling, and therapeutic development in ASD. (A) Summary for how WGS advances ASD research by enabling 3 major applications: noncoding variant discovery, comprehensive risk assessment, and development of gene-based therapeutics. WGS allows detection of noncoding and regulatory variants beyond coding regions. By capturing r"
+  ],
+  "tables": [
+    "Findings from experiments for risk noncoding variants in ASD",
+    "Summary of gene-based therapeutic development"
+  ],
+  "query": "autism spectrum disorder Korea",
+  "fetched_at": 1779996105.3335369
+}

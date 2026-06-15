@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12134141",
+  "pmid": "40461718",
+  "title": "Periodic leg movements and cognitive function in middle-aged and elderly adults with mediating role of REM duration and PLMS-related arousal.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sun S, Xu L, Zheng Y, Yu W, Jing T, Xu G, Tang T, Chu C.",
+  "doi": "10.1038/s41598-025-04660-7",
+  "figures": [
+    "Mediation model and regression coefficients of REM sleep duration and PLMAI between PLMS and cognitive function. Note: * p  &lt; 0.05, ** p  &lt; 0.01, *** p  &lt; 0.001; a represents the effect size of PLMS on REM sleep duration, b represents the effect size of REM sleep duration on cognitive function, a' represents the effect size of PLMS on PLMS-related arousal, b' represents the effect size of"
+  ],
+  "tables": [
+    "Regression analysis.",
+    "Baseline demographic and cognitive characteristics.",
+    "Comparison of scale scores and PSG results.",
+    "Mediation effect test."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002281.4813855
+}

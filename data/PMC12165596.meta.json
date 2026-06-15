@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12165596",
+  "pmid": "40479647",
+  "title": "Use of Artificial Intelligence in Adolescents' Mental Health Care: Systematic Scoping Review of Current Applications and Future Directions.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sharma G, Yaffe MJ, Ghadiri P, Gandhi R, Pinkham L, Gore G, Abbasgholizadeh-Rahimi S.",
+  "doi": "10.2196/70438",
+  "figures": [
+    "PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) flowchart of the selection procedure. AI: artificial intelligence.",
+    "Frequency and timeline of artificial intelligence research studies by year of publication.",
+    "Distribution of AI methods in research studies over the years. AI: artificial intelligence; KNN: k-nearest neighbours; LLM: large language model; NLP: natural language processing; SVM: support vector machine.",
+    "Risk of bias graph: assessing the risk of bias in 5 categories, namely overall, participants, predictors, analysis, and outcome (presented as percentages)."
+  ],
+  "tables": [
+    "Adolescents’ variables reported (N=88).",
+    "Types of data used to develop artificial intelligence interventions (N=88)."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048286.3816884
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11954541",
+  "pmid": "40161158",
+  "title": "Assessing the Clinical Efficacy of Dupilumab and Its Impact on the Quality of Life of Adult Atopic Dermatitis Patients: A Systematic Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Krissheeven M, Nunkoo S, Ramanah M, Robinson J, Banerjee I.",
+  "doi": "10.7759/cureus.79762",
+  "figures": [
+    "PRISMA 2020 flowchart  PRISMA: Preferred Reporting Items for Systematic Reviews and Meta-Analyses, TRIP: Turning Research Into Practice",
+    "Weighted bar plots showing the summary of risk of bias for the RCTs based on five domains  RCTs: randomized controlled trials",
+    "Traffic light plot showing the risk of bias of the nine RCTs included in the final review  RCTs: randomized controlled trials"
+  ],
+  "tables": [
+    "Databases searched  MeSH: Medical Subject Headings, CENTRAL: Cochrane Central Register of Controlled Trials, TRIP: Turning Research Into Practice",
+    "Author, study design, sample size, dupilumab group, placebo group, and patient age  RCTs: randomized controlled trial",
+    "Author, EASI, NRS, quality of life, limitations, and study conclusion  Qw: once a week, q2w: twice a week, EASI: Eczema and Severity Index, NRS: numerical rating scale, SCORAD: Scoring Atopic Dermatitis, POEM: Patient-Oriented Eczema Measure, DLQI: Dermatological Life Quality Index, HADS: Hospital Anxiety and Depression Scale, QoLIAD: Quality of Life index of Atopic Dermatitis, ADRs: adverse drug ",
+    "Author, dupilumab dosing, treatment duration, follow-up period, and outcomes evaluated  Qw: once a week, q2w: twice a week, EASI: Eczema and Severity Index, NRS: numerical rating scale, SCORAD: Scoring Atopic Dermatitis, POEM: Patient-Oriented Eczema Measure, DLQI: Dermatological Life Quality Index, HADS: Hospital Anxiety and Depression Scale, QoLIAD: Quality of Life index of Atopic Dermatitis, AD"
+  ],
+  "query": "atopic dermatitis depression",
+  "fetched_at": 1780014666.1798172
+}

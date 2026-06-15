@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12073456",
+  "pmid": "40362838",
+  "title": "Feasibility of a Structured Calorie-Restricted Dietary Intervention in Korean Adults with Early Type 2 Diabetes and Obesity: A Pilot Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park SJ, Kim MK, Kim J, Choi JY, Song Y, Kwon HS.",
+  "doi": "10.3390/nu17091530",
+  "figures": [
+    "Overview of the calorie restriction intervention in the study. The program consisted of a 6-week weight loss period followed by a 6-week weight maintenance period. Meals were provided during the weight loss period, starting at 800 kcal/day and increasing by 200 kcal with each phase, including the transition (Phase 4). During the maintenance period, all participants managed their own diets. Mixed m",
+    "Changes in body weight and percentage from the baseline by phase during the weight loss period and the average during the maintenance periods of all subjects ( A ) and by sex ( B ).",
+    "Changes in body weight from baseline during the study period. ( A ) Weekly weight changes by participants based on achievement of the weight reduction goal. ( B ) Average daily energy intake consumed by participants based on achievement of the weight reduction goal. Achievers were defined as participants who met the 7% weight reduction goal by week 5. Those who did not achieve this goal (‘Non-achi",
+    "Changes in postprandial glycemic response to a mixed meal with 65% of energy from carbohydrate between week 0 and week 5 using continuous glucose monitoring system. ( A ) Postprandial glucose levels after meal. ( B ) Glucose area under the curve over (AUC) 120 min. Mixed meal testing was performed at both times to compare glycemic response before and after the very low-calorie diet. The postprandi",
+    "Dietary adherence of participants to daily energy intake during the study period. ‘Successful’ participants consumed energy intake within 10% of the target, while others were classified as ‘Not successful’."
+  ],
+  "tables": [
+    "Basic characteristics of study participants.",
+    "The average nutrient intake during weight loss and maintenance periods.",
+    "The sample menu by phase in the weight loss period.",
+    "The average nutrient intake during weight maintenance periods by sex."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053331.7608118
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12263214",
+  "pmid": "40672890",
+  "title": "Systematic Review of Craniofacial Phenotyping in Pediatric Obstructive Sleep Apnea: An Approach to Standardization of Methods.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ismail IN, Ismail ND.",
+  "doi": "10.1055/s-0045-1802650",
+  "figures": [
+    "Flowchart of study selection according to PRISMA guidelines.",
+    "Proposed framework for parameters to evaluate pediatric obstructive sleep apnea."
+  ],
+  "tables": [
+    "Concepts, MeSH terms and Keywords used for search strategy",
+    "PICO Strategy for eligibility criteria",
+    "Study Characteristics",
+    "Clinical assessment of the airway, skeletal and dental",
+    "Imaging techniques",
+    ""
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002014.5985646
+}

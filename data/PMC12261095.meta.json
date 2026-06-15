@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12261095",
+  "pmid": "39607675",
+  "title": "A Novel Y-Shaped Pegylated Recombinant Human Growth Hormone for Children With Growth Hormone Deficiency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liang Y, Wei H, Yang F, Zhang H, Chen L, Yao H, Luo X, Cheng X, Yang Y, Lian Q, Du H, Li T, Li P, Zhang G, Song F, Liang L, Liu D, Zhu S, Gong H, Gong C, Cheng X, Xu Z, Ma Y, Su Z, Zhou W, He R, Yin Y, Sun L, Luo X.",
+  "doi": "10.1210/clinem/dgae816",
+  "figures": [
+    "Annualized growth velocity (cm/year) by visit (full analysis set).  Abbreviations: GV, growth velocity; LSMEAN, least squares mean; rhGH, recombinant human growth hormone.",
+    "Observed IGF-1 SDS and IGFBP-3 profiles following Pegpesen and daily rhGH administration. A, At 52 weeks of treatment, IGF-1 SDS levels significantly improved both in the Pegpesen and daily rhGH groups compared to baseline (both  P  &lt; .001).  P  = .0041 for intergroup comparisons. B, IGFBP-3 levels also significantly improved compared to baseline both in the Pegpesen and daily rhGH groups (both",
+    "Quantitative pharmacology results: IGF-1 SDS profiles during 52 weeks after Pegpesen administration in children with GHD simulated by PK/PD model (n = 292).  Abbreviations: GHD, growth hormone deficiency; IGF-1, insulin-like growth factor-1; PK/PD, pharmacokinetic/pharmacodynamic; SDS, SD score."
+  ],
+  "tables": [
+    "Study demographics and baseline characteristics (full analysis set)",
+    "Efficacy end points (full analysis set)",
+    "Levels of ΔIGF-1 area under the curve in different dose groups of Pegpesen",
+    "Adverse events (safety analysis set)"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012601.5178761
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12336206",
+  "pmid": "40792109",
+  "title": "Integrated oral-gut microbiota therapy: a novel perspective on preventing bacterial translocation for systemic disease management.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhu J, Jiang Z, Yu F, Gao L, Wang X, Wang Q.",
+  "doi": "10.3389/fcimb.2025.1641816",
+  "figures": [
+    "Factors influencing the homeostasis of oral microbiota.",
+    "Bidirectional interactions between the oral and gut microbiota and their influencing factors. The oral microbiota can influence the composition and function of the gut microbiota through the following pathways: (1) Enteric route: Oral microbiota are transported to the gut via daily saliva swallowing. (2) Hematogenous route: Oral microbiota can enter systemic circulation and disseminate to the gut ",
+    "Oral and gut microbiota and their metabolites can reach the liver through hematogenous dissemination or via the gut-liver axis translocation pathway. By mechanisms of insulin resistance, lipid metabolism dysregulation, and inflammatory activation, they promote the progression of liver diseases. These pathophysiological alterations collectively constitute key driving factors in the progression from",
+    "Current research indicates that periodontitis can induce neuroinflammation through multiple pathways, thereby promoting the onset and progression of neurodegenerative diseases. Oral pathogens primarily affect the central nervous system through three mechanisms: (1) systemic inflammatory pathways, (2) oral-gut-brain axis pathways, and (3) neural transmission pathways.",
+    "The impact of oral-gut microbiota on the female reproductive system."
+  ],
+  "tables": [
+    "Gut microbiota interventions (e.g., FMT, probiotics) in parenteral diseases.",
+    "Periodontal therapy in systemic diseases."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995471.648554
+}

@@ -1,0 +1,33 @@
+{
+  "pmcid": "PMC12273934",
+  "pmid": "40680076",
+  "title": "Assessing the role of regional educational integration policies in fostering university-industry-research innovation: Evidence from China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen Q, Zhou J.",
+  "doi": "10.1371/journal.pone.0325717",
+  "figures": [
+    "Research Framework.",
+    "Parallel Trend Analysis.",
+    "Placebo Test Coefficient Kernel Density Plot."
+  ],
+  "tables": [
+    "Descriptive statistics of variables.",
+    "Augmented Dickey-Fuller (ADF) unit root test.",
+    "Engle-Granger (EG) two-step cointegration test.",
+    "Fixed effects model results.",
+    "Placebo Test---Removing the impact of COVID-19.",
+    "PSM Kernel Density Analysis.",
+    "Regression Discontinuity Design Analysis.",
+    "RDD Discontinuity Uniqueness Test.",
+    "Extended RDD Analysis by Policy Timing.",
+    "Time Trend Effects Analysis.",
+    "Heterogeneity Analysis by Region.",
+    "Heterogeneity Analysis by Cooperative Innovation Intensity.",
+    "Mechanism Analysis.",
+    "GMM Analysis.",
+    "Results of Leave-One-Out Analysis."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780036086.5675118
+}

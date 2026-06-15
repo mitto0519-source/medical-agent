@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12120081",
+  "pmid": "40436827",
+  "title": "Genome-wide association studies in a large Korean cohort identify quantitative trait loci for 36 traits and illuminate their genetic architectures.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jee YH, Wang Y, Jung KJ, Lee JY, Kimm H, Duan R, Price AL, Martin AR, Kraft P.",
+  "doi": "10.1038/s41467-025-59950-5",
+  "figures": [
+    "Overview of the Korean Cancer Prevention Study-II Biobank and analysis.  Detailed descriptions of the 36 quantitative traits examined in this study are shown in Supplementary Data  1 . After QC, the data were phased using SHAPEIT4  71   and imputed using IMPUTE5  72   with 1000 Genomes Project Phase 3 data.",
+    "GWAS results for 36 quantitative traits in the Korean Cancer Prevention Biobank-II (KCPS2).   a  Number of known and novel (“previously unreported”) variants identified in KCPS2 compared to the Open Target Genetics  83   using EFO terms (Supplementary Data  2 - S3 ). The definition of ‘novel association’ is detailed in the Methods.  b  A summary of genome-wide significant loci associated with the ",
+    "Meta-analysis of 21 traits across KCPS2, KoGES, BBJ, TWB, and UKB.   a  Genome-wide significant loci identified in the meta-analysis, Color of dots indicate significance in meta-analysis (black), KCPS2 (blue), KoGES (orange), BBJ (purple), TWB (light blue), and UKB (green). Multiple dots in a bar represent simultaneous significance in multiple cohorts.  b  Comparisons of allele frequency and effec",
+    "Genetic architecture of complex traits across KCPS2 ( n  = 153 K), KoGES ( n  = 72 K), BBJ ( n  = 179 K), TWB ( n  = 102 K), and UKB ( n  = 420 K).   a  The dots represent posterior means and horizontal bars represent standard errors of the parameters for each trait. The vertical dashed line shows the median of the estimates across traits. Full results are shown in Supplementary Data  8 . Pearson ",
+    "Fine-mapping and colocalization analysis of ALDH2 region in KCPS2.   a  Association between ALDH2 (12q24.12) and alcohol intake in KCPS2, estimated using a linear mixed model. Colors in the Manhattan panels represent  r  2  values to the lead variant rs671. In the posterior inclusion probability (PIP) panels, derived from SuSiE fine-mapping, only fine-mapped variants in the 95% credible sets (CS) "
+  ],
+  "tables": [],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036449.0154781
+}

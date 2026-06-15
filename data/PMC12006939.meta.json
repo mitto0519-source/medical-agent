@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12006939",
+  "pmid": "40243164",
+  "title": "Effects of eye movement desensitisation and reprocessing on depressive symptoms, stress and rumination in adolescents with depression: a randomised controlled trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zheng S, Shen Y, Geng F, Ye M, Song S, Wang R, Zhang S, Ou Y, Zhou X.",
+  "doi": "10.1080/20008066.2025.2488558",
+  "figures": [
+    "Flow chart of study design.",
+    "Change from baseline in primary and secondary outcomes. From left to right and top to bottom, repeated-measures ANOVA did not show a significant (time*group) interaction for SES scores, but did show significant interactions in favour of the intervention group for HAMD-17, IES-R, and SES scores (see main text). Error bars indicate 95% CI of the mean."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population.",
+    "Types of stressful life events.",
+    "Comparison of the levels of measured indicators at baseline, 2 weeks, and 4 weeks between the two groups.",
+    "Estimate outcomes of mixed model analyses."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055552.8269708
+}

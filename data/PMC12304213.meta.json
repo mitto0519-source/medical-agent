@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12304213",
+  "pmid": "40721479",
+  "title": "Association between perceived financial hardship and sleep duration among Korean adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim S, Jung YH, Youn HM, Park EC.",
+  "doi": "10.1038/s41598-025-12677-1",
+  "figures": [
+    "Dependent subgroup analysis stratified by sleep duration.  † Statistically significant results ( p  &lt; 0.05)."
+  ],
+  "tables": [
+    "General characteristics of the study population.",
+    "Results of factors associated with sleep duration using multinomial logistic regression.",
+    "Subgroup analysis stratified by independent variables.",
+    "Subgroup analysis stratified by sleep satisfaction."
+  ],
+  "query": "KYRBS Korea Youth Risk Behavior",
+  "fetched_at": 1779977348.8960884
+}

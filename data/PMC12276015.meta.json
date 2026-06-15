@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12276015",
+  "pmid": "40687186",
+  "title": "Characteristics and Comorbidities Influencing Mortality Risk Among Hereditary Angioedema Patients.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Khalid S, Hitch AT.",
+  "doi": "10.36469/001c.141747",
+  "figures": [
+    "Bar Plots for Demographics for Patients in the HA Cohort (N = 441)  Abbreviation: HA, hereditary angioedema.  Other race category: Asian, Native American, other and missing. Other insurance category: Self-pay, other sources.",
+    "Bar Plots for Comorbidities, Severity, and Mortality Risk for Patients in the HA Cohort (N = 441)  Abbreviation: HA, hereditary angioedema.",
+    "DAG Used for BN Analysis and Interplay Between Patient Demographics and Comorbidities  Abbreviations: BN, Bayesian network; DAG, directed acyclic graphs.  The direction of the arrows does not imply causation but rather a statistical relationship.",
+    "Changes in Estimated Probability of Mortality Risk Conditioning on the Predictor Nodes  Abbreviation: AUC, area under the curve.",
+    "Validating Predictions Made by Bayesian Network Using 30% Test Data"
+  ],
+  "tables": [],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020906.0955641
+}

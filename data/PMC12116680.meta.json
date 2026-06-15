@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12116680",
+  "pmid": "40438332",
+  "title": "Qifuyin alleviates anxiety and depression in 3×Tg-AD mice by modulating neuroendocrine function.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yu T, Yu Y, Zhao J, Li H, Lu H, Li Y, Peng Y, Wang S, Wei W, Cheng X.",
+  "doi": "10.3389/fpsyt.2025.1554866",
+  "figures": [
+    "The effect of QFY on anxiety-like behavior of 3×Tg-AD transgenic mice in open field test.  (A-C) , Time spent in central area;  (D–F) , Number of visits to the central zone;  (G-I) , Total distance in central district;  (J–L) , Percentage of central area time. Mean ± S.D., n=7-20;  ** \n P &lt;0.01 vs C57 mice, Student`s  t -test;  # \n P &lt;0.05,  ## \n P &lt;0.01 vs 3×Tg-AD mice, One-way ANOVA fol",
+    "Open field test trajectory map of mice.",
+    "The effect of QFY on anxiety-like behavior of 3×Tg-AD transgenic mice in elevated plus maze test.  (A-C) , Time of open arm;  (D-F) , Frequency of open arm entry times;  (G-I) , Percentage of open arm time;  (J-L) , Percentage of frequency in open arm time. Mean ± S.D. n=7-9.  * \n P &lt;0.05,  ** \n P &lt;0.01 vs C57 mice, Student`s  t -test;  # \n P &lt;0.05,  ## \n P &lt;0.01 vs 3×Tg-AD mice, One-w",
+    "The effect of QFY on depressive-like behavior in 3×Tg-AD transgenic mice in the forced swimming experiment.  (A)  The immobility time of Male mice.  (B)  The immobility time of Female mice.  (C)  The immobility time of male + female mice. Mean ± S.D.n=7-9. * \n P &lt;0.05,  ** \n P &lt;0.01 vs C57 mice, Student`s  t -test;  # \n P &lt;0.05,  ## \n P &lt;0.01 vs 3×Tg-AD mice, One-way ANOVA followed by ",
+    "The effect of QFY on depressive-like behavior in 3×Tg-AD transgenic mice in the sugar water splash test.  (A-C) , Grooming latency;  (D-F) , Grooming frequency. Mean ± S.D., n=7-20;  * \n P &lt;0.05,  ** \n P &lt;0.01 vs C57 mice, Student`s  t -test;  # \n P &lt;0.05,  ## \n P &lt;0.01 vs 3×Tg-AD mice, One-way ANOVA followed by Dunnett’s multiple comparisons test; GraphPad 8.0.1.",
+    "The effect of QFY on hypothalamic–pituitary–adrenal axis of 3×Tg-AD transgenic mice.  (A-C)  The concentration of ACTH in plasma.  (D-F)  The concentration of CRH in plasma.  (G-I) , The concentration of CORT in plasma. Mean ± S.D., n=7-14.  ** \n P &lt;0.01 vs C57 mice, Student`s  t -test;  # \n P &lt;0.05,  ## \n P &lt;0.01 vs 3×Tg-AD mice, Student`s  t -test; Graphpad 8.0.1.",
+    "The effect of QFY on hypothalamic-pituitary-gonadal axis of 3×Tg-AD transgenic mice.  (A-C)  The concentration of GnRH in plasma.  (D-F)  The concentration of FSH in plasma.  (G-I) , The concentration of LH in plasma.  (J-L)  The concentration of T in plasma.  (M-O)  The concentration of E2 in plasma. Mean ± S.D. n=7-14. * \n P &lt;0.05, ** \n P &lt;0.01 vs C57 mice, Student`s  t -test;  # \n P &lt;0",
+    "Principal component analysis based on the HPA, HPT, and HPO axes and the box plots of PCA score statistics. Each point represents a sample in PCA analysis plot: blue represents the Con group, red represents the Mod group, and green represents the QFY group, below each plot are box plots of PC1 and PC2 scores: Blue represents the Con group, red represents the Mod group, and green represents the QFY",
+    "Heatmap generated from the correlation analysis between the open field test, elevated plus maze test, forced swimming, splash test and ACTH, CRH, CORT, GnRH, FSH, LH, T, E2 in male 3×Tg-AD mice. Colors closer to red indicate higher r-values, while colors closer to blue indicate lower r-values.  * \n P &lt;0.05,  ** \n P &lt;0.01, The heatmap was created using GraphPad.",
+    "Heatmap generated from the correlation analysis between open field test, elevated plus maze test, forced swimming, splash test and ACTH, CRH, CORT, GnRH, FSH, LH, T, E2 in female 3×Tg-AD mice. Colors closer to red indicate higher r-values, while colors closer to blue indicate lower r-values.  * \n P &lt;0.05,  ** \n P &lt;0.01, The heatmap was created using GraphPad.",
+    "Multiple linear regression analyses of the HPA, HPT, and HPO axes were conducted to assess their relationships with the percentage of time spent in the open arms of the elevated plus maze and the duration of immobility in the forced swim test.  (A-C) : Multiple linear regression analyses were conducted to the percentage of open-arm time in the EPM for male mice with the HPA, HPT and HPO axes.  (D-"
+  ],
+  "tables": [],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057612.865122
+}

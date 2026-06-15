@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12246929",
+  "pmid": "40656647",
+  "title": "Adolescent health in relation to their peers: likeability as a resilience factor.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nieuwenhuis J, Veennema D.",
+  "doi": "10.1016/j.ssmph.2025.101833",
+  "figures": [
+    "Marginal effects of indegree and classroom health status on adolescents' health status.  Note: Figures a. and c. show the marginal effects of indegree on adolescents' health status and health status change across different levels of classroom health status and classroom health status change, respectively. Figures b. and d. show the marginal effects of classroom health status and classroom health s",
+    "Plot of interaction between indegree, change in classroom health status, and gender.  Note: Low and high classroom health change are −.45 and .45, respectively. Low and high indegree are 0 and 6, respectively."
+  ],
+  "tables": [
+    "Descriptive statistics (N = 2350).",
+    "Regression results (N = 2350)."
+  ],
+  "query": "Taiwan adolescent mental health",
+  "fetched_at": 1780049484.711591
+}

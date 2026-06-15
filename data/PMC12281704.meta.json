@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12281704",
+  "pmid": "40696345",
+  "title": "Associations of family support and loneliness with underlying depression in Chinese children and adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tian G, Wang J, Zhu J, Hu H, Hao Y.",
+  "doi": "10.1186/s12889-025-23771-4",
+  "figures": [
+    "Forest plot of the associations between family support with loneliness and depression plotted based on subgroup analysis",
+    "Model ( a ): Unadjusted mediation model; Model ( b ): Adjusted mediation model for age and stage"
+  ],
+  "tables": [
+    "Participant characteristics at the China family panel studies assessment",
+    "Associations of participant characteristics with loneliness and depression",
+    "Associations between related variables",
+    "Unadjusted and adjusted direct and indirect associations of depression with family support mediated via loneliness",
+    "The multiplicative interaction between family support and loneliness on depression",
+    "The additive interaction between family support and loneliness on depression"
+  ],
+  "query": "loneliness isolation adolescent mental",
+  "fetched_at": 1779999511.9354777
+}

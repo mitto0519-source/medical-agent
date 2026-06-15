@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12004384",
+  "pmid": "40089108",
+  "title": "Impact of genetic markers related to hyper-HDL cholesterol on the prevalence of myocardial infarction: a KoGES study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee SB, Hong KW, Park B, Jung DH.",
+  "doi": "10.1016/j.jlr.2025.100777",
+  "figures": [
+    "Miami plot for the genome-wide association study results. The GWAS results for the normal-HDL cholesterol group versus hyper-HDL cholesterol group are represented in the upper red plot, while the hypo-HDL cholesterol group versus the normal-HDL cholesterol group results are depicted in the lower blue plot. Each dot in the Miami plot represents the -log10 transformed  P  value from the genome-wide ",
+    "Manhattan plot for myocardial infarction case-control genome-wide association studies across three HDL cholesterol groups. A: Hypo-HDL cholesterol group; (B) normal-HDL cholesterol group; (C) hyper-HDL cholesterol group. The Manhattan plots illustrate the -log10 transformed  P  values from the GWAS results for each HDL cholesterol group. The x-axis represents the chromosome number where each genet",
+    "Signal plots for the  MED13L  gene region in the GWAS analysis for myocardial infarction. This figure shows an enlarged view (approximately 1 Mbp) of the  MED13L  gene region, which exhibited the most significant association in the GWAS for myocardial infarction. A: Shows the results for the Hypo-HDL cholesterol group, (B) for the Normal-HDL cholesterol group, and (C) for the Hyper-HDL cholesterol"
+  ],
+  "tables": [
+    "Characteristics of population",
+    "Lead SNPs identified through GWAS as showing significant associations in either the hypo-HDL cholesterol group or the hyper-HDL cholesterol group compared to the normal-HDL cholesterol group",
+    "Lead SNPs showing significant association with MI in the hyper-HDL cholesterol group"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036719.7117116
+}

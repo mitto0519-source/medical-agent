@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12025568",
+  "pmid": "40310125",
+  "title": "Problematic Internet Use and Its Relationship with Cyberbullying, Anxiety, and Executive Functions in Adolescence.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Real-Fernández M, Navarro-Soria I, Rosales-Gómez M, Delgado B.",
+  "doi": "10.3390/children12040503",
+  "figures": [],
+  "tables": [
+    "Sample distribution by sex and school grade.",
+    "Correlation between different variables.",
+    "Binary logistic regression of the probability of presenting PIU based on EFs, anxiety, cyberbullying, and cybervictimization.",
+    "Binary logistic regression of the probability of experiencing cybervictimization based on EFs, anxiety, and PIU.",
+    "Binary logistic regression of the probability of perpetrating cyberbullying based on EFs, anxiety, and PIU."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017579.3984432
+}

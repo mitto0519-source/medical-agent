@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC11899296",
+  "pmid": "40069662",
+  "title": "The relationship between VAI, LAP, and depression and the mediation role of sleep duration-evidence from NHANES 2005-2020.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Huang Y, Zhao D, Yang Z, Wei C, Qiu X.",
+  "doi": "10.1186/s12888-025-06631-8",
+  "figures": [
+    "Flowchart of sample selection from NHANES 2005–2020",
+    "Formulas for VAI and LAP according to gender",
+    "Weighted non-linear relationship between VAI and depression by the generalized additive model",
+    "Weighted non-linear relationship between LAP and depression by generalized additive model",
+    "Mediation effect of Sleep duration on the association of VAI and depression",
+    "Mediation effect of Sleep duration on the association of LAP and depression",
+    "Weighted sensitivity analysis of the association between VAI and depression",
+    "Weighted sensitivity analysis of the association between Log LAP and depression"
+  ],
+  "tables": [
+    "Weighted characteristics of the study population by depression",
+    "Weighted multivariate logistic regression of VAI and Log LAP in depression",
+    "Weighted threshold effect analysis of VAI or LAP on depression by two-piecewise linear regression model",
+    "Weighted mediation analysis for the association of VAI and LAP with depression"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002514.7776275
+}

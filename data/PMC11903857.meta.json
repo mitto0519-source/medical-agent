@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11903857",
+  "pmid": "40075149",
+  "title": "Systematic review and meta-analysis on fully automated digital cognitive behavioral therapy for insomnia.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hwang JW, Lee GE, Woo JH, Kim SM, Kwon JY.",
+  "doi": "10.1038/s41746-025-01514-4",
+  "figures": [
+    "PRISMA flow diagram.  This diagram shows the number of articles identified in each database through this study, and the number of studies included and excluded by the systematic review process. A total of 3101 articles were identified from four databases, and 129 articles remained after the deduplication and screening process. A total of 29 studies were included after the full text review.",
+    "Risk of bias summary.  This presents the results of the risk of bias assessment using the RoB 2.0 tool for the included randomized controlled trials (RCTs). The assessment covered five domains: (1) the randomization process, (2) deviations from intended interventions, (3) missing outcome data, (4) measurement of the outcome, and (5) selection of the reported result. Each study was assessed accordi",
+    "The effect of FA dCBT-I on insomnia severity.  This figure presents a forest plot summarizing the standardized mean difference (SMD) and 95% confidence intervals for various studies comparing FA dCBT-I with control interventions. The control groups consisted of different conditions: (1) TAU, (2) placebo, (3) paper and pencil CBT-I delivered by e-mail vs waitlist, (4) electronic CBT-I vs waitlist, ",
+    "The effect of FA dCBT-I on insomnia severity by control type.  This figure presents the standardized mean differences (SMD) and 95% confidence intervals for FA dCBT-I compared to six control groups: waitlist, treatment as usual (TAU), placebo, online education about sleep, non-sleep psychological intervention, and CBT-I with therapist support. The intervention groups consisted of different conditi"
+  ],
+  "tables": [
+    "Study Characteristics",
+    "Meta-regression analyses of the effect on the insomnia severity"
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063451.3866785
+}

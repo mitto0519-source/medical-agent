@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC11854508",
+  "pmid": "40002607",
+  "title": "Advances in Neuroimaging and Deep Learning for Emotion Detection: A Systematic Review of Cognitive Neuroscience and Algorithmic Innovations.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Halkiopoulos C, Gkintoni E, Aroutzidis A, Antonopoulou H.",
+  "doi": "10.3390/diagnostics15040456",
+  "figures": [
+    "Network visualization of neuroimaging and deep learning integration.",
+    "Flowchart of PRISMA methodology.",
+    "Risk of bias assessment visualization.",
+    "Comparison of neuroimaging modalities for emotion detection.",
+    "Real-time emotion tracking via neurofeedback and deep learning.",
+    "Functional neuroanatomy of emotion networks.",
+    "Temporal dynamics of emotion processing.",
+    "Structured visualization of emotion detection in adaptive systems.",
+    "Performance funnel for 64 studies.",
+    "Accuracy (%) across neuroimaging modalities and AI models.",
+    "Interpretability (%) across neuroimaging modalities and AI models.",
+    "Feasibility (%) across neuroimaging modalities and AI models."
+  ],
+  "tables": [
+    "Research articles of systematic analysis ( n  = 64).",
+    ""
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046634.6020722
+}

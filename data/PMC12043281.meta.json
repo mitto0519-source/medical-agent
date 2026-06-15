@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12043281",
+  "pmid": "40313647",
+  "title": "Caffeine Consumption, Psychological Distress, and Insomnia in a Cohort of Individuals with Depression.",
+  "year": 2025,
+  "journal": "",
+  "authors": "McIntosh HA, Borgas AJ, Aouira N, Mitchell BL, Crouse JJ, Medland SE, Hickie IB, Wray NR, Martin NG, Middeldorp CM, Byrne EM.",
+  "doi": "10.1159/000545393",
+  "figures": [
+    "Caffeine-related genetic variants"
+  ],
+  "tables": [
+    "Caffeine-related genetic variants",
+    "Cohort summary statistics (numeric variables)",
+    "Cohort summary statistics (categorical variables)",
+    "Non-genetic model results",
+    "Genetic model results"
+  ],
+  "query": "US adolescent soft drink depression",
+  "fetched_at": 1779992392.0917778
+}

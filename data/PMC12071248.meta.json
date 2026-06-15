@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12071248",
+  "pmid": "40361840",
+  "title": "Menopause and Diabetes Risk Along with Trajectory of β-Cell Function and Insulin Sensitivity: A Community-Based Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Choi MJ, Yu J.",
+  "doi": "10.3390/healthcare13091062",
+  "figures": [
+    "Diagrammatic representation of the selection of the analysis sample. From the 5272 women in the Ansan and Ansung cohorts of the Korean Genome and Epidemiology Study (KoGES), those who reached menopause during follow-up and met the criteria for tracking diabetes risk before and after menopause were selected. Inclusion criteria involved the following: (1) women without menopause at baseline who reac",
+    "Mean estimates of diabetes incidence in the years before or after menopause. Mean estimates of diabetes incidence were illustrated from 8 years before to 7 years after menopause, divided into 2-year intervals (eight intervals over 16 years: −8 to −7, −6 to −5, −4 to −3, −2 to −1, 0 to +1, +2 to +3, +4 to +5, and +6 to +7). A marginal model with a generalized estimating equation was used to estimat",
+    "Changes in β-cell function and insulin sensitivity in the years before and after menopause. Changes in β-cell function and insulin sensitivity/resistance indices were estimated over the period from 8 years before to 7 years after menopause across four groups, categorized by diabetes onset: premenopausal, perimenopausal, postmenopausal incident diabetes, and non-progressors. The indices analyzed in"
+  ],
+  "tables": [
+    "Baseline characteristics of women stratified into four groups.",
+    "Odds ratios of diabetes development by the period relative to menopause.",
+    "Odds ratio of diabetes development at baseline and longitudinal changes in the IGI 60 , composite ISI, and DI  IGI60, ISI ."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037215.434611
+}

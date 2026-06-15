@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11876893",
+  "pmid": "40040931",
+  "title": "Joint association of sleep onset time and sleep duration with depression in patients with chronic kidney disease: Insights from the NHANES 2015-2020.",
+  "year": 2025,
+  "journal": "",
+  "authors": "He K, Guo S, Zhu J, Wang Z, Chen S, Luo J, Chen L, Zhang L, Wu J.",
+  "doi": "10.1016/j.pmedr.2025.103006",
+  "figures": [
+    "Flowchart of participant selection among U.S. adults aged 20 years and older with chronic kidney disease from NHANES 2015–2020.  Abbreviations: NHANES, National Health and Nutrition Examination Survey; CKD, chronic kidney disease; PHQ-9, Patient Health Questionnaire-Nine.",
+    "Restricted cubic spline analysis of the association between sleep onset time (A) and sleep duration (B) with depression in U.S. adults aged 20 and older with chronic kidney disease from NHANES 2015–2020.  Note: The restricted cubic spline model was adjusted for age, sex, marital status, race/ethnicity, education level, poverty income ratio, smoking status, drinking status, body mass index and phys"
+  ],
+  "tables": [
+    "Descriptive characteristics of U.S. adults aged 20 years and older with chronic kidney disease from NHANES 2015–2020.",
+    "Logistic regression analysis on the association of sleep onset time and sleep duration with depression in U.S. adults aged 20 years and older with chronic kidney disease from NHANES 2015–2020.",
+    "Threshold effect analysis of sleep onset time and sleep duration on depression in U.S. adults aged 20 years and older with chronic kidney disease from NHANES 2015–2020."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002162.824246
+}

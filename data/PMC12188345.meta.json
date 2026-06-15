@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12188345",
+  "pmid": "40556014",
+  "title": "Does treatment of adolescent depression reduce risk of later psychosis: A quasi-experimental study of selective serotonin reuptake inhibitor treatment in a total population cohort.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Healy C, O'Hare K, Lång U, Kerkelä M, Byrne J, Veijola J, Pulakka A, Metsälä J, Kajantie E, Kelleher I.",
+  "doi": "10.1192/j.eurpsy.2025.10050",
+  "figures": [
+    "Consort diagram for the investigations.",
+    "Directed acyclic graph of the relationship between hospital district variability in prescribing practice, SSRI use, and psychosis. The direct path between hospital district VPP (variability in prescribing preference) and SSRI treatment (red) indicates the relevance assumption. A falsification test for the independence assumption is conducted by examining the relationship between each of the observ",
+    "Birth cohort follow-up and schematic of the analysis."
+  ],
+  "tables": [
+    "Demographic and clinical information in those with and without adolescent depression",
+    "Odds ratios for the association between SSRI use (binary and cumulative use) with psychosis",
+    "Instrumental variable analysis results of the relationship between variability in prescribing and risk of psychosis"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055348.2670538
+}

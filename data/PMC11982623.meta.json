@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11982623",
+  "pmid": "40205859",
+  "title": "Artificially Sweetened Food Mediates the Perception of Chronic Pain in Individuals With Neuroticism Traits: A Mendelian Randomization Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao H, Guan D, Ma Z, Yang M, Dong N, Guo J.",
+  "doi": "10.1002/brb3.70476",
+  "figures": [
+    "Research and design flowchart for articles.",
+    "The causal effects of neuroticism on chronic pain.",
+    "The causal effects of chronic pain on neuroticism.",
+    "The causal effects of neuroticism on artificially sweetened food.",
+    "The causal effects of artificially sweetened food on chronic pain."
+  ],
+  "tables": [
+    "Detailed information on included traits in the present study.",
+    "Multivariable Mendelian randomization analyses of the causal effects between neuroticism traits, artificially sweetened food, and chronic pain."
+  ],
+  "query": "artificial sweetener depression",
+  "fetched_at": 1779974866.2251933
+}

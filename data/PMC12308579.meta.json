@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12308579",
+  "pmid": "40881068",
+  "title": "Cross-sectional association of fitness, fatness, and dyslipidemia with metabolic syndrome in youth.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Musa DI, Toriola OO, Usman HU, Mohammed A.",
+  "doi": "10.5409/wjcp.v14.i3.107054",
+  "figures": [
+    "Participants’ metabolic syndrome risk factor profile according to sex.  BMI: Body mass index; CRF: Cardiorespiratory fitness; VAI: Visceral adiposity index; TG/HDL: Triglyceride-to-high-density lipoprotein cholesterol; TC/HDL-C: Total cholesterol-to-high-density lipoprotein cholesterol.",
+    "Sex-specific areas under the receiver operating characteristic curve of metabolic syndrome for females and males.  VAI: Visceral adiposity index; TG_HDL: triglyceride-to-high-density lipoprotein cholesterol; TC/HDL-C: total cholesterol-to-high-density lipoprotein cholesterol; BMI: body mass index; CRF: cardiorespiratory fitness."
+  ],
+  "tables": [
+    "General characteristics of participants stratified by sex ( n  = 403)",
+    "Comparison of participants according to their metabolic risk status",
+    "Standardized regression coefficients on the association among health markers and metabolic risk score ( n  = 403)",
+    "Receiver operating characteristics curve analysis for risk of metabolic syndrome among participants ( n  = 403)"
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780010705.3096106
+}

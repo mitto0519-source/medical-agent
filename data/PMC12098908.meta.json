@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12098908",
+  "pmid": "40404654",
+  "title": "Apnea detection using wrist actigraphy in patients with heterogeneous sleep disorders.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xing X, Ai S, Zhang J, Huang R, Liu Y, Quan D, Ma J, Wu G, Xu J, Zhang Y, Feng H, Dong WF.",
+  "doi": "10.1038/s41598-025-01430-3",
+  "figures": [
+    "( A ) Illustration of experimental setup. ( B ) Detailed data processing flowchart for OSA detection. PaCO 2 : arterial partial pressure of carbon dioxide; BiLSTM: Bi-directional Long and Short-Term Memory.",
+    "Apex-centric tokenization procedure for an OSA event.",
+    "( A ) Illustration of the multi-stage data flow. ( B ) Detailed design of each module. AHI seq  and ODI seq  were defined in  “ Target labelling and recovering ” section.",
+    "Correlation of AHI sub  with ( A ) ODI sub , ( B ) snoring sub  and ( C ) RLS sub .",
+    "Event distribution and durations.",
+    "Concurrent signals and processed data during OSA events. First row: the raw data, the first principal component and the used IMF; Second row: experimental thoracic, abdomen and nasal flow signal.",
+    "( A – C ) correlation between reference AHI sub , ODI sub  and RLS sub  versus their estimations; ( D – F ) Corresponding Bland–Altman plot. The limits of agreement were drawn as dotted line (1.96 SD).",
+    "OSA severity comparison, if the classification is made based on ( A ) AHI sub  ( B ) ODI sub .",
+    "For sequences with OSA events, AHI seq  estimation error under various influences."
+  ],
+  "tables": [
+    "Subject characteristics and sleep-related parameters (mean ± SD).",
+    "Event counts and durations (mean ± SD).",
+    "Cohen’s kappa between estimated and expected AHI sub  and ODI sub .",
+    "Performance enhancement by proper tokenization and multi-stage structure.",
+    "Comparison with previous studies with advanced machine-learning with/without heterogenous population."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780001966.1556942
+}

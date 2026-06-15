@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12232192",
+  "pmid": "40616140",
+  "title": "Global pattern, trend, and cross-country health inequality of adult acne aged 25 + years from 1990 to 2021, a comprehensive analysis for global burden of disease and global dietary database.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Deng J, Peng S, Yang F, Wei X, Lu X, Lu L, Lu Y, Chen Z, Yan W, Huang X.",
+  "doi": "10.1186/s41043-025-00847-w",
+  "figures": [
+    "Joinpoint regression analysis of adult acne burden at the global level during 1990 to 2021.  A  Incidence numbers.  B  Prevalence numbers.  C  Numbers of DALYs.  D  Age-standardized incidence rate.  E  Age-standardised prevalence rate.  F  Age-standardised DALYs rate",
+    "Burden of adult acne by SDI regions from 1990 to 2021.  A  Incidence numbers.  B  Prevalence numbers.  C  Numbers of DALYs.  D  Age- standardised incidence rate;  E  Age- standardised prevalence rate;  F  Age-standardised DALYs rate. SDI, socio-demographic index",
+    "The EAPCs in age-standardised rates of incidence  A , prevalence  B  and DALYs  C  due to adult acne from 1990 to 20,221 by GBD region and SDI quintile. EAPC, estimated annual percentage change; SDI, Socio-demographic Index",
+    "The EAPCs in age-standardised rates of incidence  A , prevalence  B  and DALYs  C  due to adult acne between 1990 and 2019 in 204 countries and territories. EAPC, estimated annual percentage change",
+    "The age-standardised rates of incidence  A , prevalence  C  and DALYs  E  due to adult acne by sex, across 21 regions, in 2021. And age patterns by sex of the total number and rates of incidence  B , prevalence  D  and DALYs  F  due to adult acne at the global level in 2021",
+    "Change of age-standardised rates of incidence (ASIR) for adult acne among 21 GBD regions from 1990 to 2021  A . EAPC of ASIR was associated with SDI in 204 countries and territories in 2021  B . Health inequality regression curves for ASIR of adult acne  C . Concentration curves for ASIR of adult acne  D . EAPC, estimated annual percentage change",
+    "The predictions of global incidence cases for adult acne to 2030.  A  25–29 years,  B  30–34 years,  C  35–39 years,  D  40–44 years,  E  45–49 years,  F  50–54 years,  G  55–59 years,  H  60–64 year",
+    "Identification of risk factor for adult acne. Scatter plots  A  and forest plot  B  for causal effect of intake of sugar added to coffee on adult acne.  C  sugar-sweetened beverage (SSB) intakes (8 oz servings/week) in adults across 185 countries in 2018.  D  The association between age-standardized rates of incidence for adult acne and SSB intakes of adult in global ( p  &lt; 0.05)"
+  ],
+  "tables": [
+    "Incidence, prevalence and DALYs for adult acne (25 + year) in 1990 and 2021 and their temporal trends from 1990 to 2021"
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975741.5736237
+}

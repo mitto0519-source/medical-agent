@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12097550",
+  "pmid": "40403006",
+  "title": "Relationship of urinary bisphenol A in childhood on thyroid hormone function in adolescents: a cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Choi JE, Choi EJ, Lee S, Park B, Lee HA, Hong YS, Ha E, Kim HS, Park H.",
+  "doi": "10.1371/journal.pone.0322658",
+  "figures": [
+    "Characteristics of study subjects."
+  ],
+  "tables": [
+    "Characteristics of study subjects.",
+    "Linear regression analysis results for the effect of log-transformed urinary BPA concentrations at two time points on serum thyroid concentrations at ages 10–12.",
+    "Association between urinary BPA exposure levels in childhood and serum thyroid hormone concentrations in adolescence."
+  ],
+  "query": "thyroid function adolescent",
+  "fetched_at": 1780012626.002371
+}

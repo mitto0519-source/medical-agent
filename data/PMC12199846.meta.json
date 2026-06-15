@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12199846",
+  "pmid": "40536944",
+  "title": "Designing Chatbots to Treat Depression in Youth: Qualitative Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kuhlmeier FO, Bauch L, Gnewuch U, Lüttke S.",
+  "doi": "10.2196/66632",
+  "figures": [
+    "Screenshot of an example conversation between Cady and a participant.",
+    "Results for how much support participants would like for several proposed chatbot capabilities."
+  ],
+  "tables": [
+    "Excerpt from the interview guide (translated from German).",
+    "Participant characteristics.",
+    "Key design recommendations."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999293.2950838
+}

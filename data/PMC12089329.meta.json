@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12089329",
+  "pmid": "40389457",
+  "title": "Effect of sweet and caloric drinks on cardiac reactivity to slow-paced breathing in healthy adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Meier M, Dimitroff SJ, Denk BF, Unternaehrer E, Pruessner JC.",
+  "doi": "10.1038/s41598-025-00980-w",
+  "figures": [
+    "Changes in ( A ) blood glucose concentrations over time, and ( B ) respiration rate.  SPB  slow-paced breathing.",
+    "Changes in ( A ) root mean square of successive differences (RMSSD) as an indicator of parasympathetic activity, and ( B ) pre-ejection period (PEP) as an indicator of sympathetic activity in the different drink groups.",
+    "Flow diagram visualizing the sample of the study.",
+    "Experimental procedure. ECG/ICG = electrocardiogram/impedance cardiography."
+  ],
+  "tables": [
+    "Descriptive statistics of the experimental groups."
+  ],
+  "query": "artificial sweetener depression",
+  "fetched_at": 1779975066.8943372
+}

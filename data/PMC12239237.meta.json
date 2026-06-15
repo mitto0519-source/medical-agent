@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12239237",
+  "pmid": "40627440",
+  "title": "Exercise with fasting or isotonic drink? A randomized controlled trial in youth elite basketball players.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Márton P, Bátai LK, Takács T, Csulak E, Kiss AR, Kopper B, Szabó LE, Balla D, Petrov I, Lázár L, Vágó H, Merkely B, Sydó N.",
+  "doi": "10.1080/15502783.2025.2528533",
+  "figures": [
+    "Study design and interventions.",
+    "Longitudinal tracking of the Borg scale during CPET exam in the fasting and in the isotonic drink groups.",
+    "Longitudinal tracking of lactate levels during the CPET exam in the fasting and in the isotonic drink groups.",
+    "Correlation between Borg scale ratings and lactate levels."
+  ],
+  "tables": [
+    "Baseline characteristics of the fasting and of the isotonic drink groups.",
+    "Consumption of the main carbohydrate sources of the fasting and of the isotonic drink groups according to the food frequency questionnaire.",
+    "Cardiopulmonary exercise test parameters and blood glucose levels in the fasting and in the isotonic drink groups."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011278.2354221
+}

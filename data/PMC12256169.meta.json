@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12256169",
+  "pmid": "40661155",
+  "title": "Unveiling Rare Hemoglobinopathies: Hematologic Characterization of Double Heterozygous Hb D and Hb E With Beta-Thalassemia-A Case Report.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Minhas AM, Eiman H, Iqbal J, Imran A, Chughtai AS.",
+  "doi": "10.1155/crh/8375604",
+  "figures": [
+    "Hemoglobin electrophoresis of the patient.",
+    "Hemoglobin electrophoresis of the father.",
+    "Hemoglobin electrophoresis of the mother.",
+    "Pedigree of family with HbD/E–β Thalassemia double heterozygosity."
+  ],
+  "tables": [
+    "Complete blood count of the patient, father, and mother.",
+    "RBC morphology of the patient."
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004475.6417122
+}

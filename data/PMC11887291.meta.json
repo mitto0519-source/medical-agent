@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11887291",
+  "pmid": "40050027",
+  "title": "Influence of time of birth in early neonatal mortality and morbidity: retrospective cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cabra-Bautista G, Pérez AF, Ruiz GV, Aguirre-Acevedo DC, Florez ID, Calvache JA.",
+  "doi": "10.1136/bmjpo-2024-003236",
+  "figures": [
+    "Patient identification flow chart. LBC, live birth certificate.",
+    ""
+  ],
+  "tables": [
+    "Characteristics of births during the day and night",
+    "Primary and sensitivity analysis between time of birth and adverse perinatal outcomes",
+    "Secondary and sensitivity analysis between time of birth (early night) and adverse perinatal outcomes",
+    "Secondary and sensitivity analysis between time of birth (late night) and adverse perinatal outcomes"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021086.4398925
+}

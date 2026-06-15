@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12093150",
+  "pmid": "40396348",
+  "title": "Accounting for Time-Varying Confounding in a Self-Controlled Case Series of Fluoroquinolone Treatment for Uncomplicated Urinary Tract Infections and Risk of Collagen-Related Events.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Schultze A, Ju S, Drysdale M, Mu G, Mitrani-Gold FS, Logie J.",
+  "doi": "10.1002/prp2.70124",
+  "figures": [
+    "Illustration of key definitions used in the SCCS design.",
+    "Adjusted incidence rate ratios with 95% confidence intervals (95% CIs) for fluoroquinolones (FQ) versus trimethoprim/sulfamethoxazole (STX) for the Day 1–90 risk period."
+  ],
+  "tables": [
+    "Active comparator rate ratios with 95% confidence intervals using each method in the sensitivity analyses."
+  ],
+  "query": "G-methods time-varying confounding",
+  "fetched_at": 1780025596.5725667
+}

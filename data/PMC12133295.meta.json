@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12133295",
+  "pmid": "40425484",
+  "title": "Familial risk of major mood disorders and brain functional connectivity in the default mode, cognitive executive, and salience networks.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Murage D, Nazarova A, Drobinin V, Adepalli N, Helmick CA, Schmidt MH, Newman AJ, Bowen CV, Uher R.",
+  "doi": "10.1503/jpn.250002",
+  "figures": [
+    "Brain plots of key regions of the (A) default mode network, (B) cognitive executive network, and (C) salience network. dACC = dorsal anterior cingulate cortex; dlPFC = dorsolateral prefrontal cortex; dmPFC = dorsomedial prefrontal cortex; PCC = posterior cingulate cortex; PPC = posterior parietal cortex.",
+    "Within-network connectivity in the (A, B) right and (C, D) left hemisphere of the default mode network (DMN), and in the (E, F) right and (G, H) left hemisphere of the cognitive executive network (CEN). The left column shows participants’ family history group, irrespective of whether they have a mood disorder diagnosis; the right column shows participants with family history without a mood disorde",
+    "Within-network connectivity in the (A, B) right, (C, D) left, and (E, F) right-to-left hemispheres of the salience network (SN). The left column shows participants’ family history group, irrespective of whether they have a mood disorder diagnosis; the right column shows participants with family history without a mood disorder, those with a mood disorder, and controls without a mood disorder. In al",
+    "Between-network connectivity in the (A, B) right, (C, D) left, and (E, F) right-to-left hemisphere of the default mode network (DMN) and the cognitive executive network (CEN), and in the (G, H) right and (I, J) left hemisphere of the DMN and the salience network (SN). The left column shows participants’ family history group, irrespective of whether they have a mood disorder diagnosis; the right co",
+    "Between-network connectivity in the (A, B) right-to-left hemisphere of the default mode network (DMN) and the salience network (SN), and in the (C, D) right, (E, F) left, and (G, H) right-to-left hemisphere of the SN and the cognitive executive network (CEN). The left column shows participants’ family history group, irrespective of whether they have a mood disorder diagnosis; the right column show"
+  ],
+  "tables": [
+    "Descriptive characteristics of participants by family group",
+    "Descriptive characteristics of participants included in the study versus those excluded because of motion",
+    "Test–retest reliability results for within- and between-network connections",
+    "Association between motion and between-network connectivity from linear mixed-effects models",
+    "Descriptive characteristics of low-motion participants (framewise displacement &lt; 0.2 mm)",
+    "Association between motion and between-network connectivity among low-motion participants, from linear mixed-effects models"
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779997215.9467387
+}

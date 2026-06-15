@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11853532",
+  "pmid": "40002494",
+  "title": "Emerging Medications for Treatment-Resistant Depression: A Review with Perspective on Mechanisms and Challenges.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lucido MJ, Dunlop BW.",
+  "doi": "10.3390/brainsci15020161",
+  "figures": [
+    "“Resistance” to drugs with a primary mechanism of serotonin reuptake inhibition (SRI) can result from three different treatment profiles: (1) failure to respond to initial serotonin reuptake inhibitor (SRI) medication trial, (2) loss of benefit during continuation or maintenance treatment (“tachyphylaxis”), or (3) failure to respond to re-initiated SRI treatment for a recurrent episode after prior",
+    "PRISMA flowchart for US and EU clinical trials registry results related to treatment-resistant depression (TRD). “Other” interventions marked for exclusion during the screening process included diet, dietary supplements without validated or listed components, behavioral complementary medicine (e.g., acupuncture), or in cases in which the intervention was a diagnostic test.",
+    "PRISMA flowchart for US clinical trials registry results related to anhedonia. “Other” interventions marked for exclusion during the screening process included diet, dietary supplements without validated or listed components, behavioral complementary medicine (e.g., acupuncture), or in cases in which the intervention was a diagnostic test.",
+    "PRISMA flowchart for US clinical trials registry results related to suicide. “Other” interventions marked for exclusion during the screening process included diet, dietary supplements without validated or listed components, behavioral complementary medicine (e.g., acupuncture), or in cases in which the intervention was a diagnostic test."
+  ],
+  "tables": [
+    "Phase 2 or 3 clinical trials of glutamatergic signaling modulators for TRD or MDD with inadequate response to antidepressant medication that are ongoing or recently completed.",
+    "Phase 2 or 3 clinical trials of non-glutamatergic drugs for TRD or MDD with inadequate response to antidepressant medication that are ongoing or recently completed.",
+    "Active or recently completed clinical trials targeting anhedonia or suicidal ideation/suicidality."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057492.727605
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12319605",
+  "pmid": "40765647",
+  "title": "Suicidal Ideation and Suicidal Attempt in Spanish Adolescents: Risk Profiles Identified Through Decision Tree Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jiménez TI, Estévez-García JF, Musitu G, Estévez E.",
+  "doi": "10.5093/pi2025a13",
+  "figures": [
+    "Conditional Tree Model for Predicting Suicide Risk in Adolescents.",
+    "Conditional Tree Model Predicting Suicide Eisk in Adolescents with High MNS",
+    "Conditional Tree Model for Predicting Suicide Risk in Boys with Low MNS.",
+    "Conditional Tree Model for Predicting Suicide Risk in Girls with Low MNS."
+  ],
+  "tables": [
+    "Means (Standard Deviations) of Metric Variables by Group of Suicide Risk, with ANOVA Results",
+    "Percentages of Categorical Variables by Group of Suicide Risk",
+    "Distribution Percentage of the Dependent Variable in each Node of the Conditional Tree Model"
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780016785.2425563
+}

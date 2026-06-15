@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12257847",
+  "pmid": "40660168",
+  "title": "The joint association between sleep quality, moderate-to-vigorous physical activity, cardiorespiratory fitness, and working memory in Chinese adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hong J, Liu Y, Guo Y, Li Y, Zhang F, Sun P, Hu Y, Liu H, Yin X.",
+  "doi": "10.1186/s12889-025-23567-6",
+  "figures": [
+    "Flow diagram of participant inclusion process",
+    "DAG for the association between sleep quality and working memory. Abbreviations: SSB, sugar-sweetened beverage; MVPA, moderate-to-vigorous physical activity; BMI, body mass index; CRF, cardiorespiratory fitness",
+    "Association between sleep quality and reaction time for 1-back in various subgroups. Note: The linear regression model adjusted for gender, age, SSB, MVPA, BMI, and CRF",
+    "Association between sleep quality and reaction time for 2-back in various subgroups. Note: The linear regression model adjusted for gender, age, SSB, MVPA, BMI, and CRF"
+  ],
+  "tables": [
+    "Study population characteristics according to sleep quality",
+    "The linear regression of sleep quality and working memory ( n  = 2824)",
+    "The linear regression of PSQI score and working memory for adolescents with poor sleep ( n  = 918)"
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975650.5466833
+}

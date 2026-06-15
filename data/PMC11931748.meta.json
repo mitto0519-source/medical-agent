@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11931748",
+  "pmid": "40126579",
+  "title": "Diabetes diagnosis based on glucose control levels and time until diagnosis: a regression discontinuity approach to assess the effect on direct healthcare costs.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mora T, Rodríguez-Sánchez B.",
+  "doi": "10.1186/s13561-025-00613-y",
+  "figures": [
+    "Average healthcare costs across timespans.  Note : the dotted lines refer to the non-treated individuals (those whose average glucose control level does not lie above the cut-off of 6.5%), whereas the continuous lines denote the treated individuals. The timespans considered are 6 months, 15 months and 24 months since the first laboratory test",
+    "Effect of average glucose level on accumulated healthcare costs at the discontinuity point (6.5%) across different timespans. Note: (1) The y-axis plots accumulated healthcare costs over the different timespans, which include visits and procedures in primary care, hospitalisations and emergency care, as well as drugs use, and where the number of days between the laboratory and the doctor’s diagnos"
+  ],
+  "tables": [
+    "Descriptive statistics on sociodemographic characteristics and health status for the whole sample",
+    "Descriptive statistics on healthcare use and costs for those treated (HbA1c ≥ 6.5%) vs. controls (HbA1c &lt; 6.5%). Span = 6 months",
+    "Descriptive statistics on healthcare use and costs for those treated (HbA1c ≥ 6.5%) vs controls (HbA1c &lt; 6.5%). Span = 24 months",
+    "Effects of average glucose level on healthcare costs from the fuzzy regression discontinuity models excluding outliers &gt;99%. Forcing variable: distance from cut-off HbA1c = 6.5%"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035807.5602863
+}

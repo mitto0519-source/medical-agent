@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12288299",
+  "pmid": "40707890",
+  "title": "Metabolic syndrome and cardiovascular risk factors among bank employees in iran: a cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Izadi N, Heidari A, Heidari N, Pouryaghoub G, Hajighasemi Dehaghi Y.",
+  "doi": "10.1186/s12889-025-23758-1",
+  "figures": [
+    "The prevalence of metabolic syndrome (MetS) according to ATP III criteria, along with the frequency of each component, was illustrated among the study population"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population",
+    "Crude odds ratios for MetS components between job categories (management versus operational staff) based on ATP III criteria",
+    "Association of demographic and occupational variables with MetS (Unadjusted and adjusted odds ratios)",
+    "Distribution of ASCVD risk scores by gender, job title, and correlation with age",
+    "Association of demographic and occupational variables with ASCVD risk (Unadjusted and adjusted odds ratios)"
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006652.0229807
+}

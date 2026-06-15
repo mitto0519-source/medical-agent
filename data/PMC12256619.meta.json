@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12256619",
+  "pmid": "40653510",
+  "title": "Moderated mediation model of the association between problematic smartphone use and dry eye disease within Moroccan adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Bouazza S, Abbouyi S, Zarrouq B.",
+  "doi": "10.1038/s41598-025-11060-4",
+  "figures": [
+    "Diagram illustrating the three central components of the mesolimbic brain circuit involved in behavioral addictions.",
+    "Moderated mediation model with Problematic Smartphone Use (PSU) (predictor), Sleep Disturbance (SD) (mediator), physical activity duration (moderator) and Dry Eye Disease (DED) (outcome). ( a ) link between PSU and SD; ( b ) link between SD and DED; ( c ’), link between PSU and DED (direct effect).",
+    "Moderating effect of physical activity duration on the connection between problematic smartphone use and dry eye questionnaire DEQ-5.",
+    "Moderating effect of physical activity duration on the connection between problematic smartphone use and insomnia severity index ISI."
+  ],
+  "tables": [
+    "Descriptive statistics of socio-demographic features of the participants.",
+    "PSU, ISI, and DEQ-5 in different groups of physical activity (N = 2202).",
+    "Descriptive statistics and correlations of Problematic Smartphone Use, Insomnia Severity Index, and Dry Eye Questionnaire-5.",
+    "Moderated mediation model (outcome: DEQ-5)."
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001307.1897352
+}

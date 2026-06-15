@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11944175",
+  "pmid": "40137128",
+  "title": "Association Between Coffee Consumption and Metabolic Syndrome Components Among Saudi Adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Alzahrani WI, Alsharif SN, Hafiz MS, Alyoubi DA, Alrizqi AM, Younes RA, Jahlan AM, Yaghmour KA.",
+  "doi": "10.3390/metabo15030163",
+  "figures": [
+    "A bar chart displaying the rate of metabolic syndrome components among the participants (N = 95).",
+    "A scatter plot demonstrating the correlation between coffee cup size and WC (N = 85)."
+  ],
+  "tables": [
+    "Relationship between coffee consumption and MetS components (N = 95).",
+    "Relationship between coffee consumption and MetS components (N = 85).",
+    "Correlation between MetS components and coffee consumption amount (N = 85).",
+    "Relationship between coffee consumption and BMI, TC, and LDL (N = 85).",
+    "Correlation between MetS components and coffee consumption amount (N = 85).",
+    "Binary logistic regression analysis (inter-method) for predictors of high FBG.",
+    ""
+  ],
+  "query": "artificial sweetener depression",
+  "fetched_at": 1779975208.2268074
+}

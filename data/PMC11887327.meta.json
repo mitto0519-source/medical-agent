@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11887327",
+  "pmid": "40050732",
+  "title": "Robust phylogenetic tree-based microbiome association test using repeatedly measured data for composition bias.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim K, Won S.",
+  "doi": "10.1186/s12859-024-06002-2",
+  "figures": [
+    "Examples of rooted binary phylogenetic trees",
+    "Power estimates for genera consisting of more than one taxon. Power estimates at the significance level 0.05 were calculated with 500 replicates. We generated simulation data based on read counts from datasets and considered genera with more than one taxon. For statistical methods whose type-1 errors are violated, their P-values were adjusted with the simulated data, which makes all statistical me",
+    "Taxon distributions of significantly associated genus  Lactobacillus . Relative proportions of taxa belonging to  Lactobacillus  at different time points were plotted. Each taxon has its corresponding leaf node; leaf nodes in black square and black circle indicate that they are in L k  and R k     , respectively.      β  ^    black   square/black   circle      indicates the mean difference of     "
+  ],
+  "tables": [
+    "Type-1 error estimates of mTMAT IM  and other statistical methods from repeatedly measured microbiome data at three time points at the significance levels 0.1, 0.05",
+    "Association analysis results of the Pregnant dataset"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041827.71435
+}

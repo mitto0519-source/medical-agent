@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12340075",
+  "pmid": "40790305",
+  "title": "Somatic and mental health of and the COVID-19 pandemic's impact on adolescents diagnosed with asthma.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Emilsson M, Bador K, Johansson C, Kerekes N.",
+  "doi": "10.1038/s41533-025-00444-8",
+  "figures": [],
+  "tables": [
+    "Gender distribution of the study population in the participating countries.",
+    "The prevalence of adolescents with an asthma diagnosis in the multinational study population by country.",
+    "Prevalence of somatic diseases and complaints in the groups of adolescents with and without asthma.",
+    "Prevalence of somatic diseases and complaints in adolescent men and adolescent women with and without asthma.",
+    "The level of psychological distress in adolescents with and without asthma.",
+    "Psychological distress in adolescent men and adolescent women with and without asthma."
+  ],
+  "query": "asthma adolescent prevalence",
+  "fetched_at": 1780012850.0756235
+}

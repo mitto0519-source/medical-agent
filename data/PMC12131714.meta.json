@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12131714",
+  "pmid": "40457391",
+  "title": "Association of micronutrient status with thyroid function in adolescent Afghan refugees; a cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shaheen S, Shahzad M, Sher N, Khan MS, Iqbal K, Ahmad HA, Andrews SC.",
+  "doi": "10.1186/s13044-025-00239-6",
+  "figures": [
+    "Corretion coefficient, data distribution and scatter plot of the micronutrients with T3, T4 and TSH by gender (all genders). The upper right triangle present correlation coefficients and their statistical significance values are represented by asterisk. Black color represents significance of overall correlation while red and navy-blue color represent correlation with in the younger (age 10–14 year"
+  ],
+  "tables": [
+    "Association of thyroid hormone levels with age, sex and BMI",
+    "Comparison of micronutrientstatus and T3 levels in adolescent Afghan refugees. Comparison was achieved by dividing participants into three equally-sized tertiles according to T3 levels",
+    "Comparison of micronutrient status and serum T4 levels in adolescent Afghan refugees. Comparison was achieved by dividing participants into three equally-sized tertiles according to T4 levels",
+    "Comparison of micronutrient status and TSH levels in Afghan adolescent refugees. Comparison was achieved by dividing participants into three equally-sized tertiles according to TSH levels"
+  ],
+  "query": "thyroid function adolescent",
+  "fetched_at": 1780012036.8465803
+}

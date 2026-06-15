@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12296581",
+  "pmid": "40718774",
+  "title": "Psychological distress and problematic internet use among language teachers: a latent profile analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shen Z, Liu H, Chen IH.",
+  "doi": "10.7717/peerj.19707",
+  "figures": [
+    "The different models of LPA with various profiles."
+  ],
+  "tables": [
+    "Key characteristics of the participants of the study ( N  = 1,259).",
+    "Results of the latent profile analysis.",
+    "The detection rate of the number of positive symptoms across profiles.",
+    "The results of multivariate logistic regression analysis.",
+    "The results of the ANOVA analysis."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048861.3265924
+}

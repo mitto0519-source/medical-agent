@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11932047",
+  "pmid": "40130188",
+  "title": "Bullying and depression among adolescents in East Asia: a scoping review on prevalence rates, risk and protective factors.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kiing JSH, Ragen ES, Sulaiman MSBM, Goh WS, Tan NJH, Ng SH, Luo Y, Samuel M, Young D, Loh VWK.",
+  "doi": "10.3389/fpsyt.2025.1497866",
+  "figures": [
+    "PRISMA flow diagram illustrating search process and records screening."
+  ],
+  "tables": [
+    "Characteristics of included studies (n = 66).",
+    "Quality Assessment for cross-sectional studies (n=45) using the Newcastle-Ottawa Scale adapted for cross-sectional studies.",
+    "Quality Assessment for cohort studies (n=21) using the Newcastle-Ottawa Scale.",
+    "Prevalence of Bullying and Victimization.",
+    "Factors associated with bullying and/or depression."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048582.1329536
+}

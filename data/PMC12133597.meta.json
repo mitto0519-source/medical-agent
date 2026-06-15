@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12133597",
+  "pmid": "40461142",
+  "title": "Rosacea and Its Potential Role in the Development of Irritable Bowel Syndrome: Insights From the Korean National Health Insurance Service-National Sample Cohort.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jo YW, Min JH, Kwon JW, Her Y.",
+  "doi": "10.3346/jkms.2025.40.e97",
+  "figures": [
+    "Flowchart of study sample selection from the NHIS-NSC.  NHIS-NSC = National Health Insurance Service-National Sample Cohort, IBS = irritable bowel syndrome.",
+    "Kaplan-Meier curve of the cumulative risk of IBS in the rosacea patients and the control group using the log-rank test.  IBS = irritable bowel syndrome."
+  ],
+  "tables": [
+    "Demographic data of patients in rosacea and control group",
+    "Analysis of IBS risk factors in patients with rosacea by proportional hazards regression"
+  ],
+  "query": "Korean National Health Insurance NHIS cohort",
+  "fetched_at": 1780039277.9451325
+}

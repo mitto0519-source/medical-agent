@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12302739",
+  "pmid": "40722112",
+  "title": "Sport-specific impacts of ball games on adolescent brain function: a network meta-analysis of executive cognitive tasks.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang Y, Luo Z, Zhang T, Zhang M, Kapilevich L, Wang J.",
+  "doi": "10.1186/s13102-025-01268-2",
+  "figures": [
+    "PRISMA flow diagram of literature selection",
+    "( A ) NMA figure for the Go/No-Go Task. ( B ) SUCRA plot for the Go/No-Go Task",
+    "( A ) NMA figure for the Stop-Signal Task. ( B ) SUCRA plot for the Stop-Signal Task",
+    "( A ) NMA figure for the Stroop Task. ( B ) SUCRA plot for the Stroop Task",
+    "( A ) NMA figure for the Trail Making Test. ( B ) SUCRA plot for the Trail Making Test",
+    "( A ) NMA figure for the N-back Task. ( B ) SUCRA plot for the N-back Task",
+    "Funnel plot on publication bias. ( A ): Go/No-Go Task; ( B ): Stop-Signal Task; ( C ): Stroop Task; ( D ): Trail Making Test; ( E ): N-back Task"
+  ],
+  "tables": [],
+  "query": "team sport adolescent mental",
+  "fetched_at": 1780009281.464255
+}

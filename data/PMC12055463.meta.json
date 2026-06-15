@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12055463",
+  "pmid": "39218433",
+  "title": "Can algorithms replace expert knowledge for causal inference? A case study on novice use of causal discovery.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gururaghavendran R, Murray EJ.",
+  "doi": "10.1093/aje/kwae338",
+  "figures": [
+    "Pairwise correlation matrix for all covariates, including adherence and death.",
+    "P  value function for risk difference estimates for analyses adjusting for baseline and time-varying covariates.  \n P  value functions for risk difference estimates from 500 bootstrap samples using inverse probability weighting (IPW) and baseline standardization to adjust for baseline and time-varying covariates identified via expert knowledge (dot-dash line) or causal discovery algorithm (solid l"
+  ],
+  "tables": [
+    "Inputs and model specifications for causal discovery algorithms assessed.",
+    "Model output summary.",
+    "Adjustment sets identified from bootstrapped ensemble results and potential intermediate variables.",
+    "Estimated risk difference (percentage points; 95% CI  a  ) for high vs low adherence to placebo on 5-year mortality among the placebo arm, coronary drug project ( n  = 2413). Unadjusted risk difference: 11.1 (6.5, 15.6)."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021445.7367349
+}

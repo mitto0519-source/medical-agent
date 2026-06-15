@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12120054",
+  "pmid": "40436992",
+  "title": "Comparison of thrombectomy alone versus bridging thrombolysis in a US population using regression discontinuity analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim Y, Salazar-Marioni S, Abdelkhaleq R, Iyyangar A, Haussen D, Grossberg J, Dolia J, Pabaney A, Mohammaden M, Hassan A, Tekle W, Saei H, Abdalkader M, Klein P, Nisar T, Saleemi A, Majidi S, Fifi J, Valestin G, Linares G, Christopher K, Liebeskind DS, Jumaa M, Zaidi S, Nogueira R, Mehta B, Sessa J, Vivanco-Suarez J, Rodriguez-Calienes A, Galecio-Castillo M, Ortega-Gutierrez S, Siegler J, Penckofer M, Linfante I, Sheth SA, SVIN Registry Consortium.",
+  "doi": "10.1038/s41598-025-03249-4",
+  "figures": [
+    "Association of intravenous thrombolysis and primary exposure and potential confounders. Blue circles represent the mean value for individual patients and the dotted lines indicate the cutoff value of last known well to endovascular center arrival.",
+    "Association of intravenous thrombolysis and good functional outcome in patients undergoing EVT."
+  ],
+  "tables": [
+    "Patient demographics and clinical characteristics.",
+    "Association of intravenous thrombolysis and primary and secondary outcomes in patients undergoing EVT."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035292.5447931
+}

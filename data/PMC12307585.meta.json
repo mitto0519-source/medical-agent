@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC12307585",
+  "pmid": "40730802",
+  "title": "Transfer learning prediction of type 2 diabetes with unpaired clinical and genetic data.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jung Y, Han S, Kang E, Park S, Kim M, Kim N, Ahn T.",
+  "doi": "10.1038/s41598-025-05532-w",
+  "figures": [
+    "Overall experimental flow of the study. The diagram outlines the sequence of steps in our research methodology, including data preparation, model training, and performance evaluation.",
+    "Data pre-processing workflow. KoGES and SNUH datasets were processed to remove outliers and missing values, yielding a combined dataset of individuals with both SNP and clinical data (32,307 samples). The combined data were split into training, validation, and test sets for model development.",
+    "Example class distribution of the training data, illustrating class imbalance and the effect of weighting. The minority class (T2DM-positive) is upsampled or given higher weight to balance against the majority class (T2DM-negative).",
+    "Transfer learning model structure. The clinical data branch (blue) is a fully connected network initialized with weights pre-trained on clinical data alone. The genetic data branch (green) is a 1D convolutional network processing SNP features. Latent representations from both branches are fused (concatenated) and fed into further layers to predict T2DM risk.",
+    "Performance distributions across 100 independent runs for five class-imbalance handling strategies−SMOTE oversampling, unweighted binary cross-entropy loss (standard BCE), probability-weighted BCE (pw_BCE), weighted random sampling (WRS), and the combined pw_BCE + WRS approach−evaluated on the ( A ) validation and ( B ) held-out test sets. Each box-and-whisker plot shows the spread of four metrics",
+    "Performance distributions across 100 independent runs for five model architectures−XGBoost, plain DNN, intermediate fusion (IF), the graph-based MGCN-CalRF model (GCN), and our transfer-learning approach (TL)−evaluated on the ( A ) validation and ( B ) test sets. Each box-and-whisker plot displays the spread of (left to right)        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usep"
+  ],
+  "tables": [
+    "Description of transfer learning model.",
+    "Baseline characteristics of the study population.",
+    "Performance comparison of models with random initialization versus transfer learning initialization (pre-trained on KoGES clinical data) on the SNUH dataset.",
+    "Test-set performance of DNN models using different strategies to address class imbalance.",
+    "Best performance of different model architectures on the test set (all models use class imbalance mitigation).",
+    "Performance metrics from previous studies (ranges of sensitivity, specificity, balanced accuracy, AUC) compared to the performance of the proposed transfer learning model."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036770.7620797
+}

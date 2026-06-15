@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12166562",
+  "pmid": "40514697",
+  "title": "Mendelian randomization study of micronutrients and development of CKD in a Korean population.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee J, Lee S, Oh KH, Park SK.",
+  "doi": "10.1186/s12937-025-01160-2",
+  "figures": [
+    "Flow chart of the study population selection from the KARE GWAS and MR study. KARE, Korean Association Resource; GWAS, genome-wide association study; MR, Mendelian randomization",
+    "Overview of the selection IVs associated with dietary micronutrient levels but not CKD for MR analysis. KoGES, the Korean genome and epidemiology study; SNPs, single nucleotide polymorphism; LD, linkage disequilibrium; CKD, chronic kidney disease; IV, instrumental variable; MR, Mendelian randomization",
+    "Scatter plots comparing MR analyses of the associations between dietary micronutrient levels and CKD development. Associations between genetic IVs for dietary micronutrient levels (after excluding SNPs with potential pleiotropic effects) and CKD development were analyzed using different MR methods. MR, Mendelian randomization; CKD, chronic kidney disease; IV, instrumental variable; SNP, single nuc",
+    "Associations between the PRS derived from IVs—after excluding potential pleiotropic SNPs—and dietary micronutrient levels, based on linear regression models. Black lines indicate beta coefficients, and grey shaded areas represent their 95% CIs. IV, instrumental variable; PRS, polygenic risk score; CI, confidence interval"
+  ],
+  "tables": [
+    "General characteristics of the study subjects",
+    "Associations of individual genetic instruments for dietary phosphorus intake levels with CKD development, after excluding potential pleiotropic SNPs",
+    "Associations of individual genetic instruments for dietary vitamin B2 intake levels with CKD development, after excluding potential pleiotropic SNPs",
+    "Associations of individual genetic instruments for dietary vitamin B6 intake levels with CKD development, after excluding potential pleiotropic SNPs",
+    "Associations of individual genetic instruments for dietary vitamin C intake levels with CKD development, after excluding potential pleiotropic SNPs",
+    "Mendelian randomization results for the effects of dietary phosphorus and vitamin B2, B6, and C intake on CKD development, after excluding potential pleiotropic SNPs",
+    "Results of pleiotropy test for the association between dietary micronutrients levels and CKD development, after excluding pleiotropic SNPs"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037324.2520819
+}

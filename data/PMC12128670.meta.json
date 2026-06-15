@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12128670",
+  "pmid": "40448518",
+  "title": "&lt;i&gt;Eggerthella lenta&lt;/i&gt; down regulated flavone and flavonol biosynthesis promoted Kawasaki disease.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yeh YT, Chen KD, Huang CH, Tsai JR, Kuo HC.",
+  "doi": "10.1080/21505594.2025.2512401",
+  "figures": [
+    "",
+    "Gut microbiota composition change in Kawasaki disease (KD) patients. (a) Shannon alpha diversity (including richness and evenness) was significantly decreased in Kawasaki disease patients ( p  = 0.042). (b) Jaccard beta diversity bacteria composition was significantly changed in Kawasaki disease ( p  &lt; 0.001). A  p  value less than 0.05 was considered statistically significant.",
+    "Core microbiota analysis between healthy control and Kawasaki disease. (a) the cladogram plots of core microbiota analysis. Red colour is presented healthy control. Green colour is presented Kawasaki disease patients. (b) LEfSe bar plots shown significantly changed gut microbiota in healthy control and Kawasaki disease. The cut-off value of LDA score is 4.0.",
+    "Eggerthella lenta  and  Bacteroides ovatus  are significantly changed in Kawasaki disease. (a) receiver operating characteristic (ROC) curve were used to analyse the  Eggerthella lenta  and  Bacteroides ovatus  and get the cut-off value (&gt;0.041 and &lt; 0.026, respectively) and area under curve (0.841 and 0.816, respectively). (b) the correlation plot between  Eggerthella lenta  and B acteroide",
+    "The critical signalling pathway in Kawasaki disease is flavone and flavonol biosynthesis. a. functional pathways analysis by PICRUSt and false positive discovery rate (FDR) analysis was utilized by Benjamini-Hochberg method and adj  p -value ( q  value) less than 0.05 were consider as statistically significant. b. flavone and flavonol biosynthesis was downregulated in Kawasaki disease. c. flavone ",
+    "Decision tree analysis for Kawasaki disease prediction based on the  Eggerthella lenta / Bacteroides ovatus  ratio. the root node shows 114 samples (55 controls and 59 KD patients), with a split at a threshold ratio of 0.011 (adjusted  p  &lt; 0.001, chi-square = 55.284, df = 1). For samples with a ratio of 0.011 or lower, 82.1% are classified as controls (node 1), while for samples with a ratio g"
+  ],
+  "tables": [
+    "Core microbiota in species level with FDR (LDA score ≥4.0).",
+    "Univariant and multivariant regression.",
+    "Multivariant regression."
+  ],
+  "query": "Eggerthella gut bacteria",
+  "fetched_at": 1779991529.3234892
+}

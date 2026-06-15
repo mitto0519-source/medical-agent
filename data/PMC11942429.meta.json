@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11942429",
+  "pmid": "40141172",
+  "title": "Sex Steroids and Brain-Derived Neurotrophic Factor Interactions in the Nervous System: A Comprehensive Review of Scientific Data.",
+  "year": 2025,
+  "journal": "",
+  "authors": "de Assis GG, de Sousa MBC, Murawska-Ciałowicz E.",
+  "doi": "10.3390/ijms26062532",
+  "figures": [
+    "Overview of the de novo sex steroid synthesis within the mitochondria. Notes: The figure does not display all intermediate steroids, pathways, or enzymes. DHEA = dehydroepiandrosterone.",
+    "Search flowchart.",
+    "Schematic illustration of direct (complete arrow) and indirect (dotted arrow) interactions between sex steroids and BDNF systems via the activation of nuclear receptors in neuronal cells within the brain. ? = Unknown mechanisms. Created with  https://www.biorender.com/ ."
+  ],
+  "tables": [
+    "Data summary of interactions between progesterone and BDNF.",
+    "Data summary of interactions between testosterone and BDNF.",
+    "Data summary of interactions between estrogen and BDNF.",
+    "Summarized highlights of findings from different studies."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046607.3755374
+}

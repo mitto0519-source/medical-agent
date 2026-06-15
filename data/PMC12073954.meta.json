@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12073954",
+  "pmid": "40371245",
+  "title": "Factors associated with chronotype in individuals with bipolar disorder in remission.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Singh R, Deep R, Patil V, Bhargava R, Mishra AK.",
+  "doi": "10.4103/indianjpsychiatry.indianjpsychiatry_980_24",
+  "figures": [
+    "Scree plot of the EFA"
+  ],
+  "tables": [
+    "Clinical variables for individuals with BD in remission ( n =100)",
+    "Association of chronotype (CSM) with study variables ( n =100)",
+    "Rotated (Varimax) Component Matrix using PCA ( n =100)",
+    "Regression analysis: CSM as the dependent variable ( n =100)"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001060.0887094
+}

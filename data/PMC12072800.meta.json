@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12072800",
+  "pmid": "40364096",
+  "title": "Otolaryngological Problems Among Patients with Growth Hormone Deficiency-A Systematic Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Abdulaziz-Opiela G, Witkowski P, Późniak Y, Bajdor J, Bautembach J, Myśliwiec M, Mikaszewski B.",
+  "doi": "10.3390/jcm14093064",
+  "figures": [
+    "PRISMA flowchart."
+  ],
+  "tables": [
+    "Inclusion and exclusion criteria for the selection of articles.",
+    "Relevant data extracted from the articles.",
+    "The prevalence of ENT conditions among patients with GHD."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012530.2426243
+}

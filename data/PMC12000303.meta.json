@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12000303",
+  "pmid": "40234587",
+  "title": "How anxiety and depression mediate the link between sleep quality and health perception during crisis periods.",
+  "year": 2025,
+  "journal": "",
+  "authors": "de Menezes-Júnior LAA, de Moura SS, Machado-Coelho GLL, Meireles AL.",
+  "doi": "10.1038/s41598-025-98004-0",
+  "figures": [
+    "Directed acyclic graph (DAG) on sleep quality and self-rated health in adults during the COVID-19 pandemic (COVID-Inconfidentes Study). Legend: The variable in green and with the “ &gt; ” symbol inside the rectangle was the exposure variable; those in blue and with the letter “I” inside the rectangle were the response variables; variables in blue are the antecedents of the outcome variable, and th",
+    "Prevalence of self-rated health, during the covid-19 pandemic (COVID-Inconfidentes Study). Self-rated health grouped: Poor (which included the very poor, poor, and regular categories); Good (which included the very good and good categories).",
+    "Path diagram of the mediation analysis of the role of sleep quality in self-rated health using depression symptoms and anxiety disorders symptoms (COVID-Inconfidentes Study). Path analysis based on multivariate logistic regressions, adjusted for the minimum and sufficient set of variables: sex, age, family income, alcohol and tobacco consumption, and chronic diseases. Total, direct, and indirect e"
+  ],
+  "tables": [
+    "Sociodemographic, health, and behavioral characteristics according to the self-rated health, during the COVID-19 pandemic (COVID-Inconfidentes Study)."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021889.0225186
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12133595",
+  "pmid": "40461140",
+  "title": "Risk for Human Papillomavirus-Associated Gynecologic Cancers Among Women of Childbearing Age With Rheumatic Diseases: A Population-Based Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee J, Baek IW, Lim H, Chung MK, Park PG, Lee CH, Park JS.",
+  "doi": "10.3346/jkms.2025.40.e95",
+  "figures": [
+    "Incidence rates and cumulative incidence of HPV-associated gynecologic cancers. IRs per 100,000 person-years ( A ) and Kaplan−Meier curves for the cumulative incidence ( B ) of HPV-associated gynecologic cancers. The RD and non-RD cohorts are matched for age and index date. HPV-associated gynecologic cancers included cervical intraepithelial neoplasia grade 3, cervical cancer, vaginal cancer, and ",
+    "HRs for HPV-associated gynecologic cancers: multivariate Cox regression models. A step down in HR after adjusting for variables in each model indicates that the adjusted variables increased the risk, whereas a step up in HR indicates that the adjusted variables decreased the risk.  Model 1 was adjusted for income level, medical insurance type, residential district, comorbidities, and preventive me"
+  ],
+  "tables": [
+    "Baseline characteristics of the study cohort",
+    "Comorbidities, medication, and healthcare and preventive medical service utilization during the follow-up period"
+  ],
+  "query": "Korean National Health Insurance NHIS cohort",
+  "fetched_at": 1780039040.407267
+}

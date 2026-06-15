@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12154410",
+  "pmid": "40507778",
+  "title": "Relationship Between Obesity and Depression Considering the Inflammatory Theory.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Oracz AJ, Zwierz M, Naumowicz M, Suprunowicz M, Waszkiewicz N.",
+  "doi": "10.3390/ijms26114966",
+  "figures": [
+    "Causes of the increase in obesity in society. Genetic factors are rarely the sole cause of obesity. It has been suggested that the obesity pandemic results from the interaction of environmental and genetic factors in epigenetic mechanisms.",
+    "Dysregulation of the hypothalamic–pituitary–adrenal (HPA) axis in obesity. Excessive adipose tissue is responsible for increased concentrations of resistin and leptin and decreased concentrations of the anti-inflammatory adiponectin. This imbalance stimulates the HPA axis to produce cortisol, with elevated cortisol levels being linked to depression. Ghrelin secreted by the gastric parietal cells i",
+    "Dysregulation of the kynurenine pathway in obesity and its link to depressive symptoms. In individuals with obesity (body mass index, BMI ≥ 30), elevated levels of proinflammatory cytokines, including interleukin-6 (IL-6), tumor necrosis factor-alpha (TNF-α), and interleukin-1 beta (IL-1β), lead to the activation of indoleamine 2,3-dioxygenase 1 (IDO1) and the inhibition of tryptophan 2,3-dioxygen",
+    "The inflammatory model posits a link between obesity and depression, proposing that obesity leads to an increase in proinflammatory cytokines, including IL-6, TNF-α, C-reactive protein (CRP), and interleukin-1 beta (IL-1β), while concurrently decreasing levels of anti-inflammatory cytokines, such as interleukin-10 (IL-10) and transforming growth factor beta 1 (TGF-β1). This immune imbalance has be",
+    "Excessive adipose tissue in obesity promotes inflammation through various mechanisms. Inflammation, in turn, exacerbates oxidative stress, which is associated with depression. Abbreviations used in the figure: interferon-γ (IFN-γ), brain-derived neurotrophic factor (BDNF).",
+    "The graphic depicts the variations in immune cell composition and cytokine patterns between normal and obese adipose tissue. Normal adipose tissue is characterized by an anti-inflammatory environment, with macrophages producing IL-10, eosinophils releasing interleukin-4 (IL-4), IL-10, and interleukin-13 (IL-13), regulatory T cells (Treg) secreting IL-10 and transforming growth factor beta (TGF-β),"
+  ],
+  "tables": [
+    "Summary of studies investigating the relationship between BMI, leptin levels, and depression symptom severity.",
+    "A comparative summary of key metabolic markers, their mechanisms of action, and their roles in obesity and depression. The table categorizes adipokines as either proinflammatory or anti-inflammatory and outlines their altered levels in obesity and depression."
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003521.0525248
+}

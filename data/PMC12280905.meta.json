@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12280905",
+  "pmid": "40698051",
+  "title": "Misuse and diversion of stimulant medications prescribed for the treatment of ADHD: a systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Forrest J, Chen W, Jagadheesan K.",
+  "doi": "10.3389/fpsyt.2025.1612785",
+  "figures": [
+    "Meta-analysis of prevalence: past year and lifetime diversion.",
+    "Meta-analysis of prevalence: past year diversion.",
+    "Meta-analysis of prevalence: lifetime diversion.",
+    "PRISMA flow diagram.",
+    "Meta-analysis of prevalence: past year misuse."
+  ],
+  "tables": [
+    "Results of individual studies - studies assessing both misuse and diversion.",
+    "Results of individual studies - studies assessing misuse only.",
+    "Results of individual studies - studies assessing diversion only.",
+    "JBI critical appraisal checklist."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058972.9032524
+}

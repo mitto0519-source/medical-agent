@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12056540",
+  "pmid": "40102186",
+  "title": "Weight status of children and adolescents with autism spectrum disorder: A cross-sectional analysis of primary care electronic medical records and linked health administrative datasets in Ontario, Canada.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kinlin LM, Saunders NR, Carsley S, Keown-Stoneman C, Tu K, Zwaigenbaum L, Birken CS.",
+  "doi": "10.1111/ijpo.70000",
+  "figures": [
+    "Identification of eligible visits in the Electronic Medical Records Primary Care (EMRPC) database between January 2011 and December 2016. OHIP, Ontario Health Insurance Plan. zBMI, age‐ and sex‐standardized body mass index  z ‐score.",
+    "Odds ratio of the specified weight status versus normal weight in children with autism spectrum disorder (ASD), compared to those without ASD, by age group. The vertical black line indicates an odds ratio of 1 (i.e., no difference). zBMI, age‐ and sex‐standardized body mass index  z ‐score."
+  ],
+  "tables": [
+    "Definitions of weight status for children and adolescents from the World Health Organization (WHO) and as adapted for study purposes. \n 70",
+    "Characteristics of children and adolescents in the Electronic Medical Records Primary Care (EMRPC) database [2011 to 2016]. Figures are numbers (percentage) of children and adolescents. Percentages may not sum to 100 due to rounding.",
+    "Weight status in children with and without autism spectrum disorder (ASD) in the Electronic Medical Records Primary Care (EMRPC) database [2011 to 2016]. Figures are numbers (percentage). Percentages may not sum to 100 due to rounding.",
+    "Multivariable multinomial logistic regression analysis for the entire study sample, with weight status as the dependent variable ( N  = 33 338); normal weight serves as the reference. Odds ratios, as presented, are adjusted for all other variables in the model.",
+    "Multinomial logistic regression analysis evaluating association between autism spectrum disorder (ASD) and weight status, by sex; normal weight serves as the reference for all odds ratios presented."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057329.226917
+}

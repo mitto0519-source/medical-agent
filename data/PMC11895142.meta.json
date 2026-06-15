@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11895142",
+  "pmid": "40065314",
+  "title": "Promoting active transportation through technology: a scoping review of mobile apps for walking and cycling.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Siriaporn N, de Nazelle A, Vuillemin A.",
+  "doi": "10.1186/s12889-025-22131-6",
+  "figures": [
+    "PRISMA flow diagram of the academic literature search",
+    "PRISMA flow diagram of the mobile app search process on the Google Play Store and Apple App Store",
+    "Stages of change in relation to AT based on the Transtheoretical Model of Behavior Change, adapted from Prochaska and DiClemente (1982), and, based on current review, recommended app features to support user progression through the stages"
+  ],
+  "tables": [
+    "Search terms used in the six academic literature databases",
+    "Full list of included studies ( n  = 38) and the app used ( n  = 28), charted for AT promotion strategies and evaluation results (if applicable)",
+    "Theories used in the reviewed articles",
+    "The MARS, ABACUS, and user engagement scores of the downloaded and tested apps"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007115.7034886
+}

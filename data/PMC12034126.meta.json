@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12034126",
+  "pmid": "40287688",
+  "title": "The effect of Internet use on adolescent nutritional outcomes: evidence from China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu W, Ren Y, Liu J, Loy JP.",
+  "doi": "10.1186/s41043-025-00856-9",
+  "figures": [
+    "Distribution of BMI-for-age z-score.  Note : BMI-for-age z-score equals 1 or above are defined as overweight.   Source : CHNS 2006, 2009, 2011 and CFPS 2010, 2014, 2016, 2018, 2020, 2022"
+  ],
+  "tables": [
+    "Descriptive statistics of the main variables   Sources:  The estimations are based on the CNHS 2006, 2009, 2011 and CFPS 2010, 2014, 2016, 2018, 2020, 2022",
+    "Estimation of Internet use on nutritional outcomes   Sources : The estimations are based on the CNHS 2006, 2009, 2011 and CFPS 2010, 2014, 2016, 2018, 2020, 2022",
+    "The treatment effect of Internet use on adolescent nutritional outcomes   Sources : The estimations are based on the CNHS 2006, 2009, 2011 and CFPS 2010, 2014, 2016, 2018, 2020, 2022",
+    "Heterogeneity impact on adolescent nutritional outcomes   Sources : The estimations are based on the CNHS 2006, 2009, 2011 and CFPS 2010, 2014, 2016, 2018, 2020, 2022",
+    "The effects of Internet use on potential channels   Sources : The estimations are based on the CNHS 2006, 2009, 2011",
+    "Main results robustness (ATT): separate estimations by data source   Sources : The estimations are based on the CNHS 2006, 2009, 2011 and CFPS 2010, 2014, 2016, 2018, 2020, 2022",
+    "ESR model with Mundlak correction   Sources : The estimations are based on the CNHS 2006, 2009, 2011 and CFPS 2010, 2014, 2016, 2018, 2020, 2022",
+    "Alternative IV estimates: Lewbel's Heteroskedasticity-Based IV approach   Sources : The estimations are based on the CNHS 2006, 2009, 2011 and CFPS 2010, 2014, 2016, 2018, 2020, 2022",
+    "Sample composition",
+    "First-stage regression results for Internet use",
+    "Reduced-regression of BMIZ and county penetration",
+    "Descriptive statistics by urban and rural residence",
+    "Descriptive statistics by gender"
+  ],
+  "query": "US adolescent soft drink depression",
+  "fetched_at": 1779992304.3389037
+}

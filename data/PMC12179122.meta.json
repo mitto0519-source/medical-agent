@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12179122",
+  "pmid": "40536169",
+  "title": "Molecular neuroimaging of ovarian steroid effects on the female brain: A systematic review of human non-clinical studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Walsh MJ, Gibson K, Gray RM, McNeal M, Lynch LS, Kang M, Brierley J, Bondy E, Dichter GS, Schiller CE.",
+  "doi": "10.1177/0271678x251348865",
+  "figures": [
+    "PRISMA flow chart.",
+    "Illustration of estradiol (E2) and progesterone (P4) fluctuations across the menstrual cycle and the perinatal and menopause transition, utilizing simulated data. Panel a depicts the menstrual cycle, where E2 levels remain low in the early follicular phase and surge during the late follicular phase to induce ovulation. During the luteal phase, E2 and P4 rise and fall, precipitating menses and anot"
+  ],
+  "tables": [
+    "Reproductive transitions characterized by marked changes in E2 levels.",
+    "Reproductive transitions characterized by concurrent changes in Both E2 and P4 levels.",
+    "Reproductive Transitions with Marked Changes in P4 Levels."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046561.4795237
+}

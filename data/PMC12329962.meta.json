@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12329962",
+  "pmid": "40770767",
+  "title": "I don't know-responses in the international trauma questionnaire caregiver-version: caregivers' knowledge about children's mental health.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lueger-Schuster B, Weindl-Wagner D, Zagaria A, Russo M, Novaković IZ, Zajec K, Noske J, Haselgruber A.",
+  "doi": "10.1186/s40359-025-03229-3",
+  "figures": [
+    "Percentages of IDK responses across the ITQ-CG items",
+    "Histogram of raw frequencies of different IDK counts",
+    "Profile plot of the 2 classes LCA model"
+  ],
+  "tables": [
+    "Descriptive statistics for children’s sociodemographic variables",
+    "Descriptive statistics of children’s caregiver -reported and self-reported symptom burden",
+    "Values (absolute and percentages) of IDK selected",
+    "IDK descriptive statistics and differences across children’s and caregivers’ gender and type",
+    "Correlations of psychological outcomes reported by the caregiver with the summative IDK score",
+    "Correlations of psychological outcomes reported by the child with the summative IDK score",
+    "Fit indexes LCA"
+  ],
+  "query": "PTSD trauma adolescent",
+  "fetched_at": 1779997504.217259
+}

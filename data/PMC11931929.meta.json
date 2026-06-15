@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11931929",
+  "pmid": "40118476",
+  "title": "Suicidal behaviours and associated factors among Bangladeshi medical students: a systematic review and meta-analysis (2000-2024).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Rahman M, Kabir MHMI, Sultana S, Abdullah I, Shimu AT.",
+  "doi": "10.1136/bmjopen-2024-095573",
+  "figures": [
+    "Cluster analysis showing searched keywords from the PubMed database.",
+    "PRISMA flow diagram of study selection process. PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses).",
+    "(A) Forest plot showing pooled prevalence of suicidal ideation (SI) among Bangladeshi medical students. (B) Forest plot showing the pooled prevalence of suicidal plans(SP) among Bangladeshi medical students. (C) Forest plot showing pooled prevalence of suicidal attempt (SA) among Bangladeshi medical students.",
+    ""
+  ],
+  "tables": [
+    "Key search terms used to develop the search strategy",
+    "JBI critical appraisal scores for included studies"
+  ],
+  "query": "academic stress East Asian student",
+  "fetched_at": 1780019126.2554617
+}

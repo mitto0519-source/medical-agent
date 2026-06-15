@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12314734",
+  "pmid": "40747584",
+  "title": "Importance of allergic sensitisation for normal range of fractional exhaled nitric oxide in adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hallberg J, Wang G, Bergström A, Kull I, Melén E, Malinovschi A.",
+  "doi": "10.1111/pai.70154",
+  "figures": [
+    "Flowchart of the BAMSE population relevant for the present study.",
+    "FeNO (ppb) according to type of allergen sensitization in males and females separately, compared to the negative Phadiatop group. ***  p  &lt; 0.001.",
+    "FeNO (ppb) according to degree of allergen sensitization by sex (females 1st tertile &lt;0.85 PAU/L, 2nd tertile 0.85–9.28, 3rd tertile &gt;9.28 and males 1st tertile &lt;2.35, 2nd tertile 2.35–16.7, 3rd tertile &gt;16.7), compared to the negative sensitization group. **  p  &lt; 0.01, but  p  ≥ 0.001. ***  p  &lt; 0.001.",
+    "Proportion of individuals with FeNO below and above the upper limit of normal at the 95th percentile calculated for the specific subgroup, and classified as having low, intermediate, or high FeNO according to guidelines, by sensitization status."
+  ],
+  "tables": [
+    "Characteristics at the 16 years' follow‐up.",
+    "Prevalence and odds ratios with 95% confidence interval for reporting wheeze in the last 12 months, current asthma, or having impaired lung function at 16 years in relation to a FeNO value below or above the sex and sensitization status‐specific 95th percentile, or the 25 ppb cutoff, or 50 ppb cutoff, stratified by sensitization status."
+  ],
+  "query": "asthma adolescent prevalence",
+  "fetched_at": 1780013525.5821686
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12058522",
+  "pmid": "40175543",
+  "title": "A natural experiment on the effect of herpes zoster vaccination on dementia.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Eyting M, Xie M, Michalik F, Heß S, Chung S, Geldsetzer P.",
+  "doi": "10.1038/s41586-025-08800-x",
+  "figures": [
+    "A large jump in zoster vaccine receipt at the date-of-birth eligibility threshold.   a – f , The date-of-birth eligibility cut-off led to a large discontinuity in zoster vaccine receipt ( a ), but there is baseline exchangeability across the cut-off for uptake of other preventive interventions (flu vaccine ( d ), pneumococcal polysaccharide vaccine (PPV) ( e ) and statin medications ( f )) as well",
+    "The effect of the zoster vaccine on shingles diagnoses.   a – c , Effect estimates of being eligible for ( a ), and having received (across different follow-up periods ( b ) and across different grace periods ( c )), the zoster vaccine on the probability of having at least one shingles diagnosis during the follow-up period. For  a , the MSE-optimal bandwidth is 145.7 weeks (95,227 adults). The gre",
+    "The effect of the zoster vaccine on new diagnoses of dementia.   a – c , Effect estimates of being eligible for ( a ), and having received (across different follow-up periods ( b ) and across different grace periods ( c )), the zoster vaccine on new diagnoses of dementia. For  a , the MSE-optimal bandwidth is 134.4 weeks (83,167 adults). The grey dots show the mean value for each 10-week increment",
+    "Comparison of effect estimates between the DID-IV and regression discontinuity approach.  Comparison of absolute effect estimates of having received the zoster vaccine on new diagnoses of dementia, shingles and postherpetic neuralgia between the DID-IV and the regression discontinuity analyses. The data source for this analysis was the SAIL database for Wales. The sample size for the dementia outc",
+    "The effect of the zoster vaccine on new diagnoses of dementia, separately for women and men.   a – f , Effect estimates of being eligible for ( a  (women) and  d  (men)) and having received ( b  and  c  (women) and  e  and  f  (men); across different follow-up periods ( b  and  e ) and across different grace periods ( c  and  f )) the zoster vaccine on new diagnoses of dementia, separately for wom"
+  ],
+  "tables": [],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035682.59894
+}

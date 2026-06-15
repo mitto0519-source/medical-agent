@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11885126",
+  "pmid": "40061951",
+  "title": "Impacts of Chinese national centralized volume-based procurement policy targeting meropenem on prescription of designated antimicrobials for inpatients: an interrupted time series analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lin ZH, Wang CM, Cai LL.",
+  "doi": "10.3389/fphar.2025.1458792",
+  "figures": [
+    "The meropenem NCVBPP increases the consumption of but reduces expenditures for meropenem.  (A, B)  Based on analysis using a segmented regression model  (A)  and an ARIMA model  (B) , the consumption of meropenem was found to increase, following the meropenem NCVBPP.  (C, D)  Results of analysis using the segmented regression model  (C)  and the ARIMA model.  (D)  Indication of the effect of the m",
+    "The meropenem NCVBPP has no effects on the consumption of carbapenems, and its effects on expenditures for carbapenems are unknown.  (A, B)  According to analysis using the segmented regression model  (A)  and the ARIMA model  (B) , the meropenem NCVBPP failed to alter the consumption of carbapenems.  (C, D)  The impacts of the meropenem NCVBPP on the expenditures for carbapenems were unknown beca",
+    "Alterations in the consumption of and expenditures for combinations of penicillins/cephalosporins with beta-lactamase inhibitors after the meropenem NCVBPP.  (A, B)  Due to the contradictory results from analysis using the segmented regression model  (A)  and the ARIMA model  (B) , whether there was a change in the consumption of combinations of penicillins/cephalosporins with beta-lactamase inhib",
+    "Changes in the consumption of and expenditures for all types of carbapenem-replaced antimicrobials following the meropenem NCVBPP.  (A, B)  Results from analysis using the segmented regression model  (A)  and the ARIMA model  (B)  indicated that the consumption of carbapenem-replaced antimicrobials did not change after the meropenem NCVBPP.  (C, D)  According to analysis using the segmented regres",
+    "Changes in the consumption of and expenditures for carbapenems plus carbapenem-replaced antimicrobials after the meropenem NCVBPP.  (A, B)  Results from analysis using the segmented regression model  (A)  and the ARIMA model  (B)  showed that no alternation in the consumption of carbapenems plus carbapenem-replaced antimicrobials was observed after the meropenem NCVBPP.  (C, D)  According to analy"
+  ],
+  "tables": [
+    "General description of the data collected."
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032300.450405
+}

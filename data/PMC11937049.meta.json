@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11937049",
+  "pmid": "40145006",
+  "title": "Public interest and engagement in care for brain health in Slovenia: the role of education.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Perovnik M, Kos H, Vidmar G, Fabjan S, Hawlina H, Tomat N, Trol D, Bresjanac M.",
+  "doi": "10.3389/fpubh.2025.1490846",
+  "figures": [
+    "Flowchart of the selection procedure.",
+    "Percentage of responses to the question “How do you evaluate the following practices in terms of their value for brain health?” stratified by participants’ brain-related education.",
+    "Percentage of responses to the question “How frequently do you comply with recommendations for brain health?” stratified by participants’ brain-related education.",
+    "Percentage of responses to the question “I do not engage in healthy practices because of lack of information” stratified by participants’ brain-related education.",
+    "Proportion of participants that identified specific diseases in which we can reduce the likelihood of appearance by healthy lifestyle stratified by participants’ brain-related education."
+  ],
+  "tables": [
+    "Demographic data.",
+    "Summary of propensity-score adjusted linear regression models for comparing the survey responses between educated and lay public."
+  ],
+  "query": "Malaysian adolescent dietary depression",
+  "fetched_at": 1779992377.2194695
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12031049",
+  "pmid": "40333206",
+  "title": "Using Measles Outbreaks to Identify Under-Resourced Health Systems in Low- and Middle-Income Countries: A Predictive Model.",
+  "year": 2025,
+  "journal": "",
+  "authors": "MacKechnie GPD, Dalton M, Delport D, Vaccher S.",
+  "doi": "10.3390/vaccines13040367",
+  "figures": [
+    "Directed Acyclic Graph for the association between health systems and large measles outbreaks.",
+    "Predicted odds of large measles outbreaks compared to observed measles outbreak size for the testing set ( N  = 11)."
+  ],
+  "tables": [
+    "Health system indicators stratified by large and non-large measles outbreaks ( N  = 53).",
+    "Predictors of large measles outbreaks in LMICs (multivariable regression).",
+    "",
+    "Sensitivity analysis results for different large measles outbreak definitions.",
+    "Sensitivity analysis, including a covariate for the proportion of refugees and asylum seekers."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021773.9791524
+}

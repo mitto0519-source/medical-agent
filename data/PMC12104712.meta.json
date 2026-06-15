@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12104712",
+  "pmid": "40421163",
+  "title": "Physical activity and BMI inequalities throughout childhood: a Brazilian birth cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Keye SA, Hallal PC, Crochemore-Silva I, Domingues MR, Leite GS, Amaral de Andrade Leão O.",
+  "doi": "10.1016/j.lana.2025.101111",
+  "figures": [
+    "Equiplots of physical activity according to sex, ethnicity, and assets index (1-poorest, 5-richest).",
+    "Equiplots of BMI-for-age according to sex, ethnicity, and assets index.",
+    "Physical activity (A) and BMI-for-age (B) trajectories."
+  ],
+  "tables": [
+    "Characteristics of children from the 2015 Pelotas (Brazil) birth cohort.",
+    "Physical activity and BMI z-score of children from the 2015 Pelotas (Brazil) Birth Cohort.",
+    "Trajectory groups for PA and BMI-for-age based on sex, race, and assets index."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008233.218621
+}

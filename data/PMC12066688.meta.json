@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC12066688",
+  "pmid": "40356777",
+  "title": "A bibliometric analysis of metabolic dysfunction-associated steatotic liver disease in children from 2004 to 2024.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gong X, Bai S, Lei E, Lu T, Chen Y, Cai J, Liu J.",
+  "doi": "10.3389/fped.2025.1468788",
+  "figures": [
+    "Flow chart of publication retrieval and visual analysis. TS is the abbreviation for topic search, and WoSCC is the abbreviation for the web of science core collection database.",
+    "Trend graph of the number of annual publications on MASLD in children (retrieval time span: 01/01/2004–31/12/2024).",
+    "Analysis of countries/regions and institutions.  (A)  National/regional collaborative network. Each label represents a country or region, the length of the arc corresponds to the volume of publications, and the width of the connecting lines indicates the strength or frequency of collaboration.  (B)  Institutional collaborative network in VOSviewer. Each node represents an institution, the size of ",
+    "Analysis of active authors and co-cited authors.  (A)  Collaborative network of authors in VOSviewer. Each node represents an author, the size of the nodes represents the quantity of publications, the thickness of the lines reflects the closeness of the cooperation, the colors are applied to distinguish different cooperation clusters.  (B)  Collaborative network of co-cited authors in VOSviewer. E",
+    "Analysis of journals and co-cited journals.  (A)  Collaborative network of journals in VOSviewer. Each node represents a journal, the size of the nodes represents the number of publications, the connecting lines between the nodes indicate the cooperation, and the colors are applied to distinguish different cooperation clusters.  (B)  Collaborative network of co-cited journals in VOSviewer. Each no",
+    "Analysis of keywords.  (A)  Collaborative network of keywords in VOSviewer. Each node represents a keyword, with its size indicating frequency. Connecting lines indicate keyword co-occurrence in publications, thicker lines mean higher co-occurrence frequency. Color-coded clusters group related keywords by research theme.  (B)  Keywords cloud map. Larger font size indicates higher frequency of occu",
+    "Analysis of co-cited references.  (A)  Collaborative network of references in CiteSpace. Each node represents a reference, the size of the node represents the number of citations, the line between the nodes indicates the co-citation relationship between the two documents, and the color of the node indicates the year change.  (B)  References clustering map. The color blocks in the figure represent ",
+    "Three-field plot of pediatric MASLD related study. The labels “CR”, “AU” and “DE” represent “cited references”, “author” and “keywords”, respectively. The entries in each field are sorted by frequency, the connecting lines between different fields indicate the associations between the entries, and the width of the lines reflects the strength of the connections. Different color shades used in the b"
+  ],
+  "tables": [
+    "Top 5 countries/regions in terms of number of publications and centrality in the field of pediatric MASLD research from 2004 to 2024.",
+    "Top 5 institutions in terms of number of publications and centrality in the field of pediatric MASLD research from 2004 to 2024.",
+    "Top 5 authors and co-cited authors in the field of pediatric MASLD research from 2004 to 2024.",
+    "Top 5 journals in terms of total number of publications in the field of pediatric MASLD research from 2004 to 2024.",
+    "Top 5 co-cited journals in terms of total number of citation frequency in the field of pediatric MASLD research from 2004 to 2024.",
+    "Top 20 keywords in terms of frequency of occurrences in the field of pediatric MASLD research from 2004 to 2024.",
+    "Top 10 co-cited references in the field of pediatric MASLD research from 2004 to 2024."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779994870.2949226
+}

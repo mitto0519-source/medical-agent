@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12204189",
+  "pmid": "40584578",
+  "title": "Variable selection for causal inference, prediction, and descriptive research: a narrative review of recommendations.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dyer BP.",
+  "doi": "10.1093/ehjopen/oeaf070",
+  "figures": [
+    "A directed acyclic graph to illustrate covariate roles.",
+    "A directed acyclic graph to identify confounders of the association between electrocardiographic findings and disability. Numbered references to provide empirical evidence of some effects are included from the article by Röhrig  et al . The authors only included arcs for major associations with age and sex to avoid overcrowding. They note that the ‘minimally sufficient adjustment set would not cha"
+  ],
+  "tables": [
+    "Summary of variable selection approaches for different types of medical research"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021196.8814454
+}

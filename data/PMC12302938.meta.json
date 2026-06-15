@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12302938",
+  "pmid": "40719569",
+  "title": "Fitness, Weight Status and Executive Functions in Adolescents: A Cluster Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Grao-Cruces A, Martín-Acosta F, Vaquero-Solís M, Ruiz-Hermosa A, Camiletti-Moirón D, Sánchez-Oliva D.",
+  "doi": "10.1111/sms.70098",
+  "figures": [
+    "Description of the weight status and fitness variables latent profiles based on standardized scores. CRF, cardiorespiratory fitness; MF, muscular fitness; zBMI, standardized body mass index."
+  ],
+  "tables": [
+    "Descriptives and correlations of fitness, fatness, and executive functions.",
+    "Fit indexes, entropy, and model comparisons for models from latent profile analysis.",
+    "Differences between profiles in fitness, fatness, and executive functions."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780010865.39991
+}

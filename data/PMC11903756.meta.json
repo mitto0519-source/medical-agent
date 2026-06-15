@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11903756",
+  "pmid": "40084057",
+  "title": "LncRNA of peripheral blood mononuclear cells: HYMAI acts as a potential diagnostic and therapeutic biomarker for female major depressive disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Bu T, Yang J, Zhou J, Liu Y, Qiao K, Wang Y, Zhang J, Zhao E, Owura BK, Qiu X, Qiao Z, Yang Y.",
+  "doi": "10.3389/fpsyt.2025.1241089",
+  "figures": [
+    "(A)  Heat map of DElncRNAs associated with MDD.  (B)  Volcano plot highlighting significantly upregulated (purple) and downregulated (green) lncRNAs. DElncRNAs, differentially expressed lncRNAs; lncRNAs, long non-coding RNAs; MDD, major depressive disorder.",
+    "The differential expression levels and ROC curves of DElncRNAs in PBMCs between MDD patients (MDD, n = 20) and healthy controls (HCs, n = 20) by qRT–PCR.  (A)  The expression of HYMAI and LOC107987438 in MDD was significantly higher than that in HCs. *p &lt; 0.05,***p &lt; 0.001.  (B)  ROC curve analysis of HYMAI, LOC107987438, LOC105377781, LOC105373656 and LOC107987461. ROC, receiver operating c",
+    "(A)  The differential expression levels of lncRNA HYMAI in PBMCs between two groups (MDD, n = 70; HCs, n = 70). HYMAI expression level was increased in MDD group compared with HCs group, as determined by qRT–PCR. **** p  &lt; 0.0001.  (B)  The ROC curves of lncRNA HYMAI in PBMCs of MDD group. The area under the ROC curve was 0.867. lncRNA, long non-coding RNA; PBMCs, peripheral blood mononuclear c",
+    "Venn diagram of the predicted miRNA target genes. miRNA, microRNA.",
+    "ceRNA network of lncRNA HYMAI–miRNA–mRNA in female major depressive disorder. The network consists of 1 lncRNA node, 8 miRNA nodes, and 897 mRNA nodes. Orange color indicates lncRNA, green color presents miRNA, and purple color illustrates mRNA. lncRNA, long non-coding RNA; miRNA, microRNA; ceRNA, competitive endogenous RNA; mRNA, messenger RNA.",
+    "GO function annotations of downstream target genes. The green bar chart illustrates the biological process, the purple car chart expounds the cellular component, and the gray bar chart illustrates the molecular function. GO, Gene Ontology.",
+    "KEGG pathway analysis of the downstream target genes. KEGG, Kyoto Encyclopedia of Genes and Genomes.",
+    "The selected cluster of protein–protein interaction network identified by MCODE was visualized using Cytoscape v.3.6.1. The size of node depends on significance of  p -value. The more significant  p -value, the larger the diameter of node. The color of the edge represents the value of combined score from 0.4 to 1, light to dark."
+  ],
+  "tables": [
+    "Primers used for qRT–PCR analysis of lncRNA expression levels."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780047260.1715047
+}

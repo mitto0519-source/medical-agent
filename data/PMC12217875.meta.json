@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12217875",
+  "pmid": "40594100",
+  "title": "Stability and change in latent movement behaviour profiles during adolescence and links with future depressive symptoms.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Knowles C, Breslin G, Carlin A, Paradis K, Shannon S.",
+  "doi": "10.1038/s41598-025-04466-7",
+  "figures": [
+    "Predicted profile characteristics relating to H 1  and H 2 . Each bar represents an hypothesised movement profile and are clustered by age at measurement. Each profile is associated with less movement than its equivalent at the timepoint prior.",
+    "Hypothesised differences in depressive symptoms among those exhibiting different transition patterns proposed for H 4  &amp; H 5 .",
+    "Elbow plots illustrating model fit cross-sectional latent profile models with k + 1 solutions.",
+    "Minimally adjusted 3 × 3 non-invariant RI-LTA model, with movement behaviours expressed as the proportion of daily accelerometer wear time (%)."
+  ],
+  "tables": [
+    "Model fit indices for cross-sectional latent profiles of adolescent movement behaviour.",
+    "Model fit of invariant and non-invariant regular LTA and RI-LTA models.",
+    "Cross-tabulation indicating odds of profile transition from T1 to T2 and T2 to T3 for each latent movement profile.",
+    "Predictors of profile transitions with 95% confidence intervals.",
+    "Depressive symptoms associated with transition patterns with consistently moderate movers serving as reference."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999510.2736065
+}

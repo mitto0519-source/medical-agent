@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC12055457",
+  "pmid": "38960702",
+  "title": "Joint associations of diet and physical activity with incident type 2 diabetes and hypertension: an analysis of 144 288 UK Biobank participants.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Inan-Eroglu E, Ahmadi M, Sainsbury A, Leitzmann M, Khunti K, Yates T, Stamatakis E.",
+  "doi": "10.1093/aje/kwae180",
+  "figures": [
+    "A-D) Joint association between physical activity and dietary markers with major cardiometabolic disease incidence.  *   Cox proportional hazard model. Model is adjusted for baseline age, sex, ethnic background, education, Townsend Deprivation Index, smoking status, self-reported sleep duration (hours/night)/accelerometer measured sleep duration (hours/night), discretionary screen time (TV and non-"
+  ],
+  "tables": [
+    "Baseline characteristics of study sample by self-reported moderate to vigorous physical activity tertiles  *   ( n  = 144 288)."
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006746.8305435
+}

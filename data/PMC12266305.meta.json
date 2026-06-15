@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12266305",
+  "pmid": "40632805",
+  "title": "Sleep Quality as a Mediator of Internet Gaming Disorder and Executive Dysfunction in Adolescents: Cross-Sectional Questionnaire Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Moshel ML, Warburton W, Thomasius R, Paschke K.",
+  "doi": "10.2196/68571",
+  "figures": [
+    "Hypothesized mediational models. In the first hypothesized mediation model ( A ),  a  represents the impact of Internet gaming disorder symptoms on sleep quality, while  b  represents the effect of sleep quality on executive functioning. The direct effect of Internet gaming disorder symptoms on executive functioning is denoted as  c′ . In model ( B ), the direction between Internet gaming disorder",
+    "Bootstrap mediation effects of hypothesized models. (A) The model with internet gaming disorder symptoms as the predictor and executive dysfunction as the outcome. (B) The model with executive dysfunction as the predictor and internet gaming disorder symptoms as the outcome. Path coefficients (in boldface) represent parameter estimates, with bootstrap SEs within parentheses. All models were adjust",
+    "Exploring the indirect effect. Sleep quality categorized as 1 SD above and below the mean, mediating the relationship between IGD symptoms and executive dysfunction. IGD: internet gaming disorder."
+  ],
+  "tables": [
+    "Descriptives and correlation table."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998019.406404
+}

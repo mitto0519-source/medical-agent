@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC12287551",
+  "pmid": "40289602",
+  "title": "Physical activity and sedentariness levels in patients with post-exertional malaise resulting from post-COVID-19 syndrome.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Elkebir KE, Gilbert JA, Kugathasan TA, Cazeneuve C, Chouchou F, Mathieu ME.",
+  "doi": "10.1177/10519815251329231",
+  "figures": [],
+  "tables": [
+    "Duration of physical activity before and after COVID-19, by sex at birth.",
+    "Duration of physical activity before and after COVID-19, as a function of time elapsed since COVID-19.",
+    "Duration of physical activity before and after COVID-19, according to questions answered about post-exertion discomfort."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007529.970134
+}

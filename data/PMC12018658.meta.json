@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12018658",
+  "pmid": "40268818",
+  "title": "Association of School Social Status with COVID-19 Pandemic-Related Changes and Post-Pandemic Rebounds of Children's Physical Fitness.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Teich P, Arntz F, Wöhrl T, Bähr F, Golle K, Kliegl R.",
+  "doi": "10.1186/s40798-025-00838-5",
+  "figures": [
+    "Physical fitness by fitness component, school social status, and cohort (means and 95% CIs). The vertical line marks the critical date (first day of school in school year 2020/21). Endurance (i.e., cardiorespiratory endurance) = 6-min run, Coordination = star-run, Speed = 20-m linear sprint, PowerLOW (i.e., lower limbs muscle power) = standing long jump, PowerUP (i.e., upper limbs muscle power) = "
+  ],
+  "tables": [
+    "Sample description",
+    "Cardiorespiratory endurance (6-min run). Fixed effect estimates, standard errors (SE), and z-values of the linear mixed model for Covid pandemic effects, cohort trends, school social status and their interactions",
+    "Coordination (star-run). Fixed effect estimates, standard errors (SE), and z-values of the linear mixed model for Covid pandemic effects, cohort trends, school social status and their interactions",
+    "Speed (20 m sprint). Fixed effect estimates, standard errors (SE), and z-values of the linear mixed model for Covid pandemic effects, cohort trends, school social status and their interactions",
+    "PowerLOW (standing long jump). Fixed effect estimates, standard errors (SE), and z-values of the linear mixed model for Covid pandemic effects, cohort trends, school social status and their interactions",
+    "PowerUP (Ball-push test). Fixed effect estimates, standard errors (SE), and z-values of the linear mixed model for Covid pandemic effects, cohort trends, school social status and their interactions",
+    "Static balance (one-legged-stance with eyes closed). Fixed effect estimates, standard errors (SE), and z-values of the linear mixed model for Covid pandemic effects, cohort trends, school social status and their interactions",
+    "Fixed effect estimates, standard errors (SE), and z-values of the linear mixed model for age and gender effects, as well as age by school social status interactions",
+    "Child- and school-related variance components and correlation parameters of the linear mixed model"
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011084.4771285
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12344461",
+  "pmid": "40810071",
+  "title": "Prevalence and risk factors of metabolic associated fatty liver disease in lean patients with bipolar disorder: a retrospective cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lei W, Li J, Liu Y, Wang Y, Wu Q.",
+  "doi": "10.3389/fendo.2025.1605484",
+  "figures": [
+    "Flowchart of the study participants.",
+    "The discriminative power of influencing factors on MAFLD. TG: Triglycerides; Total Cholesterol; FBG, Fasting Blood Glucose; HDL, high-density lipoprotein; GGT, Gamma-Glutamyl Transferase.",
+    "The presents the predicted nomogram for MAFLD. HDL, high-density lipoprotein; GGT, Gamma-Glutamyl Transferase."
+  ],
+  "tables": [
+    "Features and attributes of obese/overweight and lean patients.",
+    "Comparison of clinical features between MAFLD and non-MAFLD groups in lean individuals.",
+    "Factors associated with MAFLD in lean patients.",
+    "Comparison of the diagnostic efficacy of different biomarkers for metabolic associated fatty liver disease."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995305.7120516
+}

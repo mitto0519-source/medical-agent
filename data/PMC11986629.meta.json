@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11986629",
+  "pmid": "40139048",
+  "title": "Amygdala subregion volumes and apportionment in preadolescents - Associations with age, sex, and body mass index.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Overholtzer LN, Torgerson C, Morrel J, Ahmadi H, Tyszka JM, Herting MM.",
+  "doi": "10.1016/j.dcn.2025.101554",
+  "figures": [
+    "Probabilistic amygdala nuclei segmentation using the  CIT168 Atlas  in a representative subject. Structural T1-weighted image and probabilistic estimates of 9 subregions (threshold set at 0.5 for visualization) are shown in the coronal plane.",
+    "Age effects on amygdala subregions. Standardized beta coefficients with 95 % confidence intervals (CIs) for age effects on subregion volumes (left panel) and RVFs (right panel) by hemisphere. CIs intersecting the dashed line indicate null effects. Subregion beta coefficients that remained significant after FDR correction are heat mapped onto the amygdala in the bottom panel of the figure.",
+    "Sex effects on amygdala subregions. Standardized beta coefficients with 95 % CIs for female (versus male) sex effects on subregion volumes (left panel) and RVFs (right panel) by hemisphere. CIs intersecting the dashed line indicate null effects. Subregion beta coefficients that remained significant after FDR correction are visualized on the amygdala in the bottom panel of the figure.",
+    "BMIz effects on amygdala subregions. Standardized beta coefficients with 95 % CIs for BMIz on subregion volumes (left panel) and RVFs (right panel) by hemisphere. CIs intersecting the dashed line indicate null effects. Subregion beta coefficients that remained significant after FDR correction are visualized on the amygdala in the bottom panel of the figure."
+  ],
+  "tables": [
+    "Sample demographics."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046721.9788933
+}

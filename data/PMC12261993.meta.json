@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12261993",
+  "pmid": "40666146",
+  "title": "Aerobic exercise strategies for anxiety and depression among children and adolescents: a systematic review and meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Song H, Ge S, Wang Y, Ran L, Zhang H.",
+  "doi": "10.3389/fpubh.2025.1555029",
+  "figures": [
+    "Flowchart based on PRISMA standards.",
+    "Evaluation of bias risk based on Cochrane collaboration guidelines.",
+    "Funnel plot of anxiety.",
+    "Funnel plot of depression.",
+    "Anxiety results for subgroup analysis based on exercise intensity.",
+    "Anxiety results for subgroup analysis based on exercise intervention period.",
+    "Anxiety results for subgroup analysis based on exercise frequency.",
+    "Anxiety results for subgroup analysis based on exercise session duration.",
+    "Depression results of subgroup analysis based on exercise intensity.",
+    "Depression results of subgroup analysis based on exercise intervention period.",
+    "Depression results of subgroup analysis based on exercise frequency.",
+    "Depression results of subgroup analysis based on exercise session duration.",
+    "Sensitivity analysis of the relationship between exercise and depression."
+  ],
+  "tables": [
+    "The character of included studies."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999231.8100812
+}

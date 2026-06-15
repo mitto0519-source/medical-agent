@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11982698",
+  "pmid": "40226760",
+  "title": "Association between sleep timing shifts and dietary quality in Korean high school girls during COVID-19: a cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim MH, Jung Y, Kim E.",
+  "doi": "10.4162/nrp.2025.19.2.292",
+  "figures": [
+    "School grade adjusted mean scores of NQ-A and constituent factors of the high school girls according to the sleep timing.  The height of the bars represents means adjusted for grade using analysis of covariance, and the error bars indicate the SEs.  Normal sleeper: Participants who maintained a consistent sleep schedule, with the midpoint between bedtime and wake-up time occurring before 5:30 a.m."
+  ],
+  "tables": [
+    "General characteristics and lifestyles of the high school girls",
+    "Participants’ dietary behaviors related to dietary balance and their association with sleep pattern classification",
+    "Participants’ dietary behaviors related to dietary moderation and their association with sleep pattern classification",
+    "Participants’ dietary behaviors related to dietary diversity and their association with sleep pattern classification",
+    "Participants’ dietary behaviors related to dietary practice and environment and their association with sleep pattern classification",
+    "NQ for Korean adolescents score and sub-domain score of the high school girls according to the sleep pattern classification"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001601.9231257
+}

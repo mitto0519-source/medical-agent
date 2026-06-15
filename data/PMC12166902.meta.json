@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12166902",
+  "pmid": "40519483",
+  "title": "Screening of Substance Abuse Among the General Population in Saudi Arabia: A Cross-Sectional Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "ElZyat A, Sultan S, Altakroni A, Khan G, Alharbi L, Magdy A.",
+  "doi": "10.7759/cureus.84164",
+  "figures": [
+    "Screening for any substance abuse by DAST-10 among the studied participants (n=360).  Categories are expressed as n(%); DAST-10: Drug Abuse Screening Test-10"
+  ],
+  "tables": [
+    "General characteristics of the studied participants (n=360).",
+    "Risk factors for substance abuse among the studied participants (n=360).",
+    "The association between general characteristics and DAST-10 score among the studied population (n= 360).  *P-value is statistically significant, Mann-Whitney test; ** P-value is not statistically significant, Kruskal-Wallis test; ***P-value is not statistically significant, Mann-Whitney test.  DAST-10: Drug Abuse Screening Test-10",
+    "The association between risk factors for substance abuse and DAST-10 score among the studied population (n= 360).  *P-value is statistically significant, Kruskal-Wallis test; ** P-value is statistically significant, Mann-Whitney test; ***P-value is not statistically significant, Kruskal-Wallis test.  DAST-10: Drug Abuse Screening Test-10",
+    "Multivariate regression analysis to predict substance abuse among the studied participants (n=360).  *P-value is statistically significant; B represents unstandardized coefficients. β represents standardized coefficients.  SA: substance abuse."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059653.395503
+}

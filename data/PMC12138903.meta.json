@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12138903",
+  "pmid": "40475967",
+  "title": "Mapping arterial stiffness metabolic biomarkers: a bibliometric analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen B, Wirawan KF, Luo L, Zhang J, Li T.",
+  "doi": "10.3389/fmed.2025.1557731",
+  "figures": [
+    "Workflow of the study.",
+    "(A)  The cumulative number of publications.  (B)  Publication counts based on corresponding author’s country. SCP, single country publications; MCP, multiple country publications.  (C)  The top 10 countries with the highest average citations.  (D)  Three-field plot of the keywords analysis on affiliations and keywords of publication (left field: keywords; middle field: affiliations; right field: k",
+    "Keywords co-occurrence analysis.  (A)  Keywords co-occurrence network.  (B)  Trending topics of keywords.",
+    "Abstract words frequency analysis.  (A)  Top 20 arterial stiffness-related diseases.  (B)  Top 20 arterial stiffness-related metabolites."
+  ],
+  "tables": [
+    "Top 10 authors with the most publications about metabolome and arterial stiffness.",
+    "Top 10 journals with most articles about metabolome and arterial stiffness.",
+    "The top 10 most cited papers.",
+    "The top 10 most cited references.",
+    "Hallmarks of arterial stiffness-related metabolites."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002545.0171785
+}

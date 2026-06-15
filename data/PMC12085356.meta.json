@@ -1,0 +1,28 @@
+{
+  "pmcid": "PMC12085356",
+  "pmid": "40261564",
+  "title": "Prevalence, Treatment Patterns, and Characteristics of US Adults with Confirmed or at Risk for Growth Hormone Deficiency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hoffman AR, Raveendran S, Manjelievskaia J, Komirenko AS, Winer I, Cheng J, Bonafede M, Winer-Jones JP, Miner P, Smith AR.",
+  "doi": "10.1007/s12325-025-03188-6",
+  "figures": [
+    "Study design.  GH  growth hormone",
+    "Selection of ( A ) individuals with confirmed or at risk for adult growth hormone deficiency (GHD) and ( B ) controls without adult GHD.  EHR  electronic health records;  ICD-10  International Classification of Disease, Tenth Edition.  a Code sets and medication lists used to assess these criteria are listed in Table  1  and Supplementary Table 2.  b 102 individuals who had a laboratory result tha",
+    "Baseline prevalence of endocrine-related conditions.  GHD  growth hormone deficiency",
+    "Baseline medications a .  GHD  growth hormone deficiency.  a Among patients with confirmed adult GHD or at-risk of adult GHD who did or did not receive growth hormone treatment at some point during the baseline or follow-up period",
+    "Estimated US prevalence of adult growth hormone disorder (GHD) across age groups"
+  ],
+  "tables": [
+    "",
+    "Diagnosis codes used in patient selection",
+    "Selection criteria",
+    "Demographic and physical characteristics",
+    "Baseline clinical characteristics",
+    "Somatotropin and insulin-like growth factor-1 (IGF-1) testing results",
+    "Recombinant human growth hormone treatment patterns among those who initiated treatment during the follow-up period",
+    "Estimated United States prevalence of adult growth hormone deficiency (GHD)"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012646.3316
+}

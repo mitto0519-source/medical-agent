@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12134120",
+  "pmid": "40461453",
+  "title": "Longitudinal stability of mood-related resting-state networks in youth with symptomatic bipolar-I/II disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hafeman DM, Feldman J, Mak J, Merranko J, Goldstein TR, Gratton C, Phillips ML, Birmaher B.",
+  "doi": "10.1038/s41398-025-03404-5",
+  "figures": [
+    "Relationship between manic symptoms and NOI stability.  Each dot represents a within-subject scan pair, plotted by mean YMRS score and NOI stability, with color indicating the corresponding subject. As indicated by the trend line, there is a negative relationship between YMRS and NOI stability. NOI ( a ) and whole brain ( b ) similarity across between- and within-subject scans. Each square represe",
+    "NOI Within-Subject Stability in BD vs. HC Youth.  Dots indicate the similarity between each within-subject scan pair; the horizontal line demarcates the median subject-level similarity across scan pairs. HC, shown in blue, have overall higher average NOI stability than BD youth.",
+    "Relationship between scan-pair mean YMRS and NOI stability, grouped by subject."
+  ],
+  "tables": [
+    "Demographic and Clinical Characteristics of the Sample."
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779996983.5574677
+}

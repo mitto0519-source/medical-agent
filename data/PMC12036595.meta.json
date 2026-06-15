@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12036595",
+  "pmid": "40297150",
+  "title": "Intrinsic Links Between Non-Suicidal Self-Injury and Sleep Quality and Cytokines: A Network Analysis Based on Chinese Adolescents with Depressive Disorders.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang Y, Suo X, Wang X, Xu J, Xu W, Pan L, Gao J.",
+  "doi": "10.2147/prbm.s513241",
+  "figures": [
+    "Network structure and expected impact of NSSI-sleep quality-cytokines network in adolescents with depressive disorders (Blue edges indicate positive correlations and red edges indicate negative correlations).",
+    "Network structure of NSSI-sleep quality-cytokines network showing bridge symptoms in adolescents with depressive disorders (Blue edges indicate positive correlations and red edges indicate negative correlations).",
+    "The stability of expected influence and bridge expected influence using case-dropping bootstrap of NSSI-sleep quality-cytokines network.",
+    "Flow network of perseverative errors (Blue edges indicate positive correlations and red edges indicate negative correlations)."
+  ],
+  "tables": [
+    "Descriptive Statistics for the 337 Adolescents"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001400.2995508
+}

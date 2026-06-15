@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12073678",
+  "pmid": "40362791",
+  "title": "Efficiency of Different Supplements in Alleviating Symptoms of ADHD with or Without the Use of Stimulants: A Systematic Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Al Shahab S, Al Balushi R, Qambar A, Abdulla R, Qader M, Abdulla S, Jahrami H.",
+  "doi": "10.3390/nu17091482",
+  "figures": [
+    "PRISMA flow diagram.",
+    "The results of the ROBINS-I bias assessment for cross-sectional and open-label studies [ 12 , 19 , 20 , 22 ] present risk-of-bias judgments across seven domains (color-coded as green [low], yellow [moderate], or red [serious risk]) and their overall classifications.",
+    "Risk of bias assessment of controlled studies [ 10 , 11 , 13 , 14 , 15 , 16 , 17 , 18 , 21 , 23 ] using Cochrane Collaboration’s tool."
+  ],
+  "tables": [
+    "Characteristics of the included studies."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058898.6703272
+}

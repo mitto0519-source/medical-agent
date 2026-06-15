@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12112824",
+  "pmid": "40423066",
+  "title": "Methodologies for the Emulation of Biomarker-Guided Trials Using Observational Data: A Systematic Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Baldwin FD, Khalaf RKS, Kolamunnage-Dona R, Jorgensen AL.",
+  "doi": "10.3390/jpm15050195",
+  "figures": [
+    "PRISMA flow chart.",
+    "Directed acyclic graph (DAG) depicting the hypothesised causal relationships between statin use (exposure) and cardiovascular disease (outcome), accounting for time-varying statin use (at baseline, T0 and follow-up, T1) alongside time-varying variables LDL cholesterol and smoking status, and age and sex as baseline confounders."
+  ],
+  "tables": [
+    "Advantages and disadvantages of the methods used to control for confounding within application and methodological studies.",
+    ""
+  ],
+  "query": "G-methods time-varying confounding",
+  "fetched_at": 1780025031.594545
+}

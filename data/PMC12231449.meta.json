@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12231449",
+  "pmid": "40293819",
+  "title": "Imbalanced goal-directed and habitual control in individuals with internet gaming disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lei W, Huang Y, Peng Y, Chen G, Gong K, Liu K, Wu D, Qin C, Cheng X, Tian M, Zhang L, Zhou Y, Yu R, Chen J.",
+  "doi": "10.1556/2006.2025.00037",
+  "figures": [
+    "(A)  The two-step task. Each trial began with a fixation presented randomly for 1–3 s. Then, in the first-stage decision, two cars were presented for 2 s, during which subjects determined which car to take using one of two buttons on a response box (maximum RT = 2 s; the selected car was highlighted with a green box once a response was made and the stimuli remained on the screen for the rest of th",
+    "(A)  RPE MB  maps in individuals with IGD and HCs.  (B)  RPE MF  maps in individuals with IGD and HCs. The green-coloured regions indicate the ROIs",
+    "(A)  Individuals with IGD showed increased RPE MF  signals in the right inferior frontal gyrus (IFG), compared to HCs. And  (B)  the RPE MF  values extracted from the right IFG were positively correlated with Internet Gaming Disorder Scale (IGDS) scores",
+    ""
+  ],
+  "tables": [
+    "Demographic information, scores in scale measures, and performance in the two-step task for both IGD and HC groups",
+    "Regression coefficients of the mixed-effects logistic regression",
+    "Fitted model parameters and group differences",
+    "Correlations between model parameters and scale measurements",
+    "RPE MF  and RPE MB  in IGD and HC groups, and group differences",
+    "Correlations between RPE MF  signals in the right IFG and clinical measures"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779997969.0900989
+}

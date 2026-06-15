@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11889882",
+  "pmid": "40057681",
+  "title": "Association of FHIT gene variant and salty food preference with the incidence of metabolic syndrome.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim J, Lee S, Acharya SR, Shin D.",
+  "doi": "10.1186/s12263-025-00762-z",
+  "figures": [
+    "Flow diagram of the study design, including the study participants inclusion and elimination criteria",
+    "Manhattan plots for the genome-wide association study (GWAS) of salty food preference",
+    "Regional plot for single nucleotide polymorphisms (SNPs) on  FHIT  gene that are significantly associated with preference for salty foods",
+    "Identification of the gene expression of the  FHIT  gene and SNPs in eQTL",
+    "Linkage disequilibrium (LD) block structure of SNPs in the  FHIT  gene"
+  ],
+  "tables": [
+    "General characteristics of the study participants based on the presence of metabolic syndrome",
+    "General characteristics of the study participants based on the  FHIT  rs2006807 genotypes",
+    "Incidence of metabolic syndrome based on preference for salty foods in Korean adults",
+    "Incidence of metabolic syndrome based on  FHIT  rs2006807 genotypes in Korean adults",
+    "Incidence of metabolic syndrome based on salty food preference and  FHIT  genotypes in Korean adults"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037225.9318619
+}

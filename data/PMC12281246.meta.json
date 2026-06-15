@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12281246",
+  "pmid": "40669384",
+  "title": "Analysis of the relationship between antidepressants and seizures based on the food and drug administration's adverse event reporting system database.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zou D, Hu Q, Yu L, Wu B.",
+  "doi": "10.1016/j.clinsp.2025.100727",
+  "figures": [
+    "Flowchart of extraction and analysis of seizure-associated antidepressants from the FAERS database.",
+    "ROR and IC for seizures with antidepressants."
+  ],
+  "tables": [
+    "Basic information of the antidepressant-related seizure events."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056416.656772
+}

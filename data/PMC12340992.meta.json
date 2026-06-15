@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12340992",
+  "pmid": "40762233",
+  "title": "The Impact of Clustered Care on Itch Severity and Sleep Quality in Patients with Atopic Dermatitis via an Online Platform.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang R, Ren C, Li Y, Guo B, Zhang X, Wang L, Luo L, Zhang Y.",
+  "doi": "10.2340/actadv.v105.43525",
+  "figures": [
+    "Comparison of pruritus severity scores between the study and control groups (* p  &lt; 0.001).",
+    "Comparison of atopic dermatitis scores between the study and control groups (* p  &lt; 0.001).",
+    "Comparison of sleep quality between the study and control groups (* p  &lt; 0.001).",
+    "Comparison of quality of life between the study and control groups (* p  &lt; 0.001)."
+  ],
+  "tables": [
+    "Comparison of general data between the 2 groups",
+    "Comparison of pruritus severity, atopic dermatitis scores, sleep quality, and quality of life between the 2 groups"
+  ],
+  "query": "atopic dermatitis depression",
+  "fetched_at": 1780014730.8516219
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12326924",
+  "pmid": "40605234",
+  "title": "Sex- and age-specific determinants of diabetes: Insights from BKMR and cox modelling of metabolic and lifestyle risk factors in a Korean cohort.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee HA.",
+  "doi": "10.1111/dom.16577",
+  "figures": [
+    "Characteristics of sex‐ and age‐specific sub‐cohorts.",
+    "Joint effects of metabolic and lifestyle risk factors on incident diabetes. Graphs depict the difference in effect estimate from the median (reference) between risk factors at 5% intervals from the 25th to the 75th percentile. The collective association is defined as the change in estimate for incident diabetes when all of the multiple risk factors are fixed at their 75th percentile compared to wh",
+    "Relative contribution of multiple exposures to incident diabetes. Panels (A–C) represent the Y45, Y55 and Y65 cohorts in men (M), respectively, and panels (D–F) represent the corresponding cohorts in women (W). The values were obtained from hierarchical Bayesian kernel machine regression, adjusting for covariates including education level, quartiles of unweighted genetic risk score, parental diabe"
+  ],
+  "tables": [
+    "Characteristics of sex‐ and age‐specific sub‐cohorts.",
+    "Association of metabolic and lifestyle risk factors with the incident diabetes."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041215.6706357
+}

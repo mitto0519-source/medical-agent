@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12219059",
+  "pmid": "40595695",
+  "title": "Host-microbiome relationship in depression: can human induced pluripotent stem cells play a role in unravelling mechanisms?",
+  "year": 2025,
+  "journal": "",
+  "authors": "Rosell-Cardona C, Cryan JF, Clarke G, Kittel-Schneider S.",
+  "doi": "10.1038/s41522-025-00749-z",
+  "figures": [
+    "Microbiota gut-brain axis in depression.  Alterations in gut microbiota composition can impact the central nervous system (CNS) through hypothalamic-pituitary-adrenal (HPA) axis and endocrine, immune, neural (through the vagus nerve) and metabolic pathways of the gut-brain axis, contributing to the development and progression of depression. Images used to create the figures were taken from BioRend",
+    "Human induced stem cell technology.  Steps to develop hiPSC-derived cells including the collection of somatic cells, reprogramming into pluripotent stem cells using non-integrated viral factors, and further differentiation to any specific cell types. Images used to create the figures were taken from BioRender and SciDraw 10.5281/zenodo.3925900.",
+    "Advantages and disadvantages of using human induced pluripotent stem cells (hiPSCs), key strategies to overcome these challenges, and their successful applications in humans to date.  Images used to create the figures were taken from BioRender and SciDraw 10.5281/zenodo.3925900.",
+    "hiPSCs: bridging the gap in translational microbiota-gut-brain axis (MGBA) research for depression.  hiPSC-derived cells enable disease modelling, identification of microbial metabolite targets, and integration of multi-omics and emerging technologies like organ-on-a-chip for therapeutic insights. Images used to create the figures were taken from BioRender and SciDraw 10.5281/zenodo.3925900."
+  ],
+  "tables": [
+    "Alteration of the microbiota-gut-brain axis in depression",
+    "Faecal microbiota transplantation from patients with depression to microbiota-depleted rodents",
+    "Gut microbiota interventions in preclinical studies",
+    "Clinical studies on gut microbiota interventions in depression",
+    "Targeting microbial metabolites as an intervention of depressive-like behaviours"
+  ],
+  "query": "tryptophan kynurenine pathway depression",
+  "fetched_at": 1780045868.8606226
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12315665",
+  "pmid": "40685415",
+  "title": "Characterizing intraindividual variability in bipolar disorder: links to cognition, white matter microstructure, and clinical variables.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Caruana GF, Carruthers SP, Karantonis JA, Furlong LS, Tan EJ, Neill E, Rossell SL, Van Rheenen TE.",
+  "doi": "10.1017/s0033291725100731",
+  "figures": [
+    "Demographic, clinical, and cognitive characteristics of the full sample",
+    "Spearman’s rho correlations between IIV indices and the different cognitive domains for the (a) bipolar disorder (BD) and (b) healthy control (HC) groups.  \n Note:  CoV, ‘coefficient of variation’; iSD, ‘individual standard deviation’; *  p  ≤ 0.05, **  p  ≤ 0.01, ***  p  ≤ 0.001 (FDR-corrected).",
+    "Pearson’s  r  correlations of global IIV indices with diffusion-weighted imaging measures and the different cognitive domain scores in the  BD neuroimaging subsample.    Note:  AD, ‘axial diffusivity’; CoV, ‘coefficient of variation’; FA, ‘fractional anisotropy’; iSD, ‘individual standard deviation’; MD, ‘mean diffusivity’; RD, ‘radial diffusivity’; * p  ≤ 0.05, ** p  ≤ 0.01, *** p  ≤ 0.001 (FDR-c"
+  ],
+  "tables": [
+    "Demographic, clinical, and cognitive characteristics of the full sample"
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779997612.9802418
+}

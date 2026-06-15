@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12291864",
+  "pmid": "40722922",
+  "title": "Glucosinolate Metabolites and Brain Health: An Updated Review on Their Potential Benefits in Neurodegenerative, Neurodevelopmental, and Psychiatric Disorders.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Muscarà C, Gugliandolo A, Mazzon E, Calì G.",
+  "doi": "10.3390/antiox14070818",
+  "figures": [
+    "Schematic representation of biosynthesis of glucosinolates from 3 different amino acid precursors. Depending on the amino acid precursor, glucosinolate can be divided in three different chemical classes: aliphatic, aromatic, and indole glucosinolates. The biosynthesis process is divided into three distinct steps, side chain elongation (for methionine and phenylalanine-derived glucosinolates), core",
+    "Potential benefits of glucosinolate derivatives in neurodegenerative diseases, neurodevelopmental disorders, and psychiatric conditions: insights from preclinical and clinical studies. The figure was created using the vector image bank of Servier Medical Art by Servier ( http://smart.servier.com/  (accessed on 1 April 2025)). Servier Medical Art is licensed under CC BY 4.0.",
+    "Overview of ITC effects on the Nrf2 pathway and their anti-inflammatory actions. Both antioxidant and anti-inflammatory properties mediate their neuroprotective actions. However, in neurodegenerative diseases, the dominant mechanism of ITCs involves antioxidant actions, while in neurological disorders the immunoregulatory effect is prevalent."
+  ],
+  "tables": [
+    "Preclinical studies: results on the effects of glucosinolate or isothiocyanate treatments in neuroinflammation and oxidative stress models.",
+    "Preclinical studies: results on the effects of glucosinolates or isothiocyanates treatments in AD models.",
+    "Preclinical studies: results on the effects of glucosinolates or isothiocyanates treatments in PD models.",
+    "Preclinical studies: results on the effects of glucosinolates or isothiocyanates treatments in MS models.",
+    "Preclinical studies: results on the effects of glucosinolates or isothiocyanates treatments in ASD models.",
+    "Clinical studies: results on the effects of glucosinolates or isothiocyanates treatments on behavior and health in individuals with ASD.",
+    "Preclinical studies: results on the effects of glucosinolates or isothiocyanates treatments on schizophrenia models.",
+    "Clinical studies: results on the effects of glucosinolates or isothiocyanates treatments on behavior and health in individuals with schizophrenia.",
+    "Preclinical studies: results on the effects of glucosinolates or isothiocyanates treatments on depression/anxiety models.",
+    "Preclinical studies: results on the effects of glucosinolates or isothiocyanates treatments on epilepsy models.",
+    ""
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057304.707466
+}

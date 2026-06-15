@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11871768",
+  "pmid": "40025507",
+  "title": "Diazepam exposure associated with an increased risk of acute kidney injury in children: an observational cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang M, Huang L, Zhu Y, Zeng L, Cheng G, Li H, Zhang L.",
+  "doi": "10.1186/s12887-025-05494-y",
+  "figures": [
+    "Flowchart of patient selection"
+  ],
+  "tables": [
+    "Characteristics of diazepam group vs. control group in hospitalized children",
+    "Diazepam exposure and risk of AKI in hospitalized children",
+    "Association between diazepam exposure and risk of AKI in subgroups of Hospitalized Children",
+    "Risk factors for diazepam-associated AKI in hospitalized children"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059967.598129
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12044992",
+  "pmid": "40312305",
+  "title": "Modified triglyceride-glucose indices as novel predictors of metabolic dysfunction-associated fatty liver disease in US adolescents: a nationally representative study from NHANES 2017-2020.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zou Y, Dai Y, Li Z, Lin B, Chen H, Zhuang Z, Li W, Yang Q, Dai D.",
+  "doi": "10.1186/s12876-025-03915-x",
+  "figures": [
+    "Flow diagram of participants. NHANES, National Health and Nutrition Examination Survey",
+    "RCS to analyze the nonlinear relationship between TyG index, modified TyG indices and CAP.  A  TyG index;  B  TyG-BMI;  C  TyG-WC;  D  TyG-WHR;  E  TyG-WHtR; TyG index, triglyceride to glucose index; BMI, body mass index; WC, waist circumference; WHR, waist to hip circumference ratio; WHtR, waist to height ratio; 95%Cl, 95% confidence interval",
+    "Receiver operating characteristic (ROC) curves of each parameter for predicting MAFLD. TyG, Triglyceride to glucose index; BMI, Body Mass Index; WC, waist circumference; WHR, waist-to-hip ratio; WHtR, waist-to-height ratio"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population",
+    "Associations of TyG-index and modified TyG-index with CAP among adolescents",
+    "Diagnostic performance of each parameter for predicting MAFLD",
+    "Interaction of TyG index, modified TyG index and CAP in adolescents with or without obesity"
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779994901.111095
+}

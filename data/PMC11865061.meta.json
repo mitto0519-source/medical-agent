@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11865061",
+  "pmid": "40018086",
+  "title": "A systematic review of structural neuroimaging markers of psychotherapeutic and pharmacological treatment for obsessive-compulsive disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Moreau AL, Hansen I, Bogdan R.",
+  "doi": "10.3389/fpsyt.2024.1432253",
+  "figures": [
+    "PRISMA flow diagram of systematic search process.",
+    "Results for ROIs with two or more significant findings.",
+    "Results for ROIs with two or more significant findings, grouped by whether they were a treatment response predictor or change after treatment ( \n Figures 2 \n - \n 5 \n  in color).",
+    "Results for ROIs with two or more significant findings, grouped by age.",
+    "Results for ROIs with two or more significant findings, grouped by structural phenotype."
+  ],
+  "tables": [
+    "Study characteristics.",
+    "Brain regions with significant findings in at least two studies.",
+    "Study results."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056422.448866
+}

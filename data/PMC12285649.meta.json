@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12285649",
+  "pmid": "40704130",
+  "title": "Alcohol dependence trajectories and smoking cessation among Korean men who smoke: A secondary data analysis from the Korean longitudinal study of aging dataset.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Han M, Kang H, Chun HR, Cho SI.",
+  "doi": "10.18332/tid/205795",
+  "figures": [
+    "Selection of study participants",
+    "Alcohol dependence trajectories identified by latent class growth analysis among Korean men aged ≥45 years, KLoSA (N=2356)",
+    "Kaplan–Meier curves of time to smoking cessation by alcohol dependence trajectory class, for Korean men aged ≥45 years who currently smoked at baseline, KLoSA (N=1122)"
+  ],
+  "tables": [
+    "Baseline characteristics of Korean men aged ≥45 years included in the multinomial regression analysis in the KLoSA (N=1959)",
+    "Model fit statistics for latent class analysis of alcohol dependence trajectories among Korean men aged ≥45 years, KLoSA (N=2356)",
+    "Comparison of variables by alcohol dependence trajectory class among Korean men aged ≥45 years, using chi-squared tests, KLoSA (N=1959)",
+    "Multinomial logistic regression predicting alcohol dependence trajectory class membership among Korean men aged ≥45 years, KLoSA (N=1959)",
+    "Smoking cessation rates by alcohol dependence trajectory class among Korean men aged ≥45 years who currently smoked at baseline, KLoSA (N=1122)",
+    "Cox proportional hazards model predicting time to smoking cessation by alcohol dependence trajectory class among Korean men aged ≥45 years who currently smoked at baseline, KLoSA (N=1122)"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039560.9547868
+}

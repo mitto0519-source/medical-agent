@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12339371",
+  "pmid": "40425853",
+  "title": "Efficacy and mechanisms of repeated closed-loop auditory exposure during slow-wave sleep for internet gaming disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang X, Song Y, Liu W, Huang Y, Jia T, Liu J, Lu L, Sun Y, Shi J.",
+  "doi": "10.1038/s41380-025-02995-1",
+  "figures": [
+    "CONSORT flow diagram and experimental design.   A  CONSORT flow diagram.  B  Experimental design.  a . Timeline of sleep groups: Participants were split into two groups (SIG and SCG) and spent two consecutive nights in the sleep laboratory. SIG participants were exposed to approximately 300 game-related sounds per night, while SCG participants heard around 300 non-game-related sounds. Online game ",
+    "Group differences in cravings and playtime at pre- and post-intervention, and follow-up.   A  VAS score changes in SIG and SCG at baseline, post-intervention, and at 1, 2, 3 weeks, and 1 month follow-up.  B  QGU-B score changes in SIG and SCG at baseline, post-intervention, and at 1, 2, 3 weeks, and 1 month follow-up.  C  P300 mean amplitude changes in SIG and SCG at baseline, post-intervention, a",
+    "Time-frequency difference and its correlation with cravings.   A  Top panel: TFR of responses to game-related cues versus non-game cues over two nights. Bottom panel: topographical plots showing game-related cue-elicited low-frequency power, early spindle power, and late spindle power.  B  Mean (±SEM) low-frequency power for both SIG and SCG across all subjects.  C  Mean (±SEM) early spindle power",
+    "Fitting curve of power in three frequency clusters across intervention blocks and its correlation with therapeutic effects.   A  A quadratic trajectory of low-frequency power across 20 intervention blocks in the SIG.  B  A quadratic trend for early spindle power across 20 intervention blocks in the SIG.  C  A significant linear trend for late spindle power across 20 intervention blocks in the SIG."
+  ],
+  "tables": [
+    "Clinical and sleep characteristics in the different groups."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998197.3089643
+}

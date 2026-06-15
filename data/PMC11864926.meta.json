@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11864926",
+  "pmid": "40017551",
+  "title": "The effect of COVID-19 on completed suicide rate in Iran: an Interrupted Time Series study (ITS).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nouhi Siahroudi A, Hashemi Nazari SS, Namdari M, Panahi MH, Mahdavi SA, Khademi A.",
+  "doi": "10.3389/fpubh.2025.1387213",
+  "figures": [
+    "Sample data set for the study to be called in R-Studio software for discontinuous time series analysis",
+    "ITS plot of standardized incidence of suicide deaths in IRAN from March 2009 to 20,223 compared to the counterfactual level (circles = observed rates; red line = modeled rates fitted to the data; blue line = counterfactual level. Gray area = Announcement of mental health orientation following the COVID-19 pandemic by the WHO).",
+    "Seasonally adjusted ITS plot of standardized incidence of suicide deaths in IRAN from March 2009 to 2023. Circles = observed rates; red line = modeled rates fitted to the data (step change only); blue line = modeled rates fitted to the data (multiplicative interaction). Gray area = Announcement of mental health orientation following the COVID-19 pandemic by the WHO."
+  ],
+  "tables": [
+    "Sample data set for the study to be called in R-Studio software for discontinuous time series analysis",
+    "Demographic data of suicide deceased in Iran from April 20, 2009 to March 20, 2023.",
+    "Provincial divisions based on the zoning of the ministry of interior.",
+    "Comparison of implemented models to choose the final model of Interrupted Time Series."
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032728.0365596
+}

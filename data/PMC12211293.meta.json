@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12211293",
+  "pmid": "40598492",
+  "title": "Barriers and facilitators to patient education from nursing perspectives in West bank hospitals: a Cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hayek M, Ghoul I, Abdullah A, Said N, Alkaissi A, Alshawish E, Hirzallah FM, Asia A, Jkhlab M, Daas N, Salah B, Abutair J, Abd-Alkader N, Marzook D.",
+  "doi": "10.1186/s12912-025-03434-w",
+  "figures": [
+    "Barriers to patient education – Mean, standard deviation, and priority",
+    "Facilitators to patient education – mean, standard deviation, and priority",
+    "Normal Q-Q plot of barriers",
+    "Normal Q-Q plot of facilitators"
+  ],
+  "tables": [
+    "Sociodemographic data",
+    "Barriers to patient education",
+    "Facilitators to patient education",
+    "Sociodemographic data – barriers to patient education correlation",
+    "Sociodemographic data – facilitators to patient education correlation",
+    "Ordinal logistic regression predicting perceived barriers",
+    "Significant predictors of patient education facilitators (Multinomial logistic Regression)"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035627.786439
+}

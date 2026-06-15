@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12313989",
+  "pmid": "40745091",
+  "title": "Functional connectivity-related changes underlying mindfulness meditation for internet gaming disorder: a randomized clinical trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xu X, Ni H, Wang H, Wang T, Liu C, Song X, Dong GH.",
+  "doi": "10.1038/s44184-025-00154-6",
+  "figures": [
+    "Schematic diagram of the entire research process.  IGD internet gaming disorder, HCs health controls, MM Mindfulness meditation, PMR progressive muscle relaxation, ReHo Regional homogeneity, DC degree centrality, FC functional connectivity.",
+    "Results of functional connectivity comparison between Internet gaming disorder and healthy controls and neural network classification.   A  shows the common significant regions at the FDR corrected  p  = 0.05 level in the independent sample t-test of regional homogeneity and degree centrality between Internet gaming disorder and healthy control group and is also the regions of interest for subsequ",
+    "Changes of functional connectivity before and after MM intervention and comparison of functional connectivity results with HCs after intervention and neural network classification result.   A  shows the comparison of functional connectivity after mindfulness meditation intervention and HCs.  B − D  shows neural network classification result.  B  shows the confusion matrix diagram of the test set r",
+    "Mindfulness meditation group behavioral data and functional connectivity comparison results before and after the intervention.   A – D  are behavioral data results;  E – G  are functional connectivity results. * p  &lt; 0.05, ** p  &lt; 0.01. All  p  values provided in the results section are FDR corrected. Pre Before the mindfulness meditation intervention, Post after the mindfulness meditation i"
+  ],
+  "tables": [
+    "The demographic information for participant"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779997995.5603356
+}

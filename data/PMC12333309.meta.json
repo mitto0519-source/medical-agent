@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12333309",
+  "pmid": "40775314",
+  "title": "Risk factors for allergic rhinitis in preschool children: a meta-analysis and systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Si N, Chang W, Cheng F, Wang Y, Suo L, Zhao C.",
+  "doi": "10.1186/s12887-025-05906-z",
+  "figures": [
+    "Literature search flow chart",
+    "The forest plot summarized that parental allergic rhinitis is a risk factor for allergic rhinitis in preschool children, OR: odds ratio",
+    "The forest plot summarized that parental eczema is a risk factor for allergic rhinitis in preschool children, OR: odds ratio",
+    "The forest plot summarized that parental asthma is a risk factor for allergic rhinitis in preschool children, OR: odds ratio",
+    "The forest plot summarized that pet is a risk factor for allergic rhinitis in preschool children, OR: odds ratio",
+    "The forest plot summarized that male is a risk factor for allergic rhinitis in preschool children, OR: odds ratio",
+    "The forest plot summarized that caesarean birth is a risk factor for allergic rhinitis in preschool children, OR: odds ratio",
+    "The forest plot summarized that dampness is a risk factor for allergic rhinitis in preschool children, OR: odds ratio"
+  ],
+  "tables": [
+    "Basic characteristics of the articles; it shows the basic characteristics of the articles we eventually included",
+    "The NOS scores of the included articles are presented, NOS scores &gt; 7 indicate high quality"
+  ],
+  "query": "allergic rhinitis quality life",
+  "fetched_at": 1780014476.9357142
+}

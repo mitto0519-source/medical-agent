@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11934590",
+  "pmid": "40128706",
+  "title": "The impact of sugar-sweetened beverages consumption on constipation: evidence from NHANES.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang X, Liu M, Wang Y, Zheng Y, Zhou Y.",
+  "doi": "10.1186/s12889-025-22265-7",
+  "figures": [
+    "Flow chart of the participants in NHANES from 2007 to 2010. Abbreviations: NHANES, the National Health and Nutrition Examination Survey; SSBs, sugar-sweetened beverages",
+    "Association between SSBs-grams ( a ) as well as SSBs-kcal ( b ) and constipation. RCS analysis was conducted in model 3 which was adjusted for all covariates. The ORs of constipation were shown as solid black lines, and the corresponding 95% CIs were shown as short black dashed lines. Abbreviations: ORs, odds ratios; CIs, confidence intervals; SSBs, sugar-sweetened beverages",
+    "The weighted stratified and interaction analyses of the relationship between SSBs and constipation. The weighted stratified and interaction analyses of the relationship between SSBs-grams (shown in the left half of the figure), as well as SSBs-kcal (shown in the right half of the figure) and constipation, were conducted in model 3 by removing the applied categorical variables at the time of their "
+  ],
+  "tables": [
+    "Basic characteristics of participants",
+    "Relationship between SSBs and constipation",
+    "The sensitivity analysis by excluding participants with extreme SSBs intake"
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975692.4320953
+}

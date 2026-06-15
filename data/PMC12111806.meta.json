@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC12111806",
+  "pmid": "40429570",
+  "title": "Heart Rate Variability Prediction of Stimulant-Induced Creativity Gains in Attention-Deficit/Hyperactivity Disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Appling C, Nuraini N, Hart E, Wang D, Tosh A, Beversdorf D, Ferguson B.",
+  "doi": "10.3390/jcm14103570",
+  "figures": [
+    "Several HRV frequency-domain indices significantly predicted stimulant-related changes in divergent thinking. Higher baseline HF FFT peak frequency predicted a greater improvement in both fluency ( a ) ( β  = 138.56,  p  = 0.031,  R  2  = 0.29) and flexibility ( c ) ( β  = 39.93,  p  = 0.025,  R  2  = 0.31) on the TTCT. In contrast, VLF FFT power expressed as a percentage of total power negatively"
+  ],
+  "tables": [
+    "Participant demographics and medication characteristics. The table summarizes the sample characteristics including age, gender, education, and income distribution for the 16 participants. Medication type and dosage data are provided for individuals prescribed stimulant treatments during the study. Reported dosage values reflect the group means (mg) and standard deviations (SDs) for each medication"
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780059025.7865741
+}

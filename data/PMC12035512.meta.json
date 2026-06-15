@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12035512",
+  "pmid": "40297497",
+  "title": "Research progress on the impact of opioids on the tumor immune microenvironment (Review).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhou Y, Li W, Chen Y, Hu X, Miao C.",
+  "doi": "10.3892/mco.2025.2848",
+  "figures": [
+    "A summary of the effects of opioids on immune cells. Opioids can mediate dual effects on immune system, by the following: i) inhibiting cytokine production in CD8+T cells; ii) interfering with the TLR9/NF-κB pathway in macrophages, leading to the reduction of ROS production and in turn the bactericidal effect; iii) Upregulating apoptosis-related molecules, such as Fas/FasL and p53, inducing the ap"
+  ],
+  "tables": [
+    "A summary of the functions of opioid receptors in the tumor immune microenvironment.",
+    "A summary of the effects of opioids on different types of lymphocytes within the tumor immune microenvironment.",
+    "A summary of the existing conflict effects of opioids."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060444.8996904
+}

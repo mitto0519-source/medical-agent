@@ -1,0 +1,28 @@
+{
+  "pmcid": "PMC12189729",
+  "pmid": "40563336",
+  "title": "Protective Effects of Fish Oil Against Brain Impairment in Rats with Chronic Ethanol-Induced Liver Damage Involving the NRF2 Pathway and Oxidative Stress.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xiao Q, Chen YH, Fu LC, Nurrahma HA, Lai JH, Shirakawa H, Yang SC.",
+  "doi": "10.3390/antiox14060704",
+  "figures": [
+    "Schematic diagram for experimental design. After one week of adaption, all rats were distributed into 6 groups ( n  = 6) with no AST and ALT differences among groups. Behavior tests were conducted before grouping, followed by the 4th week and the endpoint of the experiment. C, control group; E, ethanol group; F25, 25% fish oil substituted for olive oil; F57, 57% fish oil substituted for olive oil;",
+    "Effects of fish oil on hepatic damage markers in rats with alcohol-induced injury. ( A ) H&amp;E staining (magnification ×200) (red arrows: lipid vacuoles). ( B ) Scores of fatty changes and inflammation ( n  = 5). ( C ) CYP2E1 protein expression ( n  = 6). *  p  &lt; 0.05 compared to the C group by Student’s  t -test. Superscript letters  (A,B)  indicate differences among three ethanol groups acc",
+    "Effects of fish oil on the hepatic NRF2/KEAP1 signaling pathway in rats with chronic ethanol-induced liver damage ( n  = 6). ( A ) Representative images and quantitation of phosphorylated (p)-NRF2(ser40), NRF2, phosphorylated ratio, and KEAP1 protein expressions. ( B ) mRNA levels of  nfe2l2 ,  keap1 ,  hmox1 , and  nqo1 . Values are presented as the mean ± SD. *  p  &lt; 0.05 compared to the C gr",
+    "Effects of fish oil on behavioral changes in rats with chronic ethanol-induced liver damage ( n  = 6). ( A ) Spontaneous alterations in the Y maze. ( B ) Novel objective recognition (NOR) at the endpoint. ( C ) Representative images of rats’ route in the NOR test. Values are presented as the mean ± SD. **  p  &lt; 0.01 compared to the C group according to Student’s  t -test. Superscript letters  (",
+    "Effects of fish oil on hippocampus H&amp;E staining and neuronal inflammation markers in rats with chronic ethanol-induced liver damage. ( A ) H&amp;E staining of the hippocampus at ×40 magnification (white arrowhead: normal pyramidal cells, yellow arrow: nuclear condensed pyramidal cell). ( B ) Representative images of GFAP by IHC, at ×200 magnification (red arrow: GFAP-positive astrocytes). ( C ",
+    "Effects of fish oil on prefrontal cortex and hippocampus β-amyloid (Aβ)1-40 and Aβ1-42 concentrations, and ratio in rats with chronic ethanol-induced liver damage ( n  = 6). Values are presented as the mean ± SD. Superscript letters  (a,b)  and  (A,B) , respectively, indicate differences among three control and ethanol groups according to a one-way ANOVA with Tukey’s post hoc test ( p  &lt; 0.05).",
+    "Effects of fish oil on prefrontal cortex NRF2/KEAP1 protein levels in rats with chronic ethanol-induced liver damage ( n  = 6). ( A ) Representative images and quantitation of phosphorylated (p)-NRF2(ser40), NRF2, phosphorylated ratio, and KEAP1 protein expressions. ( B ) mRNA levels of  nfe2l2 ,  keap1 ,  hmox1 , and  nqo1 . Values are presented as the mean ± SD. *  p  &lt; 0.05 compared to the C",
+    "Effects of fish oil on hippocampal NRF2/KEAP1 protein levels in rats with chronic ethanol-induced liver damage ( n  = 6). ( A ) Representative images and quantitation of phosphorylated (p)-NRF2(ser40), NRF2, phosphorylated ratio, and KEAP1 protein expressions. ( B ) mRNA levels of  nfe2l2 ,  keap1 ,  hmox1 , and  nqo1 . Values are presented as the mean ± SD. *  p  &lt; 0.05 compared to the C group"
+  ],
+  "tables": [
+    "Antibodies used for Western blotting.",
+    "Primers used for RT-qPCR.",
+    "Effects of fish oil on ethanol consumption, dietary intake and efficiency, body weight (BW), relative liver weight, and liver injury markers in rats with chronic ethanol-induced liver damage  1 .",
+    "Effects of fish oil on hepatic glutathione (GSH) concentration and antioxidant enzymes in rats with chronic ethanol-induced liver damage  1 .",
+    "Effects of fish oil on prefrontal cortex glutathione (GSH) concentration and antioxidant enzymes in rats following chronic alcohol feeding  1 ."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995346.8039799
+}

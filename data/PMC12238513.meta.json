@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12238513",
+  "pmid": "40628780",
+  "title": "The impact of insufficient sleep on dietary choices and physical activity behaviors: evidence from a randomized cross-over trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dickinson DL, Kakoschke N, Drummond SPA.",
+  "doi": "10.1038/s41598-025-08289-4",
+  "figures": [
+    "Participant flow diagram.",
+    "Assessment of protocol validity. Participants were asked to not nap during the SR or WR week of the study, but any rare naps in the data were scored and included in the measure of average 24 h sleep time. Significance is based on a one-sample Z-test of the difference between actigraphy measured average nightly sleep duration during the SR and WR treatment weeks (See Appendix Table A2), with associ",
+    "Analysis of SR impact on daytime actigraphy-measured PA. Coefficient plots show the point estimate and the 95% (thick line) and 99% (thin line) confidence intervals. Control variables include demographic, a binary order (of week) indicator variable, and cohort fixed effects. Robust standard errors are clustered on the participant (n = 118 treatment participants, n = 236 panel data set observations",
+    "Analysis of SR impact on PA intensity (upper panel), prolonged sitting and planned PA (lower panel). Coefficient plots show point estimates with 95% (thick line) and 99% (thin line) confidence intervals. Robust standard errors are clustered on the participant ( n  = 118 treatment participants, 2 observations each). Partial eta-squared effect sizes are from the comparable ordinary least squares mod"
+  ],
+  "tables": [
+    "Participant characteristics and energy balance (by treatment week).",
+    "Bootstrapped estimation results.",
+    "SR impact on daily dietary report outcomes coefficient (standard error) [η p  2 ] shown.",
+    "The impact of SR (exploratory analysis) [η p  2  effect sizes from regression analysis shown in square brackets]."
+  ],
+  "query": "zero-calorie beverage mental health",
+  "fetched_at": 1779974572.7920055
+}

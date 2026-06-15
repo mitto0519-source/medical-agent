@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12148626",
+  "pmid": "40496045",
+  "title": "Potential misclassification of ultra-processed foods across studies and the need for a unified classification system: a scoping review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jung S, Kim JY, Park S, Lee JE, UPF Working Group.",
+  "doi": "10.4162/nrp.2025.19.3.331",
+  "figures": [
+    "Flowchart of selecting studies for the scoping review.  KISS, Korean studies Information Service System; RISS, Research Information Sharing Service; UPF, ultra-processed food.  Adapted from Page  et al . BMJ 2021;372:n71. doi: 10.1136/bmj.n71. Licensed under CC BY 4.0. To view a copy of this license, visit  https://creativecommons.org/licenses/by/4.0 .",
+    "Number of articles according to the study characteristics (publication year, study design, dietary assessment method, and data source).  24HR, 24-h dietary recall; FFQ, food frequency questionnaire; KNHANES, Korea National Health and Nutrition Examination Survey; KoGES, Korean Genome and Epidemiology Study; CMERC, Cardiovascular and Metabolic Diseases Etiology Research Center; MOCEH, Mothers’ and ",
+    "UPF consumption across studies.  In the study by Kim  et al . [ 13 ] (2024), 21.9% and 23.6% of participants reported UPF intake before and during COVID-19, respectively. In the study by Lee and Choi [ 27 ] (2023), 27.3% and 31.3% reported UPF intake among participants without and with depression, respectively.  FFQ, food frequency questionnaire; 24HR, 24-h dietary recall; UPF, ultra-processed foo",
+    "UPF consumption according to the study characteristics (dietary assessment method, sample size, explicit description of UPF classification, data source, and study design). Values represent the median of individual studies included within each category.  MOCEH, Mothers’ and Children’s Environmental Health; CMERC, Cardiovascular and Metabolic Diseases Etiology Research Center; KoGES, Korean Genome a"
+  ],
+  "tables": [
+    "Search strategy",
+    "Summary of individual studies on ultra-processed foods conducted in Korea"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036825.2785544
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12159434",
+  "pmid": "40510289",
+  "title": "An approach to screen susceptible rats and efficacy of an antidepressive treatment after chronic stress.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Valencia-Flores KB, Vidal-de-laO Y, Paz-Trejo D, Sánchez-Castillo H.",
+  "doi": "10.1016/j.ibneur.2025.05.001",
+  "figures": [
+    "– Open Field Test (OFT). Assessment of the anxiety profile in open-field test. 1A) Shows time spent in the center and periphery. 1B) Shows immobility time. 1 C) Shows grooming time. 1D) Shows the total frequency of grid crosses. Statistical significance was represented as * &lt;0.05; * * &lt; 0.01, * ** &lt;0.001 and * ** * &lt; 0.0001.",
+    "– Forced Swim Test (FST). Assessment of swimming, climbing, and immobility behaviors in forced swim test. Immobility was taken as a depressive behavioral marker. Note: Statistical significance was represented as * &lt;0.05; * * &lt; 0.01, * ** &lt;0.001 and * ** * &lt; 0.0001.",
+    "– Saccharine preference test (SPT). Assessment of the depression profile in a saccharin preference test. The water and saccharine total consumed during the test was shown. Statistical significance was represented as * &lt;0.05; * * &lt; 0.01, * ** &lt;0.001 and * ** * &lt; 0.0001.",
+    "– Fluoxetine effects on Open Field Test (OFT). Assessment of the anxiety profile in open-field test after Fluoxetine treatment. A) Shows the total frequency of grid crosses, B) Shows time spent in the central area. C) Shows grooming time. D) Shows immobility time. Statistical significance was represented as * &lt;0.05; * * &lt; 0.01, * ** &lt;0.001 and * ** * &lt; 0.0001.",
+    "– Fluoxetine effects on Forced Swim Test (FST). Assessment of immobility in forced swim test after fluoxetine treatment. Immobility was taken as a depressive behavioral marker. Note: Statistical significance was represented as * &lt;0.05; * * &lt; 0.01, * ** &lt;0.001 and * ** * &lt; 0.0001.",
+    "Fluoxetine effects on Saccharine Preference Test (SPT). Assessment of the depression profile in saccharin preference test after fluoxetine treatment. Saccharine total consumption during the test was evaluated. Statistical significance was represented as * &lt;0.05; * * &lt; 0.01, * ** &lt;0.001 and * ** * &lt; 0.0001.",
+    "– Behavioral data per subject and identified by group after stress. All behavioral data selected was used to create a 3D chart to visualize all subjects' behavior and identify them by their manipulation group.",
+    "Clustering by k-means method after stress. Behavioral data after stress exposure and under the k-means method. A 3D plot was constructed where the centroids of each cluster found by k-means are indicated with (X). Three clusters were found. The data of each cluster were identified and the percentage of individuals belonging to each experimental manipulation group was calculated.",
+    "– Clustering by k-means method after fluoxetine treatment. Behavioral data after fluoxetine treatment and after the k-means method. A 3D plot was constructed where the centroids of each cluster found by k-means are indicated with (X). Three clusters were found. The data of each cluster were identified and the percentage of individuals belonging to each experimental manipulation group was calculate"
+  ],
+  "tables": [],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055706.029757
+}

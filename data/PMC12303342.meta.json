@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12303342",
+  "pmid": "40720488",
+  "title": "The impact of 10-valent pneumococcal conjugate vaccine on the incidence of admissions to hospital with hypoxaemic and non-hypoxaemic pneumonia in Kenyan children.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Haeusler IL, Kagucia EW, Bottomley C, Otiende M, Nyiro J, Scott JAG.",
+  "doi": "10.1371/journal.pgph.0004888",
+  "figures": [
+    "Flow diagram of admissions to Kilifi County Hospital (KCH).  KHDSS = Kilifi Health and Demographic Surveillance System.",
+    "Monthly incidence rates of hypoxaemic pneumonia in KHDSS-resident children aged 2-59 months admitted to Kilifi County Hospital.  Predictions using segmented Poisson model, accounting for time and seasonality, excluding PCV10 introduction and healthworker strikes. Hypoxaemic pneumonia defined as pneumonia with oxygen saturations on admission of &lt;90%. KHDSS = Kilifi Health and Demographic Surveil",
+    "Monthly incidence rates of non-hypoxaemic pneumonia in KHDSS-resident children aged 2-59 months admitted to Kilifi County Hospital.  Predictions using segmented Poisson model, accounting for time and seasonality, excluding PCV10 introduction and healthworker strikes. Hypoxaemic pneumonia defined as pneumonia with oxygen saturations on admission of &lt;90%. KHDSS = Kilifi Health and Demographic Sur"
+  ],
+  "tables": [
+    "Crude median monthly counts and incidence rates of hypoxaemic and non-hypoxaemic pneumonia in KHDSS-resident children admitted to Kilifi County Hospital during the pre- and post-intervention period, by age group.",
+    "Summary regression model estimates for KHDSS-resident children admitted to Kilifi County Hospital with hypoxaemic and non-hypoxaemic pneumonia by age group. Fitted by segmented Poisson regression, adjusted for time-trend and seasonality (through calendar month). Newey-West standard errors used to account for autocorrelation (lag three). All estimates based on 144 time points (48 pre, 96 post): dat"
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032485.0675752
+}

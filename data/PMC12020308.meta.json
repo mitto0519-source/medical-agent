@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12020308",
+  "pmid": "40270076",
+  "title": "The relationship between defending self-efficacy and defending behavior in cyberbullying: a moderated mediation model.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen H, Fang Y, Wang L, Chen Y, Fan C.",
+  "doi": "10.1186/s40359-025-02758-1",
+  "figures": [
+    "Moderated mediation model",
+    "Empathy moderated the relation between defending self-efficacy and defending intention",
+    "Empathy moderated the relation between defending intention and defending behavior"
+  ],
+  "tables": [
+    "Descriptive statistics and correlations between variables",
+    "Testing the mediation effect of defending intention",
+    "Testing the moderated mediation effect"
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780016864.831153
+}

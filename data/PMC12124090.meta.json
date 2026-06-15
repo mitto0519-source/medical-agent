@@ -1,0 +1,35 @@
+{
+  "pmcid": "PMC12124090",
+  "pmid": "40442669",
+  "title": "Exploring the impact of workplace violence on defensive medicine and patient outcomes: an empirical analysis using regression discontinuity.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hu G, Li Y, Zhao H.",
+  "doi": "10.1186/s12913-025-12942-z",
+  "figures": [
+    "Polynomial fitting curve for the total health expenditure",
+    "Polynomial fitting curve for the comprehensive expenditure",
+    "Polynomial fitting curve for the diagnosis fees",
+    "Polynomial fitting curve for the treatment fees",
+    "Polynomial fitting curve for the pharmaceutical fees",
+    "Parallel regression discontinuity plots for covariates",
+    "Parallel regression discontinuity plots for covariates",
+    "Trends of regression discontinuity estimates for key outcomes under varying bandwidths"
+  ],
+  "tables": [
+    "Descriptive statistical analysis",
+    "WPV and medical costs",
+    "Defensive medicine and patient outcomes",
+    "Robustness check: exclude the sample during the spring festival period",
+    "Robustness check: varying the time window",
+    "Robustness check: covariate balance test",
+    "Robustness check: excluding discontinuous covariates",
+    "Robustness check: “donut” RD",
+    "Robustness check: polynomial sensitivity",
+    "Robustness check: bandwidepartment transferh sensitivity",
+    "Diagnostic fees bandwidepartment transferh sensitivity analysis",
+    "Binomial fit"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035579.5897012
+}

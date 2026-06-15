@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12122571",
+  "pmid": "39390266",
+  "title": "Agomelatine in pediatric patients with moderate to severe major depressive disorder: an open-label extension study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Arango C, Fegert JM, Picarel-Blanchot F, Marx U, Truffaut-Chalet L, Pénélaud PF, Buitelaar J, study investigators.",
+  "doi": "10.1007/s00787-024-02587-4",
+  "figures": [
+    "Study plan. The following visits were performed between W12 and W104: W14, W18, W24, W32, W40, W48, W52, W60, W68, W77, W86, W95. *If no improvement at W2, the fluoxetine dose could be increased to 20 mg at the investigator’s judgment. **The follow up period was dedicated to: all patients who withdrew prematurely from the study at any moment. All patients who did not continue into the extension pe",
+    "CDRS-R raw total score: mean value (± SD) at each visit during the W12–W104 open-label extension period, according to the treatment previously received during the double-blind period",
+    "CDRS-R raw total score: mean value (± SD) at each visit during W000–W104 in patients receiving agomelatine for the duration of the study and continuing in the extension period",
+    "Proportion of total population (children and adolescents) in remission (CDRS-R raw total score ≤ 28) during the extension period"
+  ],
+  "tables": [
+    "Main demographic and patient characteristics, according to the treatment received during the double-blind period, and overall",
+    "Treatment-emergent adverse events by system organ class and preferred term occurring in more than three patients in the safety population during the Week 12 to Week 104 open-label extension"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056259.5110617
+}

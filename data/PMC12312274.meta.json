@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12312274",
+  "pmid": "40739649",
+  "title": "Off-label use of psychotropic drugs in youth.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Rosland HG, Wergeland GJ, Holst L.",
+  "doi": "10.1186/s12888-025-07176-6",
+  "figures": [
+    "Off-label choices as first line treatment for different diagnostic classifications"
+  ],
+  "tables": [
+    "On/off-label status for psychotropic medicines in 2019 in Norway",
+    "ICD-10/ICPC codes for state reimbursements",
+    "Off-label frequency per drug class ( N  = 55 066)",
+    "Number of prescriptions per indication (55 066)",
+    "Demographic and background information of survey participants (medical Doctors working in child and adolescent psychiatry)",
+    "Differences in preferred choice of first line treatment by geographic region using Chi-Square"
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779996674.0093384
+}

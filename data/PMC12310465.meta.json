@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12310465",
+  "pmid": "40746676",
+  "title": "An investigation of the relationship and pathways of influence between body mass index, motor coordination, and health-related physical fitness index in preschool children.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao D, Chen X, Zhang A, Wang C, Wang Y, He J, Chen J, Hu H, Tang X, Zhang A, Xiao H, Zhang Y.",
+  "doi": "10.3389/fpubh.2025.1585768",
+  "figures": [
+    "Path relationship assumptions.",
+    "Structure of the network of BMI, MC, and PFI relationships. Red lines indicate negative correlation, green lines indicate positive correlation, and the thickness of the lines represents the size of the correlation.",
+    "Standard EI index for network elements.",
+    "Bootstrap test for CS coefficients of network nodes.",
+    "Mediation model of BMI effect on PFI. ** , p  &lt; 0.01."
+  ],
+  "tables": [
+    "Sample characteristics.",
+    "Correlation analysis of key variables.",
+    "Stratified linear regression analysis.",
+    "Bootstrap analysis for significance test of mediation effect."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011406.0450509
+}

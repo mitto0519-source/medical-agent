@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11874789",
+  "pmid": "40033236",
+  "title": "Exploration of brain imaging biomarkers in subthreshold depression patients across different ages: an ALE meta-analysis based on MRI studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao B, Liu Z, He Y, Hu Y, Li Z, Cao L, Liang C, Yao R, Yin L, Wu J.",
+  "doi": "10.1186/s12888-025-06495-y",
+  "figures": [
+    "Flowchart of studies identification",
+    "Significant convergent brain regions in StD patients.  A : Total effect of StD patients in adolescents. Since all included studies indicated a downward trend, it also represented total effect “decrease” (StD &lt; HC) in adolescents.  B : Total effect of StD patients in young adults.  C : Total effect of StD patients in middle-aged and older adults. D: Total effect “increase” (StD &gt; HC) in young"
+  ],
+  "tables": [
+    "Characteristics of included studies",
+    "Total effect of StD patients at different ages",
+    "Total effect “increase” (StD &gt; HC) or “decrease” (StD &gt; HC) of StD patients at different ages"
+  ],
+  "query": "frontostriatal circuit development",
+  "fetched_at": 1779991350.6803992
+}

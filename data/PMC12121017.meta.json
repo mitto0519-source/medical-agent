@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12121017",
+  "pmid": "40442656",
+  "title": "The mediation role of low social-connectedness in association of internet gaming disorder and anger among adolescents: a multi-centre, large-sample and cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang X, Tan L, Xu JQ, Chen XC, Tang XD, Xu JJ.",
+  "doi": "10.1186/s12889-025-23142-z",
+  "figures": [
+    "Matrix graph of Spearman analysis.  Abbreviations : SCS: Social Connectedness Scale; RSCS: Reality SCS Score; RSCS_P: 10 positive-item score of Reality SCS; RSC_N: 10 negative-item score of Reality SCS; ISC_N: 10 negative-item score of Internet SCS; ISCS: Internet SCS; ISC_P: 10 positive-item score of Internet SCS; IGDS9-SF: 9-item internet gaming disorder scale-short from scores; Anger-6: Anger-6",
+    "Mediation analysis.  Abbreviations : IGD: Internet gaming disorder; SCS: Social Connectedness Scale; RSCS: Reality SCS Score; RSCS_P: 10 positive-item score of Reality SCS; RSC_N: 10 negative-item score of Reality SCS; ISCS: Internet SCS; ISC_P: 10 positive-item score of Internet SCS; ISC_N: 10 negative-item score of Internet SCS; SCSM: mean value of RSCS and ISCS; IRM_P: mean value of ISCS and RS"
+  ],
+  "tables": [
+    "Demographic characteristics and clinical parameters",
+    "Risk factors for having severe anger"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998281.1250002
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12264187",
+  "pmid": "40664716",
+  "title": "Conducting the National Health and Morbidity Survey 2023 in Malaysia with focus on methodology and main findings on non-communicable diseases.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mat Rifin H, Mohd Yusoff MF, Abd Hamid HA.",
+  "doi": "10.1038/s41598-025-08311-9",
+  "figures": [
+    "NHMS 2023 applied a two-stage stratified random sampling design.",
+    "Response rates by living quarters and individuals by states, NHMS 2023.",
+    "Trends in diabetes, hypertension, hypercholesterolaemia,  overweight and obesity from 2011 to 2023."
+  ],
+  "tables": [
+    "Scopes, instruments, methods of data collection, devices, target age groups, and level of analysis, NHMS 2023.",
+    "Required sample size by scope of the study for different precisions.",
+    "Sociodemographic characteristics of the population, NHMS 2023.",
+    "Main NCDs and their risk factors findings from the NHMS 2023."
+  ],
+  "query": "Malaysian adolescent dietary depression",
+  "fetched_at": 1779992251.0728726
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12161324",
+  "pmid": "40499939",
+  "title": "Fractal biomarker of daily activity for women with early onset depression.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang HW, Münch M, Ulsa MC, Gaba A, Birchler-Pedross A, Frey S, Knoblauch V, Li P, Chellappa SL, Cajochen C, Hu K.",
+  "doi": "10.1136/bmjment-2024-301321",
+  "figures": [
+    "( a ) Activity recordings of two representative participants from the control and MDD groups, respectively. Data were aligned by each participant’s habitual wake-up time and divided into 3-hour bin. Down-pointing/up-pointing triangles indicate habitual bedtime/wake-up. ( b ) Fractal analysis results obtained from the data within rectangle areas in ( a ); coloured shapes=during wakefulness; hollowe",
+    "Associations of MADR with mean activity level ( a ) and fractal activity correlation during the last 3 hours before actual wake-up ( b ). The dashed line in ( b ) was obtained from the linear regression. The fitted line in ( a ) was not presented because the regression was not significant. MADR, Montgomery-Åsberg Depression.",
+    "Melatonin analysis. ( a–c ) Group differences in DLMO ( a ), DLMOff ( b ) and MEL_last3hr ( c ). ( d–f ) Correlation between MADR and DLMO ( d ), DLMOff ( e ) and MEL_last3hr ( f ). ( g–i ) Correlation between fractal activity correlation during the last 3 hour before actual wake-up and DLMO ( g ), DLMOff ( h ) and MEL_last3hr ( i ). The dashed lines in ( f,i ) were obtained from the linear regres"
+  ],
+  "tables": [
+    "Rest-activity patterns in MDD and control group"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001129.3947268
+}

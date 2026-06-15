@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12100978",
+  "pmid": "40410729",
+  "title": "Impacts of consumption tracking and tailored feedback on meeting nutritional recommendations: a longitudinal regression discontinuity study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jensen N, Lepariyo W, Alulu V, Sibanda S.",
+  "doi": "10.1186/s12937-025-01149-x",
+  "figures": [
+    "Timeline of project events",
+    "Example of the process for recording child consumption (left panel), feedback on child consumption (middle panel), and feedback on caregiver consumption (right panel)",
+    "The dots represent the daily ratio of children that met the MDD-C threshold before and after the feedback feature was activated",
+    "The number of times that each participant accessed a caregiver feedback report during the study period",
+    "Ratio of caregivers that had consumed foods from each group over the previous 24 h",
+    "The number of caregivers out of 189 that had not ever accessed or that had accessed the caregiver feedback feature, calculated each day over the project period",
+    "Estimated persistence of the impact of the feedback feature on caregiver consumption of animal source foods (Panel  A ), dark green leafy vegetables (Panel  B ), and orange flesh fruits and vegetables (Panel  C )"
+  ],
+  "tables": [
+    "Summary statistics of main outcome variables",
+    "Average marginal impacts of the feedback feature on MDD-C as recorded by caregivers (M1, M2) and by CHVs (M3, M4)",
+    "The estimated average marginal effects of the caregiver feedback on the likelihood of consuming food groups in the caregiver data",
+    "Difference in difference estimates of the impact of the feedback feature on caregiver consumption"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780036119.94728
+}

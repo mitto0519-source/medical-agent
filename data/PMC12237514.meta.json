@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12237514",
+  "pmid": "40628494",
+  "title": "Associations between commuting modes and risk of 16 site-specific cancers in the UK Biobank.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Thu W, Cavadino A, Woodward A, Tin Tin S.",
+  "doi": "10.1093/ije/dyaf117",
+  "figures": [
+    "Study sample selection.",
+    "Estimates of the associations between commuting modes and risks of site-specific cancers. Horizontal lines show site-specific cancers, the number of cancer cases for each commuting mode, effect estimates (HRs) and 95% confidence intervals for the associations of commuting modes (walking, cycling, and public transport in comparison to car-only) with each cancer. Left vertical line shows the associa",
+    "Estimates of the associations between commuting modes and risks of gender-specific cancers. Horizontal lines show site-specific cancers, the number of cancer cases for each commuting mode, effect estimates (HRs) and 95% confidence intervals for the associations of commuting modes (walking, cycling, and public transport in comparison to car-only) with each cancer. Left vertical line shows the assoc"
+  ],
+  "tables": [
+    "Baseline characteristics of the sample by commuting mode",
+    "Number of cancers (total, women, men)"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007001.7406664
+}

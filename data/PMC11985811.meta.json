@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11985811",
+  "pmid": "40225846",
+  "title": "Associations between sugar-sweetened beverage consumption, weight-adjusted-waist index, with psychological symptoms: a cross-sectional survey of adolescents in mainland China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang R, Guo S, Yang G, Li J.",
+  "doi": "10.3389/fpsyt.2025.1558919",
+  "figures": [
+    "Participant extraction process.",
+    "Trends in ORs of multiple logistic regression analysis of SSB consumption, WWI, and psychological symptoms among Chinese adolescents."
+  ],
+  "tables": [
+    "Demographic, anthropometric, and behavioral characteristics of Chinese adolescent participants.",
+    "Comparison of Chinese adolescents with and without the presence of psychological symptoms.",
+    "A one-way comparison of SSB consumption, WWI, and psychological symptoms among Chinese adolescents.",
+    "Multivariate logistic regression analysis of SSB consumption, WWI, and psychological symptoms in Chinese adolescents.",
+    "Ordered logistic regression analysis of SSB consumption, WWI, and psychological symptoms among Chinese adolescents."
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975608.1083698
+}

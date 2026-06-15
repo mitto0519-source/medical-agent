@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12235055",
+  "pmid": "40503595",
+  "title": "The Prevalence, Size, and Anatomic Location of Cartilage and Osteochondral Lesions in Athletes With an Acute Ligamentous Ankle Injury.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Baltes TPA, Dalansi F, Al-Naimi MR, Bordalo M, Holtzhausen L, Whiteley R, Cardinale M, D'Hooghe P, Kerkhoffs GMMJ, Tol JL.",
+  "doi": "10.1177/03635465251344187",
+  "figures": [
+    "Flowchart for study inclusion.  * In 194 athletes.  † In 166 athletes. MRI, magnetic resonance imaging.",
+    "Distribution of cartilage and osteochondral lesions ([O]CLs) expressed as a percentage of total lesions present on the talus or tibia. Distribution of (O)CLs on (A) talus and (B) tibia. Distribution of cartilage lesions on (C) talus and (D) tibia. Distribution of osteochondral lesions on (E) talus and (F) tibia."
+  ],
+  "tables": [
+    "Description of Included Ankle Injuries \n \n a",
+    "Size, Location, and Grading of Cartilage and Osteochondral Lesions According to the Modified Berndt and Harty, Griffith, and ICRS Classification Systems \n \n a",
+    "Multivariate Logistic Regression Analysis for the Association Between (O)CLs and Ligamentous Injury Location \n \n a"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035944.330757
+}

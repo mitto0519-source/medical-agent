@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12191537",
+  "pmid": "40558836",
+  "title": "Bullying and Cyberbullying Are Associated with Low Levels of Motivational Beliefs Toward Learning in Youth.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Solas-Martínez JL, Roldán-Roldán R, Moyano-Muñoz MLN, Martínez-López EJ.",
+  "doi": "10.3390/ejihpe15060093",
+  "figures": [
+    "Differences in the subscales of motivational beliefs toward learning—( a ) intrinsic goal orientation, ( b ) extrinsic goal orientation, ( c ) task value, ( d ) control beliefs, ( e ) self-efficacy, and ( f ) test anxiety—between students who have never been victims and those who have experienced bullying victimization, differentiated by boys and girls.",
+    "Differences in the subscales of motivational beliefs toward learning—( a ) intrinsic goal orientation, ( b ) extrinsic goal orientation, ( c ) task value, ( d ) control beliefs, ( e ) self-efficacy, and ( f ) test anxiety—between students who have never been victims and those who have experienced cyberbullying victimization, differentiated by boys and girls.",
+    "Differences in the subscales of motivational beliefs toward learning—( a ) intrinsic goal orientation, ( b ) extrinsic goal orientation, ( c ) task value, ( d ) control beliefs, ( e ) self-efficacy, and ( f ) test anxiety—between students who have never engaged in bullying aggression and those who have, differentiated by boys and girls.",
+    "Differences in the subscales of motivational beliefs toward learning—( a ) intrinsic goal orientation, ( b ) extrinsic goal orientation, ( c ) task value, ( d ) control beliefs, ( e ) self-efficacy, and ( f ) test anxiety—between students who have never engaged in cyberbullying aggression and those who have, differentiated by boys and girls."
+  ],
+  "tables": [
+    "Biometric characteristics and sociodemographic data of participants segmented by gender.",
+    "Binary logistic regression of bullying and cyberbullying victimization (1 = never to 5 = more than once/week) according to categorised indicators (high vs. low) of motivational orientation for learning in adolescent boys and girls. OR: odds ratio, CI: confidence interval. OR was adjusted for age, BMI (body mass index), maternal education, and weekly physical activity.",
+    "Binary logistic regression of bullying and cyberbullying aggression (1 = never to 5 = more than once/week) according to categorised indicators (high vs. low) of motivational orientation for learning in adolescent boys and girls. OR: odds ratio, CI: confidence interval. OR was adjusted for age, BMI (body mass index), maternal education, and weekly physical activity.",
+    "Comparison of mean differences and risk ratios in motivational beliefs related to bullying and cyberbullying among victims and bullies, differentiated by gender.",
+    "Recommendations for strengthening motivational beliefs about learning in victims and bullies of bullying and cyberbullying."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017047.3650956
+}

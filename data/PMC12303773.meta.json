@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12303773",
+  "pmid": "40588848",
+  "title": "Evaluation of the feasibility and effectiveness of trauma-focused cognitive behavioural therapy for children and youth in Ukraine during the war.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Pfeiffer E, Garbade M, Beer R, Birgersson A, Cabrera N, Cohen JA, Deblinger E, Gjini R, Kirsch V, Kostova Z, Larsson M, Mannarino A, Moffitt G, Onsjö M, Ostensjo T, Vikgren A, Weyler H, Klymchuk V, Sachser C.",
+  "doi": "10.1192/j.eurpsy.2025.10032",
+  "figures": [],
+  "tables": [
+    "Program evaluation and satisfaction of the therapists assessed at post-training (T1)",
+    "Descriptive data of therapists’ professional quality of life, attitudes towards evidence-based treatments and trauma-related knowledge before and after the training program",
+    "Fidelity checklist.",
+    "Estimated means and standard deviations from the linear mixed effect models",
+    "Linear mixed-effect models for PTSS change in patients"
+  ],
+  "query": "PTSD trauma adolescent",
+  "fetched_at": 1779997548.4379315
+}

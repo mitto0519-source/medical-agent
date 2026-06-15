@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11924704",
+  "pmid": "40114229",
+  "title": "Comparisons of three novel markers for insulin resistance to predict incident cardiovascular disease: a Korean cohort study from three different regions.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ryu HE, Lee YJ, Park B, Jung DH.",
+  "doi": "10.1186/s40001-025-02374-0",
+  "figures": [
+    "Flowchart for the selection of study participants"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population according to the TyG index quartiles",
+    "Baseline characteristics of the study population according to the AIP quartiles",
+    "Baseline characteristics of the study population according to the METS-IR quartiles",
+    "HRs and 95% CIs for cardiovascular disease using the TyG index, AIP, and METS-IR as quartiles and continuous variables",
+    "TyG index vs. AIP vs. METS-IR for predicting cardiovascular disease"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036952.565068
+}

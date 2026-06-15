@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12207131",
+  "pmid": "40589629",
+  "title": "Reassessing the relationship between major depressive disorder and blood lipids: a comprehensive Mendelian randomisation study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sun G, Xia D, Xue B, Jian X, Peng L, Wang B, Wu C, Gao C, He L, Xu Y, Zhao X, Zhang Q, Cao H, Wen Y, Shi Y, Potash JB, Chen J, Li Z.",
+  "doi": "10.1136/gpsych-2024-101900",
+  "figures": [
+    "Outline of the study design created with BioRender.com. (1) MR: This figure shows the use of multiple UVMR methods to analyse the bidirectional causal association between MDD and blood lipids and the use of 3 methods in MVMR to analyse the confounding factors of blood lipids on MDD. (2) Mediation analysis: This figure shows the two-step MR process. The left figure uses arrows to indicate the impac",
+    "Causal effects between MDD and TG within Europe. 95% CI represents the 95% CI for the beta.   24 25   The results of the observational studies were derived from two published meta-analyses by Wei  et al   24   and Bharti  et al.   25   CAUSE, causal analysis using summary effect estimates; CI, confidence interval; IVW, inverse variance weighting; MDD, major depressive disorder; MR, Mendelian rando",
+    "Mediating mechanisms of MDD on lipid metabolism: a two-step Mendelian randomisation analysis created with BioRender.com. This figure represents the outcomes of a Mendelian randomisation study exploring the mediating effects of MDD on TG levels. ( A ) ‘MDD–Mediator–TG’ shows the direct, indirect and total effects of different biomarkers. ( B ) ‘Risk Factors–MDD–TG’ depicts the effect of different t",
+    "Gene expression pattern of MDD-WHR-TG concordant and discordant SNPs plotted genes. ( A ) MDD-WHR-TG concordant SNPs plotted genes; ( B ) MDD-WHR-TG discordant SNPs plotted genes. MDD, major depressive disorder; SNP, single nucleotide polymorphisms; TG, triglycerides; TPM, transcripts per million; WHR, waist-to-hip ratio."
+  ],
+  "tables": [
+    "MR estimates for the association between five blood lipid phenotypes and MDD across six analytical methods"
+  ],
+  "query": "academic stress East Asian student",
+  "fetched_at": 1780019150.2932942
+}

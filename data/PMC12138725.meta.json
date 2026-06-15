@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12138725",
+  "pmid": "40465295",
+  "title": "Longitudinal Outcomes of the COVID-19 Pandemic on Youth Physical Fitness.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Pavlovic A, Leonard D, Walker TJ, Craig DW, Injil J, DeFina LF.",
+  "doi": "10.1001/jamanetworkopen.2025.13721",
+  "figures": [
+    "Unadjusted Cardiorespiratory Fitness Healthy Fitness Zone Achievement by Semester With Number of Schools Reporting  Boxes extend from the 25th to the 75th percentiles, medians are indicated by horizontal bars, and means are indicated by diamonds.",
+    "Odds Ratios (ORs) for Healthy Fitness Zone Achievement Based on Learning Modality During the COVID-19 Pandemic  Cardiorespiratory and musculoskeletal fitness ORs are adjusted for grade level, sex, Title I eligibility, and region."
+  ],
+  "tables": [
+    "Characteristics of Schools Reporting Cardiorespiratory and Musculoskeletal Outcomes Before, During, and After the COVID-19 Pandemic (Fall 2019 to Spring 2023)  a",
+    "Schools Reporting Fitness Outcomes Data Before, During, and After the COVID-19 Pandemic (Fall 2019 to Spring 2023)  a",
+    "Association of the COVID-19 Pandemic With Youth Achievement of Healthy Fitness Zone Cardiorespiratory and Musculoskeletal Fitness"
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780010791.8721235
+}

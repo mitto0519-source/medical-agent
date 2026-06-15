@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11900950",
+  "pmid": "40095899",
+  "title": "Digital Cognitive Behavioral Therapy for Panic Disorder and Agoraphobia: A Meta-Analytic Review of Clinical Components to Maximize Efficacy.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jung HW, Jang KW, Nam S, Kim A, Lee J, Ahn ME, Lee SK, Kim YJ, Shin JK, Roh D.",
+  "doi": "10.3390/jcm14051771",
+  "figures": [
+    "PRISMA flow chart.",
+    "Risk of bias graph.",
+    "Forest plots for passive ( above ) and active ( below ) controls for the included studies [ 38 , 39 , 40 , 41 , 42 , 43 , 44 , 45 , 46 , 47 , 48 , 49 , 50 , 51 , 52 , 53 , 54 , 55 , 56 , 57 , 58 , 59 , 60 , 61 , 62 , 63 , 64 , 65 , 66 , 67 , 68 ]. Note: The numbers on the left refer to interoceptive exposure, inhibitory-learning-based exposure, and personalization, respectively, coded as 1 (presen",
+    "Funnel plots for overall effects and meta-regression."
+  ],
+  "tables": [
+    "Study characteristics.",
+    "Overall and subgroup effects.",
+    "Meta-regression models."
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063467.8599463
+}

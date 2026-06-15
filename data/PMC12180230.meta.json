@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12180230",
+  "pmid": "40537847",
+  "title": "The social determinants of tuberculosis: a case-control study characterising pathways to equitable intervention in Peru.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Saunders MJ, Montoya R, Quevedo L, Ramos E, Datta S, Evans CA.",
+  "doi": "10.1186/s40249-025-01324-6",
+  "figures": [
+    "Simplified directed acyclic graph illustrating hypothesised causal relationships between household poverty, personal risk factors, and tuberculosis.  TB  tuberculosis;  BMI  body mass index. Solid arrows indicate that all variables in the upstream node (illustrated as boxes) were hypothesised to cause all variables in the downstream node. Dashed arrows indicate that only some variables in the upst",
+    "Associations between household poverty and tuberculosis (TB) ( n  = 3318).  a  Discrete measures of household poverty.  b  Overall household poverty and dimensions of household poverty derived through principal components analyses. Odds ratios (a OR ) and population attributable fractions (PAF) were adjusted for age, sex, community, and place of birth for all variables shown here. For discrete mea",
+    "Social gradient in tuberculosis (TB) across deciles of household poverty ( n  = 3318). Odds ratios (a OR ) were adjusted for age, sex, community, and place of birth. Error bars represent 95% confidence intervals (95%  CI ). Numbers and  P  values are shown in the Supplementary Appendix, page 6",
+    "Associations between personal risk factors and tuberculosis (TB) ( n  = 3318).  BCG  Bacillus Calmette-Guérin. Odds ratios (a OR ) and population attributable fractions (PAF) were adjusted for variables shown in the Supplementary Appendix, pages 6–8, based on the directed acyclic graph in Fig.  1 . Error bars represent 95% confidence intervals (95%  CI ). For this analysis, social capital was cons",
+    "Social gradients in personal risk factors across quintiles of household poverty ( n  = 3318).  TB  tuberculosis. For this analysis, lower social capital was defined as less than the median social capital score. Numbers, percentages, and Cochran-Armitage test for linear trend p values across household poverty quintiles for each of these risk factors are shown in the Supplementary Appendix, pages 8-"
+  ],
+  "tables": [
+    "Household poverty variables, with weightings used to create indices of household poverty derived from principal components analysis for controls versus cases with tuberculosis ( n  = 2713)",
+    "Personal risk factors for controls versus cases with tuberculosis ( n  = 3318)"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021749.5581045
+}

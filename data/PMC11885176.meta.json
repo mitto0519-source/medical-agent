@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11885176",
+  "pmid": "40062058",
+  "title": "Peutz-Jeghers Syndrome Presenting With Iron-Deficiency Anaemia and a Giant Colonic Polyp.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Naher N, Al Masud A, Biswas SK, Imam H, Hasan MN.",
+  "doi": "10.7759/cureus.78520",
+  "figures": [
+    "Mucocutaneous pigmentation involving the lips (a) and pulp of the fingers (b).",
+    "Colonoscopy findings shows a pedunculated polyp in the colon (Figure  2a ) and large polypoidal mass within the colon (Figure  2b ). Snare polypectomy was performed to remove the polyp (Figure  2c ).",
+    "Histological section showing Peutz-Jeghers polyp with arborizing smooth muscle fibers extending from the muscularis mucosa into the lamina propria, forming a tree-like pattern within the colonic epithelium.",
+    "Coronal magnetic resonance enterography (MRE) images show multiple polypoid lesions (marked by red arrows) within the intestine."
+  ],
+  "tables": [
+    "Complete blood count during admission   CBC: complete blood count; WBC: white blood cells; RBC: red blood cells; MCV: mean corpuscular volume",
+    "Iron profile in further analysis  TIBC: total iron-binding capacity"
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004924.5268154
+}

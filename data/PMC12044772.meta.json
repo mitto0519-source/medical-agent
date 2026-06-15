@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12044772",
+  "pmid": "40312748",
+  "title": "The predictive value of endocan as a novel biomarker: an umbrella study on meta-analyses.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nayak SS, Ameen D, Nobakht S, Nayak R, Prabhu SV, Keivanlou MH, Hassanipour S, Amini-Salehi E, Thakker N.",
+  "doi": "10.1186/s13643-025-02858-4",
+  "figures": [
+    "Study selection process",
+    "Quality assessment of included studies based on AMSTAR2 checklist",
+    "Results of power analysis.  A  Diabetes mellitus.  B  Hypertension.  C  Preeclampsia.  D  Coronary artery disease.  E  Coronary slow flow.  F  Obstructive sleep apnea.  G  Sepsis mortality.  H  Sepsis multiple organ dysfunction syndrome.  I  Sepsis respiratory failure.  J  Chronic kidney disease.  K  COVID-19.  L  Acute respiratory distress syndrome",
+    "The pathophysiology of endocan in different medical conditions"
+  ],
+  "tables": [
+    "Characteristics of included studies",
+    "Predictive value of endocan in various medical conditions",
+    "GRADE assessment of the predictive value of endocan in different medical conditions"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002104.203956
+}

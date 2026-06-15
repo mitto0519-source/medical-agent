@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11922443",
+  "pmid": "40101090",
+  "title": "Exploring the evolving frontiers of sleep deprivation research in the post-COVID-19 era.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Abdelwahab SI, Taha MME, Aldhahi MI, Jerah AA, Farasani A, Abdullah SM, Aljahdali IA, Ibrahim R, Oraibi O, Oraibi B, Alfaifi HA, Alzahrani AH, Babiker YOH.",
+  "doi": "10.1097/md.0000000000041806",
+  "figures": [
+    "Search strategy.",
+    "(A) Global production in sleep deprivation research (SDR). Countries with a dark blue color are the most productive. Countries outside the blue category have yet to contribute to research in this area. This figure was generated using the Bibliometrix application and the BibTex data file. (B) An overview of the distribution of multiple-country publications (MCP) and single-country publications (SCP",
+    "Author’s keyword mapping. The analysis was conducted using VOSviewer, focusing on author keywords with more than 50 occurrences in the dataset.",
+    "Thematic map of sleep deprivation research based on authors’ keywords. Thematic map is divided into 4 quadrants based on centrality and density, which represent the importance and development of the research topics. This figure was generated using the Bibliometrix application and the BibTex data file.",
+    "Trending topics.",
+    "Thematic evolution of the sleep deprivation research. 2022 was a crucial point for the transformation of the main topics. This figure was generated using the Bibliometrix application and the BibTex data file."
+  ],
+  "tables": [
+    "Most cited documents.",
+    "Terms of the thematic map."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002169.135263
+}

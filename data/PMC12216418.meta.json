@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12216418",
+  "pmid": "40593528",
+  "title": "Muscle Rev-erb controls time-dependent adaptations to chronic exercise in mice.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu J, Xiao F, Choubey A, Kumar S U, Wang Y, Hong S, Yang T, Otlu HG, Oturmaz ES, Loro E, Sun Y, Saha P, Khurana TS, Chen L, Hou X, Sun Z.",
+  "doi": "10.1038/s41467-025-60520-y",
+  "figures": [
+    "Low-intensity exercise before sleep is better than after waking for weight control, contractile performance, and glucose tolerance.   a  Treadmill training scheme.  b  Body weight ( n  = 10 mice/group), * p  = 0.0067, 0.0161, 0.0191, and 0.0147 for EX_AM vs. EX_PM;  #  p  = 0.0316, 0.0363, 0.0358, and 0.0360 for EX_AM vs. Rest, with 2-way repeated-measure ANOVA and Tukey test.  c  Magnetic resonan",
+    "Rev-MKO mice show normal baseline mitochondrial content, muscle mass, fiber type, locomotor activities, and energy expenditure.   a  Body weight. n = 8 mice for WT (4 Rev-erb floxed  and 4 MLC-Cre),  n  = 7 mice for KO.  b  Average food intake at 6 months of age ( n  = 5 mice per group). For WT, 3 Rev-erb floxed  and 2 MLC-Cre. Analyzed by 2-sided student  t -test.  c  RT-qPCR analysis of the tibi",
+    "Muscle Rev-erb is required for the timing effects of exercise training on weight control, contractile performance, and glucose tolerance.   a  Body weight ( n  = 9 mice for KO EX_AM,  n  = 10 mice for the other groups). * p  = 0.0473 and 0.042 for WT EX_AM vs. WT EX_PM with 2-way repeated-measure ANOVA and Tukey test. WT, Rev-erb floxed  mice.  b ,  c  Forelimb grip strength test and wire hang tes",
+    "Muscle Rev-erb is required for the time-dependent effects of chronic exercise on energy balance and locomotor activity.   a  Average daily food intake ( n  = 9 mice/group). WT are Rev-erb floxed  mice. * p  = 0.0452, 0.0208, and 0.0183 by 1-way ANOVA and Holm-Sidak test.  b  Body weight at 4.5 months old ( n  = 8 mice for WT EX_AM,  n  = 9 mice for WT EX_PM,  n  = 9 mice for KO EX_AM,  n  = 7 mice",
+    "Muscle Rev-erb regulates the baseline diurnal rhythm of muscle strength and endurance.   a  Wire hang in males at 3 months old. * p  = 0.0085 (WT vs. KO at ZT23-1) and 0.0255 (ZT23-1 vs. ZT11-13 for WT).  b  Forelimb grip strength in males at 3 months old. * p  = 0.001 (WT vs. KO at ZT23-1) and 0.0001 (ZT23-1 vs. ZT11-13 for WT). Data are mean ± SD.  c  Treadmill test with the low-speed profile in",
+    "Multi-omics characterization of muscle Rev-erb functions.   a  Venn diagram showing the ZT22 and ZT10 overlap of differentially expressed genes (DEGs) in KO vs. WT as identified by RNA-seq at 6 months of age ( q  &lt; 0.05, fold change &gt; 1.5). WT are Rev-erb floxed  mice.  b ,  c  Top enriched KEGG pathways in DEGs at ZT22 and ZT10.  d ,  e  Heat map of DEGs showing the relative abundance (in Z",
+    "Muscle Rev-erb regulates the diurnal rhythm of bioenergetics and time-dependent metabolic adaptations to acute exercise.   a  Integrated transcriptomics and metabolomics analysis.  b ,  c  Glucose uptake and fatty acid oxidation (FAO) rates in primary myotubes isolated from mice at 3 months old, followed by electric pulse stimulation (EPS) during isotope tracing with  3 H-deoxyglucose (DOG) or  3 "
+  ],
+  "tables": [],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001389.715891
+}

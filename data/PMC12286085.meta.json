@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12286085",
+  "pmid": "40700257",
+  "title": "The Owls Are Not What They Seem: Health, Mood, and Sleep Problems Reported by Morning and Evening Types with Atypical Timing of Weekend Sleep.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Putilov AA, Verevkin EG, Sveshnikov DS, Bakaeva ZV, Yakunina EB, Mankaeva OV, Torshin VI, Trutneva EA, Lapkin MM, Lopatskaya ZN, Budkevich RO, Budkevich EV, Ligun NV, Puchkova AN, Dorokhov VB.",
+  "doi": "10.3390/clockssleep7030035",
+  "figures": [
+    "Scores on morningness-eveningness scales and sleep times in five trait+state types. Scores on morningness-eveningness scales and sleep times on weekends ( B ) were used for the subdivision of the whole sample into subsamples of unidimensional trait and state types, with the following subdivision into subsamples of trait+state types: Mm-, Me-, Neither-, Em-, and Ee-types. ( A ) Scores on scales des",
+    "Simulations of three sleep–wake cycles in students from four trait+state types. Simulations of a sequence of three sleep–wake cycles for Fr, Sa, and Su (Friday, Saturday, and Sunday); fBT-RT: Bed- and risetimes on weekends; wBT-RT: Bed- and risetimes on weekdays. Mm-, Me-, Em-, and Ee-types: Distribution into trait+state subsamples according to the combinations of scores on morningness-eveningness"
+  ],
+  "tables": [
+    "Assignment of students to three trait types, three state types, and five trait+state types.",
+    "F-ratios and  post hoc  pairwise comparisons of questionnaire scores in five trait+state types.",
+    "F-ratios and  post hoc  pairwise comparisons of sleep times in five trait+state types.",
+    "Ratio between the expected and real count of LIVEMAN types among trait and state types.",
+    "Ratio between the expected and real count of LIVEMAN types among trait+state types.",
+    "Associations between chronotypes and concerns about health, mood, and sleep.",
+    "Parameters of the model of sleep–wake regulation in five trait+state types.",
+    "Answers to the study questions #1–#4."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001186.0412934
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12343232",
+  "pmid": "40808843",
+  "title": "A closer look at the role of nutrition in children and adults with ADHD and neurodivergence.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hunter C, Smith C, Davies E, Dyall SC, Gow RV.",
+  "doi": "10.3389/fnut.2025.1586925",
+  "figures": [
+    "Demographic data, including diagnoses and symptoms in children and adults with ADHD and other neurodivergent symptoms.",
+    "Children’s cohort nutrient levels (%) vs. Recommended Reference Range."
+  ],
+  "tables": [
+    "Demographic data, including diagnoses and symptoms in children and adults with ADHD and other neurodivergent symptoms.",
+    "Demographic data including medication, supplements, eating styles, food intolerances, childhood infections, antibiotic use and IQ in children and adults with ADHD and other neurodivergent conditions/symptoms.",
+    "Reference ranges for all nutrients according to laboratory (Viva Health and Biolab Medical Unit).",
+    "Demographics and characteristics of the children’s group ( n  = 36).",
+    "Demographic data including medication, supplements, eating styles, food intolerances, childhood infections, antibiotic use and IQ in children and adults with ADHD and other neurodivergent conditions/symptoms in the children’s group ( n  = 36).",
+    "Reference ranges for the children’s cohort for all nutrients according to laboratory (viva health and BioLab medical unit)."
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780002843.1022415
+}

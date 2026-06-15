@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12127263",
+  "pmid": "40441815",
+  "title": "The epidemiology and burden of ten mental disorders in countries of the Association of Southeast Asian Nations (ASEAN), 1990-2021: findings from the Global Burden of Disease Study 2021.",
+  "year": 2025,
+  "journal": "",
+  "authors": "GBD 2021 ASEAN Mental Disorders Collaborators.",
+  "doi": "10.1016/s2468-2667(25)00098-2",
+  "figures": [
+    "Age-standardised prevalence of and DALY rate attributable to mental disorders in the Association of Southeast Asian Nations, 2021  (A) Age-standardised prevalence. (B) Age-standardised DALY rate. DALY=disability-adjusted life-year.",
+    "Relative contribution of DALYs attributable to Level 3 mental disorders to total mental disorder DALYs in the ASEAN and its member states, 2021  ASEAN=Association of Southeast Asian Nations. DALY=disability-adjusted life-year.",
+    "Number of DALYs by mental disorder, age, and sex in the Association of Southeast Asian Nations, 2021  DALY=disability-adjusted life-year.",
+    "Rank of mental disorders among all Level 2 causes by number of DALYs, 1990 and 2021  The numbers represent the change in rank from 1990 to 2021. For example, in the ASEAN, mental disorders ranked 11th in 1990 and 6th in 2021, a +5 increase in rank. ASEAN=Association of Southeast Asian Nations. DALY=disability-adjusted life-year."
+  ],
+  "tables": [
+    "Total and sex-disaggregated number of prevalent cases and age-standardised prevalence of mental disorders in 1990 and 2021, and percentage change from 1990 to 2021, in the ASEAN and each of its member countries"
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050374.0253017
+}

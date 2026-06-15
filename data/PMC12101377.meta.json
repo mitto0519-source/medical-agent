@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12101377",
+  "pmid": "40407447",
+  "title": "The Impact of a Multidimensional Physical Activity Intervention on Glycemic Control in Type 1 Diabetes: A Preliminary Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Papale O, Festino E, Di Rocco F, Foster C, Prestanti I, Serafini S, Izzicupo P, Cortis C, Fusco A.",
+  "doi": "10.3390/jfmk10020163",
+  "figures": [
+    "Placement of the Actigraph GT9X accelerometers to evaluate physical activity levels.",
+    "Timeline of the measurements carried out during the experimental sessions. * = PREvención con Dieta MEDiterránea, Pittsburgh Sleep Quality Index, Morningness-Eveningness Questionnaire, International Physical Activity Questionnaire; # = Physical Activity Enjoyment Scale Questionnaire.",
+    "Blood glucose levels in testing days (grey line; ( a ) Indoor Session 1, ( b ) Indoor Session 2, ( c ) Outdoor Session 1, ( d ) Outdoor Session 2) in comparison with the enrolment day (black line). Horizontal dashed lines identify the glucose thresholds and the vertical solid line identifies different time points. * the participant’s wake-up (07:20) and fall asleep (23:10) times; # mealtime and in"
+  ],
+  "tables": [
+    "Summary of daily dietary intake, and lifestyle-related questionnaires (adherence to a Mediterranean diet, sleep quality, chronotype, enjoyment, and IPAQ) results collected across the experimental sessions.",
+    "Physical Activity Level data recorded during the outdoor session.",
+    "Psycho-physiological parameters collected during the four experimental sessions.",
+    "Summary of hemodynamic responses collected across the experimental sessions."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001277.1371896
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12172602",
+  "pmid": "40386883",
+  "title": "Data Missingness and Equity Implications in the Nation's Largest Student Fitness Surveillance System: The New York City School Based Physical Fitness Testing Programs, 2006-2020.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Thompson HR, Ricks-Oddie JL, Schneider M, Day S, Argenio K, Konty K, Radom-Aizik S, Guo Y, Cooper DM.",
+  "doi": "10.1111/josh.70021",
+  "figures": [
+    "Proportion of annually missing fitness testing data for all three fitness tests (administered through the New York City FITNESSGRAM (NYCFG) included PACER, push‐ups, and curl‐ups), by grade type and student demographic characteristics. Data are for school years 2007/08–2018/19 (NYCFG years 2006–07 and 2019–20 were excluded due to the high prevalence of missingness in those years). Grade level incl"
+  ],
+  "tables": [
+    "Sociodemographic characteristics of New York City public school students (grades 4–12) eligible for school fitness testing, school years 2006/07–2019/20.",
+    "Proportion of annually missing fitness testing data, by student demographic characteristics, school years 2007/08–2018/19.",
+    "Associations between student sociodemographic characteristics and missing fitness testing data, school year 2018–19.",
+    ""
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011388.5455186
+}

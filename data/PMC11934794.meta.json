@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11934794",
+  "pmid": "40128739",
+  "title": "The impact of lifestyle sports on the sleep quality of depressed high school students in Jiangsu Province, China: based on cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen X, Yang Y, Hu J, Jin S, Lu P, Zeng X, Yi X, Yin R, Zhong C.",
+  "doi": "10.1186/s12889-024-21238-6",
+  "figures": [
+    "Moderated mediation model of depression between lifestyle sports and sleep quality.  Note : *** means  P  &lt; 0.001",
+    "Structural equation model of six dimensions of lifestyle sports and sleep quality"
+  ],
+  "tables": [
+    "Demographic characteristics of the participants( N  = 32974)",
+    "Correlation analysis among major variables( N  = 32974)",
+    "Data for the analysis of mediating effect of lifestyle sports on sleep quality and depression",
+    "Bootstrap test results for mediation effect",
+    "Correlation analysis between variables ( N  = 14943)",
+    "Hypothesis testing of model regression coefficients"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001510.3961363
+}

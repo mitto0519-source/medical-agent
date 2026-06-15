@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11985134",
+  "pmid": "40212288",
+  "title": "Fatty acid desaturase genetic variations in heart failure and cardiovascular disease.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gittess D, Thompson I, Traktuev DO, Duarte JD, Keeley EC.",
+  "doi": "10.1016/j.ahjo.2025.100529",
+  "figures": [
+    "Representation of the omega (ω)-6 and ω−3 fatty acid pathways depicting sites of delta (δ) 5- and 6-desaturase activity in the fatty acid desaturase (FADS) 1 and 2 genes (chemical structures were retrieved from  pubchem.ncbi.nlm.nih.gov )."
+  ],
+  "tables": [
+    "Summary of polymorphisms reviewed.",
+    "Effects of FADS SNPs on D5D and D6D expression and ω−3 and ω−6 fatty acid levels.",
+    "FADS  SNPs and associated risks of cardiovascular disease.",
+    "FADS SNPs and associations with cardiovascular risk factors.",
+    "Associations between diet, SNPs, and PUFA levels."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041220.9564202
+}

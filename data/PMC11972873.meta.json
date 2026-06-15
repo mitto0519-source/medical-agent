@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11972873",
+  "pmid": "40201374",
+  "title": "Adiposity rebound and body mass index in Japanese patients with congenital hypothyroidism.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nakayama K, Kaneko N, Hishimura N, Yamaguchi T, Morikawa S, Yokota I, Kamasaki H, Nagasaki K, Hasegawa Y, Nakamura A.",
+  "doi": "10.1297/cpe.2024-0075",
+  "figures": [
+    "Distribution of TSH and FT4 at the first visit. TSH, thyroid-stimulating hormone;\nFT4, free thyroxine.",
+    "Longitudinal BMI-SDS in (A) boys and (B) girls with CH. Error bars show ± 1SD. BMI,\nbody mass index; CH, congenital hypothyroidism; SDS, standard deviation score.",
+    "The age at AR by (A) FT4 at NBS, (B) FT4 at the first visit, (C) TSH at NBS, (D) TSH\nat the first visit, (E) Disease type, and (F) DFE ossification at the first visit.\nGreen diamonds represent means and 95% CI; AR, adiposity rebound; NBS, newborn\nscreening; FT4, free thyroxine; TSH, thyroid-stimulating hormone; DFE, distal femoral\nepiphysis; DH, dyshormonogenesis; CI, confidence interval; SE, stan",
+    "BMI at 15–18 yr by (A) FT4 at NBS, (B) FT4 at the first visit, (C) TSH at NBS, (D)\nTSH at the first visit, (E) Disease type, and (F) DFE ossification at the first visit.\nGreen diamonds represent means and 95% CI; BMI, body mass index; NBS, newborn\nscreening; FT4, free thyroxine; TSH, thyroid-stimulating hormone; DFE, distal femoral\nepiphysis; DH, dyshormonogenesis; CI, confidence interval; SE, sta",
+    "BMI curves for (A) boys and (B) girls with CH. Error bars show ± 1SD. Dotted lines\ndepict BMI of patients without DFE at the first visit. Solid line depict the mean BMI\nof patients with DFE at the first visit. BMI, body mass index; CH, congenital\nhypothyroidism; SD, standard deviation; DFE, distal femoral epiphysis."
+  ],
+  "tables": [
+    "Participant characteristics"
+  ],
+  "query": "thyroid function adolescent",
+  "fetched_at": 1780012462.3849063
+}

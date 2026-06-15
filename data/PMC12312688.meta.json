@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12312688",
+  "pmid": "40746615",
+  "title": "Biological maturation determines the beneficial effects of high-intensity functional training on cardiorespiratory fitness in male adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Domaradzki J, Alvarez C, Szafraniec R, Koźlenia D.",
+  "doi": "10.7717/peerj.19756",
+  "figures": [
+    "The bubble plot presents the numbers of individuals from the chronological age groups in maturity offset class categories.  The wheel size represents the number of individuals. LM, late matured (biologically youngest, maturity offset &lt;2.23 years after APHV); MLM, middle late matured (maturity offset &lt;3.15 years after APHV); MEM, middle early matured (maturity offset &lt;3.59 years after APHV"
+  ],
+  "tables": [
+    "Volume progression pattern.",
+    "Descriptive statistics of the baseline demographic and anthropometrical measurements in experimental (EG) and control (CG) groups across chronological age groups.",
+    "Descriptive statistics of the changes (Δ) induced by HIFT (EG) and spontaneous (CG) in body fat (BF), systolic blood pressure (SBP), diastolic blood pressure (DBP) and cardiorespiratory fitness (CRF).",
+    "Multiple linear regressions with chronological age (Age) and maturity status (Maturity offset) as outcomes predictors."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780010954.639265
+}

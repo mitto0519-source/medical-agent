@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12323241",
+  "pmid": "40760687",
+  "title": "The impact of adverse childhood experiences in the development of post-traumatic stress disorder in adults over 18 years of age: a systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Umar M, Mustajab M, Fatima Z, Richard RM, Qureshi SR, Muneer SU, Shamim L, Ahmed S, Hashim HT, Basalilah AFM.",
+  "doi": "10.1186/s12888-025-07090-x",
+  "figures": [
+    "Preferred reporting items for systematic review and meta-analysis flow diagram"
+  ],
+  "tables": [
+    "Comprehensive Search Strategy Detailing Databases, Search Terms, and Number of Articles Retrieved",
+    "Defined Inclusion and Exclusion Criteria for Selecting Studies in the Systematic Review",
+    "Quality assessment tool for cohort studies using the new-castle Ottawa scale",
+    "Axis Scale for cross-sectional studies",
+    "Baseline Characteristics of Included cross-sectional Studies",
+    "Baseline characteristics of included cohort studies",
+    "Summary of Study Characteristics, Participants, Assessments, Statistical Analysis, Key Findings, and Limitation",
+    "Comparison of Sample Characteristics and Adverse Childhood Experiences across Studies"
+  ],
+  "query": "PTSD trauma adolescent",
+  "fetched_at": 1779997563.803474
+}

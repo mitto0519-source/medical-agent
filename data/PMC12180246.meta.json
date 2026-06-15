@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12180246",
+  "pmid": "40537739",
+  "title": "Triglyceride-glucose index and its related factors may be predictors for cardiovascular disease among Chinese postmenopausal women: a 12-year cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tu W, Xu R, Wang D, Luo N, Wu M, Zhou Y, Ning J.",
+  "doi": "10.1186/s12944-025-02643-1",
+  "figures": [
+    "Flowchart depicting the selection of participants",
+    "Incidence of CVD based on the cutoff values of TyG and its relevant factors among postmenopausal women",
+    "Kaplan-Meier curves for CVD based on the cut-off of TyG index ( A ), TyG-WC ( B ), TyG WHtR ( C ), TyG-BMI ( D ) in the postmenopausal population",
+    "Restricted cubic spine curves for the association of TyG ( A ), TyG-WC ( B ), TyG-WHtR ( C ), and TyG-BMI ( D ) with the risk of CVD among the postmenopausal population in the adjusted model",
+    "Decision curve analysis curves for the association of different models with the risk of CVD among the postmenopausal population. The base model was adjusted for age, education level, smoking, hypertension, diabetes, dyslipidemia, creatinine, and hs-CRP"
+  ],
+  "tables": [
+    "Baseline characteristics of the total individuals",
+    "Predictive performance of TyG and its relevant factors for CVD risk among postmenopausal women",
+    "Association of TyG and its relevant factors and the risk of CVD in participants",
+    "Improvement in discrimination and risk reclassification for CVD risk after adding four TyG and its relevant factors"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041635.4089293
+}

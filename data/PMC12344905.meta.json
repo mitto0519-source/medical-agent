@@ -1,0 +1,16 @@
+{
+  "pmcid": "PMC12344905",
+  "pmid": "40804420",
+  "title": "Prescribed medications for patients with amphetamine-type stimulant use disorder seen in rural-serving Pacific Northwest primary care clinics.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yerton MJ, McCabe CJ, Iles-Shih MD, Tsui JI, Hallgren KA.",
+  "doi": "10.1186/s13722-025-00593-8",
+  "figures": [],
+  "tables": [
+    "Demographics, co-occurring conditions, and encounters with behavioral health specialists among primary care patients in rural-serving clinics with clinically documented other stimulant abuse or dependence (N = 963)",
+    "Receipt of medication orders among primary care patients with clinically documented other stimulant abuse or dependence (N = 963), for full sample and based on co-occurring disorders"
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058416.0312335
+}

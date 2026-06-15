@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12097236",
+  "pmid": "40406231",
+  "title": "Association between non-alcoholic fatty liver disease and arterial stiffness measured by brachial-ankle pulse wave velocity: a cross-sectional population study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang Y, Fang Z, Fu Q, Yao D, Jin X.",
+  "doi": "10.7717/peerj.19405",
+  "figures": [
+    "Flow chart of the participant selection procedure.",
+    "Correlation between AS and various risk factors.  Multiple logistic regression analysis was used.  P  &lt; 0.05 in a two-tailed test indicates statistical significance.",
+    "Multiple linear regression model: Relationship between baPWV and multiple risk factors in the whole population.  (A) Model 1, adjusted for gender, age, BMI, smoking, drinking, and exercise; (B) Model 2, further adjusted NAFLD based on Model 1; (C) further adjusted high TC, high TG, high UA, high FBG, low HDL based on Model 2. A multiple linear regression model was used for analysis.  P  &lt; 0.05 ",
+    "Multiple linear regression model: Relationship between baPWV and multiple risk factors in different sex.  (A) Model 1, adjusted for age, BMI, smoking, drinking, and exercise in men; (B) Model 2, further adjusted NAFLD based on Model 1 in men; (C) further adjusted high TC, high TG, high UA, high FBG, low HDL based on Model 2. A multiple linear regression model was used for analysis.  P  &lt; 0.05 i",
+    "Age-baPWV scatter plot.  (A) The age-baPWV scatter plot of NAFLD and non-NAFLD groups. (B) the age-baPWV scatter plot of males and females in the NAFLD population; (C) the age-baPWV scatter plot of NAFLD and non-NAFLD groups in sensitivity analysis. (D) the age-baPWV scatter plot of males and females in the NAFLD population in the sensitivity analysis. The number at the intersection of the black d"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of NAFLD group and non-NAFLD group.",
+    "Comparison of related risk factors in different degrees of AS.",
+    "BaPWV in different age groups between NAFLD and non-NAFLD.",
+    "BaPWV in different age groups by gender in NAFLD."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995226.706568
+}

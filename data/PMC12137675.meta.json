@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12137675",
+  "pmid": "40467974",
+  "title": "Functional connectivity of the nucleus accumbens predicts clinical course in medication adherent and non-adherent adult ADHD.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zaher A, Leonards J, Reif A, Grimm O.",
+  "doi": "10.1038/s41598-025-96780-3",
+  "figures": [
+    "Study workflow.",
+    "Correlation between global score WRI  t  1  and the FC-quotient between NAc and the paracingulate Gyrus right in all subjects. In 2a Statistical  t -map showing the significant cluster of the connectivity analysis: the paracingulate gyrus right and its localization is demonstrated at the MNI  x  = 12 plane. In 2b a scatterplot of individual FC-Quotient against global score WRI  t  1  of each subje",
+    "Correlation between ∆ WRI ( t  2 - t  1 ) and the FC-quotient between the NAc and the anterior insula right in all subjects. In 3a Statistical t-map showing the significant cluster of the connectivity analysis: the anterior insula right and its localization is demonstrated MNI  x  = 36 plane. In 3b a scatterplot of individual FC-quotient against ∆ WRI each subject is shown. NB: Arrow direction exp",
+    "Correlation between ∆ WRI ( t  2 - t  1 ) and the FC-quotient between NAc and the posterior insula in MA vs. MNA. In 4a Statistical t-map showing the significant cluster of the connectivity analysis: the posterior insula right and its localization is demonstrated MNI  x  = 42 plane. In 4b a scatterplot of individual FC-quotient of MA patients against ∆ WRI of those subjects is shown. In 4c a scatt",
+    "Correlation between NAc connectivity and the densities of D1, D2 and DAT. In 5a a Statistical  t -map showing significant clusters of the connectivity analysis: encompassing the precuneus cortex, the frontal pole right, the posterior cingulate gyrus. For illustrative purposes a  p  &lt; 0.01 was used for this analysis. In 5b a box plot displays the Fisher’s z-transformed Pearson correlation coeffi"
+  ],
+  "tables": [
+    "Demographics (participants, n = 54); M: mean; SD: standard deviation; MA: medication adherent group; MNA: medication non adherent group.",
+    "Movement-related effects in all MA and MNA subjects (participants, n = 54; MA, n = 34; MNA, n = 20); FD: framewise displacement; SD: standard deviation."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058852.0994582
+}

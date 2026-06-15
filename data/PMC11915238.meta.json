@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11915238",
+  "pmid": "40095469",
+  "title": "Incidence of Major Depressive Disorder Relapse and Effectiveness of Pharmacologic and Psychological Interventions in Primary Care: A Systematic Review and Meta-Analysis: Incidence de la rechute du trouble dépressif majeur et efficacité des interventions pharmacologiques et psychologiques en soins primaires : revue systématique et méta-analyse.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Abu-Ashour W, Delaney S, Farrell A, Gamble JM, Hawboldt J, Sale JEM.",
+  "doi": "10.1177/07067437251322401",
+  "figures": [
+    "PRISMA flow diagram.",
+    "Forest plot for MDD relapse incidence rate in primary care by intervention group: (A) pharmacotherapy; (B) non-pharmacotherapy; (C) combination.",
+    "Forest plot for prevention of MDD relapse in primary care by intervention group: (A) pharmacotherapy; (B) non-pharmacotherapy; (C) combination."
+  ],
+  "tables": [
+    "Demographic Table.",
+    "Individual Study Characteristics."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055824.5890467
+}

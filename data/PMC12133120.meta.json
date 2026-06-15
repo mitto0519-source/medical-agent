@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12133120",
+  "pmid": "38636488",
+  "title": "Growth Hormone Therapy: Comparison of Short- and Long-Term Outcomes between Children with Growth Hormone Deficiency and Small for Gestational Age.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gleiss A, Raimann A, Haufler F, Ertl DA, Sagmeister S, Hartmann G.",
+  "doi": "10.1159/000538798",
+  "figures": [
+    "Study cohort and inclusion and exclusion process. See text for details.",
+    "Distribution of raw data for short-term parameters (first year of therapy) for 103 GHD and 53 SGA patients. Note that these GHD-specific SDS [ 20 ] were also applied to SGA patients for comparison.",
+    "Distribution of raw data for long-term parameters (up to final height). See online supplementary Table 2 for number of missing values."
+  ],
+  "tables": [
+    "Patient characteristics at start of treatment",
+    "Results after 1st year of GHT in GHD and SGA",
+    "Final height after GHT in GHD and SGA",
+    "Adjusted  R  2  values for linear regression with dependent variable delta height SDS from start of therapy to FH based on 41 SGA and 89 GHD patients with available or imputed FH"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013280.7781053
+}

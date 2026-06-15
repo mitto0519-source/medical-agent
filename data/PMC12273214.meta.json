@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12273214",
+  "pmid": "40681969",
+  "title": "The association of metabolic syndrome components with chronic kidney disease in patients with hypertension: a community-based cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yu Y, Li J, Ma X, Chen L, Yin X, Liu X, Qin G, Yu Y, Xu H.",
+  "doi": "10.1186/s12877-025-06192-1",
+  "figures": [
+    "Flowchart of the study participants",
+    "Kaplan–Meier cumulative incidence of CKD in MS and MS-free subjects",
+    "Kaplan–Meier cumulative incidence of CKD in the different numbers of MS components"
+  ],
+  "tables": [
+    "The baseline characteristics of the total participants and patients with or without CKD",
+    "Crude and multivariate-adjusted hazard ratio (95% CI) of CKD associated with MS",
+    "Hazard ratio (95% CI) of MS components for incident CKD",
+    "Hazard ratio (95% CI) for incident CKD according to different MS component patterns"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041204.544063
+}

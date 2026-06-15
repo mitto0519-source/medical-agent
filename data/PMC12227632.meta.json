@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12227632",
+  "pmid": "40615604",
+  "title": "Aspartame and ischemic stroke: unraveling the molecular link through network toxicology and molecular docking analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang T, Wang T, Yu K, Huang C, Bao K.",
+  "doi": "10.1038/s41598-025-08898-z",
+  "figures": [
+    "Flowchart of the study design.",
+    "( A ) Venn diagram of targets associated with aspartame and ischemic stroke. ( B ) Network diagram depicting the potential targets shared between aspartame and ischemic stroke.",
+    "( A ) Protein–protein interaction (PPI) network of potential targets, with a confidence score threshold set at ≥ 0.7; nodes represent proteins and edges indicate their interactions. ( B ) Visualization of the PPI network using Cytoscape, with node color and size adjusted based on degree values—darker colors and larger circles represent stronger interactions. ( C ) Gene Ontology (GO) enrichment ana",
+    "Molecular docking of Aspartame with its target AGT. ( A ) Cartoon representation of the 3D interactions between the small molecule compound and its target protein. ( B ) 2D interaction diagram illustrating the binding between the compound and its target.",
+    "Molecular docking of Aspartame with its target IL1B. ( A ) Cartoon representation of the three-dimensional interactions between the small molecule and its target protein. ( B ) Two-dimensional interaction map of the compound and its target.",
+    "Molecular docking of Aspartame with its target MMP9. ( A ) Cartoon representation of the three-dimensional interactions between the small molecule and its target protein. ( B ) Two-dimensional interaction map of the compound and its target.",
+    "Molecular docking of Aspartame with its target SRC. ( A ) Cartoon representation of the three-dimensional interactions between the small molecule and its target protein. ( B ) Two-dimensional interaction map of the compound and its target.",
+    "Molecular docking of Aspartame with its target TNF. ( A ) Cartoon representation of the three-dimensional interactions between the small molecule and its target protein. ( B ) Two-dimensional interaction map of the compound and its target.",
+    "Molecular docking of Captopril with its target AGT. ( A ) Cartoon representation of the three-dimensional interactions between the small molecule and its target protein. ( B ) Two-dimensional interaction map of the compound and its target.",
+    "Molecular docking of Thalidomide with its target TNF. ( A ) Cartoon representation of the three-dimensional interactions between the small molecule and its target protein. ( B ) Two-dimensional interaction map of the compound and its target."
+  ],
+  "tables": [
+    "Binding energies between the core targets and aspartame."
+  ],
+  "query": "artificial sweetener depression",
+  "fetched_at": 1779974917.163614
+}

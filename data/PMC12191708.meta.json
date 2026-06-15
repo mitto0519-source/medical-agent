@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12191708",
+  "pmid": "40699860",
+  "title": "Differential Genetic Architecture of Insulin Resistance (HOMA-IR) Based on Obesity Status: Evidence from a Large-Scale GWAS of Koreans.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Choi JE, Kwon YJ, Hong KW.",
+  "doi": "10.3390/cimb47060461",
+  "figures": [
+    "Study design.",
+    "Miami plot. Miami plots illustrating the results of the genome-wide association studies (GWASs) for the HOMA-IR in the normal-weight group (blue) and the overweight/obese group (red). The  x -axis represents the chromosomal positions of SNPs across chromosomes 1 to 22, and the  y -axis shows the −log 10  transformed  p -values for the association with the HOMA-IR. The solid horizontal line indicat",
+    "Regional plot. Graphical illustration of the SNP ± 400 kbp position and mapped genes discovered in the GWASs. ( a ) rs662799 (APOA5) of overweight/obese group; ( b ) rs662799 (APOA5) of normal-weight group; ( c ) rs671 (ALDH2) of overweight/obese group; ( d ) rs671 (ALDH2) of normal-weight group."
+  ],
+  "tables": [
+    "Genome-wide significant and suggestive association results in each group."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036649.4331036
+}

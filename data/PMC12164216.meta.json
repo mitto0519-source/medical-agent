@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12164216",
+  "pmid": "40506701",
+  "title": "Systems approaches in public health: beyond mapping the causes.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Crielaard L, Nicolaou M, Brown AD, Dijkstra SC, Ter Ellen F, Elsenburg LK, Luna Pinzon A, Waterlander WE, Stronks K.",
+  "doi": "10.1186/s12966-025-01766-z",
+  "figures": [
+    "The problem framing matrix, as presented by Hovmand in his book Community Based System Dynamics [ 50 ,  62 ]"
+  ],
+  "tables": [
+    "It is common for causal loop diagrams developed in the context of obesity to be geared towards describing the causes/drivers of obesity as a system: describing the current system producing undesired outcomes",
+    "Problem framing by distinguishing between problems of coordination, learning, analysis and transformation, as presented by Hovmand [ 50 ,  62 ]",
+    "Distinction between the complex public health problem/the subject of the systems approach, and the intended result/the object of the systems approach",
+    "Examples of systems approaches seeking to achieve coordination, learning, analysis and transformation to address the complex public health problem of obesity",
+    "Examples of higher level leverage points associated with fundamental changes to the system’s underlying structure"
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975696.2637317
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11944085",
+  "pmid": "40142186",
+  "title": "Association Between Shift Work and Acute Coronary Syndrome According to Alcohol Intake and Smoking.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ryu SJ, Kim SM, Kook HY, Park EY, Jung E.",
+  "doi": "10.3390/medicina61030373",
+  "figures": [
+    "Forest plot of ACS risk factors."
+  ],
+  "tables": [
+    "Characteristics of the study population by shift work status.",
+    "Characteristics of the study population according to smoking status.",
+    "Characteristics of the study population according to alcohol intake.",
+    "Cox proportional logistic regression analysis for the study outcome.",
+    "Interaction analysis between shift work, smoking, and alcohol consumption on the study outcome."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037687.3457704
+}

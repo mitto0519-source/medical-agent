@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12293181",
+  "pmid": "40723142",
+  "title": "Epidemiologic Investigation of a Varicella Outbreak in an Elementary School in Gyeonggi Province, Republic of Korea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sung G, Jang J, Lee K.",
+  "doi": "10.3390/children12070949",
+  "figures": [
+    "Floor plan of Elementary School A classrooms.",
+    "Epidemic curve of a varicella outbreak associated with Elementary School A.",
+    "Network diagram of varicella transmission associated with Elementary School A outbreak"
+  ],
+  "tables": [
+    "General characteristics of varicella cases associated with the Elementary School A outbreak (N = 23).",
+    "Clinical characteristics of varicella cases associated with the Elementary School A outbreak (N = 23).",
+    "Distribution of 23 varicella cases by private academy and after-school registrations.",
+    "Affiliation and academy details of varicella outbreak cases associated with Elementary School A."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019239.21883
+}

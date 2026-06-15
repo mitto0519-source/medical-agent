@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12031961",
+  "pmid": "39503851",
+  "title": "Low perceived social support in mothers during pregnancy and early childhood; associations with anxiety and ADHD symptoms in children at 3 and 8 years.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ingeborgrud CB, Oerbeck B, Friis S, Pripp AH, Aase H, Biele G, Dalsgaard S, Overgaard KR.",
+  "doi": "10.1007/s00127-024-02792-1",
+  "figures": [
+    "Percentages of children categorized with anxiety disorders or ADHD at the age of 8 years by maternal social support level (low/good) at each assessment point.  Note  P- values for comparisons between the group with low maternal social support and the group with maternal good social support, were &lt; 0.05 at all time points for both child anxiety and ADHD"
+  ],
+  "tables": [
+    "Descriptive statistics of child and maternal continuous variables for the whole sample, and comparisons between children with mothers reporting low and good social support",
+    "Logistic regression, univariable analyses",
+    "Logistic regression, multivariable models"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048629.1696773
+}

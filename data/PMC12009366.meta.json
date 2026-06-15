@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12009366",
+  "pmid": "40253566",
+  "title": "Global burden trends and forecasts for MAFLD in adolescents and young adults from 1990 to 2021.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ruan S, Huang L, Song J, Yi Z, Sun W, Zhou F, Feng C, Du G, Xie J, Lu Y, Fan G.",
+  "doi": "10.1038/s41598-025-98489-9",
+  "figures": [
+    "Temporal trend of age-standardised prevalence rate, age-standardised incidence rate and age-standardised disability adjusted life years (DALY) for the burden of MAFLD, globally and by sociodemographic index (five categories; countries with a high, high-middle, middle, low-middle, or low sociodemographic index) from 1990 to 2021.",
+    "The change trends and correlation analyses of prevalence rate and SDI from 1990 to 2021. ( A ) The change trends and correlation of ASPR and SDI from 1990 to 2021 in 21 regions. ( B ) The change trends and correlation of ASIR and SDI from 1990 to 2021 in 21 regions. ( C ) The change trends and correlation of age-standardized DALY rate and SDI from 1990 to 2021 in 21 regions. ( D ) Correlation betw",
+    "Global GBD and temporal trends of MAFLD prevalence in 204 countries or territories. ( A ) The ASR per 100,000 people in 2021. ( B ) EAPC for MAFLD prevalence. *Maps were generated using R (version 4.3.3;  https://www.r-project.org/ ) and the ‘rnaturalearth’ package (version 1.0.1;  https://github.com/ropensci/rnaturalearth ), based on vector data from Natural Earth ( https://www.naturalearthdata.c",
+    "Sex-age distribution of MAFLD among Ages 15–39 in 1990 and 2021.",
+    "Risk attribution factors for MAFLD. ( A ) Trends in the Proportion of MAFLD DALYs attributable to Tobacco and High Fasting Plasma Glucose, Globally and in 5 SDI Regions, from 1990 to 2021. ( B ) Proportion of MAFLD DALY attributable to tobacco and high fasting plasma glucose for 21 GBD regions, 2021. ( C ) Trends in the Proportion of MAFLD Deaths attributable to Tobacco and High Fasting Plasma Glu",
+    "Future forecasts of GBD in MAFLD prevalence, incidence, DALYs, and deaths."
+  ],
+  "tables": [
+    "Prevalence of MAFLD between 1990 and 2021 at global and regional level.",
+    "Forecast of future trends in MAFLD prevalence globally and across 21 regions."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995460.7974732
+}

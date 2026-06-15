@@ -1,0 +1,38 @@
+{
+  "pmcid": "PMC11953604",
+  "pmid": "40085843",
+  "title": "Digital Cognitive Behavioral Therapy-Based Treatment for Insomnia, Nightmares, and Posttraumatic Stress Disorder Symptoms in Survivors of Wildfires: Pilot Randomized Feasibility Trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Isaac F, Klein B, Nguyen H, Watson S, Kennedy GA.",
+  "doi": "10.2196/65228",
+  "figures": [
+    "CONSORT (Consolidated Standards of Reporting Trials) flowchart showing participant flow through allocation to the treatment and waitlist conditions. ISI: Insomnia Severity Index; ITT: intention to treat; NDI: Nightmare Disorder Index; PCL-5: PTSD Checklist for DSM-5; PP: per protocol.",
+    "Change in adjusted estimates of primary measures, including the Insomnia Severity Index (ISI); Nightmare Disorder Index (NDI); and PTSD Checklist for DSM-5 (PCL-5), from before to after the intervention based on the intention-to-treat analysis.",
+    "Change in adjusted estimates of secondary outcomes, including the Generalized Anxiety Disorder–7 (GAD-7), Patient Health Questionnaire–9 (PHQ-9), and Pittsburgh Sleep Quality Index (PSQI), from before to after the intervention based on the intention-to-treat analysis.",
+    "Change in Insomnia Severity Index (ISI); Nightmare Disorder Index (NDI); and PTSD Checklist for DSM-5 (PCL-5) scores for the intervention group from baseline to the postintervention time point and the 3-month follow-up as determined by the intention-to-treat analysis.",
+    "Change in Generalized Anxiety Disorder–7 (GAD-7), Patient Health Questionnaire–9 (PHQ-9), and Pittsburgh Sleep Quality Index (PSQI) scores for the intervention group from baseline to the postintervention time point and the 3-month follow-up as determined by the intention-to-treat analysis.",
+    "Change in Insomnia Severity Index (ISI); Nightmare Disorder Index (NDI); and PTSD Checklist for DSM-5 (PCL-5) scores for the waitlist group from before to after the intervention and the 3-month follow-up as determined by the intention-to-treat analysis.",
+    "Change in Generalized Anxiety Disorder–7 (GAD-7), Patient Health Questionnaire–9 (PHQ-9), and Pittsburgh Sleep Quality Index (PSQI) scores for the waitlist group from before to after the intervention and the 3-month follow-up as determined by the intention-to-treat analysis."
+  ],
+  "tables": [
+    "Sleep Best-i modules and the treatment offered in each module. All modules were approximately 17 minutes in duration.",
+    "Demographic variables for the treatment and waitlist groups and differences between the 2 at the baseline assessments.",
+    "Mixed-effects linear regression analysis of the effect of the intervention on primary outcomes (intention-to-treat analysis; N=30) a .",
+    "Mixed-effects linear regression analysis of the effect of the intervention on primary outcomes for completers only (per-protocol analysis; N=20) a .",
+    "Mixed-effects linear regression analysis of the effect of the intervention on secondary outcomes (intention-to-treat analysis; N=30) a .",
+    "Mixed-effects linear regression analysis of the effect of the intervention on secondary outcomes for completers only (per-protocol analysis; N=20) a .",
+    "Mixed-effects linear regression analysis of the change in primary outcomes over time in the intervention group (intention-to-treat analysis; N=16) a .",
+    "Mixed-effects linear regression analysis of the change in primary outcomes over time in the intervention group for completers only (per-protocol analysis; N=11) a .",
+    "Mixed-effects linear regression analysis of the change in secondary outcomes over time in the intervention group—intention-to-treat analysis (N=16) a .",
+    "Mixed-effects linear regression analysis of the change in secondary outcomes over time in the intervention group—per-protocol analysis (N=11) a .",
+    "Mixed-effects linear regression analysis of the change in primary outcomes over time in the waitlist group receiving the intervention—intention-to-treat analysis (N=14) a .",
+    "Mixed-effects linear regression analysis of the change in primary outcomes over time in the waitlist group receiving the intervention—per-protocol analysis (N=9) a .",
+    "Mixed-effects linear regression analysis of the change in secondary outcomes over time in the waitlist group receiving the intervention—intention-to-treat analysis (N=14) a .",
+    "Mixed-effects linear regression analysis of the change in secondary outcomes over time in the waitlist group receiving the intervention—per-protocol analysis (N=9) a .",
+    "Distribution of clinically significant responders by condition—intention-to-treat analysis (N=30).",
+    "Distribution of clinically significant responders by condition—per-protocol analysis (N=18) (N=20)."
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063502.778891
+}

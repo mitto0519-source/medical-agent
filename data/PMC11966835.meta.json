@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11966835",
+  "pmid": "40181383",
+  "title": "Comparative efficacy and acceptability of psychotherapeutic, pharmacological, and combination treatments for non-suicidal self-injury in children and adolescents: a systematic review and network meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen X, Dong Y, Ye M, Wang X, Yan J, Yao Y, Qi Z, Qian C, Liu Z.",
+  "doi": "10.1186/s12888-025-06735-1",
+  "figures": [
+    "Network of eligible comparisons.  A  Efficacy. B Acceptability. The width of the lines is proportional to the number of trials comparing every pair of treatments, and the size of each node is proportional to the number of randomly assigned participants",
+    "Network meta-analysis of efficacy and acceptability. Interventions were divided into four groups (pharmacotherapy, psychotherapy, combination intervention, and control condition) and each group was reported in alphabetical order. Comparisons between treatments are read from left to right, and the estimate is in cells in common between the column-defining treatment and the row-defining treatment. F",
+    "Forest plots of network meta-analysis.  A  Efficacy. B Acceptability. Interventions were compared with placebo for efficacy and acceptability. Effect sizes represent summary odds ratios with 95% confidence intervals in network meta-analysis",
+    "Forest plots of subgroup analysis and results of meta-regression analysis. ADHD = Attention-deficit/hyperactivity disorder, BI = Brief intervention, BPD = Borderline personality disorder, CAT = Cognitive analytic therapy, CBT = Cognitive behavioral therapy, C-SSRS = Columbia–Suicide Severity Rating Scale, DBT = Dialectical behavior therapy, DGP = Developmental group psychotherapy, ERT = Emotion re"
+  ],
+  "tables": [
+    "Randomized controlled trials included in the systematic review and network meta-analysis. All comparisons are based on elimination of the common therapy framework. After eliminating the common therapy framework, the groups did not receive any intervention. References for included studies are provided in the Appendix 3"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056406.398616
+}

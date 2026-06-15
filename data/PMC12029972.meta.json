@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12029972",
+  "pmid": "40284174",
+  "title": "Iron Consumption and Colorectal Cancer in Korean Adults: A Prospective Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Min S, De la Torre K, Lee H, Shin WK, Kang D.",
+  "doi": "10.3390/nu17081309",
+  "figures": [
+    "Flowchart for the overall selection process. In accordance with the Health Examinees-Gem (HEXA-G) participant eligibility criteria, participants under 40 years or over 69 years of age, as well as those recruited from sites that only participated in the pilot phase, participated for less than 2 years, or did not meet the biospecimen quality control criteria, were excluded ( n  = 139,267). Individua"
+  ],
+  "tables": [
+    "Characteristics of the study population.",
+    "Association between total iron consumption and colorectal, colon, and rectal cancer risk.",
+    "Association between heme iron consumption and colorectal, colon, and rectal cancer risk.",
+    "Association between non-heme iron consumption and colorectal, colon, and rectal cancer risk."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037032.8232093
+}

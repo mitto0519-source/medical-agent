@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12221596",
+  "pmid": "40472970",
+  "title": "Dysregulated RNA-binding proteins and alternative splicing: Emerging roles in autism spectrum disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jeong J, Yoo HJ, An JY, Jeong S.",
+  "doi": "10.1016/j.mocell.2025.100237",
+  "figures": [
+    "Overview of splicing mechanism and regulation by RNA-binding proteins. (A) The fundamental mechanism of splicing. The spliceosome recognizes key RNA sequence elements, including 5’ splice site (GU), branch point (A), pyrimidine tract (Yn), and 3’ splice site (AG) in introns. The U1 small nuclear ribonucleoprotein (snRNP) binds to the 5’ splice site, while U2 binds to the branch point. The recruitm",
+    "Interplay of RNA-binding proteins in alternative splicing and RBP networks. (A) Regulation of alternative splicing by RNA-binding proteins (RBPs) and the splicing code. The splicing code within introns and exons determines splicing outcomes through the binding of RBPs, such as serine-/arginine-rich (SR) proteins or heterogeneous nuclear ribonucleoproteins (hnRNPs). SR proteins and hnRNPs regulate ",
+    "RNA-binding proteins involved in neuronal development. Schematic representation of splicing factors involved in neuronal differentiation and maturation. Neural stem cells (NSCs) differentiate into neural progenitor cells (NPCs), which further develop into immature neurons and ultimately mature neurons. The splicing factors regulate neuronal differentiation by modulating alternative splicing events"
+  ],
+  "tables": [
+    "List of splicing factors and their alternative spliced targets dysregulated in autism spectrum disorder"
+  ],
+  "query": "autism spectrum disorder Korea",
+  "fetched_at": 1779996091.125892
+}

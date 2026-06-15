@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12004805",
+  "pmid": "40240896",
+  "title": "Prevalence of oral diseases among adolescents in prisons in Taiwan: a population-based study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang YP, Hsin HT, Jiesisibieke ZL, Wang YC, Wang BL, Yu PC, Huang SH, Chung RJ, Huang YC, Tung TH.",
+  "doi": "10.1186/s12887-025-05660-2",
+  "figures": [
+    "The flowchart of this study sample selection. CD: datasets of ambulatory care expenditures by visits; DD: datasets of inpatient expenditures by admissions; NHIRD: National Health Insurance Research Database",
+    "The prevalence of oral cavity, salivary glands, and jaws diseases among prisoners by gender, ( A ) ICD9_520- Disorders of tooth development and eruption, ( B ) ICD9_521- Diseases of hard tissues of teeth, ( C ) ICD9_522- Diseases of pulp and periapical tissues, ( D ) ICD9_523- Gingival and periodontal diseases, ( E ) ICD9_524-Dentofacial anomalies including malocclusion, ( F ) ICD9_525- Other dise"
+  ],
+  "tables": [
+    "Demographics of the participating sample by gender ( n  = 1,610, Taiwan, 2013)",
+    "Prevalence of oral cavity, salivary glands, and jaws diseases by gender by a survey of year 2013 claims data from the Taiwan National health insurance program ( n  = 1,610, Taiwan, 2013)"
+  ],
+  "query": "Taiwan adolescent mental health",
+  "fetched_at": 1780049325.4889238
+}

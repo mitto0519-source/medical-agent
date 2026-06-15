@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12187915",
+  "pmid": "40555730",
+  "title": "Comparative efficacy and safety of daridorexant, lemborexant, and suvorexant for insomnia: a systematic review and network meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kishi T, Ikuta T, Citrome L, Sakuma K, Hatano M, Hamanaka S, Nishii Y, Iwata N.",
+  "doi": "10.1038/s41398-025-03439-8",
+  "figures": [
+    "Flow chart of the literature search and study selection.",
+    "Forest plot.   A  sTSO at month 1.  B  sTST at month 1.  C  sWASO at month 1.  D  ISI score at month 1. 95% CI: 95% confidence interval, DAR25 daridorexant 25 mg/day, DAR50 daridorexant 50 mg/day, ISI insomnia severity index, LEM5 lemborexant 5 mg/day, LEM10 lemborexant 10 mg/day, SMD standardized mean difference, sTSO subjective time to sleep onset, sTST subjective total sleep time, SUV20/15 suvo"
+  ],
+  "tables": [
+    "Characteristics of the studies included in the systematic review and network meta-analysis.",
+    "Risk of bias summary.",
+    "League tables for key efficacy outcomes.",
+    "League tables for tolerability and key safety outcomes."
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001441.699889
+}

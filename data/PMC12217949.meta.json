@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12217949",
+  "pmid": "40594440",
+  "title": "Quantification of motor abnormalities with instrumental tasks among adolescents with first-episode schizophrenia and depressive disorders.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Diao H, Wang H, Jia W, Han G, Liu Q, Li X, Wei K.",
+  "doi": "10.1038/s41598-025-06590-w",
+  "figures": [
+    "The illustrations of the weight-holding task ( A ), the quiet standing task ( B ), and the straight walking task ( C ). The weight-holding task required the participant to stabilize their loaded and extended arm for 30 s, with an inertial sensor mounted on the hand-held object. The quiet standing task required the participant to maintain a steady standing posture for 30 s on a plantar pressure mat",
+    "Typical trials from the three instrumental tasks. ( A ) Acceleration signal in the weight-holding task. ( B ) COP displacement from the quiet standing task (blue) and its fitted ellipse with 95% confidence intervals. ( C ) Foot pressure and COP trajectory during a typical foot contact in the ground walking task. The colored patches denote the maximal pressure registered by all the force sensors. T",
+    "The amplitude of tremor during weight holding as a function of group. ( A ) Standard deviation (SD) of acceleration. ( B ) Parkinsonian tremor spectral power. ( C ) Essential tremor spectral power. Box plots denote the median and interquartile interval for each group. *  p  &lt; 0.01.",
+    "The performance from the quiet standing task. Root mean square (RMS;  A ), total length (LNG;  B ), the area (Area;  C ), and the power spectrum between 0 and 3 Hz (Power;  D ) of COP displacement are shown. Despite an increasing tendency, no significant group difference was found. The boxplot indicates the median and IQR for each group.",
+    "The performance of the ground walking task. ( A ) Contact duration. ( B ) Variability of contact duration. ( C ) The dynamic range of pressure. ( D ) The displacement of COP in the progression direction, normalized by foot size, as a function of foot contact time. The inset highlights the group difference near the foot takeoff. ( E ) The COP travel distance in the progression direction is divided ",
+    "Receiver operating characteristic (ROC) curves from the classification analysis. ( A ) The ROC curves for the three-group classification. The ROC curves are plotted separately for the NC group versus the two remaining groups, the SZ group versus the two remaining groups, and the DP group versus the two remaining groups. ( B ) The ROC curve for the two-group classification between the drug group (c"
+  ],
+  "tables": [
+    "Participants Characteristics.",
+    "The confusion matrix of the three-group classification.",
+    "The confusion matrix from the two-group classification."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780056710.4680645
+}

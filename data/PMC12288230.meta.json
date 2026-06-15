@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12288230",
+  "pmid": "40708843",
+  "title": "IDO-Dependent Tryptophan Metabolites and Endocan as Effective Diagnostic Biomarkers for Pregnancy with Pulmonary Hypertension.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Peng G, Liu Z, Wang W.",
+  "doi": "10.2147/ijwh.s527345",
+  "figures": [
+    "",
+    "Baseline Characteristics of the Participants",
+    "Endocan expression is positively correlated with BNP and NT pro-BNP. ( A – B ) The correlation between endocan level and BNP and NT pro-BNP was analyzed by the Pearson correlation coefficient.",
+    "The levels of IDO-dependent tryptophan metabolites are elevated in the serum of PPH patients.( A – D ) The concentrations of kynurenine, kynurenate, anthranilate, and quinolinate in the serum of the control group (n = 86) and patients with PPH (n = 62) were measured by HPLC-MS/MS.",
+    "Endocan and IDO-dependent tryptophan metabolites may be effective diagnostic biomarkers of PPH.( A – F ) The diagnostic value of endocan and IDO-dependent tryptophan metabolites for PPH was evaluated by the ROC curve."
+  ],
+  "tables": [
+    "Baseline Characteristics of the Participants",
+    "Relationship Between PPH Severity and NYHA Score",
+    "Correlation Analysis Between Clinical Data and sPAP",
+    "Linear Regression Analysis of Clinical Data and sPAP",
+    "Logistic Regression Analysis",
+    "ROC Curve Analysis"
+  ],
+  "query": "tryptophan kynurenine pathway depression",
+  "fetched_at": 1780045995.3450367
+}

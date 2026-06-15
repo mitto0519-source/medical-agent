@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12230406",
+  "pmid": "40036760",
+  "title": "Diagnosis and coding of opioid misuse: a systematic scoping review and implementation framework.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hurley RW, Bland KT, Chaskes MD, Hill EL, Adams MCB.",
+  "doi": "10.1093/pm/pnaf019",
+  "figures": [
+    "PRISMA flow diagram for scoping review of OM coding practices. Flow diagram following PRISMA-ScR guidelines showing the systematic search and selection process. Initial database searches identified 5176 records (Embase [ n  = 1900], MEDLINE [ n  = 965], PubMed [ n  = 896], Google Scholar [ n  = 1415]) and 4385 additional records from grey literature. After removing 7047 duplicates (5808 identified",
+    "Current status of opioid-related coding documentation. Conceptual diagram illustrating the hierarchical relationship between opioid use codes. The figure demonstrates how ICD-10 codes F11.9* (Opioid use, unspecified) and Z79.891 (Long-term use of opiate analgesic) are positioned within the broader framework of opioid-related diagnoses. The image shows the progression from appropriate use through m",
+    "Intended vs clinician interpretation ICD code hierarchy. Comparison diagram showing the disconnect between WHO’s intended ICD code hierarchy and common clinical interpretation. The left side shows the intended progression from F11.9 (use) through F11.1 (mild OUD) to F11.2 (moderate-severe OUD). The right side illustrates how clinicians often interpret these codes differently, conceptualizing a pro"
+  ],
+  "tables": [
+    "Data extraction variables for scoping review of OM coding.  a",
+    "Overview of extracted articles and key findings from scoping review.",
+    "Newcastle-Ottawa Scale (NOS) scoring table.",
+    "Common definitions of OM.",
+    "Study characteristics summary of Opioid Misuse research.  a",
+    "Population characteristics of studies examining OUD.",
+    "Primary outcomes and study aims of included publications.  a",
+    "Administrative coding systems used in Opioid Misuse studies.  a"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059602.750565
+}

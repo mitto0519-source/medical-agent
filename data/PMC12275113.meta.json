@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12275113",
+  "pmid": "40688470",
+  "title": "Positive Impact of Health Check-Ups and Guidance in the General Population: A Database-Based Cohort Study in Japan.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shimasaki Y, Nojima M.",
+  "doi": "10.1016/j.focus.2025.100380",
+  "figures": [
+    "Effectiveness of health guidance on changes in metabolic indicators.  This figure shows the model-based effectiveness of receiving health guidance among eligible participants stratified according to stage of behavioral change. Differences in continuous outcomes between those who received support and those who did not after 1- and 2-year follow-ups are shown by solid and dotted lines, respectively.",
+    "Effect of health guidance on new medications and exceeding certain cut offs of metabolic indicators.  This figure shows model-based effectiveness of receiving health guidance among eligible participants. ORs are shown for binary outcomes between those who received support and those who did not after a 1-year follow-up. Owing to issues with the stability of the analysis, the stages of behavioral ch",
+    "Effect of skipping health check-ups on new medications and exceeding certain cut offs of metabolic indicators.  This figure shows model-based effectiveness of skipping health check-ups among ineligible healthy participants stratified by stage of behavioral change. (A, B, G, H) Differences in continuous outcomes. (C–F) ORs for binary outcomes at a health check-up 2 years later. The comparison was b",
+    "Effect of health guidance over time.  This figure shows the longitudinal tracking of health outcomes comparing participants who received health guidance with those who did not.  (A, B) Changes in metabolic indicators over 5 years for (A) males and (B) females who received active support. (C, D) Outcomes for (C) males and (D) females who received motivational support. Models used in these assessmen"
+  ],
+  "tables": [],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035863.2176788
+}

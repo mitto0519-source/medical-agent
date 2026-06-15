@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11933202",
+  "pmid": "40143888",
+  "title": "Socioeconomic disparities in mobility behavior during the COVID-19 pandemic in developing countries.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lucchini L, Langle-Chimal OD, Candeago L, Melito L, Chunet A, Montfort A, Lepri B, Lozano-Gracia N, Fraiberger SP.",
+  "doi": "10.1140/epjds/s13688-025-00532-2",
+  "figures": [
+    "Change in the share of users self-isolating at home by socioeconomic group.  Each panel shows the relative change in the share of active users staying at home over the entire course of a day relative to the pre-pandemic period for the six countries studied, conditioning on the wealth of their primary home administrative unit. Shaded areas indicate the standard errors of the mean computed pulling t",
+    "Net share of urban users relocating to rural areas by socioeconomic group.  Each panel shows the percentage change in the difference between the number of users relocating from an urban to a rural area and those moving from rural to urban, for different socioeconomic groups in the six countries under study. Results are normalized to remove pre-pandemic relocation flows. We also report the stringen",
+    "Change in the fraction of users not commuting by socioeconomic group.  Focusing on the 26% of users with a work location during the observation period, we illustrate the percentage change in the number of users who are not commuting, conditioning on their wealth group classification. Users in the high-wealth group (solid red line) were more likely to stop commuting than those in the low-wealth gro",
+    "Policy restrictions and commuting patterns across socioeconomic groups.  a) We present the estimated coefficients for policy restrictions,     c   i  ,  n     , modeling the propensity of users from different socioeconomic groups to suspend commuting. Errorbars report the 95% confidence intervals for the estimated coefficient values. b-d) Distributions of the distance between home and workplace ac",
+    "Inferring location type and time use from GPS trajectories. \n (a)  Trajectory of a hypothetical mobile phone user over one day. A stop event (dotted circle) characterizes a location where a user spends at least 5 minutes within a 25-meter distance. The color of a stop event corresponds to the time of the day when the event occurs, and lines connect two consecutive stop events.  (b)  Stop events ar"
+  ],
+  "tables": [
+    "Summary statistics of the dataset used for the analysis . Each column reports information for a different country, respectively, Brazil (BR), Colombia (CO), Indonesia (ID), Mexico (MX), the Philippines (PH), and South Africa (ZA). All numbers are for active users living in urban administrative units. Population in the “Urban pop. data coverage (%)” and the “Country pop. data coverage (%)” rows rep",
+    "Device distribution per wealth of home location neighborhood . For each country, the table reports the percentage of users labeled within each different wealth group. Users living in high-wealth neighborhoods are more represented than users living in low-wealth neighborhoods, highlighting the presence of known biases in device penetration and usage [ 64 ] for different wealth groups"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007131.4056568
+}

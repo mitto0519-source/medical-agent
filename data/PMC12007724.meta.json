@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12007724",
+  "pmid": "40231591",
+  "title": "Artificial Intelligence-Driven Biological Age Prediction Model Using Comprehensive Health Checkup Data: Development and Validation Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jeong CU, Leiby JS, Kim D, Choe EK.",
+  "doi": "10.2196/64473",
+  "figures": [
+    "Overview of the study. H-PEACE: Health and Prevention Enhancement, KoGES: Korean Genome and Epidemiology Study, GENIE: gene-environmental interaction and phenotype, CT: computed tomography, MRI: magnetic resonance imaging, MRA: magnetic resonance angiography.",
+    "Visualization of the feature importance with Shapley Additive exPlanation (SHAP) values. SHAP summary plots for the model from the gradient boosting model (A) and the support vector machine (SVM) model (B) are visualized. Features with broader spreads and higher SHAP values have a more significant impact to predict biological age and values with the color gradient indicate whether higher or lower ",
+    "The delta age distribution across different age groups. The distribution of the delta age across different age groups in the test set at baseline (total n=5684) is shown for the gradient boosting (A) and support vector machine (B) models.",
+    "The delta age trajectory during follow-up across different age groups. The projectiles of the changes in delta age during follow-up across different age groups in the test set (n=2022) are shown for the gradient boosting model (A) and SVM model."
+  ],
+  "tables": [
+    "Comparison of the performances of 8 machine learning models to predict biological age in the test set (N=5684).",
+    "Comparison of the performances of the test set and replication set in all ages and in age above 65 years.",
+    "Top 10 significant clinical factors associated with the predicted biological age."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036744.875875
+}

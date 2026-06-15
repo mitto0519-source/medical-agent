@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11897700",
+  "pmid": "40078421",
+  "title": "Adult Growth Hormone Deficiency (AGHD) and Outcomes (NordiNet and ANSWER).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Carmichael JD, Kargi AY, Dichtel L, Kelepouris N, Nedjatian N, Fridman M, Weber MM.",
+  "doi": "10.1210/jendso/bvaf026",
+  "figures": [
+    "Mean GH exposure for (A) female and (B) male patients with AGHD in the EAS from NordiNet® IOS and the ANSWER Program stratified by age and sex. Error bars represent ± SE.  Abbreviations: AGHD, adult GH deficiency; ANSWER, American Norditropin Studies: Web Enabled Research; EAS, effectiveness analysis set.",
+    "Mean GH exposure for (A) female and (B) male patients with AGHD in the FAS from NordiNet IOS and the ANSWER Program stratified by age and sex. Error bars represent ± SE.  Abbreviations: AGHD, adult GH deficiency; ANSWER, American Norditropin Studies: Web Enabled Research; FAS, full analysis set.",
+    "Mean GH exposure for female patients with AGHD in the EAS from NordiNet International Outcome Study and the ANSWER Program either (A) using any form of estrogen (oral, vaginal, or patch) or (B) not using any form of estrogen. Error bars represent ± SE.  Abbreviations: AGHD, adult GH deficiency; ANSWER, American Norditropin Studies: Web Enabled Research; EAS, effectiveness analysis set.",
+    "Mean GH exposure for female patients with AGHD in the FAS from NordiNet International Outcome Study and the ANSWER Program either (A) using any form of estrogen (oral, vaginal, or patch) or (B) not using any form of estrogen. Error bars represent ± SE.  Abbreviations: AGHD, adult GH deficiency; ANSWER, American Norditropin Studies: Web Enabled Research; EAS, effectiveness analysis set.",
+    "IGF-I SDS levels for (A) female, (B) male, and (C) all adult patients with AGHD in the NordiNet International Outcome Study and the ANSWER Program stratified by age and sex.  Abbreviations: AGHD, adult GH deficiency; ANSWER, American Norditropin Studies: Web Enabled Research; EAS, effectiveness analysis set; SDS, SD score."
+  ],
+  "tables": [
+    "Baseline characteristics of adult patients in the EAS and FAS from NordiNet IOS and the ANSWER Program stratified by age group",
+    "Adverse reactions and events from the FAS by age group   a",
+    "Summary of nonserious and serious adverse reactions for adult patients with AGHD in the FAS from NordiNet IOS and the ANSWER Program stratified by age group",
+    "Summary of adverse events for adult patients with AGHD in the FAS from NordiNet IOS and the ANSWER Program stratified by age group",
+    "Mean HbA1c of adult patients in the EAS and FAS from NordiNet IOS and the ANSWER Program stratified by age group and sex",
+    "Mean non-HDL cholesterol of adult patients in the EAS and FAS from NordiNet IOS and the ANSWER Program stratified by age group and sex"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012641.1402743
+}

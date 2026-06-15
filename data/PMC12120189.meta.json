@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12120189",
+  "pmid": "40179887",
+  "title": "Bayesian causal graphical model for joint Mendelian randomization analysis of multiple exposures and outcomes.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zuber V, Cronjé T, Cai N, Gill D, Bottolo L.",
+  "doi": "10.1016/j.ajhg.2025.03.005",
+  "figures": [
+    "Results of standard and multi-variable MR (MVMR) methods regarding how lifestyle and behavioral exposures impact mental health outcomes  (A) Total causal effects estimated by standard MR  25   of one exposure and one outcome at a time at 5% Benjamini-Hochberg (BH) false discovery rate (FDR)  29   across all exposures and outcomes.  (B) Direct causal effects estimated by a Bayesian MVMR method (MR-",
+    "Representation of the proposed multiple exposures and multiple outcomes Mendelian randomization model and causal effects estimation where reverse causation is not allowed  (A) (Middle) Multi-variable Mendelian randomization for multiple responses with     G  =    (    G  1   ,  …  ,   G  n    )   ⊤     : genetic variants (black) or instrumental variables (IVs);     X  =    (    X  1   ,   X  2   ,",
+    "Schematic illustration of different dependency structures simulated between the traits at the individual-level data and the parameters employed in the simulation study  Directed edges indicate dependency relations, while undirected edges denote partial correlations. Dashed lines depict the true (unconfounded by     U    ) dependency structure within the exposures and the outcomes, while solid line",
+    "Examples of unconfounded dependency structure simulated at the individual-level data and estimated by using summary-level statistics within the exposures, the outcomes, and between them in two different scenarios  In each panel, individual-level outcomes     Y  =   (    Y  1   ,  …  ,   Y  5    )      and exposures     X  =   (    X  1   ,  …  ,   X  15    )      as well as genetically predicted o",
+    "Precision-recall curves (PRCs) for all methods considered in the simulated scenarios       UndG  X     -     DAG  Y      and      DAG  X     -     DAG  Y      show recall (    =  sensitivity  =  TP  /   (   TP  +  FN   )     ) in the     x    -axis and precision     (   =  positive   predictive   value  =  TP  /   (   TP  +  FP   )    )     in the     y    -axis with     TP  =  true   positive  , ",
+    "Violin plots of the sum of squares error (SSE) of the causal effects     Θ     between the exposures and the outcomes for all methods considered in the simulated scenarios      UndG  X     -     DAG  Y      and      DAG  X     -     DAG  Y      across 25 replicates in each scenario  (A) In scenario      UndG  X     -     DAG  Y     , the strength of correlation between consecutive     X     is set",
+    "Results of MrDAG algorithm regarding how lifestyle and behavioral exposures impact mental health outcomes  (A) PDAG of the posterior probability of edge inclusion (PPEI) within the exposures (lifestyle and behavioral traits, blue nodes), the outcomes (mental health phenotypes, orange nodes), and between them. Undirected edges are represented as bidirectional edges; see, for instance, edges between",
+    "Results of MrDAG regarding how liability to mental health phenotypes affects lifestyle and behavioral traits after removing invalid IVs  (A) Posterior probability of edge inclusion (PPEI) for each combination of outcomes (lifestyle and behavioral traits) and exposures (mental health phenotypes). Horizontal and vertical dotted lines separate the exposures (bottom-right submatrix) from the outcomes "
+  ],
+  "tables": [],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021403.4099324
+}

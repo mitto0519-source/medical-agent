@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12179139",
+  "pmid": "40546825",
+  "title": "Platelet-to-high-density lipoprotein ratio as a biomarker for asthma risk in adolescents: insights from NHANES 2011-2023.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liao F, Lv Q, Xu Y, Zan J, Xie Y.",
+  "doi": "10.3389/falgy.2025.1593351",
+  "figures": [
+    "Flow chart of participant selection.",
+    "Determination of the association between PHR and adolescents asthma by restricted cubic spline (RCS) regression analysis.",
+    "Verification of the association between PHR and adolescents’ asthma by subgroup analyses and interaction analyses."
+  ],
+  "tables": [
+    "Baseline characteristics of the study participants.",
+    "Weighted logistic regression analyses of association between PHR and asthma.",
+    "The Sensitivity analysis of the association between PHR and asthma after excluding individuals under 12 years of age."
+  ],
+  "query": "asthma adolescent prevalence",
+  "fetched_at": 1780013444.2942214
+}

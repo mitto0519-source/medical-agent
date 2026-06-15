@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12279933",
+  "pmid": "40691132",
+  "title": "Transcriptomic decoding of surface-based imaging phenotypes and its application to pharmacotranscriptomics.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ecker C, Pretzsch CM, Leyhausen J, Berg LM, Gurr C, Seelemeyer H, McAlonan G, Puts NA, Loth E, Dell'Aqua F, Mason L, Charman T, Oakley B, Bourgeron T, Beckmann C, Buitelaar JK, Arango C, Banaschewski T, Chiocchetti AG, Freitag CM, Hattingen E, Krueger-Burg D, Schmeisser MJ, Repple J, Reif A, Murphy DG.",
+  "doi": "10.1038/s41467-025-61927-3",
+  "figures": [
+    "Workflow diagram for generating high-resolution surface-based transcriptomic signatures for all cortically expressed genes with reliable mRNA microarray data in the Allen Human Brain Atlas (AHBA).  The AHBA data was initially quality assessed and normalized across genes and donors using the abagen toolbox  32  . Samples were then mirrored across hemispheres and assigned to the FreeSurfer fsaverage",
+    "Transcriptomic decoding of high-resolution surface-based imaging-derived phenotypes (IDPs).   a  Singular Value Decomposition (SVD) was employed to reduce the spatially-interpolated mRNA expression signatures of all  N  = 15,633 genes in cortical brain tissue to a smaller subset of nine spatially-dense co-expression gradients (G1 to G9), which together captured ~41% of total variability in gene ex",
+    "Surface-based transcriptomic decoding of the serotonergic 1A receptor (5-HT 1A R).   a  Spatial correlations between the average receptor density (B max ) of the 5-HT 1A R based on the high-resolution in vivo Positron Emission Tomography (PET) atlas of the human serotonergic system provided by ref.   15   (upper panel) and the predicted mRNA expression profile of the  HTR1A  gene (lower panel).  b",
+    "Surface-based transcriptomic decoding of the Benzodiazepine (BZ) binding sites.   a  A high-resolution in vivo atlas of the human brain’s BZ binding site of GABA A Rs provided by ref.   22  .  b  False positive rate (FPR) of the α-null (blue), Linear Mixed Effects (LME, red), and General Least Squares (GLS, yellow) decoding techniques across different adjusted  p -value thresholds (p adj ). For LM",
+    "Stratification of imaging phenotypes based on their transcriptomic association with GABA A -receptor subunits.   a  Upper panel: Standardization of neuroanatomical imaging-derived phenotypes (IDPs) based on the neurotypical trajectory of cortical thickness (CT). All IPs were transformed to unit standard deviations relative to the canonical trajectory of CT (Δ CT ). Data are presented as mean ± sta"
+  ],
+  "tables": [],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059972.9491034
+}

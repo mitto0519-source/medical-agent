@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12305585",
+  "pmid": "40734824",
+  "title": "Differential analysis of clinical outcomes in cerebral infarction associated with REM-OSA and NREM-OSA: a retrospective database study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xu L, Yu W, Sun S, Zheng Y, Jing T, Xu G, Tang T, Chu C.",
+  "doi": "10.3389/fneur.2025.1607963",
+  "figures": [
+    "Consort flow chart of the study sample. PSG, polysomnography; AHI, apnea-hypopnea index; OSA, obstructive sleep apnea; REM, rapid eye movements; NREM, non-rapid eye movements.",
+    "Differences in MRS between NREM-OSA and REM-OSA.",
+    "Pearson correlation between variables and REM-AHI."
+  ],
+  "tables": [
+    "Baseline demographic and clinical characteristics of the study population.",
+    "Comparison of laboratory indices of the study participants.",
+    "Comparison of the type, laterality, multiplicity, number of SCIs, and location of the study participants.",
+    "Comparison of excessive sleepiness and sleep quality among the study participants.",
+    "Unadjusted and adjusted ORs (95% CIs) for variables associated with REM-OSA patients.",
+    "Pearson correlation analysis between variables and AHI REM .",
+    "Polysomnographic findings of the study population."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780001895.411307
+}

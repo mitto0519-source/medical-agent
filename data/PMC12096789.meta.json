@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12096789",
+  "pmid": "40405233",
+  "title": "Serum 25-hydroxyvitamin D levels and risk of overall and site-specific cancers in Korean adults: results from two prospective cohort studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Song S, Woo HD, Lyu J, Song BM, Lim JY, Park HY.",
+  "doi": "10.1186/s12937-025-01146-0",
+  "figures": [
+    "Hazard ratios and 95% confidence intervals for overall cancer risk per 25 nmol/L increment in serum 25(OH)D by other factors. The model was adjusted for age in years, sex, cohort, educational level, cigarette smoking, alcohol drinking, regular exercise, body mass index, diabetes, and family history of cancer (as applicable). Abbreviations: 25(OH)D, 25-hydroxyvitamin D; HR, hazard ratio; CI, confid"
+  ],
+  "tables": [
+    "Characteristics of participants according to quartiles of serum 25(OH)D levels",
+    "Hazard ratios and 95% confidence intervals of overall and site-specific cancer risk according to quartiles of serum 25(OH)D levels",
+    "Hazard ratios and 95% confidence intervals of overall and site-specific cancer risk according to absolute cut-offs of serum 25(OH)D levels"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036840.196197
+}

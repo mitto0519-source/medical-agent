@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12159171",
+  "pmid": "40500264",
+  "title": "Glymphatic dysfunction evidenced by DTI-ALPS is related to obstructive sleep apnea intensity in newly diagnosed Parkinson's disease.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nepozitek J, Marecek S, Rottova V, Dostalova S, Krajca T, Keller J, Sonka K, Dusek P.",
+  "doi": "10.1038/s41531-025-01018-8",
+  "figures": [
+    "Correlation plots showing relation of ALPS-index to observed parameters in PD patients.  Correlation analysis between ALPS-index and age ( A ), arousal index ( B ), sleep stage N1 ratio ( C ), sleep stage R ratio ( D ), apnea-hypopnea index ( E ), and oxygen desaturation index ( F ) in Parkinson’s disease. Legend: ALPS analysis along the perivascular space, N1 non-rapid eye movement sleep stage 1,",
+    "Preprocessing steps of the automatic approach.  Using atlas regions of interest ( a ), restricting to the desired areas ( b ). Then, using color-coded fractional anisotropy thresholding by acquiring absolute values of the principal eigenvector ( c ) and subtracting the nuisance vectors from the desired one ( d ) and multiplying the result by fractional anisotropy."
+  ],
+  "tables": [
+    "Comparison of demographic, clinical, and polysomnographic parameters and DTI-ALPS index",
+    "Correlations between ALPS-index and observed parameters",
+    "Multivariable regression analysis with interaction term between AHI and group",
+    "Post-hoc multivariable regression analysis assessing the effect of covariates within the separate groups: PD patients and controls",
+    "Effect of comorbidities as potential confounders to association between ALPS-index and AHI in PD"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780001919.8744757
+}

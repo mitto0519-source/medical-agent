@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11864917",
+  "pmid": "40011203",
+  "title": "Psycho-Oncological Issues in a Pediatric Sample: Two Years Follow-Up Data of Consultation Liaison Psychiatry.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Efe A, Çelik YS, Kaşak M, Macit ŞS, Özdemir ZB, Karakolcu SN, Şen EN, Solcan G, Maraz S, Kaya AF, Kaynak VSY, Gökmen ÜB, Cınbırtoğlu D, Nazlıgül R, Coşkun M, Şahin B, Öztürk Y.",
+  "doi": "10.1002/pon.70112",
+  "figures": [
+    "Distribution of oncological diagnosis.",
+    "Distribution of psychotropic agents. The distribution of psychotropics is as follows: For the SSRI group, 4 (7.1%) fluoxetine, 4 (7.1%) sertraline, and 21 (37.5%) escitalopram; for the antipsychotic group, 6 (10.7%) risperidone, 6 (10.7%) haloperidol, and 2 (3.6%) quetiapine; and for other drug groups, 1 (1.8%) hydroxyzine hydrochloride and 1 (1.8%) melatonin."
+  ],
+  "tables": [
+    "Parents‐related demographics and characteristics.",
+    "Clinical characteristics of oncological and psychiatric conditions.",
+    "Comparison by major oncological diagnosis‐groups.",
+    "Regression analysis of parameters predicting psychopathology presence.",
+    "Regression analysis of parameters predicting psychopharmacological requirement."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056082.052844
+}

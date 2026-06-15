@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12269536",
+  "pmid": "40673697",
+  "title": "Increase in HEV IgG Seroprevalence During the Past Years in Southern France.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dimeglio C, El Rakaawi M, Boineau J, De Smet C, Abravanel F, Lhomme S, Bardiaux L, Izopet J.",
+  "doi": "10.1002/jmv.70483",
+  "figures": [
+    "Factors associated with HEV IgM seroprevalence in 2023—bivariate analysis.",
+    "Directed acyclic graphs to identify the connections between: (A) the HEV IgG seroprevalence and the variables included in the Table  2  initial multivariate analysis. (B) the increase of HEV IgG seroprevalence and the variables included in the Table  3B  initial multivariate analysis."
+  ],
+  "tables": [
+    "Factors associated with HEV IgM seroprevalence in 2023—bivariate analysis.",
+    "Factors associated with HEV IgG seroprevalence in 2023.",
+    "Factors associated with anti‐HEV IgG seroprevalence which varied between 2011 and 2023 according to the administrative area."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021348.653155
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12268226",
+  "pmid": "40677492",
+  "title": "Understanding 30-Day Mortality After First STEMI Through DAGs: Unravelling Epidemiological Cause-Effect Links.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gupta A, Arora S, Shetty MK, Agrawal A, Chauhan A, Kunal S, Palleda GM, Gupta L, Goyal D, Gupta MD.",
+  "doi": "10.7759/cureus.86178",
+  "figures": [
+    "Overview of the workflow for the creation of DAG.  NORIN-STEMI: North India ST-segment elevation myocardial infarction registry; DAG: directed acyclic graph.  The image is created by the authors of this study.",
+    "Causal DAG representing different epidemiology factors affecting 30-day mortality, obtained after thresholding and permutation testing.  Weights of the direct links from epidemiological variables to 30-day mortality: age (0.553), mode of transport (0.496), sex (0.406), physical activity (0.301), education (0.203), hypertension (0.186), LDL (0.171), HDL (0.166), socioeconomic status (0.145).  HbA1c"
+  ],
+  "tables": [
+    "Clinical and background features in patients with and without 30-days mortality.  HbA1c: glycated hemoglobin; LDL: low-density lipoprotein; HDL: high-density lipoprotein; CAD: coronary artery disease  Category 0 implies the absence of hypertension, hyperlipidemia, and uncontrolled diabetes, while category 1 implies their presence.",
+    "Lifestyle and behavioral features in patients with and without 30-days mortality.",
+    "Healthcare access features in patients with and without 30-days mortality.  CGHS: Central Government Health Scheme; PCI: percutaneous coronary intervention"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020698.6591172
+}

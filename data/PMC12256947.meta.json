@@ -1,0 +1,31 @@
+{
+  "pmcid": "PMC12256947",
+  "pmid": "40661882",
+  "title": "Exercise prescription to improve inhibitory control in children and adolescents with ADHD: a network meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao K, Li Y, Wang P, Zhang P.",
+  "doi": "10.3389/fpsyt.2025.1601765",
+  "figures": [
+    "PRISMA flow diagram of the study process.",
+    "Bias risk diagram for each item.",
+    "Overall bias risk diagram.",
+    "Network evidence diagram. 1,con;2,Aerobic exercise;3,Sports games;4,Exergame;5,Cycling exercise;6,Taekwondo;7,Yoga;8,Combination exercise;9,Table tennis;10,Swimming;11,Qigong; A,con;B,1times;C,2times;D,3times;E,5times;H,con;I,10-31min;J,40-50min;K,60min;L,70min;M,≥90min;a,con;b,4-5weeks;c,6weeks;d,8weeks;e,9-10weeks;f,12weeks;j,≥20weeks;N,con;O,Moderate intensity;P,Medium to high intensity.",
+    "League table of pairwise comparisons of intervention effects among exercise type elements.",
+    "League table of pairwise comparisons of intervention effects among exercise duration elements.",
+    "League table of pairwise comparisons of intervention effects among exercise frequency elements.",
+    "League table of pairwise comparisons of intervention effects among exercise period elements.",
+    "League table of pairwise comparisons of intervention effects among exercise intensity elements. The red numbers are statistically significant.",
+    "Probability ranking chart of dose-response effects of exercise prescription elements. 1,con;2,Aerobic exercise;3,Sports games;4,Exergame;5,Cycling exercise;6,Taekwondo;7,Yoga;8,Combination exercise;9,Table tennis;10,Swimming;11,Qigong; A,con;B,1times;C,2times;D,3times;E,5times;H,con;I,10-31min;J,40-50min;K,60min;L,70min;M,≥90min;a,con;b,4-5weeks;c,6weeks;d,8weeks;e,9-10weeks;f,12weeks;j,≥20weeks;N",
+    "Funnel plot of dose-response effects of exercise prescription elements. 1,con;2,Aerobic exercise;3,Sports games;4,Exergame;5,Cycling exercise;6,Taekwondo;7,Yoga;8,Combination exercise;9,Table tennis;10,Swimming;11,Qigong; A,con;B,1times;C,2times;D,3times;E,5times;H,con;I,10-31min;J,40-50min;K,60min;L,70min;M,≥90min;a,con;b,4-5weeks;c,6weeks;d,8weeks;e,9-10weeks;f,12weeks;j,≥20weeks;N,con;O,Moderat"
+  ],
+  "tables": [
+    "Complete search strategy for databases.",
+    "Evaluation of the quality of evidence in the included literature.",
+    "Basic characteristics of included studies.",
+    "Risk of bias assessment (n=20).",
+    "SUCRA values for the efficacy of interventions of each element of exercise prescription."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046919.350716
+}

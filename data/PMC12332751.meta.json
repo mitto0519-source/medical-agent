@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12332751",
+  "pmid": "40787684",
+  "title": "Effect of music therapy on children with autism spectrum disorders in the Chinese population: a systematic review and meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang Y, Wang Y, Li W, Su L.",
+  "doi": "10.3389/fpsyt.2025.1611182",
+  "figures": [
+    "PRISMA flow chart. Showing the article selection process.",
+    "The effect of music therapy on ATEC score [ (A)  total ATEC score,  (B)  communication skills,  (C)  social interaction skills,  (D)  language ability,  (E)  cognitive function].",
+    "The effect of music therapy on ABC score [ (A)  total ABC score,  (B)  sensory,  (C)  social and self-help].",
+    "The effect of music therapy on ABC score [ (A)  body and object use,  (B)  language skills,  (C)  relating].",
+    "The effect of music therapy on CARS score."
+  ],
+  "tables": [
+    "Characteristics of included studies."
+  ],
+  "query": "autism spectrum disorder Korea",
+  "fetched_at": 1779996261.1854353
+}

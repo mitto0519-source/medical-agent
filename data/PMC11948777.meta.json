@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11948777",
+  "pmid": "40140864",
+  "title": "The relationship between shift work, circadian rhythms, and cognitive function in ICU nursing.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Moosavi S, Ghalenoei M, Amerzadeh M, Variani AS.",
+  "doi": "10.1186/s12912-025-02850-2",
+  "figures": [],
+  "tables": [
+    "Quantitative and qualitative demographic information of the participating nurses",
+    "Circadian rhythm",
+    "Comparison of interference scores at the beginning and end of work shifts",
+    "Displays the mean visual memory span scores at the beginning and end of work shifts",
+    "Comparison of visual memory capacity at the beginning and end of work shifts",
+    "Codes related to the beginning and end of the shift",
+    "Comparison of circadian rhythm dimensions in morning, evening, and night shifts with the amount of response time in harmony",
+    "Comparison of circadian rhythm dimensions in morning, evening and night shifts with inconsistent response time",
+    "Comparison of circadian rhythm dimensions in morning, evening and night shifts with interference score",
+    "Comparison of circadian rhythm dimensions in morning, evening, and night shifts with visual memory span",
+    "Comparison of the average number of total correct responses at the beginning and end of work shifts",
+    "Interference scores at the beginning and end of work shifts"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001270.6834116
+}

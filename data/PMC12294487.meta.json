@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12294487",
+  "pmid": "40724040",
+  "title": "Examining the Link Between Problematic Smartphone Use and Substance Use Disorders Among College Students: Association Patterns Using Network Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Vitta ASL, Oliveira WA, Oliveira LG, Silva LSD, Freires ÉM, Semolini FF, Baptista MN, Romualdo C, Kim HS, de Micheli D, Scatena A, Andrade ALM.",
+  "doi": "10.3390/ijerph22070973",
+  "figures": [
+    "Gaussian graphical model considering 13 variables (nodes) evaluating smartphone dependence (SAS), alcohol use patterns (total weekly consumption and on typical days, total number of DSM-V symptoms for AUD, total AUDIT score, CAGE); total illicit substances consumed in the last month, and emotional problems (DASS-21 subscales). Green edges indicate positive correlations, with thicker edges represen",
+    "Indices of four levels of centrality considering the total sample ( A ) and participants by gender ( B )."
+  ],
+  "tables": [
+    "Sociodemographic characteristics of participants considering those classified as problematic smartphone users (PSU, n = 1467) and non-problematic smartphone users (nPSU, n = 1663).",
+    "Substance use behavior in the last month considering participants classified as problematic smartphone users (PSU,  n  = 1467) and non-problematic smartphone users (nPSU,  n  = 1663).",
+    "Substance use behavior in the last year considering participants classified as problematic smartphone users (PSU,  n  = 1467) and non-problematic smartphone users (nPSU,  n  = 1663).",
+    "Different criteria regarding alcohol consumption and consumption intensity considering participants classified as problematic smartphone users (PSU,  n =  1467) and non-problematic smartphone users (nPSU,  n =  1663)."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060067.6596496
+}

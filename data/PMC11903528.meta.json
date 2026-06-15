@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11903528",
+  "pmid": "39154118",
+  "title": "Metabolic Monitoring for Adults Living with a Serious Mental Illness on a Second-Generation Antipsychotic Agent: A Scoping Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Bui TNT, Au RT, Janetzki JL, McMillan SS, Hotham E, Suppiah V.",
+  "doi": "10.1007/s10488-024-01408-9",
+  "figures": [
+    "PRISMA flow diagram showing the process of study selection for inclusion in the scoping review",
+    "The type and frequency of metabolic monitoring for different metabolic parameters reported by the 29 included studies.*Studies that reported the frequency of metabolic monitoring over multiple years or where the prevalence was not reported were not included in this figure. Areas of overlap indicate that two or more studies reported similar monitoring rates"
+  ],
+  "tables": [
+    "Data extraction table, presented in order of publication year",
+    "Frequency of routine metabolic monitoring over time"
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780056980.2303262
+}

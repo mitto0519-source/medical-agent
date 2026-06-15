@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12236319",
+  "pmid": "39450759",
+  "title": "Effectiveness of Omega-3 Fatty Acids Versus Placebo in Subjects at Ultra-High Risk for Psychosis: The PURPOSE Randomized Clinical Trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Winter-van Rossum I, Slot MIE, van Hell HH, Bossong MG, Berger G, Aschauer H, Maat A, Walitza S, Lavan O, Baeza I, Dolz M, Monducci E, Fiori Nastro P, Kroken RA, Lawrie SM, Díaz-Caneja CM, Renner T, Schlögelhofer M, Scharinger C, Spalletta G, Banaj N, Otero S, Schipper M, Kwakkel DB, PURPOSE Study Group, Kahn RS.",
+  "doi": "10.1093/schbul/sbae186",
+  "figures": [
+    "CONSORT subject flowchart PURPOSE trial.",
+    "The rate of transition to psychosis was compared between subjects treated with omega-3 Polyunsaturated Fatty Acids (PUFA) and placebo, applying a strict definition of transition (A) and an extended definition of transition (B)."
+  ],
+  "tables": [
+    "Baseline Demographic and Clinical Characteristics.",
+    "Results of the Mixed Model Analysis of the Several Questionnaire Scores.",
+    "Concomitant Medication Used During the Study, Per Treatment Arm."
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003893.4492555
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12239299",
+  "pmid": "40635068",
+  "title": "Loneliness, insomnia symptoms, social jetlag, and vitamin D deficiency in relation to mental health problems in Japanese female university students: a cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yamashita N, Ishii S, Kotoku Y, Shuo T, Eto H, Kondo H.",
+  "doi": "10.1186/s40101-025-00403-9",
+  "figures": [
+    "Histogram of serum 25(OH)D level. 25(OH)D: 25-hydroxyvitamin D",
+    "Classification and regression trees for predicting factors associated with K6 ≥ 5. AIS, Athens insomnia scale; 25(OH)D, 25-hydroxyvitamin D; SJL, social jetlag"
+  ],
+  "tables": [
+    "Demographic characteristics",
+    "Comparisons of demographic characteristics between K6 score &lt; 5 group and K6 score ≥ 5 group",
+    "Comparisons of sleep characteristics between K6 score &lt; 5 group and K6 score ≥ 5 group"
+  ],
+  "query": "vitamin D deficiency adolescent depression",
+  "fetched_at": 1780002119.231488
+}

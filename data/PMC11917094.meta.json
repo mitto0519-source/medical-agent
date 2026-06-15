@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11917094",
+  "pmid": "40098002",
+  "title": "Altered resting-state network connectivity in internet gaming disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gao G, Rong B, Huang J, Zhou M, Zhao H, Tu N, Bu L, Xiao L, Wang G.",
+  "doi": "10.1186/s12991-025-00553-1",
+  "figures": [
+    "Flow chart of subject inclusion and exclusion",
+    "Spatial maps of eight networks. Abbreviations: VN = visual network, SN = salience network, AUN = auditory network, rFPN = right right frontoparietal networks, DMN = default mode network, dAN = dorsal attention network, SMN = sensorimotor network, and lFPN = left right frontoparietal networks",
+    "Inter-network connectivity changes among the groups. Significant differences were detected among the groups in dAN-VN functional network connectivity ( p  &lt; 0.05, FDR-corrected). Notably, the HEGs demonstrated higher dAN-VN FNC compared to both the IGDs and the LEGs ( p  &lt; 0.05)"
+  ],
+  "tables": [
+    "Demographics and clinical characteristics of the subjects"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779997953.6442106
+}

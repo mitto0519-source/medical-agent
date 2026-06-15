@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12158967",
+  "pmid": "40510376",
+  "title": "Failure in the mother-young communication in domestic mammals: endocrine and behavioral aspects.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mota-Rojas D, Bienboire-Frosini C, Bettencourt AF, Villanueva-García D, Domínguez-Oliva A, Álvarez-Macías A, Fischer V, Mora-Medina P, Olmos-Hernández A, Hernández-Avalos I, Martínez-Burnes J, Abd El-Aziz AH, Orihuela A, Grandin T.",
+  "doi": "10.3389/fvets.2025.1589916",
+  "figures": [
+    "Representative examples of key maternal behaviors discussed in this review. The images illustrate a range of caregiving actions typically observed during the early postnatal period, including nursing posture, grooming, and close physical contact.",
+    "Search methodology.",
+    "Endocrine modulation of maternal behavior and behavioral alterations in murine knockout models. Maternal care, including licking, calls, arched-back posture to nurse, and reduced aggression, are behaviors elicited by the release of OXT in the PVN and SON and its action on the mAMY, MPOA, BNST, and VTA. However, in knockout models, where there is no release of OXT or a lack of OXTr expression, abno",
+    "Modulation of maternal behavior and impaired mother-young bonds. Sensorial stimulation from the lamb activates key structures such as the MPOA. The MPOA has projections to the pituitary gland, where OXT is released due to the activation of the PVN and SON. Additionally, connections to other cerebral regions (e.g., MOB, BNST, and AMY) promote the newborn’s auditory, olfactory, and visual recognitio",
+    "Effects of dystocia and pain on the mother-young bond. Prolonged pain, a characteristic of dystocia, causes several adverse effects on the mother and the offspring, which affect maternal care. Pain activates the HPA axis, leading to cortisol release. In the presence of cortisol, OXT release is inhibited, reducing maternal behavior. Moreover, dystocia has other maternal consequences, such as uterin",
+    "Suggested neurobiology of aggression towards the newborn. OXT is the main mediator of maternal behavior. Thus, the inhibition of OXT signaling in the MPOA is associated with aggression towards the newborn immediately after birth. BNST, bed nucleus of the stria terminalis; HYP, hypothalamus; MeA, medial amygdala; MPOA, medial preoptic area; OXT, oxytocin; PAG, periaqueductal gray; PMv, ventral part",
+    "Alternatives to maintain the mother-young bond."
+  ],
+  "tables": [
+    "Mediators of maternal behavior according to the species."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780047121.6225097
+}

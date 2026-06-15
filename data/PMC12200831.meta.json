@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12200831",
+  "pmid": "40570015",
+  "title": "Fatty liver index and risk of type 2 diabetes of adults with normoglycemia: Insights into insulin sensitivity and beta-cell function.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Bae JH, Lee MJ, Kim SH, Kim JY, Khang AR, Kang YH, Yi D.",
+  "doi": "10.1371/journal.pone.0327058",
+  "figures": [
+    "Flowchart of the study population.  Abbreviations: FPG, fasting plasma glucose; IFG, impaired fasting glucose; IGT, impaired glucose tolerance; OGTT, oral glucose tolerance test; T2DM, type 2 diabetes mellitus.",
+    "OGTT-derived insulin sensitivity and secretion markers across FLI groups adjusted for covariates.  The  P  values at the top of the figures were calculated using an ANCOVA adjusted for age, sex, SBP, BMI, TC, and the HDL-C level.  a The logarithmic transformation was performed to calculate the  P  values.  b Modified Box-Cox transformation was applied to calculate  P  values.  c Significant differ",
+    "Cumulative incidence of T2DM over the 18-year follow-up period across the FLI groups. Abbreviations: FLI, fatty liver index; T2DM, type 2 diabetes mellitus.",
+    "ROC curve of the FLI and insulin sensitivity and secretion markers.  Abbreviations: FLI, fatty liver index; ROC, receiver-operating characteristic."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population according to the fatty liver index (FLI).",
+    "Standardized beta coefficient of the fatty liver index (FLI) for insulin sensitivity or secretion markers according to the multivariate linear regression.",
+    "Hazard ratios and 95% confidence intervals of T2DM according to the FLI.",
+    "Predictive ability of the FLI for T2DM."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036874.9359782
+}

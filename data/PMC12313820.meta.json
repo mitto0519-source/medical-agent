@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12313820",
+  "pmid": "40756024",
+  "title": "Increased use of attention-deficit/hyperactivity disorder drugs among children and adolescents with suicidal ideation: A real-world registry study in Japan.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tsujii N, Kihara H, Hiraiwa A, Tachibana H, Ueno M, Takasaki A, Igarashi C, Kaneko N, Itagaki K, Yamamoto K, Inazaki K, Hakoshima Y, Mizumoto Y, Usami M.",
+  "doi": "10.1002/pcn5.70170",
+  "figures": [
+    "Sample selection flow chart. Participants were grouped into the suicidal ideation (SI) or non‐SI group based on Item 10 of the Depression Self‐Rating Scale for Children (DSRS‐C). Cases without an attention‐deficit/hyperactivity disorder (ADHD) diagnosis ( n  = 2499) were excluded; these participants were diagnosed with other psychiatric disorders according to the DSM‐5. ADHD‐RS‐IV, ADHD‐Rating Sca"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of the study participants ( n  = 431).",
+    "Associations between suicidal ideation and ADHD medication prescriptions.",
+    "Multivariate logistic regression analyses predicting the prescription of ADHD medications within 3 months after the diagnosis."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780047505.7215548
+}

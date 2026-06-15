@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12231415",
+  "pmid": "40459935",
+  "title": "Love at first glance: Imbalanced processing to gaming and natural rewards in internet gaming disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhou X, Zeng Y, Wen Y, Dong X, Gola M, Li Y.",
+  "doi": "10.1556/2006.2025.00044",
+  "figures": [
+    "The experiment design of the adapted Incentive Delay Task (IDT). (A). The sequence of events during a single trial. (B) During each trial, one of the cues was presented, followed by an outcome. The white shadow indicated the real probability for the corresponding reward",
+    "Grand average N1 waveforms in individuals with IGD and RGU during the Incentive Delay Task. (A) Shaded areas represent the standard error of the mean for the ERP signal at each time point. Time zero represents the onset of the outcome. The amplitudes of the N1 component were calculated by the most negative peak between 70 and 150 ms at the Cz channel. Individuals with IGD exhibited significant lar",
+    "Grand average FRN waveforms in individuals with IGD and RGU during the Incentive Delay Task. (A) Shaded areas represent the standard error of the mean for the ERP signal at each time point. Time zero represents the onset of the outcome. FRN was calculated as the mean amplitudes during 250 and 350 ms at the FCz channel. Individuals with IGD exhibited smaller amplitudes in the monetary than gaming c",
+    "Grand average LPP waveforms in individuals with IGD and RGU during the Incentive Delay Task. (A) Shaded areas represent the standard error of the mean for the ERP signal at each time point. Time zero represents the onset of the outcome. LPP was calculated as the mean amplitudes during 400 and 800 ms at the Pz, P3, P4, PO3, and PO4 channel. The gaming condition elicited amplitude was larger than mo",
+    "Correlations between the self-reported BAS responsiveness and the amplitudes of N1 in gaming and monetary condition"
+  ],
+  "tables": [
+    "Demographic and questionnaire data of the IGD and RGU group",
+    "Yes choice and total trials of unexpected feedback in IGD and RGU group",
+    "Correlations among self-reported reward responsiveness and neural response to gaming feedback among the total sample"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779997928.4664958
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11967029",
+  "pmid": "40176061",
+  "title": "The increased risk of cyberbullying and its negative impact on mental health among sexual minority college students compared to their peers.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Luo M, Duan Z, Luo W, Niu Z.",
+  "doi": "10.1186/s13034-025-00895-4",
+  "figures": [
+    "The distribution of propensity score before and after PSM analysis",
+    "a  Causal mediation analysis of cyberbullying in the relationship between sexual minorities and depressive symptoms among the participants.  b  Causal mediation analysis of cyberbullying in the relationship between sexual minorities and anxiety symptoms among the participants.  c  Causal mediation analysis of cyberbullying in the relationship between sexual minorities and stress among the particip"
+  ],
+  "tables": [
+    "The socio-demographic characteristics of participants before and after PSM",
+    "The correlation analysis of key characteristics in this study"
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017320.1213195
+}

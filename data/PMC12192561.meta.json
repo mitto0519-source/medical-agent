@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12192561",
+  "pmid": "40565498",
+  "title": "Associations of Body Mass Index and Lifestyle Factors with Suicidal Ideation, Planning, and Attempts Among Korean Adolescents: A Cross-Sectional Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang H, Kim KO.",
+  "doi": "10.3390/healthcare13121470",
+  "figures": [
+    "Flow chart for subject identification."
+  ],
+  "tables": [
+    "Characteristics of study subjects (N = 38,412).",
+    "Odds ratios and 95% confidence intervals of lifestyle factors for suicidal ideation, planning, and attempts among all adolescents (N = 38,412).",
+    "Odds ratios and 95% confidence intervals of lifestyle factors for suicidal ideation, planning, and attempts among underweight adolescents (N = 9029).",
+    "Odds ratios and 95% confidence intervals of lifestyle factors for suicidal ideation, planning, and attempts among overweight adolescents (N = 7729).",
+    "Odds ratios and 95% confidence intervals of lifestyle factors for suicidal ideation, planning, and attempts among obese adolescents (N = 3371)."
+  ],
+  "query": "KYRBS Korea Youth Risk Behavior",
+  "fetched_at": 1779977298.9947722
+}

@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12105223",
+  "pmid": "40420009",
+  "title": "Predicting treatment response in individuals with major depressive disorder using structural MRI-based similarity features.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Song S, Wang S, Gao J, Zhu L, Zhang W, Wang Y, Wang D, Zhang D, Wang K.",
+  "doi": "10.1186/s12888-025-06945-7",
+  "figures": [
+    "Schematic diagram of machine learning workflow based on structural similarity features",
+    "Visualization of differences between responding and non-responding groups of Hangzhou Dataset in ( A ) gray matter volume (GMV), ( B ) gray matter density (GMD), and ( C ) white matter volume (WMV)",
+    "Visualization of differences between responding and non-responding groups of Jinan Dataset in ( A ) gray matter density (GMD), ( B ) white matter volume (WMV) and ( C ) white matter density(WMD)",
+    "ROC curves for classification based on similarity methods (left: white matter volume, MCD matrix, LDA classifier; right: white matter density, Spearman matrix, RF classifier)"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of subjects",
+    "Group analysis results of two datasets",
+    "Hangzhou dataset prediction results based on original image features (%)",
+    "Prediction results (%) of Hangzhou dataset applying three similarity methods and six classifiers",
+    "Jinan dataset prediction results based on original image features (%)",
+    "Prediction results (%) of Jinan dataset applying three similar methods and six classifiers"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056210.0714042
+}

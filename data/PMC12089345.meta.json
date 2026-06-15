@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12089345",
+  "pmid": "39953208",
+  "title": "Frontostriatal regulation of brain circuits contributes to flexible decision making.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Duan Y, Ma Z, Tsai PJ, Lu H, Xiao X, Wang D, Siddiqi A, Stein EA, Michaelides M, Yang Y.",
+  "doi": "10.1038/s41386-025-02065-8",
+  "figures": [
+    "Experimental design and example of the strategy set-shifting task.   A  Experimental design. Rats were bilaterally injected with adeno-associated virus (AAV) expressing the excitatory DREADD hM3Dq or green fluorescent protein (GFP) as control (AAV5-syn-GFP) in the medial prefrontal cortex (mPFC) and bilateral cannulas were implanted 1 mm above the nucleus accumbens (NAc). After 2 weeks of recovery",
+    "Activation of mPFC-NAc pathway promoted visual cue task (VCT) shifting to response discrimination task (RDT).   A  There was no significant difference in the pretraining phase between the hM3Dq ( n  = 19) and control ( n  = 19) groups.  B  There was no significant difference in number of total trails to reach criterion between the two groups in VCT training.  C  Activation of the mPFC-NAc pathway ",
+    "Activation of mPFC-NAc pathway decreased functional connectivity in NAc circuits.   A  The top shows the location of NAc seed, which was defined according to the cannula tip in each rat. SESSION (baseline, post-injection) × GROUP (hM3Dq, control) × TREATMENT (CNO, VEH) ANOVA showed a significant interaction effect in functional connectivity of NAc with orbitofrontal cortex (OFC), olfactory bulb (O",
+    "Activation of mPFC-NAc pathway decreased functional connectivity in mPFC circuits.   A  The top showed mPFC seed, which was defined as the region showing significance in the analysis on functional connectivity with the NAc seed. SESSION (baseline, post-injection) × GROUP (hM3Dq, control) × TREATMENT (CNO, VEH) ANOVA showed a significant interaction effect in functional connectivity of mPFC with fr",
+    "Activation of mPFC-NAc pathway decreased functional connectivity of M2 circuits.   A  The top showed M2 seed, which was defined as the region showing significance in the analysis on functional connectivity with the NAc seed. SESSION (baseline, post-injection) × GROUP (hM3Dq, control) × TREATMENT (CNO, VEH) ANOVA showed a significant interaction effect in functional connectivity of M2 with orbitofr"
+  ],
+  "tables": [],
+  "query": "frontostriatal circuit development",
+  "fetched_at": 1779991476.4787247
+}

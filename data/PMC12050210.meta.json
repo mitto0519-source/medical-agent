@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12050210",
+  "pmid": "40330589",
+  "title": "Causal Effect of Obstructive Sleep Apnea on Sick Sinus Syndrome: A Bidirectional Mendelian Randomization Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chen W, Pan W, Ling L, Jiang B, Zhang Y, Su X, Jiang T, Lin J.",
+  "doi": "10.2147/nss.s511973",
+  "figures": [
+    "",
+    "Study design. The purpose of this bidirectional two-sample MR analysis is to investigate the causal relationship between OSA and SSS. The GWAS meta-analysis for this study is from mixed-sex European cohorts.",
+    "Associations of genetically predicted OSA with risk of SSS. P-value and 95CI% specific value are listed on the right side.",
+    "Scatter plots of causal associations and leave-one-out sensitivity analysis for OSA on SSS. ( A ) Individual estimates about the causal effect of OSA on SSS. ( B ) leave-one-out analysis for OSA on SSS."
+  ],
+  "tables": [
+    "Characteristics of Instrumental Variables Associated with OSA"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780001949.169244
+}

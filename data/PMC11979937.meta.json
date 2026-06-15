@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11979937",
+  "pmid": "40206663",
+  "title": "Associations of reallocating sedentary leisure-time to alternative discretionary movement behaviours with incident cardiometabolic diseases in 0.5 million Chinese adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Collings PJ, Wang M, Ho HHS, Au Yeung SL, Siu PM, Cowling BJ, Sharp SJ, Brage S, Wareham NJ, Du H, Bennett DA, Kim Y, China Kadoorie Biobank (CKB) Study Collaborative Group.",
+  "doi": "10.1016/j.lanwpc.2025.101524",
+  "figures": [
+    "Particip  ant flow diagram . Abbreviations: CKB, China Kadoorie Biobank; COPD, Chronic obstructive pulmonary disease; TIA, Transient ischaemic attack.",
+    "Associations of reallocating sedentary leisure-time to alternative discretionary movement behaviours with incident cardiometabolic diseases, in 10 min/day time-substitution increments (log scale) . Values calculated from Cox regression models, using age as the underlying timescale, and incorporating sex and region strata. Models adjusted for educational attainment, household income, work-related a",
+    "The estimated decrease in incident cardiometabolic disease cases within the CKB cohort if average sedentary leisure-time was decreased by 30 min/day and the average time in each of the alternative discretionary movement behaviours was increased by the same amount, assuming causality . Values are potential impact fractions (95% confidence interval) calculated using the ‘distribution shift’ method, "
+  ],
+  "tables": [
+    "Descriptive characteristics for the whole sample and by categories of sedentary leisure-time.",
+    "Summary of discretionary movement behaviours.",
+    "Associations of reallocating sedentary leisure-time to alternative discretionary movement behaviours with incident cardiometabolic diseases, per 30 min/day time exchanges."
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006884.6397505
+}

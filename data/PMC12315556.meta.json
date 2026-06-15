@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12315556",
+  "pmid": "40755543",
+  "title": "Efficacy of music therapy for depressive symptoms in college students: a meta-analysis and systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lin Y, Li Q.",
+  "doi": "10.3389/fpsyg.2025.1576381",
+  "figures": [
+    "RCT Selection by PRISMA guidelines flow.",
+    "Risk of bias graph.",
+    "Risk of bias summary.",
+    "Forest plot for SDS scores.",
+    "Subgroup analyses for SDS scores.",
+    "Forest plot for SCL-90 scores.",
+    "Subgroup analyses for SCL-90 scores.",
+    "Forest plot for BDI scores.",
+    "Subgroup analyses for BDI scores."
+  ],
+  "tables": [
+    "Basic information of included RCTs on music therapy."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999170.0695598
+}

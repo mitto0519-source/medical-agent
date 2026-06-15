@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12294719",
+  "pmid": "40724080",
+  "title": "The Contribution of Social and Structural Determinants of Health Deficits to Mental and Behavioral Health Among a Diverse Group of Young People.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mitchell KJ, Banyard V, Colburn D.",
+  "doi": "10.3390/ijerph22071013",
+  "figures": [
+    "The selected 5-class solution. The measures used in the LCA are on the  x -axis. Relative scores are presented on the  y -axis."
+  ],
+  "tables": [
+    "Demographic characteristics (N = 4981).",
+    "Fit statistics for varying size latent class models of SDOH.",
+    "Latent class marginal means.",
+    "Individual social and structural determinants of health deficits and health indicators for different groups of young people.",
+    "Youth characteristics across classes."
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780051870.4619677
+}

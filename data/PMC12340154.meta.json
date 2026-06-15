@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12340154",
+  "pmid": "40790029",
+  "title": "Mechanisms and interventions promoting healthy frontostriatal dynamics in obsessive-compulsive disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Naze S, Hearne LJ, Sanz-Leon P, Robinson C, Hall CV, Sonkusare S, Burgher B, Zalesky A, Roberts JA, Cocchi L.",
+  "doi": "10.1038/s41467-025-62190-2",
+  "figures": [
+    "Schematic of the analysis steps and modelling framework.   A  Resting-state functional connectivity (FC) of the frontostriatal system was computed from subjects with OCD and matched healthy controls.  B  Frontostriatal resting-state neural dynamics were simulated using our computational model. The model parameters were optimised to fit the empirical FC of the two groups.  C  The optimisations prod",
+    "The single circuit model adopted to study frontostriatal neural dynamics at rest.   A  Schematic of the model derived from Wong &amp; Wang  32   and Deco et al.  33  , incorporating static frontostriatal (     C    21     ) and stochastic striato-cortical (     C    12    ,    η    12    ,    σ    12     ) coupling terms (Methods).  B  Time series of the model state variables S 1  (frontal cortex)",
+    "Altered activity of coupled ventral and dorsal frontostriatal circuits in OCD.   A  Schematic of the coupled model space comprising the ventral (nucleus accumbens [NAcc]-orbitofrontal cortex [OFC]) and dorsal (putamen [dPut]-lateral prefrontal cortex [LPFC]) frontostriatal circuits and their associated neural parameters (details in Table  2 ). Brain regions were extracted from the Schaefer et al. ",
+    "Effect of targeted parameter changes to restore frontostriatal brain dynamics in OCD.   A  Schematic of the virtual intervention approach: Sets of      n    t    =  1  …  6    posterior distribution(s) were systematically permuted between parameter sets for OCD and healthy controls, simulating the restoration of healthy parameter ranges in OCD. The statistical outcome of each intervention was esti",
+    "Digital twin analysis on the core neural mechanisms supporting changes in frontostriatal functional connectivity and OCD symptoms over time.   A  Changes in resting-state functional connectivity (FC) and OCD symptoms’ severity (Y-BOCS: Yale-Brown Obsessive-Compulsive Scale) over time (   Δ    baseline  minus  follow-up) were linearly correlated (R: Pearson’s correlation; grey shaded area correspon"
+  ],
+  "tables": [
+    "Sample characteristics",
+    "Bounds of uniform prior distributions for each parameter with underlying assumptions and interpretations. PFC: prefrontal cortex; OFC: orbitofrontal cortex; NAcc: nucleus accumbens"
+  ],
+  "query": "frontostriatal circuit development",
+  "fetched_at": 1779991284.4054718
+}

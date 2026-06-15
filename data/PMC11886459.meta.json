@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11886459",
+  "pmid": "40061577",
+  "title": "Seasonal trends in methylphenidate use: A mirror of misuse or compliance?",
+  "year": 2025,
+  "journal": "",
+  "authors": "Schoeman R, Benjamin SJ.",
+  "doi": "10.4102/sajpsychiatry.v31i0.2391",
+  "figures": [
+    "Unit sales for methylphenidate from January 2014 to December 2022.",
+    "Least squares mean graph for accumulated monthly methylphenidate 10 mg (immediate release) unit sales ( p  &lt; 0.01).",
+    "Unit sales for atomoxetine from January 2014 to December 2022.",
+    "Least squares mean graph for accumulated monthly atomoxetine unit sales ( p  &lt; 0.01)."
+  ],
+  "tables": [
+    "Rank order of methylphenidate and atomoxetine total unit sales from January 2014 to December 2022.",
+    "Descriptive statistics for methylphenidate 10 mg immediate release unit sales."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780059108.5926747
+}

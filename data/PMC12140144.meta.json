@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12140144",
+  "pmid": "40311048",
+  "title": "Race-based sampling, measurement and monitoring in health data: promising practices to address racial health inequities and their determinants in Black Canadians.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jamieson M, Blair A, Jackson B, Siddiqi A.",
+  "doi": "10.24095/hpcdp.45.4.02",
+  "figures": [
+    "PRISMA diagram"
+  ],
+  "tables": [
+    "Search strategy for systematic scoping review",
+    "Data sources from Canada and peer countries identified in Steps 1 to 3\nPeer country datasets identified in Step 1 (purposeful sampling)",
+    "Data sources from Canada and peer countries identified in Steps 1 to 3\nPeer country datasets identified in Step 2 (systematic scoping review)",
+    "Data sources from Canada and peer countries identified in Steps 1 to 3\nCanadian datasets identified in Step 3 (website search)",
+    "Descriptions of health surveys and administrative data sources in Canada and Canada’s peer countries"
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053660.976257
+}

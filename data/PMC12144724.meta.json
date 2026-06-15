@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12144724",
+  "pmid": "40481459",
+  "title": "Gender gap in tooth brushing among Korean adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kawachi I, Ryu JI.",
+  "doi": "10.1186/s12903-025-06323-5",
+  "figures": [
+    "The probit ratio coefficient changes by sex and sadness interaction"
+  ],
+  "tables": [
+    "The weighted percentage of the study population, Korean middle- and high-school adolescents from 2017 to 2022",
+    "The weighted percentage of toothbrushing after lunch according to characteristics among the study population of adolescents",
+    "The probit ratio coefficient and 95% confidence interval (CI) estimates for toothbrushing after lunch from probit regression model among the study population of adolescents"
+  ],
+  "query": "KYRBS Korea Youth Risk Behavior",
+  "fetched_at": 1779977332.1981454
+}

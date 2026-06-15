@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12134700",
+  "pmid": "40392587",
+  "title": "Mobile- and Web-Based Interventions for Promoting Healthy Diets, Preventing Obesity, and Improving Health Behaviors in Children and Adolescents: Systematic Review of Randomized Controlled Trials.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Talens C, da Quinta N, Adebayo FA, Erkkola M, Heikkilä M, Bargiel-Matusiewicz K, Ziółkowska N, Rioja P, Łyś AE, Santa Cruz E, Meinilä J.",
+  "doi": "10.2196/60602",
+  "figures": [
+    "Study selection following the PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) criteria detailing the study selection process. RCT: randomized controlled trial."
+  ],
+  "tables": [
+    "Characteristics of the included studies.",
+    "Description of the interventions.",
+    "A summary of intervention effects (in comparison to the control group) found in the included studies for anthropometric measurements, dietary habits, physical activity, knowledge, and attitude outcomes. The results are only shown for the outcomes that were evaluated by at least 2 studies.",
+    "Risk of bias for the included studies."
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975765.846185
+}

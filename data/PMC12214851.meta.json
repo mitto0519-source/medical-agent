@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12214851",
+  "pmid": "40596027",
+  "title": "Loneliness and depressive symptoms in institutionally isolated Polish adolescents explored through network psychometrics.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Grygiel P, Dąbrowska A.",
+  "doi": "10.1038/s41598-025-06541-5",
+  "figures": [
+    "Frequency of depressive symptoms measured by the RCADS-MDD.",
+    "Matrix of rho Spearman correlations between the studied variables. All coefficients are statistically significant at  p  &lt; 0.01.",
+    "EBIC gLasso network of the RCADS-MDD symptoms and loneliness.",
+    "Network highlighting shortest-paths between loneliness and depression symptoms. Solid lines represent shortest paths, dashed lines represent connections that do not lie on the shortest paths. The wider the line, the stronger the correlation.",
+    "Standardized strength centrality scores for all nodes in the network."
+  ],
+  "tables": [],
+  "query": "loneliness isolation adolescent mental",
+  "fetched_at": 1779999424.8012319
+}

@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12306029",
+  "pmid": "40721835",
+  "title": "Dysfunctional sleep beliefs and sleep quality among Chinese university students: the mediating roles of depression, anxiety, and stress.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang P, Xie C, Qian J, Cai S, Xu L, Jiang X, Chen G, Wang K.",
+  "doi": "10.1186/s40359-025-03210-0",
+  "figures": [
+    "Diagram of the parallel mediation hypothesis model",
+    "Diagram of the chain mediation hypothesis model of anxiety and stress",
+    "Diagram of the chain mediation hypothesis model of depression and stress",
+    "The parallel multiple mediation model diagram of negative emotion in DBAS and sleep quality. Note:  ** \n p  &lt;.01,  *** \n p  &lt;.001",
+    "Diagram of chain mediation. Note:  * \n p  &lt;.05,  ** \n p  &lt;.01,  *** \n p  &lt;.001"
+  ],
+  "tables": [
+    "Descriptive statistics and correlation analysis ( N  = 864)",
+    "Confidence intervals and effect sizes for the parallel mediation effect test",
+    "Tests the mediation model",
+    "Path analysis of mediation model"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001526.8898692
+}

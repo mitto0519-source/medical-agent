@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12094662",
+  "pmid": "40170669",
+  "title": "Capitalizing on natural language processing (NLP) to automate the evaluation of coach implementation fidelity in guided digital cognitive-behavioral therapy (GdCBT).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zainal NH, Eckhardt R, Rackoff GN, Fitzsimmons-Craft EE, Rojas-Ashe E, Barr Taylor C, Funk B, Eisenberg D, Wilfley DE, Newman MG.",
+  "doi": "10.1017/s0033291725000340",
+  "figures": [
+    "Schematic diagram of data analytic steps.  \n Note.  ML, machine learning; NLP, natural language processing. Please refer to  Supplementary Table S1  for more information on the best coach fidelity rubric codes.",
+    "Top 20 most frequently used words by GdCBT coaches when writing messages to users.  \n Note.  GdCBT, digital cognitive-behavioral therapy, n, frequency (word count).",
+    "Frequency of emotion sentiment words using the Bing sentiment lexicon."
+  ],
+  "tables": [
+    "Examples of high coach-to-user implementation fidelity messages",
+    "Examples of suboptimal coach-to-user implementation fidelity messages",
+    "ML predictive performance of sentiment analyses with NLP to predict unique coach implementation fidelity",
+    "Interpretation of performance metrics in predicting coach implementation fidelity",
+    "Model performance of various classifiers to automate the evaluation of coach implementation fidelity"
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063497.460547
+}

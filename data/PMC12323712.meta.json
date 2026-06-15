@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12323712",
+  "pmid": "40765616",
+  "title": "Industry sponsorship bias in randomized controlled trials of digital cognitive behavioral therapy for insomnia: a meta-research study based on the 2023 Brazilian guidelines on the diagnosis and treatment of insomnia in adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kakazu VA, Assis M, Bacelar A, Bezerra AG, Ciutti GLR, Conway SG, Galduróz JCF, Drager LF, Khoury MP, Leite IPA, Luciano YM, Poyares D, Tufik S, Pires GN.",
+  "doi": "10.3389/fneur.2025.1600767",
+  "figures": [
+    "Flowchart of article identification and inclusion process.",
+    "Correlations between risk of sponsorship bias levels and ISI score. Correlations of sponsorship bias were performed in three different contexts: with ISI score in the control group  (A) , with ISI score in the experimental group  (B)  and with ISI effect size  (C) .",
+    "Comparison between the ISI score and sponsorship bias between the experimental and control groups, and effect size. Comparison made considering all levels of bias and Insomnia Severity Index (ISI) score  (A) , only “possible bias” and “Very low bias” and ISI score  (B) , all levels of bias and Effect size  (C) , and only “possible bias” and “Very low bias” and Effect size  (D) .",
+    "Methodological quality assessment considering the entire sample.",
+    "Comparison between the sponsorship bias levels (“Very low bias” and “Possible bias”).  (A)  Sponsorship bias levels were compared with the publication model (Subscription based and Open Access).  (B)  Sponsorship bias levels were compared with methodological quality (Higher and Lower methodological quality).",
+    "Comparisons between ISI score and the publication model (subscription-based and open access) in the control and experimental groups."
+  ],
+  "tables": [
+    "Descriptions and characteristics of the included studies.",
+    "Methodological quality assessment."
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063513.774403
+}

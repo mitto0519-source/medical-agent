@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12243098",
+  "pmid": "40641631",
+  "title": "Prevalence of growth hormone deficiency in brain tumor survivors: a systematic review and meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tselovalnikova T, Ponvilawan B, Pavlova MG, Flanagan C, Rakhra SS, Drees BM.",
+  "doi": "10.1530/eo-25-0025",
+  "figures": [
+    "Study identification and the literature review process.",
+    "Forest plot of the incidence of adult GHD in patients with pediatric brain cancer who received cranial irradiation.",
+    "Sensitivity analysis of the incidence of adult GHD in patients with pediatric brain cancer who received cranial irradiation using studies that evaluated GHD at age of more than 18 years.",
+    "Subgroup analysis of the incidence of adult GHD in patients with pediatric brain cancer who received cranial irradiation (A) by the peak GH level cutoff, and (B) by the continent of the study.",
+    "Univariate linear regression between peak GH level in ITT and (A) age at cranial irradiation, (B) time duration between cranial irradiation and ITT, (C) cranial irradiation dose, and (D) sex."
+  ],
+  "tables": [
+    "Multivariate linear regression of growth hormone peak level and clinical factors."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012748.4366784
+}

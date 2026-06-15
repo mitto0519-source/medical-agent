@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11963470",
+  "pmid": "40170167",
+  "title": "The effect of a post-bronchodilator FEV&lt;sub&gt;1&lt;/sub&gt;/FVC &lt; 0.7 on COPD diagnosis and treatment: a regression discontinuity design.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Moffett AT, Halpern SD, Weissman GE.",
+  "doi": "10.1186/s12931-025-03198-6",
+  "figures": [
+    "Association between post-bronchodilator FEV 1 /FVC and the diagnosis and treatment of COPD. Binscatter plots depict the association between post-bronchodilator FEV 1 /FVC values and the probability that COPD is  A  diagnosed and  B  treated. Post-bronchodilator FEV 1 /FVC values are binned at the 0.01 interval. The vertical dashed line represents the post-bronchodilator FEV 1 /FVC cutoff of 0.7 re"
+  ],
+  "tables": [
+    "Encounter characteristics",
+    "Effect of a post-bronchodilator FEV 1 /FVC &lt; 0.7 on COPD diagnosis and treatment",
+    "Effect of a post-bronchodilator FEV 1 /FVC &lt; 0.7 on COPD diagnosis and treatment by subgroup"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034643.9728873
+}

@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC12245598",
+  "pmid": "40536230",
+  "title": "Reproducible sex differences in personalised functional network topography in youth.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Keller AS, Sun KY, Francisco A, Robinson H, Beydler E, Bassett DS, Cieslak M, Cui Z, Davatzikos C, Fan Y, Gardner M, Kishton R, Kornfield SL, Larsen B, Li H, Linder I, Pines A, Pritschet L, Raznahan A, Roalf DR, Seidlitz J, Shafiei G, Shinohara RT, White LK, Wolf DH, Alexander-Bloch A, Satterthwaite TD, Shanmugan S.",
+  "doi": "10.1192/bjp.2025.135",
+  "figures": [
+    "Definition of personalised functional networks (PFNs). (a) We employed a precision brain-mapping approach that leverages spatially regularised, non-negative matrix factorisation (NMF) to define individual-specific atlases of functional brain network organisation. In this approach, NMF is performed using a previously derived group consensus atlas (17 × 59 412) and each individual’s functional magne",
+    "Univariate analysis identifies that sex differences are greatest in association networks. We fit a generalised additive model (GAM) at each vertex to determine the impact of sex on network loadings. Site, age and motion were included as covariates, with age modelled using a penalised spline and site modelled as a random effect. We accounted for multiple comparisons within each network with false d",
+    "Support vector machine (SVM) models classify participant sex based on personalised functional network (PFN) topography. SVMs were trained with nested, twofold cross-validation (2F-CV) to classify participants’ sex (male or female) from PFN functional topography. (a) Depiction of the average receiver operating characteristic (ROC) curve from 100 SVM models with permuted split-half, train-test parti"
+  ],
+  "tables": [],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046847.9501352
+}

@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC12292275",
+  "pmid": "40723669",
+  "title": "The Mental Health Costs of Shadow Education: The Duration of Shadow Education and Its Depressive Effects on Chinese Adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cao Y, Wang W.",
+  "doi": "10.3390/bs15070885",
+  "figures": [
+    "Age and gender pyramid of the analytical sample.",
+    "Annual changes in depression levels and duration of shadow education.",
+    "Marginal effects of shadow education duration on depression levels. The dashed line represents the confidence interval and the circle represents the marginal effect estimate.",
+    "Marginal effects of survey year on depression levels. The dashed line represents the confidence interval and the circle represents the marginal effect estimate.",
+    "Grouped multilevel regression coefficients of survey year on depression levels (N = 7739).",
+    "Sensitivity analysis of shadow education duration ( left : shadow education duration;  right : squared term of shadow education duration; N = 7739)."
+  ],
+  "tables": [
+    "Descriptive statistics of key variables (N = 7739).",
+    "Multi-level linear regression model for depression levels (N = 7739).",
+    "Multilevel binary logistic regression model of shadow education duration (using appropriate education as the reference category).",
+    "Inverse probability weighted regression adjustment model for depression levels (N = 7739).",
+    "Multi-level linear regression model for depression levels."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019310.6626775
+}

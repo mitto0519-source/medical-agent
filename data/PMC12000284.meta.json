@@ -1,0 +1,36 @@
+{
+  "pmcid": "PMC12000284",
+  "pmid": "40234526",
+  "title": "Travel experience in public transport: Experience sampling and cardiac activity data for spatial analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Bosch E, Luther AR, Ihme K.",
+  "doi": "10.1038/s41597-025-04955-4",
+  "figures": [
+    "Study procedure.",
+    "Travel modes on the route.",
+    "Event categories reported top: overall, middle: in the stress hot spot and bottom: the satisfaction cold spot.",
+    "Travel satisfaction by event.",
+    "Travel satisfaction (left) and stress (right) by day (upper plots) and year (lower plots). Blue numbers indicate the number of observations in the time bin.",
+    "Travel mode of journey 1 of participant 1 as indicated by self-report, the Movisens ECG Move chest belt, and the DLR App called Keepmoving.",
+    "Raw heart rate data of journey 1 of participant 1 colored by whether the transportation mode was an active or passive travel mode.",
+    "Confusion matrixes for travel mode detection of the DLR Keepmoving App (left) and the Movisens chest belt (right).",
+    "median absolute deviation heart rate and heart rate variability in active (walk, bike, wait) and passive (train, bus tram) travel mode types.",
+    "Screenshot of the interactive map."
+  ],
+  "tables": [
+    "Participants’ Commute Distances.",
+    "Participants’ Living Situation.",
+    "Participants’ Education Levels.",
+    "Participants’ Commute Modes.",
+    "Columns names, their content and value ranges for the variables that were collected once per participant.",
+    "Columns names, their content and value ranges for all variables that were collected once per journey.",
+    "Columns names, their content and value ranges for all variables that were collected throughout the whole journey by the chest-worn EcgMove4 sensor regarding physical activity, part 1.",
+    "Columns names, their content and value ranges for all variables that were collected throughout the whole journey by the chest-worn EcgMove4 sensor regarding physical activity, part 2.",
+    "Columns names, their content and value ranges for all variables that were collected throughout the whole journey by the chest-worn EcgMove4 sensor regarding ECG data.",
+    "Columns names, their content and value ranges for all variables that were collected throughout the whole journey regarding experience sampling.",
+    "Columns names, their content and value ranges for variables that were collected by the chest-worn EcgMove4 sensor regarding temperature, variables that contain pre-processed ECG-related data, and GPS-related variables."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007063.0806696
+}

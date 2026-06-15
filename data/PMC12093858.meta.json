@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12093858",
+  "pmid": "40400013",
+  "title": "Physical activity in relation to health status, quality of life and compliance with World Health Organization recommendations in patients with axial spondyloarthritis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Carbo M, Hilberdink B, Paap D, Wink F, Vlieland TV, van Weely S, Spoorenberg A, Arends S.",
+  "doi": "10.1186/s13075-025-03575-y",
+  "figures": [],
+  "tables": [
+    "Characteristics of AxSpA patients included in the GLAS cohort and LUMC patients",
+    "Physical activity: minutes spent in light, moderate and vigorous PA by patients with AxSpA",
+    "Compliance with WHO PA recommendations for adults in patients with AxSpA",
+    "Type and frequencies of physical activities performed by patients with AxSpA",
+    "Associations of (m)SQUASH total score with health status and QoL in patients with AxSpA"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008226.6467862
+}

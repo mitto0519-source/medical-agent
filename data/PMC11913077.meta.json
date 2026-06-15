@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11913077",
+  "pmid": "39672599",
+  "title": "Long-Acting Growth Hormone Therapy in Pediatric Growth Hormone Deficiency: A Consensus Statement.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Maniatis A, Cutfield W, Dattani M, Deal C, Collett-Solberg PF, Horikawa R, Maghnie M, Miller BS, Polak M, Sävendahl L, Woelfle J.",
+  "doi": "10.1210/clinem/dgae834",
+  "figures": [
+    "Conceptual representation of the pharmacodynamic differences between once-weekly long-acting growth hormone and daily growth hormone. A = peak, B = average, C = trough.  Abbreviations: LAGH, long-acting GH; SDS, standard deviation score."
+  ],
+  "tables": [
+    "Overview of long-acting growth hormone products available in more than 1 country",
+    "IGF-1 correction factors IGF correction factors needed to estimate the average weekly IGF-1 SDS from samples taken at different time points during the week after the last injection of LAGH"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012684.6850848
+}

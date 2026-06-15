@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12128483",
+  "pmid": "40457338",
+  "title": "Association of football athlete engagement profiles with adolescent mental health - a latent profile analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Huang H, Sha X, Zhong C, Ma N, Shui Y.",
+  "doi": "10.1186/s12889-025-23239-5",
+  "figures": [
+    "Mean scores in the three latent profiles (standardized scores)"
+  ],
+  "tables": [
+    "Demographic information of participants",
+    "Descriptive statistics and correlation analysis ( N  = 1659)",
+    "Fit indices for LPA",
+    "Latent class probabilities for most likely membership",
+    "The results of multinomial logistics regression",
+    "Mental health outcomes per athlete engagement profile",
+    "Differences in mental health across athlete engagement profiles"
+  ],
+  "query": "team sport adolescent mental",
+  "fetched_at": 1780008997.6218195
+}

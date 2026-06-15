@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12001611",
+  "pmid": "40241025",
+  "title": "Interpretation of coefficients in segmented regression for interrupted time series analyses.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang Y, Nonzee NJ, Zhang H, Ashing KT, Song G, Crespi CM.",
+  "doi": "10.1186/s12874-025-02556-8",
+  "figures": [
+    "Estimated segmented regression line using the illustration dataset. The scatter points in blue and orange represented the data points in the pre- and post-intervention periods, respectively, while the black lines represented the pre- and post-intervention models. The vertical black dot-dashed line represented the time point of policy (i.e., intervention) implementation. The black dashed line repre"
+  ],
+  "tables": [
+    "Summary of interpretation of coefficients and intervention effects in segmented regression for interrupted time series analysis using parametrizations of Bernal et al. and Wagner et al",
+    "Estimated coefficients a  in segmented regression with standard errors (SE) and P-values"
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780031859.9695134
+}

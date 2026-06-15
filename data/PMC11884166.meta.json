@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11884166",
+  "pmid": "40045348",
+  "title": "Experience sampling method studies in physical activity research: the relevance of causal reasoning.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Poppe L, De Paepe AL, Deforche B, Van Dyck D, Loeys T, Van Cauwenberg J.",
+  "doi": "10.1186/s12966-025-01723-w",
+  "figures": [
+    "DAG with X as exposure and Y as outcome. Notes. Green arrows represent causal paths; A red node indicates a common cause of the exposure and the outcome; DAG created using Dagitty [ 32 ]",
+    "DAG depicting the time-varying exposure and outcome. Notes. k refers to the timepoint of assessment; DAG created using Dagitty [ 32 ]",
+    "Time-varying variables mentioned by the experts",
+    "Developed DAG. Notes. SES = socio-economic status; BMI = body mass index; Rounded rectangles represent supernodes",
+    "DAG visualizing the instrumental variable approach. Notes. IV = instrumental variable; C. = confounders; DAG created using Dagitty [ 32 ]",
+    "Design using a time-varying instrumental variable",
+    "DAG visualizing analytic control of confounding. Notes. The green rectangles indicate the variables that need to be adjusted for in the analysis (i.e., the adjustment set); C. = Confounders",
+    "Design for analytic control of confounding"
+  ],
+  "tables": [
+    "Summary of physical control and analytic control approaches"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021476.8710322
+}

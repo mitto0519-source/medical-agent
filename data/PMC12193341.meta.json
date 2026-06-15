@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12193341",
+  "pmid": "40565384",
+  "title": "The Impact of Long-Term Care Insurance for Older Adults: Evidence of Crowding-In Effects.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shin H.",
+  "doi": "10.3390/healthcare13121357",
+  "figures": [
+    "Regression coefficients and confidence intervals."
+  ],
+  "tables": [
+    "Demographic and health-related factors.",
+    "Caregiving types and expenditures by LTCI utilization ( n  = 3103).",
+    "Results of multivariable logistic regression on determinants of family-provided care ( n  = 3103).",
+    "Results of multivariable logistic regression on determinants of private non-family care ( n  = 3103).",
+    "Results of multivariable linear regression on determinants of total care expenditures ( n  = 3103)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039858.565237
+}

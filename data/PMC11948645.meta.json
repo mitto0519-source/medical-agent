@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11948645",
+  "pmid": "40140890",
+  "title": "Atypical maturation of the functional connectome hierarchy in autism.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee JE, Kim S, Park S, Choi H, Park BY, Park H.",
+  "doi": "10.1186/s13229-025-00641-9",
+  "figures": [
+    "Atypical development of the cortical hierarchy in ASD.  (A)  The principal gradients derived from functional connectivity of the TD group using the HCP-D dataset.  (B)  The maturational trajectory of the whole-brain functional hierarchy. Brain regions with significant age effects are plotted (       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{am",
+    "Hierarchy score analysis. ( A)  Calculation of the hierarchy scores and the trajectory of median and slope values [per year].  (B)  Whole-brain centile scores across three developmental stages.  (C)  Network-level stratification of whole-brain centile scores across different developmental stages. ∗,  p &lt;0.05; ∗∗,  p &lt;0.01; ∗∗∗,  p &lt;0.001. Abbreviations: TD, typically developing; ASD, Auti",
+    "Topological characteristics during development.  (A)  FC of the TD group across different developmental stages. To improve visibility, each network within the FC matrix is outlined by the representative network colors shown in the legend for B.  (B)  The normative trajectory of whole-brain and network-wise PC.  (C)  Results of mediation analysis for each stage. The paths  a ,  b , and  c  denote d",
+    "Correlations between the hierarchy score and symptom severity. Scatter plots between the hierarchy score and total and five subscores of the social responsiveness scale (SRS). Abbreviations: SRS, social responsiveness scale; r, Pearson correlation coefficient;        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb}"
+  ],
+  "tables": [],
+  "query": "autism spectrum disorder Korea",
+  "fetched_at": 1779996204.2999058
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12056285",
+  "pmid": "39921356",
+  "title": "Prevalence and incidence of comorbidities in patients with atopic dermatitis, psoriasis, alopecia areata, and vitiligo using a Japanese claims database.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ma Y, Chachin M, Hirose T, Nakamura K, Shi N, Hiro S, Imafuku S.",
+  "doi": "10.1111/1346-8138.17643",
+  "figures": [
+    "Cohort screening. The AD, psoriasis, AA, and vitiligo cohorts were matched in a 1:1 ratio with non‐AD, nonpsoriasis, non‐AA, and nonvitiligo control cohorts by sex, age, and index month.  a In the AD cohort, patients were required to have at least two records of treatment, including topical corticosteroids, topical calcineurin inhibitors, dupilumab, or other AD therapies, administered within 1 mon",
+    "Prevalence of the 20 most frequent comorbidities during the baseline period in matched (a) AD and non‐AD, (b) psoriasis and nonpsoriasis, (c) AA and non‐AA, and (d) vitiligo and nonvitiligo cohorts. AA, alopecia areata; AD, atopic dermatitis; COPD, chronic obstructive pulmonary disease; IBD, inflammatory bowel disease (including ulcerative colitis and Crohn disease); NMSC, nonmelanoma skin cancer.",
+    "IRs of major cardiovascular events and VTE events in patients with AD, psoriasis, AA, and vitiligo compared with index month‐, age‐, and sex‐matched controls during the follow‐up period. Ischemic heart diseases were diagnosed using  ICD‐10  code I20‐25 (i.e., any of ischemic heart disease diagnosis codes [acute coronary syndrome and coronary artery disease]), and stroke was diagnosed using  ICD‐10",
+    "IRs of (a) all malignancies, including or excluding NMSC, and (b) malignancy subtypes, in patients with AD, psoriasis, AA, and vitiligo compared with index month‐, age‐, and sex‐matched controls during the follow‐up period. AA, alopecia areata; AD, atopic dermatitis; CI, confidence interval; IR, incidence rate; NMSC, nonmelanoma skin cancer; PY, person‐years.",
+    "IRs of (a) herpes zoster infections and (b) tuberculosis in patients with AD, psoriasis, AA, and vitiligo compared with index month‐, age‐, and sex‐matched controls during the follow‐up period. AA, alopecia areata; AD, atopic dermatitis; CI, confidence interval; IR, incidence rate; PY, person‐years."
+  ],
+  "tables": [
+    "Patient demographics and healthcare utilization patterns during the baseline period."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048572.54525
+}

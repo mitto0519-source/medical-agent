@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12197991",
+  "pmid": "40575350",
+  "title": "Mediating Role of Trauma Connecting Psychiatric Family History and Adolescent Mental Health.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chaiyachati BH, Catalano JL, Schultz LM, Almasy L, Visoki E, Seidlitz J, Moore TM, Taylor JH, Calkins ME, Gur RE, Barzilay R.",
+  "doi": "10.1016/j.bpsgos.2025.100525",
+  "figures": [
+    "Proposed pathway analysis of p-factor. Structural equation modeling was applied to estimate the total effects of family history of psychopathology on adolescent mental health (p-factor) with a mediating pathway via trauma. Further models incorporated the effects of neighborhood environment and latent genetic factor represented by polygenic scores for psychiatric conditions. Covariates not shown in",
+    "Model 3. Effect of latent genetic factor on p-factor in EUR-like cohort.  (A)  Path diagram with standardized path coefficients, where ( ) indicates insignificant ( p  &gt; .05) coefficient. Regression relationships between variables are depicted as one-headed arrows pointing from the independent variable to the dependent variable. Rectangular variable outlines indicate measured variables, and ovu"
+  ],
+  "tables": [
+    "Participant Data",
+    "Structural Equation Model Path Coefficients With Fit Measures for Association of Family History With p-Factor"
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779997577.48749
+}

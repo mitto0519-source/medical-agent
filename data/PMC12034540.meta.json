@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC12034540",
+  "pmid": "40297030",
+  "title": "Disease burden and attributable risk factors of major depressive disorder in China, Japan, and South Korea from 1990 to 2021 and its prediction to 2035.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang Y, Zhu J, Zhou J.",
+  "doi": "10.3389/fpubh.2025.1510091",
+  "figures": [
+    "ASIR of MDD.  (A)  ASIR for MDD in 2021 for 204 countries and territories;  (B)  ASIR time trend for MDD. The blue line and its surrounding area represent the prediction curves and uncertainty intervals for males; the green line and its surrounding area represent the prediction curves and uncertainty intervals for females; and the red line and its surrounding area represent the prediction curves a",
+    "ASPR of MDD.  (A)  ASIR for MDD in 2021 for 204 countries and territories;  (B)  ASPR time trend for MDD. The blue line and its surrounding area represent the prediction curves and uncertainty intervals for males; the green line and its surrounding area represent the prediction curves and uncertainty intervals for females; and the red line and its surrounding area represent the prediction curves a",
+    "ASDR of MDD.  (A)  ASDR for MDD in 2021 for 204 countries and territories;  (B)  ASDR time trend for MDD. The blue line and its surrounding area represent the prediction curves and uncertainty intervals for males; the green line and its surrounding area represent the prediction curves and uncertainty intervals for females; and the red line and its surrounding area represent the prediction curves a",
+    "Burden of MDD in CJK in 1990.  (A)  Incidence;  (B)  Prevalence;  (C)  DALYs. Pink bars and pink areas represent the burden of disease and uncertainty interval for females; blue bars and blue areas represent the burden of disease and uncertainty interval for males.",
+    "Burden of MDD in CJK in 2021.  (A)  Incidence;  (B)  Prevalence;  (C)  DALYs. Pink bars and pink areas represent the burden of disease and uncertainty interval for females; blue bars and blue areas represent the burden of disease and uncertainty interval for males.",
+    "APC trend of MDD burden in China from 1990 to 2021.  (A)  Age effect;  (B)  Period effect;  (C)  Cohort effect.",
+    "APC trend of MDD burden in Japan from 1990 to 2021.  (A)  Age effect;  (B)  Period effect;  (C)  Cohort effect.",
+    "APC trend of MDD burden in South Korea from 1990 to 2021.  (A)  Age effect;  (B)  Period effect;  (C)  Cohort effect.",
+    "Changes in PAF of MDD from 1990 to 2021.  (A)  Level 2 risk factors;  (B)  Level 3 risk factors.",
+    "Prediction of Burden Trend of MDD from 2021 to 2035.  (A)  ASIR;  (B)  ASPR;  (C)  ASDR."
+  ],
+  "tables": [
+    "ASIR and trends of MDD in CJK.",
+    "ASPR and trends of MDD in CJK.",
+    "ASDR and trends of MDD in CJK.",
+    "Main risk factors for MDD in CJK in 1990 and 2021."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780047832.8949685
+}

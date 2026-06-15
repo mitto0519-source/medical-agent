@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12312137",
+  "pmid": "40734508",
+  "title": "Cognitive appraisals, cognitive avoidance and rumination as shared vulnerabilities for PTSD and depression in trauma-exposed adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Claxton J, Alberici A, Meiser-Stedman R, Chiu HTS.",
+  "doi": "10.1080/20008066.2025.2527550",
+  "figures": [
+    "Venn diagram delineating unique and comorbid diagnostic cases."
+  ],
+  "tables": [
+    "Zero-order correlations.",
+    "Diagnostic group differences.",
+    "Hierarchical regression analysis: predictors of PTSS and depression symptoms.",
+    "Unique and common variances of predictors in PTSD and depression symptoms.",
+    "Commonality analysis: variance partitions in depression and PTSD symptoms."
+  ],
+  "query": "PTSD trauma adolescent",
+  "fetched_at": 1779996915.3205554
+}

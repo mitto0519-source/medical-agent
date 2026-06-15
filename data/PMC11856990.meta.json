@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11856990",
+  "pmid": "40004800",
+  "title": "Insulin Sensitivity and Muscle Loss in the Absence of Diabetes Mellitus: Findings from a Longitudinal Community-Based Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim HJ.",
+  "doi": "10.3390/jcm14041270",
+  "figures": [
+    "Flow diagram of study cohort.",
+    "Kaplan–Meier curve for the development of incident muscle loss by ISI quartiles. The highest number of muscle loss events occurred in Q1, where insulin sensitivity was lowest, while the lowest number occurred in Q4, where insulin sensitivity was highest.",
+    "Restricted cubic spline curve for the development of incident muscle loss by ISI. Adjusted hazard ratios for muscle loss associated with the ISI were analyzed using a Cox model with restricted cubic splines. The dark gray zone represents confidence intervals, while the light gray zone with a mountain-like shape indicates population density along the spline variable. The model was adjusted for age,",
+    "Kaplan–Meier curve for all-cause mortality by ISI quartiles. No statistically significant differences between the groups were observed.",
+    "Kaplan–Meier curve for the development of all-cause mortality according to incident muscle loss. The curves showed that the muscle loss group (dashed line) had significantly higher mortality compared to the group without muscle loss (solid line)."
+  ],
+  "tables": [
+    "Baseline characteristics of patients by ISI quartiles.",
+    "Muscle loss event rates among groups categorized by ISI quartiles.",
+    "Hazard ratios for the development of muscle loss by ISI quartiles.",
+    "Hazard ratios for all-cause mortality in individuals with muscle loss.",
+    ""
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037389.4282162
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12009566",
+  "pmid": "40255973",
+  "title": "The Association Between Chronotype and Weight Change Among Medical Students: A Cross-Sectional Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lin X, Kuang X, Ding S, Tian L, Fang J, Chen S, Shi H, Jin X.",
+  "doi": "10.2147/dmso.s504151",
+  "figures": [
+    "Weight changes with different chronotypes. Weight change (kg) = current weight - enrollment weight.",
+    "( a ) Joint effect of chronotype and dinner time on weight change value; ( b ) Joint effect of chronotype and dinner time on weight gain. Model was adjusted for gender (male, female), grade (sophomore, junior, senior or above), parental education (primary school or below, junior high school, high school, university or above), birthplace (city, town, countryside), only child (yes, no), sleep durati"
+  ],
+  "tables": [
+    "Basic Characteristics of Participants by Chronotype",
+    "Behavioral Characteristics of Participants by Chronotype",
+    "Weight Change of Participants With Different Chronotypes",
+    "Association Between Chronotype, Weight Change and Weight Gain, n=1300",
+    "Joint Effect of Chronotype and Dinner Time on Weight Change",
+    "Sensitivity Analysis"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001171.6364179
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12119502",
+  "pmid": "40443511",
+  "title": "Extremely high HDL cholesterol paradoxically increases the risk of all-cause mortality in non-diabetic males from the Korean population: Korean genome and epidemiology study-health examinees (KoGES-HEXA) cohorts.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ryu HE, Jung DH, Heo SJ, Park B, Lee YJ.",
+  "doi": "10.3389/fmed.2025.1534524",
+  "figures": [
+    "Flowchart of the study participants.",
+    "Kaplan–Meier curve for all-cause mortality by HDL groups.  (A)  Men,  (B)  women.",
+    "Non-linear association between HDL-C levels and all-cause mortality using a fully adjusted restricted cubic spline model.  (A)  Men,  (B)  women."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population according to HDL quartiles in men and women.",
+    "The sex-stratified Cox proportional hazard regression analysis results for all-cause mortality according to HDL groups in men and women.",
+    "Subgroup analysis of hazard ratios for all-cause mortality according to HDL-C levels stratified by age and sex."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036947.281564
+}

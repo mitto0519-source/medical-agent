@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12187025",
+  "pmid": "40534180",
+  "title": "Sleep, Health Care-Seeking Behaviors, and Perceptions Associated With the Use of Sleep Wearables in Canada: Results From a Nationally Representative Survey.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dion K, Porteous M, Kendzerska T, Nixon A, Lee E, de Zambotti M, Garland SN, Singh M, De Luca G, Gillman S, Baril AA, Gallson D, Robillard R, Canadian Sleep Research Consortium.",
+  "doi": "10.2196/68816",
+  "figures": [
+    "Differences in sleep onset latency between wearable users and nonusers. Error bars represent the standard error of the mean. *  P &lt;.05.",
+    "Differences in sleep duration between wearable users and nonusers. Error bars represent the standard error of the mean. *  P &lt;.05.",
+    "Differences in insomnia severity between wearable users and nonusers. Error bars represent the standard error of the mean. *  P &lt;.05.",
+    "Differences in sleep-related health care between wearable users and nonusers. *  P &lt;.05.",
+    "Moderating effect of wearable use on sleep duration and anxiety. ln: natural logarithm. GAD-7: Generalized Anxiety Disorder-7."
+  ],
+  "tables": [
+    "Sleep wearables use stratified by self-identified racial or ethnic groups. A total of 92 respondents self-identified as belonging to multiple racial or ethnic groups.",
+    "Global sample characteristics in relation to 2021 Canadian Census data [ 21-23 ].",
+    "Sociodemographic predictors of wearable use.",
+    "Perceived effects of wearable use on sleep and stress levels.",
+    "Comparison of sleep in wearable users and nonusers. Univariate analysis of covariates."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053715.315284
+}

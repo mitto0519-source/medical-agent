@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12131460",
+  "pmid": "40462141",
+  "title": "Circulating levels of 25-hydroxyvitamin D in relation to hypertension in children and adolescents: a systematic review and dose-response meta-analysis of epidemiologic studies with GRADE assessment.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mokhtari E, Moradmand Z, Rouhani P, Saneei P.",
+  "doi": "10.1186/s12967-025-06668-z",
+  "figures": [
+    "Flowchart of the study selection process",
+    "Forest plot of prospective and cross-sectional studies that examined the association between highest versus lowest level of circulating 25(OH)D and odds of childhood HTN",
+    "Forest plot of studies conducted in Asian and Non-Asian countries that examined the association between highest versus lowest level of circulating 25(OH)D and odds of childhood HTN",
+    "Linear dose–response meta-analysis of circulating 25(OH)D and odds of childhood HTN",
+    "Non-Linear dose–response meta-analysis of circulating 25(OH)D and odds of childhood HTN"
+  ],
+  "tables": [
+    "PICOS criteria for inclusion of studies",
+    "Detailed characteristics of the eligible epidemiologic studies included in the systematic review and meta-analysis for circulating 25(OH)D concentration in relation to high blood pressure in children",
+    "Results of subgroup-analysis for circulating 25(OH)D levels and odds of childhood hypertension"
+  ],
+  "query": "Korean Children Adolescents Study KoCAS",
+  "fetched_at": 1780040945.9406416
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11882814",
+  "pmid": "40044920",
+  "title": "Effects of childhood maltreatment on mothers' empathy and parenting styles in intergenerational transmission.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kawaguchi Y, Kurata S, Kawata NYS, Yao A, Nishitani S, Fujisawa TX, Tomoda A.",
+  "doi": "10.1038/s41598-025-92804-0",
+  "figures": [
+    "Path analysis model based on hypothesis in mixed group from total scores of CTQ or ACE to CM being mediated by Depressive Symptoms, Cognitive Empathy, Affective Empathy, Cortisol, Parenting style Overreactivity and Parenting Style Laxness. Goodness of fit indices indicated that the model was not statistically fit;  χ  2 (22) = 66.03,  p  &lt; .001; AIC = 2173, BIC = 2220, CFI = .24, TLI = -.20, RM",
+    "( a ) Fitted path model in the mixed group from total scores of Childhood Trauma to CM being mediated (or not mediated) by Cognitive Empathy, Affective Empathy, Depressive Symptoms, and Cortisol. Goodness of fit indices indicated that the model was statistically fit;  χ  2 (7) = 7.28,  p  = .41; AIC = 1466, BIC = 1493, CFI = 1.0, TLI = 1.0, RMSEA = .03. The solid lines indicate statistically signi",
+    "Fitted path model in the maltreatment group from total scores of Childhood Trauma to Parenting Style Total being mediated by Affective Empathy and Depressive Symptoms. Goodness of fit indices indicated that the model was statistically fit;  χ  2 (3) = 2.60,  p  = .46; AIC = 407, BIC = 412, CFI = 1.0, TLI = 1.1, RMSEA = .00. ** p  &lt; .01, * p  &lt; .05.",
+    "Fitted path model in the non-maltreatment group from total scores of Childhood Trauma to Parenting Style Total being mediated (or not mediated) by Affective Empathy and Depressive Symptoms. Goodness of fit indices indicated that the model was statistically fit;  χ  2 (3) = 3.00,  p  = .39; AIC = 1001, BIC = 1015, CFI = 1.0, TLI = 1.1, RMSEA = .003. ** p  &lt; .01, * p  &lt; .05."
+  ],
+  "tables": [
+    "Demographics of participants (N = 55).",
+    "Psychological measurements of the participants.",
+    "Pearson correlation coefficients for key analytic variable of mixed group."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048471.2300642
+}

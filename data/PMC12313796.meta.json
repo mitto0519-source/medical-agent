@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12313796",
+  "pmid": "40742621",
+  "title": "A Preliminary Integrated Metabolomics Analysis Identifies Retrograde Endocannabinoid Signaling Shift in Severe OSA Patients.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Han L, Liu J, Xu J, Li X, Chen R.",
+  "doi": "10.1007/s11325-025-03425-w",
+  "figures": [
+    "Flow Chart of the Study Recruitment",
+    "Visualization Plots of Screening Differential Metabolites by GC–MS. Scatter plots for PLS-DA (R 2 X = 0.384, R 2 Y = 0.973, Q 2  = 0.716) and OPLS- DA (Q 2  = 0.719, R2 = 0.96) models built from untargeted GC-MS analysis, showing separation between mOSA and sOSA patients in ( A ) and ( B ). Volcano plots of the FC (defined as FC = 1.25) and p value (defined as 0.05) for DMs between the two groups ",
+    "Visualization Plots of Screening Differential Metabolites by LC–MS. Scatter plots for PLS-DA (R 2 X = 0.597, R 2 Y = 0.765, Q 2  = −0.002) and OPLS- DA (Q 2  = −0.625, R 2  = 0.771) models built from untargeted LC–MS analysis, showing a degree of separation between mOSA and sOSA patients in ( A ) and ( B ). Volcano plots of the FC (defined as FC = 1.25) and p value (defined as 0.05) for DMs betwee",
+    "Bubble charts of KEGG pathways of DMs between mOSA and sOSA by GC–MS and LC–MS. Pathway analysis indicates biosynthesis of unsaturated fatty acids and FoxO signaling pathway are the most statistically enriched pathway from GC–MS ( A ). Arachidonic acid metabolism and choline metabolism in cancer are the most prominent pathways from LC–MS ( B ). Markedly, retrograde endocannabinoid signaling is the",
+    "ROS Changes between OSA Subgroups according to Respiratory Events or Sleep Fragmentation. The comparation of ROS level in serum between mOSA and sOSA patients according to AHI ( A ) or ODI ( B ), without any significance shown. However, significant difference could be manifested between the subgroups (h-SF vs. l-SF) with high or low sleep fragmentation. In the subgroup with more N3 sleep duration,"
+  ],
+  "tables": [
+    "PSG and clinical Characteristics of the Participants",
+    "the top DMs between groups in GC–MC",
+    "the top DMs between groups in LC-MC"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780001932.2393296
+}

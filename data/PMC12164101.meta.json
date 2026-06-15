@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12164101",
+  "pmid": "40514752",
+  "title": "Cumulative handgrip strength and longitudinal changes in cognitive function and daily functioning among people aged 50 years and older: evidence from two longitudinal cohort studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Han B, Zeng Z, Wen Y, Chen C, Cheng D, Li Y, Huang N, Ruan J, Zhao D, Xue Q.",
+  "doi": "10.1186/s13690-025-01624-1",
+  "figures": [
+    "The study designs. Abbreviations: ELSA, English Longitudinal Study of Aging; HGS, handgrip strength; SHARE, Survey of Health, Ageing, and Retirement in Europe. Note: The ELSA did not collect the handgrip strength in wave 3 and wave 5, and SHARE did not collect the handgrip strength in wave 3"
+  ],
+  "tables": [
+    "",
+    "The basic characteristics",
+    "Association between cumulative handgrip strength and global cognitive decline (SD/year)",
+    "Association between cumulative handgrip strength and risk of cognitive impairment",
+    "Association between cumulative handgrip strength and daily functioning decline (ADLs+IADLs; point/year)",
+    "Association between cumulative handgrip strength and risk of functional impairment"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040914.4136918
+}

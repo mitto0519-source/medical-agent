@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12187978",
+  "pmid": "40567293",
+  "title": "Anxiety and Depression Screening of Youth in Pediatric Pulmonary Hypertension Clinic: A Multi-Center, Cross-Sectional Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Parker C, Whalen E, Smith MA, Becerra J, Stevens L, Avitabile CM, Brown A, Cash M, Jackson EO, McSweeney J, Miller-Reed K, Reyes JT, Sheppard C, Mullen MP, Pulmonary Hypertension Network (PPHNet).",
+  "doi": "10.1002/pul2.70117",
+  "figures": [
+    "Study algorithm.",
+    "Odds ratios."
+  ],
+  "tables": [
+    "Patient demographics and PH characteristics.",
+    "Mental health history.",
+    "AD screening outcomes.",
+    "AD Interventions."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056534.881815
+}

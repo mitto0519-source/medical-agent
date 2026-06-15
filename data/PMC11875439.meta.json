@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11875439",
+  "pmid": "39327907",
+  "title": "How to develop causal directed acyclic graphs for observational health research: a scoping review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Poppe L, Steen J, Loh WW, Crombez G, De Block F, Jacobs N, Tennant PWG, Cauwenberg JV, Paepe AL.",
+  "doi": "10.1080/17437199.2024.2402809",
+  "figures": [
+    "Basic definitions and graphical rules for Directed Acyclic Graphs. Notes. Measurement bias can be visualised using different structures. Interested readers are referred to Chapter 9 of Hernán and Robins (Hernán &amp; Robins,  2020 ).",
+    "Panel A displays a feedback loop. Panel B shows the corresponding causal DAG encoding the temporal nature underlying the feedback loop. Notes. ‘k’ refers to timepoint k.",
+    "Completed PRISMA flow diagram.",
+    "DAG depicting the exposure and outcome. Notes.  https://dagitty.net/mgFapKirJ  The green colour of the arrow indicates this edge captures an open directed path.",
+    "DAG with common causes. Notes.  https://dagitty.net/mUqwRMept  Arrows lying on an open undirected path are indicated in red.",
+    "DAG including a collider. Notes.  https://dagitty.net/mocqpRgwk",
+    "DAG representing measurement bias. Notes:  https://dagitty.net/mWeagRxdW"
+  ],
+  "tables": [
+    "Included papers and resources.",
+    "Six steps to consider when creating a DAG."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021290.240634
+}

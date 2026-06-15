@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11941804",
+  "pmid": "40141050",
+  "title": "Identification of &lt;i&gt;POU1F1&lt;/i&gt; Variants in Vietnamese Patients with Combined Pituitary Hormone Deficiency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nguyen HT, Nguyen KN, Dien TM, Can TBN, Nguyen TTN, Lien NTK, Tung NV, Xuan NT, Tao NT, Nguyen NL, Tran VK, Mai TTC, Tran VA, Nguyen HH, Vu CD.",
+  "doi": "10.3390/ijms26062406",
+  "figures": [
+    "Pedigrees of the five patients’ families in this study. Arrows indicate the probands. Black symbols represent affected patients.",
+    "Magnetic resonance imaging (MRI) revealed the anterior hypoplasia in the pituitaries of patients.",
+    "Sanger validation of  POU1F1  variants in the five families. Patients P1 and P2 inherited each mutant allele c.428G&gt;A (p.Arg143Gln) from their parents. Patient 3 was homozygous for c.557T&gt;G p.(Leu186Arg), while her parents were heterozygous. The c.811C&gt;T p.(Arg271Trp) variant was heterozygous in patients P4, P5, and P6. The c.811C&gt;T p.(Arg271Trp) variant was de novo as their parents ca",
+    "Growth charts of the six patients. The six patients responded well to recombinant human growth hormone (rhGH) therapy. After three years of treatment, patient P1 remained at a low height SDS (−4.37), while patients P2, P3, and P4 reached normal height. Patient P5 reached a height of 143 cm (−2.55 SDS) after five years of treatment. For patient P6, the height has significantly improved, nearing the",
+    "Location of  POU1F1  variants in protein ( a ) and p.Arg143Gln in three-dimensional structure of human PIT-1 ( b ). Arrows indicate the location of the wild-type ( left  side) and mutant ( right  side) amino acid residue."
+  ],
+  "tables": [
+    "Clinical characteristics and hormonal profiles of the six patients.",
+    "Genetic interpretation of  POU1F1  variants in the six patients.",
+    "Treatment and responsiveness of the six patients."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053122.5866985
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11888134",
+  "pmid": "40053562",
+  "title": "Hypertension associated with serotonin reuptake inhibitors: A new analysis in the WHO pharmacovigilance database and examination of dose-dependency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chrétien B, Rabiaza A, Kazuki N, Fedrizzi S, Sassier M, Dolladille C, Alexandre J, Humbert X.",
+  "doi": "10.1371/journal.pone.0317841",
+  "figures": [
+    "Flow chart of individual case safety report (ICSR) in WHO pharmacovigilance database concerning serotonin reuptake inhibitors (SRIs) induced hypertension."
+  ],
+  "tables": [
+    "Characteristics of the 13,688 individual case safety reports (ICSRs) of hypertension with SRIs reported in VigiBase®.",
+    "Time to onset (TTO) of hypertension after SRIs exposure.",
+    "Dechallenge and rechallenge after the onset of hypertension.",
+    "Disproportionality analysis with all SRIs in VigiBase® to search for a signal of hypertension.",
+    "Disproportionality analysis of the signal of hypertension associated with SRIs to search for a dose-dependency effect."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056021.9430084
+}

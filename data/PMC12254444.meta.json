@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12254444",
+  "pmid": "40643757",
+  "title": "Altered glucose metabolism in default mode network and prefrontal circuit in patients with Kallmann syndrome.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhou C, Wang X, Men M, Yi X, Cao K, Pu W, Hacker M, Li X, Zhao M.",
+  "doi": "10.1186/s13550-025-01282-y",
+  "figures": [
+    "Brain glucose metabolic alterations in Kallmann syndrome patients. Whole-brain voxel-wise [ 18 F]FDG PET/CT analysis using SPM12 revealed significant hypermetabolism (red clusters) and hypometabolism (blue clusters) in 30 KS patients vs. 30 healthy controls. The height threshold of synaptic density changes was set at  P &lt;0.001 ( P &lt;0.05 false discovery rate [FDR] corrected at cluster level)",
+    "Violin plots of the 8 identified metabolic clusters for KS patients and healthy controls expressed as SUVR. Abbreviations: KS, Kallmann syndrome; HC, healthy control",
+    "Correlation Analysis.  (A)  Chord diagram depicting multivariate correlations between PET metabolic clusters (C1–C8) and endocrine-psychological parameters.  (B)  Relationships between PET metabolic cluster3 and cluster5 and their positive correlation with FAS, HIOS and HIAS. Abbreviations: HIAS, health information avoidance scale; HIOS, health information overload scale; FAS, fertility anxiety sc",
+    "Mediation analysis of the hypermetabolism of basal ganglia cluster between HIAS and FAS. The effect of HIAS is shown by the direct effect (c’) without mediator, and the total effect (c) with the mediator. Standardized β-coefficients of each path are shown for the mediator. Indirect effects are statistically significant at the 95% CI when the CI does not include 0. As the direct effect (c’) is not "
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of the study cohort",
+    "Main hyper-and hypometabolic clusters identified from patients with KS compared with that of HCs"
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046272.173975
+}

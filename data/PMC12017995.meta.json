@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12017995",
+  "pmid": "40270586",
+  "title": "The impact of biosimilar use on healthcare utilization among new users of etanercept for inflammatory arthritis: a population-based regression discontinuity analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhou VY, Lacaille D, Zheng Y, Qian Y, Nosyk B, Xie H.",
+  "doi": "10.1016/j.lana.2025.101058",
+  "figures": [
+    "Proportion of biosimilar use. Note: Biologics incident users were divided into quarterly cohorts (4 per year) according to their biologics initiation date (except for the datapoints appear immediately before and after policy change date). The datapoint appears immediately before policy change date (i.e., grey dashed line) included biologics incident users whose initiation date were between April 1",
+    "Healthcare utilization outcomes by etanercept initiation date. (a) Physician Visits; (b) All-Cause Hospitalizations; (c) Infection-Related Hospitalizations; (d) Length of Hospital Stays; (e) Emergency Room Visits. Note: The black solid line shows estimates obtained from quasi-Poisson Regression (i.e., primary results). The black dotted line shows estimates obtained from local linear regression (LL"
+  ],
+  "tables": [
+    "Baseline characteristics for incident etanercept users for inflammatory arthritis in BC, Canada, with etanercept initiation dates between 2014 and 2020.",
+    "The intention-to-treat effect of policy implementation on healthcare utilization outcomes among incident etanercept users.",
+    "The complier average causal effect of biosimilar use on healthcare utilization outcomes among incident etanercept users."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035687.7088468
+}

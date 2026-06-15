@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12231481",
+  "pmid": "40366753",
+  "title": "Altered dynamic reconfiguration of brain functional networks during gaming and deprivation in individuals with internet gaming disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang Z, Wang M, Meng G, Qi Y, Wang L, Dong GH.",
+  "doi": "10.1556/2006.2025.00036",
+  "figures": [
+    "The whole analytical pipeline of this study   Abbreviations : IGD, internet gaming disorder; RGU, recreational game use; BGN, basal ganglia network. *** indicates  p  &lt; 0.001.",
+    "Brain regions included in the BGN, LN and FPN  The values indicate the numbers of the brain nodes within the networks and do not have any meaning.   Abbreviations : BGN, basal ganglia network; LN, limbic network; FPN, frontal-parietal network; L, left; R, right.",
+    "The recruitments of the BGN and its nodes  (A) Post-hoc results for the recruitment of the BGN.  (B) The change in the recruitment of the BGN from gaming to deprivation (recruitment  deprivation  - recruitment  gaming ) showed a significant positive correlation with addiction severity (IAT and DSM-5 scores) among all the participants.  (C) Post-hoc results for the recruitment of the node “right ca",
+    "The recruitments of the LN and its nodes  (A) Post-hoc results for the recruitment of the LN.  (B) The change in the recruitment of the LN from gaming to deprivation (recruitment  deprivation  - recruitment  gaming ) were significantly positively correlated with addiction severity (IAT and DSM-5 scores) among all the participants.  (C) Post-hoc results for the recruitment of the node “left insula”",
+    "The integrations of the nodes in the FPN with BGN  (A) Post-hoc results for the integration between the node “left IFG” in the FPN and BGN.  (B) The change in this integration from gaming to deprivation (integration deprivation - integration gaming) showed a significant positive correlation with addiction severity (IAT scores) among all the participants.   Abbreviations : IGD, internet gaming diso",
+    "The integrations of the nodes in the FPN with LN  (A) Post-hoc results for the integration between the node “right DLPFC” in the FPN and LN.  (B) Post-hoc results for the integration between the node “left IFG” in the FPN and LN.  (C) Changes in these two integrations from gaming to deprivation (integration  deprivation  - integration  gaming ) were significantly positively correlated with addicti"
+  ],
+  "tables": [
+    "Demographic information and group differences",
+    "Brain nodes with significant interaction effect of Group × Phase ANOVA"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998024.6766467
+}

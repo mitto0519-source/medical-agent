@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12277286",
+  "pmid": "40693276",
+  "title": "The kynurenine pathway as a potential link between ethanol-induced behavioral alterations and neuroinflammation.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gil de Biedma-Elduayen L, Giménez-Gómez P, Morales-Puerto N, Vidal R, Del Río-García Á, Núñez-de la Calle C, Careaga L, Gutiérrez-López MD, O'Shea E, Colado MI.",
+  "doi": "10.3389/fphar.2025.1628527",
+  "figures": [
+    "Chronic intermittent ethanol (CIE) vapor exposure paradigm.  (A)  Schematic timeline for CIE paradigm to induce dependence in mice.  (B–D)  Average EtOH consumption, preference for EtOH and water consumption, respectively, during the two-bottle choice limited access (2BC) procedure over baseline weeks and after three cycles of CIE vapor exposure.  (E)  Weight gain of mice exposed to EtOH vapor (CI",
+    "Effect of the CIE model on behavioral and cognitive parameters in dependent mice.  (A)  Distance travelled and,  (B)  average speed in the open-field test.  (C)  Sucrose preference (%) test.  (D)  Time spent in open arms (%) and,  (E)  number of entries into open arms in the elevated plus maze test.  (F)  Discrimination index (%) in the novel object recognition test. All the tests were conducted 2",
+    "Transcriptomic profile in the nucleus accumbens (NAc) of mice exposed to the CIE model.  (A)  Count of upregulated and downregulated genes based on the Fold Change (ǀFCǀ ≥2) and the p-value ( P  &lt; 0.05). The comparison pair was Control vs CIE using the statistical method FC and binomial Wald Test, n = 4.  (B)  Volcano plot presenting the differentially expressed genes. It shows the log2 of the ",
+    "Impact of CIE model on kynurenine pathway in plasma.  (A)  Kynurenine concentration.  (B)  Tryptophan concentration.  (C)  Serotonin concentration.  (D)  KYN/TRP ratio.  (E)  TRP/5-HT ratio All the determinations were performed 24 h following the final exposure to EtOH vapors. Results are presented as mean ± SEM, n: Control = 7 and CIE = 8 for A and D, Control and CIE = 8 for B, Control and CIE = ",
+    "Impact of CIE model on kynurenine pathway in limbic forebrain.  (A)  Kynurenine concentration.  (B)  Tryptophan concentration.  (C)  Serotonin concentration.  (D)  KYN/TRP ratio.  (E)  TRP/5-HT ratio All the determinations were performed 24 h following the final exposure to EtOH vapors. Results are presented as mean ± SEM, n: Control = 6 and CIE = 8 for A, Control = 8 and CIE = 7 for B and E, Cont",
+    "Impact of CIE model on kynurenine pathway in cortex.  (A)  Kynurenine concentration.  (B)  Tryptophan concentration.  (C)  Serotonin concentration.  (D)  KYN/TRP ratio.  (E)  TRP/5-HT ratio All the determinations were performed 24 h following the final exposure to EtOH vapors. Results are presented as mean ± SEM, n: Control and CIE = 7 for A and D, Control = 8 and CIE = 7 for B, C and E Statistica",
+    "Impact of CIE model on kynurenine pathway in cerebellum.  (A)  Kynurenine concentration.  (B)  Tryptophan concentration.  (C)  Serotonin concentration.  (D)  KYN/TRP ratio.  (E)  TRP/5-HT ratio All the determinations were performed 24 h following the final exposure to EtOH vapors. Results are presented as mean ± SEM, n: Control and CIE = 8 for A and C, Control and CIE = 7 for B, D, and E Statistic"
+  ],
+  "tables": [],
+  "query": "tryptophan kynurenine pathway depression",
+  "fetched_at": 1780045901.8226976
+}

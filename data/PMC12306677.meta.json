@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC12306677",
+  "pmid": "40740665",
+  "title": "Building geodemographic regions: commuting, productivity and uneven spatial development in England and Wales.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hincks S, Arbabi H, Hamilton R.",
+  "doi": "10.1080/00343404.2025.2485132",
+  "figures": [
+    "Commuter categories and variables.",
+    "Geodemographic labour market areas, segmented into distinct regions.",
+    "Commuting flows by settlement type from urban, suburban, and rural areas.  Note: Different line heights represent varying flow intensities, labelled with settlement type-specific groupings: (1) professional core; (2) mixed services; (3) traders, movers and makers; (4) high flyers; (5) nurturers; and (6) friendly faces.",
+    "Elasticity of returns to scale across different geodemographic boundaries: ordinary least squares (OLS) estimates of scaling exponents  β  for (a) economic output, (b) the extent of the urbanised area, and (c) the balance between economic output and infrastructural efficiencies as captured by the interaction of productivity and density for all geographies.  Note: Values of mean-normalised distribu",
+    "Densification and mobility across geodemographic labour market areas (LMAs).  Note: Darker areas indicate increased benefits from densification (positive log( YN  ×  A \n nN ) values in (c), while lighter areas indicate increased benefits from better internal mobility."
+  ],
+  "tables": [
+    "Commuter categories and variables.",
+    "Summary of diagnostic statistics to determine the optimum cluster solution ( n  = 3–9).",
+    "Geodemographic group profiles.",
+    "Summary of evaluation metrics for labour market area (LMA) delineation.",
+    "Maximum entropy measures by group.",
+    "Measures of commuting distance by group.",
+    "Measures of the structure of commuting by group."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007623.98026
+}

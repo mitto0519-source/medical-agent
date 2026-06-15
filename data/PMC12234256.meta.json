@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12234256",
+  "pmid": "40630424",
+  "title": "Association Between Fermented Food Consumption and Sleep Quality Under Psychological Stress: Prospective Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dobielska M, Bartosik N, Olczyk K, Suława A, Litwin M, Parys J, Karbownik MS.",
+  "doi": "10.1002/fsn3.70537",
+  "figures": [
+    "The study design. Step A stands for carrying out Survey 1, Step B stands for providing records of food and beverages, Step C stands for carrying out Survey 2. Independent and dependent were written in color, confounding variables were written in black.",
+    "Students' chronotypes according to the Chronotype Questionnaire.",
+    "Covariate adjusted analysis of V‐shaped trend in the association between fermented food consumption and sleep quality in the 1 week before the stressful event. The higher Global PSQI score, the worse sleep quality. In the raw analysis of the same association, the curve was very close to the presented and also V‐shaped. PSQI, Pittsburgh Sleep Quality Index.",
+    "Coassociations between fermented food consumption, intensity of GI symptoms, and quality of sleep. The results were presented in a particular order: Point estimate (confidence interval),  p  value. Statistically significant associations were presented on darker backgrounds. For the purpose of examining trends between the intensity of GI symptoms and quality of sleep, the former was treated as cate"
+  ],
+  "tables": [
+    "Basal characteristics of the participants, from Survey 1.",
+    "Health‐related parameters of the participants in the week processing the final exam. GI, gastrointestinal.",
+    "Consumption of the analyzed food products per day in a period of almost 4 days preceding the exam. The instruments, used to assess the above parameters, were thoroughly described in the section “Data measurements, Step B” of Materials and Methods.",
+    "Association between consumption of fermented food and quality of sleep under psychological stress ( n  = 280). Statistically significant results are shown in bold."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001149.1665094
+}

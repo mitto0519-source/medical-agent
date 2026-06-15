@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12215923",
+  "pmid": "40595309",
+  "title": "Effect of the implementation of HIV/AIDS prevention and treatment policies on the mortality rate of people living with HIV in Guilin, China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Feng Y, Zhuo Y, Tang J, Zhang G, Shi W, Zhou L.",
+  "doi": "10.1038/s41598-025-07683-2",
+  "figures": [
+    "Number of reported HIV/AIDS deaths and mortality rate in Guilin, 1996–2020.",
+    "HIV/AIDS mortality rate among overall HIV/AIDS in Guilin, 1996–2020. ( a ) First phase implementation of the “Prevention and Treatment of HIV/AIDS”. ( b ) Second phase implementation of the “Prevention and Treatment of HIV/AIDS”.",
+    "HIV/AIDS mortality rate among HIV/AIDS with high school education and below, 1996–2015. ( a ) First phase implementation of the “Prevention and Treatment of HIV/AIDS”. ( b ) Second phase implementation of the “Prevention and Treatment of HIV/AIDS”.",
+    "HIV/AIDS mortality rate among farmers with HIV/AIDS, 2006–2020. ( a ) First phase implementation of the “Prevention and Treatment of HIV/AIDS”. ( b ) Second phase implementation of the “Prevention and Treatment of HIV/AIDS”."
+  ],
+  "tables": [
+    "Table of parameters for the segmented regression model for the overall HIV/AIDS mortality.",
+    "Parameters of the segmented regression model for the HIV/AIDS mortality rate for those with high school education and below.",
+    "Parameters of the segmented regression model for HIV/AIDS mortality among farmers."
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032220.8118958
+}

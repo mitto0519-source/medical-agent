@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11974432",
+  "pmid": "39792180",
+  "title": "Temporal attentional bias to visual game stimuli in Internet gaming disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hu M, Ku Y, Liu L.",
+  "doi": "10.1556/2006.2024.00075",
+  "figures": [
+    "An example of an RSVP series. Participants were instructed to report the number and content of target stimuli surrounded by a 10-pixel wide blue border while ignoring distractors surrounded by a 10-pixel wide black border. The target stimuli can be game-related (e.g., T1) or neutral (e.g., T2), with the lag between them ranging from 200 to 800 ms (shown here with a lag of 300 ms). The proportions ",
+    "The results of attentional blink enhancement analysis. Response accuracy of T2 (ACC) following neutral T1 (green line) and game-related T1 (red line) in different lag conditions for (A) Internet gaming disorder (IGD) and (B) healthy control (HC) groups. Error bars show 95% confidence interval. The asterisk indicates significant differences between T2 accuracy following neutral T1 and game-related ",
+    "The results of attentional blink antagonism analysis. Response accuracy (ACC) of neutral T2 (green line) and game-related T2 (red line) in different lag conditions for (A) Internet gaming disorder (IGD) and (B) healthy control (HC) groups. Error bars show 95% confidence interval",
+    "The results of attentional backward interference analysis. Response accuracy of T1 (ACC) before neutral T2 (green line) and game-related T2 (red line) indifferent lag conditions. Error bars show 95% confidence interval",
+    ""
+  ],
+  "tables": [
+    "Demographic and Internet-related characteristics",
+    "Descriptive information about the RSVP task accuracy"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998095.194722
+}

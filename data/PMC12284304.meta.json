@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12284304",
+  "pmid": "40696525",
+  "title": "Outbreak of Severe Obesity and Metabolic Complications in Children and Adolescents Using the Korea National School Health Examination (KNSHE) From 2017 to 2021.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim KH, Lee HA, Choi JE, Mun E, Lee R, Park H, Kim HS.",
+  "doi": "10.3346/jkms.2025.40.e160",
+  "figures": [
+    "Flow chart of subjects included for analysis.  KNSHE = Korea National School Health Examination, BMI = body mass index.",
+    "Trends in prevalence of overweight, obesity and severe obesity by school levels, data from the Korea National School Health Examination.  The points indicate the weighted prevalence (%) at each school level. The horizontal axis represents the survey year. Overweight was defined as the 85th to 94th percentile, Obesity was defined as the 95th percentile or greater and less than 120% of the 95th perc",
+    "Changes in proportion of overweight, obesity, and severe obesity from 2017 to 2021: data from the Korea National School Health Examination.  Proportion by degree of obesity were calculated for overweight and obese children. The innermost circle represents the results from 2017, the middle circle represents the results from 2019, and the outermost circle represents the results from 2021. The values",
+    "Prevalence of metabolic complications in overweight and obese children by school levels and degree of obesity.  Results are expressed as weighted percentage by integrating data from 2017, 2018, 2019, and 2021 Korea National School Health Examination. Hypertriglyceridemia and hypo-HDL-cholesterolemia were obtained using 2021 Korea National School Health Examination data.  FBG = fasting blood glucos"
+  ],
+  "tables": [
+    "Anthropometric characteristics of participants from the Korea National School Health Examination by sex and school levels between 2017 and 2021",
+    "Prevalence of overweight, obesity and severe obesity from the Korea National School Health Examination between by sex and school levels between 2017 and 2021"
+  ],
+  "query": "obesity BMI Korean children",
+  "fetched_at": 1779977762.7806318
+}

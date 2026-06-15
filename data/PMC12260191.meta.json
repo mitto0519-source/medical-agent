@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12260191",
+  "pmid": "40189317",
+  "title": "Children with idiopathic short stature and growth hormone deficiency exhibit similar changes in gut microbiota.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Han J, Huang C, Meng L, Wu H, Meng D.",
+  "doi": "10.1507/endocrj.ej24-0615",
+  "figures": [
+    "(A) Alpha diversity analysis shows no significant difference in gut microbiota (GM) between the ISS group and the GHD group; (B) Principal component analysis (PCA) reveals an overlap between samples from the two groups, indicating similar gut microbiota composition; (C) Similarity clustering of samples based on Bray-Curtis distance does not show clear aggregation trends, suggesting insignificant β",
+    "The phyla between the ISS and GHD groups  At the phylum level, the composition and relative abundance of the top five major bacterial phyla in the gut microbiota of children from both groups were compared, with results showing no significant differences.",
+    "The genera between the ISS and GHD groups  At the genus level, the composition and relative abundance of the top 15 major genera in the gut microbiota of children from both groups are presented, with results indicating no significant differences.",
+    "Microbiota functions of L2 level in the ISS and GHD groups  Functional differential analysis at KEGG database L2 level shows no significant functional differences between the two groups.",
+    "Microbiota functions of L3 level in the ISS and GHD groups  At KEGG database L3 level, it was found that two functional categories—Bacterial motility proteins and Bacterial chemotaxis—had higher enrichment levels in the ISS group.",
+    ""
+  ],
+  "tables": [
+    "Comparison of general information between two groups of children (    x  ‾   ±  s   )",
+    "Significant differences in Genus between the ISS and GHD groups",
+    "Significant differences in bacterial Species between the ISS and GHD groups",
+    "Microbiota functions of L2 level in the ISS and GHD groups"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012700.9290037
+}

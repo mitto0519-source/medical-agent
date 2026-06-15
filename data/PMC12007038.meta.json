@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12007038",
+  "pmid": "40256447",
+  "title": "Social determinants of recovery from ongoing symptoms following COVID-19 in two UK longitudinal studies: a prospective cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cheetham NJ, Bowyer V, García MP, Bowyer RCE, Carpentieri JD, Guise A, Thompson EJ, Sudre CH, Molteni E, Antonelli M, Penfold RS, Harvey NR, Canas LS, Rjoob K, Murray B, Kerfoot E, Hammers A, Ourselin S, Duncan EL, Steves CJ, COVID Symptom Study Biobank Consortium.",
+  "doi": "10.1136/bmjph-2024-001166",
+  "figures": [
+    "Directed acyclic graph describing hypothesised causal pathways. Proposed directed acyclic graph (DAG) used to generate minimal adjustment variable sets for models estimating the total causal effect of exposure variables on the outcome of self-perceived COVID-19 recovery. Data only available in CSSB or TwinsUK are coloured in blue and purple, respectively, while key unobserved potential confounders",
+    "Association between prepandemic sociodemographics and recovery from COVID-19 in CSS Biobank and TwinsUK cohorts. Relative risk ratios (RRs) and 95% CIs from Poisson regression models testing association between recovery from COVID-19 and various prepandemic sociodemographic exposure variables, among individuals with self-reported COVID-19 infection. Unadjusted recovery rates and group sizes from u",
+    "Predicted probability of COVID-19 recovery for social strata of sex, education level and local area deprivation from MAIHDA models in CSS Biobank and TwinsUK cohorts. Predicted probabilities and approximate 95% CIs from MAIHDA mixed-effects logistic regression models testing association between recovery from COVID-19 and social strata for: (a) all CSSB cohort participants with self-reported COVID-",
+    "Associations between sociodemographics collected during the COVID-19 pandemic and recovery from COVID-19 in CSS Biobank and TwinsUK cohorts. Relative risk ratio and 95% CIs from Poisson regression models testing association between various sociodemographics collected during the COVID-19 pandemic and recovery from COVID-19, among individuals with self-reported COVID-19 infection. Results for each e"
+  ],
+  "tables": [
+    "Sample characteristics"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021605.016053
+}

@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12097254",
+  "pmid": "40406233",
+  "title": "Alterations of Blood Plasma Metabolites, Including Kynurenine and Tryptophan, in Bipolar Disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nakayama T, Umehara H, Mawatari K, Tomioka Y, Yoshida T, Matsuda H, Matsumoto Y, Masuda R, Kamishikiryo T, Fuchikami M, Nakataki M, Takahashi A, Tajima A, Okada G, Numata S.",
+  "doi": "10.2147/ndt.s508021",
+  "figures": [
+    "Blood plasma concentrations of metabolites in the BD and control groups (*FDR q &lt; 0.05). Y axis represents metabolic plasma concentration (μM). Bars indicate mean levels in the group. ( a ) The levels of Tryptophan were significantly lower in BD patients than in control subjects (FDR q = 1.09E-06). ( b ) The levels of Kynurenine were significantly lower in BD patients than in control subjects ("
+  ],
+  "tables": [
+    "Demographic of Participants",
+    "Blood Plasma Metabolite Concentrations in the BD and Control Groups"
+  ],
+  "query": "tryptophan kynurenine pathway depression",
+  "fetched_at": 1780045685.7354805
+}

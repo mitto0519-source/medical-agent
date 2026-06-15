@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11931092",
+  "pmid": "40123051",
+  "title": "Prevalence Trends and Patterns of Perinatal ADHD Stimulant Medication Use in British Columbia, Canada.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nitchske A, Salmanpour A, Kaur P, do Valle HA, Elwood C, Gadermann A, Guhn M, Hippman C, Ip A, Karim JL, Oberlander TF, Socha PM, Hanley GE.",
+  "doi": "10.1002/pds.70129",
+  "figures": [
+    "Summary",
+    "Prevalence of ADHD stimulant medication use (per 1000 pregnancies) from 2000 to 2021, categorized by age group. Individual data points are shown for each year, and a linear regression line is fitted to illustrate trends in ADHD stimulant medication use over time for each age group. The lines represent estimated trends based on a linear model.",
+    "Prevalence of ADHD stimulant medication use from 1 year preconception to 1 year postpartum in British Columbia, Canada."
+  ],
+  "tables": [
+    "Characteristics of ADHD stimulant medication users during pregnancy compared to non‐users during pregnancy in the full cohort ( N  = 899,679).",
+    "Description of use of ADHD stimulant medication.",
+    "Characteristics of ADHD stimulant medication users among those who continued vs. discontinued treatment before pregnancy or at an point during pregnancy ( N  = 2895)."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058751.5385725
+}

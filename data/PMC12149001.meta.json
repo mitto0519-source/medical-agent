@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12149001",
+  "pmid": "39217211",
+  "title": "Hippocampal, thalamic, and amygdala subfield morphology in major depressive disorder: an ultra-high resolution MRI study at 7-Tesla.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu W, Heij J, Liu S, Liebrand L, Caan M, van der Zwaag W, Veltman DJ, Lu L, Aghajani M, van Wingen G.",
+  "doi": "10.1007/s00406-024-01874-0",
+  "figures": [
+    "Subfields of hippocampus, thalamus, and amygdala. ( A ) hippocampal subfields; ( B ) thalamic subfields; ( C ) amygdala subfields.  PARA  parasubiculum,  PSIL  presubiculum,  SIL  subiculum,  CA  cornu Ammonis,  GC-ML-DG  granule cell and molecular layer of the dentate gyrus,  ML  molecular layer,  HATA  hippocampal-amygdala transition area,  AV  anteroventral nucleus,  LD  laterodorsal nucleus,  ",
+    "Differences in volumes of the hippocampal, thalamic, and amygdala subfields between groups.  MDD  major depressive disorder,  HATA  hippocampal-amygdala transition area,  CA  cornu Ammonis,  GC-ML-DG  granule cell and molecular layer of the dentate gyrus,  MDl  mediodorsal lateral parvocellular,  PuL  pulvinar lateral,  MDm  mediodorsal medial magnocellular,  PL  paralaminar nuclear,  Pc  paracent",
+    "Relationships between volumes of the hippocampal, thalamic, and amygdala subfields and clinical indices in MDD.  MDD  major depressive disorder,  Pt  paratenial nuclear,  L-SG  limitans-suprageniculate nuclear,  MGN  medical geniculate nuclear,  AV  anteroventral nuclear,  MV-re  medial ventral reuniens nuclear,  CeM  central medial nuclear,  VAmc  ventral anterior magnocellular nuclear,  Pc  para",
+    "Hippocampal and amygdala subfields with moderate or higher strength evidence in this study.  HATA  hippocampal-amygdala transition area,  CA  cornu Ammonis,  GC-ML-DG  granule cell and molecular layer of the dentate gyrus,  PL  paralaminar nuclear",
+    "Thalamic subfields with moderate or higher strength evidence in this study.  MDl  mediodorsal lateral parvocellular,  PuL  pulvinar lateral,  MDm  mediodorsal medial magnocellular,  L-SG  limitans-suprageniculate nuclear,  MGN  medical geniculate nuclear,  AV  anteroventral nuclear,  VA  ventral anterior nuclear,  MV-re  medial ventral reuniens nuclear,  CeM  central medial nuclear,  VAmc  ventral"
+  ],
+  "tables": [
+    "Demographical and clincal information of the participants",
+    "Summary of the BF values of subfield volumes with moderate or higher evidence for the relationship with clinical features",
+    "Summary of the BF values of subfield volumes for group differences"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060544.2829492
+}

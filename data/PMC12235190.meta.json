@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12235190",
+  "pmid": "40625042",
+  "title": "Short- and Long-Term Neonatal Outcomes According to Cerclage in Nulliparous Singleton Women: A National Cohort Study Over 15 Years.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sung JH, Kang D, Hong SY, Park H, Lee YR, Ham S, Cho J, Choi SJ, Roh CR, Oh SY.",
+  "doi": "10.3346/jkms.2025.40.e131",
+  "figures": [
+    "The prevalence of adverse short-term outcomes in infants within 1 year after birth according to the cerclage placement.  NICU = neonatal intensive care unit.",
+    "The prevalence of adverse long-term outcomes of infants according to the cerclage placement.  ADHD = attention-deficit/hyperactivity disorder."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population",
+    "Adjusted OR for short-term outcomes of infants born to women with and without cerclage",
+    "Adjusted HR for long-term outcomes of infants in women with and without cerclage"
+  ],
+  "query": "autism spectrum disorder Korea",
+  "fetched_at": 1779996307.238455
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11955425",
+  "pmid": "40135628",
+  "title": "Timing of exposure to household poverty and adolescent mental health problems.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Koyama Y, Isumi A, Fujiwara T.",
+  "doi": "10.1017/s2045796025000162",
+  "figures": [
+    "Hypothesized longitudinal causal associations between household poverty and mental health. A directed acyclic graph in the current analysis is shown. Arrows in blue indicate associations of interest in the current study and thus were aimed to estimate causal associations. Arrows going back and forth between household poverty and confounders over time suggest the existence of exposure-confounder fe",
+    "Transition of household poverty status over time. Orange flows indicate children not exposed to household poverty and blue flows indicate children exposed to household poverty. Percentages in bar charts show the prevalence of children exposed/not exposed to household poverty at each grade among the analytical sample.",
+    "Associations between childhood household poverty and adolescent mental health outcomes. The results of g-estimation of structural nested mean modelling that examines the average of the average treatment effects of household poverty at any grade on mental health outcomes at grade 8 (the upper rows) and age-specific average treatment effects of household poverty at a particular grade on mental healt"
+  ],
+  "tables": [
+    "Sample baseline characteristics",
+    "Associations between household poverty in childhood and adolescent mental health"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780047617.634379
+}

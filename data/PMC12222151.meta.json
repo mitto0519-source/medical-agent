@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12222151",
+  "pmid": "40612487",
+  "title": "Association between three-timepoint maternal blood pressure trajectories during pregnancy and low birth weight: a longitudinal study based on NHANES 2005-2006.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu H, Wei Y, Zhang W, Meng F, Ding N, Liu X.",
+  "doi": "10.3389/fped.2025.1604845",
+  "figures": [
+    "Flowchart of sample data selection.",
+    "Box plot analysis of three blood pressure measurements during pregnancy.",
+    "Maternal blood pressure trajectory model (GBTM) analysis results. This figure displays three distinct trajectory groups for  (A)  systolic blood pressure,  (B)  diastolic blood pressure, and  (C)  pulse pressure across gestational weeks 10, 20, and 30. The identified trajectories are labeled as high–low, high–medium, and medium–low, reflecting different trends in blood pressure changes over time. ",
+    "DAG analysis for covariate selection. The green node represents the exposure variable (blood pressure trajectory), the blue node represents the outcome variable (LBW), and the pink nodes represent potential confounders, including age, BMI, race, education level, income, marital status, alcohol consumption, smoking, and cholesterol levels."
+  ],
+  "tables": [
+    "Demographic data of high-medium and medium-low groups.",
+    "Association between maternal blood pressure trajectories and LBW across different pressure loci.",
+    "Stratified analysis of systolic pressure locus and LBW."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021190.576174
+}

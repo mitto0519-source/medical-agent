@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12201631",
+  "pmid": "40570037",
+  "title": "Association between functional dentition and ultra-processed food consumption in Brazilian adults: A cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "do Amaral Junior OL, Braccini Fagundes ML, Bidinotto AB, Neves M, Hugo FN, do Amaral Giordani JM.",
+  "doi": "10.1371/journal.pone.0325838",
+  "figures": [
+    "Directed acyclic graph (DAG) illustrating hypothesized confounders in the relationship between functional dentition and ultra-processed food consumption."
+  ],
+  "tables": [
+    "Characteristics of the sample and high consumption of ultra-processed food by socioeconomic factors. National Health Survey (PNS) 2019, Brazilian adults aged 18-49 years (n = 50,146).",
+    "Unadjusted and adjusted association between ultra-processed diet and functional dentition in Brazilian adults aged 18-49 years (n = 50,146) through Poisson regression with robust variance.",
+    ""
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021168.2932472
+}

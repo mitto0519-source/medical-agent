@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC12344687",
+  "pmid": "40792417",
+  "title": "PTSD symptom changes during Trauma-Focused Cognitive Behavioural Therapy (TF-CBT) in children and adolescents: a Single-Case Experimental Design study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kooij LH, Hein IM, Bouwmeester S, Lindauer RJL.",
+  "doi": "10.1080/20008066.2025.2538355",
+  "figures": [
+    "Overview of the TF-CBT modules.",
+    "Overview of the three levels of the SCED design.",
+    "Participant overview.",
+    "Symptom changes during TF-CBT of Participant 2.  Note: CATS-2 = Child and Adolescent Trauma Screen-2; PROMIS A = short form questionnaire for anxiety; PROMIS D = short form questionnaire for depression; cPTCI = child Post Traumatic Cognitions Inventory; PACHIQ-r = Parent Child Interaction Questionnaire–revised.",
+    "Symptom changes during TF-CBT of Participant 6.  Note: CATS–2 = Child and Adolescent Trauma Screen-2; PROMIS A = short form questionnaire for anxiety; PROMIS D = short form questionnaire for depression; cPTCI = child Post Traumatic Cognitions Inventory; PACHIQ-r = Parent Child Interaction Questionnaire–revised.",
+    "Median scores of the group from T0–T5.  Notes: CATS, PROMIS A &amp; D: T0  N  = 8, T1  N  = 7, T2,  N  = 8, T3,  N  = 6, T4  N  = 5, T5  N  = 8, cPTCI T0  N  = 8, T1  N  = 7, T2,  N  = 8, T3,  N  = 6, T4  N  = 5, T5  N  = 7, PACHIQ-R mother. T0  N  = 7, T1  N  = 6, T2,  N  = 7, T3,  N  = 5, T4  N  = 4, T5  N  = 6, PACHIQ-R father. T0  N  = 4, T1  N  = 3, T2,  N  = 4, T3,  N  = 3, T4  N  = 3, T5  N",
+    "PRACTICE elements overview per participant as reported by the therapist.  Abbrevations: PP = participant; PRAC = Psycho-education Relaxation, Affect modulation, Cognitive coping; N = Narrative; C = Cognitive reprocessing; S = Sharing."
+  ],
+  "tables": [
+    "Overview of the included participants.",
+    "Mean differences of the permutation distance test for pp02, pp06 and the group.",
+    "Reliable change index for all participants on trauma symptoms, anxiety, depression and traumatic cognitions.",
+    "Wilcoxon Rank tests for every TF-CBT phase, CATS-2, PROMIS A and PROMIS  D.",
+    "Overview of the number of sessions per participant."
+  ],
+  "query": "PTSD trauma adolescent",
+  "fetched_at": 1779997521.4512885
+}

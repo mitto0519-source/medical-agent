@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12273843",
+  "pmid": "40687743",
+  "title": "Temporal dynamics in the association between depression and dementia: an umbrella review and meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Brain J, Alshahrani M, Kafadar AH, Tang EY, Burton E, Greene L, Turnbull D, Myers B, Naheed A, Siervo M, Tully PJ, Stephan BC.",
+  "doi": "10.1016/j.eclinm.2025.103266",
+  "figures": [
+    "Flow diagram of study selection.",
+    "Random-effects meta-analysis of depression measured in late-life and the risk of all-cause dementia.",
+    "Meta-analysis of studies investigating depression measured in midlife and the risk of all-cause dementia."
+  ],
+  "tables": [
+    "Characteristics of included reviews .",
+    "Individual studies used  in  the meta-analysis investigating depression measured in late-life and all-cause dementia.",
+    "Individual studies used in the meta-analysis investigating depression assessed in midlife and the risk of all-cause dementia."
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991665.664203
+}

@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11888000",
+  "pmid": "39970428",
+  "title": "Teenager Substance Use on Reddit: Mixed Methods Computational Analysis of Frames and Emotions.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang X, Zhu J, Kenne DR, Jin R.",
+  "doi": "10.2196/59338",
+  "figures": [
+    "Frame-specific emotion intensity heat map."
+  ],
+  "tables": [
+    "Substance-use keyword schema.",
+    "BERTopic-generated topics on adolescent substance use."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779998989.7883525
+}

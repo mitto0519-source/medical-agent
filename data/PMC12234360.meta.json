@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12234360",
+  "pmid": "40240501",
+  "title": "The impact of the SARS-CoV-2 pandemic on umbilical cord blood transplantation in Japan: insights from an interrupted time series analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nakamura N, Morishita T, Hayashi H, Okabe M, Nakasone H, Uchida N, Doki N, Fukuda T, Yoshihara S, Tanaka M, Nishida T, Hasegawa Y, Matsuoka KI, Sawa M, Eto T, Onizuka M, Katayama Y, Kato K, Ishimaru F, Tabuchi K, Atsuta Y, Kanemura N, Teshima T.",
+  "doi": "10.1038/s41409-025-02588-0",
+  "figures": [
+    "Stacked area graph of the absolute number of cases of donor sources among patients who underwent allogeneic stem cell transplants.  The number of allogeneic stem cell transplant cases per month is plotted on the y-axis, and the date (year and month) on the x-axis. BMT bone marrow transplantation, CBT cord blood transplantation, PBSCT peripheral blood stem cell transplantation.",
+    "Interrupted time series analysis of the effect of the SARS-CoV-2 pandemic on hematopoietic stem cell transplantation.  The figure displays interrupted time series analyses of monthly transplantation case numbers before and after the SARS-CoV-2 pandemic (vertical dotted line indicates February 2020).  a  Cord blood transplantation cases.  b  Total allogeneic stem cell transplantation cases.  c  Bon",
+    "Bayesian causal inference modeling of the effect of the SARS-CoV-2 pandemic.  Top panel: The original data (black) and the counterfactual estimate (blue dotted line with 95% credible interval). Second panel: The delta between the original data and the estimate showing the causal effect of every time point. Third panel: Cumulative monthly causal effects over time. CBT Cord Blood Transplantation, SA"
+  ],
+  "tables": [
+    "Patients’ characteristics before and after the SARS-CoV-2 pandemic."
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032777.6974924
+}

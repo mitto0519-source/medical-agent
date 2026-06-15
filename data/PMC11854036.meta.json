@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11854036",
+  "pmid": "39760865",
+  "title": "Social jetlag and sleep habits in children and adolescents: Associations with autonomy (bedtime setting and electronics curfew) and electronic media use before sleep.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Illingworth G, Manchanda T, Skripkauskaite S, Fazel M, Waite F.",
+  "doi": "10.1080/07420528.2024.2444675",
+  "figures": [
+    "Distribution of social jetlag. The distribution of social jetlag is based on half-hourly bins.",
+    "Social jetlag by age.",
+    "Social jetlag by age and gender."
+  ],
+  "tables": [
+    "Sample characteristics for students who provided social jetlag with all predictor variables.",
+    "Descriptive statistics for social jetlag by age, gender, bedtime setting, electronic media curfew, and frequency of electronic media use before sleep ( n  = 19,760).",
+    "Multiple regression analysis of age, gender, school night bedtime setting, weekend bedtime setting, electronic media curfew, social media use before sleep and video gaming before sleep as predictors of social jetlag ( n  = 19,760)."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001416.2030773
+}

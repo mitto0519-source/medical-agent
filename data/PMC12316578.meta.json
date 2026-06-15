@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12316578",
+  "pmid": "40629918",
+  "title": "Adolescent Mental Health: Impact of Introducing Earlier Compulsory School Grades.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Linder A, Gerdtham UG, Heckley G.",
+  "doi": "10.1002/hec.4982",
+  "figures": [
+    "Descriptive statistics—mental disorder outcomes and baseline characteristics in reform and control cohorts.",
+    "Discontinuity graphs—probability of mental disorder diagnosis by month of birth. This figure shows the mean probability of internalizing disorder and substance use disorder by month of birth, with fitted linear predictions and 95% confidence intervals clustered by birth month and year (discontinuity graphs for the separate conditions can be found in the Supporting Information  S1 : Appendix, Figur",
+    "Discontinuity visualization—reduced‐form estimates of being born January–June. This figure presents reduced‐form regression discontinuity (RD) estimates of being born in January–June (vs. July–December) on the probability of receiving a mental disorder diagnosis in the calendar year the student enters grade 9 (the final grade of compulsory school). Estimates are plotted separately by birth cohort ",
+    "The effect of earlier grading in sixth or seventh school year on mental disorder diagnoses. This figure presents the estimated effect of earlier exposure to grading on the probability of receiving a mental disorder diagnosis in the calendar year the student enters grade 9 (the final grade of compulsory school). Spikes represent 95% confidence intervals clustered by birth month and year. Each point",
+    "Timing of the effect of earlier grading on mental disorder diagnoses. This figure presents the estimated effect of earlier grading on the probability of receiving a mental disorder diagnosis from the year the student enters grade 5 through the second year of upper secondary school. The final follow‐up year (second year of upper secondary) is only available for the cohort exposed to earlier grading",
+    "Heterogeneity analysis—the effect of earlier grading by background characteristics and GPA quartiles. This figure shows the estimated effect of earlier grading on the probability of receiving a mental disorder diagnosis in the calendar year the student enters the final grade (grade 9) of compulsory school. Each point represents the 2SLS treatment effect estimate ( ρ \n 2SLS ) from separate differen"
+  ],
+  "tables": [
+    "Descriptive statistics—mental disorder outcomes and baseline characteristics in reform and control cohorts.",
+    "Main results—the effect of earlier grading on mental disorder diagnoses at the end of compulsory school."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780036009.2733665
+}

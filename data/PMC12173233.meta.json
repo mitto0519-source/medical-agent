@@ -1,0 +1,33 @@
+{
+  "pmcid": "PMC12173233",
+  "pmid": "40526727",
+  "title": "Spatio-temporal heterogeneity of metro ridership under major epidemic conditions.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shi B, Yu L, Yang Q, Zhang N, Yang N.",
+  "doi": "10.1371/journal.pone.0326114",
+  "figures": [
+    "Literature classification by epidemic stages.",
+    "The average annual passenger volume of each metro line and the network in Xi’an from 2011 to 2023 (In 2023, the average volume calculate the first three months).",
+    "The mean fitting coefficient of the independent variablesTemporal effects.",
+    "The mean fitting coefficient of the independent variables in weekday.",
+    "The mean fitting coefficient of the independent variables in weekend.",
+    "The spatial fitting results for workplace areas in weekday of 2023.",
+    "The spatial fitting results for residential land in weekday of 2023.",
+    "The spatial fitting results for medical land in weekday of 2023.",
+    "The spatial fitting results for park and green space in weekday of 2023.",
+    "The spatial fitting results for education land in weekday of 2023.",
+    "The differentiation of spatial fitting results for workplace areas in workday between 2023 and 2019.",
+    "The differentiation of spatial fitting results for residential land in workday between 2023 and 2019.",
+    "The differentiation of spatial fitting results for medical land in workday between 2023 and 2019.",
+    "The differentiation of spatial fitting results for park and green space in workday between 2023 and 2019.",
+    "The differentiation of spatial fitting results for education land in workday between 2023 and 2019."
+  ],
+  "tables": [
+    "Fitting results of OLS, GWR, and GTWR for weekday.",
+    "Fitting results of OLS, GWR, and GTWR for weekend.",
+    "The mean fitting coefficient of the independent variables for each year."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007437.2949283
+}

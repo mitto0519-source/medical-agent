@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11969607",
+  "pmid": "40191840",
+  "title": "Mediation of obesity-related variables in the association between physical fitness and cardiometabolic risk in children and adolescents: a systematic review and meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Silveira JFC, López-Gil JF, Reuter CP, Sehn AP, Borfe L, Carvas Junior N, Pfeiffer KA, Guerra PH, Andersen LB, Garcia-Hermoso A, Reis Gaya A.",
+  "doi": "10.1136/bmjsem-2024-002366",
+  "figures": [
+    "Flow diagram of systematic searches and studies selection process.",
+    "Forest plot for the indirect cross-sectional association between cardiorespiratory fitness and cardiometabolic risk via obesity-related variables. The size of squares is not determined by weight. BF%, body fat percentage; BMI, body mass index; FMI, fat mass index; MASEM, meta-analytic structural equation modelling; WC, waist circumference; WHtR, waist-to-height ratio; β, standardised indirect coef",
+    "Forest plot for the indirect cross-sectional association between muscular fitness score and cardiometabolic risk via obesity-related variables. The size of squares is not determined by weight. BF%, body fat percentage; BMI, body mass index; MASEM, meta-analytic structural equation modelling; β, standardised indirect coefficient.",
+    "Forest plot for the total cross-sectional association between global physical fitness and cardiometabolic risk. CRF, cardiorespiratory fitness; r, correlation coefficient.",
+    "Forest plot for the direct cross-sectional association between global physical fitness and cardiometabolic risk. CRF cardiorespiratory fitness; r, correlation coefficient.",
+    "Forest plot for the total and direct longitudinal association between cardiorespiratory fitness and cardiometabolic risk. CRF, cardiorespiratory fitness; r ,  correlation coefficient."
+  ],
+  "tables": [],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011174.1352024
+}

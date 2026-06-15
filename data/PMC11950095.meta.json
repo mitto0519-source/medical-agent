@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11950095",
+  "pmid": "40111736",
+  "title": "A Survey of People Living with Narcolepsy in the USA: Path to Diagnosis, Quality of Life, and Treatment Landscape from the Patient's Perspective.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ortiz LE, Morse AM, Krahn L, Lavender M, Horsnell M, Cronin D, Schneider B, Gudeman J.",
+  "doi": "10.1007/s40263-024-01142-8",
+  "figures": [
+    "Pathway to a narcolepsy diagnosis. Bars represent the proportion of respondents reporting symptoms that made them seek out a diagnosis or feel that something was wrong, including daytime disturbances ( A ), sleep disturbances ( B ), and cognitive challenges ( C ), and the proportion of respondents reporting an initial diagnosis other than narcolepsy ( D ) and time to diagnosis after symptom onset ",
+    "Cataplexy frequency and triggers. Bars represent the proportion of respondents who reported a specific cataplexy episode frequency ( A ) and who experienced specific cataplexy triggers ( B ). Respondents were allowed to select all answers that applied to the survey question in panel B. Both survey questions were asked of respondents with NT1 or who experienced cataplexy.  NT1  narcolepsy type 1",
+    "Impact of narcolepsy on quality of life. Bars represent the proportion of respondents who strongly or somewhat agreed that they experienced specific negative impacts on daily life",
+    "Most troubling symptoms and desired treatment outcomes. Bars represent the proportion of respondents who reported that a specific symptom was the most troubling ( A ) and who selected a response as one of their top three desired treatment goals ( B ). *Sleep disturbances include poor quality sleep, DNS, sleep disruption, fragmented sleep, insomnia, or frequent awakenings.  DNS  disrupted nighttime",
+    "Educational resources utilized. Bars represent the proportion of respondents who reported that specific resources were the most helpful sources of information for treating narcolepsy"
+  ],
+  "tables": [
+    "",
+    "Respondent characteristics",
+    "Respondents’ desired treatment objectives",
+    "Commonly prescribed narcolepsy treatments (≥ 2% of all respondents)",
+    "Commonly combined narcolepsy treatments"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001446.539829
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12231526",
+  "pmid": "40625441",
+  "title": "Validity, reliability, measurement invariance, and equipercentile linking of the depression anxiety stress scale-21 in the youth population in Singapore.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Abdin E, Tan B, Chang S, Samari E, Tan B, Tang C, Vaingankar JA, Verma SK, Subramaniam M.",
+  "doi": "10.3389/fpsyg.2025.1563190",
+  "figures": [
+    "Factor structure of the DASS-21.",
+    "Bland–Altman plots between raw and converted scores of the PHQ-8 and GAD-7."
+  ],
+  "tables": [
+    "Sociodemographic characteristics of the sample ( n  = 2,600).",
+    "Confirmatory factor analysis results of factor structure of the DASS-21.",
+    "The goodness of fit indices of measurement invariance models.",
+    "Conversion table from the DASS-depression to PHQ-8 and from the DASS-anxiety to GAD-7."
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780049838.6747909
+}

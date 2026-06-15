@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11933915",
+  "pmid": "40165879",
+  "title": "National Health Insurance Data as a Research Tool in Korean Medicine: a guide to database utilization and methodological approaches.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kwon CY, Park IS.",
+  "doi": "10.3831/kpi.2025.28.1.1",
+  "figures": [
+    "Composition and use of the National Health Information DB.  Figure 1  illustrates the comprehensive structure of the National Health Information DB and its relationship with various data sources. The diagram shows how different types of healthcare data (qualification, medical treatment, health examination, and long-term care data) are collected, processed, and made available for research purposes."
+  ],
+  "tables": [
+    "Types and characteristics of the National Health Insurance Service sample research database",
+    "Types and characteristics of the Health Insurance Review &amp; Assessment Service patient sample dataset",
+    "Comparison of medical use data table names between NHIS and HIRA",
+    "Cases using Korean health insurance data in recent Korean medicine research"
+  ],
+  "query": "Korean National Health Insurance NHIS cohort",
+  "fetched_at": 1780039298.5933952
+}

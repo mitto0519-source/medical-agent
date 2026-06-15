@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC11854986",
+  "pmid": "39675348",
+  "title": "ISPAD Clinical Practice Consensus Guidelines 2024: Type 2 Diabetes in Children and Adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Shah AS, Barrientos-Pérez M, Chang N, Fu JF, Hannon TS, Kelsey M, Peña AS, Pinhas-Hamiel O, Urakami T, Wicklow B, Wong J, Mahmud FH.",
+  "doi": "10.1159/000543033",
+  "figures": [
+    "Diagnosis of new onset diabetes in youth.",
+    "Evaluation and management of new onset T2D.",
+    "Blood pressure evaluation and management in youth with T2D.",
+    "Lipid evaluation and management in youth with T2D."
+  ],
+  "tables": [
+    "Unique characteristics of youth with impaired glucose tolerance (IGT) and T2D, as compared to adults",
+    "Risk factors associated with youth-onset T2D",
+    "Recommended criteria for the diagnosis of prediabetes [B]",
+    "Lifestyle recommendations for youth with T2D",
+    "Medications for use in T2D",
+    "Recommendations for screening of associated comorbidities/complications",
+    "Nutrition management for dyslipidemia [A]",
+    "Evaluation of peripheral and cardiac autonomic neuropathy"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002379.2648377
+}

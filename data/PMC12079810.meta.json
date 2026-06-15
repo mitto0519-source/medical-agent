@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12079810",
+  "pmid": "40369687",
+  "title": "The impact of childhood emotional maltreatment on adolescent insomnia: a chained mediation model.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shen Q, Wang H, Liu M, Li H, Zhang T, Zhang F, Wang S, Liu Y, Deng L.",
+  "doi": "10.1186/s40359-025-02803-z",
+  "figures": [
+    "The hypothetical model of the chained mediating role of stress and short video addiction in the relationship between childhood emotional maltreatment and adolescent insomnia",
+    "The chained mediation model (*: P &lt; 0.05, **: P &lt; 0.01)"
+  ],
+  "tables": [
+    "Correlation coefficients of the study variables ( n  = 745)",
+    "Direct prediction of adolescent insomnia by childhood emotional maltreatment ( n  = 745)",
+    "The mediating role of stress between childhood emotional maltreatment and adolescent insomnia ( n  = 745)",
+    "The mediating role of short video addiction between childhood emotional maltreatment and adolescent insomnia ( n  = 745)",
+    "The mediating role of stress and short video addiction between childhood emotional maltreatment and adolescent insomnia ( n  = 745)",
+    "Analysis of the mediating effect of stress and short video addiction"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001108.0604484
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11997813",
+  "pmid": "40221142",
+  "title": "Risk of hospitalisation for first-onset psychosis or mania within a year of ADHD medication initiation in adults with ADHD.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gudbrandsdottir RK, Sigurdsson E, Albertsson ÞI, Jonsdottir H, Ingimarsson O.",
+  "doi": "10.1136/bmjment-2024-301521",
+  "figures": [
+    "Flow chart of the study population. ADHD, attention deficit hyperactivity disorder.",
+    "A Kaplan-Meier survival curve illustrating the time to hospitalisation for new-onset psychosis or mania within 1 year following the initiation of new ADHD medication use. ADHD, attention deficit hyperactivity disorder.",
+    "The risk of hospitalisation for first-onset psychosis and mania. ATC, anatomic therapeutic chemical"
+  ],
+  "tables": [
+    "Patient characteristics and clinical factors associated with first-onset psychosis or mania"
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058837.411019
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11850924",
+  "pmid": "39994316",
+  "title": "Sex differences in the relationship between short sleep duration and obesity among koreans.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim Y, Kim YJ, Kim S, Cho WK.",
+  "doi": "10.1038/s41598-025-90695-9",
+  "figures": [
+    "Associations between short sleep duration and different types of obesity.",
+    "Flow diagram depicting participant selection and the number of participants."
+  ],
+  "tables": [
+    "Baseline characteristics of the participants according to sex ( N  = 3,950).",
+    "Associations between short sleep duration and different obesity indices in the study participants ( N  = 3,950).",
+    "Associations between short sleep duration and different obesity indices among females ( N  = 1902).",
+    "Effect of age on the association between obesity and sleep deprivation among female participants ( N  = 1902)."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037692.0452476
+}

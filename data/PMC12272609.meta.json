@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12272609",
+  "pmid": "40688549",
+  "title": "The association between the use of digital technologies and positive youth development: a systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Martin-Barrado AD, Gomez-Baya D.",
+  "doi": "10.3389/fpsyg.2025.1552128",
+  "figures": [
+    "PRISMA flowchart.",
+    "Distribution of articles by year of publication.",
+    "Quartile distribution of the JCR impact factor of included journals.",
+    "Distribution of journal categories."
+  ],
+  "tables": [
+    "PICO format.",
+    "MeSH terms used in the search.",
+    "Search strategy.",
+    "Characteristics of the studies included.",
+    "Scores of cross-sectional studies.",
+    "Scores of longitudinal or cohort studies."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017527.1285102
+}

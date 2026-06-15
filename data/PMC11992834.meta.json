@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11992834",
+  "pmid": "40221780",
+  "title": "Impact of Health All-in-One Machines on access to healthcare of rural areas in China: an interrupted time series analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xie Y, Zhang H, Li W, Yan H, Duan H.",
+  "doi": "10.1186/s12913-025-12710-z",
+  "figures": [
+    "Time series analysis of the number of patient visits: the time series of the number of patient visits ( A ), the residuals of segmented regression with no ARIMA errors modeling ( B ), autocorrelation function for the residuals ( C ), and partial autocorrelation function for the residuals ( D )",
+    "Residual check of the number of patient visits for final ARIMA (1,0,0)",
+    "Observed values and predicted values in absence of intervention based on ARIMA model"
+  ],
+  "tables": [
+    "The statistical analysis of outcome indicators in three phases",
+    "Model parameter estimates from the three-phase ITS"
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032567.3590608
+}

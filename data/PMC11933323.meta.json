@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11933323",
+  "pmid": "40128256",
+  "title": "Cognitive assessment in the Accelerating Medicines Partnership® Schizophrenia Program: harmonization priorities and strategies in a diverse international sample.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Allott K, Yassin W, Alameda L, Billah T, Borders O, Buccilli K, Carrión RE, Castillo-Passi RI, Cho KIK, Chin K, Coleman MJ, Colton BL, Corral S, Dwyer D, Gundersen KB, Gur RC, Hoftman GD, Jacobs GR, Kelly S, Lewandowski KE, Marcy PJ, Matneja P, McLaughlin D, Nunez AR, Parsa S, Penzel N, Ray S, Reinen JM, Ruparel K, Sand MS, Santorelli G, Seitz-Holland J, Spark J, Tamayo Z, Thompson A, Tod S, Wannan CMJ, Wickham A, Wood SJ, Zoupou E, Addington J, Anticevic A, Arango C, Breitborde NJK, Broome MR, Cadenhead KS, Calkins ME, Chen EYH, Choi J, Conus P, Corcoran CM, Cornblatt BA, Ellman LM, Fusar-Poli P, Gaspar PA, Gerber C, Glenthøj LB, Horton LE, Hui CLM, Kambeitz J, Kambeitz-Ilankovic L, Keshavan M, Kim SW, Koutsouleris N, Kwon JS, Langbein K, Mamah D, Diaz-Caneja CM, Mathalon DH, Mittal VA, Nordentoft M, Pearlson GD, Perkins DO, Perez J, Powers AR, Rogers J, Sabb FW, Schiffman J, Shah JL, Silverstein SM, Smesny S, Strauss GP, Thompson JL, Upthegrove R, Verma SK, Wang J, Wolf DH, Pasternak",
+  "doi": "10.1038/s41537-025-00578-1",
+  "figures": [
+    "Comparison between CHR and CC in the AMP SCZ Cognition Battery at baseline.   a  current IQ,  b  verbal learning,  c  attention,  d  emotion recognition,  e  working memory,  f  processing speed,  g  visual memory,  h  motor speed,  i  estimated premorbid IQ,  j  PennCNB composite. WRAT-5 Wide Range Achievement Test, IQ Full Scale Intelligence Quotient, SPLLT Short Penn List Learning Test, SPCPTNL",
+    "Consistency and reliability of the AMP SCZ Cognition Battery between baseline and 8 weeks later for the CHR participants.   a  attention,  b  emotion recognition,  c  working memory,  d  processing speed,  e  motor speed,  f  visual memory,  g  PennCNB composite. SPCPTNL Short Penn Continuous Performance Test, ER40 Penn Emotion Recognition Test, SFNB Short Fractal N-Back Test, DIGSYM Digit-Symbol "
+  ],
+  "tables": [
+    "Core guiding principles for selection of AMP SCZ harmonized cognition battery.",
+    "AMP SCZ Cognition Battery and assessment schedule.",
+    "Demographic data.",
+    "Baseline comparisons of the AMP SCZ Cognition Battery between the CHR and CC.",
+    "Consistency of the AMP SCZ Cognition Battery in CHR between baseline and the following timepoint.",
+    "Intraclass correlation in CHR between baseline and the following timepoint."
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780051406.3073547
+}

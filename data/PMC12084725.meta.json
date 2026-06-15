@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12084725",
+  "pmid": "40384693",
+  "title": "Disrupted small-world networks in children with drug-naïve growth hormone deficiency: a DTI-based network analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Alimire Y, Cheng Y, Qiu H, Wu L, Zhang L, Lin L, Qian L, Cui W, Yang Z, Chen Q, Xiang X, Su S.",
+  "doi": "10.21037/qims-24-1927",
+  "figures": [
+    "Comparison of global parameters of the brain anatomical networks between the GHD patients and typically developing children. The GHD patients showed significant decreases in E glob  (P&lt;0.001), E loc  (P&lt;0.001), C p  (P&lt;0.001), and σ (P=0.012), but obvious increases in L p  (P&lt;0.001), λ (P&lt;0.001) compared with TD children (*, P&lt;0.05, **, P&lt;0.001, permutation test). Error bars r",
+    "Comparison of nodal metrics of the brain anatomical networks between GHD patients and typically developing children. Detailed information can be found in   Table 2  . CAU, caudate nucleus; DCG, median cingulate and paracingulate gyri; GHD, growth hormone deficiency; HIP, hippocampus; IPL, inferior parietal, but supramarginal and angular gyri; ITG, inferior temporal gyrus; L, left; LING, lingual gy",
+    "Relationship between the significantly different group regions and clinical variables in GHD group. The results of positive correlation analysis between the CBCL scores (x-axis) and nodal efficiency of the left middle occipital gyrus (r=0.275; P=0.048, A), nodal efficiency of the right inferior parietal lobe (r=0.293; P=0.035, B) and nodal efficiency of the left middle temporal gyrus (r=0.295; P=0"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of children with GHD and TDs",
+    "Abnormal nodal metrics in GHD compared to typically developing controls"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012679.780534
+}

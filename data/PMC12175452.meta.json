@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12175452",
+  "pmid": "40533726",
+  "title": "Higher dietary insulinemic potential is associated with kidney stones: a nationally representative cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang B, Tang M, Li X.",
+  "doi": "10.1186/s12937-025-01163-z",
+  "figures": [
+    "Flowchart of selection of participants in the current analysis. NHANES, National Health and Nutrition Examination Survey",
+    "Directed acyclic graph for covariate selection when assessing the association between dietary pattern and kidney stone risk. Confounding factors are sex, age, race/ethnicity, education, marital status, family income, physical activity, smoking, total energy intake, water intake, dietary calcium, and protein intake. BMI, hypertension, and diabetes are potential mediators. BMI, Body mass index",
+    "The associations of EDIH and EDIR with the risk of kidney stones when the population was divided into five, ten, fifteen, and twenty equal-sized groups, respectively. CI, Confidence interval; EDIH, Empirical dietary index for hyperinsulinemia; EDIR, Empirical dietary index for insulin resistance; OR, Odds ratio. The models were adjusted for the same covariates listed in the Table  2",
+    "Restricted cubic splines analysis for the associations of EDIR and EDIH with kidney stone risk. EDIH, Empirical dietary index for hyperinsulinemia; EDIR, Empirical dietary index for insulin resistance. The models were adjusted for the same covariates listed for model 3 in Table  2",
+    "Subgroup analysis for the associations of EDIR and EDIH with kidney stone risk stratified by potential confounders. BMI, Body mass index; CI, Confidence interval; EDIH, Empirical dietary index for hyperinsulinemia; EDIR, Empirical dietary index for insulin resistance; OR, Odds ratio. The models were adjusted for the same covariates listed for model 3 in Table  2"
+  ],
+  "tables": [
+    "Age-adjusted characteristics of participants according to tertiles of EDIR and EDIH scores in NHANES 2007–2018",
+    "The associations of EDIH and EDIR indices with risk of kidney stones in NHANES 2007–2018",
+    "Sensitivity analysis of OR and 95% CI for kidney stones according to tertiles of EDIR and EDIH scores after further adjustments for hypertension, body mass index, and diabetes"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021577.0085757
+}

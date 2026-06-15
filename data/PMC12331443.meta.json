@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12331443",
+  "pmid": "40775676",
+  "title": "The role of diet in moderating the relationship between symptoms of depression and brain amyloid load.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Al Shamsi HSS, Gardener SL, Rainey-Smith SR, Sohrabi HR, Taddei K, Masters CL, Doré V, Rowe C, Fernando WMADB, Martins RN, AIBL Research Group.",
+  "doi": "10.1002/alz.70560",
+  "figures": [
+    "Simple slopes graph of the relationship between symptoms of depression and brain Aβ at levels of DASH diet adherence. Each line represents the association between symptoms of depression and brain Aβ when all datapoints are at either the mean, or 1 SD above, or below, the mean DASH diet adherence. There were no significant associations between symptoms of depression and brain Aβ at 1 SD above the m",
+    "Simple slopes graph of the relationship between symptoms of anxiety and brain Aβ at levels of DASH diet adherence in  APOE  ɛ4 allele carriers. Each line represents the association between symptoms of anxiety and brain Aβ when all data points are at either the mean, or 1 SD above, or below, the mean DASH diet adherence. In  APOE  ɛ4 allele carriers, there were no significant associations between s"
+  ],
+  "tables": [
+    "Western diet pattern factor loadings from factor analysis.",
+    "Descriptive statistics for the cognitively unimpaired cohort and stratified by  APOE  ɛ4 carrier status.",
+    "Moderation analyses of diet scores on the relationship between symptoms of depression and anxiety on brain Aβ in the cohort as a whole and stratified by  APOE  ɛ4 allele carriage."
+  ],
+  "query": "zero-calorie beverage mental health",
+  "fetched_at": 1779974649.2364125
+}

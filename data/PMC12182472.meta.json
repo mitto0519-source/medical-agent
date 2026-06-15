@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12182472",
+  "pmid": "40542826",
+  "title": "Five-year safety and growth response of long-acting PEGylated recombinant human growth hormone in children with growth hormone deficiency-data from CGLS database.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wu W, Wei H, Du H, Liang L, Gong C, Zhong Y, Ma L, Luo F, Chen R, Huang X, Ye K, Cui Y, Wang C, Zhu M, Wang K, Zhao Y, Zhang H, Xu X, Wu H, Li Y, Cai J, Zhang H, Ying L, Chen Z, Gu W, Liu Z, Li Y, Zheng R, Wan N, Li G, Luo J, Ma Y, Chen Y, Li N, Wang T, Luo X.",
+  "doi": "10.1007/s00431-025-06268-5",
+  "figures": [
+    "Frequency of AEs by system organ class .  AE, adverse events; SOC, system organ class",
+    "Growth response outcomes in participants with PGHD treated with PEG-rhGH. ( A ) Ht SDS ( B ) Height gain (∆Ht SDS) ( C ) height velocity (cm/year) ( D ) subgroup analysis of Height gain (∆Ht SDS) ( E ) Height gain/accumulated dose ( F ) IGF-1 SDS. GHD, growth hormone deficiency; Ht, height; Ht SDS, Ht standard deviation score; IGF-1, insulin-like growth factor-1; PEG-rhGH, PEGylated recombinant hu"
+  ],
+  "tables": [
+    "",
+    "Demographic characteristics of the safety and efficacy cohorts",
+    "Safety profile of PEG-rhGH in participants with GHD (safety cohort  N  = 1207)",
+    "Growth response of treatment with PEG-rhGH in participants with GHD",
+    "Growth response outcomes in different subgroups"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012820.6983213
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12176788",
+  "pmid": "40547350",
+  "title": "Interpersonal Psychotherapy for Suicidal Risk: A Narrative Review of Randomized Controlled Trials.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sahu D, Bakhla AK, Mehta VS.",
+  "doi": "10.1177/02537176251347066",
+  "figures": [
+    "Flow Diagram (Adapted from PRISMA 2020).  IPT, interpersonal psychotherapy; RCT, randomized controlled trial.",
+    "Graph Across Included Studies.",
+    "Summary for Each Risk of Bias Area Across Studies."
+  ],
+  "tables": [
+    "Descriptive Summary of Studies.",
+    "Components of Interpersonal Psychotherapy Across Six Studies."
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780051830.2446282
+}

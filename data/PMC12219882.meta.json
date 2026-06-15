@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12219882",
+  "pmid": "40604491",
+  "title": "Predictors of transition from independence to limitations in activities of daily living (ADL) among independent community-dwelling older adults: longitudinal evidence from the Malaysia ageing and retirement survey (MARS).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Md Sharif S, Jawahir S, Fun WH, Tan EH, Md Razman AH, Awang H, Sararaks S, Mansor N.",
+  "doi": "10.1186/s12877-025-06076-4",
+  "figures": [
+    "Flow diagram showing the selection of respondents for the study",
+    "ADL transition between baseline (Wave 1) and follow-up (Wave 2). Created with flourish.studio. *LTF/RTP: Lost to follow-up or refused to participate in the follow-up survey. ADL: Activities of Daily Living",
+    "Predicted probability of transitioning to ADL limitation with increasing age, by physical activity level",
+    "Predicted probability of transitioning to ADL limitation by BMI category and age group"
+  ],
+  "tables": [
+    "Description of respondents and population by selected characteristics ( n  = 2275)",
+    "Characteristics of the population who were independent at baseline, by ADL limitation status at follow-up ( n  = 1211)",
+    "Determinants of transition from independence to ADL limitation at follow-up ( n  = 1213)"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040575.4763503
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12065250",
+  "pmid": "40349006",
+  "title": "Comparative efficacy of antidepressant medication for adolescent depression: a network meta-analysis and systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wu T, Song F, Cao W, Liu C, Jia S.",
+  "doi": "10.1186/s12888-025-06941-x",
+  "figures": [
+    "Flow chart of literature screening for NMA",
+    "Risk of bias graph and risk of bias summary",
+    "Evidence relationship comparing the efficacy of fluoxetine, vilazodone, paroxetine, escitalopram, sertraline, venlafaxine, agomelatine, and placebo in the treatment of adolescent depression.  A  Children’s Depression Rating Scale-Revised (CDRS-R).  B  Clinical overall impression - Severity (CGI-S).  C  Global Assessment Scale for Children (CGAS).  D  Clinical Overall Impression Improvement Scale (",
+    "The SUCRA values of each treatment:  A  Children’s Depression Rating Scale-Revised (CDRS-R).  B  Clinical overall impression - Severity (CGI-S).  C  Global Assessment Scale for Children (CGAS).  D  Clinical Overall Impression Improvement Scale (CGI-I).  E  Montgomery-Asberg Depression Rating Scale (MADRS)",
+    "Funnel plot of efficacy and safety results.  A  Children’s Depression Rating Scale-Revised (CDRS-R).  B  Clinical overall impression - Severity (CGI-S).  C  Global Assessment Scale for Children (CGAS).  D  Clinical Overall Impression Improvement Scale (CGI-I).  E  Montgomery-Asberg Depression Rating Scale (MADRS)"
+  ],
+  "tables": [
+    "The trial characteristics and baseline characteristics of the participants of the 11 trials included in the network meta-analysis"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055547.8837707
+}

@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12231443",
+  "pmid": "40549959",
+  "title": "Trajectory of internet gaming disorder among Chinese adolescents: Course, predictors, and long-term mental health outcomes.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Peng P, Chen Z, Ren S, He Y, Li J, Liao A, Zhao L, Shao X, Chen S, He R, Liang Y, Tan Y, Chen X, Tang J, Liao Y.",
+  "doi": "10.1556/2006.2025.00054",
+  "figures": [
+    "Trajectory of IGD over two years",
+    ""
+  ],
+  "tables": [
+    "Sample characteristics of the adolescent gamers at the baseline ( N  = 16,833)",
+    "Comparison of fit indices for GMM models with 1–5 trajectories for internet gaming disorder among gamers ( N  = 16,833)",
+    "Baseline characteristics of the four trajectories of internet gaming disorder",
+    "Predictors of the trajectory of IGD",
+    "Factors distinguishing Moderate-Risk Increasing group from Moderate-Risk Stable group",
+    "Factors distinguishing High-Risk Decreasing Group from Moderate-Risk Increasing Group",
+    "Mental health outcomes at T3 across the IGD trajectories ( N  = 12,320)",
+    "Association of IGD trajectory with long-term mental health outcome"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998029.7539794
+}

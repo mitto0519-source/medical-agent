@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12237035",
+  "pmid": "40627642",
+  "title": "Resilience during the COVID-19 pandemic: Associations with changes in burnout and mental well-being among NHS mental health staff in England.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kika N, Trompeter N, Lamb D, Bhundia R, Carr E, Dempsey B, Greenberg N, Madan I, Penfold C, Raine R, Wessely S, Stevelink SAM.",
+  "doi": "10.1371/journal.pone.0326753",
+  "figures": [
+    "Burnout scores over a 12-month period with 95% confidence intervals in the overall sample.  Findings are adjusted for time of baseline completion, ethnicity, relationship status, time since professional registration, and Covid-19 symptoms at baseline.",
+    "Well-being scores over a 12-month period with 95% confidence intervals in the overall sample.  Findings are adjusted for time of baseline completion, ethnicity, relationship status, age, time since professional registration, family support, manager support, colleague support, and Covid-19 symptoms at baseline."
+  ],
+  "tables": [
+    "Sample characteristics at baseline."
+  ],
+  "query": "East Asian academic pressure mental",
+  "fetched_at": 1780054882.9852319
+}

@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11938432",
+  "pmid": "40144813",
+  "title": "Long-Acting Growth Hormone for Pediatric Growth Hormone Deficiency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Albers N, Cadarette S, Feakins B, Arregui M, Ebohon S, Lai P, Raveendran S, Kjelgaard-Hansen M, Andersen C, Zhao C, Smith A, Geffner M.",
+  "doi": "10.1210/jendso/bvaf040",
+  "figures": [
+    "Flow of literature through systematic literature review and feasibility assessment.",
+    "Network of evidence for analysis of LAGHs for pGHD. Base case analysis (gray), included Deal et al [ 47 ], Thornton et al [ 33 ], and Miller et al [ 49 ]. Sensitivity analysis trials (orange) included Horikawa et al [ 46 ] and Khadilkar et al [ 48 ].  a Dose of daily somatropin was 0.24 mg/kg/week in Thornton et al [ 33 ], Deal et al [ 47 ], and Miller et al [ 49 ]; 0.21 mg/kg/week in Khadilkar et",
+    "Forest plot of annualized height velocity at 52 weeks—base case. Orange box indicates significant results.",
+    "Forest plot of height SDS change from baseline—base case. Orange box indicates significant results.",
+    "Forest plot of IGF-1 SDS change from baseline—base case. Orange box indicates significant results.",
+    "Forest plot of bone age-to-chronological age ratio change from baseline—base case. Orange box indicates significant results.",
+    "Forest plot of total SAEs—base case. Orange box indicates significant results."
+  ],
+  "tables": [
+    "Inclusion criteria for the systematic literature review",
+    "Study characteristics of the trials included in the network meta-analysis",
+    "Baseline characteristics of the studies included in the network meta-analysis",
+    "Outcome definitions"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012562.2424045
+}

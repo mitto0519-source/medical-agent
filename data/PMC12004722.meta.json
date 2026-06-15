@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12004722",
+  "pmid": "40247863",
+  "title": "Preliminary analysis of salivary microbiota in catathrenia (nocturnal groaning) using machine learning algorithms.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yu M, Lu Y, Zhang W, Gong X, Hao Z, Xu L, Wen Y, Dong X, Han F, Gao X.",
+  "doi": "10.1080/20002297.2025.2489613",
+  "figures": [
+    "Overview of the study design.",
+    "Salivary microbiota distribution of patients with catathrenia and control groups.  (a) α-diversity (Chao 1, Faith’s pd, and observed species) of catathrenia and control; (b) β-diversity (principal coordinate analysis, Bray-Curtis’s distance) of catathrenia and control; (c) Composition of the salivary microbiota at the phylum level in catathrenia and control; (d) Composition of the salivary microbi",
+    "Machine-learning based biomarkers identification and model performance.  (a) The most important genera identified by the 10-fold cross-validated XGBoost algorithm. SHAP: SHapley Additive exPlanations. (b) The receiver operating curve (ROC) of top three genera of XGBoost algorithm; (c) The most important genera identified by the nested random forest classifier; (b) The receiver operating curve (ROC",
+    "Pre- and post-MAD treatment salivary microbiota distribution in patients with catathrenia.  MAD: mandibular advancement device. (a) Pre- and post-treatment groaning index changes; (b) Pre- and post-treatment α-diversity (Chao 1, Faith’s pd, and observed species); (c) Pre- and post-treatment β-diversity (principal coordinate analysis, Bray-Curtis’s distance); (d) Pre- and post-treatment composition",
+    "Characteristics of potential biomarker genera in salivary microbiota.  (a) Pre- and post-treatment abundance of  Alloprevotella ,  Peptostreptococcaceae_XI_G1 ,  Actinomyces , and  Rothia;  (b) Spearman correlation analysis between potential biomarker genera and polysomnographic parameters; REM: rapid-eye movement stage; N: non-REM sleep stage; AHI: apnea-hypopnea index; ODI: oxygen desaturation i"
+  ],
+  "tables": [
+    "Clinical characteristics between catathrenia and control group."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002184.6386335
+}

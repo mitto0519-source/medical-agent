@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12087099",
+  "pmid": "40390033",
+  "title": "Microbiota alterations leading to amino acid deficiency contribute to depression in children and adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Teng T, Huang F, Xu M, Li X, Zhang L, Yin B, Cai Y, Chen F, Zhang L, Zhang J, Geng A, Chen C, Yu X, Sui J, Zhu ZJ, Guo K, Zhang C, Zhou X.",
+  "doi": "10.1186/s40168-025-02122-w",
+  "figures": [
+    "Video Abstract",
+    "The deficiency of plasma amino acids in children and adolescents with MDD.  A  A clear discrepancy of plasma metabolome between MDD patients ( n  = 256) and HCs ( n  = 307), revealed by Partial Least-Squares Discriminant Analysis (PLS-DA).  B  The volcano plot for all the 1300 identified metabolic features, including 63 up-regulated metabolites (red), 297 down-regulated metabolites (blue) and 940 ",
+    "Specific fecal microbial ecosystem in children and adolescents with MDD.  A  Box and whiskers plots (in the style of Turkey) for the α-diversity analysis of four indices (Simpson, Chao1 and Shannon) at the microbial strain level between MDD patients ( n  = 83) and HCs ( n  = 58).  B  Principal component analysis (PCoA) indicates a partial but significant separation between patients with MDD and HC",
+    "Interactions of fecal microbial compositions and host circulating amino acids in children and adolescents with MDD.  A  Procrustes analysis of plasma metabolome versus fecal microbiome. Blue and red color of node represent HCs ( n  = 58) and MDD ( n  = 83), respectively. The plasma metabolome and fecal samples from the same individual are connected by red arrows.  B  Canonical correlation analysis",
+    "Depression-related plasma metabolites correlate with brain dysfunction.  A  The group differences of functional connectivity between MDD and HCs in children and adolescents evaluated by network-based statistics (NBS). Grids with white bounding box indicate functional connections that comprise the group-differed network (the family-wise error corrected  p  = 0.030).  B  The group-differed functiona",
+    "Fecal microbiota transplantation (FMT) from children and adolescents with MDD-induceddepressive-like behaviors in adolescent rats accompanied by AAs deficiency in the prefrontal cortex (PFC).  A  The experiment schedule of the antibiotic-treated (Abx), FMT and behavioral tests.  B  Lower sucrose preference in sucrose preference test (SPT, left) and higher immobility time in forced swim test (FST, ",
+    "Dietary lysine restriction may increase depression susceptibility in adolescent chronic unpredictable mild stress (CUMS) rats via modulating excitatory amino acid transporters (EAATs) in the prefrontal cortex (PFC).  A  The experiment schedule of the dietary lysine restriction study including four groups: Con+L100 ( n  = 8), Con+L70 ( n  = 8), CUMS+L100 ( n  = 9) and CUMS+L70 ( n  = 9). PND, postn"
+  ],
+  "tables": [
+    "Summary of clinical parameters of all individuals from MDD and HCs"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048082.1486988
+}

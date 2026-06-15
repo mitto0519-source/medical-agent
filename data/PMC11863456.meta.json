@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11863456",
+  "pmid": "40001224",
+  "title": "Relationships between age, gender, ulnar variance and triangular fibrocartilage disc on high-resolution MRI in asymptomatic adults' wrist.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhan H, Qian Z, Cui J, Wang P, Bai R, Yin Y.",
+  "doi": "10.1186/s13018-025-05618-1",
+  "figures": [
+    "TFC morphology on coronal proton density with fat-suppression MRI.  A , slightly radially tilted asymmetrical bowtie.  B , shorter and more horizontal. C, more distally stretched",
+    "Measurements of TFC thickness ( A ), TFC angle ( B ), and ulnar variance ( C )"
+  ],
+  "tables": [
+    "TFC thickness, angle and ulnar variance from different age groups and gender",
+    "Multiple linear regression analysis for associations of variables with TFC thickness and angle",
+    "The coronal morphology, signal and continuity of TFC between different age groups and gender",
+    "Logistic regression analysis of influencing factors associated with TFC coronal morphology, and signal and continuity"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035887.5571978
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11983003",
+  "pmid": "40225070",
+  "title": "Recombinant growth hormone improves growth and adult height: a comparison between treated and untreated patients with idiopathic growth hormone deficiency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao Q, Li R, Shao Q, Zhang M, Ban B.",
+  "doi": "10.21037/tp-2024-576",
+  "figures": [
+    "Comparison of adult height and height improvement in rhGH treated and untreated IGHD patients. (A) Adult height SDS; (B) height SDS gain. IGHD, idiopathic growth hormone deficiency; rhGH, recombinant human growth hormone; SDS, standard deviation score.",
+    "Comparison of height SDS before rhGH treatment and adult height SDS in patients with IGHD. (A) Treated with rhGH; (B) untreated with rhGH. IGHD, idiopathic growth hormone deficiency; rhGH, recombinant human growth hormone; SDS, standard deviation score.",
+    "Associations between growth outcomes and clinical characteristics in patients with IGHD. (A) Height SDS gain; (B) final adult height SDS. BMI, body mass index; CI, confidence interval; IGF-1, insulin like growth factor-1; IGHD, idiopathic growth hormone deficiency; rhGH, recombinant human growth hormone; SDS, standard deviation score.",
+    "",
+    ""
+  ],
+  "tables": [
+    "Baseline characteristics of IGHD patients with and without rhGH treatment",
+    "Comparison of adult height and height improvement in rhGH-treated and untreated IGHD patients",
+    "Comparison of height SDS before rhGH treatment and adult height SDS in patients with IGHD"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012834.8452346
+}

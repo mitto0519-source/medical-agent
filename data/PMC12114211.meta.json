@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12114211",
+  "pmid": "40431346",
+  "title": "Network Approach to Evaluate the Effect of Diet on Stroke or Myocardial Infarction Using Gaussian Graphical Model.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lailo JM, Shin J, Menichetti G, Lee SA.",
+  "doi": "10.3390/nu17101605",
+  "figures": [
+    "Selection criteria and identification of outcomes for all cohorts. * means reported numbers follow the format: Cases of either stroke or MI (Cases of stroke/Cases of MI).",
+    "Food group network for all respondents derived using Gaussian graphical models. Nodes represent food groups. Edges represent conditional dependency between food groups measured by correlation coefficients. The absence of edges between two food groups represents conditional independence. Continuous lines represent positive conditional dependency, whereas broken lines represent negative conditional ",
+    "Sex-specific forest plot of hazard ratios for stroke or myocardial infarction across 9 food groups, adjusted for demographics and lifestyle."
+  ],
+  "tables": [
+    "Demographic variables and risk, event, and hazard ratio data of stroke or myocardial infarction for total population, males, and females.",
+    "Hazard ratios for networks scores and risk of stroke or myocardial infarction.",
+    "Hazard ratios for networks scores and risk of stroke.",
+    "Hazard ratios for networks scores and risk of myocardial infarction.",
+    ""
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041161.7966762
+}

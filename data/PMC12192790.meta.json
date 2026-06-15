@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12192790",
+  "pmid": "40566334",
+  "title": "The Longitudinal Relationship Between Physical Functions and Cognitive Functions Among Middle-Aged and Older Adults in Primary Care.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hu N, Yin W, Noon RI, Alabdullatif N.",
+  "doi": "10.3390/ijerph22060908",
+  "figures": [
+    "( a ): Flowchart depicting the data selection and exclusion process for the GS cohort. ( b ): Flowchart depicting the data selection and exclusion process for the HGS cohort."
+  ],
+  "tables": [
+    "( a ): Baseline characteristics of the GS cohort (N = 1903). ( b ): Baseline characteristics of the HGS cohort (N = 4218).",
+    "( a ): The association between cognitive functions and concurrent GS. ( b ): The association between cognitive functions and GS at a lagged time (one wave lag) and current time.",
+    "( a ): The association between cognitive functions and concurrent HGS. ( b ): The association between cognitive functions and HGS at a lagged time (one wave lag) and current time.",
+    "Impact of baseline GS on the temporal trend (slope) of overall cognitive functions.",
+    "Impact of baseline HGS on the temporal trend (slope) of overall cognitive functions.",
+    ""
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040654.8651273
+}

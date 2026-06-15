@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12314545",
+  "pmid": "40747605",
+  "title": "Patient-Reported Symptoms and Mental Health Event Risks in Adolescents and Young Adults With Cancer.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Gupta S, Li Q, Nathan P, Kurdyak P, Baxter N, Sutradhar R, Coburn N.",
+  "doi": "10.1002/cam4.71096",
+  "figures": [
+    "Cumulative incidence of late severe mental health events among 5‐year survivors."
+  ],
+  "tables": [
+    "Distributions of demographic and disease characteristics of study cohort ( N  = 5435).",
+    "Associations between time‐varying symptom severity, precancer diagnosis mental healthcare use, and early severe mental health event.",
+    "Associations between maximum symptom severity within 1‐year of cancer diagnosis, precancer diagnosis mental healthcare use, and late severe mental health event.",
+    "Percentage of late SMHE accounted for by cohort subgroups."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780047996.9952147
+}

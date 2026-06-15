@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12022786",
+  "pmid": "40262783",
+  "title": "The Clinical Utility of Biomarkers in Diagnosing Major Depressive Disorder in Adults: A Systematic Review of Literature From 2013 to 2023.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ang SH, Ho RC, McIntyre RS, Zhang Z, Chang SK, Teopiz KM, Ho CS.",
+  "doi": "10.30773/pi.2024.0152",
+  "figures": [
+    "Flow diagram for identification of studies. MDD, major depressive disorder; AUC, area under the curve."
+  ],
+  "tables": [
+    "A summary of blood biomarkers in diagnosing major depressive disorder in adults",
+    "A summary of neuroimaging/neurophysiology biomarkers in diagnosing major depressive disorder in adults",
+    "A summary of urinary biomarkers in diagnosing major depressive disorder in adults",
+    "A summary of other biomarkers in diagnosing major depressive disorder in adults",
+    "A summary of best performing biomarkers in diagnosing major depressive disorder in adults"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048955.2905767
+}

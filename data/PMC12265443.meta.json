@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12265443",
+  "pmid": "40678101",
+  "title": "Impact of Circadian Rhythm Disturbance and Chronotype on Medical Students' Mental State.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Niroumand Sarvandani M, Garmabi B, Asadi M, Ghazvini H, Rafaiee R, Kalalian Moghaddam H.",
+  "doi": "10.32598/bcn.2022.1425.6",
+  "figures": [
+    "Overview of study procedures",
+    "Left box, showing the circadian alignment protocol; right box, showing the circadian misalignment protocol",
+    "CONSORT"
+  ],
+  "tables": [
+    "Measurement and deviation of research variables and independent t-test to compare the scores of the two groups in the pre-test",
+    "Results of analysis of covariance to investigate the effect of circadian misalignment on the outcomes",
+    "One-way analysis of variance to compare research variables in groups based on chronotype",
+    "The results of the Bonferroni post hoc test"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780000879.4325798
+}

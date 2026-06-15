@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11902253",
+  "pmid": "40077648",
+  "title": "Gene-Diet Interactions in High-Density Lipoprotein Cholesterol-Related Polymorphisms and Cardiovascular Disease Risk: Insights from the Korean Genome and Epidemiology Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee JH, Hong KW, Park BJ, Choi JE, Jung DH.",
+  "doi": "10.3390/nu17050778",
+  "figures": [
+    "Study design and population characteristics.",
+    "Plots showing the relationship between gene and diet interaction. ( a ) Interaction of ABCA1 rs1883025 with protein intake on ischemic stroke risk. ( b ) Interaction of APOA5 rs651821 with fat intake on coronary artery disease risk."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population according to HDL Cholesterol.",
+    "Lead SNPs for the low and/or high groups GWASs.",
+    "Statistical analysis results of interactions between HDL cholesterol-associated SNPs and dietary habits.",
+    ""
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036670.3742666
+}

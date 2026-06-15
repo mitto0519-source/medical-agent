@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11974428",
+  "pmid": "39786381",
+  "title": "Features related to the presence of internet gaming disorder and their impact on the treatment outcomes.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ayala-Rojas RE, Rosinska M, Cárdenas IP, Soldevilla-Morera J, Granero R, Fernández-Aranda F, Jiménez-Murcia S.",
+  "doi": "10.1556/2006.2024.00070",
+  "figures": [
+    "Scheme with the study procedure",
+    "Treatment outcomes: risk of dropout and relapses during therapy",
+    "Cumulative survival functions for the rate of relapses and dropout",
+    ""
+  ],
+  "tables": [
+    "Descriptive variables for the sample at baseline",
+    "Logistic regression with the final discriminative models",
+    "Poisson regression with the final discriminative models"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998107.117543
+}

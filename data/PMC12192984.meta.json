@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12192984",
+  "pmid": "40564898",
+  "title": "Early Cardiovascular and Metabolic Benefits of rhGH Therapy in Adult Patients with Severe Growth Hormone Deficiency: Impact on Oxidative Stress Parameters.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kościuszko M, Buczyńska A, Hryniewicka J, Jankowska D, Adamska A, Siewko K, Jacewicz-Święcka M, Zaniuk M, Krętowski AJ, Popławska-Kita A.",
+  "doi": "10.3390/ijms26125434",
+  "figures": [
+    "Changes in serum insulin-like growth factor type 1 (IGF-1) concentrations during rhGH therapy in patients with growth hormone deficiency (GHD). A significant increase in IGF-1 levels was observed after 6 months (V1) ( p  = 0.003 *) and maintained after 12 months (V2) of treatment compared to baseline (V0) ( p  = 0.0001 ***). However, no statistically significant difference was found between the 6-",
+    "Effect of rhGH therapy on endothelin-1 ( ET-1 ), asymmetric dimethylarginine ( ADMA ), total oxidant capacity ( TOC ), and total antioxidant capacity ( TAC ) levels in patients with growth hormone deficiency (GHD). After 12 months of treatment (V2), ET-1 concentrations were significantly reduced compared to baseline (V0) ( p  = 0.007 *), while no significant change was seen at 6 months (V1). ADMA "
+  ],
+  "tables": [
+    "Investigated biochemical parameters in the studied group.",
+    "Investigated bioimpedance parameters in the studied group.",
+    "Spearman’s correlation coefficients between OS parameters and other metabolic markers in the studied group initially and during the treatment.",
+    "Clinical characteristics in the studied group."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012766.3511364
+}

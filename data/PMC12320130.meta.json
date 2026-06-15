@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12320130",
+  "pmid": "40755300",
+  "title": "Prophylactic Effect of Prefrontal Alternating Current Stimulation on Postoperative Sleep Disturbance in Patients Undergoing Gynecological Laparoscope: A Randomized, Double-Blind, Sham-Controlled Trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Du N, Yang JJ, Li XY, Li ZH, Hashimoto K, Lei L, Yang JJ.",
+  "doi": "10.1111/cns.70529",
+  "figures": [
+    "Flowchart of the study. TACS, transcranial alternating current stimulation.",
+    "Incidence of Sleep Disturbance (SD) on Preoperative Day 1, Postoperative Day 1, and Postoperative Day 3. Data on the intention‐to‐treat sample were analyzed using the Pearson χ 2 . Intergroup difference in sleep disturbance incidence on postoperative day 1 (Active vs. Sham):  P  = 0.007. *Compared to baseline sleep disturbance incidence (preoperative day 1):  p  &lt; 0.01.",
+    "Comparison of AIS, HADS‐A, and HADS‐D scores between the two groups. Error bars represent the SE of the mean. Data on the per‐protocol sample were analyzed using Generalized estimating equation (GEE) analysis. (A): Changes in AIS scores over time. Intergroup difference at T1 (Active vs. Sham):  p  = 0.018. (B): Changes in HADS‐A scores over time. Intergroup difference at T1 (Active vs. Sham):  p  ",
+    "Forest Plot of the Subgroup Analysis. AIS, Athens Insomnia Scale; HADS‐A indicates Hospital Anxiety and Depression Scale‐Anxiety; OR, odds ratio."
+  ],
+  "tables": [
+    "Baseline characteristics of patients allocated to active‐tACS group or sham‐tACS group. \n a",
+    "Sleep quality on PODs 1 and 3 in the active‐tACS group or sham‐tACS group. \n a",
+    "Comparison of pain scores and opioid consumption between the two groups on PODs 1 and 3. \n a",
+    "Incidence of adverse events in the active‐tACS group or sham‐tACS group in the trial. \n a"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001683.073117
+}

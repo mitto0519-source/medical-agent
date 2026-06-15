@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12277109",
+  "pmid": "40135503",
+  "title": "Association of COVID-19 Continuous Enrollment With Self-Reported Postpartum Medicaid Continuity and Coverage Inequities.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Eliason EL, Gordon SH, Steenland MW.",
+  "doi": "10.1111/1475-6773.14618",
+  "figures": [
+    "Monthly rates of postpartum insurance coverage before and during the FFCRA Medicaid continuous enrollment provisions, 2018–2021.  \n Note:  Author's analysis of the Pregnancy Risk Assessment Monitoring System (PRAMS) survey among respondents with Medicaid‐paid prenatal care in 29 jurisdictions, 2018–2021.  n  = 46,737, weighted  N  = 2,148,675. FFCRA is the Families First Coronavirus Response Act. "
+  ],
+  "tables": [
+    "Characteristics of respondents with Medicaid‐paid prenatal care before and during the FFCRA Medicaid continuous enrollment provisions, 2018–2021.",
+    "Changes in postpartum insurance coverage during the FFCRA Medicaid continuous enrollment provisions, 2018–21.",
+    "Changes in postpartum insurance coverage during the FFCRA Medicaid continuous enrollment provisions by Medicaid expansion status, 2018–21.",
+    "Changes in postpartum insurance coverage during the FFCRA Medicaid continuous enrollment provisions by race and ethnicity, 2018–21."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780036114.782492
+}

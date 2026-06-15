@@ -1,0 +1,32 @@
+{
+  "pmcid": "PMC12102633",
+  "pmid": "40344661",
+  "title": "Digital Mental Health Interventions for Young People Aged 16-25 Years: Scoping Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Potts C, Kealy C, McNulty JM, Madrid-Cagigal A, Wilson T, Mulvenna MD, O'Neill S, Donohoe G, Barry MM, Barry MM.",
+  "doi": "10.2196/72892",
+  "figures": [
+    "PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) flowchart.",
+    "Delivery of interventions across different types of digital tools (N=135).",
+    "Types of blended interventions used across studies (N=65). Venn diagram showing overlap between peer, clinician, and research team support. Upset plot showing the degree of overlap between specific types of blended support. F2F: face-to-face; MH: mental health.",
+    "Participant recruitment sources across all studies (N=145).",
+    "Gender split in experimental groups across all studies (N=145). LGBTQ+: lesbian, gay, bisexual, transgender, and queer.",
+    "Marginalized groups represented across all studies (N=145). LGBTQ+: lesbian, gay, bisexual, transgender, and queer.",
+    "Breakdown of digital-only support versus blended human and digital support.",
+    "Treatment modalities used in digital mental health interventions across main participant groups. ABMT: attention bias modification training; ABPT: affect-based psychodynamic therapy; ACT: acceptance and commitment therapy; BA: behavioral activation; CBT: cognitive behavioral therapy; CFT: compassion-focused therapy; DBT: dialectical behavior therapy; IMBS: information-motivation-behavioral skills;",
+    "Intervention features across most common populations. EMA: ecological momentary assessment; ESM: experience sampling method; VR: virtual reality."
+  ],
+  "tables": [
+    "Search terms used to identify studies across 6 key databases.",
+    "Study characteristics.",
+    "Most frequently used mental health scales across studies.",
+    "Target area for digital mental health interventions across all studies.",
+    "Intervention features across all 135 unique digital interventions.",
+    "Participant information for studies that recruited individuals who had a mental health diagnosis or met the diagnostic criteria (27 studies).",
+    "Retention rates across study characteristics.",
+    "Recommendations for future work based on key findings in this review."
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050896.5802398
+}

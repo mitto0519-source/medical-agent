@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12202743",
+  "pmid": "40574483",
+  "title": "Alcohol consumption and cancer risk in South Korea and the UK: prospective cohort studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jung KJ, Lee K, Song DS, Baek JW, Shin SY, Jee SH, Lewington S.",
+  "doi": "10.1093/ije/dyaf108",
+  "figures": [
+    "Association between drinking amount and incident cancer risk in all participants in the pooled Korean biobank. Adjusted for age, BMI, smoking status, socioeconomic status, family history of cancer; head and neck cancer included oral cavity cancer, pharynx cancer, larynx cancer; alcohol-related cancer included oral cavity cancer, pharynx cancer, larynx cancer, esophagus cancer, liver cancer, colore",
+    "Association between drinking amount and incident cancer risk in total participants in UKB. Adjusted for age, BMI, smoking status, socioeconomic status, family history of cancer; head and neck cancer included oral cavity cancer, pharynx cancer, larynx cancer; alcohol-related cancer included oral cavity cancer, pharynx cancer, larynx cancer, esophagus cancer, liver cancer, colorectal cancer, female ",
+    "Association between drinking amount and incident cancer risk excluding F/U of &lt;3 years in the pooled Korean biobank. Adjusted for age, BMI, smoking status, socioeconomic status, family history of cancer; head and neck cancer included oral cavity cancer, pharynx cancer, larynx cancer; alcohol-related cancer included oral cavity cancer, pharynx cancer, larynx cancer, esophagus cancer, liver cance",
+    "Association between drinking amount and incident cancer risk excluding F/U of &lt;3 years in UKB. Adjusted for age, BMI, smoking status, socioeconomic status, family history of cancer; head and neck cancer included oral cavity cancer, pharynx cancer, larynx cancer; alcohol-related cancer included oral cavity cancer, pharynx cancer, larynx cancer, esophagus cancer, liver cancer, colorectal cancer, "
+  ],
+  "tables": [
+    "General characteristics of KCPS-II, KoGES, and UKB.",
+    "Age-adjusted cancer incidence and incidence ratio in pooled Korean biobank and UKB subjects aged 40–69 years"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036538.1667757
+}

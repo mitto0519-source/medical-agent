@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12217130",
+  "pmid": "40593862",
+  "title": "Targeted metabolomics reveals bioactive inflammatory mediators from gut into blood circulation in children with NAFLD.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Luo M, Luo J, Kaminga AC, Wei J, Dai W, Zhong Y, Xu N, Li X, Zhou H, Pan X.",
+  "doi": "10.1038/s41522-025-00706-w",
+  "figures": [
+    "Gut metabolic alterations in NAFLD.  Chemical class metabolite sets plots ( A ) shown the chemical class metabolite of metabolites.  B  OPLS-DA score plots for differential metabolites in fecal samples. X axis and Y axis represent contributions of persons to the first two principal components (PC1 and PC2).  C  Cross-validation plot with a permutation test repeated 200 times. The intercepts of R2 ",
+    "Plasma metabolic alterations in NAFLD.  Chemical class metabolite sets plots ( A ) shown the chemical class metabolite of metabolites.  B  OPLS-DA score plots for differential metabolites in Plasma samples. X axis and Y axis represent contributions of persons to the first two principal components (PC1 and PC2).  C  Cross-validation plot with a permutation test repeated 200 times. The intercepts of",
+    "Overview of the key gut metabolic pathways in the pathogenesis of NAFLD.  Pathway enrichment plots of fecal ( A ) and plasma ( B ) shown the pathway enrichment analysis by KEGG for metabolites. The pathway enrichment analysis result takes KEGG pathway as the unit, and the hypergeometric test is applied to find the pathway that is enriched in the differential metabolites against the background of a",
+    "Metabolites discriminates disease severity and association of mediators with markers of inflammation, glycolipid metabolism and liver function.  A heatmap of plasma ( A ) shown the correlation between selected gut metabolites with glycolipid metabolism, liver function and inflammatory factors indices. Red color represents positive correlation, blue color represents negative correlation. Bar chart ",
+    "Metabolites docks to the ligand-binding domain of inflammatory receptor.  The superposition of these metabolites bound to the ligand-binding domain pocket of inflammatory receptor ( A ). Two-dimensional interaction map of inflammatory receptor with metabolites ( B ). Hypothesis map of inflammatory mechanism pathway is shown in ( C ).",
+    "Flow chart showing the methods used for metabolomics analysis and bioinformatics function prediction.  Patient recruitment and inclusion and exclusion criteria. Various clinical samples were obtained from NAFLD patients and controls. Integrative analysis for potential harmful and beneficial gut metabolites. Targeted metabolomics (LC-MS/MS) offers a plethora of information on metabolites. NAFL, non"
+  ],
+  "tables": [
+    "Dysregulation of the significantly pathway of metabolites might be involved in the inflammatory progression of NAFLD"
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779994812.5737557
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12079816",
+  "pmid": "40369569",
+  "title": "Identification of MMP14 and MKLN1 as colorectal cancer susceptibility genes and drug-repositioning candidates from a genome-wide association study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yun D, Yang JH, Sim JA, Kim M, Park JW, Jeong SY, Shin A, Kweon SS, Song N.",
+  "doi": "10.1186/s12967-025-06491-6",
+  "figures": [
+    "Flowchart of the genome-wide association study (GWAS) and functional analyses.  SNUH  Seoul National University Hospital,  KOGES  Korean Genome and Epidemiology Study,  SNP  single-nucleotide polymorphism,  QC  quality control,  MAF  minor allele frequency,  HWE  Hardy–Weinberg equilibrium,  rsq  r-squared statistic,  FUMA GWAS  functional mapping and annotation of GWAS,  GTEx  Genotype-Tissue Exp",
+    "Manhattan plot of GWAS in the discovery study. Each dot represents the test results for a single SNP. The x-axis represents the genomic location along each chromosome, and the y-axis represents − log10 of the  P -value. The solid horizontal line corresponds to a  P -value of 5.00 × 10 –8 . Red dots represent SNPs with  P -value &lt; 5.00 × 10 –8",
+    "Violin plot of gene expression in sigmoid colon and transverse colon tissues. The x-axis represents the category of colon tissues and the y-axis represents − log10 of (transcripts per million + 1)",
+    "Structural analysis of MMP14. The green protein is MMP14 with the reference allele (G) for rs3751489, and the blue protein is MMP14 with the alternate allele (A) for rs3751489"
+  ],
+  "tables": [
+    "Characteristics of participants included in the discovery genome-wide association study (GWAS) on colorectal cancer risk",
+    "Signals and functional annotations from GWAS on colorectal cancer risk",
+    "Expression of genes in sigmoid colon and transverse colon tissues",
+    "Targeting of MKLN1 and MMP14 and drug-repositioning candidates for colorectal cancer"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036675.6354651
+}

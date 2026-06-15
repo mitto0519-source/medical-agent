@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12277239",
+  "pmid": "40685637",
+  "title": "Development of a midlife-specific CogDrisk algorithm (CogDrisk-ML) to enable validated implementation of dementia risk assessment from midlife to late life.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Huque MH, Welberry HJ, Eramudugolla R, Lautenschlager NT, Anstey KJ.",
+  "doi": "10.1093/ageing/afaf201",
+  "figures": [],
+  "tables": [
+    "Pooled regression coefficients and associated point estimates of each of the risk factors for the midlife CogDrisk score.",
+    "Estimated Harrell’s  C  statistics (95% CI) of CogDrisk-ML and CAIDE risk scores across three datasets.",
+    "Estimated Harrell’s  C  statistics (95% CI) of CogDrisk-ML, CAIDE and CogDrisk scores across three datasets, where these scores are calculated without including age effect in the model.",
+    "Estimated Harrell’s  C  statistics (95% CI) of CogDrisk-ML with age- and sex-only model.",
+    "Sensitivity and specificity and cutoff points of CogDrisk-ML in the development and validation data."
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991601.9238756
+}

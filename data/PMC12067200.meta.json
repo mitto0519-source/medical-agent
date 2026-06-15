@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12067200",
+  "pmid": "40310459",
+  "title": "Psychological reactance to system-level policies before and after their implementation.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Granulo A, Fuchs C, Böhm R.",
+  "doi": "10.1073/pnas.2409907122",
+  "figures": [
+    "Public opposition to the system-level policy when it was planned (ex ante implementation) and when it was implemented (ex post implementation) in the three countries that implemented the policy vs. those that did not plan and implement the policy in Study 1 ( N  = 49,674;  M  age = 47.81, SD age  = 18.43). Colored (black) dots and whiskers indicate the observed means and their 95% CI in the countr",
+    "Forest plot of mean differences in psychological reactance to system-level policies before (ex ante) vs. after (ex post) their implementation across Studies 2-4A. Note: Differences in psychological reactance refer to standardized differences. The experimental materials were comparable and varied in policy contexts as described in  Materials and Methods ; thus, the four studies can be understood as",
+    "Effect of loss frame salience on psychological reactance to the system-level policy across implementation stage conditions in Study 4B ( N  = 1,635;  M  age = 39.85, SD age  = 13.34). Colored areas represent rotated kernel density distributions of individual responses. Orange dots and whiskers indicate the observed means and their 95% CI.",
+    "Effect of societal benefits salience on psychological reactance ex ante the implementation of the system-level policy in Study 4C ( N  = 622;  M  age = 40.61, SD age  = 13.57). Colored areas represent rotated kernel density distributions of individual responses. Orange dots and whiskers indicate the observed means and their 95% CI."
+  ],
+  "tables": [
+    "Regression model of public opposition to system-level policies, i.e., smoking ban in indoor workplaces (Study 1)"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008268.9296627
+}

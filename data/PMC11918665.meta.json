@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11918665",
+  "pmid": "40096976",
+  "title": "Safety and efficacy of weekly somapacitan for growth hormone deficiency in children: A 72-week observational study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Al-Agha AE, Aljefri HM, Kafi SE, Alamri AS, Alghamdi AA.",
+  "doi": "10.15537/smj.2025.46.3.20240937",
+  "figures": [
+    "- Comparison of height velocity measurements by gender across sequential time intervals in patients receiving weekly somapacitan therapy.",
+    "- Longitudinal changes in serum insulin-like growth factor-1 levels over 72 weeks for treatment-naive patients compared to patients switched from daily growth hormone therapy."
+  ],
+  "tables": [
+    "- Height velocity by gender across various intervals in patients receiving somapacitan therapy.",
+    "- Height velocity comparison between naive and switched patients across different intervals.",
+    "- Changes in insulin-like growth factor-1 levels between treatment-naive patients and patients switched from daily growth hormone therapy over specified intervals."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012659.59343
+}

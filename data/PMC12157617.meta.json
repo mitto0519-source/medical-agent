@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12157617",
+  "pmid": "40507105",
+  "title": "Dietary Omega-3 PUFAs in Metabolic Disease Research: A Decade of Omics-Enabled Insights (2014-2024).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Li J, Lin YC, Zuo HL, Huang HY, Zhang T, Bai JW, Huang HD.",
+  "doi": "10.3390/nu17111836",
+  "figures": [
+    "Trends in the five countries with the highest absolute burden of five metabolic diseases, 1990–2021 (Based on DALYs and mortality data).",
+    "Polyunsaturated fatty acids and dietary sources. ( a ) Chemical structure and dietary sources; ( b ) general metabolic pathway for Omega-3 and Omega-6 PUFAs.",
+    "PRISMA flowchart of study inclusion and exclusion and distribution of publication numbers by omic types for included studies. ( a ) Eligibility criteria for the selection of research articles. ( b ) Distribution of publication numbers by omic types for the 72 included studies.",
+    "Geographical distribution of omics-based research publications on Omega-3 PUFAs in animal or human models (ranked by publication volume by country).",
+    "Mechanistic insights into Omega-3 PUFAs in metabolic diseases through omics analysis in animal and human models."
+  ],
+  "tables": [
+    "Exclusion criteria of selected articles."
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003555.2462916
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12111139",
+  "pmid": "40427832",
+  "title": "Assessment of Potential Factors Influencing Attention-Deficit/Hyperactivity Disorder Drug Adherence: A Database Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Truter I, Regnart J, Meyer A.",
+  "doi": "10.3390/ijerph22050716",
+  "figures": [
+    "Identification of the ADHD-diagnosed group against subjects who received ADHD-indicated drugs without any history of a confirmed ADHD diagnosis over the study period."
+  ],
+  "tables": [
+    "Rules applied for the determination of dispensing month reassignment when two dispensing dates were within a single calendar month.",
+    "Rules applied to guide the duration of PDC assessment periods.",
+    "Study Population Demographic Representations. Referenced Age Is In Years In All Instances.",
+    "PDC Measurements For Different Population Groups Defined By Adherence, Gender, Drug Therapy, And Diagnostic Code ( N  = 89). AD = antidepressants; F90 = ICD-10 code for ADHD diagnosis; MPH = methylphenidate; PDC = Proportion of Days Covered.",
+    "Proportions of drug types dispensed for the treatment-adherent group ( n  = 23).",
+    "Comparison of average PDCs and methylphenidate average PDD for different treatment-, ICD-10 code-, and gender-defined groups in the study population ( N  = 89).",
+    "Overall MPH PDC and PDD for each diagnostic-code defined group with stratification for gender ( N  = 89)."
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058667.982032
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12166866",
+  "pmid": "40521016",
+  "title": "The relationship between aging out of the special supplemental nutrition program for women, infants, and children assistance and weight status in kindergarten.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lazic A, Thomsen MR, Brown CC, Martin BC, Goudie A, Thompson JW.",
+  "doi": "10.1016/j.pmedr.2025.103125",
+  "figures": [
+    "The time between aging out of the Supplemental Nutrition Program for Women, Infants, and Children Assistance (WIC) and starting kindergarten represented as two parts (WIC gap).",
+    "Attrition diagram showing how the final study sample of kindergartners in Arkansas from 2019 to 2023 who participated in the Supplemental Nutrition Program for Women, Infants, and Children Assistance (WIC) program for five years and had no missing covariate information was derived (total lost = 134,568).",
+    "Regression Discontinuity Graphs with 95 % Confidence Intervals (CI) for 30-, 60-, and 90-day bandwidth from the school enrollment date for kindergartners measured in Arkansas from 2019 to 2023.  a. coefficient and 95 % CI represent the difference in adiposity as measured by BMI/BMI 95  between kindergartners born before the cutoff for kindergartner enrollment (July 31st) compared to those born aft"
+  ],
+  "tables": [
+    "Descriptive statistics comparing kindergartners in Arkansas (2019 to 2023) that were enrolled in the Special Supplemental Nutrition Program for Women, Infants, and Children Assistance (WIC) for a full five years to those who participated in WIC for less than 5 years.",
+    "The association between the time elapsed since aging out of the Special Supplemental Nutrition Program for Women, Infants, and Children Assistance (WIC) and a kindergartner's weight status represented as their body mass index expressed as a ratio of the 95th percentile (BMI/BMI 95 ) measured by ordinary least square regression among those in Arkansas from 2019 to 2023.",
+    "Sensitivity checks to estimate how modifying the adjusted regression influences the association between the time elapsed since aging out of the Special Supplemental Nutrition Program for Women, Infants, and Children Assistance (WIC) and a kindergartner's weight status represented as their body mass index expressed as a ratio of the 95th percentile (BMI/BMI 95 ) among those in Arkansas from 2019 to"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780036058.564821
+}

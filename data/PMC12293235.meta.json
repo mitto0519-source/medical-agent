@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12293235",
+  "pmid": "40723084",
+  "title": "Quality-of-Life Outcomes Following Thyroid Surgery in Pediatric Patients: A Systematic Review of Physical, Emotional, and Social Dimensions.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Alansari AN, Zaazouee MS, Najar S, Elshanbary AA.",
+  "doi": "10.3390/children12070891",
+  "figures": [
+    "PRISMA flow chart."
+  ],
+  "tables": [
+    "Baseline characteristics and summary of the included studies.",
+    "Quality assessment using the NOS tool.",
+    "",
+    "Search strategy for each database."
+  ],
+  "query": "thyroid function adolescent",
+  "fetched_at": 1780012273.0378616
+}

@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12288662",
+  "pmid": "40708593",
+  "title": "Comparative efficacy of psychological interventions for internet gaming disorder: a meta-analysis of randomized controlled trials.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang R, Zhang Y, Liu Z, Dong H, Zhang Z, Yang K, Liu Y, Zhao R, Yang Q, Niu Y.",
+  "doi": "10.3389/fpsyt.2025.1619138",
+  "figures": [
+    "Literature search process.",
+    "Schematic diagram of the methodological quality evaluation of literature.",
+    "Proportional chart of the methodological quality assessment of the literature.",
+    "Forest plot of meta-analysis on the relationship between psychological intervention and internet gaming disorder (before sensitivity analysis).",
+    "Forest plot of meta-analysis on the relationship between psychological intervention and internet gaming disorder (after sensitivity analysis)."
+  ],
+  "tables": [
+    "The basic characteristics of the research literature included in this study.",
+    "Summary table of the relationship between psychological intervention and the effectiveness on internet gaming disorder (before sensitivity analysis).",
+    "Summary table of the relationship between psychological intervention and the effectiveness on internet gaming disorder (after sensitivity analysis).",
+    "Summary table of the moderation effect test in the meta-analysis of psychological intervention on internet gaming disorder effectiveness."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779997974.545906
+}

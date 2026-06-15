@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11979335",
+  "pmid": "40207059",
+  "title": "Abnormal brain functional networks in systemic lupus erythematosus: a graph theory, network-based statistic and machine learning study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang Y, Bai R, Liu S, Li S, Zhao R, Wang X, Cheng Y, Xu J.",
+  "doi": "10.1093/braincomms/fcaf130",
+  "figures": [
+    "",
+    "Results of the between-group comparison of global indicators of functional connectivity networks in the SLE group and the HCs group.  Two-independent sample  t -test found that  γ  and  σ  were significantly decreased in SLE group ( n  = 127) compare to HCs group ( n  = 102); AUC, area under the curve; Cp, clustering coefficient; Lp, characteristic path length;  γ , normalized clustering coefficie",
+    "Subnetworks with reduced connectivity in the SLE group.  Connections in the subnetwork identified by the whole-brain NBS method with threshold 3.5, where functional connectivity is significantly reduced in SLE group ( n  = 127) compare to HCs group ( n  = 102). Number of abnormal subnetworks: 1; Number of nodes: 12; Number of edges: 11;  P  = 0.024. A, sagittal; B, coronal; C, axial; L, left; R, r"
+  ],
+  "tables": [
+    "Demographic and clinical data results of SLE group and HCs group"
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057364.3170962
+}

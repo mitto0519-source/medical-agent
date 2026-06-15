@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12336233",
+  "pmid": "40791806",
+  "title": "Diagnosis and genetic analysis of Gaucher disease in a pediatric case: a case report.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ma M, Wu N, Feng J, Sang X, Duan F, Li C, Zhang Q.",
+  "doi": "10.3389/fped.2025.1628525",
+  "figures": [
+    "(A)  Wright-Giemsa stain, ×1,000: Gaucher cells.  (B)  Glycogen stain, ×1,000: positive Gaucher cells.  (C)  iron stain, ×1,000: positive Gaucher cells (black arrows) and negative Gaucher cells (red arrows).",
+    "(A)  MRI-T2WI image demonstrated diffusely decreased signal intensity in the vertebral bodies.  (B)  MRI-T1WI image demonstrated diffusely decreased signal intensity in the vertebral bodies.  (C)  Bilateral femoral MRI demonstrated metaphyseal widening of the distal femora with flask-shaped morphological alterations (white arrow)."
+  ],
+  "tables": [
+    "Laboratory investigations.",
+    "GBA gene variant and enzymatic testing results."
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004964.6966934
+}

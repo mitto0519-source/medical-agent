@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12229182",
+  "pmid": "40401602",
+  "title": "Social Isolation Is Associated With the Acceleration of Death and Incident Cardiovascular Disease in Adults With Chronic Kidney Disease.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zeng X, Jiang Y, Liu Z, Yang H, Song H, Li C, Fu P.",
+  "doi": "10.1161/jaha.124.038951",
+  "figures": [
+    "Clinical Perspective",
+    "Standardized cumulative incidence of adverse outcomes in individuals with CKD.  \n A , Standardized cumulative all‐cause death in patients with CKD, stratified by the status of being least, moderately, and most isolated.  B , Standardized cumulative incidence of cardiovascular disease in patients with CKD, stratified by the status of being least, moderately, and most isolated. CKD indicates chronic",
+    "Time ratio on adverse outcomes according to the status of social isolation.  Results shown are time ratio and 95% CI estimated by accelerated failure time models, with reference to the least isolation group. eGFR indicates estimated glomerular filtration rate."
+  ],
+  "tables": [
+    "Disease Definitions in the Study",
+    "Baseline Characteristics of Included Individuals According to the Status of Social Isolation",
+    "Association of Social Isolation With Cause‐Specific Death, Coronary Artery Disease, and Stroke in Individuals With Chronic Kidney Disease",
+    "Difference in Restricted Mean Survival Time Within 10 Years"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021804.2784686
+}

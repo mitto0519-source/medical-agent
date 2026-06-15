@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12174664",
+  "pmid": "40535521",
+  "title": "Effect of Social Activity on All-Cause Dementia Among South Korean Elders: A Retrospective Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jeong W, Jeong W, Kim S.",
+  "doi": "10.1002/hsr2.70929",
+  "figures": [],
+  "tables": [
+    "Baseline characteristics of the study population.",
+    "Factors associated with dementia.",
+    "Subgroup analysis representing hazard ratio for dementia stratified by region.",
+    "Robustness analysis: Factors associated with dementia: Analysis with continuous predictors."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039650.5609922
+}

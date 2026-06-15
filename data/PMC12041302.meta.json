@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12041302",
+  "pmid": "39477533",
+  "title": "Risk factors for suicide attempt among adolescents reporting suicidal ideation by sexual and gender minority status: Evidence from the 2022 Minnesota Student Survey.",
+  "year": 2026,
+  "journal": "",
+  "authors": "Sexton JF, Clark KA.",
+  "doi": "10.1136/ip-2024-045317",
+  "figures": [
+    "Associations between bullying and past-year suicide attempt in sexual and gender minority (SGM) and non-SGM adolescents, Minnesota Student Survey. aOR = adjusted odds ratio; 95% CI = 95% confidence interval. Estimates derived from separate multivariable logistic regressions controlling for non suicidal self-injury, adverse childhood experiences, sexual orientation, sex at birth, gender modality (t"
+  ],
+  "tables": [
+    "Sociodemographic Characteristics of Adolescents Reporting Past-Year Suicidal Ideation, Minnesota Student Survey (n=10 561 )",
+    "Prevalence of Painful and Provocative Experiences Among Adolescents Reporting Past-Year Suicidal Ideation, Minnesota Student Survey (n=10 561 )",
+    "Multivariable Logistic Regression of Past-Year Suicide Attempt (1=Yes, 0=No) on Painful and Provocative Experiences Among SGM Adolescents Reporting Past-Year Suicidal Ideation (n=5528 )"
+  ],
+  "query": "self-harm non-suicidal adolescent",
+  "fetched_at": 1780000755.83414
+}

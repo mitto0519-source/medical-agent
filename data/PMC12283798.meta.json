@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12283798",
+  "pmid": "40484869",
+  "title": "Revealing silent alpha-thalassemia: characterization of novel HBA1 deletion and missense mutation in Tunisian families.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Amri Y, Fredj SH, Dabboubi R, Othmani R, Sahli C, Baccouche I, Ouali F, Messaoud T.",
+  "doi": "10.1007/s00277-025-06320-2",
+  "figures": [
+    "Pedigree analysis of two families with alpha thalassemia: hemoglobin ariana (Family A) and hemoglobin tozeur (Family B). The pedigree of  Family A  illustrates the proband (indicated by a black arrow) carrying the reported deletion in the  HBA1  gene, called Hemoglobin Ariana. In  Family B , the pedigree shows the proband (black arrow) with co-inheritance of Hemoglobin C and alpha thalassemia, cha",
+    "Agarose gel electrophoresis of amplicons obtained by PCR amplification of  HBA1  and  HBA2  genes in proband A and control. Agarose (0.8%) gel electrophoresis of the amplification products of  HBA1  and  HBA2  genes in the proband and control. Lane  1  contains the DNA size marker. Lanes  2  and  3  correspond to the amplification of  HBA1  and  HBA2  in proband  A , respectively. Lanes  4  and  5",
+    "Sequencing profiles of two novel mutations in  HBA1  associated with alpha thalassemia.  Panel A : Sequencing profile of a novel missense mutation ( NC_000016.10 :g.176801G &gt; C,  NP_000549.1 :p.Ala29Pro) detected in heterozygous state in exon 1 of  HBA1 . The upper row ( a ) shows the wild-type sequence, while the bottom row ( b ) displays the mutated sequence in the patient.  Panel B : Sequenc",
+    "Structural analysis of hemoglobin a: impact of the np_000509.1:p.ala29pro mutation on protein conformation and stability. ( a ) Structural analysis showing the p.Ala29Pro mutation buried in the protein core, near the heme group. The protein surface is represented in red mesh. ( b ) Predicted impact of the  NP_000509.1 :p.Ala29Pro mutation on protein conformation and stability, as analyzed using th"
+  ],
+  "tables": [
+    "Hematological and biochemical parameters of family A (Hemoglobin Ariana) and family B (Hemoglobin Tozeur) affected by alpha thalassemia"
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004703.6823623
+}

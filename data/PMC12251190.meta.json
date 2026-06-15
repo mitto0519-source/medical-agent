@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12251190",
+  "pmid": "40649341",
+  "title": "Phytotherapy and the Role of Bioactive Compounds in Modulating Mechanisms of Overweight and Obesity Comorbid with Depressive Symptoms-A Scoping Review of Mechanisms of Action.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sochacka K, Lachowicz-Wiśniewska S.",
+  "doi": "10.3390/molecules30132827",
+  "figures": [
+    "PRISMA-ScR flow diagram illustrating the study selection process. After the removal of duplicates and the application of inclusion and exclusion criteria, 261 publications were included in the final analysis.",
+    "Bidirectional pathophysiological links between obesity and depression mediated by inflammation, oxidative stress, and gut dysbiosis. Polyphenolic compounds counteract these shared mechanisms through anti-inflammatory, antioxidant, microbiota-modulating, neuroprotective, and metabolic effects.",
+    "Molecular mechanisms through which selected bioactive compounds (e.g., quercetin, genistein, and curcumin) act on the brain–gut–adipose axis to counteract inflammation, enhance AMPK activity, and modulate serotonin and neuroinflammatory pathways.",
+    "Synergistic actions of plant bioactive compounds on AMPK and BDNF signaling pathways, contributing to adipocyte reduction, improved insulin sensitivity, and neuroprotection.",
+    "Flavonoid-mediated modulation of neuroinflammation, oxidative stress, and BDNF expression in relation to depressive symptoms.",
+    "Synergistic interactions among plant bioactives, probiotics, and gut microbiota in modulating inflammation, metabolism, and neurobehavioral outcomes through gut–brain axis mechanisms."
+  ],
+  "tables": [
+    "Key bioactive compounds and their mechanisms."
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003384.767868
+}

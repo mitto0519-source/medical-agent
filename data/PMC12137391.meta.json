@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12137391",
+  "pmid": "40465044",
+  "title": "Circulating Fibroblast Growth Factor-21 in Patients with Nonalcoholic Fatty Liver Disease: A Systematic Review and Meta-Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Filimidou I, Orfanidou M, Goulas A, Giouleme O, Polyzos SΑ.",
+  "doi": "10.1007/s13679-025-00643-x",
+  "figures": [
+    "Potential metabolic effects of FGF-21 based mainly on experimental data [ 8 – 11 ]. FGF-21 is a hepatokine suggesting exerting pleiotropic effects on systemic metabolism by targeting a variety of organs through multiple endocrine pathways. These actions position FGF-21 as a potentially key metabolic regulator and a promising therapeutic target in obesity, T2DM and other metabolic diseases, includi",
+    "Flowchart depicting the process of the literature search, according to the PRISMA statement. Abbreviations: FGF-21, fibroblast growth factor-21; NAFLD, nonalcoholic fatty liver disease; PRISMA, preferred reporting items for systematic reviews and meta-analyses",
+    "Forest plot for the comparison of circulating FGF-21 between patients with NAFLD and controls in all studies (n = 44) included in the meta-analysis. Abbreviations: CI, confidence intervals; FGF-21, fibroblast growth factor-21; IV, inverse variance; NAFLD, nonalcoholic fatty liver disease; SD, standard deviation"
+  ],
+  "tables": [
+    "Main descriptives of the studies included in the systematic review and meta-analysis",
+    "FGF-21 SMD and related statistics between patients with NAFLD and controls in the sum of studies and in sensitivity analyses",
+    "FGF-21 SMD and related statistics in subgroup analysis according to NAFLD severity",
+    "FGF-21 SMD and related statistics between patients with NAFLD and controls in subgroup analysis within studies: (i) with vs. without histological confirmation of NAFLD with liver biopsy and (ii) with vs. without the inclusion of patients with NASH-related cirrhosis",
+    "Univariate meta-regression analysis of FGF-21 SMD between NAFLD patients and controls with potential confounders"
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779994601.3606305
+}

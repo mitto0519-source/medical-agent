@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12191370",
+  "pmid": "40558558",
+  "title": "Toll-like Receptors in Immuno-Metabolic Regulation of Emotion and Memory.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Crespo-Quiles C, Femenía T.",
+  "doi": "10.3390/cells14120933",
+  "figures": [
+    "Diagram of Toll-like receptor (TLR) signaling pathways. TLRs located on the cell surface include TLR1, TLR2, TLR4, TLR5, and TLR6, while TLR3, TLR7, TLR8, and TLR9 are primarily expressed within intracellular compartments. TLRs detect MAMPs (viral and bacterial components like LPS and flagellin or nucleic acids) and DAMPs like self-mRNA, mtDNA, HMGB1, and heat shock proteins."
+  ],
+  "tables": [
+    "Summary of known Toll-like receptor (TLR) ligands, chemical nature, and biological origin.",
+    "Summary of Toll-like receptor (TLR) involvement in metabolic regulation, cognitive function (memory), and emotional behavior across preclinical and clinical studies. The table compiles evidence for the role of individual TLRs in metabolic alterations (e.g., insulin resistance, glucose metabolism, adiposity), cognition and memory (e.g., spatial memory, learning, synaptic plasticity), and emotional ",
+    "Summary of main effects of TLRs in animal models and human studies. Arrows indicate direction of change (↑ increase, ↓ decrease) of expression levels, and (+)/(−) symbols represent pharmacological or genetic activation or inhibition, respectively."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046375.5833232
+}

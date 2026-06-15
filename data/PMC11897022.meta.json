@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11897022",
+  "pmid": "40078760",
+  "title": "Premature mortality patterns among American Indians in North Dakota, 2010-2019 (pre-pandemic).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nadeau M, Steele JS, Lyon-Colbert A, Kelliher A, Barnett J, Begay A, Warne D.",
+  "doi": "10.3389/fpubh.2025.1395399",
+  "figures": [
+    "Age-specific percent of reported death 0–17, 18+ years, North Dakota 2010–2019.",
+    "Percent cumulative death by age, North Dakota 2010–2019. AI represents American Indian.",
+    "Percent cumulative death by cause, North Dakota 2010–2019."
+  ],
+  "tables": [
+    "Age-specific death rates and rate ratios for common causes of death in ND."
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780052316.3185713
+}

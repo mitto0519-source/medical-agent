@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12226300",
+  "pmid": "40621099",
+  "title": "Factors influencing adherence to positive airway pressure therapy in stroke patients with obstructive sleep apnea: a cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yu WY, Xu LW, Sun ST, Zheng YX, Jing TY, Xu G, Tang TY, Chu C.",
+  "doi": "10.3389/fneur.2025.1604935",
+  "figures": [
+    "Participant flowchart."
+  ],
+  "tables": [
+    "Comparison of general information of patients with stroke with OSA.",
+    "Factors influencing PAP adherence in patients with stroke with OSA.",
+    "Analysis of PAP adherence correlation in patients with stroke combined with OSA.",
+    "Logistic regression analysis of PAP adherence in patients with stroke with OSA."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780001907.0200977
+}

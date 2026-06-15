@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11865427",
+  "pmid": "40011645",
+  "title": "Association between meeting the 24-hour movement guidelines and cardiometabolic syndrome in Korean adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Choi Y, Kang SJ, Kim J.",
+  "doi": "10.1038/s41598-025-91398-x",
+  "figures": [
+    "Flow of study participants."
+  ],
+  "tables": [
+    "Participants characteristics.",
+    "Physical activity parameters and proportion (%) of meeting guidelines.",
+    "Proportion (%) of meeting 24-hour movement guidelines.",
+    "Odds ratio (95% CI) for cardiometabolic syndrome according to general combination of meeting 24-hour movement guidelines.",
+    "Odds ratio (95% CI) for cardiometabolic syndrome according to specific combination of meeting 24-hour movement guidelines."
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006697.2437065
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12075092",
+  "pmid": "40364472",
+  "title": "Genetic Links Between Subcortical Brain Morphometry and Suicide Attempt Risk in Children and Adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ceja Z, García-Marín LM, Hung IT, Medland SE, Edwards AC, Rentería ME, Rabinowitz JA.",
+  "doi": "10.1002/hbm.70220",
+  "figures": [
+    "LDSC estimates of the genetic correlation (rG) with 95% confidence intervals between suicide attempt and the volume of nine subcortical brain structures adjusted for intracranial volume. Statistically significant genetic correlations (i.e.,  p  &lt; 0.05/10 [number of brain structures]) are marked with an asterisk (*). ICV = intracranial volume.",
+    "Ideogram highlighting genes associated with brain structures and suicide attempt.",
+    "Regional association plots for suicide attempt (SA) and thalamus volume in the MHC region on chromosome 6."
+  ],
+  "tables": [
+    "Genes in genomic segments jointly influencing brain morphometry and suicide attempt.",
+    "Suicide attempt polygenic risk score associations with intracranial volume and subcortical brain structure phenotypes."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048834.9008806
+}

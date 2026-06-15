@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12322824",
+  "pmid": "40758339",
+  "title": "Influenza With and Without Oseltamivir Treatment and Neuropsychiatric Events Among Children and Adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Antoon JW, Williams DJ, Bruce J, Sekmen M, Zhu Y, Grijalva CG.",
+  "doi": "10.1001/jamaneurol.2025.1995",
+  "figures": [
+    "Flow Diagram",
+    "Forest Plot of Incidence Rate Ratios (IRRs) for Serious Neuropsychiatric Events  Reporting of cells with values &lt;11 was restricted to ensure confidentiality. Incidence is expressed per 100 000 person-weeks.",
+    "Forest Plot of Measures of Association for Serious Neuropsychiatric Events Resulting From Alternate Analyses  Unless otherwise specified, adjusted ratio values represent incidence rate ratios. The alternative exposure definitions varying the specificity and sensitivity of the exposure assignment were (1) alternate treated influenza, defined as influenza diagnosis and oseltamivir supply ≤5 days; (2",
+    "Cumulative Incidence of Serious Neuropsychiatric Events  Shaded areas represent 95% confidence intervals."
+  ],
+  "tables": [
+    "Characteristics of the Cohort According to Exposure Assignment"
+  ],
+  "query": "G-methods time-varying confounding",
+  "fetched_at": 1780025875.3801787
+}

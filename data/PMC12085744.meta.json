@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12085744",
+  "pmid": "40285489",
+  "title": "Twenty-four-hour Skin Temperature Rhythms in Young People With Emerging Mood Disorders: Relationships With Illness Subtypes and Clinical Stage.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shin M, Carpenter JS, Park SH, Janiszewski C, Tonini E, McKenna S, Hindmarsh G, Iorfino F, Nichles A, Zmicerevska N, Scott EM, Smarr BL, Hickie IB, Crouse JJ.",
+  "doi": "10.1177/07487304251328501",
+  "figures": [
+    "Mean (A) and fitted cosinor curves (B) for wrist skin temperature over 24 h in youth with mood disorders ( n  = 306) and healthy controls ( n  = 48). Temperature data were averaged across all available wear days for each participant to create these curves.",
+    "Mean (A) and fitted cosinor curves (B) for circadian wrist skin temperature over 24 h across illness subtypes. Temperature data were averaged across all available wear days for each participant to create these curves.",
+    "Mean (A) and fitted cosinor curves (B) for circadian wrist skin temperature over 24 h across clinical stages. Temperature data were averaged across all available wear days for each participant to create these curves."
+  ],
+  "tables": [
+    "Demographics, skin temperature, and sleep-wake parameters in youth with mood disorders versus healthy controls.",
+    "Skin temperature and sleep-wake parameters across illness subtypes.",
+    "Skin temperature and sleep-wake parameters across illness stages."
+  ],
+  "query": "bipolar disorder youth",
+  "fetched_at": 1779997338.4632142
+}

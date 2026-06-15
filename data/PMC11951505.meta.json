@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11951505",
+  "pmid": "40155887",
+  "title": "Development and evaluation of a machine learning model for osteoporosis risk prediction in Korean women.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Je M, Hwang S, Lee S, Kim Y.",
+  "doi": "10.1186/s12905-025-03669-4",
+  "figures": [
+    "A flow-diagram of the study subjects. KoGES, Korean Genome and Epidemiology Study; SNP, single nucleotide polymorphism",
+    "The Receiver operating characteristic curve of six classification models and two traditional osteoporosis screening tools. LGBM, light gradient boosting machine; MLP, multi-layer perceptron; ORAI, osteoporosis risk assessment instrument; OST, osteoporosis self-assessment tool; SVM, support vector machine; XGBoost, extreme gradient boosting",
+    "Variable importance derived from the XGBoost technique. AS1_AGE, age; AS1_ALBUMIN_TR, albumin; AS1_ALT_TR, alanine aminotransferase; AS1_AMED, alternate Mediterranean diet score; AS1_ARRM, arthritis (osteoarthritis and rheumatoid arthritis); AS1_BDCMSC, muscle mass; AS1_BDFTR, body fat; AS1_BETACARO, beta-carotene intake; AS1_BPSIT1DIA, diastolic blood pressure; AS1_BRCA, breast cancer surgery; AS"
+  ],
+  "tables": [
+    "Independent variables of this study",
+    "Confusion matrix and performance evaluation metrics",
+    "Characteristics of the study subjects",
+    "The results of classification models using machine learning techniques on validation data"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037210.2243433
+}

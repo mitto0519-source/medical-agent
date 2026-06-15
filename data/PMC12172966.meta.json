@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12172966",
+  "pmid": "40435859",
+  "title": "Impact of fear of falling on social engagement among older adults: A nationwide longitudinal panel study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lim JH, Joo MJ, Ko J, Kim DB, Park EC, Ha MJ.",
+  "doi": "10.1016/j.jnha.2025.100589",
+  "figures": [
+    "Results of analysis stratified by social engagement frequency score and score combined with informal social contact.  Reference: no fear of falling and 0 score.  a  adjusted all covariates.  b  adjusted all covariates except for informal social contact. *: p-value &lt; .05 A score was assigned based on the frequency of social engagement per social group category."
+  ],
+  "tables": [
+    "General characteristics of the study population at the first wave (2006).",
+    "Results of the generalized estimating equation analysis of fear of falling and social engagement.",
+    "Results of analysis stratified by 2-year changes of social engagement.",
+    "Results of analysis stratified by 2-year changes of fear of falling.",
+    "Results of subgroup analysis stratified by independent variables."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039708.6918807
+}

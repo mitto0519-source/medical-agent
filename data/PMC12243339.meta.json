@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12243339",
+  "pmid": "40635116",
+  "title": "Intolerance of uncertainty and COVID-19-related post-traumatic stress disorder symptoms in US and Korean college students: serial mediation by COVID-19 concerns and loneliness.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim JG, Yang H, Seo D, Lee G, Park M, McReynolds LS, Amsel LV, Park SH, Hur J, Kim YH, Han S.",
+  "doi": "10.1186/s40359-025-03027-x",
+  "figures": [
+    "Simple mediation analyses of COVID-19 concerns and loneliness in the relation between intolerance of uncertainty and COVID-19-related PTSD symptoms. Two standardized coefficients on the path are US / Korea. Red arrows indicate significant differences in the indirect effect between the US and Korean samples.  **  p  &lt;.01",
+    "Serial mediation analyses of COVID-19 concerns and loneliness in the relation between intolerance of uncertainty and COVID-19-related PTSD symptoms. Two standardized coefficients on the path are US / Korea.  **  p  &lt;.01"
+  ],
+  "tables": [
+    "Means, standard deviations, correlation coefficients of each study variable",
+    "Results of serial mediation model test (US / Korea)"
+  ],
+  "query": "loneliness isolation adolescent mental",
+  "fetched_at": 1779999812.529055
+}

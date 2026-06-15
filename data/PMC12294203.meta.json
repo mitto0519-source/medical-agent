@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12294203",
+  "pmid": "40724687",
+  "title": "Lifestyle Behavior Patterns and Their Association with Active Commuting to School Among Spanish Adolescents: A Cluster Analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Campos-Garzón P, Saucedo-Araujo RG, Rodrigo-Sanjoaquín J, Palma-Leal X, Huertas-Delgado FJ, Chillón P.",
+  "doi": "10.3390/healthcare13141662",
+  "figures": [
+    "Principal component analysis (PCA) correlation circle ( A ) and cluster classification based on PCA ( B ). Notes: In panel ( A ), arrows represent the correlation between the original variables and the principal components (Dim1 and Dim2), where the direction indicates the association with each component and the length reflects the strength of the contribution. Dim1 (23.1%) and Dim2 (13.5%) repres",
+    "Cluster representation based on standardized values (z-scores). Notes: Each line represents the standardized profile (z-scores) of one of the identified clusters across all included behavioral and demographic variables.",
+    "Practical recommendations and future directions based on the cluster analysis results."
+  ],
+  "tables": [
+    "Descriptive characteristics of the participants.",
+    "Descriptive characteristics of adolescents classified into three lifestyle behavior patterns identified through cluster analysis: inactive, active, and unhealthy lifestyles.",
+    "Associations between the mode of commuting to and from school and the different lifestyle behavior patterns established.",
+    ""
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007248.5048518
+}

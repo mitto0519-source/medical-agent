@@ -1,0 +1,16 @@
+{
+  "pmcid": "PMC12190896",
+  "pmid": "40568465",
+  "title": "On the current and future potential of simulations based on directed acyclic graphs.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Breitling LP, Dragomir AD, Duan C, Luta G.",
+  "doi": "10.1016/j.gloepi.2025.100186",
+  "figures": [
+    "Upper panel: Three different causal structures with four confounding variables each (c1 to c4). Lower panel: logistic regression model estimate of the effect of exposure x on outcome y in data simulated based on the different DAGs, either raw (without adjustment) or adjusting for any of the possible minimal sufficient adjustment sets. Simulations were done with  n  = 1,000,000, all nodes binary, O",
+    "Selection bias when both exposure (x) and outcome (y) affect the participation/selection into the study (ps). Binary data were simulated with  n  = 10,000,000 according to the simple DAG presented, with no direct effect of x on y, and with varying effects (odds ratios, OR) of x and y on ps. The simulated sample size was further increased compared to  Fig. 1  to obtain smoother curves and improve t"
+  ],
+  "tables": [],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020990.1660945
+}

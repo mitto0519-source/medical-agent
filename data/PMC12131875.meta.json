@@ -1,0 +1,39 @@
+{
+  "pmcid": "PMC12131875",
+  "pmid": "40464021",
+  "title": "Visualization of the research landscape on the 20 m shuttle run test in the last 15 years: bibliometric analysis with VOSviewer of the most cited studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Becerra-Patiño BA, Paucar Uribe JD, Yáñez-Sepúlveda R, Reyes-Amigo T, Mello JB, Martins J, Gaya AR, López-Gil JF, Olivares-Arancibia J.",
+  "doi": "10.3389/fspor.2025.1568501",
+  "figures": [
+    "Flowchart for the selection of studies according to PRISMA guidelines.",
+    "Evolution of the number of annual publications.",
+    "Evolution of the number of annual citations.",
+    "Total number of citations for the 26 studies that have received at least 100 citations.",
+    "Citation by documents cited at least 50 times.",
+    "Citation by authors.",
+    "Occurrences by keywords in response to temporality.",
+    "Occurrences by keywords.",
+    "Citation by journals.",
+    "Cocitation by journals.",
+    "References cited.",
+    "Coauthorship by country.",
+    "Citation by countries.",
+    "Coauthorship by organizations."
+  ],
+  "tables": [
+    "Overview of searches with keywords, Boolean terms, and the number of documents by type in the Web of science and pubMed databases.",
+    "Types of published documents.",
+    "Most cited review articles.",
+    "Most cited research articles.",
+    "Number of documents per author taking into account the first author.",
+    "Total number of documents by author.",
+    "Total number of documents published by editorials.",
+    "Areas of knowledge.",
+    "Characteristics of the evaluated sample.",
+    "Characteristics of the athlete sample evaluated with the 20mSRT."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780010817.6332617
+}

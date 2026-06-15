@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11941981",
+  "pmid": "40238440",
+  "title": "Cyberbullying Victimization and Suicide Attempt Among Adolescents: A Cross-National Comparison.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Grimland M, Mori Y, Lesinskiene S, Li L, Ong SH, Praharaj SK, Wiguna T, Zamani Z, Heinonen E, Gilbert S, Brunstein Klomek A, Sourander A, The Eacmhs Study Group.",
+  "doi": "10.3390/ijerph22030385",
+  "figures": [
+    "Association between suicide attempt and bullying victimization by country estimated by GEE models adjusted for age and gender. Both refer to both traditional victimization and cyberbullying victimization.",
+    "Adjusted Odds Ratio of suicide attempt and their 95% confidence intervals by victimization type and emotional score adjusted for country, age, and gender. Colored shadows represent confidence interval for each victimization type. The reference category was no bullying victimization."
+  ],
+  "tables": [
+    "Description of the study sample from the Eurasian Child Mental Health Study.",
+    "Prevalence of reported bullying victimization in the past six months and suicide attempt by country.",
+    "Univariate and multivariate analyses of the association between suicide attempts and bullying victimization."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017472.3904455
+}

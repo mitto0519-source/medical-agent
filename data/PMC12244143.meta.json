@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12244143",
+  "pmid": "40656097",
+  "title": "Biomarkers associated with treatment outcome in young people with depression: A systematic review.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zierotin A, Mondelli V, Zajkowska Z.",
+  "doi": "10.1016/j.nsa.2024.104082",
+  "figures": [
+    "Prisma flow diagram of the study selection process."
+  ],
+  "tables": [
+    "Description of included studies investigating cortisol markers (n = 2).",
+    "Description of included studies examining immune markers (n = 8).",
+    "Description of included studies examining neural markers (n = 16).",
+    "Overview of immune markers discussed in 3 or more studies (n = 4).",
+    "Systematic Assessment of Quality in Observational Research (SAQOR) Quality Assessment ratings of the included studies (n = 25)."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055931.0260782
+}

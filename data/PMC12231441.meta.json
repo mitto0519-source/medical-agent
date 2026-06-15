@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12231441",
+  "pmid": "40549949",
+  "title": "Individual-specific subspace of altered functional connectivity predicts clinical symptoms in Internet gaming disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Li S, Jiang A, Wang M, Ni H, Fu J, Dong G.",
+  "doi": "10.1556/2006.2025.00047",
+  "figures": [
+    "The data analysis procedure used in the current study.  (A) Individuals with internet game disorder and recreational game users were included in this study. (B) Preprocessing of rs-fMRI datasets. (C) Shen's 268-ROI atlas was used to construct the brain network. (D) Time series were extracted from 268 ROIs using rs-fMRI data. (E) The altered functional connections of individuals with internet game ",
+    "The brain networks associated with four common components in the individual-shared subspace.  (A) Common component 1 was linked to the MFN, FPN, LN, VN-I, and VN-II. (B) Common component 2 was associated with the FPN, MN, VN-I, VN-II, and Ce. (C) Common component 3 corresponded to the MFN, DMN, MN, and VAN. (D) Common component 4 was associated with the FPN, DMN, VN-I, VN-II, and BGN",
+    "Relationships between AFC in the individual-specific subspace and clinical symptoms.  (A) FAFC within DMN showed a negative association with BAS-Fun Seeking scores. (B) FAFC within MFN showed negative associations with BAS-Reward Responsiveness scores. (C) FAFC within MFN was negatively associated with BAS-Drive scores. (D) FAFC within FPN exhibited a negative association with BIS scores",
+    "Predicting clinical symptoms using AFC in the individual-specific subspace.  (A) FAFC within the DMN could predict BAS- Fun Seeking scores. (B) FAFC within the MFN could predict BAS-Reward Responsiveness (C) FAFC within the MFN could predict BAS-Drive scores. (D) FAFC within the FPN could predict BIS scores",
+    ""
+  ],
+  "tables": [
+    "Demographic information on the participants"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998044.148053
+}

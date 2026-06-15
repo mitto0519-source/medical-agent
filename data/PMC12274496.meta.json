@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12274496",
+  "pmid": "40681664",
+  "title": "A randomized controlled trial of a digital cognitive behavioral therapy for insomnia for older adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ritterband LM, Shaffer KM, Thorndike FP, Chow PI, Gonder-Frederick L, Ingersoll KS, Cohn WF, Frederick C, MacDonnell K, Glazer JV, Mattos MK, Hilgart MM, Quigg MS, Bashir M, Morin CM.",
+  "doi": "10.1038/s41746-025-01847-0",
+  "figures": [
+    "SHUTi OASIS Trial CONSORT Chart.  *Note: Number of interest forms received (1487) does not include 281 forms received after recruitment was closed, which were included in Glazer et al. (2020).",
+    "Primary sleep outcomes.  *Note: Total participants and raw means (SDs) are shown beneath each time point, followed by within-group effects for each time point from baseline to each postassessment and follow-up.",
+    "Changes in sleep medication.  The first panel is the percentage of medicated nights. The second panel is the percentage of equal to or greater than one medicated night."
+  ],
+  "tables": [
+    "Baseline characteristics",
+    "ISI responders and remitters a",
+    "Secondary outcomes"
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063395.5485444
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12274147",
+  "pmid": "40681955",
+  "title": "Rethinking causal inference for recurring exposures: The incremental propensity score approach with lavaan.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Loh WW, Ren D, Rosseel Y.",
+  "doi": "10.3758/s13428-025-02735-x",
+  "figures": [
+    "Estimates of the naturally occurring propensity scores at     t  =  2     for each exposure group, stratified by the previous exposure     X  1    , in the family violence example. The proportions of those observed with either      X  2   =  0     or      X  2   =  1     across strata defined by     X  1     are stated in brackets on the horizontal axis",
+    "Estimates of the naturally occurring propensity score at     t  =  3     for each exposure group, stratified by the previous exposures     X  1     and     X  2    , in the family violence example.  Note .      X   1  :  2    =   (   X  1   ,   X  2   )     . The proportions of those observed with either      X  3   =  0     or      X  3   =  1     across strata defined by     (   X  1   ,   X  2 ",
+    "Estimates of the incremental propensity score intervention causal estimand (IPSICE) for the outcome at each time point in the family violence example.  Note.  Each  circle  corresponds to an IPSICE estimate, and each  vertical line  corresponds to the 95% confidence interval (CI), for a given value of    δ    on the horizontal axis. A logarithmic horizontal axis was used for the evenly spaced posi",
+    "Estimates of the incremental propensity score intervention causal estimand (IPSICE) for the outcome at each time point in the family violence example, after using correlated exposure and outcome residuals to mimic unmeasured confounding.  Note . Descriptions of each panel are provided as part of Fig.  3  in the main text",
+    "Estimates of the IPSIs     Q  t  δ     at     t  =  1  ,  2  ,  3     in the family violence example.  Note . For a given value of    δ    on the horizontal axis, the estimated average       E    [   Q  t  δ   ]     is denoted by a cross, with each vertical line corresponding to a symmetric 80-percentile interval. A logarithmic horizontal axis was used for the evenly spaced posited values of    δ "
+  ],
+  "tables": [
+    "Observed data for six students in the illustration",
+    "Results of the simulation study comparing estimators of the average causal effects of a recurring exposure on     Y  1     and     Y  2"
+  ],
+  "query": "G-methods time-varying confounding",
+  "fetched_at": 1780025798.5824518
+}

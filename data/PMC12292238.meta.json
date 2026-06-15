@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12292238",
+  "pmid": "40723679",
+  "title": "Inconsistent Bodily Feedback? Interoceptive Sensibility Affects Internet Gaming Disorder in Emerging Adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lv Z, Li C, Zhang J, He J.",
+  "doi": "10.3390/bs15070896",
+  "figures": [
+    "Hypothetical model.",
+    "Serial mediating and moderating effects examined in this study. Path coefficients from interoceptive sensibility, positive outcome expectancy, and flow experience are from the serial mediation model. Path coefficients from refusal self-efficacy are from the moderated mediation model. *  p  &lt; 0.05, **  p  &lt; 0.01, and ***  p  &lt; 0.001.",
+    "The moderating effect of refusal self-efficacy on the association between positive outcome expectancy and IGD.",
+    "The moderating effect of refusal self-efficacy on the association between flow and IGD."
+  ],
+  "tables": [
+    "Descriptive statistics and correlations of the measured variables.",
+    "Bootstrap results for direct and indirect effects.",
+    "Test of moderated mediation.",
+    ""
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779997963.5347514
+}

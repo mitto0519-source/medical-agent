@@ -1,0 +1,39 @@
+{
+  "pmcid": "PMC12124896",
+  "pmid": "40453305",
+  "title": "The Impact of Government Lockdowns on the Mental Health of the General Population: A Systematic Review and Meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Okazaki Y, Tsujimoto Y, Yamada K, Saka N, Ariie T, Taito S, Banno M, Kataoka Y, Watanabe N.",
+  "doi": "10.7759/cureus.83249",
+  "figures": [
+    "PRISMA flow diagram",
+    "Risk of bias assessment using the ROBINS-I for depressive symptom severity",
+    "Risk of bias assessment using the ROBINS-I for suicide",
+    "Government lockdown versus no government lockdown during the COVID-19 pandemic: depressive symptom severity  We pooled the standardized mean difference (SMD) in eight studies. The study by Cohen et al. (2021) [ 54 ] was not included in the meta-analysis because the SMD could not be estimated due to zero scores in both the intervention and control groups.",
+    "Sensitivity analysis. Government lockdown versus no government lockdown during the COVID-19 pandemic: depressive symptom severity",
+    "Risk of bias assessment using the ROBINS-I for anxiety symptom severity",
+    "Risk of bias assessment using the ROBINS-I for post-traumatic stress disorder symptom severity",
+    "Risk of bias assessment using the ROBINS-I for insomnia symptom severity",
+    "Risk of bias assessment using the ROBINS-I for substance use",
+    "Government lockdown versus no government lockdown during the COVID-19 pandemic: important outcomes  (A) Anxiety symptom severity. (B) Post-traumatic stress disorder symptom severity. (C) Insomnia symptom severity. (D) Substance use."
+  ],
+  "tables": [
+    "Characteristics of the included studies  *We classified levels of country income according to the World Bank’s 2020 classification.",
+    "Summary of the findings table: impact of government lockdown versus no government lockdown on mental health during the COVID-19 outbreak  Patient or population: the general population during the COVID-19 pandemic. Setting: COVID-19 outbreak. Intervention: government lockdown. Comparison: no government lockdown.  *The risk in the intervention group (and its 95% confidence interval) is based on the ",
+    "Investigation of potential sources of heterogeneity for depressive symptom severity using a univariate meta-regression analysis  CI: confidence interval, SMD: standardized mean difference.  *The study by Cohen et al. (2021) [ 54 ] was not included in the meta-regression analysis because the SMD was not estimated.   ** Reference: high-income countries.  ‡Reference: adolescents.",
+    "Preferred Reporting Items for Systematic Review and Meta-Analysis Checklist 2020",
+    "Search strategy",
+    "Characteristics of excluded studies",
+    "Characteristics of ongoing studies",
+    "Detailed characteristics of included studies",
+    "Detailed assessment of the risk of bias for depressive symptom severity",
+    "Detailed assessment of the risk of bias for suicide",
+    "Detailed assessment of the risk of bias for anxiety symptom severity",
+    "Detailed assessment of post-traumatic stress disorder symptom severity",
+    "Detailed assessment of the risk of bias for insomnia symptom severity",
+    "Detailed assessment of the risk of bias for substance use"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048745.4869459
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12326767",
+  "pmid": "40770615",
+  "title": "Association between the number of children and depression in the population aged 50 years and older: a multi-national cross-sectional analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang J, Feng P, Chen X, Wu J, He F.",
+  "doi": "10.1186/s12888-025-07206-3",
+  "figures": [],
+  "tables": [
+    "Basic characteristics of participants",
+    "The association between the number of children and major depression",
+    "Threshold effect analysis results across datasets",
+    "Subgroup analysis of the association between childlessness and depression",
+    "Association between number of children (0, 1–2, &gt; 2) and depression"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039553.1919558
+}

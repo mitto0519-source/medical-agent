@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12293824",
+  "pmid": "40723083",
+  "title": "The Impact of Physical Activity on Suicide Attempt in Children: A Systematic Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Patel M, Branjerdporn G, Woerwag-Mehta S.",
+  "doi": "10.3390/children12070890",
+  "figures": [
+    "PRISMA diagram providing an overview of the number of included studies from identification, abstract and title screening, full-text review, and inclusion."
+  ],
+  "tables": [
+    "Search strategy based on population, intervention, and outcome.",
+    "Inclusion and exclusion criteria for included studies based on the PICO format.",
+    "Demographics (country, age group, sample size), parameters of physical activity, including type, duration per day, number of days, and intensity, and the main results for the included studies (N = 21) examining the relationship between physical activity and suicide attempts.",
+    "The direction of relationship and statistical significance between physical activity and suicide attempts based on intensity, team sport, active school travel, school sport, muscle strengthening, sex and gender, ethnicity, and potential pathological aspect of physical activity."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999637.5913699
+}

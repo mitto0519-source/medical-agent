@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12184402",
+  "pmid": "40489615",
+  "title": "Global health and climate benefits from walking and cycling infrastructure.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Millard-Ball A, Reginald M, Yusuf Y, Bian C.",
+  "doi": "10.1073/pnas.2422334122",
+  "figures": [
+    "Share of kilometers traveled by bicycle ( A)  and on foot ( B ). The top 10% of cities are highlighted in color; other cities in the EIE dataset are shown in gray.",
+    "Distribution of city mode share (kilometers). Countries are ordered by the mean share of kilometers traveled by bicycle ( Left ) and on foot ( Right ). For each country, the box shows the distribution of city-level mode shares, with the vertical lines denoting the median city in each country, and the individual dots marking the outliers. The dark gray circle indicates the country-level mean, with ",
+    "Factors influencing active travel. Each coefficient represents the impact of a one-SD change in each variable on the share of kilometers traveled by cycling ( A ) and walking ( B ). For each city-level variable such as density, the model estimates a separate coefficient for each country. The shaded area shows the distribution of country-level coefficients; for density, for example, the effect on w",
+    "Effects of density vs GDP per capita. For walking trips (purple line), the effects of density are greater in higher-income countries. For cycling (green line), the effect is more muted. Each dot indicates a country-specific coefficient. The shaded areas indicate the 95% CI from the regressions of mode shares against GDP per capita. For clarity, the y axes are truncated to omit outliers.",
+    "Greenhouse gas benefits of bicycle facilities. For each city, we estimate the impacts of increasing bicycle infrastructure to  B =  1, 2…50 km of bicycle facility per 100 km of road. Cities that already exceed that level of  B  are assumed not to change (i.e.,  B  is a minimum level of provision). The shaded area shows the 95% uncertainty interval."
+  ],
+  "tables": [],
+  "query": "active transport school commute",
+  "fetched_at": 1780007269.123421
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC12310045",
+  "pmid": "40737241",
+  "title": "Association between lifestyle-related factors and low back pain: Evidence from a Japanese population-based study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kawabata S, Kurita N, Nikaido T, Tominaga R, Endo Y, Fujita N, Konno SI, Ohtori S.",
+  "doi": "10.1371/journal.pone.0328684",
+  "figures": [
+    "Gender-specific silhouettes for self-image assessment.  Participants were shown nine silhouettes and asked to select the one that best represented their current body shapes. The selected number was used to categorize body shape into three groups: 1–3 as “underweight,” 4–6 as “normal weight,” and 7–9 as “obese”."
+  ],
+  "tables": [
+    "Comparison between participants with and without current LBP.",
+    "Multivariable Logistic Regression Analysis of Risk Factors for Current LBP.",
+    "Comparison Based on current LBP Severity.",
+    "Multivariable Logistic Regression Analysis of Risk Factors for Severe Pain in Current LBP.",
+    "Comparison between participants with and without chronic LBP.",
+    "Multivariable Logistic Regression Analysis of Risk Factors for chronic LBP."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780054099.1841388
+}

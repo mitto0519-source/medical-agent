@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12185402",
+  "pmid": "40556751",
+  "title": "Effects of dupilumab on quality of life in patients with atopic dermatitis: a systematic review and meta-analysis of randomized controlled trials.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sun Y, Liu H, Gao Y, Sang H, Kong Q.",
+  "doi": "10.3389/fphar.2025.1587977",
+  "figures": [
+    "PRISMA flow diagram.",
+    "Forest plot of quality of life-related indicators.  (a)  HRQoL;  (b)  CDLQI or IDQoL;  (c)  DFI;  (d)  EQ-5D."
+  ],
+  "tables": [
+    "Characteristics of included studies."
+  ],
+  "query": "atopic dermatitis depression",
+  "fetched_at": 1780014616.672382
+}

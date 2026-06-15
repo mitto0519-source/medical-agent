@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12166939",
+  "pmid": "40520978",
+  "title": "Clinical Characteristics and Treatment Outcomes of Alcohol Withdrawal Syndrome in Adolescents and Young Adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Unlu H, Yehia A, El-Gayar S, Havanur A, Deceus F, Brown SJ, Umar SB, Croarkin PE, Schneekloth TD, Abulseoud OA.",
+  "doi": "10.1016/j.jaacop.2024.01.012",
+  "figures": [
+    "Histogram Showing the Percentage of Patients at Different Peak Score Groups    Note:   CIWA-Ar = Clinical Institute Withdrawal Assessment of Alcohol Scale,  Revised.",
+    "Association Between Peak Clinical Institute Withdrawal Assessment of Alcohol Scale, Revised (CIWA-Ar) Score and Total Lorazepam Dose Administered in the First 24 Hours of Hospitalization   Note:  (A) All patients; (B) patients with CIWA-Ar score ≥15; and (C) patients with CIWA-Ar score &lt;15."
+  ],
+  "tables": [
+    "Patient Demographics",
+    "Reasons for Hospital Admission in Study Patients",
+    "Comorbid Medical and Psychiatric Conditions of Study Patients",
+    "Hospital Course of Study Patients"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059769.979813
+}

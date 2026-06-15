@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12011847",
+  "pmid": "40264776",
+  "title": "Extracellular vesicles as precision therapeutics for psychiatric conditions: targeting interactions among neuronal, glial, and immune networks.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kawiková I, Špička V, Lai JCK, Askenase PW, Wen L, Kejík Z, Jakubek M, Valeš K, Španiel F.",
+  "doi": "10.3389/fimmu.2025.1454306",
+  "figures": [
+    "Cellular and molecular interactions within the brain form intricate networks involving neuronal, glial, and immune systems. Neurons communicate through synaptic connections and release neurotransmitters, while astrocytes and microglia modulate synaptic activity, maintain homeostasis, and respond to injury. Peripheral immune cells interact with glial cells via soluble factors such as cytokines, che",
+    "Traditional view of fluid distribution in the brain highlights two primary compartments: the vascular and CSF systems. Blood circulates through arteries, capillaries, and veins, with the BBC at the capillary level protected by astrocytic end-feet. The CSF is produced by the choroid plexus within the ventricles, circulates through the ventricular system, and flows into the subarachnoid space surrou",
+    "Paradigm shifts in the understanding of brain fluid dynamics highlight the discovery of the paravascular space, where CSF exchanges with interstitial fluid in the parenchyma, forming a glymphatic clearance pathway. This mixing facilitates the removal of metabolic waste from the brain. Additionally, the identification of meningeal lymphatic vessels reveals an alternative drainage route, where a por",
+    "Homeostasis in the brain parenchyma is critical for fundamental functions, e.g. action potential propagation and myelination. It involves close interactions between four networks: the neuronal network (neurons, interneurons, and neurotransmitters at neuronal synapses), the glial network (consisting of astrocytes, microglia, oligodendrocytes and ependymal cells), the body’s immune cells that may in",
+    "Intranasal administration of EVs enables their transport through the trigeminal and olfactory pathways, and partially also through the nasal mucosa into systemic circulation, reaching the BBB, and delivering therapeutic cargo to the central nervous system. Created in BioRender. Kawikova, I (2024).  https://BioRender.com/s33f934 ."
+  ],
+  "tables": [
+    "Summary of advantages and disadvantages of different types of EVs.",
+    "EV-based clinical trials addressing conditions unrelated to CNS.",
+    "EVs-based therapies for CNS conditions."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057398.8936486
+}

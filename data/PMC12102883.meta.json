@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12102883",
+  "pmid": "40413400",
+  "title": "Did the periodic intensification of routine immunisation strategy (Intensified mission Indradhanush) reduce the demand for pediatric antibiotic formulations in India?",
+  "year": 2025,
+  "journal": "",
+  "authors": "Farooqui HH, Karan A, Mehta A, Babu GR, van Schayck OCP.",
+  "doi": "10.1186/s12879-025-11082-3",
+  "figures": [
+    "Private-sector monthly antibiotic sales across antibiotic class, before and after Intensified Mission Indradhanush implementation, January 2015–December 2019. Note: The vertical line on the x-axis represents the Intensified Mission Indradhanush introduction",
+    "Poisson segmented regression models of the impact of Intensified Mission Indradhanush on private-sector antibiotic sales in India"
+  ],
+  "tables": [
+    "Poisson segmented regression models of the impact of intensified mission Indradhanush on private-sector antibiotic utilisation in India",
+    "Poisson segmented regression models of the impact of intensified mission Indradhanush on private-sector antibiotic utilisation across Indian States"
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032187.954739
+}

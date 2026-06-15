@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12125180",
+  "pmid": "40447870",
+  "title": "No significant association between self-reported physical activity and brain volumes in women and men from five European cohorts.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Demnitz N, Baaré WFC, Binnewies J, Brandmaier AM, Fjell AM, Gates AT, Kievit R, Kjaer M, Madsen KS, Nyberg L, Pudas S, Siebner HR, Suri S, Sørensen Ø, Walhovd KB, Ebmeier KP, Boraxbekk CJ.",
+  "doi": "10.1038/s41598-025-98601-z",
+  "figures": [
+    "For each brain ROI, a random effects meta-analysis was conducted to pool the associations between physical activity and grey matter volumes across cohorts, including age, sex and ICV as covariates in the model.",
+    "A scatterplot to illustrate the association between physical activity and total grey matter volume (GMV), with one linear model per cohort, using z-scores.",
+    "For each brain ROI, a random effects meta-analysis was conducted. Each forest plot illustrates the cohort-specific and pooled beta values for the sex        physical activity interaction for one of the structural brain outcomes, including age, sex, ICV and physical activity effects as covariates in the model.",
+    "Heatmap illustrating correlation coefficients from the associations between measures of physical function, physical activity and estimated physical fitness in the LISA cohort (n = 401).  eCRF  estimated cardiorespiratory fitness."
+  ],
+  "tables": [
+    "Characteristics of each cohort (mean ± SD)."
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991644.4705791
+}

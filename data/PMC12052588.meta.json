@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12052588",
+  "pmid": "40336824",
+  "title": "Steatotic liver disease is a marker of multimorbidity, not underlying cirrhosis, in older adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Oduwole O, Ding C, Bitar N, Nair D, Salter S, Silverman M, Allen R, Ng Fat L, Tsochatzis E, Bell S, Mehta G, Britton A.",
+  "doi": "10.1038/s44355-025-00024-0",
+  "figures": [
+    "Participant flow chart.  Participant flow chart.",
+    "Association of risk factors and adverse health conditions with controlled attenuation parameter (CAP).  Association of risk factors and adverse health conditions with controlled attenuation parameter (CAP) in analysed participants ( n  = 983). The β coefficients from univariate regression indicated the change in CAP (dB/m) for a one-SD increase in continuous variables, one additional limitation in",
+    "Association of risk factors and adverse health conditions with liver stiffness.  Association of risk factors and adverse health conditions with liver stiffness by transient elastography in analysed participants ( n  = 974). When multiplied by 100, the β coefficients from univariate regression indicate the percentage difference in liver stiffness (kPa) for a one-SD increase in continuous variables,"
+  ],
+  "tables": [
+    "Participant characteristics",
+    "Characteristics of participants based on the presence of steatotic liver disease (controlled attenuation parameter ≥275 dB/m)",
+    "Characteristics of participants based on the presence of significant fibrosis (F2-F4)"
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991660.7097046
+}

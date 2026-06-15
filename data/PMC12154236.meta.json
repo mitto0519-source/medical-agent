@@ -1,0 +1,38 @@
+{
+  "pmcid": "PMC12154236",
+  "pmid": "40508939",
+  "title": "Effectiveness of a Digital Game-Based Physical Activity Program (AI-FIT) on Health-Related Physical Fitness in Elementary School Children.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park SW, Lim DH, Kim JH, Kim SH, Han YO.",
+  "doi": "10.3390/healthcare13111327",
+  "figures": [
+    "Comparison of body height and body weight between experimental and control groups.",
+    "Pre–post changes in flexibility by gender (experimental group).",
+    "Pre–post changes in flexibility by group.",
+    "Pre–post changes in muscular endurance by group.",
+    "Pre–post changes in muscular endurance by gender (experimental group).",
+    "Pre–post changes in PAPS grade by group.",
+    "Pre–post changes in PAPS grade by gender (experimental group).",
+    "Pre–post changes in cardiorespiratory endurance by group.",
+    "Pre–post changes in cardiorespiratory endurance by gender (experimental group).",
+    "Pre–post changes in explosive power by group.",
+    "Pre–post changes in explosive power by gender (experimental group)."
+  ],
+  "tables": [
+    "General characteristics of the participants.",
+    "Exercise composition by fitness component in the AI-FIT program.",
+    "Pre–post comparison of flexibility changes between the experimental and control groups following participation in the AI-FIT program.",
+    "Pre–post comparison of flexibility between male and female subgroups within the experimental group.",
+    "Pre–post comparison of muscular endurance changes between the experimental and control groups following participation in the AI-FIT program.",
+    "Pre–post comparison of muscular endurance between male and female subgroups within the experimental group.",
+    "Pre–post comparison of overall physical fitness (PAPS grade) between the experimental and control groups following participation in the AI-FIT program.",
+    "Pre–post comparison of overall physical fitness (PAPS grade) between male and female subgroups within the experimental group.",
+    "Pre–post comparison of cardiorespiratory endurance between the experimental and control groups following participation in the AI-FIT program.",
+    "Pre–post comparison of cardiorespiratory endurance between male and female subgroups within the experimental group.",
+    "Pre–post comparison of explosive power between the experimental and control groups following participation in the AI-FIT program.",
+    "Pre–post comparison of explosive power between male and female subgroups within the experimental group."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011378.1313033
+}

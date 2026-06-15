@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12103748",
+  "pmid": "40414835",
+  "title": "Breaking up prolonged sedentary behavior to improve cardiometabolic health (BREAK2): protocol for a dose-finding adaptive randomization trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Diaz KM, Murdock ME, Clark AW, Kumar S, Jerez V, Serafini MA, Xu C, Boudreaux BD, Romero EK, Aguirre J, Seid H, Nandakumar R, Ginsberg H, Shimbo D, Cheung YK.",
+  "doi": "10.1186/s12889-025-22250-0",
+  "figures": [
+    "Overview of study design",
+    "Example of collection time points of study measurements taken over 8-hour intervention visit (sedentary break dose: every 60 min for 1 min)",
+    "Data flow in adaptive randomization process",
+    "Example Scenarios of Minimum Effective Dose. An effective dose (green “+”) is defined as having &gt; 60% cardiometabolic response; blue circles indicate minimum effective doses (MED), and blue lines indicate minimum effective contour (MEC). Panel  A , the MEC is determined by the minimum effective dose (MED) at every 90 min for 7 min. Panel  B , the MEC is determined by three MED"
+  ],
+  "tables": [
+    "Major limitations of prior experimental studies identified in systematic review by Saunders et al. [ 23 ]"
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006442.597644
+}

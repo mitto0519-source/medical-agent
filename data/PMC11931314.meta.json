@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11931314",
+  "pmid": "40129756",
+  "title": "An overview of reviews of breastfeeding barriers and facilitators: Analyzing global research trends and hotspots.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Miranda AR, Barral PE, Scotta AV, Cortez MV, Soria EA.",
+  "doi": "10.1016/j.gloepi.2025.100192",
+  "figures": [
+    "Flow chart of retrieved, screened and included articles.",
+    "Publications by journal sources (A), impact of retrieved reviews (B), and design used (proportion in C, absolute number in D) across years.",
+    "Methodological quality and risk of bias assessment of the retrieved reviews.",
+    "Network visualization map of terms. The node size represents the frequency of term occurrences, with the largest node and label indicating the most frequently used terms. The thickness of the connecting lines represents the frequency of co-occurrence between keywords, with the thickest links representing the most frequent co-occurrences. The different colors represent different clusters of terms. ",
+    "Breastfeeding outcomes assessed over time by the retrieved reviews.",
+    "Themes identified in this overview of reviews regarding breastfeeding facilitators and barriers, mapped onto the Socioecological Model of Health and the Conceptual Model of an Enabling Environment for Breastfeeding."
+  ],
+  "tables": [
+    "Search strategy for PubMed.",
+    "Analysis of the temporal evolution of the methodological quality and risk of bias of the retrieved publications.",
+    "Synthesis of the recommendations for healthcare and research on breastfeeding."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053968.555728
+}

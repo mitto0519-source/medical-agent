@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11978190",
+  "pmid": "40197229",
+  "title": "Maintenance effects of a multilevel workplace intervention to reduce sedentary time: twenty-four-month follow-up of the group randomized clinical trial 'Stand and Move at Work'.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Leonard KS, Larouche M, Mitchell NR, Rydell SA, Toledo MJ, Mullane SL, Hasanaj K, de Brito JN, Buman MP, Pereira MA.",
+  "doi": "10.1186/s12966-025-01731-w",
+  "figures": [
+    "Worksite and participant flow",
+    "Mean workplace sitting time in STAND + and MOVE + study arms at baseline, 12- and 24-months. Note. Circle data points refer to the  STAND  + study arm; Square data points refer to  MOVE  + study arms; Error bars are 95% confidence intervals"
+  ],
+  "tables": [
+    "Demographics of the 24-month sample",
+    "Intervention effects on objectively measured work time and total time activity variables, by study arm in minutes, at 0, 12, and 24 months of the 24 month analytic sample",
+    "Intervention effects on cardiometabolic risk biomarkers of the 24-month analytical sample by study arm"
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006641.3030882
+}

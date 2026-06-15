@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC12178119",
+  "pmid": "40538761",
+  "title": "DNA Methylation in Aging and Alzheimer's Disease.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Cheng R, Shu J, Chen H, Li M, Cheng X, Liu L.",
+  "doi": "10.37819/hb.3.2027",
+  "figures": [
+    "AD progresses through specific brain regions, leading to functional decline and varied DNA methylation changes. The early stages involve hypermethylation of genes like  ANK1  and  MAPT  in memory-related regions such as the entorhinal cortex and hippocampus. In mid-stages, sensory and cognitive regions like the temporal and frontal cortices show mixed methylation patterns, affecting genes such as ",
+    "Relationship between age-related diseases and regulatory factors. Aging increases chronic inflammation, disrupts proteostasis, compromises autophagy, elevates oxidative stress, and decreases mitochondrial function. The interplay among these changes creates a network of cellular stresses that contributes to age-related diseases, including cardiovascular disease, neurodegenerative diseases, Type 2 d"
+  ],
+  "tables": [
+    "Examples of important genes showed DNA methylation changes with age and in Alzheimer's disease.",
+    "Difference of 1 st  and 2 nd  generation DNA methylation clocks."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046432.004749
+}

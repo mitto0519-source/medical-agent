@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12078640",
+  "pmid": "40368938",
+  "title": "A systematic review of AI-driven intelligent tutoring systems (ITS) in K-12 education.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Létourneau A, Deslandes Martineau M, Charland P, Karran JA, Boasen J, Léger PM.",
+  "doi": "10.1038/s41539-025-00320-7",
+  "figures": [
+    "Comparison of studies based on sample size, type of control group, and duration of the study.  Bubble size indicates the sample size. An asterisk indicates studies that included the effect sizes of their results.",
+    "PRISMA flow diagram."
+  ],
+  "tables": [
+    "Included studies",
+    "Domain-specific (Education) keywords scoping results",
+    "Domain-specific (ITSs and AIEd) keywords scoping results",
+    "Final query"
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019282.31875
+}

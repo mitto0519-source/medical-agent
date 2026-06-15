@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12101742",
+  "pmid": "40408537",
+  "title": "Trends in Parkinson's disease medication prescribing patterns in the UK: An interrupted time series analysis (2019-2024).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Orayj K.",
+  "doi": "10.1371/journal.pone.0324999",
+  "figures": [
+    "Impact of American Academy of Neurology (AAN) recommendations on Parkinson’s medication prescriptions in England, Wales, Scotland, and Northern Ireland (July 2019–May 2024).  This figure illustrates monthly prescribing trends of Parkinson’s disease (PD) medications across the four UK countries. A vertical bold line marks the publication of the AAN guidelines (November 2021). Post-guideline changes",
+    "Influence of the American Academy of Neurology (AAN) recommendations on Parkinson’s disease medication prescribing trends across the United Kingdom (July 2019–May 2024).  This figure presents aggregated monthly data on Parkinson’s disease (PD) prescriptions across the UK. The vertical bold line marks the point of AAN guideline publication, distinguishing the pre- and post-guideline periods."
+  ],
+  "tables": [
+    "Parkinson’s disease medications and corresponding BNF codes.",
+    "Comparison of average PD medication prescriptions per 100,000 population across England, Scotland, Wales, and Northern Ireland before and after the AAN recommendation, including 95% confidence intervals.",
+    "Segmented regression analysis of PD medication trends examining the impact of AAN recommendation.",
+    "Segmented regression analysis of PD medication trends with a 6-month lag to assess the impact of AAN recommendation."
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032851.0038698
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC12223187",
+  "pmid": "40603349",
+  "title": "Race-neutral versus race-specific GLI reference equations on spirometry interpretation in the general population.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Choi JY, Rhee CK, Jo YS, Khor YH.",
+  "doi": "10.1038/s41598-025-04653-6",
+  "figures": [
+    "Sankey plot for the differences of medical disability classification derived using the race-specific 2012-GLI and race-neutral 2022-GLI. GLI, Global Lung Function Initiative.",
+    "Longitudinal trajectories of ( a ) FEV1 and ( b ) FVC using the race-specific 2012-GLI and race-neutral 2022-GLI reference equations. GLI, Global Lung Function Initiative; FEV 1 , forced expiratory volume in 1 s; FVC, forced vital capacity; yr, year."
+  ],
+  "tables": [
+    "Baseline characteristics.",
+    "Differential distribution of patients with normal spirometry and obstruction using the race-specific 2012-GLI and race-neutral 2022 GLI reference equations.",
+    "Association of FEV 1  percent-predicted using race-specific 2012-GLI and race-neutral 2022-GLI reference equations and dyspnea.",
+    "Association of FEV 1  percent-predicted using race-specific 2012-GLI and race-neutral 2022-GLI reference equations and chronic bronchitis."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037348.880326
+}

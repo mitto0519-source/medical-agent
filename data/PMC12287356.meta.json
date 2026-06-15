@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC12287356",
+  "pmid": "40702077",
+  "title": "Comparison between long-acting pegylated and daily recombinant human growth hormone for pediatric growth hormone deficiency a systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang J, Guo S, Wang T, Chen Q.",
+  "doi": "10.1038/s41598-025-10613-x",
+  "figures": [
+    "Flowchart of the study selection process.",
+    "Results of quality assessment of randomized controlled trials.",
+    "Meta-analysis results of ∆Ht-SDS for RCTs after 6 months.",
+    "Meta-analysis results of ∆Ht-SDS for cohort studies after 6 months.",
+    "Meta-analysis results of ∆Ht-SDS for cohort studies after 12 months."
+  ],
+  "tables": [
+    "Basic characteristics of the included studies.",
+    "Results of quality assessment of cohort studies.",
+    "Summarized results of rcts.",
+    "Summarized results of randomized controlled trials.",
+    "Summarized results of cohort studies."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012719.9811742
+}

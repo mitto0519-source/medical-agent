@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12340092",
+  "pmid": "40809892",
+  "title": "Gender-specific association of diet with the risk of loss of muscle mass in Korean baby boomers: a prospective population-based cohort analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jang EH, Lee S.",
+  "doi": "10.4162/nrp.2025.19.4.635",
+  "figures": [
+    "Flow diagram for the selection of study subjects.  KoGES, Korean Genome and Epidemiology Study."
+  ],
+  "tables": [
+    "Components and scoring criteria of the K-HEI and the MTD scores",
+    "Baseline characteristics of participants according to gender",
+    "Daily intake of food groups and quality of diet scores analyzed by gender",
+    "Risk of loss of total muscle mass (≥ 5% over 2 yrs) associated with food group intake in men",
+    "Risk of loss of total muscle mass (≥ 5% over 2 yrs) associated with food group intake in women",
+    "Risk of loss of total muscle mass (≥ 5% over 2 yrs) associated with quality of diet score in men",
+    "Risk of total muscle mass loss (≥ 5% over 2 yrs) associated with the diet quality score in women"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036775.813381
+}

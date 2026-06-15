@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12137653",
+  "pmid": "40467551",
+  "title": "Common neural patterns of substance use disorder: a seed-based resting-state functional connectivity meta-analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang X, Zhang H, Shao Y, Li Y, Zhang F, Zhang H.",
+  "doi": "10.1038/s41398-025-03396-2",
+  "figures": [
+    "Flowchart of the literature retrieval and exclusion criteria for articles on SUD in the meta-analysis.  SUD, substance use disorder; ACC, anterior cingulate cortex; PFC, prefrontal cortex; Amy, Amygdaloid; Tha, Thalamus; MRI, magnetic resonance imaging; fMRI, functional MRI.",
+    "Meta-regression analysis showed that the total score of BIS-11 in SUD patients was significantly negatively correlated with decreased rsFC between the striatum and the left MCG/PCG (peak voxel coordinates: 0,16,32; r = −0.9609;  p  = 0.0006).  After FWE correction ( p  &lt; 0.05), the correlation remained significant (voxel: 573; z = −3.472;  p  = 0.002). In the plot, the effect size required to c",
+    "Schematic diagram of reward circuit disorders in patients with SUD.  ( A ) Cortical-striatal-thalamic-cortical (CSTC) circuit; ( B ) Cortical-striatal-HIP/PHG-amygdala-cortical (CSHAC) circuit. Solid black lines indicate increased inter-regional rsFC, while dashed lines indicate decreased inter-regional rsFC. The red arrows represent specific pathway models that help explain common clinical featur"
+  ],
+  "tables": [
+    "Meta-analysis of seed-based abnormal rsFC in SUD patients compared with HCs.",
+    "Meta-analysis of striatum subgroup abnormal rsFC in SUD patients compared with HCs."
+  ],
+  "query": "frontostriatal circuit development",
+  "fetched_at": 1779991470.997969
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC12117307",
+  "pmid": "40299787",
+  "title": "Age, period and cohort trends in hospital admissions for alcohol-related liver disease in Australia, 1993-2020.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Livingston M, Gilmore W, Taylor N, Chikritzhs T, Yuen WS, Howell J, Flores E, Curtis M, Dietze P.",
+  "doi": "10.1111/dar.14063",
+  "figures": [
+    "Alcohol‐related liver disease hospital admissions per 100,000 population, 1993–2020, by sex.",
+    "Alcohol‐related liver disease hospital admissions by age and calendar year, female (a) and male (b).",
+    "Age, period and age, cohort effect estimates from age period cohort (top) and age cohort period (bottom) models of alcoholic liver disease hospital admissions, women. Period reference category = 2006, cohort reference category = 1954.",
+    "Age, period, and age, cohort effect estimates from age period cohort (top) and age cohort period (bottom) models of alcoholic liver disease hospital admissions, men."
+  ],
+  "tables": [
+    "Diagnosis codes included in analyses."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779994934.272025
+}

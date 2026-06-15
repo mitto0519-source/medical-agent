@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC12289211",
+  "pmid": "40695343",
+  "title": "Let's DAG in: how directed acyclic graphs can help behavioural ecology be more transparent.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Borger MJ, Ramesh A.",
+  "doi": "10.1098/rspb.2025.0963",
+  "figures": [
+    "Fundamental causal structures. (a) Total independence. (b) Dependence:  X  causes  Y . (c) Pipe or chain. (d) Descendant. (e) Confounder. (f) Collider.",
+    "Three directed acyclic graphs about the effects of predator density, prey density and foraging efficiency of prey on the survival probability of prey individuals. (a) Causal structure where predator density both directly and indirectly affects foraging efficiency, and directly and indirectly affects the survival probability of prey. (b) Same causal structure but without a direct effect of predatio",
+    "Four directed acyclic graphs showing collider, pipe and confounder variables. (a) A DAG for a study trying to estimate the effect of age on foraging efficiency, where body mass is a collider for this relationship. (b) A DAG for a study trying to estimate the effect of feeding frequency on fledging probability, where chick mass is a pipe variable. (c) A DAG for an experiment trying to study the eff",
+    "Two directed acyclic graphs (DAGs) about the effect of territory quality and number of helpers on the number of surviving offspring. (a) A case where territory quality causes the number of helpers. (b) A case where the number of helpers causes territory quality. Depending on the causal relationship between territory quality and number of helpers, the effect of number of helpers on number of surviv"
+  ],
+  "tables": [],
+  "query": "negative control causal inference",
+  "fetched_at": 1780023313.301892
+}

@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC12247059",
+  "pmid": "40566952",
+  "title": "Cost-effectiveness analysis of depression case finding followed by alerting patients and their GPs among older adults in northern England: results from a regression discontinuity study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao Q, Torgerson DJ, Bell KJ, Adamson JA, Fairhurst CM, Cockayne S, Lister J, Baird K, Ekers D.",
+  "doi": "10.1192/bjo.2025.782",
+  "figures": [
+    "(a) cost-effectiveness plane (base case); (b) cost-effectiveness acceptability curve (base case). QALY, quality-adjusted life year; WTP, willingness to pay; GP, general practitioner.",
+    "(a) cost-effectiveness plane (complete case); (b) cost-effectiveness acceptability curve (complete case). QALY, quality-adjusted life year; WTP, willingness to pay; GP, general practitioner.",
+    "(a) cost-effectiveness plane (societal perspective); (b) cost-effectiveness acceptability curve (societal perspective). QALY, quality-adjusted life year; WTP, willingness to pay; GP, general practitioner.",
+    "(a) cost-effectiveness planes under seven MNAR scenarios; (b) cost-effectiveness acceptability curves under seven MNAR scenarios. MNAR, missing not at random; QALY, quality-adjusted life year; WTP, willingness to pay; GP, general practitioner.",
+    "Pooled cost-effectiveness acceptability curves of subgroup analyses and base-case analysis (NHS and PSS perspective, imputed, controlled for baseline covariates). GDS, Geriatric Depression Scale; NHS, National Health Service; PSS, personal social services; QALY, quality-adjusted life year; WTP, willingness to pay; GP, general practitioner."
+  ],
+  "tables": [
+    "Baseline characteristics by treatment group",
+    "Average EQ-5D-3L utility and total QALYs by treatment group",
+    "Average costs of resource use by treatment group over 6 months",
+    "Comparison of baseline characteristics between participants who scored slightly below and above the GDS cut-off point"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035434.8804042
+}

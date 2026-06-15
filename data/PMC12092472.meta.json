@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC12092472",
+  "pmid": "40392326",
+  "title": "A comprehensive bibliometric analysis of the association between atopic dermatitis and depression (1994-2024).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang Y, Li JX, Wang ZL, Zhu SE, Xie JZ.",
+  "doi": "10.1007/s00403-025-04269-w",
+  "figures": [
+    "The process flow of literature selection and data screening",
+    "The total number of publications per year (1994–2024). ( A ) “Rising Sun” image ( B ) Histogram. Note. The x-axis corresponds to the year of publication and the y-axis to the number of publications",
+    "( A ) Co-occurrence network map of keywords related to AD and depression. An analysis of keyword co-occurrence clusters was performed using VOsviewer software. The minimum number of occurrences for each keyword was set to 7 times, including authors who meet the above conditions. A total of 1321 keywords underwent cleaning, with meaningless words eliminated. After merging synonyms, 48 keywords were",
+    "The clustering network visualization highlights the authors of research on AD and depression. Using VOSviewer software, the authors were visualized, with 3,670 authors having published a total of 729 articles related to AD and depression research. Authors who have published at least 5 articles on AD and depression were included in the collaboration map. The size of the circles is positively correl",
+    "( A ) Co-citation network of journals in AD and depression research. A total of 5,470 articles were cited, with 57 articles being cited more than 90 times. The size of the circles is positively correlated with the number of citations. ( B ) Cooperation network map of co-cited references in AD and depression research",
+    "A cluster network visualization highlighting the collaboration among 1,357 institutions in AD and depression research, based on 729 published articles. Different colors represent distinct clusters, formed based on the co-citation network of documents between institutions. Institutions with strong co-citation relationships are grouped, and a hierarchical clustering diagram is generated to illustrat",
+    "( A ) network map illustrating collaborative relationships between countries/regions in the research on AD and depression. To create the national cooperation map, countries that have published at least 5 articles on AD and microbiota were included. Each peripheral curve segment represents a country, and the thickness of the connection is proportional to the intensity of cooperation between countri"
+  ],
+  "tables": [
+    "Top 10 authors who published the most papers on AD and depression",
+    "The frequently cited publications on AD and depression",
+    "Top 10 cited journals, number of citations, impact factor, and JCR division",
+    "The top 10 institutions contributing to publications of AD and depression",
+    "The top 10 countries publishing research on AD and depression"
+  ],
+  "query": "atopic dermatitis depression",
+  "fetched_at": 1780014160.1705587
+}

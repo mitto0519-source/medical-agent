@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11934365",
+  "pmid": "40122549",
+  "title": "Associations of Chinese diagnosis-related group system with low-value coronary revascularisation: an interrupted time series analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zou K, Su W, Zhang L, Wu H, Meng Z.",
+  "doi": "10.1136/bmjopen-2024-087165",
+  "figures": [
+    "Interrupted time series of low-value coronary revascularisation rates. Time series data with regression lines drawn for before and after C-DRG policy periods (introduction indicated by dotted line at the start of 2018). Scatter plot of low-value coronary revascularisation rates over time. Each point represents the low-value coronary revascularisation rates per quarter, a level change in predicted ",
+    "Interrupted time series of high-value coronary revascularisation rates. Time series data with regression lines drawn for before and after C-DRG policy periods (introduction indicated by dotted line at the start of 2018). Scatter plot of high-value coronary revascularisation rates over time. Each point represents the high-value coronary revascularisation rates per quarter, a level change in predict",
+    ""
+  ],
+  "tables": [
+    "Characteristics of inpatients with CHD before and after the C-DRG reform",
+    "Parameter estimates from interrupted time series analysis for the association between C-DRG policy and low-value or high-value coronary revascularisation services",
+    "Parameter estimates from multivariable logistic regression model for the association between C-DRG policy and low-value or high-value coronary revascularisation services"
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032562.3232133
+}

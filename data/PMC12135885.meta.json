@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC12135885",
+  "pmid": "40465332",
+  "title": "Comprehensive Characterization of Antidepressant Pharmacogenetics: A Systematic Review of Studies in Major Depressive Disorder.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Grant CW, Delaney K, Jackson LE, Bobo J, Hassett LC, Wang L, Weinshilboum RM, Croarkin PE, Gentry MT, Moyer AM, Athreya AP.",
+  "doi": "10.1111/cts.70255",
+  "figures": [
+    "Study selection following Prisma 2020 flow diagram for systematic reviews.",
+    "Treatments studied. N lists the number of studies evaluating each treatment in pharmacogenetic contexts. Figure excludes  N  = 7 studies with non‐pharmacological treatments (transcranial magnetic stimulation (TMS), transcranial direct current stimulation (TDCS), theta‐burst stimulation (TBS), electroconvulsive therapy). MAOI, Monoamine oxidase inhibitor; SNRI, Serotonin‐norepinephrine reuptake inh",
+    "Study duration (weeks). Count represents the final timepoint of evaluation (one per study). This does not reflect all reported outcome time points, as some studies may have reported pharmacogenetic associations at multiple timepoints.",
+    "Data types used in associating genomic variants with antidepressant outcomes. Count represents the number of studies using each respective datatype (light color: No significant association; dark color: Significant association). Significance was defined by the study authors.",
+    "Variant‐outcome associations of top studied variants. Variants studied in the context of outcomes to antidepressant therapies were separated according to whether they were studied in the context of (A) efficacy outcomes or, (B) adverse‐event outcomes. Size of circle represents the number of studies while color intensity represents the proportion of significant associations. Counts are representati"
+  ],
+  "tables": [
+    "Most frequently studied genes in scientific literature.",
+    "Outcomes and top three definitions by frequency.",
+    "Most common genes on pharmacogenomic panels relevant for MDD."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056180.5302057
+}

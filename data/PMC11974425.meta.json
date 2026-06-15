@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11974425",
+  "pmid": "39841152",
+  "title": "Prefrontal cortex responses to game rewards and losses in individuals with Internet Gaming Disorder: Insights from fNIRS during mobile gameplay.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang X, Liu D, Li J, Zheng X, Zhou S, Elhai JD, Montag C, Yang H.",
+  "doi": "10.1556/2006.2024.00076",
+  "figures": [
+    "Experimental procedure and game process\n  (a) Procedure of experiment 1 and experiment 2, participants were in a relatively calm state before engaging in the gaming part, the experimental procedure began by requesting subjects to sit quietly and relax for 3 min. Upon hearing a prompt sound signal, indicated by a “beep,” participants were instructed to pick up their mobile devices and prepare for t",
+    "The analytical pipeline of this study\n  (a) Two project members independently conducted frame-by-frame analysis of the participants' game recordings. Subsequently, a third member cross-checked the time points marked. Inconsistencies in the marked time points (with a total frequency of approximately 5.37% across experiments 1 and 2) were reanalyzed to identify the occurrence of positive or negative",
+    "HbO/HbR responses during positive and negative game events in solo gameplay\n  (a–d) present the HbO/HbR response  t -maps for the IGD and RGU groups during positive and negative events in solo gameplay, respectively. (e) highlights the specific regions of difference, with the dLPFC, FPA, and OFC regions showing significantly stronger HbO responses in the IGD group during positive game events, and ",
+    "HbO/HbR responses during positive and negative game events in multiplayer gaming\n  (a–d) present the HbO/HbR response  t -maps for the IGD and RGU groups during positive and negative events in multiplayer gameplay, respectively.",
+    "Linear regression between HbO/HbR responses and IGDT-10 scores during positive/negative game events in solo/multiplayer gameplay\n  (a) In solo gameplay, during positive game events, the HbO/HbR responses in the dLPFC, vLPFC, and FPA regions were positively correlated with IGDT-10 scores. During negative game events, the negative HbR responses in the dLPFC region were positively correlated with IGD",
+    ""
+  ],
+  "tables": [
+    "Demographic characteristics of the two groups"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998402.3663676
+}

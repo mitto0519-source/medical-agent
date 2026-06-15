@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11917929",
+  "pmid": "40101020",
+  "title": "Cluster-Based Analysis of Lipid Profiles and Inflammation in Association With Cardiovascular Disease Incidence and Mortality: A 17.5-Year Longitudinal Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cho AR, Heo SJ, Han T, Kwon YJ.",
+  "doi": "10.1111/jch.70035",
+  "figures": [
+    "Flow chart of study population.",
+    "Characteristics of the four clusters. Distribution of age, TC, log‐transformed TG, HDL‐C, non‐HDL‐C, and log‐transformed CRP at baseline in the KoGES cohort for each cluster. K‐means clustering was performed. CRP, C‐reactive protein; HDL‐C, high‐density lipoprotein cholesterol; KoGES, Korean Genome and Epidemiology Study; TC, total cholesterol; TG, triglyceride.",
+    "Kaplan–Meier curves of the cumulative rates of new‐onset CVD (A), all‐cause mortality (B), CVD mortality (C), and MACE mortality (D) according to the four clusters. CVD, cardiovascular disease; MACE, major adverse cardiovascular event."
+  ],
+  "tables": [
+    "Comparison of baseline characteristics among clusters.",
+    "Cox proportional regression analysis for incident CVD, all‐cause mortality, CVD mortality, and MACE mortality according to clusters."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037220.557651
+}

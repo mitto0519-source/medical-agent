@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11894353",
+  "pmid": "39993291",
+  "title": "Machine Learning-Based Prediction of Substance Use in Adolescents in Three Independent Worldwide Cohorts: Algorithm Development and Validation Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim S, Kim H, Kim S, Lee H, Hammoodi A, Choi Y, Kim HJ, Smith L, Kim MS, Fond G, Boyer L, Baik SW, Lee H, Park J, Kwon R, Woo S, Yon DK.",
+  "doi": "10.2196/62805",
+  "figures": [
+    "Study population. KYRBS: Korea Youth Risk Behavior Web-Based Survey; Ungdata: Norwegian nationwide Ungdata surveys; YRBS: Youth Risk Behavior Survey.",
+    "Model architecture. The original KYRBS was partitioned into the original data set for model development, with performance assessed using the AUROC score. Selected high-performing models were further validated. The external validations were generated using YRBS and Ungdata. AUROC: area under the receiver operating characteristic curve; KYRBS: Korea Youth Risk Behavior Web-Based Survey; YRBS: Youth ",
+    "The assessment of five different machine learning algorithms using AUROC score and ROC curve for initial model construction with the KYRBS, and external validation with the YRBS and Ungdata. AUROC: area under the receiver operating characteristic curve; KYRBS: Korea Youth Risk Behavior Web-Based Survey; LightGBM: light gradient boosting model; ROC: receiver operating characteristic; XGBoost: extre",
+    "SHAP value of the XGBoost model. SHAP: SHapley Additive exPlanation."
+  ],
+  "tables": [
+    "Demographic characteristics of KYRBS a  from South Korea (2005-2022), YRBS b  from the United States (1998-2022), and Ungdata from Norway (2014-2021).",
+    "Feature importance of the XGBoost model."
+  ],
+  "query": "KYRBS Korea Youth Risk Behavior",
+  "fetched_at": 1779977293.9880586
+}

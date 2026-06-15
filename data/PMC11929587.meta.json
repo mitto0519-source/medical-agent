@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11929587",
+  "pmid": "40125156",
+  "title": "Effectiveness of Atomoxetine and Stimulant Combination in Attention-Deficit/Hyperactivity Disorder (ADHD) Treatment: A Systematic Review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Cheng T, Boileau AJ.",
+  "doi": "10.7759/cureus.79378",
+  "figures": [
+    "PRISMA flowchart of selected studies.  PRISMA: Preferred Reporting Items for Systematic Reviews and Meta-Analyses; CENTRAL: Cochrane Central Register of Controlled Trials; ADHD: attention-deficit/hyperactivity disorder."
+  ],
+  "tables": [
+    "Search strategies and manual filters used for study identification of each database.  MeSH: Medical Subject Heading; CENTRAL: Cochrane Central Register of Controlled Trials.",
+    "Overview of the study and population characteristics.  ADHD: attention-deficit/hyperactivity disorder; ATX: atomoxetine; MPH: methylphenidate; US: United States; OROS-MPH: osmotic-release oral system methylphenidate.",
+    "Summary of findings for efficacy.  ATX: atomoxetine; ADHD: attention-deficit/hyperactivity disorder; CGI-S: Clinical Global Impressions-Severity; MPH: methylphenidate; CMAP: combined ATX and MPH pharmacotherapy; COM: combination therapy.",
+    "Summary of findings for adherence.  MPR: medication possession ratio; ATX: atomoxetine; MPH: methylphenidate; COM: combined exposure; SEP: separate exposure; HR: hazard ratio; 95% CI = 95% confidence interval; CM: child monotherapy; CC: child combination therapy; AM: adult monotherapy; AC: adult combination therapy; ADHD: attention-deficit/hyperactivity disorder; A2A: alpha-2-agonist; LoT: length "
+  ],
+  "query": "stimulant methylphenidate ADHD",
+  "fetched_at": 1780058790.430275
+}
