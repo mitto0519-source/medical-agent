@@ -323,6 +323,29 @@ src/research/research_pipeline.py        — 주제 생성 후 자동 진화
 
 ---
 
+### 규칙 11.5 — Loop Engineering 카탈로그 (★ "프롬프트 짜기" → "루프 짜기" 인지 전환)
+
+> 출처: Addy Osmani *Loop Engineering* / Boris Cherny — "프롬프트 쓰는 사람 자리에서 빠지고 그 일을 해줄 시스템을 설계한다."
+
+**Medical-Agent는 Loop Engineering 6 부품 모두 동등 이상 보유**. 새 자동화·sub-agent·상태 인프라 만들지 마라(중복). 카탈로그는 `src/loops/registry.py:list_loops()`로 조회.
+
+| 부품 | 자산 |
+|---|---|
+| ① Automation (시작) | `runtime/heartbeat.py` 7 jobs + `backlog.py` 6 handlers + `mcp_server.py` BG 스레드 |
+| ② Worktree (격리) | `ResearchProject` checkpoint/branch (events.db) + `working_paper_store` |
+| ③ Skill (인수인계) | `prompts/*.md` (frontmatter 표준) + `CLAUDE.md` + `ARCHITECTURE_SHORT.md` |
+| ④ Connector (도구) | `mcp_server.py` 48+ tools + `agentic_loop.TOOL_SCHEMAS` 18 tools |
+| ⑤ Sub-agent (검사) | `peer_reviewer` + `agent_pool` + `evolution.gate` (★`self_bias_guard`로 writer↔critic 다양성 강제) |
+| 상태 파일 (기억) | `change_log` + `events.db` + `CURRENT_STATE.json` + `ResearchProject` |
+
+**Self-bias 정책**: writer == critic이면 `self_bias_guard.warn_if_self_review` warning. cross-family critic 권장(예: writer=Sonnet/critic=GPT-4o). `_TASK_TIER["critic_review"]="premium"` 으로 라우팅.
+
+**Slash 명령** (ez_home 컴포저): `/loop` (카탈로그/실행) · `/goal <목표>` · `/triage` (4분류 inbox) · `/state` (오늘 어디까지) · `/checkpoint <label>` · `/branch <cp_id> <제목>`.
+
+상세: `LOOP_ENGINEERING_SPEC.md`.
+
+---
+
 ### 규칙 12 — VS Code · Streamlit · MCP 단일 코어 공유 (★ 단순한 챗봇이 아니다)
 
 > **provider(Claude/Gemini/GPT)는 호출자마다 다를 수 있지만, 코어(memory/persona/prompts/events/change_log)는 단일 저장소에서 공유**된다.
