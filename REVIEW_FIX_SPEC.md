@@ -436,6 +436,43 @@ python scripts/test_rag_smoke.py
 
 ---
 
+## FIX-11 ④-bis — 데이터 = 재생성 가능 캐시 (영구 차단, 2026-06-16 추가)
+
+**문제**: FIX-11 filter-repo가 push 차단은 해결했지만 **두 번째 데이터 사고** 유발:
+`git filter-repo --path data/oa_papers --invert-paths` 가 history에 추적되던 path를 워킹트리에서도 hard-reset으로 삭제. 이후 `git gc --prune=now` 가 .git/objects도 영구 정리. 결과: **9,000편+ PMC 본문 .txt가 사라짐**. ChromaDB 47,568 chunks(3,697편 분)는 살아남았으나 나머지 8,928편 인덱싱 불가.
+
+복구: HF Datasets 사본(`cave87/medical-agent-runtime`, 사고 4일 전 백업)에 9,796편 살아있어 즉시 복구 가능. 그러나 **재발 차단**이 핵심.
+
+**근본원인**: 데이터(재생성 가능)와 코드를 같은 트리에 둠. git이 어떤 명령(filter-repo, clean, reset --hard, OneDrive sync 충돌)이든 데이터를 건드릴 수 있는 구조.
+
+**영구 해법 (외부 진단 그대로)**:
+
+1. **데이터플레인 분리** — `oa_papers`, `raw`, `chromadb`는 **HF private Datasets / 객체스토어**가 단일 진실원본. 워킹트리는 *언제든 재생성 가능한 캐시*.
+2. **재fetch 차집합 스크립트** — `oa_bulk_fetcher.py` 부분 차집합 모드: ChromaDB에 든 PMID는 빼고 Europe PMC에서 누락분만 받음.
+3. **컨테이너 부팅 시 자동 복구** — `scripts/restore_oa_papers_from_hf.py` (이미 작성). docker compose up / HF Space 부팅 시 자동 호출 → 워킹트리 비어있어도 즉시 복구.
+4. **정기 push-back** — `scripts/sync_oa_to_hf.py` (이미 작성). 인제스트 후 또는 heartbeat 매일 1회 HF push. idempotent.
+
+**구현 산출**:
+- `scripts/restore_oa_papers_from_hf.py` — HF → data/oa_papers/ 다운로드 (allow_patterns로 선택)
+- `scripts/sync_oa_to_hf.py` — data/oa_papers/ → HF push-back (인제스트 후)
+- `scripts/restore_then_ingest.py` — 복구 + 인제스트 체인 한 줄
+- `src/runtime/heartbeat.py` 신규 job: `data_plane_sync` (매일, idempotent)
+
+**검증**:
+```bash
+# 워킹트리 oa_papers 일부러 삭제 → restore가 복원하나
+rm -rf data/oa_papers/*.txt
+python scripts/restore_oa_papers_from_hf.py
+ls data/oa_papers/PMC*.txt | wc -l  # > 0 이어야 PASS
+# filter-repo 시뮬 → restore_then_ingest 한 줄로 30분 내 풀 복구
+```
+
+**판정**: 워킹트리에서 .txt 일부러 지워도 부팅 자동 복구 + 인제스트 시작 + sync로 cloud truth 갱신 = 데이터 사고 영구 0.
+
+**롤백**: HF Dataset의 commit history (private, 자동 버전 관리) — 옛 상태로 언제든 복원.
+
+---
+
 ## 백로그 (별도 사이클 — 지금 건드리지 말 것)
 
 - **persona/self_model/insights/knowledge_graph per-user 분리**: 현재 전역 단일 파일. "그 사람에게 최적화"가 다중사용자로 가면 필요. 단일사용자 운영이면 보류.
