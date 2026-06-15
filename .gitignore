@@ -27,6 +27,12 @@ data/library/*.db*
 **/*.db
 **/*.db-shm
 **/*.db-wal
+# ★ FIX-11 ④-bis 보강 (2026-06-16): PMC*.txt가 restore 스크립트의 임시 위치
+# (data/ root)에 떨어지면 auto-sync가 가로채는 사고 방지. 모든 위치 차단.
+**/PMC*.txt
+**/PMC*.meta.json
+data/PMC*.txt
+data/PMC*.meta.json
 # 그래도 명시 안전망 (위에 모두 포함되지만 future drift 방지)
 **/*.sav
 **/*.sas7bdat

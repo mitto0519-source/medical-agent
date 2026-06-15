@@ -125,8 +125,15 @@ def sync_cycle():
         # (b) 50MB 사이즈 가드: 단일 파일이 50MB 넘으면 skip + log
         # (c) 데이터 path 명시 차단 (data/raw/, data/oa_papers/, *.sav, *.dta, *.zip)
         BANNED_PATHS = ("data/raw/", "data/oa_papers/", "data/chromadb/",
-                          "data/runtime/", "data/.hf_cache/")
-        BANNED_EXTS = (".sav", ".dta", ".sas7bdat", ".zip")
+                          "data/runtime/", "data/.hf_cache/",
+                          "data/research_states/", "data/library/")
+        BANNED_EXTS = (".sav", ".dta", ".sas7bdat", ".zip",
+                         ".db", ".db-shm", ".db-wal")
+        # ★ FIX-11 ④-bis 보강 (2026-06-16): 임시 위치(data/ root)에 떨어지는 PMC 패턴
+        # restore_oa_papers_from_hf.py가 data/ root에 임시 다운로드 후 oa_papers/로 이동
+        # 그 사이 auto-sync가 가로채는 사고 영구 차단.
+        BANNED_NAME_PREFIXES = ("PMC",)
+        BANNED_NAME_SUFFIXES = (".txt", ".meta.json")
         SIZE_CAP = 50 * 1024 * 1024  # 50MB
         safe_files: list[str] = []
         skipped: list[str] = []
@@ -138,6 +145,12 @@ def sync_cycle():
                 continue
             if any(f.lower().endswith(e) for e in BANNED_EXTS):
                 skipped.append(f"ext:{f}")
+                continue
+            # ★ PMC*.txt / PMC*.meta.json 임시 위치 가드 (어디 있든 차단)
+            fname = f.replace("\\", "/").split("/")[-1]
+            if (any(fname.startswith(p) for p in BANNED_NAME_PREFIXES) and
+                any(fname.endswith(s) for s in BANNED_NAME_SUFFIXES)):
+                skipped.append(f"pmc:{f}")
                 continue
             # size guard
             try:
