@@ -956,8 +956,13 @@ def _render_chat_page(pid: str):
     with _composer_col3:
         st.caption(f"📊 model: **{_model_choices.get(sel,sel).split('—')[0].strip()}**")
 
-    user_msg = st.chat_input("메시지를 입력하세요… (/help 슬래시 명령)",
-                                key=f"chat_input_{pid}")
+    # ★ UX-1: 빈 채팅이면 "연구 아이디어 한 줄" 안내, 진행 중이면 일반 안내
+    _placeholder = (
+        "연구 아이디어 한 줄… (예: 청소년 제로음료와 우울 · /help 슬래시 명령)"
+        if not project.get("messages")
+        else "메시지를 입력하세요… (/help · 'Intro 써줘' · '알아서 해')"
+    )
+    user_msg = st.chat_input(_placeholder, key=f"chat_input_{pid}")
     if not user_msg and initial and not project["messages"]:
         user_msg = initial
         if not project.get("title") or project["title"] == "새 작업":
