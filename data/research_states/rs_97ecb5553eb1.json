@@ -1,0 +1,39 @@
+{
+  "id": "rs_97ecb5553eb1",
+  "owner_email": "t@t.com",
+  "title": "분석 A: UPF×MetALD (MASLD 2023 신정의 KNHANES)",
+  "schema_version": "1.0.0",
+  "rq": {
+    "pico": {
+      "P": "성인 19+",
+      "I": "UPF",
+      "O": "MASLD"
+    }
+  },
+  "dataset": {
+    "name": "KNHANES",
+    "year_range": [
+      2019,
+      2024
+    ],
+    "dataset_version": "HN24_2024.10",
+    "registry_version": "0.1.0"
+  },
+  "variable_selection": {},
+  "analysis_spec": {},
+  "results": {},
+  "manuscript": {
+    "sections": {
+      "Abstract": "Test abstract..."
+    }
+  },
+  "citations": [],
+  "gates": {},
+  "provenance_ids": [],
+  "checkpoint_id": "cp_0fb63e340a2c",
+  "parent_checkpoint": "cp_0fb63e340a2c",
+  "messages": [],
+  "attachments": [],
+  "updated_at": "2026-06-15T23:33:51",
+  "_derived_manuscript_text_len": 28
+}
