@@ -168,20 +168,35 @@ def variable_compatibility_summary() -> dict:
 def load_knhanes_integrated_stata():
     """Load pre-built KNHANES 2013-2024 STATA integrated file (single DataFrame).
 
-    Faster than year-by-year reading when full multi-year analysis is needed.
+    Encoding fallback chain: utf-8 → cp949 → latin-1 → ignore.
+    한국 STATA STRL 인코딩 손상이 흔해서 다단 시도.
     """
     p = stata_integrated_path()
     if p is None:
         _log.warning("KNHANES STATA integrated file not present: %s", _STATA_SUBDIR)
         return None
-    try:
-        import pandas as pd
-        df = pd.read_stata(str(p), convert_categoricals=False)
-        _log.info("KNHANES STATA integrated loaded: %d rows, %d cols", len(df), len(df.columns))
-        return df
-    except Exception as e:
-        _log.error("STATA load fail: %s", e)
-        return None
+    # Try pyreadstat first (best Korean handling), then pandas
+    for enc in ("utf-8", "cp949", "euc-kr", "latin-1"):
+        try:
+            import pyreadstat
+            df, _meta = pyreadstat.read_dta(str(p), encoding=enc)
+            _log.info("KNHANES STATA (pyreadstat %s) loaded: %d rows, %d cols",
+                         enc, len(df), len(df.columns))
+            return df
+        except Exception:
+            continue
+    for enc in ("latin-1",):  # pandas read_stata with explicit encoding
+        try:
+            import pandas as pd
+            df = pd.read_stata(str(p), convert_categoricals=False)
+            _log.info("KNHANES STATA (pandas) loaded: %d rows, %d cols",
+                         len(df), len(df.columns))
+            return df
+        except Exception as e:
+            _log.debug("pandas read_stata fail: %s", e)
+            continue
+    _log.warning("STATA encoding 모두 실패 — 개별 .sav 12 wave 사용 권장")
+    return None
 
 
 __all__ = ["load_knhanes_year", "list_available_years",

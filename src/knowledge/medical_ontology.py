@@ -141,6 +141,34 @@ ONTOLOGY: Dict[str, Dict] = {
                               "직업", "교대근무", "야간근무"],
                 "mesh": "D016273",
             },
+            # 2026-06-15: KNHANES 도메인 패턴 분석용 노출 추가
+            "C_upf_nova": {
+                "label": "Ultra-processed food / NOVA classification",
+                "keywords": ["ultra-processed", "UPF", "NOVA classification",
+                              "nova group 4", "processed food", "초가공식품",
+                              "ultra processed", "ultraprocessed"],
+                "mesh": "D005502",
+            },
+            "C_zero_calorie_beverage": {
+                "label": "Zero-calorie beverage (ZCB)",
+                "keywords": ["zero-calorie beverage", "ZCB", "diet soda",
+                              "non-nutritive sweetener", "artificial sweetener",
+                              "제로칼로리", "제로 음료", "다이어트 음료"],
+                "mesh": "D013405",
+            },
+            "C_dietary_pattern": {
+                "label": "Dietary pattern (Western/Mediterranean/Korean)",
+                "keywords": ["dietary pattern", "western diet", "mediterranean diet",
+                              "korean diet", "DASH", "kimchi", "식이 패턴",
+                              "한식 식단", "지중해식"],
+                "mesh": "D015853",
+            },
+            "C_sleep_duration": {
+                "label": "Sleep duration / quality (continuous)",
+                "keywords": ["sleep duration", "short sleep", "long sleep",
+                              "sleep quality", "수면 시간", "수면 질"],
+                "mesh": "D012891",
+            },
         },
     },
 

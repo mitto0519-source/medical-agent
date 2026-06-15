@@ -113,3 +113,46 @@
 
 50건 ceiling → 패턴화 → `docs/troubleshooting/` 정착 (EstreGenesis 패턴).
 현재 11건 → 안전.
+
+---
+
+## 🔁 Loop Engineering Catalog (2026-06-15 — LOOP_ENGINEERING_SPEC §1)
+
+> Addy Osmani · Boris Cherny — "프롬프트 짜기"에서 "루프 짜기"로. Medical-Agent는 6 부품 모두 동등 이상 보유.
+
+### 등록 루프 12개 (`src/loops/registry.py:list_loops()`)
+
+| 이름 | trigger | purpose |
+|---|---|---|
+| `heartbeat:periodic_learn` | hourly | PubMed 24h trend 자동 수집 |
+| `heartbeat:backlog_drain` | 5min | 파일 인제스트 큐 처리 |
+| `heartbeat:reconcile_state` | daily | CURRENT_STATE.json 갱신 |
+| `backlog:ingest_paper` / `register_dataset` / `rag_reindex` / `style_profile` / `checkpoint` / `quality_eval` | manual | 6 handlers (백로그 처리) |
+| `critique:revise_with_critique` | manual | writer↔critic 분리 (★self_bias_guard 자동) |
+| `evolution:gate` | manual | candidate→골드셋→promote/rollback |
+| `research:autonomous` | manual | autopilot run_full IMRAD |
+
+### Slash 명령
+
+`/loop [name]` · `/goal <목표>` · `/triage` · `/state` · `/checkpoint <label>` · `/branch <cp_id> <제목>` · `/help`
+
+### Sub-agent diversity (self-bias guard)
+
+writer ≠ critic 강제. 같은 family면 cross-family critic 추천. 라우팅:
+- `paper_section` (writer) → Sonnet (standard tier)
+- `critic_review` (검사) → Opus (premium tier) — cross-tier로 self-bias 차단
+- `physician_review`, `stat_review` → premium (의료 보수)
+
+### State view (오늘 어디까지)
+
+`src/loops/state_view.today_view(owner_email)` → ResearchProject 진행도 + 인제스트 % + 골드셋 라벨 진척 + self_model 다음 한 수.
+사이드바 expander로 노출.
+
+### 인지적 항복 방지
+
+- 5턴+ 연속 자동 응답 → 사이드바 노란 배지 "직접 본문 점검 권장"
+- 골드셋 0건 + 10턴 → "라벨링 1순위" 알림
+- self-bias warning 발생 → critic 모델 교체 권장
+- confidence < 0.6 → "검토 필수" 빨간 배지
+
+상세: `LOOP_ENGINEERING_SPEC.md`.
