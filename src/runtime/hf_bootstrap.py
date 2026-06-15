@@ -131,6 +131,8 @@ _PUSH_TARGETS = [
     "data/working_papers",
     "data/profiles",      # per-user StyleProfile
     "data/chromadb",      # conversation_memory (대용량이라 ENABLE_HF_PUSH_CHROMA=1일 때만)
+    "data/oa_papers",     # ★ FIX-11 ④-bis (2026-06-16): PMC*.txt + meta.json — 데이터플레인
+    "data/research_states", # RESEARCH_STATE_SPEC §2 — ResearchProject 영속
 ]
 
 
