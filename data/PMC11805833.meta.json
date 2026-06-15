@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11805833",
+  "pmid": "39920379",
+  "title": "Unveiling the metabolomic profile of growth hormone deficiency children using NMR spectroscopy.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Aggelaki EA, Giannakopoulos A, Georgiopoulou PD, Chasapi SA, Efthymiadou A, Kritikou D, Chrysis D, Spyroulias GA.",
+  "doi": "10.1007/s11306-024-02217-9",
+  "figures": [
+    "Multivariate analysis of 1D  1 H CPMG plasma spectra obtained from children diagnosed with GHD before (yellow rhombus) and during the 3 months of GH replacement (green triangles) as compared with healthy controls (grey squares).  a  2D PLS-DA scores plot indicates that the controls differ from GHD patients regardless of therapy.  b  Rank of the top ten variables identified by the PLS-DA according ",
+    "Univariate statistical analysis ( a–g ). Boxplots displaying the variation of relative concetration for each one of the seven plasma metabolites, which significantly differ between the three groups: healthy controls (grey, “control”), GHD children before the initiation of therapy (yellow, “ghd”) and GHD children after the 3 months of GH replacement (green, “therapy”)",
+    "Multivariate analysis of 1D  1 H CPMG serum spectra obtained from children diagnosed with GHD before (yellow rhombus) and during 3 months of GH replacement (green triangles) as compared with healthy controls (grey squares).  a  2D PLS-DA scores plot indicates that the controls differ from GHD patients regardless of therapy  b  Rank of the top ten variables identified by the PLS-DA according to the",
+    "Univariate statistical analysis ( a–f ). Boxplots displaying the variation of relative concetration for each one of the six serum metabolites, which significantly differ between the three groups: healthy controls (grey, “control”), GHD children before the initiation of therapy (yellow, “ghd”) and GHD children after the 3 months of GH replacement (green, “therapy”)",
+    "Multivariate analysis of 1D  1 H NOESY urine spectra obtained from children diagnosed with GHD before (yellow rhombus) and during 3 months of GH replacement (green triangles) as compared with healthy controls (grey squares).  a  2D PCA scores plot with the first and second principal component  b  2D PLS-DA scores plot indicate that the controls differ from GHD patients regardless of therapy",
+    "2D Scatter plots ( a–e ) with fit lines between different metabolites and IGF-1 (SDS). r: Spearman’s rank correlation coefficient and the corresponding  p -value is shown in each plot.  a–c  Plots refer to serum glutamine, serum glycine and urine hippurate in correlation to IGF-1 (SDS) in GHD group while  d, e  plot shows glutamine and pyruvate changes in GHD group 3 months after initiation of the",
+    "Metabolic pathway analysis map of the GHD NMR plasma ( a ) and serum ( b ) metabolomic data"
+  ],
+  "tables": [
+    "Baseline characteristics of 70 participants",
+    "Results of the univariate statistical analysis from plasma metabolites",
+    "Results of univariate statistical analysis of serum metabolites",
+    "Fold change analysis of the 17 urine metabolic features detected among healthy controls and GHD children before and during 3 months of GH treatment"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012695.3515189
+}

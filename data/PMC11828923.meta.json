@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11828923",
+  "pmid": "39952983",
+  "title": "Genome-wide identification and functional validation of the WW domain containing oxidoreductase gene associated with sleep duration.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim S, Kang SW, Kim SE, Kim HJ, Kim SA, Lee YW, Kim EY, Shin C, Lee HW.",
+  "doi": "10.1038/s41598-024-81158-8",
+  "figures": [
+    "Regional association signals between single-nucleotide variants (SNVs) at the  WWOX  locus on chromosome 16 and self-aware sleep duration. The association was drawn from multivariate linear regression analysis adjusted for age, sex, area, and occupation based on the additive model. A plot shows the most strongly associated SNV, rs16948804 (purple diamond) in meta-analysis, and circles represent th",
+    "Deletion of  Wwox  changed sleep duration without affecting the circadian rhythm in  Drosophila . ( A ) Relative  Wwox  mRNA levels in control ( w   1118  ) and  Wwox  loss-of-function mutant ( Wwox   f04545  ) flies. Values indicate average ± SEM of three independent experiments. Student’s  t -test: * p  &lt; 0.05; ** p  &lt; 0.01; *** p  &lt; 0.001; **** p  &lt; 0.0001. ( B ) Sleep profiles of  "
+  ],
+  "tables": [
+    "Demographics information of the Ansan (cohort 1) and Ansung (cohort 2) cohorts.",
+    "Single-nucleotide variants (SNVs) in  WWOX  most strongly associated with self-aware sleep duration (h) (P-value total  &lt;1.00 × 10 − 5 ).",
+    "Association of sleep parameters with single-nucleotide variants (SNVs) in  WWOX  gene through meta-analysis (pFDR &lt; 0.05)."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037644.0819428
+}

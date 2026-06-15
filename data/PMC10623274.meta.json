@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10623274",
+  "pmid": "37928802",
+  "title": "Incidence and risk factors related to SARS-CoV-2 infection, reinfection, and seroconversion: Analysis of a healthcare workers cohort from a university hospital in Colombia.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Nieto MA, Caballero N, Remolina CI, Moreno S, Vega D, Quintero J.",
+  "doi": "10.1016/j.ijregi.2023.09.003",
+  "figures": [],
+  "tables": [
+    "Baseline characteristics of the COVIDA-FSFB cohort according to patient contact exposure.",
+    "Incidence rate of SARS-CoV-2 infection, reinfection, and seroconversion.",
+    "Multivariate regression analysis for infection during the active surveillance period using Cox Proportional-Hazards model.",
+    "Multivariate regression analysis for seroconversion during the active surveillance period using Cox proportional-hazards model."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007662.6889443
+}

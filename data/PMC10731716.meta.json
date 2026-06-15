@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10731716",
+  "pmid": "38124075",
+  "title": "Role of polygenic risk scores in the association between chronotype and health risk behaviors.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhang Y, Li S, Xie Y, Xiao W, Xu H, Jin Z, Li R, Wan Y, Tao F.",
+  "doi": "10.1186/s12888-023-05337-z",
+  "figures": [],
+  "tables": [
+    "The prevalence of demographic characteristics among chronotype",
+    "Association between chronotype and clustering of HRBs in adolescents",
+    "Association between CLOCK-PRS and clustering of HRBs in adolescent",
+    "Association of CLOCK-PRS and chronotype interactions with clustering of HRB in adolescents"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001298.4366484
+}

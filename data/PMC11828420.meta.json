@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11828420",
+  "pmid": "39951423",
+  "title": "Publication bias in the social sciences since 1959: Application of a regression discontinuity framework.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jerke J, Velicu A, Winter F, Rauhut H.",
+  "doi": "10.1371/journal.pone.0305666",
+  "figures": [
+    "Composition of the  QJE  over time, 1959–2018.  The graph shows the proportional distribution of theoretical and empirical contributions and discussions (e.g. notes, comments, replies) over the observational period. Shown are stacked proportions.",
+    "Sample sizes over time.  Figure on the left shows sample sizes over time. Each dot represents the respective sample size of a single coefficient of our  coefficient sample . The sample size was log-transformed to account for very large sample sizes. The line indicates a locally weighted regression. Figure on the right shows the median sample sizes for each year.",
+    "Distribution of test statistics with coefficient data.  The graphs show the distribution of test statistics for the complete observation period, 1959–2018. In panel (b) the data is weighted by number of coefficients per article. The red lines indicate, in that order, the values 1.64 (10 percent significance level), 1.96 (5 percent significance level) and 2.58 (1 percent significance level).",
+    "Discontinuity plots, 1959–2018.  The graphs show the results of the discontinuity estimation by applying the McCrary algorithm for the 10, 5 and 1 percent significance level for unweighted, left column, and weighted data, right column, respectively. The graphs plot the distribution (grey circles) and the local linear density estimation (emerald line) with the respective 95% confidence band. Standa",
+    "Moving discontinuity plots.  The graphs plot  moving discontinuity  estimates for the 10, 5 and 1 percent significance level for  k  = 15  years  time windows. Each dot is the result of a single discontinuity estimation. The x-axis marks the end point of the respective intervals. For example, the first dot reports the estimate for the interval 1959–1973, the second dot reports the estimate for the"
+  ],
+  "tables": [
+    "Selection procedure to construct the  coefficient data set .",
+    "Discontinuity estimates for the common significance levels, full sample and sub-samples."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035954.134268
+}

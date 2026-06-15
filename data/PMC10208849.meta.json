@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10208849",
+  "pmid": "37165764",
+  "title": "Characteristics of Hearing Loss Among Older Adults in the Korean Genome and Epidemiology Study: A Community-Based Longitudinal Cohort Study With an 8-Year Follow-up.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Oh KH, Cho H, Lee SK, Shin C, Choi J.",
+  "doi": "10.21053/ceo.2022.01557",
+  "figures": [
+    "Flowchart of study participants. KoGES, Korean Genome and Epidemiology Study.",
+    "Changes in air conduction and bone conduction over time. Older age was associated with a greater change in the hearing threshold between times 1 and 2. (A) Change of air conduction in right ear. (B) Change of air conduction in left ear. (C) Change of bone conduction in right ear. (D) Change of bone conduction in left ear. Values are presented as mean (standard deviation)."
+  ],
+  "tables": [
+    "Characteristics of study participants at time 1 (baseline)",
+    "Grades and types of HL at time 1 and time 2",
+    "Changes in HL over time of normal hearing, incidence, continuity, and deterioration of HL (n=1,890)",
+    "Changes in air conduction and bone conduction over time",
+    "Logistic regression analysis: incidence and deterioration of HL"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041682.8593512
+}

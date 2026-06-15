@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10511963",
+  "pmid": "37460205",
+  "title": "Does (re-)entering the labour market at advanced ages protect against cognitive decline? A matching difference-in-differences approach.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kim JH, Muniz-Terrera G, Leist AK.",
+  "doi": "10.1136/jech-2022-220197",
+  "figures": [
+    "Flowchart of a final analytical KLoSA sample This flowchart summarises matching steps and how we arrive at our final sample size. N is the number of individuals, N obs  is the number of observations (period-person), and N match is the number of matched observations. ⇤We require the fourth criterion to match up to three past waves of employment histories and examine up to one wave following the tra",
+    "Flowchart of a final analytical HRS sample This flowchart summarises matching steps and how we arrive at our final sample size. N is the number of individuals, N obs  is the number of observations (period-person), and N match is the number of matched observations. ⇤We require the fifth criterion to match up to three past waves of employment histories and examine up to one wave following the transi",
+    "Estimated effects of entry to and exit from the late-life labour market on cognitive function in KLoSA and the HRS sample The estimation results are obtained after matching according to treatment history and covariate balancing propensity score (CBPS) weighting with covariate histories during the three waves before the treatment. The left panel indicates the results from the Korean sample and the "
+  ],
+  "tables": [
+    "Descriptive statistics of HRS and KLoSA",
+    "Estimated effects of late-life labour transitions on cognitive function"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040318.1338978
+}

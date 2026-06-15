@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10654962",
+  "pmid": "38025462",
+  "title": "The Utah psychotropic oversight program: collaboratively addressing antipsychotic use within youth in foster care without prior authorization.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Monson ET, Shastri S, Chen D, Madden SL, Keeshin BR.",
+  "doi": "10.3389/fpsyt.2023.1271165",
+  "figures": [
+    "Trends in medication prescription rates and required level of care for UPOP youth. Line plots demonstrating various trends in medication and level of care requirements in UPOP youth.  (A)  Represents the percentage rate of antipsychotic prescription across male, female, and all UPOP youth from 2019 and 2022.  (B)  Represents the average count of the maximum concurrent psychotropic prescriptions pe"
+  ],
+  "tables": [
+    "Demographic characteristics of UPOP and non-UPOP fostered youth.",
+    "UPOP_AP vs. UPOP_NAP significant results.",
+    "UPOP_AP that discontinued AP vs. UPOP_AP consistently on AP."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780056947.4800372
+}

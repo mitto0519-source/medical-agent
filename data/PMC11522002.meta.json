@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC11522002",
+  "pmid": "39483142",
+  "title": "Demographics shape public preferences for carbon dioxide removal and solar geoengineering interventions across 30 countries.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Sovacool BK, Evensen D, Baum CM, Fritz L, Low S.",
+  "doi": "10.1038/s43247-024-01800-1",
+  "figures": [
+    "Assessing the impact of climate hazards by groups self-identifying themselves as in poverty.  Source: Hallegatte, Stephane. Shock waves: managing the impacts of climate change on poverty. World Bank Publications, 2016. Note: Bangladesh 1 and 2 refer to separate studies done on the same country.",
+    "Overview of 30 Countries Surveyed on Climate Intervention Technologies.  Note: Gray shaded areas indicate those where we conducted nationally representative surveys of the public, white color indicates no data. Diagram has been modified from Baum et al.  11  .",
+    "Support for climate interventions by gender identified in our survey.  Note: Sample sizes for Fig. 3: SAI (female = 4981, male = 4924), MCB (female = 4990, male = 4925), Space (female = 4984, 4923), Afforest (female = 4954, male = 5012), Soil Carbon (female = 4937, male = 4999), Blue Carbon (female = 4931, male = 4986), DACCS (female = 4918, male = 4967), BECCS (female = 4920, male = 4971), ERW (f",
+    "Support for climate interventions by age category identified in our survey.  Note: Eta 2  values for ANOVAs on each intervention: SAI (.027), MCB (.032), Space (.022), Afforest (.011), Soil Carbon (.005), Blue Carbon (.005), DACCS (.021), BECCS (.013), ERW (.014), Biochar (.012). F statistics for all ten ANOVAs are significant at  p  &lt; 0.001. Sample sizes for Fig. 4: 18–24 years = 4583, 25–34 y",
+    "Support for climate interventions by income identified by our survey.  Note: Support for the technologies was measured on a scale of 1-5: 1=strictly reject, 2=somewhat reject, 3=neither reject nor support, 4=somewhat support, 5=fully support.",
+    "Support for climate interventions by Global South vs Global North identified by our survey.  Note: Support for the technologies was measured on a scale of 1-5: 1=strictly reject, 2=somewhat reject, 3=neither reject nor support, 4=somewhat support, 5=fully support.",
+    "Support for marine cloud brightening by age, gender, and poverty identified in our survey.  * In a three-way ANOVA, poverty (partial eta 2  = 0.02) and youth (partial eta 2  = 0.00) were significant (at  p  &lt; 0.05), but gender, all three two-way interaction effects, and the three-way interaction were non-significant. F statistic for the ANOVA was significant at  p  &lt; 0.001. Sample sizes: You",
+    "Support for blue carbon and marine biomass interventions by age, gender, and poverty identified in our survey.  * In a three-way ANOVA, youth (partial eta 2  = 0.03) and the interaction between poverty and youth (partial eta 2  = 0.00) were significant (at  p  &lt; 0.05), but gender, poverty, the remaining two two-way interaction effects, and the three-way interaction were non-significant. F stati",
+    "Support for Direct Air Capture by age, gender, and poverty identified in our survey.  * In a three-way ANOVA, gender (partial eta 2  = 0.01) and poverty (partial eta 2  = 0.01) were significant (at  p  &lt; 0.05), but youth, all three two-way interaction effects, and the three-way interaction were non-significant. F statistic for the ANOVA was significant at  p  &lt; 0.001. Sample sizes: Youth not",
+    "Support for stratospheric aerosol injection by age, gender, and Global South vs North identified in our survey.  * In a three-way ANOVA, Global South (partial eta 2  = 0.021), youth (partial eta 2  = 0.003), and the interaction between Global South and youth (partial eta 2  = 0.002) were significant (at  p  &lt; 0.05), but gender, the other two two-way interaction effects, and the three-way intera"
+  ],
+  "tables": [
+    "Descriptive statistics from our survey for support for ten climate intervention technologies",
+    "Poverty rates (% below $6.85/day) in study countries and in our sample identified by our survey a"
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050793.813642
+}

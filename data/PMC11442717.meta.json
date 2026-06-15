@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11442717",
+  "pmid": "39103728",
+  "title": "Triglyceride-Glucose Index, Modifiable Lifestyle, and Risk of Colorectal Cancer: A Prospective Analysis of the Korean Genome and Epidemiology Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kityo A, Lee SA.",
+  "doi": "10.1007/s44197-024-00282-w",
+  "figures": [
+    "Illustration of the selection of study participants in the KoGES-HEXA cohort [ 21 ]",
+    "Dose-response associations between TyG index and colorectal cancer in the KoGES-HEXA cohort. The model was fitted using regression splines with three knots at the 5th, 50th, and 95th percentiles of TyG. The red line indicates hazard ratios (HR), and the dotted lines indicate the 95% CI. The model was adjusted for age, sex, educational level, monthly income, smoking, drinking, regular physical exer"
+  ],
+  "tables": [
+    "Baseline characteristics of participants according to fourths of TyG index in the KoGES-HEXA cohort",
+    "Hazard ratios and 95% CI of colorectal cancer risk per unit change in TyG index in the KoGES-HEXA cohort",
+    "Hazard ratios and 95% CI of colorectal cancer risk per unit change in TyG index in the KoGES-HEXA cohort",
+    "Joint associations of TyG index and lifestyle factors with colorectal cancer risk in the KoGES-HEXA cohort"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037042.2232213
+}

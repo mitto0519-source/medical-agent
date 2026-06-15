@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11557910",
+  "pmid": "39532985",
+  "title": "The relationship between grandparental childcare experience and relative handgrip strength among middle-aged and older adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim JI, Jeong I, Yoon S, Kang B.",
+  "doi": "10.1038/s41598-024-79077-9",
+  "figures": [
+    "Distribution of average weekly hours spent caring for grandchildren in the last year.",
+    "Distribution of total weeks spent caring for grandchildren in the last year."
+  ],
+  "tables": [
+    "Characteristics of grandparents by childcare experience.",
+    "The association between the grandparental childcare experience and weakened relative handgrip strength ( N  = 286).",
+    "The association between the intensity of the most recent childcare and weakened relative handgrip strength ( N  = 286)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039876.8668435
+}

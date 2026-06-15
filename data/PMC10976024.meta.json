@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10976024",
+  "pmid": "38543144",
+  "title": "Effect of Acute Ketamine Treatment on Sympathetic Regulation Indexed by Electrodermal Activity in Adolescent Major Depression.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kovacova V, Macejova A, Tonhajzerova I, Visnovcova Z, Ferencova N, Mlyncekova Z, Kukucka T, Farsky I, Nosal S, Ondrejka I.",
+  "doi": "10.3390/ph17030358",
+  "figures": [
+    "Correlation analysis between EDA and depression measures. CDI—Children´s Depression Inventory; SCL—skin conductance level; MADRS—Montgomery–Asberg Depression Rating Scale; NS_SCRs—nonspecific electrodermal responses. The circles represent individual MDD patients.",
+    "Study flow diagram. MDD—major depressive disorder; MADRS—Montgomery–Asberg Depression Rating Scale; CDI—Children’s Depression Inventory; EDA—electrodermal activity; HR—heart rate; BP—blood pressure."
+  ],
+  "tables": [
+    "Characteristics of the studied group.",
+    "Summary descriptive statistics for all evaluated parameters."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056108.9541123
+}

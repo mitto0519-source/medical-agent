@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11109142",
+  "pmid": "38773257",
+  "title": "Stacked neural network for predicting polygenic risk score.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim SB, Kang JH, Cheon M, Kim DJ, Lee BC.",
+  "doi": "10.1038/s41598-024-62513-1",
+  "figures": [
+    "The overall architecture of SNPRS model.",
+    "Nagelkerke R-square and R-square plot comparison for UKBB dataset with single models and stacked one.",
+    "Nagelkerke R-square and R-square plot comparison for UKBB dataset with other models.",
+    "Nagelkerke R-square and R-square plot comparison for KoGES dataset with single models and stacked one.",
+    "Nagelkerke R-square and R-square plot comparison for KoGES dataset with other models.",
+    "Stacked neural network."
+  ],
+  "tables": [
+    "Qualitative traits information.",
+    "Quantitative traits information."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037672.7120774
+}

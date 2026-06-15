@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10749930",
+  "pmid": "38148746",
+  "title": "Trends in antipsychotic use among children and adolescents in Germany: a study using 2011-2020 nationwide outpatient claims data.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Dörks M, Bachmann CJ, Below M, Hoffmann F, Paschke LM, Scholle O.",
+  "doi": "10.3389/fpsyt.2023.1264047",
+  "figures": [
+    "Prevalence of antipsychotic use among children and adolescents from 2011 to 2020 in Germany, overall and by sex.",
+    "Prevalence of antipsychotic use in males  (A)  and females  (B)  in children and adolescents from 2011 to 2020 in Germany, by age group.",
+    "Prevalence of use of risperidone, quetiapine, pipamperone, and aripiprazole from 2011 to 2020 among 15–19-year-old males  (A)  and females  (B) .",
+    "Trends in the prescribing of antipsychotics by physicians’ specialty from 2011 to 2020 among children and adolescents in Germany."
+  ],
+  "tables": [
+    "Outpatient psychiatric diagnoses among adolescent (age 15–19 years) male users of risperidone and female users of quetiapine in 2019."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057025.6928165
+}

@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC11139985",
+  "pmid": "38816361",
+  "title": "The neglected association between schizophrenia and bone fragility: a systematic review and meta-analyses.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Azimi Manavi B, Corney KB, Mohebbi M, Quirk SE, Stuart AL, Pasco JA, Hodge JM, Berk M, Williams LJ.",
+  "doi": "10.1038/s41398-024-02884-1",
+  "figures": [
+    "PRISMA flowchart 1.  Flow diagram for studies included in this review from the first search.",
+    "PRISMA flowchart 2.  Flow diagram for studies included in this review from the second search.",
+    "Forest plot for standardised mean differences in BMD at the lumbar spine in people with schizophrenia.  SMD &lt; 0 suggests that people with schizophrenia have lower BMD as compared to people without schizophrenia. SMD &gt; 0 suggests that people with schizophrenia have higher BMD as compared to people without schizophrenia. SMD = 0 suggests that BMD is the same for both groups.",
+    "Funnel plot (trim and fill).  Publication bias assessment plot with trim and fill for lumbar spine in schizophrenia versus controls.",
+    "Forest plot for standardised mean differences in BMD at the femoral neck in people with schizophrenia.  SMD &lt; 0 suggests that people with schizophrenia have lower BMD as compared to people without schizophrenia. SMD &gt; 0 suggests that people with schizophrenia have higher BMD as compared to people without schizophrenia. SMD = 0 suggests that BMD is the same for both groups.",
+    "Funnel plot (trim and fill).  Publication bias assessment plot with trim and fill for femoral neck in schizophrenia versus controls.",
+    "Forest plot for the odds of fracture in people with schizophrenia.  OR &gt; 1 suggests that people with schizophrenia have higher odds of fracture as compared to people without schizophrenia. OR &lt; 1 suggests that people with schizophrenia have lower odds of fracture as compared to people without schizophrenia. OR = 1 suggest that the odds of fracture are the same for both groups.",
+    "Funnel plot (trim and fill).  Publication bias assessment plot with trim and fill for fracture in schizophrenia versus controls. *There is overlap between some studies."
+  ],
+  "tables": [
+    "Characteristics and summary of the included studies investigating schizophrenia and fracture.",
+    "Characteristics and summary of the included studies investigating schizophrenia and bone quality.",
+    "Characteristics and summary of results of the included studies investigating schizophrenia and bone mineral density.",
+    "Characteristics and summary of the included studies investigating schizophrenia and bone turnover markers."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057185.7849855
+}

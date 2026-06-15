@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10396426",
+  "pmid": "37155837",
+  "title": "Retirement and cardiovascular disease: a longitudinal study in 35 countries.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Sato K, Noguchi H, Inoue K, Kawachi I, Kondo N.",
+  "doi": "10.1093/ije/dyad058",
+  "figures": [
+    "A flowchart of the analytical sample. Obs., observations; SHARE, Survey of Health, Ageing and Retirement in Europe; ELSA, English Longitudinal Study on Ageing; CRELES, Costa Rican Longevity and Healthy Aging Study; MHAS, Mexican Health and Aging Study; HRS, Health and Retirement Study; CHARLS, China Health and Retirement Longitudinal Study; JSTAR, Japanese Study of Aging and Retirement; KLoSA, Kor",
+    "The association of retirement with cardiovascular diseases and risk factors. FE, fixed effects; FEIV, fixed-effects instrumental variable; obs, observations; oecf, coefficient; CI, confidence interval; physic inact, physical inactivity. All models were adjusted for age, age squared, marital status and fixed-effects of individuals, countries and years. The number of observations varied across outco",
+    "Subgroup analysis by sex for the association of retirement with cardiovascular diseases and risk factors. Obs, observations; coef, coefficient; CI, confidence interval; physic inact, physical inactivity. All models were adjusted for age, age squared, marital status and fixed-effects of individuals, countries and years. The number of observations varied across outcomes due to missing values in outc",
+    "Subgroup analysis by education for the association of retirement with cardiovascular diseases and risk factors. Obs, observations; oef, coefficient; CI, confidence interval; physic inact, physical inactivity; low, less than upper secondary education; middle, upper secondary and vocational training; high, tertiary education. All models were adjusted for age, age squared, marital status and fixed-ef",
+    "Subgroup analysis by job type for the association of retirement with cardiovascular diseases and risk factors. Obs, observations; coef, coefficient; CI, confidence interval; physic Iinact, physical inactivity. All models were adjusted for age, age squared, marital status and fixed-effects of individuals, countries and years. The number of observations varied across outcomes due to missing values i"
+  ],
+  "tables": [
+    "Cohort characteristics of the surveys",
+    "Descriptive statistics of observations by labour force status (396 904 observations from 106 927 individuals)"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040741.1444297
+}

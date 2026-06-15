@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11613373",
+  "pmid": "39634908",
+  "title": "Daily versus intermittent iron supplementation among children with iron deficiency anemia: A meta-analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Alblewi SM.",
+  "doi": "10.12669/pjms.40.11.10344",
+  "figures": [
+    "Daily versus weekly iron supplementation (the PRISMA Chart).",
+    "Daily versus weekly iron supplementation in children with iron deficiency anemia (unsupervised).",
+    "Daily versus intermittent iron supplementations (supervised)."
+  ],
+  "tables": [
+    "Randomized trials investigating daily versus intermittent iron supplementation among children with iron deficiency anemia.",
+    "Risk of bias assessment of the included studies according to Cochrane risk of bias of randomized controlled trials."
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004531.871511
+}

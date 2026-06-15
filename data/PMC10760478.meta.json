@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC10760478",
+  "pmid": "38505284",
+  "title": "Introduction to Regression Discontinuity Design.",
+  "year": 2022,
+  "journal": "",
+  "authors": "Sasabuchi Y.",
+  "doi": "10.37737/ace.22001",
+  "figures": [
+    "Relationship between assignment variable and outcome in a regression discontinuity design  When there is an actual effect of the intervention, a discontinuous change (jump) in the value of the outcome is observed when the assignment variable exceeds the threshold. This change in the outcome corresponds to the effect of the intervention, e.g., treatment or policy implementation.",
+    "Assessing the continuity of the assignment variables  The histogram in the left panel shows an assignment variable that is continuous at the threshold, whereas the histogram in the right panel shows sharp change at the threshold, indicating that the assignment variable is not continuous.",
+    "Relationship between assignment variable, intervention, outcome, and confounders in fuzzy RDD  (1) Assignment variable is associated with treatment assignment. As a result, the proportion of treatment differs depending on the assignment variable. (2) Assignment variable does not affect the outcome and affects the outcome only through the treatment. (3) Assignment variable is independent of confoun"
+  ],
+  "tables": [],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034693.539434
+}

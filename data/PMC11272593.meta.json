@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11272593",
+  "pmid": "39072272",
+  "title": "Epigenetic link between Agent Orange exposure and type 2 diabetes in Korean veterans.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Seo S, Kim YA, Lee Y, Kim YJ, Kim BJ, An JH, Jin H, Do AR, Park K, Won S, Seo JH.",
+  "doi": "10.3389/fendo.2024.1375459",
+  "figures": [
+    "Schematic illustration of the flow of this study. AO, Agent Orange; EWAS, epigenome-wide association study; GWAS, genome-wide association study; KoGES, Korean Genome and Epidemiology Study; meQTL, methylation quantitative trait locus; SNP, single nucleotide polymorphism; T2D, type 2 diabetes; VHSMC, Veterans Health Service Medical Centre.",
+    "Volcano plot and Venn diagram showing the significant CpG sites of all the groups studied. The number of significant CpG sites at a significance level of 0.05, with an absolute log 2 (fold-change) &gt; 0.1. Significant CpG sites that met the two criteria were further categorised as hyper/hypo. DM, diabetes mellitus; AO, Agent Orange; T2D, type 2 diabetes; hyper, hypermethylation; hypo, hypomethyla",
+    "Change in the log 2 (fold-change) values of seven CpG sites. The sites were identified as significant in type 2 diabetes versus healthy individuals, and in AO-exposed individuals with type 2 diabetes versus AO-unexposed individuals. AO, Agent Orange; Chr, chromosome; T2D, type 2 diabetes; FC, fold-change."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population of the EWAS study.",
+    "Mendelian randomisation analysis of significant associations between CpGs (mediators) and type 2 diabetes (outcomes)."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037503.4206476
+}

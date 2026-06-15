@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11129656",
+  "pmid": "38803676",
+  "title": "The validity and reliability of the Chinese version of the biological rhythms interview of assessment in neuropsychiatry in the community: a large Chinese college student population.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Huang H, Tian X, Lam BY, Lu W, Li X, He S, Xu X, Zhang R, Wang R, Li D, Gao Y, Chen N, Wu S, Xu G, Lin K.",
+  "doi": "10.3389/fpsyt.2024.1344850",
+  "figures": [
+    "Demographic and characteristics of the two groups.",
+    "Association Between Sleep Domain of C-BRIAN and PSQI Global Score. There was a significantly moderate strength correlation between the sleep domain of the C-BRIAN and the PSQI. C-BRIAN, Chinese Version of the Biological Rhythms Interview of Assessment in Neuropsychiatry; PSQI, Pittsburgh Sleep Quality Index.",
+    "Association Between Activity/Eating Patterns Domain of the C-BRIAN and Somatic and Retarded Activity Factor of the CES-D. Somatic and retarded activity factor of the CES-D comprised items 1,2,5,7,11,13, and 20 from the CES-D. Results indicated that there was a significantly moderate strength correlation between the two. CES-D, Center for Epidemiological Studies Depression Scale.",
+    "Association Between Chronotype Domain of the C-BRIAN and the rMEQ. A weak strength correlation was observed. RMEQ, Reduced Morningness-Eveningness Questionnaire."
+  ],
+  "tables": [
+    "Demographic and characteristics of the two groups.",
+    "Factor loadings and reliability of the C-BRIAN factors."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001192.6023881
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10641288",
+  "pmid": "37964931",
+  "title": "The ability of the geriatric nutritional risk index to predict the risk of heart diseases in Korean adults: a Korean Genome and Epidemiology Study cohort.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Park JY, Bu SY.",
+  "doi": "10.3389/fnut.2023.1276073",
+  "figures": [
+    "Flow diagram for selecting study participants. The requirement of obtaining consents was waived by the Institutional Review Board. KoGES, The Korean Genome and Epidemiology Study; CAD, coronary artery disease; CHF, congestive heart failure.",
+    "Kaplan–Meier curves for events of heart disease according to GNRI. Disease occurrence was negatively associated with GNRI, with a lower diagnostic-free curve for GNRI ≤98. Log-rank test indicated  p  = 0.0009. GNRI: geriatric nutritional risk index."
+  ],
+  "tables": [
+    "Baseline characteristics of all the subjects between GNRI categories.",
+    "Nutrient intake status of study participants.",
+    "Prevalence of GNRI-assessed malnutrition risk according to BMI of participants ( n  = 3,783).",
+    "Relationship between GNRI and variables with multivariate regression analyses.",
+    "The prevalence of heart disease during 15 year-follow-up period.",
+    "Cox regression analyses for heart disease."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041567.727393
+}

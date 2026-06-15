@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11542358",
+  "pmid": "39511522",
+  "title": "Olanzapine for young PEople with aNorexia nervosa (OPEN): results of a feasibility study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Said O, Stringer D, Sengun Filiz E, Mutwalli H, Bektas S, Akkese MN, Kellermann V, Ireland K, Tyrrell-Bunge E, Beishon-Murley D, Khor JWT, Allman L, Barker J, Kotze N, Carter B, Simic M, Sually DS, Bentley J, Young AH, Madden S, Byford S, Landau S, Lawrence V, Treasure J, Schmidt U, Nicholls D, Himmerich H.",
+  "doi": "10.1186/s12888-024-06215-y",
+  "figures": [
+    "CONSORT diagram",
+    "EDE-Q Global score over time in people who adhered to olanzapine. The graph corresponds to a mean decrease of 0.07 EDE-Q Global score (0.04, 0.09 95% CI) per week",
+    "BMI over time in people who adhered to olanzapine. This graph corresponds to a mean increase of 0.08 kg/m 2  (0.06, 0.11 95% CI) per week in those who adhered to olanzapine"
+  ],
+  "tables": [
+    "Main baseline demographics and clinical characteristics for the 20 consented participants",
+    "Completion rates for the main individual measures at each timepoint"
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780056918.2349672
+}

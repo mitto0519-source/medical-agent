@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10143022",
+  "pmid": "37109236",
+  "title": "Association between Sleep Duration and Incident Diabetes Mellitus in Healthy Subjects: A 14-Year Longitudinal Cohort Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Jang JH, Kim W, Moon JS, Roh E, Kang JG, Lee SJ, Ihm SH, Huh JH.",
+  "doi": "10.3390/jcm12082899",
+  "figures": [
+    "Multivariable-adjusted hazard ratios of sleep duration with risk of type 2 diabetes, evaluated by restricted cubic splines from Cox proportional hazards models. The models are adjusted for age, sex, regular exercise, alcohol consumption, smoking status, family history of diabetes, waist circumference, hypertension, hyperlipidemia, triglyceride, fasting plasma glucose, and 2 h post-load glucose.",
+    "Longitudinal changes in glycometabolic variables according to the sleep duration: ( a ) fasting glucose, ( b ) post-load 1 h glucose, ( c ) post-load 2 h glucose, ( d ) HOMA-IR, ( e ) insulinogenic index, ( f ) body mass index."
+  ],
+  "tables": [
+    "Baseline characteristics according to incident diabetes.",
+    "Association of daily sleep duration with the incidence of diabetes.",
+    "DM risk according to the presence of excessive daytime sleepiness (EDS) in patients who sleep less than 10 h per day."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041947.507348
+}

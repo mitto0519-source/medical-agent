@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11331151",
+  "pmid": "39161746",
+  "title": "Ferritin is a potential marker of cardiometabolic risk in adolescents and young adults with sleep-disordered breathing.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Cheng ETW, Au CT, Chan RNC, Chan JWY, Chan NY, Wing YK, Li AM, Lam E, Chan KC.",
+  "doi": "10.1093/sleepadvances/zpae048",
+  "figures": [],
+  "tables": [
+    "Baseline Demographics",
+    "Association Between RCIs/Serum Ferritin and OAHI After Adjusting for Age, Gender, and BMI",
+    "Association Between RCIs/Serum Ferritin and Cardiometabolic Traits Amongst Patients with SDB After Adjusting for Age, Gender, and BMI",
+    "Association Between Serum Ferritin and Cardiometabolic Traits Amongst Patients with SDB After Adjusting for Age, Gender, BMI, LDL, MAP, and OAHI"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002576.1655788
+}

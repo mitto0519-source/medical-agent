@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC10067621",
+  "pmid": "37020908",
+  "title": "A longitudinal study of the effect of individual and socio-cultural factors on students' creativity.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Park HS, Kang S, Kim S.",
+  "doi": "10.3389/fpsyg.2023.1068554",
+  "figures": [
+    "Observed influence of individual and social factors on a student’s creativity (Arrows indicate influential power).",
+    "Final model: a two-level growth model.",
+    "Growth trajectory of creativity of the students from the fifth to ninth grades.",
+    "Growth trajectory of self-regulation and peer attachment."
+  ],
+  "tables": [
+    "Missing pattern.",
+    "Variables constructed and coefficient alpha.",
+    "Descriptive statistics.",
+    "Configural, metric, scalar invariance assumption.",
+    "Growth trajectory.",
+    "Latent class growth analysis (LCGA).",
+    "Unconstrained model.",
+    "Growth over time.",
+    "A model with time-varying predictors only.",
+    "Final model: fixed and random effect.",
+    "The effect of self-regulation, peer attachment, and gender on creativity."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019964.6065912
+}

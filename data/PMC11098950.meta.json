@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11098950",
+  "pmid": "38764806",
+  "title": "Association between changes in cardiovascular health and the risk of multimorbidity: community-based cohort studies in the UK and Finland.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Prugger C, Perier MC, Sabia S, Fayosse A, van Sloten T, Jouven X, Pentti J, Kivimäki M, Empana JP.",
+  "doi": "10.1016/j.lanepe.2024.100922",
+  "figures": [
+    "Cumulative incidence curves for multimorbidity status by category of change in the number of ideal LS7 metrics . Part A shows incidence by 5-year change from baseline to 1991–1993 in the Whitehall II study population. Part B shows incidence by 4-year change from baseline to second evaluation in the Finnish Public Sector study population. Baseline examination took place in 1985–88 and re-assessment",
+    "Hazard ratios and 95% confidence intervals for associations of change in ideal LS7 metrics with multimorbidity status during follow-up . Part A shows associations of 5-year change from baseline to 1991–1993 in the Whitehall II study population. Part B shows associations of 4-year change from baseline to re-assessment in the Finnish Public Sector study population. Baseline examination took place in"
+  ],
+  "tables": [
+    "Baseline characteristics of the Whitehall II study and Finnish Public Sector study populations by categories of number of ideal LS7 metrics.",
+    "Associations of ideal LS7 metrics at baseline with multimorbidity status during follow-up in the Whitehall II study and Finnish Public Sector study populations.",
+    "Associations of baseline and 10-year change in LE8 score and of baseline and 4-year change in ideal LS7 +  metrics with multimorbidity status during follow-up, respectively in the Whitehall II study and Finnish Public Sector study population."
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991676.0163114
+}

@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11390437",
+  "pmid": "39267702",
+  "title": "Exploring core symptoms of alcohol withdrawal syndrome in alcohol use disorder patients: a network analysis approach.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Shen G, Chen YH, Wu Y, Jiahui H, Fang J, Jiayi T, Yimin K, Wang W, Liu Y, Wang F, Chen L.",
+  "doi": "10.3389/fpsyt.2024.1320248",
+  "figures": [
+    "Network of AWS with FR algorithms, showing network edges and clustering structure. The thickness of the edge reflects the magnitude of the correlation, green edges represent positive correlations and red edges indicate negative correlations.",
+    "Network of AWS with MDS algorithms, showing the proximity between variables as the distance between the point in a low-dimensional space. The thickness of the edge reflects the magnitude of the correlation, green edges represent positive correlations and red edges indicate negative correlations.",
+    "Centrality indices of network structure of AWS. The figure shows centrality measures (i.e., strength, betweenness, closeness and expected influence) of all symptoms within the network (z-scores). The full names of the abbreviations can be found in  \n Figure 1 \n . PA, Physical Aggression; VA, Verbal Aggression; Ang, Anger; Hos, Hostility; Npl, Non-planning Impulsivity; Mtr, Motor Impulsivity; Cgn, ",
+    "AWS network centrality index and clustering coefficient, the horizontal and vertical lines indicate the median of the clustering coefficient and centrality index respectively. PA, Physical Aggression; VA, Verbal Aggression; Ang, Anger; Hos, Hostility; Npl, Non-planning Impulsivity; Mtr, Motor Impulsivity; Cgn, Cognitive Impulsivity; Anx, Anxiety; Dep, Depression; SC, Self-control.",
+    "Bridge centrality indexes of network structure of AWS.  (A)  the bridge centrality indexes between aggression and mood disorder.  (B)  the bridge centrality indexes between aggression and impulsivity. PA, Physical Aggression; VA, Verbal Aggression; Ang, Anger; Hos, Hostility; Npl, Non-planning Impulsivity; Mtr, Motor Impulsivity; Cgn, Cognitive Impulsivity; Anx, Anxiety; Dep, depression; SC, Self-"
+  ],
+  "tables": [
+    "Demographic characteristics of participants ( N  = 553).",
+    "Correlations of demographic factor and alcohol withdrawal syndrome.",
+    "Edge weight matrix for AWS network.",
+    "Centrality index and clustering coefficient of nodes in the withdrawal symptoms network."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060634.9542677
+}

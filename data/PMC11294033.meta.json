@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11294033",
+  "pmid": "38632706",
+  "title": "Adiponectin-to-leptin ratio and incident chronic kidney disease: Sex and body composition-dependent association.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park HS, Park SH, Seong Y, Kim HJ, Choi HY, Rhee Y, Park HC, Jhee JH.",
+  "doi": "10.1002/jcsm.13475",
+  "figures": [
+    "Incidence rates for chronic kidney disease (CKD). A/L ratio, adiponectin‐to‐leptin ratio.",
+    "Kaplan–Meier curves for incident chronic kidney disease according to the quartile of the adiponectin‐to‐leptin ratio in men (A) and women (B)."
+  ],
+  "tables": [
+    "Baseline characteristics of study participants",
+    "Association between adiponectin‐to‐leptin ratio quartiles and the risk of incident chronic kidney disease",
+    "Association between adiponectin‐to‐leptin ratio and risk of incident chronic kidney disease in subgroups by body mass index categories",
+    "Association between adiponectin‐to‐leptin ratio and risk of incident chronic kidney disease in subgroups by the presence of sarcopenia"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041621.9472163
+}

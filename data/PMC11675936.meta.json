@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11675936",
+  "pmid": "39766774",
+  "title": "Effects of Gene-Lifestyle Interaction on Obesity Among Students.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Egorova ES, Aseyan KK, Bikbova ER, Zhilina AE, Valeeva EV, Ahmetov II.",
+  "doi": "10.3390/genes15121506",
+  "figures": [
+    "The mean BMI among individuals with different genotypes of the  ADCY3  rs11676272, FTO  rs1421085 , and  SLC22A3  rs9364554 polymorphisms. Protective alleles:  ADCY3  A,  FTO  T, and  SLC22A3  C. Risk alleles:  ADCY3  G,  FTO  C, and  SLC22A3  T. *  p  &lt; 0.05.",
+    "Coefficients of determination (r 2 ) for lifestyle factors associated with BMI: blue indicates positive relationships, while orange indicates negative relationships.",
+    "Relationship between the number of lifestyle risk factors and BMI.  p  &lt; 0.0001 for the linear trend.",
+    "Distribution of BMI by quartile of weighted gene–lifestyle interaction score."
+  ],
+  "tables": [
+    "Anthropometric characteristics of participants."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001693.2879882
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11707018",
+  "pmid": "39775165",
+  "title": "Prediction of late-onset depression in the elderly Korean population using machine learning algorithms.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Park JW, Ko CW, Lee DY, Kim JC.",
+  "doi": "10.1038/s41598-025-85157-1",
+  "figures": [
+    "Schematic diagram of study population and system framework. These study panels include a variety of data on demographics, family composition, health information, medical history, and socio-economic status. Depressive symptoms were evaluated based on CES-D10 scores. Four latent classes of depression trajectories were identified. The class of preexisting depression was excluded to focus on predictin",
+    "Prediction of the depression trajectories in latent classes. Statistically analysis of the growth factors in the quadratic growth model classifies depression trajectories into 4 latent classes.",
+    "ROC curves of 12 machine learning models for predicting LOD. Different colors represent the different machine learning classifiers used in this study.",
+    "Confusion matrices of representative ML models in predicting RF ( a ) and GBC ( b ) models exhibited superior performances based on their AUC scores. In the confusion matrices, columns represent the actual values (identified latent classes) while rows represent the predicted values calculated by the corresponding MLs."
+  ],
+  "tables": [
+    "Trajectories of individual changes in depression.",
+    "Fit statistics according to the number of latent classes of individual changes in depression.",
+    "Evaluation of model performance in predicting LOD.",
+    "The feature importance rankings derived from machine learning algorithms."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039764.1241722
+}

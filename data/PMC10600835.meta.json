@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10600835",
+  "pmid": "37901029",
+  "title": "Effects of different doses of long-acting growth hormone in treating children with growth hormone deficiency.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Xia W, Wang T, Pan JY.",
+  "doi": "10.12998/wjcc.v11.i28.6715",
+  "figures": [
+    "Evolution of growth velocity and height standard deviation score following polyethylene glycol recombinant human growth hormone treatment.  A: Depicts the alterations in growth velocity among growth hormone deficiency patients after 1 and 2 years of polyethylene glycol recombinant human growth hormone (PEG-rhGH) treatment at varying doses; B: Illustrates the modifications in height standard deviat",
+    "Alterations in Physiological Markers Following polyethylene glycol recombinant human growth hormone Treatment.  A: Illustrates the variations in serum insulin-like growth factor-1 concentrations one-year post-treatment with polyethylene glycol recombinant human growth hormone (PEG-rhGH) at different doses; B: Depicts changes in serum insulin-like growth factor-binding protein-3 levels one year aft"
+  ],
+  "tables": [
+    "Subject demographics and baseline characteristics (Efficacy set)",
+    "Comparison of annual growth rate (cm/year) and height standard deviation score in high-dose and low-dose groups (mean ± SD)",
+    "Comparison of insulin-like growth factor-1 and insulin-like growth factor-binding protein-3 in high-dose and low-dose groups (mean ± SD)",
+    "Comparison of bone age in high-low dose group (mean ± SD)",
+    "Comparison of the one-year annual growth velocity and improvement in height standard deviation score between the high-dose and low-dose group",
+    "Comparison of side effects between the high-dose and low-dose group"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013348.944782
+}

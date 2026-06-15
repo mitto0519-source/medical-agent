@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11333560",
+  "pmid": "38722489",
+  "title": "Effects of Modifiable Activity-Related Health Behaviors on the Sleep-Pain Relationship in Adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Morales N, Van Dyk TR.",
+  "doi": "10.1007/s10880-024-10017-5",
+  "figures": [],
+  "tables": [
+    "Demographics of participating adolescents ( N  = 105)",
+    "Descriptive statistics for primary variables",
+    "Bivariate correlations between primary variables",
+    "Results of a hierarchical linear regression predicting pain from average insomnia, physical activity, screen time, and their interactions"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002589.1677349
+}

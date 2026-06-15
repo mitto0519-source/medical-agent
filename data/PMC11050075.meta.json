@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11050075",
+  "pmid": "38674096",
+  "title": "Mechanisms Involved in the Link between Depression, Antidepressant Treatment, and Associated Weight Change.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kukucka T, Ferencova N, Visnovcova Z, Ondrejka I, Hrtanek I, Kovacova V, Macejova A, Mlyncekova Z, Tonhajzerova I.",
+  "doi": "10.3390/ijms25084511",
+  "figures": [
+    "An overview of appetite regulation circuits and relevant regulatory inputs. The homeostatic system operates mostly on a humoral basis, via a relative balance of orexigenic and anorexigenic peptides, with influence on the rate of dopaminergic neurotransmission. Dysregulation of the homeostatic system leads to an increased risk of metabolic syndrome. The hedonic system operates mostly via the mesoli",
+    "Several pathophysiological mechanisms link stress, depression, and metabolic syndrome. BDNF—brain-derived neurotrophic factor, VTA—ventral tegmental area, NAC—nucleus accumbens, MSNs—medium spiny neurons, AD treatment—antidepressant treatment."
+  ],
+  "tables": [
+    "Common antidepressants and their effect on weight. +/- indicate a stimulating or inhibitory effect on the relevant target and o indicates a negligible effect on weight. Notably, the biphasic effect of certain SSRIs facilitated 5-HT 2C  downregulation. Abbreviations: SSRI—selective serotonin reuptake inhibitors, SNRI—serotonin and noradrenaline reuptake inhibitors, NDRI—noradrenaline and dopamine r"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056575.2319157
+}

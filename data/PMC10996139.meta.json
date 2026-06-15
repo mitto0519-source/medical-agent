@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC10996139",
+  "pmid": "38575928",
+  "title": "Prevalence, determinants, intervention strategies and current gaps in addressing childhood malnutrition in Vietnam: a systematic review.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Mondon C, Tan PY, Chan CL, Tran TN, Gong YY.",
+  "doi": "10.1186/s12889-024-18419-8",
+  "figures": [
+    "PRISMA flow diagram of identification and selection of studies",
+    "Quality rating of included studies using the Quality Criteria Checklist from Academy of Nutrition and Dietetics",
+    "Number of studies reported by year of publication and types of malnutrition investigated",
+    "The prevalence (%) of wasting, stunting, underweight and overweight in Vietnamese children aged &lt; 5 years old, from 1992 to 2019. Source: UNICEF/WHO/World Bank 2022"
+  ],
+  "tables": [
+    "PI(E)CO criteria for inclusion and exclusion of studies",
+    "Number of studies reported by age group and types of malnutrition investigated",
+    "Findings on the prevalence of malnutrition (undernutrition, overnutrition and micronutrient deficiencies) in Vietnamese children aged 0–18 years old",
+    "Findings on the determinants associated with different forms of malnutrition in Vietnamese children aged 0–18 years old",
+    "Number of studies reporting shared determinants of different forms of malnutrition in Vietnamese children aged 0–18 years old",
+    "Findings on the interventions and its impacts on addressing different forms of malnutrition in Vietnamese children aged 0–18 years old"
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053155.689234
+}

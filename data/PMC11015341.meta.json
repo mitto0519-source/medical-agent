@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11015341",
+  "pmid": "38618207",
+  "title": "Effect of antipsychotics and mood stabilisers on metabolism in bipolar disorder: a network meta-analysis of randomised-controlled trials.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kong L, Wang H, Yan N, Xu C, Chen Y, Zeng Y, Guo X, Lu J, Hu S.",
+  "doi": "10.1016/j.eclinm.2024.102581",
+  "figures": [
+    "Flow diagram of the network meta-analysis . Published studies before February 15th, 2024 were searched using standardised strategy. In total, 5421 records were identified from the databases. After duplication movement and detailed screening according to the inclusion and exclusion criteria, 41 publications were eventually included in the network meta-analysis. Abbreviation: RCT: randomised-control",
+    "Network maps (before sensitivity checks) and league tables (after sensitivity checks) presenting head-to-head comparisons of fasting serum glucose, TC, TG, and body weight . Mean difference and 95% CI of every individual intervention compared with every other are presented in this figure. The network maps present all interventions with direct comparisons. The size of the blue dots is in accord wit"
+  ],
+  "tables": [
+    "Mean SUCRA and mean ranking based on data of fasting serum glucose, TC, TG, LDL, and body weight (presented as mean and 95% CI).",
+    "Highlighted information on the general and subgroup analyses."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057504.5164201
+}

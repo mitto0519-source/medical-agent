@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11677051",
+  "pmid": "39770912",
+  "title": "Associations of Ultra-Processed Food Intake with the Incidence of Cardiometabolic and Mental Health Outcomes Go Beyond Specific Subgroups-The Brazilian Longitudinal Study of Adult Health.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Canhada SL, Vigo Á, Giatti L, Fonseca MJ, Lopes LJ, Cardoso LO, Monteiro CA, Schmidt MI, Duncan BB.",
+  "doi": "10.3390/nu16244291",
+  "figures": [
+    "ELSA-Brasil food groups, according to the Nova classification, are based on the degree of industrial processing of food. The ultra-processed food group (Group 3) was divided into prespecified subgroups based on similarities in nutritional content or purpose.",
+    "Heat map of the association of UPF subgroups and the nine outcomes. Red = risk (RR &gt; 1); Green = protection (RR &lt; 1); White = no association (RR = 1); Darker colors = statistical significance; GM/DAY % = Percent of total dietary intake of UPFs in grams/day; WEIGHT = elevated weight gain; WAIST = elevated waist gain; METSYN = metabolic syndrome; HPT = hypertension; MASLD = metabolic dysfuncti",
+    "Associations of cardiometabolic and mental health outcomes for a one-standard deviation difference in (1) overall ultra-processed food (UPF) intake; (2) the aggregate of UPF intake remaining after removal of UPF subgroups presenting statistically significant associations; and (3) this aggregate, now additionally adjusted for the individually associated subgroups. Analyses are conducted independent"
+  ],
+  "tables": [
+    "Baseline characteristics of the overall study sample before specific exclusion for each outcome. ELSA-Brasil (n = 13,651).",
+    "Total sample, incidence, follow-up time, and overall associations for a one-standard deviation difference in total ultra-processed food intake for each outcome. ELSA-Brasil.",
+    "Statistically significant associations of ultra-processed food (UPF) subgroups with nine cardiometabolic and mental health outcomes, for a one-standard deviation increase in intake *. ELSA-Brasil."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780042162.7787175
+}

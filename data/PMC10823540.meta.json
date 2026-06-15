@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC10823540",
+  "pmid": "38288359",
+  "title": "Cyberbullying and mental health: past, present and future.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Bansal S, Garg N, Singh J, Van Der Walt F.",
+  "doi": "10.3389/fpsyg.2023.1279234",
+  "figures": [
+    "Search model. Source: SCOPUS, Authors' creation.",
+    "Publication and citation trend. Source: SCOPUS database.",
+    "Journal overlay map. Source: SCOPUS, VOSviewer.",
+    "Country map. Source: SCOPUS database, VOSviewer.",
+    "Country overlay map. Source: SCOPUS, VOSviewer.",
+    "Keyword network visualization. Source: SCOPUS, VOSviewer.",
+    "Keyword overlay map. Source: SCOPUS, VOSviewer."
+  ],
+  "tables": [
+    "Top 10 most active journals.",
+    "Top 10 most influential publications.",
+    "Top five publications in the last 5 years.",
+    "Top 20 countries publishing on cyberbullying and mental health.",
+    "Research areas."
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780051090.6523018
+}

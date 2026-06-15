@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC10914636",
+  "pmid": "37925094",
+  "title": "An umbrella review of adverse effects associated with antipsychotic medications: the need for complementary study designs.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Chow RTS, Whiting D, Favril L, Ostinelli E, Cipriani A, Fazel S.",
+  "doi": "10.1016/j.neubiorev.2023.105454",
+  "figures": [
+    "AMSTAR 2 ratings across domains for included reviews.",
+    "Pooled effect sizes for adverse effects with a summary quality score of 1.5 or more from meta-analyses of RCTs.",
+    "Pooled effect sizes for adverse effects with a summary quality score of 1.5 or more from meta-analyses of observational studies.",
+    "PRIOR checklist.",
+    "PRISMA flow chart."
+  ],
+  "tables": [
+    "Characteristics of included RCT meta-analyses.",
+    "Characteristics of all included meta-analyses of observational studies.",
+    "Effect size data across adverse effect categories from included reviews of RCTs and observational studies. Cell shading corresponds to overall summary evidence score for consistency/robustness (red, &lt; 1.5; yellow, 1.5–2.5; green, 3–4).",
+    "Adverse effects for which summary score for consistency/robustness of effect size data was rated as moderate or high.",
+    "Excluded adverse effects with reasons.",
+    "Eligible but excluded reviews with reasons."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057270.9567072
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11487787",
+  "pmid": "39414303",
+  "title": "Development of a multifactorial prediction model for commute mode choice in 10 983 Finnish public sector employees: a cross-sectional study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Makkonen A, Gluschkoff K, Airaksinen J, Halonen JI, Salo P, Ervasti J.",
+  "doi": "10.1136/bmjopen-2023-080276",
+  "figures": [
+    "Bivariate associations between predictor items and commute mode choice for passive and active commuting during summer weather. The individual items are grouped with colours to indicate themes. The horizontal red line indicates Bonferroni corrected statistical significance (p=0.05/87=0.0006). Predictors with the highest −log10 (p values) are labelled.",
+    "Bivariate associations between predictor items and commute mode choice for active commuting in winter weather. The individual items are grouped with colours to indicate themes. The horizontal red line indicates Bonferroni corrected statistical significance (p=0.05/87=0.0006). Predictors with the highest −log10 (p values) are labelled.",
+    "The remaining predictor variables in the main Lasso models. (A) Commuting by car and (B) commuting by bike or on foot in summertime.",
+    "The remaining predictor variables in main Lasso model. (A) Commuting by car and (B) commuting by bike or on foot in the winter weather.",
+    ""
+  ],
+  "tables": [
+    "Characteristics of the study population (n=10 983)",
+    "The predictors of summer weather commute mode choice",
+    "The predictors of winter weather commute mode choice"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007083.5078871
+}

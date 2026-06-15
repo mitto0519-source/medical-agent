@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11639485",
+  "pmid": "39679020",
+  "title": "Pattern and correlates of Internet gaming disorder among medical students - A cross-sectional study from a tertiary care health institute, Rajasthan.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kumar A, Gupta A, Raj D, Kumar A.",
+  "doi": "10.4103/jehp.jehp_2026_23",
+  "figures": [
+    "Median motives score of study participants"
+  ],
+  "tables": [
+    "Association of GD with different variables (univariate analysis)",
+    "Predictors of disordered gamers using multivariate logistic regression",
+    "Difference in motive scores of all domains between disordered and non-disordered gamers",
+    "Prediction of IGD based on different domains of motives score using multivariate regression"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998497.6286883
+}

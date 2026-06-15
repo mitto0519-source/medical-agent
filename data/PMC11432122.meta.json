@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11432122",
+  "pmid": "39336969",
+  "title": "Are Sleep Parameters and Chronotype Associated with Eating Disorder Risk? A Cross-Sectional Study of University Students in Spain.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Martins-de-Passos TO, Mesas AE, Beneit N, Díaz-Goñi V, Peral-Martinez F, Cekrezi S, Martinez-Vizcaino V, Jimenez-Lopez E.",
+  "doi": "10.3390/jcm13185482",
+  "figures": [
+    "Logistic regression models of the risk of EDs (dependent variable: SCOFF score ≥ 2 points) in relation to night-time sleep duration (as a continuous variable) and the global sleep quality index (measured by the PSQI). The data are represented by dots (odds ratios) and lines (95% confidence intervals). ( a ) Crude and adjusted associations between the PSQI global score and ED risk; ( b ) crude and "
+  ],
+  "tables": [
+    "Characteristics of the sample according to the risk of eating disorders.",
+    "Sleep parameters in total and according to the risk of eating disorders (SCOFF score ≥ 2).",
+    "Chronotype and sleep timing points in total and according to the risk of eating disorders (SCOFF score ≥ 2).",
+    "Logistic regression models with sleep parameters (independent variables) and the risk of eating disorders (dependent variable) in university students."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001576.2530088
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10043748",
+  "pmid": "36972049",
+  "title": "Digital Cognitive Behavioral Therapy for Insomnia Using a Smartphone Application in China: A Pilot Randomized Clinical Trial.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhang C, Liu Y, Guo X, Liu Y, Shen Y, Ma J.",
+  "doi": "10.1001/jamanetworkopen.2023.4866",
+  "figures": [
+    "Participant Recruitment Flowchart  DCBT-I indicates digital cognitive behavioral therapy for insomnia; ISI, Insomnia Severity Index.",
+    "Insomnia Severity Index (ISI) Scores at Each Time Point Compared With the Baseline   DCBT-I indicates digital cognitive behavioral therapy for insomnia.   a Statistically significantly different from baseline."
+  ],
+  "tables": [
+    "Baseline Participant Characteristics",
+    "The Comparisons of ISI Scores of DCBT-I vs Sleep Education",
+    "Comparisons of the Sleep Diary Measures Between the DCBT-I and Sleep Education and Their Effect Sizes"
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063560.6766047
+}

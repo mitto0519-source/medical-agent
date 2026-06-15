@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11339566",
+  "pmid": "39110971",
+  "title": "Assessing the Short-Term Efficacy of Digital Cognitive Behavioral Therapy for Insomnia With Different Types of Coaching: Randomized Controlled Comparative Trial.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chan WS, Cheng WY, Lok SHC, Cheah AKM, Lee AKW, Ng ASY, Kowatsch T.",
+  "doi": "10.2196/51716",
+  "figures": [
+    "CONSORT (Consolidated Standards of Reporting Trials) flowchart of participants. dCBTi: digital cognitive behavioral therapy for insomnia.",
+    "Changes in outcomes from baseline to follow-up. Error bars indicate the SEs, “a” indicates significant group-by-time effects of digital cognitive behavioral therapy for insomnia (dCBTi) versus digital sleep hygiene and self-monitoring control (dSH), “b” indicates significant group-by-time effects of dCBTi with human (therapist or research assistant) support versus dCBTi with chatbot-based coaching"
+  ],
+  "tables": [
+    "Intervention components in each treatment condition.",
+    "Demographic characteristics of participants at baseline.",
+    "Measures of outcomes by time points.",
+    "Linear mixed models results.",
+    "Comparison of the rates of remission or clinically meaningful changes across conditions after treatment.",
+    "Video completion and sleep diary completion across conditions."
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063519.3744097
+}

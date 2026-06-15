@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11773825",
+  "pmid": "39871273",
+  "title": "Does diabetes modify the triglyceride-glucose index associated with cardiovascular events and mortality? A meta-analysis of 50 cohorts involving 7,239,790 participants.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang J, Zhan Q, Deng Z, Lin L, Feng Z, He H, Zhang D, Zhao H, Gu X, Yin X, Yu P, Liu X.",
+  "doi": "10.1186/s12933-025-02585-z",
+  "figures": [
+    "Flow chart of the study selection process in the meta-analysis of TyG index and risk of cardiovascular events and mortality in patients with or without diabetes",
+    "Forest plot of the association between TyG index and cardiovascular events in patients with or without diabetes.  A  cardiovascular events, analyzed as category variables (highest vs. lowest).  B , cardiovascular events, analyzed as continuous variables (per 1 unit increase). TyG, triglyceride-glucose; DM, diabetes mellitus",
+    "Forest plot of the association between TyG index and MACCE in patients with or without diabetes.  A  MACCE, analyzed as category variables (highest vs. lowest).  B  MACCE, analyzed as continuous variables (per 1 unit increase). TyG, triglyceride-glucose; DM, diabetes mellitus; MACCE, major adverse cardio-cerebral event",
+    "Forest plot of the association between TyG index and stroke, IHD and cardiovascular death in patients with or without diabetes.  A  stroke, analyzed as category variables (highest vs. lowest).  B  IHD, analyzed as category variables (highest vs. lowest).  C  cardiovascular death, analyzed as category variables (highest vs. lowest).  D  cardiovascular death, analyzed as continuous variables (per 1 ",
+    "Forest plot of the association between TyG index and all-cause mortality in patients with or without diabetes.  A  all-cause mortality, analyzed as category variables (highest vs. lowest).  B  all-cause mortality, analyzed as continuous variables (per 1 unit increase). TyG, triglyceride-glucose; DM, diabetes mellitus"
+  ],
+  "tables": [
+    "Characteristics of included studies in this meta-analysis of triglyceride-glucose index and risk of cardiovascular events and mortality in patients with or without diabetes"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780042132.8142529
+}

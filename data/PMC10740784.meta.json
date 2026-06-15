@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10740784",
+  "pmid": "38137402",
+  "title": "Early Adverse Family Experiences and Elevated Adrenocorticotropic Hormone Predict Non-Suicidal Self-Injury in Females with Non-Psychotic Mental Disorders and Suicidal Ideation.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zinchuk MS, Druzhkova TA, Popova SB, Zhanina MY, Guekht AB, Gulyaeva NV.",
+  "doi": "10.3390/biomedicines11123181",
+  "figures": [
+    "Levels of importance for factors influencing NSSI according to the CATS scale ( a ) and biochemical indices ( b ). An overall importance scale in arbitrary units was used.",
+    "Dependency of the probability of developing NSSI on ACTH level ( a ) and on CATS “negative home environment” subscale score ( b ). The gray area along the blue line indicates a 95% confidence interval."
+  ],
+  "tables": [
+    "Sociodemographic and clinical characteristics of patients with and without NSSI.",
+    "Laboratory data of patients and control group.",
+    "Odds ratio of predictors for model-assessed probability of developing NSSI."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780047305.9635653
+}

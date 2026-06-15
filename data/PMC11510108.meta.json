@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11510108",
+  "pmid": "39458557",
+  "title": "Beneficial Effects of Ginger Root Extract on Pain Behaviors, Inflammation, and Mitochondrial Function in the Colon and Different Brain Regions of Male and Female Neuropathic Rats: A Gut-Brain Axis Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Santos JM, Deshmukh H, Elmassry MM, Yakhnitsa V, Ji G, Kiritoshi T, Presto P, Antenucci N, Liu X, Neugebauer V, Shen CL.",
+  "doi": "10.3390/nu16203563",
+  "figures": [
+    "Effects of GEG on spontaneous pain (RGS score) in the male rats ( A ) and female rats ( B ). Data are expressed as mean ± SEM and were analyzed by one-way ANOVA followed by Bonferroni multiple comparisons test,  n  = 9 per group. *  p  &lt; 0.05, **  p  &lt; 0.01 for SNL-V vs. Sham-V group.  +   p  &lt; 0.05,  ++   p  &lt; 0.01,  +++   p  &lt; 0.001 SNL-GEG groups vs. SNL-V group.",
+    "Effects of GEG on emotional pain responses (duration of vocalizations) in the male rats ( A ) and female rats ( B ). Data are expressed as mean ± SEM and were analyzed by one-way ANOVA followed by Bonferroni multiple comparisons test.  n  = 5–7 per group. *  p  &lt; 0.05, **  p  &lt; 0.01 for SNL-V vs. Sham-V group.  +   p  &lt; 0.05,  ++   p  &lt; 0.01,  +++   p  &lt; 0.001 for other groups vs. S",
+    "Effects of GEG on plasma LBP in the male rats ( A ) and female rats ( B ) assessed by ELISA. Data are expressed as mean ± SEM and were analyzed by one-way ANOVA followed by Bonferroni multiple comparisons test.  n  = 4–6 per group. *  p  &lt; 0.05 compared with Sham-V group.  +   p  &lt; 0.05,  ++   p  &lt; 0.01 compared with SNL-V group.",
+    "Effects of GEG on claudin 3 gene expression levels in amygdala, frontal cortex, hippocampus, and colon of male rats ( A ) and female rats ( B ) and protein expression levels in colon of male and female rats ( C ). For gene expression, data are expressed as mean ± SEM and were analyzed by one-way ANOVA followed by Tukey’s test,  n  = 7–9 per group. *  p  &lt; 0.05, **  p  &lt; 0.01, ***  p  &lt; 0.",
+    "Effects of GEG on the neuroinflammation-associated gene expression levels in amygdala, frontal cortex, hippocampus, and colon of male rats ( A ) and protein expression levels in colon of male rats ( B ). For gene expression, data are expressed as mean ± SEM and were analyzed by one-way ANOVA followed by Tukey’s test,  n  = 7–9 per group. *  p  &lt; 0.05, **  p  &lt; 0.01, ***  p  &lt; 0.001, **** ",
+    "Effects of GEG on the neuroinflammation-associated gene expression levels in amygdala, frontal cortex, hippocampus, and colon of female rats ( A ) and protein expression levels in colon of female rats ( B ). For gene expression, data are expressed as mean ± SEM and were analyzed by one-way ANOVA followed by Tukey’s test,  n  = 7–9 per group. *  p  &lt; 0.05, **  p  &lt; 0.01, ***  p  &lt; 0.001, *",
+    "Effects of GEG on mitochondrial function-associated gene expression levels in amygdala, frontal cortex, hippocampus, and colon of male rats ( A ) and protein expression levels in colon of male rats ( B ). For gene expression, data are expressed as mean ± SEM and were analyzed by one-way ANOVA followed by Tukey’s test,  n  = 7–9 per group. *  p  &lt; 0.05, **  p  &lt; 0.01, ***  p  &lt; 0.001, ****",
+    "Effects of GEG on the mitochondrial function-associated gene expression levels in amygdala, frontal cortex, hippocampus, and colon of female rats ( A ) and protein expression levels in colon of female rats ( B ). For gene expression, data are expressed as mean ± SEM and were analyzed by one-way ANOVA followed by Tukey’s test,  n  = 7–9 per group. *  p  &lt; 0.05, **  p  &lt; 0.01, ***  p  &lt; 0.0"
+  ],
+  "tables": [
+    "List of primers for mRNA expression.",
+    "Summary of antibody dilutions and conditions used in Western blot analysis."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046972.7290864
+}

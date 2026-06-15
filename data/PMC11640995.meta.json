@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11640995",
+  "pmid": "39684400",
+  "title": "The Genetic Variants Influencing Hypertension Prevalence Based on the Risk of Insulin Resistance as Assessed Using the Metabolic Score for Insulin Resistance (METS-IR).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Shine BK, Choi JE, Park YJ, Hong KW.",
+  "doi": "10.3390/ijms252312690",
+  "figures": [
+    "Study design overview.",
+    "Miami plots. The results of the genome-wide association study (GWAS) analyzing the risk of hypertension prevalence in the first tertile (T1, blue graph) and third tertile (T3, red graph) groups based on METS-IR are presented in the Miami plots. The horizontal axis represents the position of SNPs across chromosomes 1 to 22, and the vertical axis shows the −log10 transformation of the  p -values for"
+  ],
+  "tables": [
+    "Population characteristics.",
+    "Lead SNPs of the genome-wide significant associations with hypertension prevalence for each METS-IR group."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037105.91673
+}

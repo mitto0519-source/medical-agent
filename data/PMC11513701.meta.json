@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11513701",
+  "pmid": "39215905",
+  "title": "Cardiovascular risk and glucocorticoids: a Dutch National Registry of growth hormone treatment in adults with growth hormone deficiency analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Slagboom TNA, van Bunderen CC, van der Lely AJ, Drent ML.",
+  "doi": "10.1007/s11102-024-01448-2",
+  "figures": [
+    "Flow chart of inclusion",
+    "The course of blood pressure during adult GHRT (including 95% confidence intervals). Significant changes between groups ( p  &lt; 0.05) : × = significant only in fully adjusted model (fully adjusted for age, sex, GHD onset, diagnosis of Cushing’s disease, LH/FSH—TSH—or AVP deficiency, history of coronary artery disease at baseline and former smoking)",
+    "The course of body composition during adult GHRT (including 95% confidence intervals). Significant changes between groups ( p  &lt; 0.05) : о = significant only in unadjusted model; × = significant only in fully adjusted model (fully adjusted for age, sex, GHD onset, diagnosis of Cushing’s disease, LH/FSH—TSH—or AVP deficiency, history of coronary artery disease at baseline and former smoking); * ",
+    "The course of lipid profile and glucose metabolism during adult GHRT (including 95% confidence intervals). Significant changes between groups ( p  &lt; 0.05) : × = significant only in fully adjusted model (fully adjusted for age, sex, GHD onset, diagnosis of Cushing’s disease, LH/FSH—TSH—or AVP deficiency, history of coronary artery disease at baseline and former smoking); * significant in both mo",
+    "Kaplan–Meier event-free survival curves for non-fatal cardiovascular disease, non-fatal cerebrovascular disease and new-onset type 2 diabetes mellitus"
+  ],
+  "tables": [
+    "Demographics",
+    "Baseline values for cardiovascular risk profile for both groups",
+    "The risk of developing non-fatal cardiovascular events, non-fatal cerebrovascular events and new-onset type 2 diabetes mellitus according to Cox hazard ratio for both groups"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013037.4729612
+}

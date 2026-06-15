@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11384258",
+  "pmid": "39135524",
+  "title": "Obesity is associated with incident chronic kidney disease in individuals with normal renal function.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Song SH, Oh TR, Suh SH, Choi HS, Kim CS, Ma SK, Kim SW, Bae EH.",
+  "doi": "10.3904/kjim.2023.491",
+  "figures": [
+    "",
+    "Study flow diagram. KoGES, Korean Genome and Epidemiology Study; eGFR, estimated glomerular filtration rate.",
+    "Longitudinal changes in metabolic profile parameters during the follow-up period. The X-axis denotes follow-up duration in years. BMI, body mass index; HbA1c, hemoglobin A1c; HOMA-IR, homeostasis model assessment-insulin resistance; CRP, C-reactive protein; HDL, high-density lipoprotein.",
+    "Log-transformed adjusted hazard ratio and 95% confidence interval for incident CKD probability associated with (A) BMI and (B) WHR. The BMI and WHR exhibited a positive correlation with the risk for incident CKD. CKD, chronic kidney disease; BMI, body mass index; WHR, waist-to-hip ratio.",
+    "Kaplan–Meier free-of-CKD probability curve with log-rank test between the obesity group and incident CKD. Obesity according to the (A) BMI and (B) WHR was associated with poor free-of-CKD probability. The X-axis denotes time-to events duration in days. CKD, chronic kidney disease; BMI, body mass index; WHR, waist-to-hip ratio.",
+    "Kaplan–Meier free-of-CKD probability curve with log-rank test according to obesity reduction. The X-axis denotes time-to events duration in days. CKD, chronic kidney disease; WHR, waist-to-hip ratio.",
+    "Multivariable Cox regression analysis for incident CKD according to WHR, stratified by subgroups. Models were adjusted for age, sex, HTN, DM, alcohol consumption, smoking, LDL cholesterol, hemoglobin, CRP, and baseline eGFR. HR, hazard ratio; CI, confidence interval; HTN, hypertension; DM, diabetes mellitus; CKD, chronic kidney disease; WHR, waist-to-hip ratio; LDL, low-density lipoprotein; CRP, C"
+  ],
+  "tables": [
+    "Baseline characteristics of the total study population according to BMI",
+    "HR for incident chronic kidney disease by BMI and WHR with Cox proportion hazard models"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037498.3235476
+}

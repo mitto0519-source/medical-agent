@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11492670",
+  "pmid": "39434101",
+  "title": "Tongue microbiota in relation to the breathing preference in children undergoing orthodontic treatment.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Marincak Vrankova Z, Brenerova P, Bodokyova L, Bohm J, Ruzicka F, Borilova Linhartova P.",
+  "doi": "10.1186/s12903-024-05062-3",
+  "figures": [
+    "Flowchart with inclusion and exclusion criteria and matching of children for the study. n, number of patients; BMI, body mass index",
+    "Demographic data and experimental results for studied children ( n  = 30) stratified according to their breathing preference. n, number of patients; SD, standard deviation; BMI, body mass index; ANB angle, angle between the points A, nasion and B; AHI, apnea–hypopnea index; M0, before orthodontic treatment; M6, approx. six months into the orthodontic therapy; MOCK, spiked commercial bacterial comm",
+    "Number of ASVs of tongue bacteriomes in children ( n  = 30) stratified according to their breathing preference. ASVs, amplicon sequence variants; M0, before orthodontic treatment; M6, approx. six months into the orthodontic therapy; MB, mouth breathing preference; NB, nasal breathing preference; NC, negative extraction control (DNA-free water)",
+    "Shannon indeces of tongue bacteriomes in children ( n  = 30) stratified according to their breathing preference. M0, before orthodontic treatment; M6, approx. six months into the orthodontic therapy; MB, mouth breathing preference; NB, nasal breathing preference; NC, negative extraction control (DNA-free water)",
+    "PCA of tongue bacteriomes in children ( n  = 30) stratified according to their breathing preference. M0, before orthodontic treatment; M6, approx. six months into the orthodontic therapy; MB, mouth breathing preference; NB, nasal breathing preference; NC, negative extraction control (DNA-free water); PCA, principal component analysis",
+    "Heatmap of tongue bacteriome characteristics in studied children ( n  = 30). M0, before orthodontic treatment; M6, approx. six months into the orthodontic therapy; MB, mouth breathing preference; MOCK, spiked commercial bacterial community; NB, nasal breathing preference; NC, negative extraction control (DNA-free water)",
+    "Solobacterium  in tongue swabs from children ( n  = 30) stratified according to their breathing preference. M0, before orthodontic treatment; M6, approx. six months into the orthodontic therapy; MB, mouth breathing preference; NB, nasal breathing preference; NC, negative extraction control (DNA-free water)"
+  ],
+  "tables": [],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002462.748104
+}

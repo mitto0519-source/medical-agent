@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11803299",
+  "pmid": "39700573",
+  "title": "The unintended effects of a large minimum wage increase on health: Evidence from South Korea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim JH, Suhrcke M, Leist AK.",
+  "doi": "10.1016/j.socscimed.2024.117626",
+  "figures": [
+    "Annual growth rate in real hourly minimum wages year 2011–2020.  The figure displays international comparisons of the annual growth rate in real hourly minimum wages from 2011 to 2020. As per ( OECD, 2023b ), real hourly minimum wages are derived by initially deflating the series using the Consumer Price Index, with 2021 serving as the base year. Subsequently, these values are converted into a com",
+    "Flowchart of the final analytical sample  This flowchart summarises the implementation of exclusion criteria to arrive at the final sample.    N    is the number of individuals;      N    o  b  s      is the number of observations (period-person). The intervention group was defined by participants reporting hourly wages below the minimum wage. Participants reporting hourly wages equal to 100%–150%",
+    "Event study results regarding cognitive functioning  These figures present the dynamic effects of the large minimum wage increase from 2016 to 2018 on cognitive functioning. The left panel shows the results from using a two-way fixed effects estimator, while the right panel displays the results from the two-stage difference-in-differences estimator. Cognitive function was measured by the Korean ve"
+  ],
+  "tables": [
+    "Comparisons of intervention assignment.",
+    "Descriptive statistics at pre-intervention assessment.",
+    "Minimum wage and health.",
+    "Minimum wage and health — Placebo group.",
+    "Alternative definitions of control groups.",
+    "Minimum wage and health — Including unemployed."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039845.55088
+}

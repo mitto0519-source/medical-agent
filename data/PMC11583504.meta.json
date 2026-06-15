@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11583504",
+  "pmid": "39574211",
+  "title": "Oppositional defiant disorder, internet gaming disorder, and suicidal ideation among Saudi adolescents: a moderated mediation model of gender and self-control.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Keshky MESE.",
+  "doi": "10.1186/s40359-024-02181-y",
+  "figures": [
+    "Framework diagram of the relationships",
+    "Relationship between ODD and self-control in females and males.  Notes  ODD_score = oppositional defiant disorder; SCS_score = self-control; 1 = females; 2 = males",
+    "Relationship between IGD and suicidal ideation in females and males.  Notes  IGDS_score = internet gaming disorder; SIS_score = suicidal ideation; 1 = females; 2 = males"
+  ],
+  "tables": [
+    "Descriptive statistics, Pearson correlation, and gender differences",
+    "Mediation role of self-control between ODD, IGD, and suicidal ideation",
+    "Bootstrapping indirect effect and 95% confidence interval (CI) for the mediation model",
+    "Moderated mediation model of gender and self-control",
+    "Conditional indirect relationship of ODD, IGD, and suicidal ideation for males and females"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998507.89008
+}

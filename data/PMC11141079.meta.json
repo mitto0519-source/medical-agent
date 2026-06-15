@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11141079",
+  "pmid": "38459699",
+  "title": "Circadian Variation in the Response to Vaccination: A Systematic Review and Evidence Appraisal.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Wyse CA, Rudderham LM, Nordon EA, Ince LM, Coogan AN, Lopez LM.",
+  "doi": "10.1177/07487304241232447",
+  "figures": [
+    "Screening and selection of eligible studies. Abbreviation: TODV = time of day of vaccination.",
+    "Summary of time intervals of vaccinations in selected studies.",
+    "Summary of results of two studies that compared the effect size of TODV against other factors affecting response to vaccination. (a) Multivariable analyses reported by  Jolliffe et al. (2022)  showed a small (non-significant) effect of TODV on vaccination outcome (change in antibody titer) relative to other factors. (b) The effect of demographic and health-related factors, including different perm"
+  ],
+  "tables": [
+    "Description of studies ( n  = 23) that investigated the effect of TODV and immune outcomes that were included in this review.",
+    "Risk of bias in the included studies assessed by the ROBINS-I tool.",
+    "Risk of bias in the included studies assessed by the ROB2 tool."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001560.4934218
+}

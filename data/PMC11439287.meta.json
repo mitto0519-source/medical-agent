@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11439287",
+  "pmid": "39342232",
+  "title": "Association between nut consumption and mortality risk: a 20-year cohort study in Korea with a stratified analysis by health-related variables.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Shin HR, Kim J, Song S.",
+  "doi": "10.1186/s12937-024-01019-y",
+  "figures": [
+    "Flowchart of participant selection",
+    "Cumulative hazard graph of mortality associated with nut consumption. Cumulative hazard incidences of all-cause mortality ( A ), cardiovascular disease mortality ( B ), and cancer mortality ( C )",
+    "The risk of all-cause mortality in the highest frequency of nut consumption stratified by covariates. Hazard ratio (HR) and 95% confidence interval (CI) for all-cause mortality and  p  for interaction were determined using Cox proportional hazard regression analysis after adjustment for sex, age, BMI, household income (&lt; 2 million won, 2–4 million won, ≥ 4 million won), education (≤ middle scho"
+  ],
+  "tables": [
+    "Baseline participant characteristics according to nut consumption",
+    "Energy and nutrient intake according to nut consumption",
+    "Risks of all-cause, cardiovascular disease, and cancer mortality according to nut consumption"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037281.3005342
+}

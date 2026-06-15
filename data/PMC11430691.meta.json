@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11430691",
+  "pmid": "39334854",
+  "title": "Perineuronal Net Alterations Following Early-Life Stress: Are Microglia Pulling Some Strings?",
+  "year": 2024,
+  "journal": "",
+  "authors": "Rahimian R, Belliveau C, Simard S, Turecki G, Mechawar N.",
+  "doi": "10.3390/biom14091087",
+  "figures": [
+    "Cell-type enrichment analysis of PNN components in the dorsolateral prefrontal cortex (dlPFC) of healthy subjects. Heatmap showing the expression levels of PNN canonical components derived from post mortem dlPFC samples from 34 neurotypical individuals (16M/18F) (Maitra et al., 2023) [ 68 ]. The OPC cluster highly expresses  VCAN ,  PTPRZ1  and  TNR . Microglia cells barely express—if at all—canon",
+    "Microglial interactions with other glia cells that are pertinent to ECM-PNN regulation. Inhibitory neurons release GABA, cytokines (e.g., IL33) and chemokines (e.g., CX3CL1). The receptors for these molecules are highly expressed by microglia. The interplay between these neuronal ligands and microglial receptors initiates different signaling cascades that culminate in the engulfment of ECM-PNN com"
+  ],
+  "tables": [
+    "Summary of ELS effects on PNNs and PV interneurons."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046684.2180672
+}

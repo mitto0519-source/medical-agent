@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10971419",
+  "pmid": "38544646",
+  "title": "Prescribing Patterns of Psychotropic Medications for Common Psychiatric Disorders in a Mental Health Hospital in Tabuk.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Ali MA, Amirthalingam P, Veeramani VP, Alasiri AM, Alsalimi MN, Alatawi F, Albalawi MM.",
+  "doi": "10.7759/cureus.54927",
+  "figures": [
+    "Frequency of medication orders for psychotropic classes",
+    "Percentages of the top prescribed psychotropic medications",
+    "Polypharmacy of psychotropic medications per patient"
+  ],
+  "tables": [
+    "Patients' baseline demographic and clinical characteristics   ALT: alanine transaminase, AST: aspartate aminotransferase, BUN: blood urea nitrogen, HDL: high-density lipoprotein",
+    "Most commonly prescribed psychotropic medications   Statistically significant at p-value &lt; 0.05.",
+    "Prescribing patterns of psychotropic medications by common psychiatric disorders  FGAs: first-generation antipsychotics, SGAs, second-generation antipsychotics",
+    "Combination of psychotropic medications"
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057375.421484
+}

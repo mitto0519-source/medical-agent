@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11666876",
+  "pmid": "39714599",
+  "title": "Association between a large change between the minimum and maximum monthly values of solar insolation and a history of suicide attempts in bipolar I disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Ritter P, Glenn T, Achtyes ED, Alda M, Agaoglu E, Altınbaş K, Andreassen OA, Angelopoulos E, Ardau R, Aydin M, Ayhan Y, Baethge C, Bauer R, Baune BT, Balaban C, Becerra-Palars C, Behere AP, Behere PB, Belete H, Belete T, Belizario GO, Bellivier F, Belmaker RH, Benedetti F, Berk M, Bersudsky Y, Bicakci Ş, Birabwa-Oketcho H, Bjella TD, Brady C, Cabrera J, Cappucciati M, Castro AMP, Chen WL, Cheung EYW, Chiesa S, Chanopoulou M, Crowe M, Cuomo A, Dallaspezia S, Desai P, Dodd S, Etain B, Fagiolini A, Fellendorf FT, Ferensztajn-Rochowiak E, Fiedorowicz JG, Fountoulakis KN, Frye MA, Geoffroy PA, Gitlin MJ, Gonzalez-Pinto A, Gottlieb JF, Grof P, Haarman BCM, Harima H, Hasse-Sousa M, Henry C, Hoffding L, Houenou J, Imbesi M, Isometsä ET, Ivkovic M, Janno S, Johnsen S, Kapczinski F, Karakatsoulis GN, Kardell M, Kessing LV, Kim SJ, König B, Kot TL, Koval M, Kunz M, Lafer B, Landén M, Larsen ER, Licht RW, Ludwig VM, Lopez-Jaramillo C, MacKenzie A, Madsen HØ, Madsen SAKA, Mahadevan J, Mahardika A, ",
+  "doi": "10.1186/s40345-024-00364-5",
+  "figures": [],
+  "tables": [
+    "Demographics of Bipolar I patients (N = 5641)",
+    "Mean Ratio of Monthly Mean Minimum/Monthly Mean Maximum Insolation by Latitude for Patient Onset Locations (N = 5641)",
+    "Estimated parameters for 2020 model explaining a history of suicide attempts for patients with bipolar I disorder (N = 5641) 1",
+    "Estimated parameters explaining a history of suicide attempts for patients with bipolar I disorder (N = 5641) 1"
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050863.079129
+}

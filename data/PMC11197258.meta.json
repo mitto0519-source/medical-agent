@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11197258",
+  "pmid": "38918799",
+  "title": "Interplay of Mediterranean-diet adherence, genetic factors, and metabolic dysfunction-associated steatotic liver disease risk in Korea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kwon YJ, Choi JE, Hong KW, Lee JW.",
+  "doi": "10.1186/s12967-024-05408-z",
+  "figures": [
+    "Flow chart of study population.  KoGES  Korean Genome and Epidemiology Study,  MASLD  Metabolic dysfunction-associated steatotic liver disease,  K-MEDAS  Korean version of the Mediterranean-Diet Adherence Screener. In total, 33,133 participants (K-MEDAS &lt; 5; n = 13,154 and K-MEDAS &gt; 6; n = 19,979) were included in the final analysis. Within the lower tertile group (K-MEDAS &lt; 5; n = 13,154",
+    "Regional association plots of the rs780094",
+    "Miami plot showing P values for the SNP associations with MASLD in participants whose K-MEDAS was either &lt; 5 or &gt; 6"
+  ],
+  "tables": [
+    "Clinical characteristics of the study population",
+    "Single nucleotide polymorphisms (SNPs) showing significant interactions with K-MEDAS associated with MASLD"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037493.0378685
+}

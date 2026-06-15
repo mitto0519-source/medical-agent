@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10378598",
+  "pmid": "37508728",
+  "title": "Time Spent on Private Tutoring and Sleep Patterns of Chinese Adolescents: Evidence from a National Panel Survey.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhang Y.",
+  "doi": "10.3390/children10071231",
+  "figures": [],
+  "tables": [
+    "Descriptive statistics.",
+    "Correlation matrix.",
+    "Coefficients for daily hours of tutoring during the week in estimating hours of sleep and number of sleep problems.",
+    "OLS regressions of sleep hours on daily hours of tutoring on weekdays and weekends.",
+    "Poisson regressions of sleep problems on daily hours of tutoring on weekdays and weekends."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019335.4809952
+}

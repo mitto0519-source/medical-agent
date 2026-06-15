@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10597646",
+  "pmid": "37881494",
+  "title": "Identifying patient-related predictors of permanent growth hormone deficiency.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Mericq V, Iñiguez G, Pinto G, Gonzalez-Briceño LG, Samara-Boustani D, Thalassinos C, Flechtner I, Stoupa A, Beltrand J, Besançon A, Brabant S, Ghazal K, Leban M, Touraine P, Cavada G, Polak M, Kariyawasam D.",
+  "doi": "10.3389/fendo.2023.1270845",
+  "figures": [
+    "Study flow chart.",
+    "ROC curve for estimation of sensitivity and specificity of the model."
+  ],
+  "tables": [
+    "Main features of the 101 study patients (median, IQ25 – IQ75).",
+    "Multivariate analysis of predicting factors."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013102.0568705
+}

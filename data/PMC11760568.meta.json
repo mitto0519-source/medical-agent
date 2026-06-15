@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC11760568",
+  "pmid": "39854325",
+  "title": "A missing link: The interdependence between sugar-sweetened beverage and cigarette consumption from China.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu L, Chen K.",
+  "doi": "10.1371/journal.pone.0316891",
+  "figures": [
+    "SSB and cigarette consumption during 2004 to 2011.",
+    "The cigarette consumption in SSB consumers."
+  ],
+  "tables": [
+    "SSB and cigarette consumption from 2004 to 2011.",
+    "Summary statistics.",
+    "The results for Heckman sample selection model in the whole sample.",
+    "The results for Heckman sample selection model in the subgroup of currently smoking.",
+    "The results for Heckman sample selection model in the subgroup of ever-smoked.",
+    "The results for Heckman sample selection model in the whole sample.",
+    "The results for Heckman sample selection model in the subgroup of currently smoking.",
+    "The correlations between SSBs and cigarettes in consumption across different subgroups.",
+    "The results for Heckman sample selection model in the subgroup of ever-smoked.",
+    "The results for SUBP and SUR model."
+  ],
+  "query": "zero-calorie beverage mental health",
+  "fetched_at": 1779974782.143854
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11346214",
+  "pmid": "39187797",
+  "title": "Altered individual-level morphological similarity network in children with growth hormone deficiency.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Cheng Y, Lin L, Hou W, Qiu H, Deng C, Yan Z, Qian L, Cui W, Li Y, Yang Z, Chen Q, Su S.",
+  "doi": "10.1186/s11689-024-09566-5",
+  "figures": [
+    "Flowchart of selection of GHD group ( A ) and the primary analytical process of gray matter MBNs ( B ) in the current study. (i) 3D T1-weighted imaging and (ii) preprocessing (segment, normalize, modulate, and smooth); (iii) nodes are defined according to the automated anatomical labelling (AAL-116) atlas; (iv) edges are defined according to the combined Euclidean distance method; (v) an individua",
+    "Comparison of global parameters of the brain anatomical networks between the GHD group and typically developing (TD) controls. Abbreviations: GHD = growth hormone deficiency; TD = typically developing; E glob  = global efficiency; E loc  = local efficiency; C p  = clustering coefficient; L p  = shortest path length; λ = normalized characteristic path length; γ = normalized clustering coefficient; ",
+    "Compared to TDs, GHD group showed regions of altered nodal profiles, showing increased points (red) and decreased (green) points. The detailed information can be found in Table  2 . Abbreviations: GHD = growth hormone deficiency; TD = typically developing; IFGoperc = Inferior frontal gyrus, opercular part; ORBinf = Inferior frontal gyrus, orbital part; ACG = Anterior cingulate and paracingulate gy",
+    "GHD-related subnetwork. Every node denotes a brain region, and every line represents a connection. Different-color nodes represent different brain regions: yellow, limbic regions; green, striatum/thalamus; pink, Cerebellum; red, central executive network (CEN); cyan, visual network (VN); orange, auditory network (AN); blue, sensorimotor network(SMN); Abbreviations: IFGoperc = Inferior frontal gyru",
+    "Relationship between the nodal properties and clinical variables in GHD group. In pediatric GHD, serum IGF-1 concentration was positively correlated with E glob  ( r  = 0.354;  P  = 0.006,  A ), and negatively correlated with L p  ( r  = -0.329;  P  = 0.011,  B ), λ ( r  = -0.306;  P  = 0.018,  C ). As for nodal profiles, serum IGF-1 concentration was positively correlated with nodal efficiency of"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of children with GHD and HCs",
+    "Altered nodal profiles in GHD and typically developing controls"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012873.370837
+}

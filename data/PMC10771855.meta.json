@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC10771855",
+  "pmid": "38186425",
+  "title": "The Impact of a Healthy Lifestyle on Psychological Well-Being Among Saudi Adolescent Girls Attending Secondary Schools in Taif City, Saudi Arabia.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Bin Baz SS, Malibarey WM, Alsalmi HA, Alzaydi MD, Alqahtani AM, Alghamdi RY.",
+  "doi": "10.7759/cureus.50189",
+  "figures": [
+    "Distribution of the subjects by body mass index",
+    "Classification of participants' lifestyle based on the Simple Lifestyle Indicator Questionnaire score",
+    "Classification of the level of depression among the participants based on Patient Health Questionnaire (PHQ)-2 and PHQ-9",
+    "Classification of anxiety levels among the participants based on Generalized Anxiety Disorder (GAD)-7 questionnaire",
+    "Classification of perceived stress among the participants according to the Perceived Stress Scale (PSS)"
+  ],
+  "tables": [
+    "Personal characteristics of the participants (n=539)  SD: standard deviation; GPA: grade point average",
+    "Association between personal characteristics of the students and their lifestyle  SD: standard deviation",
+    "Association between students' lifestyle and severity of depression  Pearson chi-square value: 36.61; degree of freedom: 8; p&lt;0.001",
+    "Association between students' lifestyle and severity of anxiety  Pearson chi-square value: 37.58; degree of freedom: 6; p&lt;0.001",
+    "Association between students' lifestyle and severity of perceived stress  Pearson chi-square value: 43.56; degree of freedom: 4; p&lt;0.001",
+    "Association between students' body mass index and severity of depression  Pearson chi-square value: 9.62; degree of freedom: 12; p=0.649",
+    "Association between students' body mass index and severity of anxiety  Pearson chi-square value: 14.26; degree of freedom: 9; p=0.113",
+    "Association between students' body mass index and severity of perceived stress  Pearson chi-square value: 10.06; degree of freedom: 6; p=0.122",
+    "Association between students' lifestyle and their grade point average  Pearson chi-square value: 9.82; degree of freedom: 6; p=0.133"
+  ],
+  "query": "Malaysian adolescent dietary depression",
+  "fetched_at": 1779992315.8928995
+}

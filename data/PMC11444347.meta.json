@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11444347",
+  "pmid": "39514734",
+  "title": "Investigating the Potential Short-term Adverse Effects of the Quadrivalent Human Papillomavirus Vaccine: A Novel Regression Discontinuity Analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Margelyte R, Redaniel MT, Walter SR, Pyne Y, Merriel S, Macleod J, Northstone K, Tilling K.",
+  "doi": "10.1097/ede.0000000000001784",
+  "figures": [
+    "Cohort flow diagram.",
+    "Adjusted odds ratios, with 95% CIs, for developing an outcome (symptom) among girls eligible versus ineligible to receive quadrivalent HPV vaccine, primary and sensitivity analyses."
+  ],
+  "tables": [
+    "Study Cohorts by Year and Month of Birth and Eligibility to Receive Quadrivalent HPV Vaccine",
+    "Baseline Characteristics in the Combined Study Cohort (Born in 2000–2005) by Eligibility to Receive Quadrivalent HPV Vaccine",
+    "Incidence of Adverse Events in the Combined Study Cohort (Born in 2000–2005) Within 12-month Follow-up Period by Eligibility to Receive Quadrivalent HPV Vaccine",
+    "Weighted Average Estimates With 95% CI of Adjusted and Unadjusted Odds Ratios and Risk Differences Across Birth Years From Random Effects Meta-analysis Model Within 12-month Follow-up Period (Eligible vs. Ineligible to Receive Quadrivalent HPV vaccine)"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035969.019852
+}

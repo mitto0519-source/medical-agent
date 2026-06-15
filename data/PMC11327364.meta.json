@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11327364",
+  "pmid": "39147847",
+  "title": "Testing of the Czech questionnaire for identifying children at risk of obstructive sleep apnea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Marincak Vrankova Z, Kratochvil T, Villa MP, Borilova Linhartova P.",
+  "doi": "10.1038/s41598-024-69958-4",
+  "figures": [
+    "Workflow of the Czech questionnaire for identifying children at risk of obstructive sleep apnea (SEN CZ) development; note that although collection of only 70 SEN CZ version 2 questionnaires were planned, 71 were included in the final analysis.  AHI  apnea–hypopnea index,  CZ  Czech language,  EN  English language; *The items were excluded if: (1) they did not use the Likert scale, (2) they had un",
+    "Czech questionnaire for identifying children at risk of obstructive sleep apnea (SEN CZ)."
+  ],
+  "tables": [
+    "Characteristics of the 100 children enrolled in the pilot study and testing of the SEN CZ questionnaire.",
+    "Sensitivity and specificity of the SEN CZ questionnaire.",
+    "Correlation of the individual factors with the total score of SEN CZ questionnaire and AHI.",
+    "Logistic regression of the total score of the SEN CZ questionnaire and the risk of POSA according to AHI.",
+    "Cut-off scores in the SEN CZ questionnaire for POSA risk prediction according to AHI."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002114.4126859
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11826012",
+  "pmid": "39210787",
+  "title": "Causal association between serum bilirubin and ischemic stroke: multivariable Mendelian randomization.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Shin JW, Jung KJ, Ryu M, Kim J, Kimm H, Jee SH.",
+  "doi": "10.4178/epih.e2024070",
+  "figures": [
+    "",
+    "Causal associations of (A) total, (B) direct, and (C) indirect bilirubin levels with ischemic stroke determined using MVMR. OR, odds ratio; IVW, inverse-variance weighted; MVMR, multivariable Mendelian randomization; FBS, fasting blood sugar; LDL, low-density lipoprotein; SBP, systolic blood pressure; TG, triglyceride."
+  ],
+  "tables": [
+    "Causal effect of total bilirubin on ischemic stroke",
+    "Causal effect of direct bilirubin on ischemic stroke",
+    "Causal effect of indirect bilirubin on ischemic stroke"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037148.4211433
+}

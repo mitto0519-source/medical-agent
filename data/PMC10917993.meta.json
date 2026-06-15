@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC10917993",
+  "pmid": "38456144",
+  "title": "How the forebrain transitions to adulthood: developmental plasticity markers in a long-lived rodent reveal region diversity and the uniqueness of adolescence.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Garduño BM, Hanni P, Hays C, Cogram P, Insel N, Xu X.",
+  "doi": "10.3389/fnins.2024.1365737",
+  "figures": [
+    "Perineuronal nets (PNNs) and microglia across the postnatal degu brain.  (A–H)  Immunofluorescence microscopic overviews of anterior-to-posterior coronal hemispheres of 1–3 m.o. (juvenile)  (A, E) , 5–8 m.o. (adolescent)  (B, F) , 12–19 m.o. (younger adult)  (C, G) , and 23–40 m.o. (older adult)  (D, H)  degus. WFA stained PNNs (in green) showed increased signal across the post-puberty 5–40 m.o. d",
+    "Prelimbic cortex (PrL) exhibits reduced perineuronal nets (PNN) in juvenile degus and an overall gradual decrease in microglia with age.  (A–C)  Immunofluorescence confocal micrographs showing PNNs (WFA, green) and microglia (Iba1, red) in the PrL of 1–3 m.o. (juvenile)  (A1, B1, C1) , 5–8 m.o. (adolescent)  (A2, B2, C2) , 12–19 m.o. (younger adult)  (A3, B3, C3) , and 23–40 m.o. (older adult)  (A",
+    "Juvenile degus show decreased perineuronal nets (PNN) in entorhinal cortex (EC) when compared to older degus.  (A–C)  Immunofluorescence confocal micrographs showing PNNs (WFA, green) and microglia (Iba1, red) in the EC of 1–3 m.o. (juvenile)  (A1, B1, C1) , 5–8 m.o. (adolescent)  (A2, B2, C2) , 12–19 m.o. (younger adult)  (A3, B3, C3) , and 23–40 m.o. (older adult)  (A4, B4, C4)  degus.  (D)  Qua",
+    "Degu retrosplenial cortex (RSC) exhibits decreasing levels of microglia with age while perineuronal nets (PNNs) are significantly decreased in juvenile degus compared to older counterparts.  (A–C)  Immunofluorescence confocal micrographs showing PNNs (WFA, green) and microglia (Iba1, red) in the RSC of 1–3 m.o. (juvenile)  (A1, B1, C1) , 5–8 m.o. (adolescent)  (A2, B2, C2) , 12–19 m.o. (younger ad",
+    "The degu primary somatosensory cortex (S1) exhibits a unique pattern of laminar perineuronal net (PNN) expression and is most plastic during pre-pubescence.  (A)  Confocal micrographs show PNNs (WFA, green) and microglia (Iba1, red) in S1's layer 4 from 1–3 m.o. (juvenile)  (A1) , 5–8 m.o. (adolescent)  (A2) , 12–19 m.o. (younger adult)  (A3) , and 23–40 m.o. (older adult)  (A4)  degus.  (B)  Repr",
+    "Degus possess a distinct hippocampal perineuronal net (PNN) expression pattern characterized by intense CA3a signal and minimal-to-no signal in CA1.  (A–E)  Immunofluorescence confocal micrographs showing PNNs (WFA, green) and microglia (Iba1, red) in the entire dorsal hippocampus  (A) , CA3a  (B, C) , and CA1  (E)  of 1–3 m.o. (juvenile, 1st row), 5–8 m.o. (adolescent, 2nd row), 12–19 m.o. (young",
+    "Degu subiculum (SUB) exhibits decreasing levels of microglia with age and similar microglia and perineuronal net (PNN) plasticity timecourse inflection ages.  (A–C)  Confocal micrographs showing PNNs (WFA, green) and microglia (Iba1, red) in the SUB of 1–3 m.o. (juvenile)  (A1, B1, C1) , 5–8 m.o. (adolescent)  (A2, B2, C2) , 12–19 m.o. (younger adult)  (A3, B3, C3) , and 23–40 m.o. (older adult)  ",
+    "Degu basolateral amygdala (BLA) shows no age-related perineuronal net (PNNs) changes, while microglia decrease with age progression.  (A–C)  Immunofluorescence confocal micrographs of PNNs (WFA, green) and microglia (Iba1, red) in the BLA of 1–3 m.o. (juvenile)  (A1, B1, C1) , 5–8 m.o. (adolescent)  (A2, B2, C2) , 12–19 m.o. (younger adult)  (A3, B3, C3) , and 23–40 m.o. (older adult)  (A4, B4, C4",
+    "Degu thalamic reticular nucleus (TRN) exhibits decreasing microglia levels with age and differing perineuronal net (PNN) densities between juvenile and adolescent life phases.  (A–C)  Confocal micrographs showing PNNs (WFA, green), microglia (Iba1, red), and parvalbumin+ interneurons (PV, blue) in the TRN of 1–3 m.o. (juvenile)  (A1, B1, C1) , 5–8 m.o. (adolescent)  (A2, B2, C2) , 12–19 m.o. (youn",
+    "The maturing degu forebrain exhibits differing neuroplasticity features in juvenile, adolescent, and adult life stages.  (A)  Normalized perineuronal net (PNN) densities and microglia Iba1 relative intensities in 1–40 m.o. degus across the investigated brain regions.  (B)  Summary matrix with statistically significant PNN/mm 2  and Iba1 relative intensity age group differences across brain regions"
+  ],
+  "tables": [
+    "Individual degu information.",
+    "Reagents and resources with Research Resource Identifiers (RRID) tags.",
+    "MANOVA  post-hoc  Tukey HSD (honestly significant difference) statistical analysis of principal component analysis data.",
+    "Perineuronal net localization and density data summary across degu age groups and brain regions.",
+    "Microglia Iba1 relative intensity data summary across degu age groups and brain regions."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046659.2617588
+}

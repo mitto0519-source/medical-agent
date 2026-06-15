@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11808183",
+  "pmid": "39924994",
+  "title": "Mediation Effect of CSF Substance P on the Association Between Smoking and Sleep.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang X, Chen L, Wu Y, Chen YH, Luo X, Xu Z, Hu W, Kang Y, Chen L, Liu Y, Wang F, Liu D.",
+  "doi": "10.1002/brb3.70296",
+  "figures": [
+    "Comparisons between nonsmokers and active smokers.",
+    "Effect decomposition of mediation models in PSQI scores. (A) Total effect between smoke and PSQI scores. (B) Effect decomposition of the mediation model for the relationship between smoke and PSQI scores association with CSF SubP levels as mediator. * p  &lt; 0.05, ** p  &lt; 0.01, *** p  &lt; 0.001. PSQI, Pittsburgh Sleep Quality Index; SubP, Substance P."
+  ],
+  "tables": [
+    "Comparisons between nonsmokers and active smokers.",
+    "Linear regression table for the mediation analysis.",
+    "Effect decomposition from mediation models."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002420.2022743
+}

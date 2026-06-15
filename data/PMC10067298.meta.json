@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10067298",
+  "pmid": "37004083",
+  "title": "Selective serotonin reuptake inhibitors and suicidality in children and young adults: analyses of pharmacovigilance databases.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Dubrall D, Fekete S, Leitzen S, Paschke LM, Romanos M, Schmid M, Gerlach M, Sachs B.",
+  "doi": "10.1186/s40360-023-00664-z",
+  "figures": [
+    "Flowchart. Research strategy for identification of intentional suicide/suicidal behaviour and overdose reports referring to selective serotonin reuptake inhibitors (SSRIs) in the European ADR database EudraVigilance and the Food and Drug Administration (FDA) Adverse Event Reporting System (FAERS). ADR: Adverse drug reaction; EEA: European Economic Area",
+    "Annual number of reports from EudraVigilance and FAERS referring to intentional suicide/suicidal behaviour or overdose associated with SSRI.  Legend to Fig. 2:  EEA: European Economic Area; Confirmed EEA reports: reports from the European economic area with a possible causal relationship of suicidality related to SSRI treatment following causality assessment applying WHO criteria [ 20 ]. US: Unite",
+    "Annual number of confirmed selective serotonin reuptake inhibitor (SSRI) reports from Germany divided by sex and age groups"
+  ],
+  "tables": [
+    "Analyses of characteristics reported in the pre-warning, warning and post-warning period",
+    "Number of confirmed selective serotonin reuptake inhibitor (SSRI) reports, number of SSRI prescriptions and the calculated reporting rates (number of confirmed SSRI reports/number of SSRI prescriptions) in the post-warning period from Germany"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056503.21209
+}

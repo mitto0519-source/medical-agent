@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11697799",
+  "pmid": "39754086",
+  "title": "Psychotropic medications: a descriptive study of prescription trends in Tabriz, Iran, 2021-2022.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Farahbakhsh M, Fakhari A, Azimian A, Khameneh A, Matinkia M, Aghajani E.",
+  "doi": "10.1186/s12888-024-06451-2",
+  "figures": [
+    "The prescription distributions of different age groups",
+    "Bar chart displaying the age and sex distributions of the prescriptions",
+    "The number of psychotropic medications prescribed by different specialties"
+  ],
+  "tables": [
+    "Psychotropic medication prescription frequency and percent in detail",
+    "Psychotropic medications categorical frequency and percentage",
+    "The number of psychotropic medications prescribed by doctors with different graduation dates",
+    "The number of psychotropic medications prescribed by different specialties"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056034.151889
+}

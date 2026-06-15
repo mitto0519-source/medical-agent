@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10971018",
+  "pmid": "38541842",
+  "title": "The Fatty Liver Index's Association with Incident Chronic Kidney Disease in Korean Middle-Aged Adults: A Community-Based Cohort Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee HH, Ro H, Jung JY, Chang JH, Chung W, Kim AJ.",
+  "doi": "10.3390/jcm13061616",
+  "figures": [
+    "Flowchart of the study population. CKD, chronic kidney disease; eGFR, estimated glomerular filtration rate; FLI, fatty liver index; KoGES, Korean Genome and Epidemiology Study.",
+    "Cumulative incidence of CKD based on the FLI group. CKD, chronic kidney disease; FLI, fatty liver index.",
+    "Restricted cubic spline curve for the risk of incident CKD by the FLI. The FLI had a linear relationship with the risk of incident CKD. CKD, chronic kidney disease; FLI, fatty liver index.",
+    "Subgroup analyses of the relationship between the FLI and incident CKD. Data are collected from the Cox proportional hazard analysis with covariate adjustment model 4 comparing FLI groups 2 and 3 to group 1. Here, 95% CI, 95% confidence interval; CKD, chronic kidney disease; CVD, cardiovascular disease; DM, diabetes mellitus; FLI, fatty liver index; HR, hazard ratio; HTN, hypertension; No., number"
+  ],
+  "tables": [
+    "Baseline characteristics according to the FLI.",
+    "Incidence of CKD during the follow-up study.",
+    "Relationship between the FLI and the risk of CKD."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041292.5799565
+}

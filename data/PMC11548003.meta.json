@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11548003",
+  "pmid": "39519600",
+  "title": "Ultra-Processed Food Intake and Risk of Insomnia: A Systematic Review and Meta-Analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Pourmotabbed A, Awlqadr FH, Mehrabani S, Babaei A, Wong A, Ghoreishy SM, Talebi S, Kermani MAH, Jalili F, Moradi S, Bagheri R, Dutheil F.",
+  "doi": "10.3390/nu16213767",
+  "figures": [
+    "Flow chart of the process of the study selection.",
+    "Forest plots demonstrating OR and 95% CI of pooled results from the random-effects models to evaluate the relationship between ultra-processed food consumption and risk of insomnia [ 24 , 25 , 26 , 27 , 28 , 31 , 32 ].",
+    "Forest plots showing sensitivity analysis results of the relationship between ultra-processed food intake and the risk of insomnia [ 24 , 25 , 26 , 27 , 28 , 31 , 32 ].",
+    "Funnel plot for evaluation of publication bias. Abbreviations: OR, Odds ratio."
+  ],
+  "tables": [
+    "Characteristics of included studies.",
+    "Dietary ultra-processed food and the risk of insomnia.",
+    "Subgroup analyses of ultra-processed food intake and the risk of insomnia (Highest vs. lowest category meta-analysis).",
+    "GRADE evidence table for ultra-processed food intake and risk of insomnia."
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001501.3299186
+}

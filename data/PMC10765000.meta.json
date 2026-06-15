@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10765000",
+  "pmid": "37652869",
+  "title": "Age-Dependent Association of Height Loss with Incident Fracture Risk in Postmenopausal Korean Women.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lee C, Park HS, Rhee Y, Hong N.",
+  "doi": "10.3803/enm.2023.1734",
+  "figures": [
+    "",
+    "The flowchart of the study population from the Korean Genome and Epidemiology Study (KoGES). QUS, quantitative ultrasound.",
+    "The fracture incidence rate according to the age group and height loss. Age, body mass index, and speed-of-sound at the midshaft tibia were adjusted.",
+    "Kaplan–Meier curve for incident fracture-free survival. (A) Overall population, aged (B) 50–59, (C) 60–69, and (D) 70 years or older.",
+    "Forest plot of fracture risk according to height loss with age subgroups. CI, confidence interval."
+  ],
+  "tables": [
+    "Clinical Characteristics of Study Participants",
+    "Hazard Ratios for Incident Fractures according to Height Loss as a Continuous Variable (per 1 SD Decrease=1.6 cm)"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041435.870372
+}

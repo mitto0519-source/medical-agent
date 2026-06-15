@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11447986",
+  "pmid": "39363323",
+  "title": "Factor analysis of impulsivity in gaming disorder and internet gaming disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Raybould JN, Tunney RJ.",
+  "doi": "10.1186/s12888-024-06072-9",
+  "figures": [],
+  "tables": [
+    "Rotated factor loadings from analysis of trait impulsivity factors with eigenvalues in parentheses",
+    "Correlations between demographic and clinical characteristics of the sample and Factors of Impulsivity",
+    "Binary logistic regression of impulsivity factors and gaming measures",
+    "Comparison between two-factor models of Impulsivity in Addiction and Gaming"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998166.0027585
+}

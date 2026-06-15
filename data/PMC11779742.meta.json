@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11779742",
+  "pmid": "39897463",
+  "title": "Web of Science-Based Visualization of Metabolic Dysfunction-Associated Fatty Liver Disease in Pediatric and Adolescent Populations: A Bibliometric Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hu L, Du H, Zhou Q, Liu C, Zhang T, Yuan M.",
+  "doi": "10.1002/hsr2.70409",
+  "figures": [
+    "Annual publication volume.",
+    "(a) Collaborative mapping of major issuing countries. (b) Collaborative mapping of major issuing organizations.",
+    "Core author collaboration mapping.",
+    "CiteSpace keyword co‐occurrence map.",
+    "(a) Vosviewer keyword clustering map. Legend: Clusters ‐ Cluster 1: dark blue, Cluster 2: yellow, Cluster 3: light blue, Cluster 4: purple, Cluster 5: red, Cluster 6: green. (b) Vosviewer Keyword Timeline Chart."
+  ],
+  "tables": [
+    "The top 10 countries/institutions.",
+    "The top 10 authors.",
+    "Top 10 co‐cited articles."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995039.843629
+}

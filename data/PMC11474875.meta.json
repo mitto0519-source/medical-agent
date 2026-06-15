@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11474875",
+  "pmid": "39379299",
+  "title": "Cardiovascular risk according to genetic predisposition to gout, lifestyle and metabolic health across prospective European and Korean cohorts.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Moon KW, Jung SH, Do H, Son CN, Kim J, Nam Y, Yun JS, Park WY, Won HH, Kim D.",
+  "doi": "10.1136/rmdopen-2024-004552",
+  "figures": [
+    "Forest plots for incident CVD according to gout genetic risk, lifestyle and metabolic syndrome. Cox regression analysis was performed with adjustment for a history of gout age, sex, 1–10 PCs, and genotype array. CVD, cardiovascular disease; MetS, metabolic syndrome.",
+    "Forest plot for incident CVD risk reduced by lifestyle and metabolic syndrome in each genetic risk group in the UK Biobank. Cox regression analysis was performed with adjustment for a history of gout age, sex, 1–10 PCs and genotype array. CVD, cardiovascular disease; MetS, metabolic syndrome.",
+    "Impact of gout history, lifestyle and MetS factors on incident CVD across cohorts. Models were adjusted by age, sex, genotype array, baseline gout and 1-10 PCs. CVD, cardiovascular disease; MetS, metabolic syndrome; BMI, body mass index; DM, diabetes mellitus; SBP, systolic blood pressure; DBP, diastolic blood pressure; EUR, European; EAS, East Asian."
+  ],
+  "tables": [
+    "Characteristics of participants in the UK Biobank",
+    "Characteristics of participants in the KoGES"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037037.6053538
+}

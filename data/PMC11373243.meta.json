@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11373243",
+  "pmid": "39232768",
+  "title": "Prediction of metabolic syndrome using machine learning approaches based on genetic and nutritional factors: a 14-year prospective-based cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Shin D.",
+  "doi": "10.1186/s12920-024-01998-1",
+  "figures": [
+    "Circus plot represents density of single nucleotide polymorphisms (SNPs) for metabolic syndrome. The outer track shows density of tagged SNPs for genome-wide polygenic risk score (gPRS), and the inner track shows  p -values of corresponding. Green dots represent metabolic syndrome associated SNPs with  p -value &lt; 0.001, blue dots represent metabolic syndrome associated SNPs with  p -value &lt; ",
+    "Comparison of the distribution of genome-wide polygenic risk score (gPRS) Z-scores considering metabolic syndrome occurrence at 168 months. The figure presents density distributions of gPRS Z-scores for individuals with (red) and without (green) metabolic syndrome across seven p-value thresholds. Single nucleotide polymorphisms (SNPs) were selected based on varying p-value thresholds ( p  &lt; 0.0"
+  ],
+  "tables": [
+    "General characteristics of study participants",
+    "Seaweed and nutrient intake characteristics of study participants",
+    "Biochemical characteristics of study participants",
+    "Multivariable Cox proportional hazards regression analysis using epidemiological variables and genome-wide polygenic risk score (gPRS) Z-scores in relation the incidence of metabolic syndrome",
+    "Results on predictive performance metrics for metabolic syndrome prediction analysis using machine learning algorithms based on epidemiological, nutritional and genome-wide polygenic risk score (gPRS)"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041697.1718884
+}

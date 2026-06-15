@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10316159",
+  "pmid": "37267086",
+  "title": "Enhanced Pavlovian-to-instrumental transfer in internet gaming disorder.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Qin C, Feng S, Chen Y, Liao X, Cheng X, Tian M, Zhou X, Deng J, Peng Y, Gong K, Liu K, Chen J, Lei W.",
+  "doi": "10.1556/2006.2023.00023",
+  "figures": [
+    "Pavlovian-to-instrumental Transfer (PIT) task. (A) In the Pavlovian phase, participants learned that specific abstract pictures (CSs) predicted specific outcomes. (B) In the instrumental phase, participants could choose the ‘G’ key or the ‘F’ key to obtain gaming-related or shopping-related rewards. (C) In the transfer test, participants performed instrumental key press while one of the CSs or a g",
+    "(A) The interaction effect of group and CS on CR. (B) The magnitude of specific PIT effects compared between IGD and HCs. CS, conditioned stimulus. CR, choice rate. RT, response time. ** p  &lt; 0.01",
+    "Correlations between the IAT scores and PIT effects in the IGD group",
+    ""
+  ],
+  "tables": [
+    "Group differences in HCs and IGD"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998732.8406305
+}

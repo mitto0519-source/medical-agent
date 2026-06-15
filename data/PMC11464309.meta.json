@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11464309",
+  "pmid": "39391081",
+  "title": "The relationship between self-control and internet gaming disorder and problematic social networking site use: the mediation effects of internet use motives.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhou R, Morita N, Zhu C, Ogai Y, Saito T, Yang W, Ogawa M, Zhang H.",
+  "doi": "10.3389/fpsyt.2024.1369973",
+  "figures": [
+    "Conceptual model.",
+    "Paths model of the relationship between variables in male group. *p &lt; 0.05, **p &lt; 0.01.***p &lt; 0.001.",
+    "Paths model of the relationship between variables in female group. *p &lt; 0.05, **p &lt; 0.01.***p &lt; 0.001."
+  ],
+  "tables": [
+    "Sample characteristics.",
+    "Differences between female and male user.",
+    "Differences between female and male users in self-control, internet use motivation, IGD, and PSNSU.",
+    "Correlation analysis results matrix.",
+    "Standardized effects with 95% confidence intervals (CIs) of male user.",
+    "Standardized effects with 95% confidence intervals (CIs) of female user.",
+    "Comparison of path coefficients between male and female groups.",
+    "Comparison of path coefficients between Chinese and Japanese groups."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998644.943909
+}

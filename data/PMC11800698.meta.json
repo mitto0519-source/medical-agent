@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11800698",
+  "pmid": "39230476",
+  "title": "Discontinuity of psychiatric care among patients with bipolar disorder in the Netherlands.",
+  "year": 2025,
+  "journal": "",
+  "authors": "van der Lee AP, Hoogendoorn A, Kupka R, Haan L, Beekman AT.",
+  "doi": "10.1177/00207640241278291",
+  "figures": [
+    "Study design.",
+    "Standardized event ratios (SER) and 95% confidence intervals of 12 psychiatric care providers."
+  ],
+  "tables": [
+    "Patient and treatment characteristics of the study sample ( n  = 2,355).",
+    "The relationship between patient and care characteristics and discontinuity of care ( n  = 2,355).",
+    "Regression parameters of the final logistic regression model obtained from stepwise forward variable selection ( n  = 2,355)."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035892.4500046
+}

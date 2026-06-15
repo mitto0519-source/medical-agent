@@ -1,0 +1,42 @@
+{
+  "pmcid": "PMC10753079",
+  "pmid": "38156293",
+  "title": "How are they doing? The academic performance and mental wellbeing of world cup babies.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Bethmann D, Cho JI.",
+  "doi": "10.1016/j.ssmph.2023.101579",
+  "figures": [
+    "Mass gathering in Seoul 2002. 2",
+    "Total fertility rate of South Korea."
+  ],
+  "tables": [
+    "Ratio of spring borns compared to the January borns by years.",
+    "Data structure.",
+    "Research design.",
+    "Descriptive statistics for academic outcome variables.",
+    "Descriptive statistics for mental wellbeing variables.",
+    "Descriptive statistics for control variables.",
+    "Probability of having elder siblings (unconditional mean).",
+    "Probability of having elder siblings (Mother's age at birth &gt;30).",
+    "Mean difference on family traits between treated and control groups.",
+    "(OLS) DID coefficients on academic outcomes.",
+    "(OLS) robustness checks with different combinations of treated months (March &amp; April).",
+    "(OLS) robustness checks with different combinations of treated months (April &amp; May).",
+    "Placebo test results on academic outcomes.",
+    "(OLS) DID coefficients on mental wellbeing outcomes.",
+    "Placebo test results on mental wellbeing outcomes.",
+    "Hypotheses Testing on Monthly New Birth with World Cup Dummies",
+    "Family Traits of World Cup Children",
+    "(Ordered-Probit) DID Coefficients on Academic Outcomes",
+    "(Ordered-Probit) Robustness Checks with. Different Combinations of Treated Months (March &amp; April)",
+    "(Ordered-Probit) Robustness Checks with. Different Combinations of Treated Months (April &amp; May)",
+    "(OLS) Academic Robustness Checks Using Clustered Standard Errors",
+    "(Ordered-Probit) Academic Robustness Checks Using Clustered Standard Errors",
+    "(Ordered-Probit) DID Coefficients on Mental Wellbeing Outcomes",
+    "(OLS) Diff-in-Diff Results with Clustered Standard Errors",
+    "(Ordered-Probit) Diff-in-Diff Results with Clustered Standard Errors"
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019692.7303736
+}

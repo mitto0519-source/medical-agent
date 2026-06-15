@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10410779",
+  "pmid": "37558974",
+  "title": "Static and dynamic changes of intrinsic brain local connectivity in internet gaming disorder.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Niu X, Gao X, Zhang M, Dang J, Sun J, Lang Y, Wang W, Wei Y, Cheng J, Han S, Zhang Y.",
+  "doi": "10.1186/s12888-023-05009-y",
+  "figures": [
+    "Flow chart of this study",
+    "Compared with healthy controls, IGD subjects showed significantly increased static ReHo. * indicates statistically significant differences. Different numbers of * represent different degrees of  P  value. L: left; R: right; mSFG: medial superior frontal gyrus; SFG: superior frontal gyrus; SMA: supplementary motor area",
+    "Compared with healthy controls, IGD subjects showed significantly increased dynamic ReHo. * indicates statistically significant differences. Different numbers of * represent different degrees of  P  value. L: left; R: right; mSFG: medial superior frontal gyrus; SMA: supplementary motor area; SFG: superior frontal gyrus",
+    "Correlations between sReHo/dReHo values and IAT/PSQI scores in individuals with IGD. ( A ) The sReHo values in the left mSFG were positively correlated with IAT scores. ( B ) The sReHo values in the left SMA were positively correlated with IAT scores. ( C ) The dReHo values in the left SMA were positively correlated with IAT scores. ( D ) The dReHo values in the left caudate nucleus were negativel",
+    "ROC curves of single metric (sReHo or dReHo) and the combination of the two metrics (sReHo + dReHo) for screening IGD in controls. sReHo: static regional homogeneity; dReHo: dynamic regional homogeneity"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of participants",
+    "Differences of static and dynamic ReHo between IGD and HC groups"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998852.844476
+}

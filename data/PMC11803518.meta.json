@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11803518",
+  "pmid": "39909687",
+  "title": "Health benefits of leisure-time physical activity by socioeconomic status, lifestyle risk, and mental health: a multicohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Nyberg ST, Frank P, Pentti J, Alfredsson L, Ervasti J, Goldberg M, Knutsson A, Koskinen A, Lallukka T, Nordin M, Rahkonen O, Strandberg T, Suominen S, Väänänen A, Vahtera J, Virtanen M, Westerlund H, Zins M, Stenholm S, Sabia S, Singh-Manoux A, Hamer M, Kivimäki M.",
+  "doi": "10.1016/s2468-2667(24)00300-1",
+  "figures": [
+    "Study selection for the IPD-Work cohorts and UK Biobank  MET=metabolic equivalent of task.",
+    "Association of leisure-time physical activity with disease-free years between ages 40 years and 75 years in males and females in the IPD-Work and UK Biobank cohorts  Physical activity levels were classified as either low (no or very little moderate or vigorous physical activity), intermediate (&lt;2·5 h of moderate activity per week and &lt;1·25 h of vigorous activity per week) or WHO-recommended ",
+    "Association between leisure-time physical activity and disease-free years using an extended list of diseases in UK Biobank  Physical activity levels were classified as either low (no or very little moderate or vigorous physical activity), intermediate (&lt;2·5 h of moderate activity per week and &lt;1·25 h of vigorous activity per week) or WHO-recommended (≥2·5 h of moderate activity per week or ≥",
+    "Association of leisure-time physical activity with disease-free years between ages 40 years and 75 years by subgroups in the IPD-Work cohorts  Total N indicates the number of participants at each level of physical activity and events indicate the number of chronic disease cases.",
+    "Comparison of disease-free years gained from WHO-recommended leisure-time physical activity between participants in the high-risk versus low-risk categories of socioeconomic factors, lifestyle factors, and depression in the IPD-Work and UK Biobank datasets  Total N indicates the number of participants at each level of physical activity and events indicate the number of chronic disease cases."
+  ],
+  "tables": [
+    "Study designs, participants, and measures of physical activity in IPD-Work cohorts and UK Biobank"
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991685.915308
+}

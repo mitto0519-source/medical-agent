@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC10492159",
+  "pmid": "37691976",
+  "title": "The impact of retirement on body mass index in China: An empirical study based on regression discontinuity design.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Yuan B, Liu W, Cui Y.",
+  "doi": "10.1016/j.ssmph.2023.101434",
+  "figures": [
+    "Male retirement ratio and age.",
+    "Female retirement ratio and age."
+  ],
+  "tables": [
+    "Descriptive statistics of main variables by gender.",
+    "First-stage estimation results by gender.",
+    "Impact of retirement on  devBMI  and weight by gender.",
+    "Effect of different family sizes on  devBMI  and weight.",
+    "Effect of intergenerational care or not on  devBMI  and weight.",
+    "Robustness tests.",
+    "Impact of retirement on channel variables.",
+    "Impact of lifestyles on residents'  devBMI  and weight."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034707.5228987
+}

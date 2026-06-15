@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11206973",
+  "pmid": "",
+  "title": "Does Vitamin D3 Supplementation Improve Depression Scores among Rural Adolescents? A Randomized Controlled Trial",
+  "year": 2024,
+  "journal": "",
+  "authors": "Satyanarayana P, Suryanarayana R, Yesupatham S, Varadapuram Ramalingareddy S, Gopalli N.",
+  "doi": "",
+  "figures": [
+    "Flowchart depicting the participant’s recruitment and study procedure.",
+    "Scatter plot to correlate between depression scores and vitamin D levels in the vitamin D arm."
+  ],
+  "tables": [
+    "Distribution of adolescent school children according to sociodemographic profile.",
+    "Distribution of adolescent school children according to vitamin D levels before and after intervention.",
+    "Distribution of adolescent school children according to calcium levels before and after intervention.",
+    "Comparison of serum vitamin D levels and serum calcium levels before and after intervention among adolescent students.",
+    "Comparison of Beck depression scores before and after intervention among adolescent students.",
+    "Comparison of Beck depression scores after intervention among adolescent students.",
+    "Distribution of adolescent school children according to Beck depression classification before and after intervention.",
+    "Intention-to-treat analysis of BDI scores.",
+    "Difference-in-difference analysis of BDI scores between the vitamin D arm and calcium arm."
+  ],
+  "query": "vitamin D deficiency adolescent depression",
+  "fetched_at": 1780002108.8957982
+}

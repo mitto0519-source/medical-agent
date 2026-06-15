@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11555215",
+  "pmid": "39528679",
+  "title": "Topic modeling and content analysis of people's anxiety-related concerns raised on a computer-mediated health platform.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Liu Y, Shan Y, Sun S, Ji M, Zhou S, You Y, Liu H, Shen Y.",
+  "doi": "10.1038/s41598-024-79164-x",
+  "figures": [
+    "Coherence score for the topic numbers.",
+    "Intertopic Distance Map and Top 30 Most Relevant Terms for Topic 2. PC: principal component, referring to the interactive web-based visualization in Multimedia Appendix 1 for other topics.",
+    "Topic modeling word clouds of the 5 dominant topics.",
+    "Weight of top 10 most relevant terms for the 5 topics.",
+    "t-distributed Stochastic Neighbor Embedding (t-SNE) plot for the topic groups identified."
+  ],
+  "tables": [
+    "Topic prevalence.",
+    "Topics (themes) and corresponding keywords."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999599.9772704
+}

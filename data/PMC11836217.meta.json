@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11836217",
+  "pmid": "39966200",
+  "title": "Prevalence and risk of complications in untreated patients with adult growth hormone deficiency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Fukuoka H, Endo T, Tsuboi S, Fujio S.",
+  "doi": "10.1007/s11102-025-01500-9",
+  "figures": [
+    "Study design  a Claims are collected from hospitals on a monthly basis.  b Earliest onset of AGHD-related complications or the last claim of the patient. ACTH, adrenocorticotropic hormone; AGHD, adult growth hormone deficiency; CCI, Charlson comorbidity index; DM, diabetes mellitus; GHD, growth hormone deficiency; Gn, gonadotropin; GHRT, growth hormone replacement therapy; TSH, thyroid stimulating",
+    "Histogram of age at diagnosis of adult growth hormone deficiency by sex and history of pituitary tumor. ( a ) females without tumor ( b ) females with tumor ( c ) males without tumor ( d ) males with tumor. AGHD, adult growth hormone deficiency",
+    "Kaplan-Meier curve for onset of adult growth hormone deficiency-related complications by history of diabetes mellitus (DM; left) and malignant neoplasm (MN; right) ( a ) DM ( b ) dyslipidemia ( c ) osteoporosis ( d ) ischemic heart disease ( e ) cerebrovascular disease ( f ) all-cause death"
+  ],
+  "tables": [
+    "Characteristics of patients with AGHD ( N  = 8,809) included from April 2008 to September 2022 in the MDV claims database",
+    "Estimated prevalence of AGHD-related complications in 2020"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012626.0644825
+}

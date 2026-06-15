@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11688115",
+  "pmid": "39740783",
+  "title": "High Body Roundness Index Is Associated With Unhealthy Sleep Patterns: Insights From NHANES (2007-2014).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Liu P, Luo Y, He X, Zhang J, Ren F, Zhang B, Zheng B, Wang J.",
+  "doi": "10.1002/brb3.70224",
+  "figures": [
+    "Flowchart of the population included in the final analysis. NHANES, National Health and Nutrition Examination Survey.",
+    "Associations between BRI levels and sleep patterns. CI, confidence interval.",
+    "Subgroup analysis of associations between BRI levels and sleep patterns.",
+    "Comparison of BRI and BMI in predicting sleep pattern (A), sleep disorder (B), sleep duration (C), and sleep trouble (D). BMI, body mass index; BRI, body roundness index; ROC, receiver operating characteristic."
+  ],
+  "tables": [
+    "Weighted demographic characteristics of all participants.",
+    "Weighted multivariate logistic analysis: The association between body roundness index (BRI) levels and sleep pattern.",
+    "Comparison of body roundness index (BRI) levels and body mass index (BMI) in predicting sleep pattern."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002264.2143996
+}

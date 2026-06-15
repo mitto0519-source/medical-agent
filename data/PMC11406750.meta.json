@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11406750",
+  "pmid": "39289774",
+  "title": "Does residential address-based exposure assessment for outdoor air pollution lead to bias in epidemiological studies?",
+  "year": 2024,
+  "journal": "",
+  "authors": "Hoek G, Vienneau D, de Hoogh K.",
+  "doi": "10.1186/s12940-024-01111-0",
+  "figures": [
+    "Flowchart of selection of studies for quantitative comparison of residence-based and dynamic air pollution exposure"
+  ],
+  "tables": [
+    "Studies comparing air pollution exposure estimated for the residential address (RES) and time-activity integrated exposure (PERS)",
+    "Studies comparing health effect estimates in epidemiological studies using exposure at the residential address only and time-activity integrated exposure",
+    "Studies assessing potential bias by using exposure at the residential address only compared to time-activity integrated exposure"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007380.3099225
+}

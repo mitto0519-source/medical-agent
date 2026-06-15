@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11748057",
+  "pmid": "39839221",
+  "title": "Internet Gaming Disorder and Sleep Quality among Jordanian University Students: A Cross-sectional Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Abdallat M, Al-Sanouri M, Al-Salaymeh S, Zoubi M, Barakat T, Badwan A, Alzubi A, Murshidi R.",
+  "doi": "10.2174/0117450179310269240820042452",
+  "figures": [
+    "These four bar charts demonstrate the significant associations between gaming group clustering and various demographic and gaming-related variables, with percentages represented on the y-axis.",
+    "This histogram represents the distribution of PSQI (Pittsburgh Sleep Quality Index) scores, categorized by gender and gaming group, with percentages on the y-axis. The normal distribution curve shows the approximate frequency of each group."
+  ],
+  "tables": [
+    "Demographic data &amp; internet use.",
+    "IGD status and its association with demographic factors.",
+    "Analysis of PSQI components and its association with IGD status.",
+    "Association of study variables with sleep quality."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998415.590819
+}

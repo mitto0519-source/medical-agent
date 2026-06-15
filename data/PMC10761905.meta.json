@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10761905",
+  "pmid": "38173691",
+  "title": "Walking to work: The role of walkability around the workplace in a Dutch adult commuting population.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Osmënaj T, Lam TM, Wagtendonk AJ, den Braver NR.",
+  "doi": "10.1016/j.ssmph.2023.101578",
+  "figures": [],
+  "tables": [
+    "Study population exclusion steps, based on chosen criteria.",
+    "Baseline characteristics for participants of OVIN 2017 in total and across quintiles of workplace walkability, presented in n (%) or mean ± SD or median [IQR].",
+    "Logistic regression for the associations between (1) quintiles of workplace walkability index at 150m buffer size or (2) continuous workplace walkability (per 10-point increment) and odds of walking for commute. The odds ratios and 95% confidence intervals are presented. N = 6769.",
+    "Logistic regression for the association between continuous workplace walkability index at 150m buffer size (per 10-point increment) and odds of walking for commute, stratified by residential urbanization degrees (highly urban, urban, rural). The odds ratios and 95% confidence intervals are presented. N = 6769.",
+    "Logistic regression for the association between combined walkability index (residential/workplace) at 150m buffer size and odds of walking for commute. The odds ratios and 95% confidence intervals are presented. N = 6769."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007420.5497828
+}

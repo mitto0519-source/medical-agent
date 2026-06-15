@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11377966",
+  "pmid": "39238364",
+  "title": "Gender disparities in multi-state health transitions and life expectancy among the ≥50-year-old population: A cross-national multi-cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Talifu Z, Guo S, Su B, Wu Y, Wang Y, Liu J, Luo Y, Zheng X.",
+  "doi": "10.7189/jogh.14.04156",
+  "figures": [
+    "Heat maps based on the 10/20/30-year state transition probabilities for each cohort. The horizontal axis corresponds to the initial states (‘robust’, ‘IADL-disabled’, and ‘BADL-disabled), while the vertical axis represents the final states (three initial states or death). Each row represents a 10-year, 20-year, 30-year time span. Darker shades in the table indicate higher probabilities of transiti",
+    "The state transition HRs for different genders (men as reference).",
+    "Expected lifespan under different states from 50 to 90.",
+    "Difference in LE between genders at 50 (men as reference)."
+  ],
+  "tables": [
+    "Baseline characteristics of study participants*"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040035.785681
+}

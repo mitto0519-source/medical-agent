@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11728935",
+  "pmid": "39530793",
+  "title": "High-coverage targeted lipidomics revealed a novel serum lipid dysregulation profile in adult growth hormone deficiency.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Yang H, Chen M, Jiang L, Wang L, Duan L, Gong F, Zhu H, Pan H.",
+  "doi": "10.1530/ec-24-0424",
+  "figures": [
+    "Overall lipidomic profiling. (A) Flowchart of the study. (B) Twenty-nine lipid subclasses identified in this study. (C) Median estimated concentration across all participant samples.",
+    "Serum lipidomic panel distinguishing between AGHD and healthy controls. (A). Heatmap of the lipid class. The average concentration of a lipid metabolite was standardized to be 0 and is shown in white. If it is below the average value, it will become negative, while if it is above the average value, it will be positive. The darker the color, the greater the difference from the average value. The co",
+    "AGHD-associated lipid signatures. (A) Correlations between clinical measures and lipid profiles for AGHD. (B) Global lipidome disruption in AGHD. Volcano plot (C) and bar plot (D) of differential metabolites between NAFLD and NL in AGHD patients with a  q  value  &lt; 0.05 and |log 2 (fold change)|  &gt;  0."
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of AGHD patients with iGCT.",
+    "Comparison of baseline characteristics between AGHD patients and healthy controls."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012898.9898121
+}

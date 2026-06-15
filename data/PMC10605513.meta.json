@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC10605513",
+  "pmid": "37891848",
+  "title": "Chronotype-Dependent Sleep Loss Is Associated with a Lower Amplitude in Circadian Rhythm and a Higher Fragmentation of REM Sleep in Young Healthy Adults.",
+  "year": 2023,
+  "journal": "",
+  "authors": "von Gall C, Holub L, Pfeffer M, Eickhoff S.",
+  "doi": "10.3390/brainsci13101482",
+  "figures": [
+    "Schematic representation of sleep data for a subject on two consecutive nights, as displayed by the proprietary Fitbit application. We used a custom application to extract objective measures of sleep timing such as midpoint of sleep and sleep duration and variables of sleep architecture such as amount, percentage and fragmentation of sleep stages. The Clocklab toolbox (Actimetrics) was used for th",
+    "Differences in subjective sleep quality and objective sleep timing between workdays (WD) and free days (FD). ( a ) Frequency distribution of self-reported tiredness upon waking (1, well rested, 2 tired, 3 very tired), as a measure for subjective sleep quality. ( b ) Midpoint of sleep (MS). Data normally distributed,  t -test ****  p  &lt; 0.0001. ( c ) Sleep duration (SD). Data normally distribute",
+    "Heatmap summarizing correlations between measures for objective sleep timing and variables assessed by questionnaire. Midpoint of sleep (MS), sleep duration (SD), social jet lag (SJL), sleep loss (SL), self-reported tiredness upon waking (TN), self-reported sleep disturbance (Dis) and biological sex. Where applicable, the data are expressed separately for workdays (WD) and free days (FD).",
+    "Phase and amplitude of circadian rhythms of sleep stages. ( a ) Phase of the circadian rhythms of total sleep and sleep stages; ( b ) phase of the circadian rhythm in sleep stages relative to the phase of the circadian rhythm in total sleep; ( c ) amplitudes of the circadian (24 h) rhythms of total sleep and sleep stages. Middle lines and error bars represent the means ± standard deviation.",
+    "Heatmap summarizing correlations between variables assessed by questionnaire, objective measures of sleep timing and variables on circadian rhythms of sleep stages. Midpoint of sleep (MS), sleep duration (SD), social jet lag (SJL), sleep loss (SL), self-reported tiredness upon waking (TN), self-reported sleep disturbance (Dis), biological sex (Sex). Where applicable, the data are expressed separat",
+    "Differences in sleep composition between workdays (WD) and free days (FD): ( a ) amount of sleep stages per night in minutes. Data normally distributed,  t -test *  p  &lt; 0.05; ( b ) proportion of sleep stages in percent of total sleep; ( c ) deep sleep fragmentation index (DFI); ( d ) REM sleep fragmentation index (RFI); and ( e ) fragmentation index of wake after sleep onset (WFI). Middle line",
+    "Heatmaps summarizing the correlations between variables of sleep composition and the amplitude of the circadian rhythms of sleep stages. ( a ) Correlations between sleep stage amount (min) and proportion (% of total sleep), fragmentation index of deep sleep (DFI), fragmentation index of REM sleep (RFI) and fragmentation index of wake after sleep onset (WFI). ( b ) Correlations between amplitude of",
+    "Heatmap summarizing correlations between measures of objective sleep timing, self-reported tiredness on waking, sleep disturbances, biological sex and most relevant variables on sleep architecture. Midpoint of sleep (MS); sleep duration (SD); social jet lag (SJL); sleep loss (SL); self-reported tiredness on waking (TN); self-reported sleep disturbance (Dis); biological sex (Sex); proportions of de",
+    "Graphic summary. Chronotype-related sleep loss is correlated with the amplitude of the circadian rhythm and the fragmentation of REM sleep. The amplitude of the circadian rhythm and the fragmentation of REM sleep are correlated with the proportion of REM sleep. Self-reported tiredness on free days and sleep disturbances are correlated with the proportion and fragmentation of REM sleep. Green arrow"
+  ],
+  "tables": [
+    "Definition and distribution of vvariables assessed by questionnaire."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001327.6095536
+}

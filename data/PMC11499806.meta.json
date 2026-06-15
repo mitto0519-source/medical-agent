@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11499806",
+  "pmid": "39448204",
+  "title": "The mSQUASH is a feasible and valid measurement tool to uniformly assess daily physical activity in patients with rheumatic diseases.",
+  "year": 2024,
+  "journal": "",
+  "authors": "van der Kraan YM, Gensler L, Paap D, Thovmasyan E, Ausma N, Kokol H, Carbo M, Kieskamp SC, de Leeuw K, van der Geest KSM, Bootsma H, Spoorenberg A, Arends S.",
+  "doi": "10.1136/rmdopen-2024-004696",
+  "figures": [
+    "Flowchart of forward-backward procedure according to the protocol of Beaton. axSpA, axial spondyloarthritis; GCA, giant cell arteritis; mSQUASH, modified Short QUestionnaire to ASsess Health-enhancing physical activity; PMR, polymyalgia rheumatica; SLE, systemic lupus erythematosus, IMIDs, immune-mediated inflammatory diseases.",
+    "Construct validity: scatter plots of the association between mSQUASH total activity score and clinical assessments. mSQUASH, modified Short QUestionnaire to ASsess Health-enhancing physical activity.",
+    "Test–retest reliability: Bland-Altman plot of mSQUASH total activity score. mSQUASH, modified Short QUestionnaire to ASsess Health-enhancing physical activity."
+  ],
+  "tables": [
+    "Characteristics of the 95 patients with axSpA included in the clinical validation study",
+    "Test–retest reliability: ICC of mSQUASH total activity score and different domains",
+    "Responsiveness: SRM using the Anchor method for self-reported improvement, stability and worsening of physical activity"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007573.9460316
+}

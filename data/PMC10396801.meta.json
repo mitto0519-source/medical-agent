@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10396801",
+  "pmid": "36822191",
+  "title": "Dynamic changes in clinical biomarkers of cardiometabolic diseases by changes in exercise behavior, and network comparisons: a community-based prospective cohort study in Korea.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Park J, Choi J, Kim JE, Park SM, Cho JY, Kang D, Lee M, Choi JY.",
+  "doi": "10.4178/epih.e2023026",
+  "figures": [
+    "Inclusion and exclusion criteria of the study population in community-based cohort study (Ansan-Ansung cohort study).",
+    "Networks of clinical biomarkers according to exercise behavior in men. Networks were constructed based on partial correlation coefficients adjusted for age (| r |&gt;0.3 and p-value &lt;0.05). (A) Network of clinical biomarkers in men who did not regularly exercise consistently (14 nodes, and 21 edges). (B) Network of clinical biomarkers in men who changed to exercise behavior (14 nodes, and 36 ed",
+    "Networks of clinical biomarkers according to exercise behavior in women. Networks were constructed based on partial correlation coefficients adjusted for age (| r |&gt;0.3 and p-value &lt;0.05). (A) Network of clinical biomarkers in women who did not regularly exercise consistently (14 nodes, and 24 edges). (B) Network of clinical biomarkers in women who changed to exercise behavior (14 nodes, and",
+    ""
+  ],
+  "tables": [
+    "Characteristics of the study population at baseline (third phase) by participation in regular exercise  1",
+    "Distribution of biomarkers at baseline (third phase) by participation in regular exercise  1",
+    "Relative changes  1   in biomarkers between baseline (third phase) and at the second follow-up (fifth phase) in men and women, according to patterns of participation in regular exercise"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041493.5689044
+}

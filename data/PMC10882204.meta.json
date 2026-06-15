@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10882204",
+  "pmid": "38390252",
+  "title": "Active mobility and mental health: A scoping review towards a healthier world.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Scrivano L, Tessari A, Marcora SM, Manners DN.",
+  "doi": "10.1017/gmh.2023.74",
+  "figures": [
+    "",
+    "Definitions of the included mental health outcomes",
+    "Word clouds summarising the most common study-specific phrases found in articles included in the review are categorised as (a) related to outcomes or (b) related to covariates. The size of the text is proportional to the relative number of occurrences of the phrase.",
+    "The study distribution in the review is projected onto the world map (left panel), while European studies are shown in the enlargement (right panel). The size of the symbols is related to the number of participants. The location of each symbol is centred on the centre of the city, region or country from which participants were drawn.",
+    "Albatross plots mapping the imputed effect size of each study for which data were available regarding differences in outcome between study participants selecting active and motorised mobility for transport needs in daily life. Curved lines join points with equal effect sizes (labelled 0.1, 0.25, 0.5). The  x -axis indicates the reported  p -value. Points to the right of the origin (null  p -value)"
+  ],
+  "tables": [
+    "Definitions of the included mental health outcomes",
+    "",
+    "Summary of study characteristics and participants, ordered by study design and year of publication",
+    "Summary of findings relating to the effect of active mobility on aspects of mental health, ordered by mental health variable, study design, and year of publication"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008124.681952
+}

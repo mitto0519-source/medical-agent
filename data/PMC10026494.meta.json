@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10026494",
+  "pmid": "36941547",
+  "title": "Association between healthy sleep patterns and depressive trajectories among college students: a prospective cohort study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhang D, Qu Y, Zhai S, Li T, Xie Y, Tao S, Zou L, Tao F, Wu X.",
+  "doi": "10.1186/s12888-023-04596-0",
+  "figures": [
+    "The association between healthy sleep patterns and depression    Note: ***:  P &lt;0.001",
+    "The trajectories of depression symptoms",
+    "The association between individual sleep behaviors, healthy sleep patterns and different trajectories of depression symptoms   Note: ns: no significant; **: P&lt;0.001"
+  ],
+  "tables": [
+    "Baseline characteristics of participants according to healthy sleep score (N = 999)",
+    "Logistic regression of healthy sleep pattern and different trajectories of depression symptoms"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001724.4230387
+}

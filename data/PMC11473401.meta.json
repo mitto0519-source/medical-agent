@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11473401",
+  "pmid": "39059709",
+  "title": "Metabolomics signatures of sweetened beverages and added sugar are related to anthropometric measures of adiposity in young individuals: results from a cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Muli S, Schnermann ME, Merdas M, Rattner J, Achaintre D, Perrar I, Goerdten J, Alexy U, Scalbert A, Schmid M, Floegel A, Keski-Rahkonen P, Oluwagbemigun K, Nöthlings U.",
+  "doi": "10.1016/j.ajcnut.2024.07.021",
+  "figures": [
+    "Study design and analysis. (A) Analytic samples and data collection. Children urine included 2 dietary assessments and 2 urine collections. Adolescent urine included single dietary assessment and urine collection. Young adult plasma included multiple (3–6) dietary assessments within 5 y preceding a single blood draw. (B) Study analytic plan. %BF, body fat percentage; 3d-WDR, 3-d weighed dietary re",
+    "The associations of food groups with urine metabolites in adolescents. All models were adjusted for age, sex, energy intake, physical activity, alcohol and smoking status. Metabolites with false discovery rate–adjusted  q  value &lt;0.05: AS,  n  = 32; LNCSB,  n  = 11; SSB,  n  = 37, and SBs,  n  = 34. The histogram bars represent the log-transformed  P  values: turquoise, positive association; li"
+  ],
+  "tables": [
+    "Basic characteristics of the study population  1",
+    "Multivariable linear regression estimates of the associations of food groups with urine metabolites in children ( n  = 297)",
+    "Multivariable linear regression estimates of the associations of food groups with plasma metabolites ( n  = 195)",
+    "Associations of food-related metabolites with adiposity measures"
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975745.5762565
+}

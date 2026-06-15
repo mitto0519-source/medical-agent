@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10660849",
+  "pmid": "37987393",
+  "title": "Effects of Vortioxetine on Sleep Architecture of Adolescents with Major Depressive Disorder.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Mlyncekova Z, Hutka P, Visnovcova Z, Ferencova N, Kovacova V, Macejova A, Tonhajzerova I, Ondrejka I.",
+  "doi": "10.3390/clockssleep5040042",
+  "figures": [
+    "Within-group comparisons of significantly changed parameters before and after treatment: ( A ) REM%; ( B ) REM latency (min). Black marks and lines indicate the patients with a drug dose of 10 mg; red marks and lines indicate the patients with a drug dose of 15 mg; blue marks and lines indicate the patients with a drug dose of 20 mg; REM—rapid eye movement, v-PSG I—video polysomnography before tre",
+    "STROBE flow chart of participants.",
+    "Study flow diagram.MDD—major depressive disorder, DSM-5—Diagnostic and Statistical Manual of, CDI—Children´s Depression Inventory, AIS—Athens Insomnia Scale, v-PSG—video-polysomnography, REM—rapid eye movement sleep."
+  ],
+  "tables": [
+    "Vortioxetine and its effects on sleep.",
+    "The questionnaire indices before and after treatment.",
+    "Mean differences in conventional sleep-related indices, sleep fragmentation indices, and EEG spectral power for delta and alpha wave during all sleep periods and individual sleep stages (N1, N2, N3, NREM, and REM) before and after treatment.",
+    "Baseline characteristics of MDD adolescents involved in the study."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056529.9518082
+}

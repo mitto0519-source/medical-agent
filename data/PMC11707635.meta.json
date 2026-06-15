@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11707635",
+  "pmid": "39777444",
+  "title": "Mental Health Care Utilization and Prescription Rates Among Children, Adolescents, and Young Adults in France.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Fond G, Pauly V, Brousse Y, Llorca PM, Cortese S, Rahmati M, Correll CU, Gosling CJ, Fornaro M, Solmi M, Smith L, Veronese N, Yon DK, Auquier P, Duclos A, Boyer L.",
+  "doi": "10.1001/jamanetworkopen.2024.52789",
+  "figures": [
+    "Interrupted Time Series Analysis of Changes in Mental Health Care Utilization Before and After the Beginning of the COVID-19 Pandemic With Annual Relative Risk (RR)   a  P  &lt; .001.   b  P  &lt; .05.  The reported RR are annual and can be interpreted as follows, using full-time psychiatric hospitalization as an example: before March 2020, the annual rate of these hospitalizations increased signi",
+    "Interrupted Time Series Analysis of Changes in Prescriptions of Antidepressants, Anxiolytics, Hypnotics, and Mood Stabilizers Before and After the Beginning of the COVID-19 Pandemic With Annual Relative Risk (RR)   a  P  &lt; .001.   b  P  &lt; .05.  The reported RR are annual and can be interpreted as follows, using antidepressants prescriptions as an example: before March 2020, the annual rate o",
+    "Interrupted Time Series Analysis of Changes in Prescriptions of Antipsychotics, Methylphenidate, and Medications for Alcohol Dependence Before and After the Beginning of the COVID-19 Pandemic With Annual Relative Risk (RR)   a  P  &lt; .001.   b  P  &lt; .05.  The reported RR are annual and can be interpreted as follows, using antipsychotics prescriptions as an example: before March 2020, the annu"
+  ],
+  "tables": [
+    "Change in Prescription Rates Between 2016 and 2022 by Medication a"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059839.8053453
+}

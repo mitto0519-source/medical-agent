@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11091800",
+  "pmid": "38683658",
+  "title": "Digital Phenotypes for Early Detection of Internet Gaming Disorder in Adolescent Students: Explorative Data-Driven Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Cho K, Kim M, Cho Y, Hur JW, Kim DH, Park S, Park S, Jang M, Lee CG, Kwon JS.",
+  "doi": "10.2196/50259",
+  "figures": [
+    "Multiple regression model based on digital phenotypes. IGDS: Internet Gaming Disorder Scale."
+  ],
+  "tables": [
+    "Demographic information of participants with their internet gaming disorder (IGD) scores.",
+    "Correlation and multiple regression results between the Internet Gaming Disorder Scale and its indicators.",
+    "Multivariate ANOVA comparison between the internet gaming disorder (IGD) and non-IGD groups."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998690.8815377
+}

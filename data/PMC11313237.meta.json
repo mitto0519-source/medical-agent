@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11313237",
+  "pmid": "39126038",
+  "title": "The Complex Relationship between Neuromodulators, Circadian Rhythms, and Insomnia in Patients with Obstructive Sleep Apnea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Gabryelska A, Turkiewicz S, Ditmer M, Gajewski A, Strzelecki D, Białasiewicz P, Chałubiński M, Sochal M.",
+  "doi": "10.3390/ijms25158469",
+  "figures": [],
+  "tables": [
+    "Comparison of demographic, polysomnography, questionnaires, neuromodulator gene expressions, and protein levels between study groups.",
+    "Comparison of questionnaire data, neuromodulator gene expressions, and protein levels in the context of clinically significant insomnia.",
+    "Correlations between questionnaire data, neuromodulator gene expressions, and protein levels.",
+    "Linear regression models for ISI score in OSA and control group. AM—subjective amplitude; CQ—Chronotype Questionnaire; ISI—Insomnia Severity Index; ME—morningness-eveningness; NTF4—neurotrophin 4; OSA—obstructive sleep apnea."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001217.0533779
+}

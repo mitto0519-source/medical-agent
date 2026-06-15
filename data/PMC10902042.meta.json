@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC10902042",
+  "pmid": "38426000",
+  "title": "Efficacy and safety of non-invasive brain stimulation in combination with antidepressants in adolescents with depression: a systematic review and meta-analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Li Y, Liu X.",
+  "doi": "10.3389/fpsyt.2024.1288338",
+  "figures": [
+    "The PRISMA flowchart of the literature search and selection.",
+    "Assessment of risk of bias in the included studies (RCTs).",
+    "Forest plot of remission rate.",
+    "Forest plot of CRDS score.",
+    "Forest plot of HAMD score.",
+    "Forest plot of adverse effect rate.",
+    "Sensitivity analysis for the remission rate by sequentially excluding each individual trial.",
+    "Sensitivity analysis for the CRDS score by sequentially excluding each individual trial.",
+    "Sensitivity analysis for the HADS score by sequentially excluding each individual trial."
+  ],
+  "tables": [
+    "Characteristics of the included studies.",
+    "Quality assessment of included studies (Single-arm trials and non-RCT).",
+    "Subgroup analyses of CRDS score was performed according to intervention measures, duration of treatment, diagnostic scales. *, P&lt;0.05."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056548.2354314
+}

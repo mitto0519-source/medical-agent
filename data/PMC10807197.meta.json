@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10807197",
+  "pmid": "38263040",
+  "title": "The effect of drug holidays on sexual dysfunction in men treated with selective serotonin reuptake inhibitors (SSRIs) other than fluoxetine: an 8-week open-label randomized clinical trial.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Alipour-Kivi A, Eissazade N, Shariat SV, Salehian R, Soraya S, Askari S, Shalbafan M.",
+  "doi": "10.1186/s12888-024-05507-7",
+  "figures": [
+    "Flow diagram of the participants of the trial",
+    "MSHQ total score changes of the participants during the course of trial. *significant difference between the two groups",
+    "MSHQ erection score changes of the participants during the course of trial. *significant difference between the two groups",
+    "MSHQ ejaculation score changes of the participants during the course of trial",
+    "MSHQ satisfaction score changes of the participants during the course of trial. *significant difference between the two groups"
+  ],
+  "tables": [
+    "Demographic data of the participants",
+    "MSHQ scores of the participants in total, and the erection, ejaculation and satisfaction subscales (mean ± standard deviation) and the mean difference between the groups at baseline and weeks 4 and 8",
+    "Friedman test’s mean rank scores for the satisfaction subscale of MSHQ"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056437.9993722
+}

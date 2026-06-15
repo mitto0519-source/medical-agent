@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11763419",
+  "pmid": "39857841",
+  "title": "Association Between Adolescent Violence Exposure and the Risk of Suicide: A 15-Year Study in Taiwan.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Sung C, Chung CH, Sun CA, Tsao CH, Ng DY, Weng TH, Fann LY, Lin FH, Chien WC.",
+  "doi": "10.3390/children12010010",
+  "figures": [
+    "Flowchart of the study.",
+    "Kaplan–Meier for cumulative risk of suicide aged 10–18, stratified by violence with log-rank test.",
+    "Joint effect for factors of suicide stratified by violence and mental disorders using Cox regression."
+  ],
+  "tables": [
+    "Characteristics of study in the baseline.",
+    "Characteristics of study at the endpoint.",
+    "Factors of suicide using Cox regression.",
+    "Factors of suicide stratified by variables listed in the table using Cox regression and Bonferroni correction for multiple comparisons.",
+    "Factors of suicide subgroups using Cox regression and Bonferroni correction for multiple comparisons.",
+    "Factors of suicide stratified by violence and mental disorders using Cox regression."
+  ],
+  "query": "Taiwan adolescent mental health",
+  "fetched_at": 1780049129.7627716
+}

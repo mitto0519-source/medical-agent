@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11826310",
+  "pmid": "39958619",
+  "title": "Association between different types of smoking and first sexual behavior in adolescents: Survey data from South Korea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wu Y, Du W.",
+  "doi": "10.18332/tid/200197",
+  "figures": [
+    "Flowchart of participants selection, South Korea (2018–2022)",
+    "The trend in the number of types of tobacco used by adolescents, South Korea (2018–2022) (N=207964)",
+    "The visualization of the regression results for first-time smoking and first-time sexual activity, South Korea (2018–2021) (N=3151)",
+    "Kaplan-Meier (KM) survival estimates of initial sexual behavior by gender, South Korea (2018–2021)",
+    "Cox proportional hazards regression of initial sexual behavior by gender, South Korea (2018–2021)",
+    "Moderating effect of gender, South Korea (2018–2021) (N=3151)"
+  ],
+  "tables": [
+    "Descriptive statistics for all variables, by smoking or not, South Korea (2018–2022) (N=207964)",
+    "Logit regression results on the relationship between adolescent tobacco use types and the occurrence of sexual behavior, South Korea (2018–2022) (N=207964)",
+    "Regression results of the number of tobacco types used and the occurrence of sexual activity, South Korea (2018–2022) (N=207964)",
+    "Moderating effect of gender, South Korea (2018–2021) (N=3151)"
+  ],
+  "query": "KYRBS Korea Youth Risk Behavior",
+  "fetched_at": 1779977340.7401967
+}

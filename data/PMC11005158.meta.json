@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11005158",
+  "pmid": "38594725",
+  "title": "Effects of cognitive behavioural therapy and bright light therapy for insomnia in youths with eveningness: study protocol for a randomised controlled trial.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Li SX, Cheung FTW, Chan NY, Chan JWY, Zhang J, Li AM, Espie CA, Gradisar M, Wing YK.",
+  "doi": "10.1186/s13063-024-08090-0",
+  "figures": [
+    "Flowchart of study design. CBTI + BLT cognitive behavioural therapy with active bright light therapy, CBTI-BLT cognitive behavioural therapy with placebo light therapy, HADS Hospital Anxiety and Depression Scale, ISI Insomnia Severity Index, rMEQ reduced Morningness-Eveningness Scale, WL waitlist control"
+  ],
+  "tables": [
+    "Study schedule",
+    "Circadian parameters derived from actigraphy circadian computations",
+    "List of neurocognitive tasks",
+    "Summary of the CBT-I programme"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001369.431509
+}

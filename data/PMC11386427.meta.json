@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11386427",
+  "pmid": "39255302",
+  "title": "Parenting stress, dyadic coping and endocrine markers of stress and resilience in foster and biological mothers.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Reindl V, Lohaus A, Heinrichs N, Konrad K.",
+  "doi": "10.1371/journal.pone.0310316",
+  "figures": [
+    "Sample description and comparison between the foster care group and biological control group."
+  ],
+  "tables": [
+    "Sample description and comparison between the foster care group and biological control group.",
+    "Stepwise regression predicting parenting stress at T3.",
+    "Fixed effects of time, group and relevant covariates predicting mother’s hair steroid hormone concentrations.",
+    "Fixed effects of parenting stress, dyadic coping and relevant covariates predicting mother’s hair steroid hormone concentrations."
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780051011.908271
+}

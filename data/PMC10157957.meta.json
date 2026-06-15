@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10157957",
+  "pmid": "37138264",
+  "title": "Longitudinal mortality of preserved ratio impaired spirometry in a middle-aged Asian cohort.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Sin S, Lee EJ, Won S, Kim WJ.",
+  "doi": "10.1186/s12890-023-02451-2",
+  "figures": [
+    "Flow diagram of the study population. AFL, airflow limitation; BMI, body mass index; COPD, chronic obstructive pulmonary disease; PRISm, preserved ratio of impaired spirometry"
+  ],
+  "tables": [
+    "Baseline demographics of participants with normal spirometry, PRISm, and COPD",
+    "Multivariable Cox proportional analysis for predicting all-cause mortality",
+    "Multivariable Cox proportional analysis for predicting cardiovascular mortality"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041937.1141865
+}

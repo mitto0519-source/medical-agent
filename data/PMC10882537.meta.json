@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10882537",
+  "pmid": "38234114",
+  "title": "Adverse childhood experiences and unhealthy dietary behaviours in adulthood.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Testa A, Zhang L, Jackson DB, Ganson KT, Raney JH, Nagata JM.",
+  "doi": "10.1017/s1368980024000144",
+  "figures": [
+    "Conceptual mode of the association between adverse childhood experiences and fast-food and sugary beverage consumption"
+  ],
+  "tables": [
+    "Descriptive statistics stratified by adverse childhood experiences (ACE): National Longitudinal Study of Adolescent to Adult Health ( n  8599)",
+    "Multinomial logistic regression of cumulative ACE on fast-food consumption quartiles: National Longitudinal Study of Adolescent to Adult Health ( n  8599)",
+    "Multinomial logistic regression of cumulative ACE on sugary beverage consumption quartiles: National Longitudinal Study of Adolescent to Adult Health ( n  8599)",
+    "Results of Karlson–Holm–Breen (KHB) mediation analysis of fast-food and sugary beverage consumption: National Longitudinal Study of Adolescent to Adult Health ( n  8599)"
+  ],
+  "query": "zero-calorie beverage mental health",
+  "fetched_at": 1779974722.543567
+}

@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11168682",
+  "pmid": "38865314",
+  "title": "Investigating the causal effects of COVID-19 vaccination on the adoption of protective behaviors in Japan: Insights from a fuzzy regression discontinuity design.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chen F, Nakanishi H, Sekizawa Y, Ochi S, So M.",
+  "doi": "10.1371/journal.pone.0305043",
+  "figures": [
+    "Characteristics of study participants in the fourth round of the survey."
+  ],
+  "tables": [
+    "Characteristics of study participants in the fourth round of the survey.",
+    "Estimation results of the regression discontinuity design on outcomes."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034663.2796872
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11636332",
+  "pmid": "39608108",
+  "title": "Interactive effects of social media use and puberty on resting-state cortical activity and mental health symptoms.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Petro NM, Picci G, Webert LK, Schantell M, Son JJ, Ward TW, McDonald KM, Livermore CL, Killanin AD, Rice DL, Ende GC, Coutant AT, Steiner EL, Wilson TW.",
+  "doi": "10.1016/j.dcn.2024.101479",
+  "figures": [
+    "Relationship between perceived pubertal stage and social media behavior.  Scatterplots illustrate the relationship between perceived pubertal stage ( x -axes) and social media behaviors ( y -axes), including active social media use (top), passive social media use (middle), and social comparison and feedback seeking (SCFS; bottom). Each data point is shown with 30 % transparency to depict the densi",
+    "Moderating effect of perceived pubertal stage on the relationship between social comparison and feedback seeking (SCFS) and spontaneous cortical activity.  Cortical surface maps (right) display the vertex-wise  t -values representing the interaction between SCFS and perceived pubertal stage on alpha (top) and beta (bottom) spontaneous cortical activity. Green dashed circles denote the vertices con",
+    "Moderating effect of perceived pubertal stage on the relationship between social comparison and feedback seeking (SCFS) and mental health symptoms.  Scatterplots illustrate the relationship between SCFS (x-axis) and the BASC-3 outcome measures (y-axis) of anxiety (top), attention problems (middle), and depression (bottom). The outcome measures are adjusted for all predictors and nuisance variables"
+  ],
+  "tables": [
+    "Participant Demographics."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046365.0643475
+}

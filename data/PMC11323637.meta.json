@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11323637",
+  "pmid": "38336614",
+  "title": "Incorporating functional annotation with bilevel continuous shrinkage for polygenic risk prediction.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhuang Y, Kim NY, Fritsche LG, Mukherjee B, Lee S.",
+  "doi": "10.1186/s12859-024-05664-2",
+  "figures": [
+    "Comparison of prediction performance in simulation studies with non-overlapping annotation groups (Settings 1–5), measured by AUC ( a ) and      R   2     ( b ). A total of     M  =  125  ,  000     SNPs were sampled from the UK Biobank data with 1 KG as LD reference panel. Genetic effects were generated using a mixture of point-Normal models with total heritability fixed at 0.7. GWAS results from",
+    "Comparison of prediction performance in simulation studies with overlapping annotation groups (Settings 6–7), measured by AUC ( a ) and      R   2     ( b ). Left: Setting 6 with overlapping pattern I, in which IOU is higher among the annotation groups with low heritability contribution. Right: Setting 7 with overlapping pattern II where IOU is higher among the annotation groups with high heritabi",
+    "Evaluation of AUC for UK Biobank analysis results. Left panel: KEGG functional annotations were used for the analysis of the proposed; Right panel: Refseq gene-based functional annotations from ANNOVAR were used for the analysis of PRSbils. From top to bottom: type II diabetes, BMI, LDL. For type II diabetes, summary statistics were obtained result from a GWAS analysis of 407,701 white British UK ",
+    "Evaluation of AUC for the MGI data. Left panel: KEGG functional annotations were used for the analysis of the proposed; Right panel: Refseq gene-based functional annotations from ANNOVAR were used for the analysis of PRSbils.  a  type II diabetes;  b  BMI;  c  LDL. For type II diabetes, summary statistics were obtained result from a GWAS analysis of 407,701 white British UK Biobank participants. F"
+  ],
+  "tables": [
+    "Summary of parameter settings in the simulation study"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037649.4348578
+}

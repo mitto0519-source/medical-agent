@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11545055",
+  "pmid": "39517380",
+  "title": "Differences in Fibromyalgia Characteristics by Mode of Commute and Age in Women: The Al-Ándalus Project.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Herrador-Colmenero M, Borges-Cosic M, Segura-Jiménez V, Álvarez-Gallardo IC, Chillón P, Delgado-Fernández M.",
+  "doi": "10.3390/healthcare12212168",
+  "figures": [
+    "Differences (ANCOVA) in ( a ) Fibromyalgia Impact Questionnaire Revised (FIQR), ( b ) 36-item Short-Form Health Survey (SF-36) Physical Score, and ( c ) Spanish version of the Multidimensional Fatigue Inventory (MFI-S) general fatigue scores among groups by age combined with mode of commute (i.e., young and active commuters; young and passive commuters; old and active commuters; and old and passiv"
+  ],
+  "tables": [
+    "Symptomatology characteristics and mode of commute in participants with fibromyalgia.",
+    "Comparison (linear regression analyses) of symptomatology characteristics between active and passive commuters from the younger (&lt;51 years) and older (≥51 years) groups."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007147.6298492
+}

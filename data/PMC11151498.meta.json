@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11151498",
+  "pmid": "38834952",
+  "title": "Association between childhood trauma and Internet gaming disorder: a moderated mediation analysis with depression as a mediator and psychological resilience as a moderator.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Liu Q, Ouyang L, Fan L, Liao A, Li Z, Chen X, Yuan L, He Y.",
+  "doi": "10.1186/s12888-024-05863-4",
+  "figures": [
+    "A flow chart of data analyzing.  Note  (1) childhood trauma = The Childhood Trauma Questionnaire Short Form score (2) Internet gaming disorder = The Internet Gaming Disorder Scale-Short Form score (3) depression = The Patient Health Questionnaire-9 score (4) psychological resilience = The Connor-Davidson Resilience Scale score",
+    "Mediated model predicting Internet gaming disorder based on the experience of childhood trauma mediated by depression.  Note  (1) 1. Childhood Trauma = The Childhood Trauma Questionnaire Short Form score 2. Depression = The Patient Health Questionnaire-9 score 3. Internet Gaming Disorder = The Internet Gaming Disorder Scale-Short Form score. (2) ***  P  &lt; 0.001 **  P  &lt; 0.01 *  P  &lt; 0.05",
+    "Model of the moderating role of psychological resilience on the indirect relationship between childhood trauma and Internet gaming disorder.  Note  (1) 1. Childhood Trauma = The Childhood Trauma Questionnaire Short Form score 2. Depression = The Patient Health Questionnaire-9 score 3. Internet Gaming Disorder = The Internet Gaming Disorder Scale-Short Form score 4. Psychological Resilience = The C",
+    "Moderating effect of resilience in the relationship between childhood trauma and Internet gaming disorder.  Note  (1) Childhood Trauma = The Childhood Trauma Questionnaire Short Form score (2) Internet Gaming Disorder = The Internet Gaming Disorder Scale-Short Form score (3) Psychological Resilience = The Connor-Davidson Resilience Scale score",
+    "Moderating effects of resilience in the relationship between childhood trauma and depression.  Note  (1) Childhood Trauma = The Childhood Trauma Questionnaire Short Form score (2) Depression = The Patient Health Questionnaire-9 score (3) Psychological Resilience = The Connor-Davidson Resilience Scale score"
+  ],
+  "tables": [
+    "Key demographic information and IGDS9-SF score of the samples ( N  = 8579)",
+    "Correlation among the scores of scales",
+    "Mediating role of depression on the associations between childhood trauma and IGD",
+    "Bootstrap results of direct and indirect effects and 95% confidence intervals between childhood trauma and IGD",
+    "Summary of the moderated mediation model",
+    "Bootstrap results of the moderated mediating effects of resilience"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998714.551082
+}

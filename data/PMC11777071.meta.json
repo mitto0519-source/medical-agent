@@ -1,0 +1,15 @@
+{
+  "pmcid": "PMC11777071",
+  "pmid": "",
+  "title": "595. The Effect of Herpes Zoster Vaccination on New Diagnoses of Dementia: A Quasi-randomized Study in Australia",
+  "year": 2025,
+  "journal": "",
+  "authors": "",
+  "doi": "",
+  "figures": [
+    "Eligibility for a free herpes zoster (HZ) vaccine reduces dementia diagnoses  In panel (a), a regression discontinuity is plotted, where the forcing variable is the number of weeks from the cutoff (November 2, 1936) and the outcome is dementia diagnoses (in percentages). The triangular dots indicate dementia diagnoses for the comparison group, scaled up by the intercept for the main cohort. Panel "
+  ],
+  "tables": [],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035929.5949435
+}

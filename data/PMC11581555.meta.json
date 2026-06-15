@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11581555",
+  "pmid": "39378032",
+  "title": "Risk for Suicide Attempts Assessed Using the Patient Health Questionnaire-9 Modified for Teens.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Tsui F, Ruiz VM, Ryan ND, Shi L, Melhem NM, Young JF, Davis M, Gibbons R, Brent DA.",
+  "doi": "10.1001/jamanetworkopen.2024.38144",
+  "figures": [
+    "Flowchart of the Cohort Inclusion and Exclusion Process  PHQ-9M indicates Patient Health Questionnaire–9 modified for teens; SA, suicide attempt.",
+    "Ranked Adjusted Hazard Ratios (AHRs) for All 13 Items in the Patient Health Questionnaire–9 Modified for Teens (PHQ-9M) and the Severity of the Patient Health Questionnaire–9 Total Score (PHQ-9 TS)  The hazard ratios for items 1 to 13 have a reference group of score 0 or \"no.\" The hazard ratios for the PHQ-9 total score severity have minimal (PHQ-9 TS &lt;5) as a reference group. Mild indicates a ",
+    "The Area Under the Receiver Operating Characteristics Curves (AUROC) of 5 Predictors Derived from the Patient Health Questionnaire–9 Modified for Teens (PHQ-9M) for the Prediction of Subsequent Suicide Attempts  Four prediction horizons following PHQ-9M questionnaires were evaluated. The group without suicide attempts is the same across horizons (n = 129 479). The size of the group with suicide at"
+  ],
+  "tables": [
+    "Patient-Based Demographic Characteristics of Patients Who Completed PHQ-9M Questionnaires",
+    "Predictive Performance Evaluation Among 3 Cox Proportional Hazards Regression Models and the PHQ-9 TS for Suicide Attempts in 4 Prediction Horizons Following PHQ-9M Screening"
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780052738.0893776
+}

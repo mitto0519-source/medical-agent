@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11772535",
+  "pmid": "39103716",
+  "title": "Insomnia in Parkinson's Disease: Causes, Consequences, and Therapeutic Approaches.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Duan X, Liu H, Hu X, Yu Q, Kuang G, Liu L, Zhang S, Wang X, Li J, Yu D, Huang J, Wang T, Lin Z, Xiong N.",
+  "doi": "10.1007/s12035-024-04400-4",
+  "figures": [
+    "Prevalence of insomnia in PD by country. No regional differences are shown according to the global research. *Data for the UK were obtained from participants who reported poor sleep quality using PSQI",
+    "Affected areas of neurodegenerative changes due to α-Syn accumulation. ( a ) Region #1 brainstem: The accumulation of α-Syn has been observed in various regions of the brainstem, including the midbrain, pons, raphe nuclei, locus coeruleus, and nucleus reticularis pontis oralis. The locus coeruleus and nucleus reticularis pontis oralis house REM-off and REM-on cells, respectively. Their involvement",
+    "Neurological mechanisms of circadian rhythms in insomnia in PD. Patients with PD are associated with declined retina function, and light signals play a crucial role in regulating the SCN. The accumulation of α-Syn in the SCN, compounded by disrupted light signaling, impairs the functioning of core clock genes. Consequently, disturbances in circadian rhythms persist due to aberrant neural and hormo",
+    "Therapeutic options for treatments in insomnia in PD. This flowchart outlines the non-medication and medication therapies available for managing chronic, short-term, and primary and secondary insomnia in PD. Options include Cognitive CBT-I, pharmacological treatments, and combined approaches when necessary"
+  ],
+  "tables": [
+    "Diagnostic criteria of DSM-V"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060285.4916565
+}

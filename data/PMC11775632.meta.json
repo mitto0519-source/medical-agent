@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11775632",
+  "pmid": "39882163",
+  "title": "An ARFID case report assessment with 18F-FDG PET/MRI and treatment with olanzapine, escitalopram and fluoxetine in adult.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Liu M, Chang Y, Xie X, Liu Y, Tian S, Yang C, Zhao Z, Zhang H.",
+  "doi": "10.3389/fpsyt.2024.1450800",
+  "figures": [
+    "The image of  18 F-FDG PET showed slightly decreased metabolism in the right parietal lobe, bilateral parts of the frontal lobe, left anterior cingulate gyrus, and right parietotemporal junction areas.  (A)  The sagittal position.  (B)  The transverse position.  (C)  The coronal position.",
+    "(A)  The second image of MRI T1WI in ARFID state showed the bilateral frontal lobes and the right partial parietal lobe were slightly atrophied.  (B)  The first image of MRI T1WI in healthy state. There is no abnormality.",
+    "The comparison of the imaging findings between the first MRI (healthy state) and the second MRI (ARFID state) revealed an increase in the volume of some brain regions and nuclei.",
+    "Timeline of case."
+  ],
+  "tables": [
+    "Drug dosage for patient follow-up after discharge."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057206.9390361
+}

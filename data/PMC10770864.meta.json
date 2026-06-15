@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC10770864",
+  "pmid": "38186692",
+  "title": "High doses of a national preschool program are associated with the long-term mitigation of adverse outcomes in cognitive development and life satisfaction among children who experience early stunting: a multi-site longitudinal study in Vietnam.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Robinson JA, Dinh PTT.",
+  "doi": "10.3389/fpubh.2023.1087349",
+  "figures": [
+    "Conceptual model that informed the current study.",
+    "Single time-point Rasch scores for mathematics and reading skills at 8 years of age for Vietnamese children who differed in stunting status at 5 years of age and in the dose of the national preschool program they received.",
+    "Longitudinal changes in Rasch scores for receptive vocabulary between 5 and 8 years of age  (A)  and in percentage correct scores for receptive vocabulary  (B) , reading skills  (C)  and mathematics  (D)  between 12 and 15 years of age for Vietnamese children who differed in stunting status at 5 years of age and in the dose of the national preschool program they received.",
+    "Longitudinal changes between 8 and 15 years of age in life satisfaction reported by Vietnamese children who differed in stunting status at 5 years of age and in the dose of the national preschool program they received.",
+    "Relationship between Vietnamese children’s stunting status at 5 years of age, the dose of preschool they received*, and their scores in three domains of cognition, receptive vocabulary  (A) , Mathematics  (B) , and Reading  (C)  when they were 12 years of age. * 500-hour categories, except when a 3000-3999 category was required to ensure  n  &gt; 20."
+  ],
+  "tables": [
+    "Timing of measures.",
+    "Comparison between children who were and were not stunted at 5 years of age in life circumstances, demographic characteristics, and growth.",
+    "Characteristics of preschool attendance by children who were and were not stunted at 5 years of age.",
+    "Differences in outcomes associated with children’s stunting status at 5 years and their total hours of preschool attendance: a summary of results of ANCOVA covarying for child age at the time of assessment.",
+    "Differences in outcomes between Vietnamese children who were and were not stunted at 5 years of age: a summary of planned comparisons between children in the same preschool dose category^.",
+    "Differences in household wealth between preschool dose categories for children who were stunted at 5 years of age: results of ANCOVA covarying for child age.",
+    "Differences in outcomes associated with preschool dose categories for children who were stunted at 5 years of age: results of post-hoc ANCOVA covarying for child age, household wealth index and urban/rural location."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053210.850396
+}

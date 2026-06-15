@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11577963",
+  "pmid": "39568603",
+  "title": "Do government environmental audits reduce air pollution? Evidence obtained from Lanzhou.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chen T, Li J.",
+  "doi": "10.3389/fpubh.2024.1470112",
+  "figures": [],
+  "tables": [
+    "Descriptive statistics.",
+    "Results of regression discontinuity.",
+    "Results of bandwidth adjustment.",
+    "Regression results of the control variable continuity tests.",
+    "Regression results without and with control variables."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035849.9468377
+}

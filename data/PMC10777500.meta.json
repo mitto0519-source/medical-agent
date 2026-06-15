@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10777500",
+  "pmid": "38200428",
+  "title": "Polygenic risk score model for renal cell carcinoma in the Korean population and relationship with lifestyle-associated factors.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Hong JY, Han JH, Jeong SH, Kwak C, Kim HH, Jeong CW.",
+  "doi": "10.1186/s12864-024-09974-w",
+  "figures": [
+    "Workflow of the study. This study included patients with RCC from the SNUH and controls from the KoGES. RCC, renal cell carcinoma; SNUH, Seoul National University Hospital; KoGES, Korean Genome and Epidemiology Study; QC, quality control; GWAS, genome-wide association study; SNP, single nucleotide polymorphism; PRS, polygenic risk score; *, multiplication",
+    "PRS distribution of 31 Korean-specific SNPs and evaluation of PRS performance. The PRS was constructed based on 31 specific SNPs in the Korean population. ( a ) Density plot showing the different distribution of the PRS in cases and controls. ( b ) ROC curve for evaluating PRS performance. SNP, single nucleotide polymorphism; PRS, polygenic risk score; RCC, renal cell carcinoma; ROC, receiver oper",
+    "Risk of RCC according to genetic and lifestyle-associated factors. The risk of RCC was affected by genetic and lifestyle-associated factors. ( a ) Association of genetic factor with RCC risk. ( b ) Association of lifestyle-associated factors with RCC risk. ( c ) Association of lifestyle-associated factors with the risk of RCC across strata of PRS. HR, hazard ratio; CI, confidence interval; N, numb"
+  ],
+  "tables": [
+    "Study demographics",
+    "SNPs associated with RCC in the Korean population at optimal PRS performance ( n  = 31)",
+    "Intronic variants and biological processes ( n  = 14)"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780042182.1965127
+}

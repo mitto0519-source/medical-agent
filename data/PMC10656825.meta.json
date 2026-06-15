@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10656825",
+  "pmid": "37978440",
+  "title": "Attenuation of gadolinium enhancement in pituitary gland on magnetic resonance imaging of patients with pediatric growth hormone deficiency.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Doai M, Nishino Y, Hayashi Y, Ito M, Matoba M.",
+  "doi": "10.1186/s12880-023-01152-w",
+  "figures": [
+    "T1-FLAIR and Gd-enhanced MRI images of a 14-year-old male with severe GHD ( a , b ) and an 8-year-old male with normal GH function ( c , d ). The ROIs of the anterior pituitary gland were obtained at the maximum diameter in post-Gd-enhanced coronal T1-FLAIR images (arrow in b and d). The ratios of Gd-enhanced signals in the anterior pituitary gland to white-matter signals in the temporal lobe (sig"
+  ],
+  "tables": [
+    "Patients and classification of GHD",
+    "The mean area ROI in the anterior pituitary gland and temporal lobe white matter of GHD patients vs. normal-GH-function pediatric patients (Mann-Whitney U test)",
+    "The ratios of pre-enhancement and Gd-enhanced signals in the anterior pituitary gland of GHD patients vs. normal-GH-function pediatric patients (Mann-Whitney U test)"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013297.0576792
+}

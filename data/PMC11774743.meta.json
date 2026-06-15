@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11774743",
+  "pmid": "39886545",
+  "title": "Sugar-sweetened beverages, relative grip strength, and psychological symptoms among rural adolescents in western China: a cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang Y, Xiong J, Sun R, Chai G, Xiong L.",
+  "doi": "10.3389/fnut.2025.1511256",
+  "figures": [
+    "Sampling process of adolescent participants in rural areas of western China.",
+    "Trends in ORs of logistic regression analysis of SSB consumption and relative grip strength with psychological symptoms among adolescents in rural areas of western China.",
+    "Trends in ORs of ordered logistic regression analyses of SSB consumption and relative grip strength with psychological symptoms among adolescents in rural areas of western China. “times/week” is SSB consumption; “Q” is relative grip strength quartiles. A is &lt;1 times/week and Q4; B is &lt;1 times/week and Q3; C is &lt;1 times/week and Q2; D is &lt;1 times/week and Q1; E is 2–4 times/week and Q4;"
+  ],
+  "tables": [
+    "Basic characteristics of adolescents aged 13–18 in rural areas of western China.",
+    "Comparison of the prevalence of different categories of adolescent psychological symptoms in rural areas of western China.",
+    "A one-way comparison of SSB consumption and relative grip strength with psychological symptoms among adolescents in rural western China.",
+    "Logistic regression analysis of SSB consumption and relative grip strength with psychological symptoms among adolescents in rural western China.",
+    "Ordered logistic regression analysis of SSB consumption and relative grip strength with psychological symptoms among adolescents in rural western China."
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975654.342254
+}

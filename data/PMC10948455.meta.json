@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10948455",
+  "pmid": "38504681",
+  "title": "Effects of common lifestyle factors on obstructive sleep apnea: precautions in daily life based on causal inferences.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Liu K, Zang C, Wang J, Liu J, Chen Z, He M, Liu B, Su X, Zhang Y, Yi M.",
+  "doi": "10.3389/fpubh.2024.1264082",
+  "figures": [
+    "Overall working flowchart: two-sample MR study to assess the causal associations between common modifiable lifestyles and OSA. OSA, obstructive sleep apnea.",
+    "Causal impacts of smoking behaviors on OSA obtained from IVW analysis. Black illustrates the primary analysis with fulfilled SNPs as IVs. Gray illustrates the results with outlier-removed variants as IVs. The vertical dotted line delineates an OR of 1. OR, odds ratio; 95% CI, 95% confidence interval; OSA, obstructive sleep apnea; IVs, instrumental variables.",
+    "Causal impacts of alcohol, coffee, and tea intake behaviors on OSA obtained from IVW analysis. Black illustrates the primary analysis with fulfilled SNPs as IVs. Gray illustrates the results with outlier-removed variants as IVs. The vertical dotted line delineates an OR of 1. OR, odds ratio; 95% CI, 95% confidence interval; OSA, obstructive sleep apnea; IVs, instrumental variables.",
+    "Causal impacts of leisure sedentary behaviors (including television watching, computer use, and driving) behaviors on OSA obtained from IVW analysis. Black illustrates the primary analysis with fulfilled SNPs as IVs. Gray illustrates the results with outlier-removed variants as IVs. The vertical dotted line delineates an OR of 1. OR, odds ratio; 95% CI, 95% confidence interval; OSA, obstructive sl"
+  ],
+  "tables": [
+    "Summary of genome-wide association study (GWAS) datasets included in our study."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002560.2314517
+}

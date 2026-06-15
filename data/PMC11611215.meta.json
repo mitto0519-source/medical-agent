@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11611215",
+  "pmid": "39621747",
+  "title": "Assessing food consumed away from home in low-and middle-income countries by developing specific modules for household surveys: Experimental evidence from Vietnam and Burkina Faso.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Landais E, Pelloquin R, Maître d'Hôtel E, Truong Tuyet M, Hoang Thu N, Bui Thi Thao Y, Do Thi Phuong H, Thu TTT, Somé J, Béné C, Verger EO.",
+  "doi": "10.1371/journal.pone.0314786",
+  "figures": [
+    "Bland and Altman plots for energy–A) Vietnam; B) Burkina Faso. 24HDR: 24-hour dietary recall.",
+    "Bland and Altman plots for monetary expenditure.  A) Vietnam; B) Burkina Faso. 24HDR: 24-hour dietary recall."
+  ],
+  "tables": [
+    "Concordance of the prevalence of consumption away from home according to the modules and the repeated 24-hour dietary recalls.",
+    "Descriptive characteristics of the samples.",
+    "Relative validity of the food consumed away from home modules compared with the 3 repeated 24-hour dietary recalls."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053730.1667075
+}

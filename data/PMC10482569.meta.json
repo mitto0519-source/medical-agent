@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10482569",
+  "pmid": "37309113",
+  "title": "Effect of trajectory of employment status on all-cause mortality in the late middle-aged and older population: results of the Korea Longitudinal Study of Aging (2006-2020).",
+  "year": 2023,
+  "journal": "",
+  "authors": "Yang JM, Kim JH.",
+  "doi": "10.4178/epih.e2023056",
+  "figures": [
+    "Study timeline.",
+    "Flow chart of sample selection. KLoSA, Korean Longitudinal Study of Aging.",
+    "Trajectories of employment status for each group from 2006 to 2014. WC, white collar; BC, blue collar.",
+    "Kaplan–Meier curve for mortality. WC, white collar; BC, blue collar.",
+    ""
+  ],
+  "tables": [
+    "General characteristics of subjects included for analysis at baseline (fifth wave of the Korean Longitudinal Study of Aging)",
+    "Cox proportional hazard regression analysis for the association between TES and all-cause mortality",
+    "Subgroup analysis of the associations between TES and all-cause mortality stratified by age and sex"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040615.7882793
+}

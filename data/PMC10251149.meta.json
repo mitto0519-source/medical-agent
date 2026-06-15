@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10251149",
+  "pmid": "37304734",
+  "title": "Equity impacts of cycling investment in England: A natural experimental study using longitudinally linked individual-level Census data.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Patterson R, Ogilvie D, Laverty AA, Panter J.",
+  "doi": "10.1016/j.ssmph.2023.101438",
+  "figures": [
+    "Coefficient plot of difference-in-difference adjusted odds ratio and 95% CIs across the three outcomes with the matched comparison group in unstratified and stratified analyses  Source: ONS Longitudinal Study, Estimates adjusted for: age, gender, ethnicity, highest educational qualification, occupation based socio-economic group, long-term illness, self-reported health, number of cars, housing ten",
+    "Coefficient plot of adjusted odds ratios and 95% CIs for uptake and maintaining active travel among those in intervention areas compared with those in matched areas across the three outcomes in unstratified and stratified analyses  Source: ONS Longitudinal Study, Estimates adjusted for: age, gender, ethnicity, highest educational qualification, occupation based socio-economic group, long-term illn"
+  ],
+  "tables": [
+    "The characteristics of the intervention and matched comparison groups."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008262.1180775
+}

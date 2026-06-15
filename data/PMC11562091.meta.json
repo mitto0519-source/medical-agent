@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11562091",
+  "pmid": "39543591",
+  "title": "Impact of New York City's 4-year multi-component natural experiment to improve elementary school physical education on student cardiorespiratory fitness.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Thompson HR, Madsen KA, Nguyen C, McKenzie TL, Picciotto S.",
+  "doi": "10.1186/s12889-024-20673-9",
+  "figures": [
+    "Adjusted school-level proportion of students who met aerobic capacity Healthy Fitness Zone standards before (2014/15) and during PE Works (2015/16–2018/19) under observed and predicted PE Works conditions ( n  = 581 schools)"
+  ],
+  "tables": [
+    "Number of elementary schools implementing PE works’ primary intervention components, a  2014-15 through 2018-19 (total  n  = 581 schools)",
+    "New York City department of education elementary school sample baseline demographic characteristics, 2014-15 school year ( n  = 581 schools;  n  = 108,898 4th /5th -grade students tested via FitnessGram)",
+    "Predicted school-level proportion of students meeting aerobic capacity healthy Fitness Zone standards A  in 2018/19 (final year of PE Works) under: (A) the observed PE works implementation across all 4 intervention years (2015/16–2018/19), compared to what would have happened had (B) PE works not been implemented and (C) all schools received all PE works components B  for all 4 intervention years "
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011412.3261878
+}

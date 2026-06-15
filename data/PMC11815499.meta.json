@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11815499",
+  "pmid": "38918044",
+  "title": "Depicting deterministic variables within directed acyclic graphs: an aid for identifying and interpreting causal effects involving derived variables and compositional data.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Berrie L, Arnold KF, Tomova GD, Gilthorpe MS, Tennant PWG.",
+  "doi": "10.1093/aje/kwae153",
+  "figures": [
+    "Causal directed acyclic graphs using deterministic notation to depict a simple derived variable (A), a composite derived variable (B), and compositional data (C). Fully determined child variables are represented by double-outlined nodes; deterministic relationships are represented by double-lined arcs; arcs leaving a deterministic variable are represented as dashed arcs; and situations where a chi",
+    "Causal directed acyclic graphs of 3 tautological associations: associations between 2 ratio variables with a common denominator parent variable (A); associations between a change score variable and its baseline parent variable (B); and associations between 2 aggregate variables (C). In panel A, the observed variable’s gross domestic product (GDP) (      \\documentclass[12pt]{minimal}\n\\usepackage{am",
+    "Causal directed acyclic graph of an instrumental-variable scenario with a coarsened exposure variable. In this scenario, the continuous variable, number of cigarettes smoked per day (      \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{upgreek}\n\\usepackage{mathrsfs}\n\\setlength{\\oddsidemargin}{-69pt}",
+    "Causal directed acyclic graphs (DAGs) examining the identification of causal effects in compositional data, here represented by total energy intake. The “full” DAG for the scenario is depicted in panel A, where the “whole” variable, total energy intake (      \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usep",
+    "Causal directed acyclic graphs (DAGs) considering the causal effect of a composite derived variable (body mass index, calculated as weight [kg]/height [m] 2 ; BMI) on an outcome (cardiovascular disease [CVD]). The “full” DAG in panel A shows BMI (      \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}\n\\usepackage{",
+    "Causal directed acyclic graphs (DAGs) examining the challenges of identifying a causal effect for a composite derived variable (metabolic syndrome) when the parent variables are separated in time. When a composite derived variable, such as metabolic syndrome (      \\documentclass[12pt]{minimal}\n\\usepackage{amsmath}\n\\usepackage{wasysym}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n\\usepackage{amsbsy}"
+  ],
+  "tables": [],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020938.453201
+}

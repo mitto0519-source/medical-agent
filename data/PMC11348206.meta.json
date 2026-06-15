@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11348206",
+  "pmid": "39189189",
+  "title": "Sleep Quality, but Not Personality Traits, Mediates the Relationship between Chronotype and Life Satisfaction: A Study in Young Adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lan A, Stukalin Y, Einat H.",
+  "doi": "10.3390/clockssleep6030022",
+  "figures": [
+    "Mediation analysis depicting the relationship between chronotype and life satisfaction mediated by sleep quality. *  p  &lt; 0.05."
+  ],
+  "tables": [
+    "Demographic data.",
+    "Mean and standard deviations of all variables.",
+    "Relationship between chronotype, sleep quality, life satisfaction, and the Big Five personality factors based on bivariate correlations. *  p  &lt; 0.05.",
+    "Differences in sleep quality, life satisfaction, and Big Five personality traits based on chronotype. MTs = morning types, ITs = intermediate types, ETs = evening types.",
+    "Chronotype classification based on gender. The numerical values within the table represent the frequency of individuals within each respective category."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001232.2002718
+}

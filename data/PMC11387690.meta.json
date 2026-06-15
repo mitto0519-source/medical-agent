@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11387690",
+  "pmid": "39262796",
+  "title": "Blood cell traits and venous thromboembolism in East Asians: Observational and genetic evidence.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Li H, Duo M, Zhang Z, Weng H, Liu D, Zhang Y, Xi L, Zou B, Li H, Chen G, Zuo X, Ito K, Xie W, Yang P, Wang C, Zhai Z, China pUlmonary Thromboembolism REgistry Study (CURES) Investigators.",
+  "doi": "10.1016/j.isci.2024.110671",
+  "figures": [
+    "",
+    "The study flowchart  Association and causal effect of blood cell traits and venous thromboembolism.",
+    "Forest plot of the observational and genetic associations between blood cell traits and the risk of VTE  Error bars represent 95% confidence intervals. All statistical tests were two-sided.",
+    "Scatterplot of the relationship of the SNP effects on blood cell traits against the SNP effects on the risks of VTE  (A) Plot showing the effect sizes of the SNP effects on PLT (x axes) and the SNP effects on VTE (y axes) with 95% confidence intervals.  (B) Plot showing the effect sizes of the SNP effects on Hemoglobin (x axes) and the SNP effects on VTE (y axes) with 95% confidence intervals.  (C"
+  ],
+  "tables": [
+    "Characteristics of participants in the cohort study after propensity score matching",
+    "Egger regression analyses for horizontal pleiotropy",
+    ""
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037555.7393415
+}

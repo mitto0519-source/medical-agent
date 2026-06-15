@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11419354",
+  "pmid": "39259748",
+  "title": "SEMbap: Bow-free covariance search and data de-correlation.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Grassi M, Tarantino B.",
+  "doi": "10.1371/journal.pcbi.1012448",
+  "figures": [
+    "Overview of the 4 × 6 simulation design.",
+    "F1-score for simulated data.  F1-score summarised as mean over simulations for dense/sparse confounding design with n = 400. For SVD methods with NULL confounding covariance, none performance metrics have been computed.",
+    "Benchmark data decorrelation (Transcription factor ESR2 vs Gene FZD4).  Gene FZD4 has a positive correlation greater than 0.5 with the unobserved transcription factor ESR2 (Unadjusted). After subtracting out the confounding variation estimated using the different methods for each gene (denoted as “deconfounded” expression level), the genes are no longer correlated with ESR2.",
+    "Benchmark data decorrelation (Transcription factor ESR2 vs Gene PIK3R2).  Gene PIK3R2 has a negative correlation greater than 0.5 with the unobserved transcription factor ESR2 (Unadjusted). After subtracting out the confounding variation estimated using the different methods for each gene (denoted as “deconfounded” expression level), the genes are no longer correlated with ESR2."
+  ],
+  "tables": [
+    "Overview of the 4 × 6 simulation design.",
+    "Overview of the considered deconfounding methods.",
+    "Evaluation metrics (SRMR, dev/df, nlog10P and vcountP) from benchmark data analysis.",
+    "Sensitivity analysis of the alpha level of the  SEMbap()  function."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021730.3900764
+}

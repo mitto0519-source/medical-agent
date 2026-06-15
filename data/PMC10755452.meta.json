@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10755452",
+  "pmid": "37781769",
+  "title": "Effects of front-of-package caffeine and sweetener disclaimers in Mexico: cross-sectional results from the 2020 International Food Policy Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Arellano-Gómez LP, Jáuregui A, Nieto C, Contreras-Manzano A, Quevedo KL, White CM, Thrasher JF, Davis RE, Hammond D, Barquera S.",
+  "doi": "10.1017/s1368980023002100",
+  "figures": [
+    "Mexican warning label system for packaged foods and beverages approved in 2020",
+    "Images with front-of-package labels displayed during experimental tasks. Experiment 1 = sweetener experiment. Experiment 2 = caffeine experiment. Note: each participant was only shown one image, corresponding to their assigned condition (control or disclaimer)",
+    "Awareness and use of disclaimer-type labels among Mexican adults and youth",
+    "Perceived healthfulness of a sweetened fruit drink with and without the sweetener disclaimer among adults. Estimations in the total sample (a) and across age categories (b) ( n  1020). Linear predictions in the total sample were derived from linear regression models adjusted for the belief that children should not consume foods or drinks with sweeteners (unbalanced variable across experimental con",
+    "Perceived healthfulness of a sweetened fruit drink with and without the sweetener disclaimer among youth. Estimations in the total sample (a), across sex (b) and the belief that children should not consume sweeteners (c) ( n  1790). Linear predictions in the total sample were derived from linear regression models adjusted for ethnicity (unbalanced variable across experimental conditions). Liner pr",
+    "Perceived healthfulness of a caffeinated drink with and without the caffeine disclaimer among adults.  n  1041. Linear predictions derived from linear regression models adjusted for nutrition knowledge"
+  ],
+  "tables": [
+    "Demographic characteristics of Mexican participants in the 2020 International Food Policy Study"
+  ],
+  "query": "artificial sweetener depression",
+  "fetched_at": 1779975156.6482549
+}

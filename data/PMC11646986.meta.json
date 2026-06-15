@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11646986",
+  "pmid": "39687863",
+  "title": "Assessing the utility of epigenetic clocks for health prediction in South Korean.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim DJ, Kang JH, Kim JW, Kim SB, Lee YK, Cheon MJ, Lee BC.",
+  "doi": "10.3389/fragi.2024.1493406",
+  "figures": [
+    "Correlation matrix of epigenetic age accelerations. Positive correlations are denoted by red shades, with lighter shades signifying weaker correlation values.",
+    "Forest plots for epigenetic age accelerations (EAAs) of second-generation clocks and health outcomes in KARE. Odds ratios (ORs) with 95% confidence intervals (CIs) or beta values with standard errors (SEs) were displayed along with their corresponding  p -values. All regression models adjusted for age, sex, and 10 principal components, with all EAAs scaled to a mean of 0 and a standard deviation o",
+    "Forest plots for epigenetic age accelerations (EAAs) of second-generation clocks and environmental factors in KARE. Beta values with standard errors (SEs) were displayed along with their corresponding  p -values. All regression models adjusted for age, sex, and 10 principal components, with all EAAs scaled to a mean of 0 and a standard deviation of 1. Significant results were highlighted with a bl"
+  ],
+  "tables": [
+    "Basic characteristics of 1,925 KARE participants.",
+    "Cox regression analysis of epigenetic age acceleration for onset of type 2 diabetes and hypertension.",
+    "Association results of second-generation epigenetic age acceleration in HEXA.",
+    "Association results of epigenetic age acceleration adjusted for lifestyle factors."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041978.046336
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10713667",
+  "pmid": "38082022",
+  "title": "The burden of psychological distress and unhealthy dietary behaviours among 222,401 school-going adolescents from 61 countries.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Shawon MSR, Rouf RR, Jahan E, Hossain FB, Mahmood S, Gupta RD, Islam MI, Al Kibria GM, Islam S.",
+  "doi": "10.1038/s41598-023-49500-8",
+  "figures": [
+    "Correlation matrices for ( A ) psychological distress variables and ( B ) unhealthy dietary behaviours. Pairwise Pearson’s correlation coefficients were used to estimate the correlation among the variables.",
+    "Associations of psychological distress with unhealthy dietary behaviours among adolescents, overall and by region. Multi-level mixed-effect logistic regressions were adjusted for age, sex, low socioeconomic status, survey year, close friend, bullying, parental support, peer support, cigarette smoking, physical activity, and overweight. Odds ratios (ORs) are represented by squares, and their corres",
+    "Associations of psychological distress with unhealthy dietary behaviours among adolescents, by levels of other factors. Multi-level mixed-effect logistic regressions were adjusted for age, sex, low socioeconomic status, survey year, region, bullying, close friend, parental support, peer support, smoking, physical activity, and overweight, as appropriate. Heterogeneity between groups was tested by "
+  ],
+  "tables": [
+    "Survey characteristics, by country.",
+    "Country-specific, pooled-regional, and pooled-overall prevalence of psychological distress among school-going adolescents, by sex and overall.",
+    "Prevalence of unhealthy dietary behaviours among school-going adolescents, overall and by region."
+  ],
+  "query": "US adolescent soft drink depression",
+  "fetched_at": 1779992412.9743044
+}

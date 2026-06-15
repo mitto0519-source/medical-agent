@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10708469",
+  "pmid": "38074018",
+  "title": "An Analysis of Drug Use-Related Curriculum Documents for Paramedic Students in British Columbia.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Bolster JL, Batt AM.",
+  "doi": "10.7759/cureus.48515",
+  "figures": [
+    "Thematic Analysis  PWUD: people who use drugs, MoC: Models of Care",
+    "Word Cloud for Theme 1",
+    "Word Cloud for Theme 2",
+    "Word Cloud for Theme 3",
+    "Word Cloud for Theme 4"
+  ],
+  "tables": [
+    "Quotes Corresponding With Themes  ABC: airway, breathing, circulation, EMS: emergency medical services",
+    "Initial Generation of Themes",
+    "Documents Included in the Analysis  PCP: Primary Care Paramedic, NOCP: National Occupational Competency Profile, ACP: Advanced Care Paramedic"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060662.1435614
+}

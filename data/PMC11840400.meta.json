@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11840400",
+  "pmid": "39668394",
+  "title": "Causal effect of fasting serum glucose on atherosclerotic cardiovascular disease: a multivariable Mendelian randomization.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee SH, Kimm H, Lee BW, Nam CM, Kim SY, Lee S, Jee SH.",
+  "doi": "10.4178/epih.e2024096",
+  "figures": [
+    "",
+    "Research design of observational and Mendelian randomization (MR) studies. FSG, fasting serum glucose ; KCPS-II, Korean Cancer Prevention Study-II; ASCVD, atherosclerotic cardiovascular disease; KoGES, Korean Genome and Epidemiology Study.",
+    "Non-linear Mendelian randomization (MR) between fasting serum glucose (FSG) and atherosclerotic cardiovascular disease (ASCVD) using fractional polynomial non-linearity. (A) ASCVD, (B) ASCVD excluding ischemic heart disease (IHD) or stroke, (C) IHD, and (D) stroke. The dotted line represents the 95% confidence interval.",
+    "Multivariable Mendelian randomization (MVMR) analysis results for atherosclerotic cardiovascular disease (ASCVD). (A) ASCVD, (B) ischemic heart disease (IHD), and (C) stroke. FSG, fasting serum glucose; LDL, low- density lipoprotein; SBP, systolic blood pressure; IVM, inverse-variance weighted; OR, odds ratio."
+  ],
+  "tables": [
+    "Baseline characteristics of participants in the KCPS-II Biobank",
+    "Association with increased risk of cardiovascular events for every 10 mg/dL increase in fasting serum glucose using Cox proportional hazard anal model in observational study",
+    "Association with increased risk of cardiovascular events for every 10 mg/dL increase in fasting serum glucose using two-sample Mendelian randomization (MR)"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037055.3170505
+}

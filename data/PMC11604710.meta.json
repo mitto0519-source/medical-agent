@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11604710",
+  "pmid": "39607637",
+  "title": "Effects of high dietary carbohydrate intake in patients with obstructive sleep apnea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Shi Y, Xu J, Yi S, Xu C, Yu F, Gu W, Zhang J, Ye L.",
+  "doi": "10.1007/s11325-024-03188-w",
+  "figures": [],
+  "tables": [
+    "Basic characteristics of the participants, categorized according to Apnea/Hypopnea Index, an index of the severity of obstructive sleep apnea ( n  = 200)",
+    "Comparison of the diet and sleep architecture of the participants in each Apnea/Hypopnea index ( n  = 200) category",
+    "Results of the analysis of the intake of dietary components, according to OSA status (AHI ≥ 5/hour vs. AHI &lt; 5/hour), performed using multivariate linear regression",
+    "Correlations of the energy provided by and the energy supply ratios of the three major nutrients with sleep-related parameters"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002119.2315795
+}

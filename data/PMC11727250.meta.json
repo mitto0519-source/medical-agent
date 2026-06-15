@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11727250",
+  "pmid": "39767650",
+  "title": "Neuroplasticity and Mechanisms of Action of Acute and Chronic Treatment with Antidepressants in Preclinical Studies.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Rosas-Sánchez GU, Germán-Ponciano LJ, Guillen-Ruiz G, Cueto-Escobedo J, Limón-Vázquez AK, Rodríguez-Landa JF, Soria-Fregozo C.",
+  "doi": "10.3390/biomedicines12122744",
+  "figures": [
+    "Signaling pathways activated by rapid antidepressants. Acute administration of ketamine and psychotropic drugs can activate various signaling pathways that modulate glutamate release. This mechanism is regulated by GABAergic neurons and astrocytes, which activate the transcription of BNDF and Homer1a in response to synaptic plasticity.",
+    "Signaling pathways that are regulated by chronic treatment with typical antidepressants such as the selective 5-hydroxytryptamine (5-HT) reuptake inhibitors (SSRIs). These block the reuptake of monoamines by the 5-HT transporter (SERT). This leads to the regulation of postsynaptic G-protein-coupled receptors coupled to a variety of second messenger systems, including the cAMP response element prot"
+  ],
+  "tables": [
+    "Classes of antidepressants that are used to treat depression.",
+    "Effects of antidepressants drugs on neuroplasticity in animal models.",
+    "Effect of chronic treatment with antidepressants."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056322.6774666
+}

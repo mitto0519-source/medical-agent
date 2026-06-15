@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11314585",
+  "pmid": "39125393",
+  "title": "Phytochemical Index and the Risk of Gastritis/Gastric Ulcer among Korean Adults: A Prospective Cohort Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park Y, Park K.",
+  "doi": "10.3390/nu16152514",
+  "figures": [
+    "Multivariable-adjusted hazard ratios (95% confidence intervals) for the non-parametric relationship between the PI and gastritis/gastric ulcer. The model was adjusted for sex (men and women), age (continuous), household income (lower or mid-low and mid-high or higher), education level (lower than high school education and high school educated or higher), smoking status (current smokers and non-smo"
+  ],
+  "tables": [
+    "Baseline characteristics of the KoGES  a  study population according to the quartiles of dietary PI  b  ( n  = 7377).",
+    "Dietary habits of the study population according to the quartiles of dietary PI ( n  = 7377).",
+    "Hazard ratios (95% confidence intervals) for gastritis/gastric ulcer according to the dietary PI quartile ( n  = 7377)."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037394.392425
+}

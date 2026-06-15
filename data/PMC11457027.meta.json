@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11457027",
+  "pmid": "39259611",
+  "title": "Comparative analysis of cortical anatomy in male participants with internet gaming disorder or tobacco use disorder: Insights from normative modeling.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Ma X, Jiang A, Dai J, Li S, Chen H, Xie Y, Wang S, Yang B, Wang L, Dong GH.",
+  "doi": "10.1556/2006.2024.00044",
+  "figures": [
+    "Methodological overview. A) T1 data were collected from both IGD and TUD patients and age-matched with HC data from the GSP dataset. B) CT data, based on the Desikan-Killiany atlas, were obtained for each participant through cortical surface reconstruction. C) Gaussian process regression was applied, and CT normative models were computed using 10-fold cross-validation. The models were applied to e",
+    "Intergroup differences in deviations from the normative model. Pairwise comparisons of normative deviations between each group in A-C to visualize regions with significant differences ( p  Bonferroni &lt;0.05). The color bars represent adjusted  p -values",
+    "Spatial overlap of extreme deviations. A-B, Map of the regional extreme deviations in two addiction groups. The upper panel displays the region with higher mean deviations from the normative model, and the two lower panels show the region with higher proportion of extreme positive and negative deviations from the normative model",
+    "Partial correlation analysis. A) Correlations between regional deviations and DSM scores. B) Correlations between regional deviations and FTND scores",
+    ""
+  ],
+  "tables": [
+    "Demographic information of subjects in the current study"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998528.7029788
+}

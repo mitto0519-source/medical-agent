@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11760956",
+  "pmid": "39856408",
+  "title": "Genome-wide association analysis of composite sleep health scores in 413,904 individuals.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Goodman MO, Faquih T, Paz V, Nagarajan P, Lane JM, Spitzer B, Maher M, Chung J, Cade BE, Purcell SM, Zhu X, Noordam R, Phillips AJK, Kyle SD, Spiegelhalder K, Weedon MN, Lawlor DA, Rotter JI, Taylor KD, Isasi CR, Sofer T, Dashti HS, Rutter MK, Redline S, Saxena R, Wang H.",
+  "doi": "10.1038/s42003-025-07514-0",
+  "figures": [
+    "Loadings and variance explained for the five principal component (PC)-based composite sleep health scores (SHS).   a  SHS-PC loadings on self-reported sleep phenotypes. Interpretation of higher SHS-PC scores, based on loadings, are: PC1—longer sleep with less-frequent insomnia and lower sleepiness; PC2—absence of snoring and lower sleepiness; PC3—morningness chronotype; PC4—presence of snoring and",
+    "Genome-wide significant SNPs associated with SHS.   a  Number of Genome-wide significant (GWS) SNPs ( p  &lt; 5e-08) and risk loci (“Methods”).  b  Number of risk variants that colocalized for each pair of SHS (HyPrColoc; “Methods”).  c  Number of loci not reported by previous sleep GWASs in biobanks (GWS loci with a lead variant at least 500 kb from any of the previously published GWS sleep varia",
+    "Pathway and tissue enrichment analysis.   a  Pathway gene sets significantly enriched for SHS genes (PASCAL  43  , “Methods”).  b  Tissue-specific expression gene sets enriched for SHS genes (MAGMA  20   via FUMA  18  , “Methods”).",
+    "SHS genetic correlations with selected phenotypes.   a  SHS genetic correlations (LDSC  44  , Methods) with sleep traits (* p  &lt; 0.05/132).  b  SHS genetic correlations (LDSC  44  , Methods) with selected health outcomes (* p  &lt; 0.05/2250). SHS sleep health score, act. derived from actigraphy, max. maximum, N number, noct. nocturnal, BMI body mass index, SBP systolic blood pressure, DBP dias"
+  ],
+  "tables": [
+    "Significant novel loci associated with SHS with a lead variant at least 500 kb from any of the previously published genome-wide significant sleep variants",
+    "Novel SHS Polygenic Risk Score (SHS-PRS) associations in independent studies"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001322.6483521
+}

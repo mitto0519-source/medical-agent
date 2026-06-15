@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10311255",
+  "pmid": "37397713",
+  "title": "Sex-based differences in the association of leisure-time physical activity with the risk of depression: the Ansan and Ansung study of the Korean Genome and Epidemiology Study (KoGES).",
+  "year": 2023,
+  "journal": "",
+  "authors": "Park JH, Lim NK, Park HY.",
+  "doi": "10.3389/fpubh.2023.1176879",
+  "figures": [
+    "Scheme depicting the study grouping and follow-up over time.",
+    "Hazard ratios for new-onset depression according to leisure-time PA per week and sex. Adjusted for age, sex, drinking, smoking, educational level, marital status, household income, BMI, hypertension, and diabetes mellitus. PA, physical activity; BMI, body mass index;  * ,  p  &lt; 0.05;  ** ,  p  &lt; 0.01."
+  ],
+  "tables": [
+    "Baseline characteristics of study participants based on leisure-time PA levels.",
+    "Hazard ratios for new-onset depression based on leisure-time PA levels by sex.",
+    "Hazard ratios for new-onset depression according to leisure-time PA levels, regularity of RT, and sex."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041557.5400348
+}

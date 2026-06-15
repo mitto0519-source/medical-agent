@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC10769585",
+  "pmid": "38186712",
+  "title": "The relation between barrier-free environment perception and campus commuting satisfaction.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Li J, Zhang C, Cai X, Peng Y, Liu S, Lai W, Chang Y, Liu Y, Yu L.",
+  "doi": "10.3389/fpubh.2023.1294360",
+  "figures": [
+    "Diagram of the conceptual model.",
+    "Plan of the study site and photographs of the location.",
+    "Average levels of barrier-free environment perception and commuting satisfaction for different commuting attributes.",
+    "Estimated road map of the standardised parameters of the model. *** p  ≤ 0.01.",
+    "Modified theoretical model. ***p ≤ 0.01."
+  ],
+  "tables": [
+    "Demographic characteristics of survey respondents ( n  = 312).",
+    "Behavioural factors of survey respondents ( n  = 312).",
+    "Fitting factors for measurement scale problems.",
+    "Structural equation model fit indices.",
+    "Results of the measurement model.",
+    "Results of the structural model.",
+    "Mediation effect results."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007604.1195474
+}

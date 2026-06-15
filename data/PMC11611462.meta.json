@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11611462",
+  "pmid": "39610238",
+  "title": "The Association Between Causality Orientation and Internet Gaming Disorder, and the Role of Sensation Seeking, Anxiety, and Depression.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Peng Y, Wang Y, Peng Z, Liao X, Gong K, Qin C, Tian M, Cheng X, Zhou X, Deng J, Chen Y, Feng S, Zhang M, Liu K, Xiang B, Lei W, Chen J.",
+  "doi": "10.30773/pi.2024.0122",
+  "figures": [
+    "Proposed models based on evidence from the literature and self-determination theory. IGD, Internet gaming disorder.",
+    "The final model depicts the associations among causality orientations, anxiety, depression, and IGD. *p&lt;0.05; **p&lt;0.001. IGD, Internet gaming disorder.",
+    "Moderating effects of sensation seeking on the relationship between causality orientations and IGDS. A: Autonomy orientation. B: Control orientation. C: Impersonal orientation. High sensation seeking: individuals with BSSS score of above mean+SD. Low sensation seeking: individuals with BSSS score of below mean-SD. IGDS, Internet Gaming Disorder Scale; BSSS, Brief Sensation Seeking Scale; SD, stand"
+  ],
+  "tables": [
+    "Correlations among the main variables",
+    "Multiple linear regressions among causality orientations",
+    "Significance test of the mediating effect",
+    "Regression analysis of the moderating effect of sensation seeking"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998275.249444
+}

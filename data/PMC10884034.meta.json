@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10884034",
+  "pmid": "38388554",
+  "title": "Dance/movement therapy for improving metabolic parameters in long-term veterans with schizophrenia.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhou Z, Guan H, Xiu M, Wu F.",
+  "doi": "10.1038/s41537-024-00435-7",
+  "figures": [
+    "Shows the individual change from baseline to post.  The outcome was on y-axis (BMI, weight etc.), time point (baseline and 12 weeks) was on x-axis in each group (DMT and TAU), with lines combining each subject-specific point across both timepoints. This provides an overview of how many subjects in each group showed improvements in the respective outcomes and how many did not."
+  ],
+  "tables": [
+    "Comparisons of demographic characteristics and biomarkers between the DMT group and the control group (      x   ®   ±  s    ).",
+    "Comparisons of weight and lipid profiles after treatment using repeated measures ANOVA analysis (     x   ®    ± s )."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057013.1636653
+}

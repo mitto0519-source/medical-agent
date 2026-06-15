@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10985901",
+  "pmid": "38566247",
+  "title": "Triglyceride-glucose-waist circumference index predicts the incidence of cardiovascular disease in Korean populations: competing risk analysis of an 18-year prospective study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Ahn SH, Lee HS, Lee JH.",
+  "doi": "10.1186/s40001-024-01820-9",
+  "figures": [
+    "Flowchart of the study population",
+    "Kaplan–Meier curves showing the cumulative incidence rate of CVD event and all-cause mortality. Abbreviations: CVD, cardiovascular disease",
+    "Cox proportional hazard spline curve for incident CVD and density plot according to TyG-WC index. The red line indicates a hazard ratio of 1. The black line represents the hazard ratio for incident CVD according to TyG-WC index. The dashed black area represents 95% confidence interval for hazard ratio. The grey area represents density of values. Abbreviations: CVD, cardiovascular disease"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population",
+    "Competing risk regression model of CVD and all-cause mortality based on the TyG-WC index quartiles TyG-WC index quartiles"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041245.8408525
+}

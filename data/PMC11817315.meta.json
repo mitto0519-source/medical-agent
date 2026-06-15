@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11817315",
+  "pmid": "39942504",
+  "title": "Impact of Modifiable Factors Associated with Physical Frailty and Cognitive Impairment Trajectory of Older Adults: Using the Korean Longitudinal Study of Aging 2006-2018.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee S.",
+  "doi": "10.3390/healthcare13030315",
+  "figures": [
+    "Flow of the selection process for this study sample.",
+    "Plots of predicted counts and observed values. ( a ) Physical frailty trajectory groups; ( b ) cognitive impairment trajectory groups."
+  ],
+  "tables": [
+    "Fit index and classification rate by model according to the number of trajectories of physical frailty and cognitive impairment.",
+    "Parameter estimates, classification rate, and fit index for joint trajectory of physical frailty and cognitive impairment.",
+    "Characteristics of the participants according to the joint trajectory of physical frailty and cognitive impairment at baseline.",
+    "Associated modifiable factors with joint trajectories of physical frailty and cognitive impairment."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039743.0946717
+}

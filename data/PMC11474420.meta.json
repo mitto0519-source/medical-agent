@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11474420",
+  "pmid": "39401036",
+  "title": "Performance of Machine Learning Suicide Risk Models in an American Indian Population.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Haroz EE, Rebman P, Goklish N, Garcia M, Suttle R, Maggio D, Clattenburg E, Mega J, Adams R.",
+  "doi": "10.1001/jamanetworkopen.2024.39269",
+  "figures": [
+    "Receiver Operating Characteristic (ROC) Curves for Mental Health Research Network (MHRN) Primary Care, Vanderbilt University (VU), and Existing Screen for 90-Day Suicide Attempts for 331 558 Patient Visits  PPV indicates positive predictive value."
+  ],
+  "tables": [
+    "Characteristics for the 16 835 Patients Included in the Dataset  a",
+    "Model Performance Comparing Existing Suicide Risk Models With Existing Screening at an Indian Health Service Facility in the Southwest for Suicide Attempts and Suicide Deaths for 331 558 Patient Visits",
+    "Comparison of Top 10 Features and Their Importance Across Samples for 90-Day Suicide Attempt"
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780052744.777358
+}

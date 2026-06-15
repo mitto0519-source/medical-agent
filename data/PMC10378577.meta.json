@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10378577",
+  "pmid": "36651686",
+  "title": "Adverse Effects of Antidepressant Medications and their Management in Children and Adolescents.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Strawn JR, Mills JA, Poweleit EA, Ramsey LB, Croarkin PE.",
+  "doi": "10.1002/phar.2767",
+  "figures": [
+    "Physical Symptoms in SSRI-treated Children and Adolescents. Physical symptoms (A–J) generally decrease over time in sertraline-treated children and adolescents ( n  = 139) during a prospective, double-blind placebo-controlled trial. Similarly, total physical symptoms (K) significantly decrease over time in sertraline-treated youth. Points represent the change from baseline in mean burden score on ",
+    "Alternative Approaches to Visualizing Adverse Effects. In contrast to presenting relative rates, odds ratio, or bar graphs, adverse effects can be visually presented relative to the population of antidepressant-treated patients and the comparison group to provide more context. Modified gauges (left) and a pictogram (right) show the incidence of nausea (based on rates in the package insert) for flu",
+    "Functional Causal Diagram of Activation in Selective Serotonin Reuptake Inhibitor-Treated Youth. Activation, a constellation of symptoms including insomnia, restlessness, irritability, and mild impulsivity, (red) is influenced by both pharmacologic (green), and clinical (beige) factors as well as adherence. Additional factors that influence medication metabolism are shown in blue.  Figure created ",
+    "Plasma selective serotonin reuptake inhibitor concentrations with missed doses and during hyperbolic discontinuation. The effect of missed doses (*) can be seen in an adolescent treated with 15 mg daily of escitalopram (A) and 150 mg daily of sertraline (B) who is a normal metabolizer for CYP2C19. However, these effects are amplified in the same adolescent treated with escitalopram 15 mg daily (C)"
+  ],
+  "tables": [],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056554.8539574
+}

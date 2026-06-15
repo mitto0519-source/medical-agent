@@ -1,0 +1,40 @@
+{
+  "pmcid": "PMC10624954",
+  "pmid": "37928174",
+  "title": "An innovative medical waste management system in a smart city using XAI and vehicle routing optimization.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Boudanga Z, Benhadou S, Medromi H.",
+  "doi": "10.12688/f1000research.138867.2",
+  "figures": [
+    "Overview of the methodology employed in this work.",
+    "Representation of chromosome.",
+    "The current MWM process.",
+    "The proposed smart medical waste management system.",
+    "Explainable artificial intelligence (XAI) in medical waste management system.",
+    "Average impact on bin fill predictions (average absolute value of SHapley Additive exPlanations (SHAP)).",
+    "Confusion matrix.",
+    "Receiver operating characteristics, area under the curve.",
+    "Precision-recall area under the curve.",
+    "The lift curve.",
+    "The feature contribution to our prediction (node 11).",
+    "Partial dependence plot (node 10).",
+    "Smart collection approach.",
+    "Algorithm 1  Result.",
+    "Two-commodity flow formulation representation.",
+    "Conditional residual value charts for \"data: distance traveled\".",
+    "Main effects graph for data: distance traveled (adjusted means).",
+    "Concurrent Tukey 95% CIs."
+  ],
+  "tables": [
+    "A comparative study: evaluating the current solution versus the proposed solution.",
+    "Prediction model performance metrics.",
+    "Analysis of variance (ANOVA).",
+    "Coefficients (ANOVA).",
+    "Result - Simulation of TDVRPTW Model.",
+    "Tukey simultaneity tests for differences between means.",
+    "Comparative table of the proposed solution and the traditional solution (trip for transport of medical waste to treatment centers)."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780020462.6958315
+}

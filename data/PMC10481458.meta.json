@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10481458",
+  "pmid": "37674209",
+  "title": "Antipsychotic effects on anthropometric outcomes in anorexia nervosa: a retrospective chart review of hospitalized children and adolescents.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Frank B, Arnold S, Jaite C, Correll CU.",
+  "doi": "10.1186/s40337-023-00862-4",
+  "figures": [
+    "Time course of antipsychotic medication in anorexia nervosa"
+  ],
+  "tables": [
+    "Clinical characteristics of anorexia nervosa patients with versus without antipsychotic medication",
+    "Prevalence and characteristics of antipsychotic medication in AN",
+    "Binary logistic regression model: Baseline predictors (moderators), and baseline predictors (moderators) together with intra-treatment predictors (mediators) of clinical antipsychotic medication use during inpatient treatment of youth with anorexia nervosa",
+    "Clinical characteristics of anorexia nervosa patients with versus without antipsychotic medication—matched sample 1",
+    "Weight change per week in kg before versus after antipsychotics: within-group comparison and between-group comparison"
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780056844.1882396
+}

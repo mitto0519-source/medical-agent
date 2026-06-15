@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10623140",
+  "pmid": "37929054",
+  "title": "GABAergic signaling in alcohol use disorder and withdrawal: pathological involvement and therapeutic potential.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Dharavath RN, Pina-Leblanc C, Tang VM, Sloan ME, Nikolova YS, Pangarov P, Ruocco AC, Shield K, Voineskos D, Blumberger DM, Boileau I, Bozinoff N, Gerretsen P, Vieira E, Melamed OC, Sibille E, Quilty LC, Prevot TD.",
+  "doi": "10.3389/fncir.2023.1218737",
+  "figures": [
+    "Brain circuits affected by alcohol consumption in the context of acute or prolonged exposure.  (A)  Alcohol induces changes in neutrotransmitters including glutamate (green), GABA (orange), dopamine (blue), serotonin (yellow), opioid (grey) and acetylcholine (purple), in various brain regions.  (B)  During acute alcohol consumption, ethanol induces a decrease in glutamatergic activity and an incre",
+    "GABA receptor subtypes involved in modulation of ethanol.  (A)  Molecular structures of γ- and δ- subunit-containing GABA A  receptors.  (B)  Ligand-specific binding sites of γ- and δ- subunit-containing GABA A  receptors.  (C)  Molecular structure and downstream signaling of GABA B  receptors. α, β, γ, δ, subunits of GABA A  receptor; Cl-, Chloride ion; GABA, Gamma-aminobutyric acid; NMDA-R, N-Me"
+  ],
+  "tables": [
+    "Alcohol consumption, symptoms, and the role of the GABAergic system.",
+    "Existing pharmacological therapeutics to treat AUDs, their efficacy, and limitations.",
+    "Role of GABA A  receptor subunits in alcohol abuse-related effects ( Berro et al., 2019 ).",
+    "GABA B -positive allosteric modulators under development for AUD.",
+    "GABA modulators in clinical trials for AUD and alcohol withdrawal treatment (Source:  clinicaltrials.org )."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060738.5936978
+}

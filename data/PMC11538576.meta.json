@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11538576",
+  "pmid": "39497565",
+  "title": "Genome-Wide Association Analysis of Rapid Decline in Lung Function: Analysis From the Korean Genome and Epidemiology Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim SH, Lee H, Jo YS, Yoo J, Choi JY.",
+  "doi": "10.3346/jkms.2024.39.e275",
+  "figures": [
+    "Manhattan plots of the genome-wide association analysis of rapid decline in FEV1.  The blue and red horizontal lines indicate possible significance (1 × 10 −5 ) and the genome-wide threshold (5 × 10 −8 ), respectively.  FEV1 = forced expiratory volume in 1 second."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population",
+    "Identified SNPs from the GWAS analysis"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037095.6125045
+}

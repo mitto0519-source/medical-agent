@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11572618",
+  "pmid": "39654664",
+  "title": "Visceral adiposity index, cardiorespiratory fitness, and fasting plasma glucose associations in adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Musa DI, Okuneye RO, Momoh JI, Darma MH, Onoja-Alexander MO, Mwangi FM.",
+  "doi": "10.5409/wjcp.v13.i4.97105",
+  "figures": [
+    "Glycemic profile of participants stratified by cardiorespiratory fitness and visceral adiposity index.  FPG: Fasting plasma glucose; VAI: Visceral adiposity index; CRF: Cardiorespiratory fitness."
+  ],
+  "tables": [
+    "General characteristics of participants stratified by type 2 diabetes risk versus cardiorespiratory fitness status ( n  = 403)",
+    "General characteristics of participants stratified by type 2 diabetes risk versus visceral adiposity index status ( n  = 403)",
+    "Partial correlation coefficients assessing the relationship among visceral adiposity index, cardiorespiratory fitness and fasting plasma glucose and other health indices after controlling for age and maturity status ( n  = 403)",
+    "Standardized regression coefficients evaluating the relationship among visceral adiposity index, cardiorespiratory fitness and fasting plasma glucose after controlling for age and maturity status ( n  = 403)"
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011381.6421165
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11053048",
+  "pmid": "38671009",
+  "title": "Differences in schizophrenia treatments by race and ethnicity-analysis of electronic health records.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Medina C, Akinkunmi A, Bland N, Velthorst E, Reichenberg A, Khachadourian V, Modabbernia A, Janecka M.",
+  "doi": "10.1038/s41537-024-00470-4",
+  "figures": [
+    "Likelihood of receiving specific anti-psychotic, anti-depressant and mood stabilizing medications in Asian, Black/AA, Hispanic, Other race/ethnicity and unknown race/ethnicity patients with SCZ diagnosis, compared to white patients.  Red tiles indicate higher, and blue tiles lower likelihood of receiving the prescription of the given medication. Odds ratios and their 95% confidence intervals are p",
+    "Likelihood of receiving an anti-psychotic, anti-depressant and mood stabilizing medication in Asian, Black/ AA, Hispanic, Other race/ethnicity and unknown race/ethnicity patients with SCZ diagnosis, compared to white patients.  Red tiles indicate higher, blue tiles lower likelihood of receiving the prescription of the medication within each class; associated estimates reflect the odds ratios with ",
+    "Likelihood of receiving an anti-psychotic, anti-depressant and mood stabilizing medication in Asian, Black/AA, Hispanic, Other race/ethnicity and unknown race/ethnicity patients with bipolar disorder and depression, compared to white patients.  Red tiles indicate higher, blue tiles lower likelihood of receiving the prescription of the medication within each class among patients with BD ( A ) and d",
+    "Standardized differences (Z-scores) in the doses of anti-psychotic, anti-depressant and mood stabilizing medications in Asian, Black/ AA, Hispanic, Other race/ethnicity and unknown race/ethnicity patients with bipolar disorder and depression, compared to white patients with respective diagnosis.  Red tiles indicate higher, and blue tiles lower daily dose of the prescription of the given medication"
+  ],
+  "tables": [
+    "Characteristics of patients with SCZ diagnosis (ICD-10: F20)."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057358.5595963
+}

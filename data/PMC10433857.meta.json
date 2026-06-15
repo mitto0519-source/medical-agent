@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10433857",
+  "pmid": "37260381",
+  "title": "Longitudinal Gut Microbiota Dysbiosis Underlies Olanzapine-Induced Weight Gain.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Qian L, He X, Liu Y, Gao F, Lu W, Fan Y, Gao Y, Wang W, Zhu F, Wang Y, Ma X.",
+  "doi": "10.1128/spectrum.00058-23",
+  "figures": [
+    "Olanzapine treatment causes body weight gain without affecting food intake. (A) Female Sprague-Dawley rats, weighing approximately 250 g, were fed a chow diet and received vehicle treatment or three doses of olanzapine (2, 4, or 8 mg/kg body weight per day) via drinking water for 4 weeks ( n  = 11). (B) Rats were housed with 2 to 3 animals per cage, and the total water intake of individual cages w",
+    "Olanzapine treatment increases liver weight and plasma triglyceride levels. (A to E) After 4 weeks of intervention, rats were sacrificed via cervical dislocation, organs were collected immediately, and the weights of the liver (A), spleen (C), gonadal white adipose tissue (D), and interscapular brown adipose tissue (E) were determined. The relative mRNA expression of  Tnf ,  Il1b , and  Ccl2  in t",
+    "Olanzapine treatment causes a dynamic alteration of gut microbiota composition. (A) Female Sprague-Dawley rats, weighing approximately 180 g, were fed a chow diet and received vehicle or olanzapine (4 mg/kg/day) treatment via drinking water for 12 days. (B and C) Body weight was measured every 2 days (B), and the percentage of body weight gain was calculated (C). Fresh fecal samples were collected",
+    "Olanzapine treatment leads to distinct changes in different subgroups of the gut microbiota over time. Fuzzy c-means clustering was used to classify the gut microbiota into different clusters based on longitudinal tracks. (A to C) The mean relative abundance of bacteria at the genus level was used to establish the longitudinal trajectories of three clusters. Detailed data for the genera in each cl",
+    "Body weight gain correlates with longitudinal changes of gut microbiota induced by olanzapine treatment. Spearman’s correlation was calculated between gut microbiota changes and body weight gain. (A to C) Scatterplots with linear regression lines were used to show these correlations. (D) Linear mixed models and Spearman’s correlation were also conducted in phylogenetic investigation of communities"
+  ],
+  "tables": [],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057467.1930044
+}

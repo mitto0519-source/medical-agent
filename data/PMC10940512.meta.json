@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10940512",
+  "pmid": "38495788",
+  "title": "Clinical and laboratory characteristics but not response to treatment can distinguish children with definite growth hormone deficiency from short stature unresponsive to stimulation tests.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lanzetta MA, Dalla Bona E, Tamaro G, Vidonis V, Vittori G, Faleschini E, Barbi E, Tornese G.",
+  "doi": "10.3389/fendo.2024.1288497",
+  "figures": [
+    "Flow-chart explaining the division to different groups of the study. dGHD, definite growth hormone deficiency; GHD, growth hormone deficiency; SUS, short stature unresponsive to stimulation tests.",
+    "Significant differences between SUS and dGHD at baseline: target height SDS (* p=0.04), height-target height SDS (**p=0.01), IGF-1 SDS (***p&lt;0.01).",
+    "Significant differences between SUS and dGHD at the last follow-up visit for individuals who reached near adult height (n=59): BMI SDS and GH peak at retesting with GHRH+arginine (*** p&lt;0.01).",
+    "Prevalence of short stature (height &lt; -2 SDS) in the overall cohort (white), dGHD (light grey) and SUS (dark grey) at different follow-up timepoints: at baseline, after 1 year of follow-up, at last visit and at the end of rhGH therapy."
+  ],
+  "tables": [
+    "GHD diagnostic criteria according to the Italian regulation: comparison of the whole cohort, GHD and SUS population and prevalence of the proposed dGHD diagnostic criteria in the dGHD population.",
+    "Clinical and laboratory characteristics at baseline.",
+    "Clinical and laboratory characteristics at the last follow-up visit for individuals who reached near adult height (n=59)."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013420.4111798
+}

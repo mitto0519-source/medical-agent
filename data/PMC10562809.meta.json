@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC10562809",
+  "pmid": "37651282",
+  "title": "Brain responses to positive and negative events in individuals with internet gaming disorder during real gaming.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhang Z, Wang S, Du X, Qi Y, Wang L, Dong GH.",
+  "doi": "10.1556/2006.2023.00039",
+  "figures": [
+    "The analytical pipeline of this study\n  (A) FMRI data were obtained when subjects played the game during the scan. (B) Subjects' gaming behaviors were coded into three types (blue) for further analysis. (C) A GLM containing positive, negative, baseline behaviors and six head movement parameters was conducted for every subject to generate brain activation in response to events of interest. Then, br",
+    "Regions showing significant activation during positive events among the IGD or RGU subjects\n  The images were obtained after the FWE correction with a voxel-level threshold  p  &lt; 0.005 and a cluster-level threshold  p  &lt; 0.05.   Abbreviations : IGD, internet gaming disorder; RGU, recreational game use; L, left; R, right; BA, Brodmann's area; DLPFC, dorsolateral prefrontal cortex.",
+    "Regions showing group differences (IGD vs. RGU) in activation during positive events and correlations between brain activation and severity scores\n  Subplot (A) illustrating the regions showing decreased activation in the IGD group compared to the RGU group during positive events (positive minus baseline). Subplot (B) illustrating the negative correlation between the brain activation of the left D",
+    "Regions showing significant activation during negative events among the IGD or RGU subjects\n  The images were obtained after the FWE correction with a voxel-level threshold  p  &lt; 0.005 and a cluster-level threshold  p  &lt; 0.05.   Abbreviations : IGD, internet gaming disorder; RGU, recreational game use; L, left; R, right; MFG, middle frontal gyrus.",
+    "Regions showing group differences (IGD vs. RGU) in activation during negative events and correlations between brain activation and severity scores\n  Subplot (A) illustrating the regions showing decreased activation in the IGD group compared to the RGU group during negative events (negative minus baseline). Subplot (B) illustrating the negative correlation between the brain activation of the left M",
+    "The results of the functional connectivity analysis and correlation analysis\n  Subplot (A) showing the ROIs investigated in the FC analysis during positive events. Subplot (B) showing that the FC strength of the DLPFC-putamen under positive events is significantly negatively correlated with IAT scores. Subplot (C) showing the ROIs investigated in the FC analysis during negative events. The subplot"
+  ],
+  "tables": [
+    "Demographic information and group differences",
+    "Number of events of the three behavior types",
+    "Regions showing group differences (IGD vs. RGU) in activation during events of interest",
+    "Differences in functional connectivity between IGD and RGU group"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998873.94727
+}

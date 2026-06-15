@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11079771",
+  "pmid": "38657238",
+  "title": "Investigating Rhythmicity in App Usage to Predict Depressive Symptoms: Protocol for Personalized Framework Development and Validation Through a Countrywide Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Ahmed MS, Hasan T, Islam S, Ahmed N.",
+  "doi": "10.2196/51540",
+  "figures": [
+    "Screenshot of the data collection tool showing the (a) consent form in short in Bangla and English, (b) consent form in detail, (c) PHQ-9, and (d) app usage data. PHQ-9: 9-item Patient Health Questionnaire.",
+    "STROBE (Strengthening the Reporting of Observational studies in Epidemiology) flowchart.",
+    "Number of days’ data that each participant has for the final analysis. P: participant.",
+    "Participants’ demographic characteristics: (a) map of Bangladesh presenting living divisions, (b) age, (c) gender, and (d) number of different institutions."
+  ],
+  "tables": [
+    "Depressive symptom for each item of the PHQ-9 a ."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001688.481756
+}

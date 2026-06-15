@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10929548",
+  "pmid": "38476590",
+  "title": "Factors Related to Treatment Non-Adherence Among Caregivers of Pediatric and Adolescent Growth Hormone Deficiency Patients in Japan.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Akazawa M, Sato T, Ebata N, LoPresti M, Nishi R.",
+  "doi": "10.2147/ppa.s446649",
+  "figures": [],
+  "tables": [
+    "Treatment Adherence and Caregiver, Patient, and Treatment Characteristics",
+    "Treatment Adherence and Health Literacy Among Caregivers Based on HLS-14",
+    "Treatment Adherence and Satisfaction Concerning Treatment",
+    "Treatment Adherence and Opinions Concerning Treatment",
+    "Exploratory Factor Analysis: Treatment Satisfaction",
+    "K-Means Cluster Analysis: Treatment Satisfaction",
+    "Exploratory Factor Analysis: Opinions Related to Treatment",
+    "K-Means Cluster Analysis: Opinions Related to Treatment"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013260.3893318
+}

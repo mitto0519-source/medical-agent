@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11725637",
+  "pmid": "39778405",
+  "title": "Pituitary abnormalities in patients with pediatric growth hormone deficiency in a single tertiary center.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Jung HJ, Kim JR, Yu J.",
+  "doi": "10.6065/apem.2448070.035",
+  "figures": [
+    "Receiver operating characteristic (ROC) curves of 4 statistically significant factors for predicting abnormal brain magnetic resonance (MR) images. IGF-I SDS and IGF-1 were identified as the best predictors of abnormal brain MR images which showed an area under the curve of 0.838 and 0.818, respectively. IGF-I, insulin-like growth factor-I; SDS, standard deviation score; IGFBP3, insulin-like growt"
+  ],
+  "tables": [
+    "Clinical characteristics of study subjects (N=95)",
+    "Comparison of demographic and laboratory data between normal and abnormal magnetic resonance imaging groups",
+    "Sensitivity, specificity, and AUC for each cutoff value of IGF-I, IGF-I SDS, GH peak level, and IGFBP3 for predicting abnormal brain MR images"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012729.442002
+}

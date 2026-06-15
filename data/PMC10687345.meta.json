@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC10687345",
+  "pmid": "38031314",
+  "title": "Developmental fluoxetine exposure affects adolescent and adult bone depending on the dose and period of exposure in mice.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Fricke HP, Krajco CJ, Perry MJ, Desorcy-Scherer KM, Wake LA, Charles JF, Hernandez LL.",
+  "doi": "10.14814/phy2.15881",
+  "figures": [
+    "Dosing regimen of Experiments 1 and 2. (a) Offspring were exposed to saline during the entire peripartum period beginning with the first day of gestation (E0), to 2 mg/kg fluoxetine from parturition through the end of lactation (D21), or to 2 mg/kg fluoxetine during both gestation and lactation. (b) Offspring were exposed to saline during the entire peripartum period, to 2 mg/kg fluoxetine during ",
+    "Average pup weight and circulating fluoxetine + norfluoxetine concentrations of offspring developmentally exposed to fluoxetine. C57BL/6J dams were administered sterile saline ( n  = 14), 2 mg/kg fluoxetine during lactation ( n  = 18), 2 mg/kg fluoxetine during gestation and lactation ( n  = 19), or 20 mg/kg fluoxetine during lactation ( n  = 18). The daily litter weight was recorded from birth to",
+    "Fluoxetine exposure during lactation or during both gestation and lactation has differential and sex‐specific impacts on cortical and trabecular characteristics at weaning. C57BL/6J dams were administered 2 mg/kg fluoxetine during either lactation alone or both gestation and lactation. MicroCT was used to measure trabecular (control:  n  = 8 female,  n  = 9 male); L(2) FLX:  n  = 8 female,  n  = 1",
+    "Fluoxetine exposure during lactation has dose‐dependent and sex‐specific impacts on cortical and trabecular characteristics at weaning. C57BL/6J dams were administered either 2 or 20 mg/kg fluoxetine during lactation. MicroCT was used to measure trabecular (control:  n  = 8 female,  n  = 9 male); L(2) FLX:  n  = 8 female,  n  = 10 male; and L(20) FLX:  n  = 9 female,  n  = 8 male) and cortical (co",
+    "Developmental fluoxetine exposure has differential effects on adult skeletal characteristics depending on the window of exposure and the sex of the offspring. C57BL/6J dams were administered 20 mg/kg fluoxetine daily either during lactation or the entire peripartum period. The exposed offspring were then aged out to 12 weeks of age before their femurs were collected. Dual‐energy x‐ray absorptiomet",
+    "Relative gene expression of the femur of female and male offspring. At 12 weeks old, the femur was collected from the female offspring ( n  = 13 CTRL;  n  = 9 L(20);  n  = 11 G + L(20)) and male offspring ( n  = 10 CTRL;  n  = 9 L(2);  n  = 10 L(20)) and gene expression was quantified via RT‐PCR. The relative gene expression of  Rank  (a),  Rankl  (b),  Opg  (c),  Mcp1  (d),  Trap  (e),  M‐csf  (f",
+    "Exposure to a high dose of fluoxetine during development has differential effects on body composition dependent on the window and length of exposure. C57BL/6J dams were administered 20 mg/kg fluoxetine during lactation alone or throughout gestation and lactation. The offspring of these dams that were exposed to fluoxetine during development were then aged out to 12 weeks of age before their body c"
+  ],
+  "tables": [
+    "Primer sequences used for RT‐qPCR.",
+    "MicroCT was used to evaluate female cortical and trabecular bone parameters in mice exposed to 2 mg/kg fluoxetine during lactation or gestation and lactation at weaning.",
+    "MicroCT was used to evaluate male cortical and trabecular bone parameters in mice exposed to 2 mg/kg fluoxetine during lactation or gestation and lactation at weaning.",
+    "MicroCT was used to evaluate female cortical and trabecular bone parameters in mice exposed to 2 mg/kg or 20 mg/kg fluoxetine during lactation at weaning.",
+    "MicroCT was used to evaluate male cortical and trabecular bone parameters in mice exposed to 2 mg/kg or 20 mg/kg fluoxetine during lactation at weaning.",
+    "MicroCT was used to evaluate female cortical and trabecular bone parameters in mice exposed to 20 mg/kg fluoxetine during lactation or gestation and lactation 12 weeks of age.",
+    "MicroCT was used to evaluate male cortical and trabecular bone parameters in mice exposed to 20 mg/kg fluoxetine during lactation or gestation and lactation at 12 weeks of age."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056519.518126
+}

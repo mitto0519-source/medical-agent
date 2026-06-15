@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC10559918",
+  "pmid": "37809858",
+  "title": "The effect of survey administration mode on youth mental health measures: Social desirability bias and sensitive questions.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Rickwood DJ, Coleman-Rose CL.",
+  "doi": "10.1016/j.heliyon.2023.e20131",
+  "figures": [
+    "Mean K10 scores by age group and survey mode.",
+    "of respondents aged 18–25 Years in each K10 category by mode and study.",
+    "Mean MHC-SF scores by age group and survey mode."
+  ],
+  "tables": [
+    "Number of participants in each mode by gender and age group, for study one and two.",
+    "Study year 2020 - Mean scores for psychological distress, wellbeing, and physical activity by study year, survey mode, gender and age group.",
+    "Study year 2022 - Mean scores for psychological distress, wellbeing, and physical activity measures by survey mode, survey mode, gender and age group.",
+    "Main and interaction effects for study, survey mode, gender, and age group on K10 scores.",
+    "Main and interaction effects for study, survey mode, gender, and age group on MHC-SF scores.",
+    "Main and interaction effects for survey mode, gender, and age group on physical activity in study one (2020).",
+    "Main and interaction effects for survey mode, gender, and age group on physical activity measures in study two (2022)."
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050857.7754233
+}

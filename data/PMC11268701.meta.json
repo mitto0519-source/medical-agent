@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11268701",
+  "pmid": "39047016",
+  "title": "Outcome assessment of different reward stimuli in Internet gaming disorder by event-related potentials.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhang M, Zhao C, Mao Z, Zhang M, Xing X.",
+  "doi": "10.1371/journal.pone.0307717",
+  "figures": [
+    "Door task trial flow.",
+    "Grand-average event-related potential (ERP) waveforms and topographic maps in food reward (at point Cz).",
+    "Grand-average event-related potential (ERP) waveforms and topographic maps in monetary reward (at point Cz).",
+    "Grand-average event-related potential (ERP) waveforms and topographic maps in game reward (at point Cz)."
+  ],
+  "tables": [
+    "Statistics on basic information of participants.",
+    "EEG results of responses to three types of rewarding stimuli between the two groups."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998427.0958157
+}

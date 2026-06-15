@@ -1,0 +1,34 @@
+{
+  "pmcid": "PMC11359277",
+  "pmid": "39204808",
+  "title": "Investigating the Impacts of Autonomous Vehicles on the Efficiency of Road Network and Traffic Demand: A Case Study of Qingdao, China.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Liu C, Zyryanov V, Topilin I, Feofilova A, Shao M.",
+  "doi": "10.3390/s24165110",
+  "figures": [
+    "Population distribution of Qingdao.",
+    "Driving scenario without autonomous vehicle.",
+    "Driving modes in autonomous driving scenarios.",
+    "Changes in commuting patterns.",
+    "Visualizations of the simulation scenario for the rate of unmanned vehicles in the traffic flow of 10% ( a ) and 20% ( b ).",
+    "Visualizations of the simulation scenario for the rate of unmanned vehicles in the traffic flow (( a ) 50% and ( b ) 80%).",
+    "Lane occupancy during simulation.",
+    "Location of apparently congested nodes.",
+    "Intersection 2 (scenario with 90% autonomous vehicle share of traffic flow).",
+    "Intersection 3 (90% of autonomous vehicle in the traffic flow).",
+    "Intersection 8 (90% of autonomous vehicle in the traffic flow)."
+  ],
+  "tables": [
+    "Parameters of the driver model used in SUMO simulations in this study.",
+    "Variables and evaluation indicators.",
+    "Road network modeling results.",
+    "Average queue length at Intersection 1.",
+    "Average queue length at Intersection 2.",
+    "Average queue length at Intersection 3.",
+    "Average queue length for north-south direction.",
+    "Average queue length for east-west direction."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008204.9585588
+}

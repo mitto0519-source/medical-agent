@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11203952",
+  "pmid": "",
+  "title": "Meta-Analysis of Internet Gaming Disorder Prevalence: Assessing the Impacts of DSM-5 and ICD-11 Diagnostic Criteria",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhou R, Morita N, Ogai Y, Saito T, Zhang X, Yang W, Yang F.",
+  "doi": "",
+  "figures": [
+    "Flow diagram for study selection.",
+    "Forest plot of the prevalence of IGD (I 2  &gt; 75% indicates that the prevalence has high heterogeneity).",
+    "Galbraith plot of the prevalence of IGD.",
+    "Forest plot of the prevalence of IGD between different diagnostic criteria.",
+    "( A ) Funnel plots to assess publication bias (original funnel plot); ( B ) Filled funnel plot to assess publication bias (studies needed to be filled in white)."
+  ],
+  "tables": [
+    "Descriptive characteristics of the study included in the meta-analysis.",
+    "Subgroup analyses."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998535.234147
+}

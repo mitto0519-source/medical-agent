@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10929649",
+  "pmid": "38476578",
+  "title": "Medical Costs Associated with High/Moderate/Low Likelihood of Adult Growth Hormone Deficiency: A Healthcare Claims Database Analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yuen KCJ, Blevins LS, Clemmons DR, Faurby M, Hoffman AR, Kelepouris N, Kerr JM, Tarp JM, Fleseriu M.",
+  "doi": "10.2147/ceor.s445495",
+  "figures": [
+    "",
+    "Clinical Characteristics Within 1 Year Prior of Individuals Being Categorized into Either the High-, Moderate-, or Low-Likelihood Group a",
+    "Annual mean cost trajectory for each level of likelihood of AGHD. Data per year are presented for high- and moderate-likelihood groups for the period of 10 years before (−10 years) and after (+10 years) year 0, and for the low-likelihood group over 10 years from the index date for ( a ) Total direct medical costs in the previous year, ( b ) Inpatient and outpatient visit costs in the previous year",
+    "Cost and health visits over time by level of AGHD likelihood. Data per year are presented for high- and moderate-likelihood groups for the period of 10 years before (−10 years) and after (+10 years) year 0, and for the low-likelihood group over 10 years from the index date for ( a ) The percentage of each likelihood group having a visit at some time in the previous year, ( b ) The average number o"
+  ],
+  "tables": [
+    "Clinical Characteristics Within 1 Year Prior of Individuals Being Categorized into Either the High-, Moderate-, or Low-Likelihood Group a",
+    "Comorbidity Risk Scores Within 1 Year Prior to Individuals Being Categorized into Either the High-, Moderate-, or Low-Likelihood Group"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013274.6571672
+}

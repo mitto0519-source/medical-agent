@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11363002",
+  "pmid": "39220110",
+  "title": "The relationship between internet gaming disorder, sleeping quality, self-compassion, physical activity participation and psychological distress: A path analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Wong MYC, Yuan GF, Liu C, Lam SKK, Fung HW.",
+  "doi": "10.1017/gmh.2024.36",
+  "figures": [
+    "Reviewed relationship between internet gaming disorder, psychological distress and sleeping quality.",
+    "Hypothesized path model.  \n Note : BSRS, Bergen Social Relationships Scale; GODIN, Godin-Shephard Leisure-Time Physical Activity Questionnaire; IGD_Total, Internet Gaming Disorder Symptoms Total; PHQ, Patient Health Questionnaire; SCS_selfkindness, Self-Compassion (Self-Kindness); SCS_mindfulness, Self-Compassion (Mindfulness); SCS_judgment, Self-Compassion (Self-Judgment).",
+    "The path analysis model.  \n Note : Path coefficient in standardized β. BSRS, The Bergen Social Relationship Scale; GSLTPAQ, Godin-Shephard Leisure-Time Physical Activity Questionnaire; IGD_Total, Internet Gaming Disorder Symptoms Total; PHQ, Patient Health Questionnaire. * p  &lt; 0.05."
+  ],
+  "tables": [
+    "Demographic information and descriptive statistics",
+    "Correlation matrix of the variables",
+    "Measurement model goodness of fit index",
+    "Standardized direct, indirect and total effect of internet gaming disorder on sleep quality",
+    "Sample size sensitivity analysis"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998847.8115516
+}

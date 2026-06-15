@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11636020",
+  "pmid": "38539277",
+  "title": "Should organized sport characteristics be considered as a strategy for meeting physical activity guidelines in children?",
+  "year": 2024,
+  "journal": "",
+  "authors": "Rodrigues D, Machado-Rodrigues AM, Gama A, Silva MG, Nogueira H, Padez C.",
+  "doi": "10.1177/17579759241237525",
+  "figures": [
+    "Flow chart of participants who practise and do not practise an organized sport. Examples for indoor sports: basketball and gymnastics; outdoor: football and tennis; individual: dancing and swimming; team: hockey and rugby; combat: judo and karate; individual aesthetic: dancing and yoga; racing: canoe and swimming; invasion: football and water polo. Complete classification of sports according to sp"
+  ],
+  "tables": [
+    "Descriptive characteristics ( n  and %, or mean and standard deviation) of participants engaged in an organized sport in total sample ( N  = 332), boys ( n  = 176) and girls ( n  = 156).",
+    "Physical activity and sedentary levels (minutes per day) of children practising indoor or outdoor sports; one-way analysis of covariance.",
+    "Physical activity and sedentary levels (minutes per day) of children practising individual or team sports; one-way analysis of covariance.",
+    "Physical activity and sedentary levels (minutes per day) of children by sport categories (e.g. combat, individual aesthetic, racing or invasion sports); one-way analysis of covariance.",
+    "Linear regression representing the relationship between time in physical and sedentary activities and children’s daily moderate-to-vigorous physical activity."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008188.0360029
+}

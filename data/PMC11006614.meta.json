@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11006614",
+  "pmid": "38599827",
+  "title": "Association of obstructive sleep apnea symptoms with all-cause mortality and cause-specific mortality in adults with or without diabetes: A cohort study based on the NHANES.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhang Q, Zhang Q, Li X, Du G, Feng X, Ding R, Chi Y, Liu Y.",
+  "doi": "10.1111/1753-0407.13538",
+  "figures": [
+    "Flow chart of participants in this study. NHANES, National Health and Nutrition Examination Survey.",
+    "Kaplan–Meier survival curves (crude) were performed to analyze the difference of mortality among the obstructive sleep apnea symptoms multivariable apnea prediction *10 (OSAS.MAP10) quartiles groups (Q1–Q4). (A) Kaplan–Meier survival curves of all‐cause mortality for all participants; (B) Kaplan–Meier survival curves of all‐cause mortality for diabetes; (C) Kaplan–Meier survival curves of cardiova",
+    "Restricted cubic spline (RCS) curves to detect the nonlinear relationship between obstructive sleep apnea symptoms multivariable apnea prediction *10 (OSAS.MAP10) with all‐cause mortality (A) and cancer mortality (B) in individuals with diabetes."
+  ],
+  "tables": [
+    "Demographic characteristics of US adults with different diabetic status.",
+    "Weighted association between OSAS.MAP10 with all‐cause mortality and cause‐specific mortality in different status of diabetes.",
+    "Association of OSAS.MAP10 with all‐cause mortality in diabetic participants.",
+    "Association of OSAS.MAP10 with cancer mortality in diabetic participants."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002269.7972188
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10394000",
+  "pmid": "37528146",
+  "title": "Light exposure behaviors predict mood, memory and sleep quality.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Siraji MA, Spitschan M, Kalavally V, Haque S.",
+  "doi": "10.1038/s41598-023-39636-y",
+  "figures": [
+    "Theoretical framework of the fitted PLS-SEM model to predict chronotype, sleep quality, mood, memory and concentration using LEBA categories as predictors.",
+    "Analyses steps used in the study.",
+    "Response distribution of Light Exposure Behavior Assessment."
+  ],
+  "tables": [
+    "Demographics and descriptive statistics of the participants ( N  = 301).",
+    "Structural validity of the scales used in the PLS-SEM model assessed using ESEM.",
+    "Direct and total effects estimated in the PLS-SEM model (Only significant structural relationships are reported,  t  &gt; 1.96)."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001426.7842753
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11696572",
+  "pmid": "39747571",
+  "title": "A genome-wide association study of high-sensitivity C-reactive protein in a large Korean population highlights its genetic relationship with cholesterol metabolism.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Oh K, Yuk M, Yang S, Youn J, Dong Q, Wang Z, Song N.",
+  "doi": "10.1038/s41598-024-84466-1",
+  "figures": [
+    "Circular Manhattan plot of GWAS on hsCRP. Circular Manhattan plot shows the genome-wide significant hits ( P  &lt; 5 × 10 –8 ) of the GWAS results from the HEXA, CAVAS, and Ansan/Ansung study, and meta-analysis of the three cohort studies in order from the innermost part to the outermost part. Labelled genes were the nearest genes to the 85 lead SNPs.",
+    "Gene-based association analysis of hsCRP. ( a ) Manhattan plot of genome-wide gene-based analysis of hsCRP. Red and blue dotted lines indicate the Bonferroni ( P  &lt; 2.68 × 10 –6 ) and nominal genome-wide significance level ( P  &lt; 5 × 10 –8 ). Labelled genes are the top 10 independent genes significantly associated with hsCRP. ( b ) Interaction network between the genes associated with hsCRP.",
+    "Association network of the hsCRP-associated pathways. This network depicts the association between pathways from gene ontology (GO) and the Kyoto Encyclopedia of Genes and Genomes (KEGG). The sizes of the nodes reflect the enrichment significance of the pathways. Color-labeled pathways represent the functional groups with the most significant  P -value.",
+    "Forest plot of PheWAS using hsCRP-PRS. Bonferroni significance level of PheWAS  p -value is 4.35 × 10 –4 .",
+    "The association analyses between hsCRP and LDL. ( a ) The association between hsCRP and LDL cholesterol. A line graph indicates the hsCRP levels, and a bar graph indicates the proportion of subjects with elevated hsCRP levels. ( b ) The association between hsCRP-PRS and LDL cholesterol."
+  ],
+  "tables": [],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037240.0736449
+}

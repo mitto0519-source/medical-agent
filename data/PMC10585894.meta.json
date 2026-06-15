@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10585894",
+  "pmid": "37858122",
+  "title": "Impact of a publicly-funded pharmacare program policy on benzodiazepine dispensing among children and youth: a population-based natural experiment.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Antoniou T, McCormack D, Kitchen S, Pajer K, Gardner W, Lunsky Y, Penner M, Tadrous M, Mamdani M, Juurlink DN, Gomes T.",
+  "doi": "10.1186/s12887-023-04331-4",
+  "figures": [
+    "Impact of OHIP + implementation (January 2018) and modification (April 2019) on monthly rates of benzodiazepine dispensing among Ontario residents between the ages of 0 and 24, January 2013 to March 2020",
+    "Actual versus predicted rates of benzodiazepine dispensing during OHIP+ (January 2018 to December 2018)"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of individuals aged 0 to 24 dispensed a benzodiazepine, January 2013 to March 2020*",
+    "Changes in benzodiazepine dispensing to children and youth following the introduction of the OHIP+ pharmacare program in January 2018",
+    "Projected and Actual Benzodiazepine Dispensing in Children and Youth, January 2018 to December 2018",
+    "Changes in benzodiazepine dispensing to children and youth following the April 2019 modification of the OHIP+ pharmacare program restricting coverage only to individuals without private insurance"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059523.2965438
+}

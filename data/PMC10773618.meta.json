@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10773618",
+  "pmid": "38192564",
+  "title": "Correlation of lifestyle behaviors during pregnancy with postpartum depression status of puerpera in the rural areas of South China.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Ding Y, Li G, Shi X, Wang M, Peng Y, Deng H, Yang Z, Liang Q, Wang Z.",
+  "doi": "10.3389/fpubh.2023.1304226",
+  "figures": [
+    "The flow chart of the study participants.",
+    "Path analysis of the correlation between lifestyle behaviors during pregnancy and PPD status.  **  p  &lt; 0.01,  *  p  &lt; 0.05. The single arrow line is the direct path line, double arrow line is the correlation line. The solid line represents a significant path coefficient, while the dashed line represents an insignificant path coefficient."
+  ],
+  "tables": [
+    "Sociodemographic characteristics of the women in two study groups.",
+    "Correlation of health literacy during pregnancy with the PPD status.",
+    "Correlation of the physical activities during pregnancy with PPD status.",
+    "Correlation of sleep quality during pregnancy with PPD status.",
+    "Correlation of dietary quality during pregnancy with PPD status.",
+    "Multiple linear regression analysis of factors influencing PPD status.",
+    "Path coefficients of lifestyle behaviors during pregnancy on PPD status."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780054055.3350873
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11307111",
+  "pmid": "38310876",
+  "title": "Temporal Changes in Resting Heart Rate and Risk of Diabetes Mellitus.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Son MK, Lee K, Park HY.",
+  "doi": "10.4093/dmj.2023.0305",
+  "figures": [
+    "",
+    "Trajectories of resting heart rate (RHR) before incident diabetes mellitus (DM) or last examination. Fitted lines denote mean RHR (incident DM vs. without incident DM), calculated from restricted cubic spline of mixed-effects linear regression models. Time 0=diagnosis or last examination. The dashed lines delimit the 95% confidence interval. (A) Time-varying RHR and DM in male. (B) Time-varying RH",
+    "Subgroup analysis for the risk of diabetes mellitus according to the resting heart rate (RHR). Adjusted for sex, area, and time-updated age, body mass index (BMI), physical activity, smoking, drinking, systolic blood pressure, antihypertensive drug use, chronic kidney disease, cardiovascular disease (CVD), glycosylated hemoglobin, total cholesterol, and change in RHR. HR, hazard ratio; CI, confide",
+    "Subgroup analysis for the risk of diabetes mellitus according to the change in resting heart rate (∆RHR). Adjusted for sex, area, and time-updated age, body mass index (BMI), physical activity, smoking, drinking, systolic blood pressure, antihypertensive drug use, chronic kidney disease, cardiovascular disease (CVD), glycosylated hemoglobin, total cholesterol, and RHR. HR, hazard ratio; CI, confid",
+    "Association between resting heart rate (RHR) and the incidence of diabetes mellitus (DM). The adjusted cubic spline model demonstrates the flexible association between time-varying RHR, including all available RHR values before an event or end of the study, and the hazard of DM incidence overall (A), in male (B), and in female (C) with 60 bpm taken as the reference RHR. The adjusted cubic spline m"
+  ],
+  "tables": [
+    "Characteristics of participants at visits 1–8",
+    "Risk of diabetes mellitus by time-varying RHR and ΔRHR, time-varying Cox regression analysis"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041562.9525092
+}

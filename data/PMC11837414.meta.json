@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC11837414",
+  "pmid": "39937115",
+  "title": "Net Reproduction Number as a Real-Time Metric of Population Reproducibility.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Achangwa C, Han C, Lim JS, Cho S, Choi S, Ryu S.",
+  "doi": "10.2196/63603",
+  "figures": [
+    "The annual number of live births, total fertility rate (TFR), and reproduction rate (R t ) in South Korea, 1975-2022. ( A ) The bar-colored blue and sky-blue indicate the annual number of male and female births, respectively. The blue solid line indicates the yearly sex ratio of male to female births. ( B ) The interrupted time series model with the TFR. The interruption (dashed vertical line) was"
+  ],
+  "tables": [
+    "Estimates from the interrupted time-series analysis using the total fertility rate and reproduction rate in South Korea, 1975-2022."
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032687.488589
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11601882",
+  "pmid": "39606511",
+  "title": "Efficacy of Melatonin as a Promising Intervention for Migraine Prevention: A Systematic Review of Randomized Control Trials.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Nelakuditi B, Dandamudi BJ, Dimaano KAM, Shah N, AlQassab O, Al-Sulaitti Z, Khan S.",
+  "doi": "10.7759/cureus.72559",
+  "figures": [
+    "A PRISMA 2020 flowchart depicting the process of article selection  MeSH: Medical Subject Headings; PRISMA: Preferred Reporting Items for Systematic Reviews and Meta-Analyses"
+  ],
+  "tables": [
+    "Search strategies and the number of papers identified from each database  MeSH: Medical Subject Headings",
+    "Quality assessment of the studies using Cochrane bias assessment tool (RoB 2)  + indicates a low risk of bias; - indicates a high risk of bias; ? indicates an unknown risk of bias",
+    "Summary of the included studies"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001405.2179773
+}

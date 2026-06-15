@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10923897",
+  "pmid": "38459065",
+  "title": "The clinical relevance of a polygenic risk score for type 2 diabetes mellitus in the Korean population.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim NY, Lee H, Kim S, Kim YJ, Lee H, Lee J, Kwak SH, Lee S.",
+  "doi": "10.1038/s41598-024-55313-0",
+  "figures": [
+    "Flowchart for the PRS analysis. GWAS: genome-wide association studies, PRS: polygenic risk score; T2DM: type 2 diabetes mellitus; KoGES: Korean Genome and Epidemiology Study; HEXA: heath examinee; CANVAS: cardiovascular disease association study.",
+    "Kaplan–Meier curve for cumulative incidence of prediabetes and T2DM by PRS group. ( a ) Progression from non-diabetes to T2DM. ( b ) Progression from NGT to prediabetes. ( c ) Progression from prediabetes to T2DM. T2DM: type 2 diabetes mellitus; NGT: normal glucose tolerance; Each shaded area represents 95% confidence band for each curve. Each dash line indicates median age-at-T2DM diagnosis for e"
+  ],
+  "tables": [
+    "Characteristics at the baseline of the KoGES_Ansan and Ansung dataset.",
+    "Results of Cox regression analysis for predicting progression from non-diabetes to T2DM, from NGT to prediabetes, and from prediabetes to T2DM.",
+    "Results of Cox regression analysis for predicting insulin prescription and T2DM complications.",
+    "Prediction performance evaluation using Harrel’s C-Index."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037738.4868855
+}

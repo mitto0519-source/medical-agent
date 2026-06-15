@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11774040",
+  "pmid": "39604202",
+  "title": "Impact of Mediterranean Diet Adherence on the Incidence of New-Onset Hypertension in Adults With Obesity in Korea: A Nationwide Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim JH, Lee JW, Lee Y, Nam CM, Kwon YJ.",
+  "doi": "10.1111/jch.14951",
+  "figures": [
+    "Study flowchart for new‐onset HTN. BMI, body mass index; HTN, hypertension; KoGES, Korean Genome and Epidemiology Study."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population according to the level of K‐MEDAS scores.",
+    "Nutritional status of the study population according to the level of K‐MEDAS scores.",
+    "Cox proportional hazard regression analysis for incident new‐onset HTN based on the level of K‐MEDAS scores.",
+    "The association between the level of K‐MEDAS scores and New‐onset HTN according to sex and age."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037467.812026
+}

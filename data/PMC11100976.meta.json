@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11100976",
+  "pmid": "38765826",
+  "title": "A new approach to urinalysis: effectiveness of a contingency management program among adolescent offenders in Spain.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Fernández-Moreno Á, Roncero D, Moreno-Fernández RD.",
+  "doi": "10.3389/fpsyg.2024.1364967",
+  "figures": [
+    "Flowchart of the sample selection process.",
+    "Flow-chart of the design of the study. (−): negative result (no drug consumption); (+) positive result (relapse).",
+    "Results of biological testing for drug consumption at the start of detention.  N  = 91; BDZ, Benzodiazepines; CB, Cannabis; Coc, Cocaine.",
+    "(A)  Proportion of relapses in drug consumption according to participation in the contingency management program. Error bars represent s.e.m. BDZ, benzodiazepines; QC, Quasi-control ( n  = 34); QE, Quasi-experimental ( n  = 57); *,  p  &lt; 0.05.  (B)  Effect size of proportion of relapses with any drug.  (C)  Effect size of proportion of relapses with cannabis."
+  ],
+  "tables": [
+    "Percentage of participants who consumed drugs during the detention period.",
+    "Predictive model of positive testing for any substance and cannabis."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060726.9851968
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11338161",
+  "pmid": "39170936",
+  "title": "Antidepressant class and concurrent rTMS outcomes in major depressive disorder: a systematic review and meta-analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zaidi A, Shami R, Sewell IJ, Cao X, Giacobbe P, Rabin JS, Goubran M, Hamani C, Swardfager W, Davidson B, Lipsman N, Nestor SM.",
+  "doi": "10.1016/j.eclinm.2024.102760",
+  "figures": [
+    "Prisma flow diagram.",
+    "Clinical outcomes between treatment (rTMS + SSRI/SNRI) and control groups (Sham rTMS + SSRI/SNRI). Panels A–F show forest plot for both SSRI (on the left) and SNRI groups (on the right). The first row of forest plots, Panel A and B, shows Standardized Mean Difference (SMD) of depression severity in treatment versus control groups. Panels C, D and E, F show treatment response and remission rates re",
+    "Clinical outcomes in treatment (rTMS + Adjunctive Medication) and control groups across all medication classes (Sham rTMS + Adjunctive Medication) Panel A shows a forest plot of Standardized Mean Difference (SMD) of depression severity in treatment versus control groups. The second forest plot (B) shows response rates of treatment and control groups. Finally, panel C shows a forest plot of remissi"
+  ],
+  "tables": [
+    "Summary of study characteristics.",
+    "Baseline study characteristics."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056399.3415575
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10008656",
+  "pmid": "36740966",
+  "title": "Sleep Duration and the Risk of Type 2 Diabetes: A Community-Based Cohort Study with a 16-Year Follow-up.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lee DY, Jung I, Park SY, Yu JH, Seo JA, Kim KJ, Kim NH, Yoo HJ, Kim SG, Choi KM, Baik SH, Lee SK, Shin C, Kim NH.",
+  "doi": "10.3803/enm.2022.1582",
+  "figures": [
+    "Flowchart of the selection of participants for this study.",
+    ""
+  ],
+  "tables": [
+    "Baseline Characteristics of the Study Participants according to Sleep Duration",
+    "Hazard Ratios and 95% Confidence Intervals for Incident Diabetes according to Sleep Duration at Baseline",
+    "Hazard Ratios and 95% Confidence Intervals for Incident Diabetes according to Persistent Habitual Sleep Duration"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041431.0694175
+}

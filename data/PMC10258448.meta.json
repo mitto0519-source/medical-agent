@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC10258448",
+  "pmid": "37313151",
+  "title": "What drives academic peer effects in middle school classrooms in China: Peer composition or peer performance?",
+  "year": 2023,
+  "journal": "",
+  "authors": "Chen Q, Pei C, Guo Y, Zhai S.",
+  "doi": "10.1016/j.heliyon.2023.e16840",
+  "figures": [
+    "Distributions of classmates' average 7th-grade test scores. (A) Classmates' average Chinese test score: original distribution. (B) Classmates' average Chinese test score: conditional distribution. (C) Classmates' average mathematics test score: original distribution. (D) Classmates' average mathematics test score: conditional distribution. (E) Classmates' average English test score: original distr"
+  ],
+  "tables": [
+    "Summary statistics.",
+    "Correlations between one's and classmates' test scores in 7th grade.",
+    "Balancing test for the allocation of educational resources across classes within schools.",
+    "Effects of classmates' average 7th-grade test scores on individual students’ 8th-grade test scores.",
+    "Effects of peer characteristics examined in previous CEPS-based studies.",
+    "Potential working channels of academic peer effects in the classroom.",
+    "Heterogeneity in academic peer effects in the classroom.",
+    "Effects of classmates' average 7th-grade test scores on individual students' 8th-grade test scores (60 schools with non-random class assignments)",
+    "Further robustness checks"
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780020184.4982536
+}

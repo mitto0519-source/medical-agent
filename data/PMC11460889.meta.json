@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11460889",
+  "pmid": "39465776",
+  "title": "Pain and cognitive function in Korean older adults aged 60 years or more: A retrospective longitudinal study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim YA, Cho YJ, Kwak SG, Ko HJ.",
+  "doi": "10.1097/md.0000000000039952",
+  "figures": [
+    "Flow chart of study participants’ selection."
+  ],
+  "tables": [
+    "Baseline characteristics of study participants in the first wave (N * =3287).",
+    "Linear mixed model *  for changes in K-MMSE score through waves 1 to 8 based on the presence of pain.",
+    "Linear mixed model *  for changes in K-MMSE score through waves 1 to 8 based on the presence of pain interference.",
+    "General estimated equation model *  for suspected dementia and cognitive impairment based on the presence of pain.",
+    "General estimated equation model *  for suspected dementia and cognitive impairment based on the pain interference among participants with pain."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039993.127487
+}

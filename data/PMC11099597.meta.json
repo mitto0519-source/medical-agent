@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11099597",
+  "pmid": "38271962",
+  "title": "Association of plain water intake with self-reported depression and suicidality among Korean adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee JW, Kim Y.",
+  "doi": "10.4178/epih.e2024019",
+  "figures": [
+    "The weighted prevalences of self-reported depression, suicidal ideation, suicide planning, and suicide attempts according to daily water intake.",
+    "The weighted prevalences of self-reported depression, suicidal ideation, suicide planning, and suicide attempts according to daily water and beverage intake.",
+    "The weighted prevalences of self-reported depression, suicidal ideation, suicide planning, and suicide attempts according to daily beverage intake."
+  ],
+  "tables": [
+    "General characteristics of participants according to their daily plain water intake",
+    "Odds ratios and 95% confidence intervals for associations of perceived depression and suicidality across daily plain water intake categories  1",
+    "Adjusted odds ratios and 95% confidence intervals for associations of covariates with perceived depression and suicidality  1"
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975749.2064266
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11317488",
+  "pmid": "39128924",
+  "title": "Developmental changes in brain structure and function following exposure to oral LSD during adolescence.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Harris-Blum L, Smith Z, Ortiz RJ, Athreya D, Chang A, Kulkarni PP, Ferris CF.",
+  "doi": "10.1038/s41598-024-69597-9",
+  "figures": [
+    "Behavior. Open field. ( a ) The scatter plots show the time spent in the center of the open field and the distanced traveled for each of the experimental conditions. Shown are the mean ± SD. The single dose LSD was significantly greater than vehicle or multiple dose for time spent in the center (* p  &lt; 0.05). Novel object preference. ( b ) Shown are scatter plots of the investigation ratio (tim",
+    "Apparent diffusion coefficient. Shown are 2D images of statistical heat maps showing the location of brain regions that were significantly different in ADC values between multidose LSD and vehicle. Areas in red denote a significant increase in ADC values over vehicle for LSD treatment. The blue denotes areas that were unaffected by LSD treatment emphasizing the olfactory bulb, prefrontal cortex an",
+    "Global functional connectivity .  ( a ) The percentage change in degrees (connections) for all 139 brain areas between multidose LSD and vehicle controls are shown as violin plots for vehicle and multidose LSD treatments. The multidose treatment showed mean difference (MD) of 6.96 percent less than vehicle and had significantly fewer connections (two-tailed, paired t-test, p &lt; 0.0001). When the",
+    "White matter connectivity. The radial connectivity diagrams show the connections (lines) to different nodes (colored circles) from the corpus callosum (yellow) comparing vehicle to multidose LSD. Circles in green highlight brain areas comprising the cerebral cortex. Circles in red are brain areas located in the brainstem and cerebellum while those in pink are hippocampal brain areas. Area in black"
+  ],
+  "tables": [
+    "Apparent diffusion coefficient: vehicle vs single dose LSD.",
+    "Apparent diffusion coefficient: vehicle vs multiple dose LSD.",
+    "Fractional anisotropy: vehicle vs single dose LSD.",
+    "Fractional anisotropy: vehicle vs multidose dose LSD."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046464.5958362
+}

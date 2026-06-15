@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11447969",
+  "pmid": "39363253",
+  "title": "The mediating effect of social connectedness between internet gaming disorder and somatic symptoms in adolescents: a large sample cross-sectional study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yan Y, Chen J, Wang HM, Xu JJ, Gong S.",
+  "doi": "10.1186/s12888-024-06090-7",
+  "figures": [
+    "The chain mediation model of IGD, RSC, NSC, and SS. *:  p  &lt; 0.05, **:  p  &lt; 0.001; IGD: Internet gaming disorder; NSC: network social connectedness; RSC: real-life social connectedness; SS: somatic symptoms",
+    "The mediation model of IGD, RSC-NSC, and SS. *:  p  &lt; 0.05, **:  p  &lt; 0.001; IGD: Internet gaming disorder; RSC-NSC: the difference of RSC and NSC; SS: somatic symptoms"
+  ],
+  "tables": [
+    "Demographic characteristics of Chinese adolescents ( N  = 9616)",
+    "PHQ-13 somatic symptom severity score for Chinese adolescents ( N  = 9616)",
+    "Descriptive statistics and correlations among IGD, SC and SS in Chinese adolescents ( N  = 9616)",
+    "Results of path analysis of IGD, NSC, RSC and SS",
+    "Results of path analysis of IGD, RSC-NSC, SS"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998439.8281925
+}

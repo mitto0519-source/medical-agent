@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11753237",
+  "pmid": "39845834",
+  "title": "A positive relationship between weight-adjusted waist index and non-alcoholic fatty liver disease: a study on US adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Cui X, Huang Y, Kang L, Han L, Sun W, Han K, Gao Y.",
+  "doi": "10.3389/fmed.2024.1424667",
+  "figures": [
+    "Flow chart for participants.",
+    "The association of BMI, WC, and WWI with NAFLD. Red band represents a smooth curve fit between the variables. The blue bands represent the 95% confidence intervals of the fitted results. The independent variables were BMI (kg/m 2 )  (A) , WC (cm)  (B) , and WWI  (C) . All the covariates in  Table 1  were adjusted."
+  ],
+  "tables": [
+    "Characteristics of participants.",
+    "Association of BMI, WC, and WWI with NAFLD.",
+    "Subgroup analysis of association between WWI and NAFLD.",
+    "Subgroup analysis of association between BMI and NAFLD.",
+    "Subgroup analysis of association between WC and NAFLD.",
+    "Threshold effect analysis of the association of BMI, WC, and WWI with NAFLD."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995117.9138134
+}

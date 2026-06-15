@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11582245",
+  "pmid": "39570448",
+  "title": "Flexible Working Arrangements and Fertility Intentions: A Survey Experiment in Singapore.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Wang S, Dong H.",
+  "doi": "10.1007/s10680-024-09719-1",
+  "figures": [
+    "Predicted probability of having high fertility intention by status of flexible working arrangements and occupational class on with 95% confidence intervals"
+  ],
+  "tables": [
+    "Weighted descriptive statistics and balance check",
+    "Ordered logistic regression models estimating the effects of flexible working arrangements on fertility intentions",
+    "Bootstrapping mediation analyses of anticipated work–family conflicts"
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050710.6713395
+}

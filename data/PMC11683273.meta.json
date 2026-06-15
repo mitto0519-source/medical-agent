@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11683273",
+  "pmid": "39737217",
+  "title": "Life course socioeconomic position and care dependency in later life: a longitudinal multicohort study from 17 countries.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Pan T, Li C, Zhou Y.",
+  "doi": "10.1016/j.eclinm.2024.102994",
+  "figures": [
+    "Care dependency trajectories by SES group at different life stages.  The panels show the predicted probability of IADL and ADL care dependency plotted by age for people with different SES at three life stages. The solid line represents the predicted probability and the shaded area represents the 95% confidence interval (CI). Predicted probabilities are based on models adjusted for gender, age, and",
+    "Socioeconomic differences in the probability of care dependency by gender.  Data points are estimated socioeconomic differences in the probability of care dependency at ages 55, 65, 75, and 85, with whiskers showing 95% confidence intervals (CIs). A positive value indicates that people with low SES have a greater probability of care dependency than those with high or middle SES. SES = Socioeconomi",
+    "Life course socioeconomic mobility pathways using measurements of SES at three life stages.  H = high. M = middle. L = low. HHH refers to the group that experiences a socioeconomic transition from high childhood SES to high early adulthood SES to high middle-late adulthood SES. SES = Socioeconomic Status.",
+    "Association between life course socioeconomic mobility and the risk of care dependency.  Life course socioeconomic mobility refers to socioeconomic transition from childhood to early adulthood to mid-late adulthood. For each outcome, the group that experiences a transition from high childhood SES to high early adulthood SES to high middle-late adulthood SES was used as reference category. SES = So"
+  ],
+  "tables": [
+    "Baseline sample characteristics of each cohort (N = 103,282 in total)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040342.514267
+}

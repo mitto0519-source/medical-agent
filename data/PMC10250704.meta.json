@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10250704",
+  "pmid": "37305046",
+  "title": "Association of growth hormone deficiency with an increased number of preadipocytes in subcutaneous fat.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhao L, Jia D, Tan Z, Jiang H.",
+  "doi": "10.3389/fendo.2023.1199589",
+  "figures": [
+    "PCR primers used in this study.",
+    "Effect of growth hormone (GH) on differentiation of stromal vascular fraction (SVF) from lit/lit mice to adipocytes. Stromal vascular fractions were isolated from inguinal subcutaneous fat pads of 14-week-old male lit/lit mice. Cells were induced to differentiate to adipocytes in the presence or absence of 100 ng/ml of recombinant bovine GH. This cell culture experiment was repeated 3 times, each ",
+    "Fluorescence-activated cell sorting (FACS) of subcutaneous adipose SVF from lit/+ and lit/lit mice. The SVFs were isolated from 3 16-week-old male lit/+ and 3 16-week-old male lit/lit mice.  (A)  Representative FACS staining profiles and gating (white lines) of subcutaneous adipose SVF from a lit/lit mouse. The propidium iodide (PI)-negative singlets, i.e., live singlets, were sorted first for lac",
+    "Quantification of mRNA levels of preadipocyte markers in subcutaneous adipose SVF cells. Stromal vascular fractions were isolated from inguinal subcutaneous fat pads of 16-week-old male lit/+ and lit/lit mice. mRNA expression was quantified by RT-qPCR. Data are expressed as means ± SE (n = 3 and 4 mice for lit/+ and lit/lit, respectively). * P  &lt; 0.05, † P  = 0.07, and § P  = 0.23  vs . lit/+ .",
+    "Model of how growth hormone (GH) inhibits subcutaneous adipogenesis in mice. It is hypothesized that GH inhibits the formation of adipocytes in mice by inhibiting the recruitment of mesenchymal stem cells (MSCs) to the subcutaneous fat depot, or the commitment of the multipotent MSCs to preadipocytes in the subcutaneous fat depot, or both. In this model, GH does not affect preadipocyte proliferati"
+  ],
+  "tables": [
+    "PCR primers used in this study."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013301.7290647
+}

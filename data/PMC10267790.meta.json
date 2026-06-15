@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10267790",
+  "pmid": "37256673",
+  "title": "Skill Enactment and Knowledge Acquisition in Digital Cognitive Behavioral Therapy for Depression and Anxiety: Systematic Review of Randomized Controlled Trials.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Jackson HM, Calear AL, Batterham PJ, Ohan JL, Farmer GM, Farrer LM.",
+  "doi": "10.2196/44673",
+  "figures": [
+    "Flow diagram of study screening and inclusion. CBT: cognitive behavioral therapy; RCT: randomized controlled trial."
+  ],
+  "tables": [
+    "Number (and percentage) of the included studies meeting the criteria on the Joanna Briggs Institute (JBI) Critical Appraisal Checklist for Randomized Controlled Trials (n=42).",
+    "Summary of methods used to investigate skill enactment in the included studies (n=29).",
+    "Summary of methods used to investigate knowledge acquisition in the included studies (n=15).",
+    "Summary of formal skill enactment indicators used to predict postintervention mental health outcomes (n=7)."
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063572.777913
+}

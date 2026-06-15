@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11817255",
+  "pmid": "39941288",
+  "title": "Monosomy 18p with Unbalanced Translocation Between 13 and 18 Chromosomes: First Reported Case in Serbia.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Marković B, Gazdić Janković M, Igrutinović Z, Medović R, Stojadinović N, Ljujić B.",
+  "doi": "10.3390/diagnostics15030358",
+  "figures": [
+    "The result of array-CGH of the patient. Zero value indicates equal fluorescence intensity ratio between the sample and reference. Copy number losses shifted the ratio toward left (red) whereas copy number gains towards the right side (blue). Our result showed the deletion of short arm from 18p11.32 to p11.21 region (14.79 Mb)."
+  ],
+  "tables": [
+    "The analysis performed on the population of B lymphocytes determined by the electronic limiter of the flow cytometer based on the lateral scattering of the light beam and the intensity of expression of the CD19 molecule.",
+    "Facial dysmorphism of patients with monosomy 18p and unbalanced translocation between chromosome 13 and 18 based on their karyotype."
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780004817.7852228
+}

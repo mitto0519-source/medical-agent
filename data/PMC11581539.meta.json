@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11581539",
+  "pmid": "39382893",
+  "title": "Combined Methylphenidate and Selective Serotonin Reuptake Inhibitors in Adults With Attention-Deficit/Hyperactivity Disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee DY, Kim C, Shin Y, Park RW.",
+  "doi": "10.1001/jamanetworkopen.2024.38398",
+  "figures": [
+    "Forest Plots of Outcome Estimates of Selective Serotonin Reuptake Inhibitor (SSRI) Plus Methylphenidate (MPH) vs MPH-Only Groups and Fluoxetine vs Escitalopram Groups   Neuropsychiatric outcomes include attention-deficit/hyperactivity disorder (ADHD) hospitalization, mania, anxiety disorder, sleep disorder, and tic disorder. Error bars represent 95% CIs.",
+    "Comparison of Headache Between the Selective Serotonin Reuptake Inhibitor (SSRI) Plus Methylphenidate (MPH) Group and MPH-Only Group  AT indicates as treated; PS, propensity score; ITT, intention to treat; and 1:n, 1 to maximum matching. Error bars represent 95% CIs."
+  ],
+  "tables": [
+    "Comparisons of Baseline Characteristics, Comorbidities, and Concomitant Drugs in Adults With ADHD and Comorbid Depression After Propensity Score Matching",
+    "Risk of Outcome Events for the SSRI Plus Methylphenidate vs Methylphenidate-Only Groups and Fluoxetine vs Escitalopram Groups"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055502.570899
+}

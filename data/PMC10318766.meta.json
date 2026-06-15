@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10318766",
+  "pmid": "37403158",
+  "title": "Association of non-high-density lipoprotein cholesterol trajectories with the development of non-alcoholic fatty liver disease: an epidemiological and genome-wide association study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lee JH, Kim J, Kim JO, Kwon YJ.",
+  "doi": "10.1186/s12967-023-04291-4",
+  "figures": [
+    "Flow chart of the study population",
+    "Cumulative incidence rate of NAFLD according to non-HDL cholesterol trajectory groups. NAFLD, non-alcoholic fatty liver disease; HDL, high-density lipoprotein",
+    "Longitudinal changes in NAFLD-liver fat score based on the non-HDL cholesterol trajectory groups. NAFLD, non-alcoholic fatty liver disease; HDL, high-density lipoprotein",
+    "Forest plot comparing standardized PRS of NAFLD risk for the control, stable non-HDL cholesterol trajectory, and increasing non-HDL cholesterol trajectory groups in the interaction GWAS result.  A  Model 1,  B  Model 2,  C  Model 3,  D  Model 4. The models differ in the covariates used in the analysis. In Model 1, age and sex were included as confounding variables, PC1 ~ 10. In Model 2, age, sex, "
+  ],
+  "tables": [
+    "Baseline characteristics of study population",
+    "Incidence of non-alcoholic fatty liver disease during follow-up",
+    "Cox proportional hazard regression analysis for incidence of non-alcoholic fatty liver disease, in the different serum non-HDL cholesterol trajectory groups"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041762.0633173
+}

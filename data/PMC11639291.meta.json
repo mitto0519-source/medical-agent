@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11639291",
+  "pmid": "39460944",
+  "title": "Causal relationships between diseases mined from the literature improve the use of polygenic risk scores.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Toonsi S, Gauran II, Ombao H, Schofield PN, Hoehndorf R.",
+  "doi": "10.1093/bioinformatics/btae639",
+  "figures": [
+    "Chord diagram illustrating the causal relations in the DAG grouped by ICD-10-CM chapters. We retained only chapters with more than 100 relations."
+  ],
+  "tables": [
+    "The measures used to score relations and their sources.",
+    "ROC AUC results comparing the original PRS and the modified PRSs. a"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021231.719112
+}

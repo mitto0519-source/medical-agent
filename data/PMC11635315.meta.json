@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11635315",
+  "pmid": "39602803",
+  "title": "Development and Validation of a Prediction Model Using Sella Magnetic Resonance Imaging-Based Radiomics and Clinical Parameters for the Diagnosis of Growth Hormone Deficiency and Idiopathic Short Stature: Cross-Sectional, Multicenter Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Song K, Ko T, Chae HW, Oh JS, Kim HS, Shin HJ, Kim JH, Na JH, Park CJ, Sohn B.",
+  "doi": "10.2196/54641",
+  "figures": [
+    "Study flowchart. *Endocrinological or systemic pathology: hypopituitarism; adrenal insufficiency; hyperthyroidism or hypothyroidism except euthyroid state; skeletal dysplasia; small for gestational age; genetic disease including chromosomal abnormalities; Russel-Silver syndrome; Prader-Willi syndrome; and chronic diseases, including a history of brain irradiation, congenital heart disease, and sys",
+    "Machine learning pipeline. ROC: receiver operating characteristics; T1C: contrast-enhanced T1-weighted image; T2WI: T2-weighted image; SHAP: Shapley additive explanations; XGBoost: extreme gradient boosting.",
+    "ROC curves from the clinical model, radiomics model, and combined model. (A) ROC curves of the clinical, radiomics, and combined models for internal validation. (B) ROC curves of the clinical, radiomic, and combined models for external validation. AUC: area under the receiver operating characteristic curve; ROC: receiver operating characteristics.",
+    "Feature importance according to mean absolute SHAP values in the prediction models for the diagnosis of GHD from external validation. (A) Mean absolute SHAP values in the clinical model. (B) Mean absolute SHAP values in the radiomics model. (C) Mean absolute SHAP values in the combined model. CA-BA: chronological age–bone age; GHD: growth hormone deficiency; IGF-Ⅰ: insulin-like growth factor-I; MP"
+  ],
+  "tables": [
+    "Baseline characteristics of participants according to etiology of short stature a .",
+    "AUCs a  of each model for predicting GHD b,c ."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013218.4337296
+}

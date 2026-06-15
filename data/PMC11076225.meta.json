@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11076225",
+  "pmid": "37946439",
+  "title": "The influence of pituitary volume on the growth response in growth hormone-treated children with growth hormone deficiency or idiopathic short stature.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Oh JS, Sohn B, Choi Y, Song K, Suh J, Kwon A, Kim HS.",
+  "doi": "10.6065/apem.2346052.026",
+  "figures": [
+    "Flowchart showing the study selection process. SDS, standard deviation score; GH, growth hormone; MRI, magnetic resonance imaging. Growth hormone deficiency was diagnosed based on decreased growth hormone secretion (below 10 ng/mL) in 2 stimulation tests.",
+    "(A) Anteroposterior diameter of the pituitary gland on midsagittal plane (a). (B) Height (b) and horizontal diameter of the pituitary gland on coronal plane (c).",
+    "Association between pituitary size and severity of GH deficiency. GH deficiency was diagnosed based on decreased growth hormone secretion (below 10 ng/ mL) in 2 stimulation tests. Data from ISS subjects were comparable to those of the group with peak GH higher than 10 ng/mL. SDS, standard deviation score; GH, growth hormone: ISS, idiopathic short stature. Analysis of variance was used in analysis ",
+    "Correlation between height gain in SDS during the first year of growth hormone treatment and PV in growth hormone deficiency (A) and idiopathic short stature (B). SDS, standard deviation score; PV, pituitary volume. Pearson correlation analysis was used to analyze correlation coefficients."
+  ],
+  "tables": [
+    "Clinical characteristics and pituitary volume in patients with GH deficiency or ISS",
+    "Comparison of good and poor response groups in patients with GH deficiency at the start of treatment",
+    "Comparison of good and poor response groups in patients with ISS at the start of treatment"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013397.445093
+}

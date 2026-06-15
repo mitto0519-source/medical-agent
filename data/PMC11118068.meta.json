@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11118068",
+  "pmid": "38785859",
+  "title": "Maternal Involvement in Education, Bicultural Acceptance, and School Adjustment: An Autoregressive Cross-Lagged Modeling Study among Adolescents from Multicultural Families.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lim Y.",
+  "doi": "10.3390/bs14050368",
+  "figures": [
+    "Research model. Note. a = equality constraints on all factor loadings of bicultural acceptance; b1, b2 = equality constraints on all factor loadings of school adjustment; A = constraints on all autoregressive coefficients of bicultural acceptance; B = constraints on all autoregressive coefficients of school adjustment; C = equality constraints on all cross-lagged coefficients of bicultural accepta",
+    "Longitudinal relationships among maternal involvement in education, adolescents’ school adjustment, and bicultural acceptance ( N  = 1185). Note: The numbers shown above the paths are standardized regression coefficients. ***  p  &lt; 0.001."
+  ],
+  "tables": [
+    "Descriptive statistics and correlations among the variables ( N  = 1185).",
+    "Test for the invariance of the autoregressive cross-lagged model ( N  = 1185)."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019315.856358
+}

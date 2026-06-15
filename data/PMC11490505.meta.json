@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11490505",
+  "pmid": "39426991",
+  "title": "Cotinine exposure enhances the association of blood manganese and non-alcoholic fatty liver disease in American children: a cross-sectional study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhang LP, Wei HX, Lin SH, Qiu BW, Lin JL.",
+  "doi": "10.1038/s41598-024-75298-0",
+  "figures": [
+    "Flow charts of the inclusion and exclusion of participants.",
+    "Restricted cubic spline analysis of the association of blood manganese level and nonalcoholic fatty liver disease. ( A ) A crude model with no covariate-adjusted. ( B ) An adjusted model with race, age, poverty income ratio, waist circumference, total bilirubin, anion gap, albumin, alanine transaminase, aspartate aminotransferase, high-density lipoprotein cholesterol, and triglycerides adjusted.",
+    "The association of blood manganese and non-alcoholic fatty liver disease stratified by cotinine exposure group."
+  ],
+  "tables": [
+    "Baseline characteristics of the study participants.",
+    "Collinearity analysis.",
+    "The association of blood mn levels with NAFLD.",
+    "Cotinine exposure regulated the association of Mn with NAFLD.",
+    "Subgroup analysis of the relationship between manganese and NAFLD in different subgroups."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995315.3797734
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11013616",
+  "pmid": "38611940",
+  "title": "Metabolic Characteristics and Discriminative Diagnosis of Growth Hormone Deficiency and Idiopathic Short Stature in Preadolescents and Adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chang Y, Chen J, Zhu H, Huang R, Wu J, Lin Y, Li Q, Shen G, Feng J.",
+  "doi": "10.3390/molecules29071661",
+  "figures": [
+    "Flow chart of the participants. GH, growth hormone; GHD, growth hormone deficiency; ISS, idiopathic short stature; PAG, preadolescent GHD; ADG, adolescent GHD; ADC, adolescent control group; PAI, preadolescent ISS; ADI, adolescent ISS; PAC, preadolescent control group.",
+    "OPLS-DA score plots (left panels), the corresponding permutation test (middle panels), and volcano plots (right panels) derived from  1 H NMR data on sera from children with SS and their corresponding controls. The marked circles in the volcano plots represent the metabolites with statistical differences between pairwise groups after correction by age and sex. Detailed information on the different",
+    "Metabolic correlation network between the potential biomarkers and clinical indices. The left panels are the control group, the middle ones are derived from the GHD group, and the right ones are derived from the ISS group. The color bars at the right represent the Pearson correlation coefficient, purple and green represent positive and negative correlation, respectively.      ×     , this indicato",
+    "The disturbed metabolic pathways induced by PAG, PAI, ADG, and ADI. The  p -value of the shown pathways is less than 0.01, which is filtered by ORA. PAC, preadolescent control group; PAG, preadolescent growth hormone deficiency; PAI, preadolescent idiopathic short stature; ADC, adolescent control group; ADG, adolescent growth hormone deficiency; ADI, adolescent idiopathic short stature.",
+    "Schematic representation of the potential biomarkers and the disturbed pathways of short stature in preadolescent ( A ) and adolescent ( B ) children. *:  p  &lt; 0.05, **:  p  &lt; 0.01; ***:  p  &lt; 0.001; ****:  p  &lt; 0.0001; ns: No significance. PAC, preadolescent control group; PAG, preadolescent growth hormone deficiency; PAI, preadolescent idiopathic short stature; ADC, adolescent contro",
+    "Evaluation of the diagnostic models of children with SS. The ROC curve of diagnostic models constructed by LASSO regression in PAG vs. PAC ( A ), PAI vs. PAC ( B ), PAI vs. PAG ( C ), ADG vs. ADC ( D ), ADI vs. ADC ( E ), and ADI vs. ADG ( F ). Red line, RF; green line, LR; blue line, SVM. ROC, receiver operating characteristic; LASSO, least absolute shrinkage and selection operator; RF, random fo"
+  ],
+  "tables": [
+    "Demographic data and clinical characteristics of the study cohort."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013125.812798
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11171290",
+  "pmid": "38893182",
+  "title": "The Association between Family History of Lung Cancer and Development of Lung Cancer: Analysis from the KoGES Data in Korea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim SH, Lee H, Kim BG, Kim SH, Sohn JW, Yoon HJ, Jang SH, Park DW.",
+  "doi": "10.3390/cancers16112063",
+  "figures": [
+    "Flow chart of the study population. Abbreviations: KoGES, Korean Genome and Epidemiology; LCA, lung cancer."
+  ],
+  "tables": [
+    "Clinical characteristics of the study population.",
+    "Clinical characteristics of the study population according to the presence or absence of the family history of lung cancer.",
+    "Association between family history of lung cancer and lung cancer development."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037439.9934936
+}

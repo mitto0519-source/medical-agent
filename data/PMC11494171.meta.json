@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11494171",
+  "pmid": "39433863",
+  "title": "A comparative retrospective longitudinal study of arthritis risk and cognitive decline in older adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim JI, Kang B.",
+  "doi": "10.1038/s41598-024-75774-7",
+  "figures": [
+    "Kaplan–Meier survival curve of the proportion of total participants remaining without an arthritis diagnosis over a 12-year period. The number of participants at risk at 0, 24, 48, 72, 96, 120, 144, and 168 months is shown below the survival curves.",
+    "Kaplan–Meier analysis curves by sex and cognitive function, illustrating the proportion of participants remaining without an arthritis diagnosis over a 12-year period. The lines represent the following groups: blue solid line = man with normal cognition, blue dashed line = man with cognitive decline, red solid line = woman with normal cognition, and red dashed line = woman with cognitive decline. ",
+    "Participant selection process."
+  ],
+  "tables": [
+    "Baseline characteristics of participants by cognitive function.",
+    "Risk factors for arthritis in total participants ( N  = 1,142).",
+    "Risk factors for arthritis in older adults with cognitive decline ( n  = 334) and normal cognition ( n  = 808)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039950.4137082
+}

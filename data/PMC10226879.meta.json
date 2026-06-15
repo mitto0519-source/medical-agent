@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10226879",
+  "pmid": "37254091",
+  "title": "Association between COVID-19 emergency declarations and physical activity among community-dwelling older adults enrolled in a physical activity measurement program: Evidence from a retrospective observational study using the regression discontinuity design.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Chiba I, Takahashi M, Lee S, Bae S, Makino K, Katayama O, Harada K, Tomida K, Morikawa M, Yamashiro Y, Takayanagi N, Sudo M, Shimada H.",
+  "doi": "10.1186/s12889-023-15932-0",
+  "figures": [
+    "Number of newly diagnosed COVID-19 cases per day in Japan",
+    "Mean daily physical activity of participants for all periods.  A  daily steps;  B  daily time engaged in light intensity physical activity (LPA);  C  daily time engaged in moderate-to-vigorous intensity physical activity (MVPA)",
+    "Mean daily physical activity of participants for the three emergency declaration periods. A1-3, daily steps; B1-3, daily time engaged in light intensity physical activity (LPA); C1-3, daily time engaged in moderate-to-vigorous intensity physical activity (MVPA). Green solid line for mean value before the emergency declaration, blue sold line for mean value during the emergency declaration period",
+    "Beta coefficients and 95% CI of 14-day bandwidth for all participants and sub-groups.  A  steps;  B  light intensity physical activity (LPA);  C  moderate-to-vigorous intensity physical activity (MVPA). All models were adjusted for age, sex, and education. Multiply-imputed data (M = 100)"
+  ],
+  "tables": [
+    "Participants’ characteristics ( n  = 1,056) for Case 3",
+    "Effects of the emergency on steps, LPA, and MVPA of participants ( n  = 1056) for Case 3"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034780.265057
+}

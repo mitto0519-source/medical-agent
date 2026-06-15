@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11304233",
+  "pmid": "39119543",
+  "title": "Towards comprehending internet gaming disorder: evaluating the psychometric properties of the Polish adaptation of the Craving for Internet Gaming Scale.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Misiuro T, Misiuro A, Cudo A, Kowalski M.",
+  "doi": "10.5114/ppn.2024.141053",
+  "figures": [],
+  "tables": [
+    "Sample structure including place of residence, marital status, and the primary device used by the participants for gaming. The results are presented for the entire sample and subdivided into two randomly selected subsamples",
+    "Mean values for the items along with standard deviations in the entire sample, and inter-correlations between items using Kendall’s tau-b coefficient",
+    "Group differences in CIGS scores across residence, marital status, and primary gaming device, considering gender stratification",
+    "Standardized factor loadings with bootstrap 95% confidence intervals calculated on 5000 samples",
+    "Pearson’s  r  coefficients with 95% confidence intervals for the correlations between the CIGS and the scales used in the criterion-related validity analysis"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998660.4876556
+}

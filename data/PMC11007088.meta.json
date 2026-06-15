@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11007088",
+  "pmid": "38606355",
+  "title": "Evaluating cardiovascular disease risk stratification using multiple-polygenic risk scores and pooled cohort equations: insights from a 17-year longitudinal Korean cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park YS, Jang HM, Park JH, Kim BJ, Park HY, Kim YJ.",
+  "doi": "10.3389/fgene.2024.1364993",
+  "figures": [
+    "Survival rate regarding incident CVD according to the wPRSsum and PCE risk groups. Survival rate regarding incident CVD, stratified by  (A)  wPRSsum (bottom, 20% colored in red; intermediate, 20%–80% colored in green; top, 20% colored in blue) and  (B)  PCE (low, &lt;7.5% colored in red; high, ≥7.5% colored in green). PRS (wPRSsum), polygenic risk score; CVD, cardiovascular disease; PCE, pooled co",
+    "Predictability of the strata using wPRSsum and PCE.  (A)  Risk of future CVD according to the PCE and wPRSsum groups. Association of wPRSsum and PCE with incident CVD.  (B)  Survival rate of incident CVD, stratified by combinations of the wPRSsum (bottom, 20%; intermediate, 20%–80%; and top, 20%) and PCE (low, &lt;7.5%; high, ≥7.5%). PRS (wPRSsum), polygenic risk score; CVD, cardiovascular disease"
+  ],
+  "tables": [
+    "Demographic characteristics of the study participants.",
+    "Association between the PRSs and prevalent CVD.",
+    "Predictability of the wPRSsum for future CVD.",
+    "Predictability of the PCE for future CVD.",
+    "Predictability of the strata by PCE and wPRSsum.",
+    "Predictive performance of the models."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041194.625109
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10606759",
+  "pmid": "37893786",
+  "title": "A Study on the Longitudinal Relationship between Changes in Depression and Cognitive Function among Older Adults Living Alone.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Park S, Jeong K, Lee S.",
+  "doi": "10.3390/healthcare11202712",
+  "figures": [],
+  "tables": [
+    "Demographic characteristics of study participants. (N = 1354).",
+    "Descriptive analysis of major variables.",
+    "Goodness of fit of latent growth models of cognitive function.",
+    "Mean and variance of the initial score and rate of change in unconditional models.",
+    "Path coefficient of study model."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040263.2041378
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11839430",
+  "pmid": "39980852",
+  "title": "The value of sex hormones and sex hormone-binding globulin in metabolic dysfunction-associated fatty liver disease among boys with obesity.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Wang Y, Yang S, Zhang S, Yang Y, Li S, Zhang M, Li X, Bai H, Luo P, Yuan Y.",
+  "doi": "10.3389/fendo.2025.1446049",
+  "figures": [
+    "ROC curves."
+  ],
+  "tables": [
+    "Baseline demographics for the patients with MAFLD and controls.",
+    "Clinical characteristics for the patients with MAFLD and controls.",
+    "Logistic analysis of factors of MAFLD in children with obesity."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995371.867726
+}

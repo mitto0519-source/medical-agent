@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10061703",
+  "pmid": "36991419",
+  "title": "Relationship between chronotypes and aggression in adolescents: a cross-sectional study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Wang Y, Liu H, Wang YR, Wei J, Zhao RR, Fang JQ.",
+  "doi": "10.1186/s12888-023-04615-0",
+  "figures": [
+    "Spearman correlation analysis of chronotypes and aggression in adolescents. Values were correlation coefficient (r); red indicated positive correlation and blue indicated negative correlation. AQ-CV, Chinese version of the Buss-Perry Aggression Questionnaire; MEQ-CV, Chinese version of Morningness-Eveningness Questionnaire"
+  ],
+  "tables": [
+    "Comparison of aggression questionnaire scores and chronotypes among adolescents of different sexes",
+    "Comparison of aggression questionnaire scores and chronotypes among adolescents of different age groups",
+    "Comparison of aggression in adolescents with different chronotypes",
+    "Linear regression analysis between chronotypes and aggression in adolescents"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001525.6880755
+}

@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10288514",
+  "pmid": "37283492",
+  "title": "Replication of the Taste of Sugar by Formulation of Noncaloric Sweeteners with Mineral Salt Taste Modulator Compositions.",
+  "year": 2023,
+  "journal": "",
+  "authors": "DuBois G, San Miguel R, Hastings R, Chutasmit P, Trelokedsakul A.",
+  "doi": "10.1021/acs.jafc.3c01144",
+  "figures": [
+    "Effects of KCl, MgCl 2 , CaCl 2 , and a KCl/MgCl 2 /CaCl 2  blend on 500 mg/L REBA\ntaste in a CA/TPC\nbuffer in comparison to the taste of sucrose in a CA/TPC buffer. The\nerror bars represent 1 SE. For mouthfeel intensity and sweetness linger,\nany two samples with no letters in common are significantly different\nat the 99% confidence level based on Tukey’s HSD post hoc test.",
+    "Effects of KCl/MgSO 4 ·7H 2 O/Ca(Lactate) 2 ·5H 2 O TMCs on the taste of a commercial sucralose\n(169 mg/L)/acesulfame-K (127 mg/L)-sweetened zero-calorie cola. The\nerror bars represent 1 SE. For mouthfeel intensity and sweetness linger,\nany two samples with no letters in common are significantly different\nat the 99% confidence level based on Tukey’s HSD post hoc test.",
+    "Effects of KCl/MgSO 4 ·7H 2 O/Ca(Lactate) 2 ·5H 2 O TMCs on the taste of a commercial aspartame-sweetened\n(520 mg/L) zero-calorie cola. The error bars represent 1 SE. For mouthfeel\nintensity and sweetness linger, any two samples with no letters in\ncommon are significantly different at the 99% confidence level based\non Tukey’s HSD post hoc test.",
+    "Effects of a KCl/MgCl 2 /CaCl 2  TMC on the taste\nof a REBA-sweetened/50% calorie-reduced orange juice. The error bars\nrepresent 1 SE. For mouthfeel intensity and sweetness linger, any\ntwo samples with no letters in common are significantly different\nat the 99% confidence level based on Tukey’s HSD post hoc test.",
+    "Effects of the KCl/MgSO 4 ·7H 2 O/Ca(Lactate) 2 ·5H 2 O TMC on the taste of a full-calorie HFCS-55-sweetened\ncitrus-flavored carbonated beverage. The error bars represent 1 SE\nunit. For mouthfeel intensity, any two samples with no letters in\ncommon are significantly different at the 99% confidence level based\non Tukey’s HSD post hoc test."
+  ],
+  "tables": [
+    "Effects of CaCl 2  on 500\nmg/L REBA Taste in Water, CA/TSC Buffer, and H 3 PO 4  a",
+    "Effects of MgCl 2  on 500\nmg/L REBA Taste in Water, CA/TSC Buffer, and H 3 PO 4  a",
+    "Effects of KCl, MgCl 2 ,\nand CaCl 2  on 500 mg/L REBA Taste in CA/TSC Buffer a",
+    "Effects of a 10 mM KCl/3 mM MgCl 2 /3 mM CaCl 2  TMC on Tastes of Sucrose and 10 Noncaloric\nSweeteners in a pH 3.1 CA/TPC Buffer a"
+  ],
+  "query": "zero-calorie beverage mental health",
+  "fetched_at": 1779974704.9861279
+}

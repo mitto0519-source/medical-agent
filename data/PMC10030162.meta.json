@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC10030162",
+  "pmid": "36960228",
+  "title": "Electrocardiographic Findings in Children With Growth Hormone Deficiency.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Yılmaz M, Gürses D, Ata A.",
+  "doi": "10.7759/cureus.36385",
+  "figures": [],
+  "tables": [
+    "Demographic, laboratory, and ECG data of the study group.  ECG: electrocardiogram, SD: standard deviation, SDS: standard deviation scores, IGF-1: insulin-like growth factor 1, IGFBP-3: insulin-like growth factor binding protein 3, PGH: peak growth hormone, HR: heart rate, Pmax: longest P wave, Pmin: shortest P wave, Pd: P wave dispersion, QTmax: longest QT interval, QTmin: shortest QT interval, QT",
+    "Demographic, laboratory, and ECG data in complete and partial growth hormone deficiency groups.  ECG: electrocardiogram, SD: standard deviation, SDS: standard deviation scores, IGF-1: insulin-like growth factor 1, IGFBP-3: insulin-like growth factor binding protein 3, HR: heart rate, Pmax: longest P wave, Pmin: shortest P wave, Pd: P wave dispersion, QTmax: longest QT interval, QTmin: shortest QT ",
+    "Correlation of IGF-1, IGFBP-3, and PBH levels and ECG parameters.  ECG: electrocardiogram, IGF-1: insulin-like growth factor 1, IGFBP-3: insulin-like growth factor binding protein 3, PGH: peak growth hormone, Pd: P wave dispersion, QTd: QT dispersion, QTcd: corrected QT dispersion, max: maximum, min: minimum"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013165.8034008
+}

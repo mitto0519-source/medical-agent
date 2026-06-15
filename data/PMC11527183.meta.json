@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11527183",
+  "pmid": "39480796",
+  "title": "Association of relative handgrip strength on the development of diabetes mellitus in elderly Koreans.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Sohn YJ, Lee HS, Bae H, Kang HC, Chun H, Ryou I, Chang EJ, Kang S, Lee SW, Shim KW.",
+  "doi": "10.1371/journal.pone.0309558",
+  "figures": [
+    "Flow diagram of participants meeting the inclusion and exclusion criteria.  * KLoSA = Korean Longitudinal Study of Ageing."
+  ],
+  "tables": [
+    "Initial participants by wave*.",
+    "General characteristics of research participants.",
+    "General characteristics of relative handgrip strength at baseline.",
+    "Generalized estimating equation model covariance structure analysis.",
+    "Generalized estimation equation model analysis of diabetes mellitus incidence according to relative handgrip strength.",
+    "Trends analysis in diabetes mellitus diagnosis according to relative handgrip strength."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040399.8051922
+}

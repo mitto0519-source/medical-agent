@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11597566",
+  "pmid": "39598395",
+  "title": "Therapeutic Potential of Psychedelic Compounds for Substance Use Disorders.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Valdez T, Patel V, Senesombath N, Hatahet-Donovan Z, Hornick M.",
+  "doi": "10.3390/ph17111484",
+  "figures": [
+    "Potential mechanisms of action for psychedelic drugs in the pathophysiology of substance use disorders. LSD = lysergic acid diethylamide. MDMA = 3,4-methylenedioxymethamphetamine. NMDA = N-methyl-D-aspartate. mGlu2 = metabotropic glutamate receptor 2. HPA = hypothalamus-pituitary-adrenal axis."
+  ],
+  "tables": [
+    "Incidence of substance use among those aged 12+ in the United States in 2023. Adapted from [ 2 ].",
+    "Percentage of population aged 18+ using substances within the past year categorized by poverty level and race/ethnicity. NH = Non-Hispanic; AIAN = American Indian or Alaskan Native. Adapted from [ 2 ].",
+    "Select human studies of various psychedelics for the treatment of substance use disorders (SUDs). TUD = tobacco use disorder; AUD = alcohol use disorder; OUD = opioid use disorder; CUD = cocaine use disorder."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060640.6266575
+}

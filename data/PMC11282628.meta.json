@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11282628",
+  "pmid": "39060937",
+  "title": "Impact of obstructive sleep apnea on prognosis of patients with cardiometabolic multimorbidity.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Liu X, Li S, Wang X, Fan J, Gong W, Yan Y, Ai H, Que B, Zheng W, Nie S.",
+  "doi": "10.1186/s13098-024-01403-y",
+  "figures": [
+    "Kaplan-Meier analysis of cumulative incidence of MACCE in patients with CMM and the impact of OSA.  (A)  The effect of OSA on the cumulative incidence of MACCE in patients with CMM.  (B)  The effect of OSA on the cumulative incidence of MACCE in patients with non-CMM. MACCE, major adverse cardiovascular and cerebrovascular events; CMM, cardiometabolic multimorbidity; OSA, obstructive sleep apnea"
+  ],
+  "tables": [
+    "Baseline characteristics of patients",
+    "Three-year clinical outcomes in patients with CMM stratified by OSA Status",
+    "Univariable and Multivariable Cox Models to assess the Effect of OSA on primary and secondary outcomes",
+    "Subgroup Analysis of OSA’s effect on MACCE assessed by Multivariable Cox Models"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002179.512174
+}

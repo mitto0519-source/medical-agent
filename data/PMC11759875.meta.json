@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11759875",
+  "pmid": "39855648",
+  "title": "Retrospective observational study of the association between changes in physical activity and frailty in middle-aged and older adults: evidence from the Korean Longitudinal Study of Aging (2006-2022).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jung YJ, Kim J, Jang YS, Park EC.",
+  "doi": "10.1136/bmjopen-2024-092072",
+  "figures": [
+    "Flowchart of selection of study participants from 2006 to 2022 according to inclusion and exclusion criteria. KLoSA, Korean Longitudinal Study of Aging.",
+    "Results of subgroup analysis stratified by variables (2006–2022). *P value &lt;0.001. REF, reference.",
+    ""
+  ],
+  "tables": [
+    "Baseline characteristics of the study population (2006–2008)",
+    "Results of generalised estimating equation (GEE) analysis of factors associated with frailty (2006–2022)",
+    "Results of subgroup analysis stratified by independent variables (2006–2022)",
+    "Results of subgroup analysis stratified by dependent variables (2006–2022)"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039666.259303
+}

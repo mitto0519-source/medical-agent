@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10988400",
+  "pmid": "38460004",
+  "title": "Neural correlates of model-based behavior in internet gaming disorder and alcohol use disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kwon M, Choi H, Park H, Ahn WY, Jung YC.",
+  "doi": "10.1556/2006.2024.00006",
+  "figures": [
+    "Participant recruitment and inclusion process  Participants were recruited from September 2018 to August 2019 through community and university-based advertisements in Seoul, Korea. Initially, 77 participants were enrolled, but three of them were subsequently excluded: one participant did not complete data collection, one participant was excluded due to moderate depression and anxiety disorder diag",
+    "Schematic representation of the Two-stage task  (A) Thick arrows represent common transitions (70%) and thin arrows indicate rare transitions (30%). For example, choosing the left option in the first stage has a 70% chance of transitioning to the blue room in the second stage, and a 30% chance of transitioning to the yellow room. The same probabilities apply in reverse for choosing the right optio",
+    "Stay probability of each group  The figure displays the actual stay proportion of each group (HC, healthy control; IGD, internet gaming disorder; AUD, alcohol use disorder) based on reward and transition probability. Each data point represents the individual participant's data, connected by lines. The error bars represent the standard error of the mean.",
+    "Group comparison of parameter estimates  Each point is a group-wise mean of the estimates of six model parameter (HC, healthy control; IGD, internet gaming disorder; AUD, alcohol use disorder). The model-based weight parameter     ω     represents the degree of model-based control, with higher     ω     values indicating greater emphasis on model-based learning. Learning rate parameters (     α  1",
+    "Group differences in model-based fMRI analysis  (A) Brain regions exhibiting significant group differences in the second-level two-sample comparisons using model-based reward prediction error (RPE) as parametric modulators ( p  &lt; 0.001, uncorrected; cluster size,  k \n    ≥     10). Significant group differences indicate that one group's brain activation is significantly correlated with the mode",
+    "Results of psychophysiological interaction (PPI) analysis results of the internet gaming disorder group  Using the right insula (MNI-coordinates: −40, 2, −8) and left insula (MNI-coordinates: 46, 2, 2) as seed regions (3 mm spheres), a PPI analysis was conducted with model-based reward prediction error (RPE) as the psychological variable. The brain maps display the effects of model-based RPE on ea",
+    ""
+  ],
+  "tables": [],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998487.876249
+}

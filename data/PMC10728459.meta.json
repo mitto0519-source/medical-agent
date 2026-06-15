@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC10728459",
+  "pmid": "38116279",
+  "title": "Multilevel factors associated with physical activity participation among Thai university students.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Amornsriwatanakul A, Rahman HA, Katewongsa P, Chaiyasong S, Charoenwattana S, Chupradit S, Ivanovitch K, Rodjarkpai Y, Sriboonma K, Sudnongbua S, Wattanapisit A, Kasemsab V.",
+  "doi": "10.1016/j.pmedr.2023.102510",
+  "figures": [],
+  "tables": [
+    "Multilevel descriptive statistics of sample characteristics by sufficiency of physical activity (PA) levels (≥600 MET/week) among Thai university students.",
+    "Univariable analysis of multilevel factors associated with sufficient physical activity levels (≥600 MET/week) among Thai university students.",
+    "Hierarchical generalized linear model (fixed effects) of factors related to sufficient physical activity (PA) level (≥600 MET/week) among Thai university students."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008322.3175535
+}

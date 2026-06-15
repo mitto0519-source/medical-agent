@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11763422",
+  "pmid": "39851502",
+  "title": "Neurobiological Mechanisms Underlying Psychological Dysfunction After Brain Injuries.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Unadkat P, Rebeiz T, Ajmal E, De Souza V, Xia A, Jinu J, Powell K, Li C.",
+  "doi": "10.3390/cells14020074",
+  "figures": [
+    "Therapeutic efficacy of psychological dysfunction in non-injured versus injured populations. While symptomatology is comparable, the therapeutic efficacy for psychological dysfunction is notably diminished in brain-injured populations compared to non-injured individuals. (Created with  Biorender.com ).",
+    "Different types of brain injury are associated with varying prevalences of psychological dysfunction. Psychological dysfunction is more prevalent in populations with brain injury, with each injury type exhibiting distinct rates and prevalences of psychological symptoms. Notably, vascular cognitive impairment and dementia (VCID), despite showing minimal overt damage (highlighted in red), exhibit th",
+    "Psychological dysfunction is associated with alterations in specific brain regions responsible for emotional regulation, with each region contributing to distinct pathogenic cascades that collectively intensify psychological dysfunction. An analysis of studies on psychological dysfunction suggests that the brain sub-regions examined are not dependent on the location, severity, or presence of the p",
+    "Therapeutic interventions targeting neurobiological mechanisms underlying psychological dysfunction in injury-related contexts. Eleven overarching categories of neurobiological mechanisms have been identified as contributing to psychological dysfunction in the context of brain injury. While there is considerable overlap across different types of brain injury, not all mechanisms have been evaluated",
+    "Nrf2 emerges as a promising upstream target for therapeutic intervention in psychological dysfunction associated with brain injury. To effectively address the multiple underlying mechanisms contributing to psychological dysfunction following brain injury, targeting upstream pathways may offer a promising direction for future research. Given its ability to simultaneously modulate neurotransmission,",
+    "The potential of neuropeptides as promising upstream targets for therapeutic intervention in injury-dependent psychological dysfunction. Neuropeptides function as multifaceted molecules that regulate several processes within the nervous system, including neurotransmission, neuroinflammation, oxidative stress, apoptosis, synaptic plasticity, cerebral blood flow (CBF), and stress responses. These pa",
+    "Non-pharmacological interventions as potential therapeutic strategies for alleviating psychological dysfunction following brain injury. Non-pharmacological interventions are inherently multi-mechanistic, enabling them to influence a broad array of factors that contribute to the onset of psychological dysfunction following brain injury. These factors include neurotransmission, neuroinflammation, ox"
+  ],
+  "tables": [
+    "Neurobiological mechanisms underlying anxiety and depression across various types of brain injuries, as investigated through animal models. (↑ = increase; ↓ = decrease; → = leads to).",
+    "Clinical studies investigating the neurobiological mechanisms underlying anxiety and depression in brains impacted by injury. (↑ = increase; ↓ = decrease; → = leads to).",
+    "Neurobiological mechanisms targeted for psychological dysfunction in preclinical brain injury models."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046960.2373693
+}

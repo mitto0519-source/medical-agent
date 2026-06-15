@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11321292",
+  "pmid": "38996808",
+  "title": "Evaluation of children's antibiotics use for outpatient pneumonia treatment in Vietnam.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Thi TVL, Canh Pham E, Dang-Nguyen DT.",
+  "doi": "10.1016/j.bjid.2024.103839",
+  "figures": [
+    "Rate of single antibiotic and combination therapy in the outpatient treatment of community-acquired pneumonia in children.",
+    "Prescription proportion (%) of each antibiotic for CAP treatment (Total ‒ average of 3years).",
+    "Prescription proportion (%) of antibiotic combinations for CAP treatment (Total ‒ average of 3-years).",
+    "Comparison of guideline adherence for common antibiotic prescriptions.",
+    "Comparison of antibiotic costs for outpatient CAP treatment (A, Cost by the origin of antibiotics; B, Cost by antibiotic class)."
+  ],
+  "tables": [
+    "Dose criteria for the assessment of the reasonableness of CAP ‒ treated outpatient prescription.",
+    "Overall usage of outpatient antibiotics among children with CAP.",
+    "Adherence with antibiotic prescribing guidelines for CAP treatment.",
+    "The association of demographics and clinical characteristics for outpatient CAP treatment."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780054077.575228
+}

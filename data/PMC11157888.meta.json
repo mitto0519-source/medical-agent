@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC11157888",
+  "pmid": "38849718",
+  "title": "Measures of fragmentation of rest activity patterns: mathematical properties and interpretability based on accelerometer real life data.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Danilevicz IM, van Hees VT, van der Heide FCT, Jacob L, Landré B, Benadjaoud MA, Sabia S.",
+  "doi": "10.1186/s12874-024-02255-w",
+  "figures": [
+    "Example of three time series from the same individual",
+    "Example of DFA procedure",
+    "Boxplot of inter-daily stability (IS), intradaily variability (IV), estimated autocorrelation parameter of AR(1) model (       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\hat",
+    "The sedentary: this individual presents the highest        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\text {TP}_{ar,\\texttt{w}}$$\\end{document}    TP   a  r  ,  w           ",
+    "The active: this individual presents the lowest        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\text {TP}_{ar,\\texttt{w}}$$\\end{document}    TP   a  r  ,  w               ",
+    "The good sleeper: this individual presents the lowest        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\text {TP}_{ra,\\texttt{s}}$$\\end{document}    TP   r  a  ,  s         ",
+    "The insomniac: this individual presents the lowest        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\text {TP}_{ar,\\texttt{s}}$$\\end{document}    TP   a  r  ,  s            ",
+    "The unbalanced rest-activity person, this individual presents the lowest IS, a high IV, both        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\hat{\\alpha }$$\\end{document}  ",
+    "The balanced rest-activity person, this individual presents the highest IS, a low IV and a high ABI. Note the very regular waves in figure ( c ) denoting a high IS and low IV, ie, strong rest-activity pattern and low rhythm fragmentation. Note that the time series in figure ( a ) is very well balanced between smoothness and spikes, display a fractal noise and balanced motion, ie,        \\documentc"
+  ],
+  "tables": [
+    "Key information of each time series",
+    "Range, interpretability, strengths and limitations of rest-activity fragmentation metrics",
+    "Hypothetical example",
+    "Mean (SD) of inter-daily stability (IS), intradaily variability (IV), transition probability (TP) from activity to rest during the awake period (       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t",
+    "Association of socio-demographic and health-related factors with standardized rest-activity fragmentation metrics, results from multivariate linear regressions",
+    "Pearson’s correlation between inter-daily stability (IS), intradaily variability (IV), transition probability (TP) from activity to rest during the awake period (       \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsid"
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991760.7434945
+}

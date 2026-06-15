@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11695921",
+  "pmid": "39747945",
+  "title": "Moral disengagement as mediator and guilt as moderator between cyber moral literacy and cyberbullying among late adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Sun YX, Cao CH, Tang ZJ, Huang FM, Zhong XB, Chen IH.",
+  "doi": "10.1038/s41598-024-83911-5",
+  "figures": [
+    "Hypothetical model illustrating the relationships between cyber moral literacy, moral disengagement, guilt, and cyberbullying.",
+    "Confirmatory factor analysis model of study constructs. F1= “Cyber moral literacy”; F2= “Cyberbullying”; F3= “Moral disengagement”; F4= “Guilt”.",
+    "Structural model of direct effect of cyber moral literacy on cyberbullying. F1= “Cyber Moral Literacy”; F2= “Cyberbullying”.",
+    "Mediation effect of moral disengagement in the relationship between cyber moral literacy and cyberbullying. F1 = “Cyber moral literacy”; F2= “Cyberbullying”; F3= “Moral disengagement”.  PL  plagiarism,  UN  unauthorized,  MJ  moral justification,  EL  euphemistic labeling,  AC  advantageous comparison,  DIS  displacement of responsibility,  DIF  diffusion of responsibility,  DOC  distortion of con"
+  ],
+  "tables": [
+    "Standardized factor loadings, convergent validity, and reliability of study constructs.",
+    "Correlations among latent variables and square roots of average variance extracted.",
+    "Bootstrapped estimates of direct, indirect, and total effects in mediation analysis.",
+    "Model fit statistics across different levels of guilt."
+  ],
+  "query": "cyberbullying adolescent",
+  "fetched_at": 1780017373.284339
+}

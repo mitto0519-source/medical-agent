@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10936863",
+  "pmid": "38478536",
+  "title": "Social isolation and depression as risk factors for weight loss of 5kg or more among older Korean adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Bae Y, Pachucki MC.",
+  "doi": "10.1371/journal.pone.0299096",
+  "figures": [
+    "Conceptual model of weight loss of 5kg or more in a year.   a \n Note : Loneliness, depression, and marital dissolution were underlined, given that prior research indicates their associations with ≥5kg weight loss.",
+    "A sub-conceptual model of weight loss of 5kg or more in a year.",
+    "Sample selection process."
+  ],
+  "tables": [
+    "Frequency of changes in living alone and marital status between waves.",
+    "Descriptive characteristics at baseline among men.",
+    "Descriptive characteristics at baseline among women.",
+    "Estimated associations of weight loss of 5kg or more among men.",
+    "Estimated associations of weight loss of 5kg or more among women.",
+    "Estimated associations of underweight at the last observation."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040285.0633528
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11544631",
+  "pmid": "39525454",
+  "title": "A significant and persistent rise in the global burden of adolescent NAFLD and NASH estimated by BMI.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lin XY, Li JM, Huang LY, Lin LY, Hong MZ, Weng S, Pan JS.",
+  "doi": "10.3389/fpubh.2024.1437432",
+  "figures": [
+    "Algorithm of the study.",
+    "Fitting curves model the correlation between BMI and risk of NAFLD/NASH BMI and risk of NAFLD in boys  (A)  and girls  (B) ; BMI and risk of NASH in boys  (C)  and girls  (D) .",
+    "Estimated global prevalence of NAFLD/NASH in adolescents from 1975 to 2030, stratified by age Estimated global prevalence of NAFLD in boys  (A)  and girls  (B) ; Estimated global prevalence of NASH in boys  (C)  and girls  (D) .",
+    "Estimated mean of regional NAFLD/NASH prevalence in adolescents from 1975 to 2030 Estimated mean of regional NAFLD prevalence in boys  (A)  and girls  (B) ; Estimated mean of regional NASH prevalence in boys  (C)  and girls  (D) .",
+    "Estimated mean prevalence of adolescent NAFLD/NASH at country or region level in 2016 Estimated mean prevalence of adolescent NAFLD at country or region level in boys  (A)  and girls  (B) ; Estimated mean prevalence of adolescent NASH at country or region level in boys  (C)  and girls  (D) ."
+  ],
+  "tables": [
+    "Parameters of the estimation models."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995356.2910511
+}

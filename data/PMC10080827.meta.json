@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10080827",
+  "pmid": "37024826",
+  "title": "Change in functional disability and its trends among older adults in Korea over 2008-2020: a 4-year follow-up cohort study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Nguyen VC, Hong GS.",
+  "doi": "10.1186/s12877-023-03867-5",
+  "figures": [
+    "Flow diagram of the study population   KLOSA  Korean Longitudinal Study of Aging;  N  Number of participants",
+    "Time-varying trends of functional disability by gender and age groups   ADL  activities of daily living;  IADL  Instrumental activities of daily living; Fisher’s exact test was used to calculate p-values for differences between males and females; ‘***’ p&lt;0.001, ‘**’ p&lt;0.01, ‘*‘ p&lt;0.05, ‘ ’ p≥0.05",
+    "Time-varying trends of functional disability by gender and cognitive function levels   ADL  activities of daily living;  IADL  Instrumental activities of daily living; Fisher’s exact test was used to calculate p-values for differences between males and females; ‘***’ p&lt;0.001, ‘**’ p&lt;0.01, ‘*’ p&lt;0.05, ‘ ’ p≥0.05",
+    "Time-varying trends of functional disability by gender and living arrangements   ADL  activities of daily living;  IADL  Instrumental activities of daily living; Fisher’s exact test was used to calculate p-values for differences between males and females; ‘***’ p&lt;0.001, ‘**’ p&lt;0.01, ‘*’ p&lt;0.05, ‘ ’ p≥0.05",
+    "Changes over time of functional disability in participants without baseline functional disability by gender   ADL  activities of daily living;  IADL  Instrumental activities of daily living; Fisher’s exact test was used to calculate p-values for differences between males and females; ‘***’ p&lt;0.001, ‘**’ p&lt;0.01, ‘*’ p&lt;0.05, ‘ ’ p≥0.05"
+  ],
+  "tables": [
+    "Characteristics of participants at baseline. (2008)",
+    "Prevalence of ADL disability and its trend over time among older adults in Korea",
+    "Prevalence of IADL disability and its trend over time among older adults in Korea",
+    "Results of multiple logistic regression analyses for ADL/IADL disability"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040904.1867838
+}

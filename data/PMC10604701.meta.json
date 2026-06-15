@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10604701",
+  "pmid": "37893087",
+  "title": "Depressive Symptomatology as a Predictor of Cognitive Impairment: Evidence from the Korean Longitudinal Study of Aging (KLOSA), 2006-2020.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Baek SU, Yoon JH.",
+  "doi": "10.3390/biomedicines11102713",
+  "figures": [
+    "The flowchart of the selection of the study sample.",
+    "Study design of the repeated measures analysis.",
+    "Stratified analyses of the impact of depressive symptoms on the risk of cognitive impairment by educational level. (AOR: Adjusted odds ratio; CI: confidence intervals)."
+  ],
+  "tables": [
+    "Characteristics of the study participants in the initial wave of KLoSA, 2006 (K-MMSE: Korean Mini-Mental State Exam).",
+    "Incidence rate of cognitive impairment according to study characteristics throughout the observational period in the KLoSA, 2006–2020.",
+    "Association between depressive symptoms and cognitive impairment onset after a 2-year follow-up (OR: odds ratio; CI; confidence Interval)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040394.7152176
+}

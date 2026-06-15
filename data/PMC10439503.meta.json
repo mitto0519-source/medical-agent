@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10439503",
+  "pmid": "37348147",
+  "title": "Individual differences in T1w/T2w ratio development during childhood.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Boroshok AL, McDermott CL, Fotiadis P, Park AT, Tooley UA, Gataviņš MM, Tisdall MD, Bassett DS, Mackey AP.",
+  "doi": "10.1016/j.dcn.2023.101270",
+  "figures": [
+    "T1w/T2w ratio group averages and age effects.  (A) Group average T1w/T2w ratio maps from the current sample of healthy, neurotypical children ages 4–10 years. (B) Group average T1w/T2w ratio maps from a separate sample of healthy, neurotypical adults ages 18–25 years using the same scan sequence and preprocessing parameters (see  Boroshok et al., 2022 ). (C) Whole-brain, uncorrected T1w/T2w ratio ",
+    "Whole-brain, uncorrected T1w/T2w ratio images showing associations between T1w/T2w ratios and variables of interest.  (A-B) Associations between T1w/T2w ratios and socioeconomic status measures. (C-D) Associations between T1w/T2w ratios and cognition measures. (E) Associations between T1w/T2w ratios and eruption of permanent molars. Color bars represent the values of the intensity histograms gener"
+  ],
+  "tables": [
+    "Associations between T1w/T2w ratios (median of intensities within each cortical system) and variables of interest.  Relationships are shown for socioeconomic status, cognitive performance on select subtests of the WPPSI-IV, and eruption of permanent molars. Standardized effect sizes and raw  p -values are reported in the first row. Partial eta-squared effect sizes are reported in the second row."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046881.6246314
+}

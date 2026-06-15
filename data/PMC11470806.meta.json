@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11470806",
+  "pmid": "39395816",
+  "title": "Influence of intergenerational social mobility on brain structure and global cognition: findings from the Whitehall II study across 20 years.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Liu Y, Thyreau B, Cui Y, Zhang Y, Tatewaki Y, Taki Y.",
+  "doi": "10.1093/ageing/afae221",
+  "figures": [
+    "(A) Regions of grey matter volume related to social mobility. Regional density indicated FDR-corrected  P -value from ANCOVA &lt;0.05 level (log-transformed, adjusted for scanner, age, gender, education and total intracranial volume). (B) Regions of grey matter cortical thickness related to social mobility. Colour density indicated FDR-corrected  P -value from ANCOVA &lt;0.05 level (log-transforme",
+    "Timeline of MRI scan and global cognition evaluation."
+  ],
+  "tables": [
+    "Sample characteristics ( N  = 771), per social mobility group  a",
+    "Difference of regional grey matter volume and cortical thickness in social mobility groups ( N  = 771)  a",
+    "Point estimate from diagonal reference models of association between social mobility and global brain cognitive outcomes, Whitehall II imaging study ( N  = 771)"
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991701.6866963
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11491467",
+  "pmid": "39428543",
+  "title": "Self-rated health and the risk of incident atrial fibrillation in general population.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee Y, Kim JH, Park JK.",
+  "doi": "10.1038/s41598-024-76426-6",
+  "figures": [
+    "The cumulative incidence of AF based on the SRH group. The incidence of AF was significantly higher in the poor SRH group than in the good SRH group. AF, atrial fibrillation; SRH, self-rated health.",
+    "The Harrell’s concordance index of the prediction models for the incident AF. Model 0 included SRH; Model 1 included age, sex, urban residence, hypertension, and MI; and Model 2 included SRH and the covariates in Model 1. AF, atrial fibrillation; SRH, self-rated health; MI, myocardial infarction."
+  ],
+  "tables": [
+    "Baseline characteristics of the study population according to the self-rated health status.",
+    "Hazard ratio for incident atrial fibrillation according to the self-rated health group.",
+    "Factors associated with poor self-rated health.",
+    "Prediction models for incidental atrial fibrillation with self-rated health."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041188.8138742
+}

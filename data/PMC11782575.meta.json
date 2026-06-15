@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11782575",
+  "pmid": "39885249",
+  "title": "Comprehensive profiling of serum microRNAs in normal and non-alcoholic fatty liver disease (NAFLD) patients.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhang JW, Ullah K, Khan N, Pan HT.",
+  "doi": "10.1038/s41598-025-87791-1",
+  "figures": [
+    "Cluster analysis of differentially expressed serum miRNAs. Heat map of differentially expressed microRNAs from NAFLD ( n  = 3) and normal controls ( n  = 3).",
+    "Validation of miR-122-5p by qRT-PCR(*:  P  &lt; 0. 05).",
+    "Gene ontology (GO) enrichment analysis of predicted target genes. GO enrichment analysis according to three GO categories of biological process (BP), molecular functions (MF), and cellular component (CC) was performed on the differentially expressed genes.",
+    "Top 20 Statistics of Pathway Enrichment."
+  ],
+  "tables": [
+    "The characteristics of patients with NAFLD and healthy controls.",
+    "Showing the results of non-coding RNA sequencing data mapping to the human genomes."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995009.528557
+}

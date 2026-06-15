@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11222934",
+  "pmid": "38966567",
+  "title": "Structural brain changes associated with cocaine use and digital cognitive behavioral therapy in cocaine use disorder treatment.",
+  "year": 2024,
+  "journal": "",
+  "authors": "McCurdy LY, DeVito EE, Loya JM, Nich C, Zhai ZW, Kiluk BD, Potenza MN.",
+  "doi": "10.1016/j.dadr.2024.100246",
+  "figures": [
+    "Decreases in GMV observed at post-treatment relative to start-of-treatment, irrespective of treatment condition. A) Whole-brain  t -statistic of pre&gt;post-treatment revealed significant voxels in the right caudate body, peak voxel [8 9 9], 139 voxels; B) bilateral cerebellum posterior lobe, peak voxel [0−72−33], 121 voxels; C) right middle temporal gyrus (MTG), peak voxel [[52−16−9] 103 voxels.",
+    "Associations between cocaine use and changes in GMV. A) Negative correlation between percent days of cocaine use during treatment and change in bilateral cerebellar GMV, where positive and negative  y -axis values indicate increases and decreases in GMV, respectively. B) Negative correlation between change in cocaine use frequency during treatment and change in right caudate GMV, where positive an",
+    "Negative correlation between CBT4CBT module completion and change in brain structure.  n =20 participants. Thick and thin lines indicate linear regression with 95 % CI."
+  ],
+  "tables": [
+    "Demographic, clinical, and treatment measures of participants. SD: standard deviation.  n =41 participants, except for “number of CBT4CBT modules completed” variable,  n =20, and “days took galantamine”,  n =14."
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063524.641578
+}

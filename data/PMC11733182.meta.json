@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11733182",
+  "pmid": "39816188",
+  "title": "Trends in functional limitations among middle-aged and older adults in the Asia-Pacific: survey evidence from 778,507 observations across six countries.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ishida M, Kane S, Ludwick T, Fan V, Mahal A.",
+  "doi": "10.1016/j.lanwpc.2024.101267",
+  "figures": [
+    "Share of the population aged 60 years and above in selected countries from the Asia-Pacific . Source: United Nations, Department of Economic and Social Affairs, Population Division (2024). World Population Prospects 2024, Data Sources. UN DESA/POP/2024.",
+    "Age-standardized prevalence of functional limitations by sex . (a) Difficulty in dressing and bathing (ADL limitations commonly available across surveys). (b) Difficulty in shopping and preparing meals (IADL limitations commonly available across surveys). (c) Difficulty in walking 1 km (mobility limitation commonly available across surveys).   Note  : Population was adjusted using 2020 UN populati",
+    "Prevalence of difficulty in physical functioning by age in selected survey years . (a) Difficulty in dressing and bathing (commonly available ADL across surveys). (b) Difficulty in shopping and preparing meals (commonly available IADL across surveys). (c) Difficulty in walking 1 km (commonly available mobility across surveys).   Note:   ADL = Activities of daily living, IADL = instrumental activit"
+  ],
+  "tables": [
+    "Characteristics of observations from pooled data between 2000 and 2019.",
+    "Distribution of limitations in activities of daily living across sociodemographic sub-groups."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039808.7007225
+}

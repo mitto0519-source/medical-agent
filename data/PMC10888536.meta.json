@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10888536",
+  "pmid": "38398388",
+  "title": "Morbidity among Adolescent Hypnotic Drug Users in Norway: An Observational Population-Based Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Sharikabad MN, Skurtveit S, Sommerschild HT, Olsen K, Hartz I, Wesselhoeft R, Hjellvik V, Hauge LJ, Handal M.",
+  "doi": "10.3390/jcm13041075",
+  "figures": [
+    "Prevalence of hypnotic drug use during 2008–2018 and sleep disorders diagnosed in primary and secondary health care among adolescents 13–17 years of age.",
+    "Prevalence of hypnotic drug use during 2008–2018 according to age in girls ( a ) and boys ( b ).",
+    "Incidence of hypnotic drug use among adolescents according to age in 2017.",
+    "Proportion of ( a ) diagnoses in all ICD-10 diagnosis blocks. A, B, C etc. include A00-A99, B00-B99, C00-C97 etc. And ( b ) the proportion of the most frequent ICD-10 F-diagnoses during a period from six months before to six months after filling the first hypnotic drug prescription among incident adolescent hypnotic users in 2017."
+  ],
+  "tables": [
+    "Percent distribution of the first hypnotic drug filled by incident  †  users in 2017.",
+    "Amount and number of filled prescriptions of hypnotic drugs used by incident  †  users (13–17 years) in the 365 days after the first filled hypnotic drug prescription in 2017.",
+    "Number and proportion of boys and girls aged 13–17 years in 2017 in the general population and among incident  †  hypnotic drug users with diagnosis from specialist health care before the age of 12 in ICD-10 blocks."
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001570.7011333
+}

@@ -1,0 +1,33 @@
+{
+  "pmcid": "PMC10131495",
+  "pmid": "37361792",
+  "title": "Examining the Effects of the Utility Value Intervention on Learners' Emotions and Conceptual Understanding in Online Video-based Learning.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Ha S, So HJ.",
+  "doi": "10.1007/s10639-023-11755-z",
+  "figures": [
+    "A model of Affect Dynamics during Complex Learning (D’Mello &amp; Graesser,  2012 , p.154)",
+    "Utility values",
+    "The Logic Model of Utility-value Interventions (adapted from Hulleman &amp; Harackiewicz, 2021, p.104)",
+    "Experiment Procedure",
+    "WoZ Experiment",
+    "Utility Value Feedback Message Presented in the WoZ Experiment",
+    "Visualized Patterns of Overall Occurrences of Emotions in the first 5 minutes (beginning)",
+    "Visualized Patterns of Overall Occurrences of Emotions in 10-15 minutes (middle)",
+    "Visualized Patterns of Overall Occurrences of Emotions after 20 minutes (last)"
+  ],
+  "tables": [
+    "Types of Emotions in Technology-enhanced Learning Environments",
+    "Action Units (AUs) Related to Boredom, Confusion, and Frustration.  \n   (adapted from  Lee et al.,  2021 )",
+    "Descriptive Statistics of Negative Emotions and Associated AUs",
+    "Descriptive Statistics between Three Groups and MANOVA",
+    "Negative Emotion Before and After Receiving Utility Value Feedback Messages (N = 78)",
+    "Changes in Negative Emotions Between Two Experimental Groups",
+    "t-test on Pre-test and Post-test Scores",
+    "Gains in conceptual Understanding across Groups",
+    "Learners’ Perception of the Utility Value Intervention"
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780020137.4065819
+}

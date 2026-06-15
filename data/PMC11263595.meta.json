@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11263595",
+  "pmid": "39039065",
+  "title": "Advances in the study of phencyclidine-induced schizophrenia-like animal models and the underlying neural mechanisms.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Li D, Pan Q, Xiao Y, Hu K.",
+  "doi": "10.1038/s41537-024-00485-x",
+  "figures": [
+    "The ventral HIP has a dense glutamatergic projection to the PFC.  PCP induces inhibition of tonic GABA inputs due to the dense distribution of NMDAR on GABA neurons. NMDAR has a sparse distribution on Glu neurons. Dotted arrows denote an indirect influence or indirect connection. PFC prefrontal cortex, PCP phencyclidine, GABA gamma-aminobutyric acid, Glu glutamatergic, AMPA-R α-amino-3-hydroxy-5-m",
+    "PCP Acts on PFC-VTA Pathway.  PCP increases glutamatergic inputs from PFC to VTA &amp; activate VTA-NAc projection &amp; inactivate VTA-PFC projection, respectively. Solid arrows denote a direct influence or direct connection; Dotted arrows denote an indirect influence or indirect connection. PCP phencyclidine, PFC prefrontal cortex, HIP, hippocampus; MD, mediodorsal nucleus of the thalamus; GABA,"
+  ],
+  "tables": [
+    "Several examples of PCP administration and its behavioral effects."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046810.49168
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11592787",
+  "pmid": "39589963",
+  "title": "Exploring Sex-Based Neuropsychological Outcomes in Pediatric Brain Cancer Survivors: A Pilot Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Colliva C, Rivi V, Sarti P, Cobelli I, Blom JMC.",
+  "doi": "10.3390/diseases12110289",
+  "figures": [
+    "( A ) PAT scores in males and females. ( B ) A total of 80.00% were categorized as part of the universal group, while 20.00% were classified as part of the targeted one. ( C ) The pie chart designates male categorization, showing that 50.00% were part of the universal population and 50.00% were part of the targeted one. Comparisons were made by an unpaired  t -test. The thicker line is the mean, a",
+    "BRIEF variables’ scores were measured in the sample separately for the females (white bar) and males (diagonal bars). Significant differences between the females and males in the BRIEF inhibit ( A ), initiate ( D ), and plan/organize ( F ) scores emerged. However, no significant differences were found in the BRIEF shift, emotional control (EMO—( C )), working memory (WM—( D )), and monitor ( G ) s",
+    "The TOL variables’ scores ( A – E ) TOL violation, TOL decision time, TOT execution time, TOT time, ACCURACY) were measured in the sample separately for the females (white bar) and males (diagonal bars). No significant differences between the females and males emerged. Comparisons were made by an unpaired  t -test. The thicker line is the mean, and the error bars are the s.e.m.s. The normative sco",
+    "The females’ (white bar) and males’ (diagonal bars) scales in the different resiliency subscales: the sense of mastery scale (MAS—( A )), the sense of relatedness scale (REL—( B )), the emotional reactivity scale (REA—( C )), and the general vulnerability index (VUL—( D )). No significant differences between the females and males emerged. The comparisons were made by an unpaired  t -test. The thic",
+    "Representation of the network model of the 17 patients. The nodes are the variables while the edges are partial correlations between them. Green edges are positive and red are negative. Gray edges represent a point-biserial correlation between a continuous and a dichotomous variable. The thickness of the edge represents the strength of that correlation. The ring around each variable is the predict",
+    "Moderated Gaussian Graphical Model. The two networks represent the same model but moderating the variable 2 (sex) in terms of 1 or 2 (females and males). The edges represent the conditional dependencies between variables. Red ones are negative and blue ones are positive.",
+    "Cartesian representation of the three variables that had the most impact on the risk scores of the patients. Each dot represents a patient. The scores of the variables PAT, initiate, and plan/organize were impaired. The higher it was, the more negative it was."
+  ],
+  "tables": [
+    "Centrality measures of each node of the network shown in  Figure 5 ."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780047152.4182224
+}

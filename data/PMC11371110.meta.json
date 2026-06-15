@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11371110",
+  "pmid": "38913964",
+  "title": "Clarifying Causal Effects of Interest and Underlying Assumptions in Randomized and Nonrandomized Clinical Trials in Oncology Using Directed Acyclic Graphs and Single-World Intervention Graphs.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Tanaka S, Muramatsu Y, Inoue K.",
+  "doi": "10.1200/cci.23.00262",
+  "figures": [
+    "Effects on time to progression and post-progression survival represented by DAGs. (A) Time to progression under the standard and experimental treatments is 4 and 8 months, respectively. PPS is 11 months regardless of the treatment. (B) Time to progression under the standard and experimental treatments is 4 and 8 months, respectively. PPS is 11 months under the standard treatment and 7 months under",
+    "Intention-to-treat analysis of a randomized controlled trial under censoring. (A) Observed variables represented by a DAG and (B) an estimand of hypothetical interventions on treatment and censoring represented by two SWIGs created from the DAG.  a Patients who experienced intercurrent events are not censored. There is no arrow from prognostic factors to OS because censoring is assumed to be at ra",
+    "Causal structures of (A) a valid cohort study, (B) a valid cohort study with adjustment for measured prognostic factors, (C) the external controlled trial of CAR-T cell therapy represented by DAGs, (D) the external controlled trial of CAR-T cell therapy with adjustment for five prognostic factors, (E) the external controlled trial of CAR-T cell therapy under informative censoring, and (F) the exte",
+    "Estimands of hypothetical interventions on treatment and intercurrent events represented by SWIGs. (A) The RCT of neuroblastoma and (B) the RCT of early breast cancer.  a Chemotherapy use, age, local treatment, nodal status, estrogen receptor/progesterone receptor status, and tumor grade. ASCT, autologous stem-cell transplantation; OS, overall survival; RCT, randomized controlled trial; SWIGs, sin",
+    "Causal structures of (A) as-treated analysis of an RCT and (B) intention-to-treat analysis of stratified RCT represented by DAGs. DAGs, directed acyclic graphs; OS, overall survival; RCT, randomized controlled trial."
+  ],
+  "tables": [
+    "Five Rules for Selecting a Sufficient Set of Adjustment Variables on the Basis of DAG and SWIG in Clinical Trials"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021809.14676
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10812514",
+  "pmid": "38247531",
+  "title": "Oxidative Balance Score and New-Onset Type 2 Diabetes Mellitus in Korean Adults without Non-Alcoholic Fatty Liver Disease: Korean Genome and Epidemiology Study-Health Examinees (KoGES-HEXA) Cohort.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Moon ME, Jung DH, Heo SJ, Park B, Lee YJ.",
+  "doi": "10.3390/antiox13010107",
+  "figures": [
+    "Flowchart for the selection of study participants.",
+    "Reverse Kaplan–Meier curves of cumulative new-onset T2DM according to the OBS tertiles."
+  ],
+  "tables": [
+    "Components of the oxidative balance score.",
+    "Baseline characteristics of study population by oxidative balance score tertiles.",
+    "Hazard ratios and 95% confidence intervals for incident type 2 diabetes by oxidative balance score.",
+    "Hazard ratios and 95% confidence intervals from univariable and multivariable analyses of the incidence of type 2 diabetes according to components of the oxidative balance score."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041842.710561
+}

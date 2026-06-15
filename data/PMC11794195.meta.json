@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11794195",
+  "pmid": "38925264",
+  "title": "The Dynamic Interplay Between Puberty and Structural Brain Development as a Predictor of Mental Health Difficulties in Adolescence: A Systematic Review.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kretzer S, Lawrence AJ, Pollard R, Ma X, Chen PJ, Amasi-Hartoonian N, Pariante C, Vallée C, Meaney M, Dazzan P.",
+  "doi": "10.1016/j.biopsych.2024.06.012",
+  "figures": [
+    "PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) flow diagram for the systematic review on puberty, brain structure, and psychopathology in young people. MRI, magnetic resonance imaging.",
+    "PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) flow diagram for the review of risk prediction modeling studies."
+  ],
+  "tables": [
+    "Studies Included in the Systematic Review Investigating Brain Structural Outcomes",
+    "Studies Included in the Systematic Review Investigating Mental Health Outcomes",
+    "Studies Included in the Systematic Review Investigating Brain Structural and Mental Health Outcomes",
+    "Selected Prediction Modeling Studies"
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050981.5402462
+}

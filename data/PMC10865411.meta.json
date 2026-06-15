@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10865411",
+  "pmid": "38357664",
+  "title": "Evaluation of GPT-4 for 10-year cardiovascular risk prediction: Insights from the UK Biobank and KoGES data.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Han C, Kim DW, Kim S, Chan You S, Park JY, Bae S, Yoon D.",
+  "doi": "10.1016/j.isci.2024.109022",
+  "figures": [
+    "",
+    "Example of a GPT prompt and response  Tabular data extracted from UK Biobank and KoGES were organized and queried into a sentence format. The 10-year cardiovascular disease risk percentage was extracted using regular expressions from the corresponding answers. GPT: generative pretrained transformer, UK: United Kingdom, KoGES: Korean Genome and Epidemiology Study, HDL: high-density lipoprotein, LDL",
+    "Performance evaluation and comparison of the risk scoring methods in the UK Biobank and KoGES cohorts  GPT-4’s performance was comparable to conventional risk prediction models. Substantial correlation was found between the GPT-based risk score, ACC/AHA risk score and Framingham risk score.  (A) AUROC curves (UK Biobank).  (B) AUROC curves (KoGES).  (C) Scatterplot (UK Biobank, GPT-4 vs. ACC/AHA r",
+    "Kaplan-Meier curves stratified by risk categories in the UK Biobank cohort  All pairwise comparisons between curves with the log rank test with post-hoc Bonferroni correction were statistically significant.  (A) Kaplan-Meier curve stratified by GPT-4 based risk category.  (B) Kaplan-Meier curve stratified by Framingham risk score category.  (C) Kaplan-Meier curve stratified by ACC/AHA risk score c"
+  ],
+  "tables": [
+    "Baseline characteristics (grouped by GPT-4 based risk category) of UK Biobank and KoGES patients",
+    "10-year cardiovascular disease risk prediction performances of the risk scoring methods",
+    ""
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037581.303532
+}

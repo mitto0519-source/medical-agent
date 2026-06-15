@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11496614",
+  "pmid": "39438585",
+  "title": "The association between the non-high-density lipoprotein cholesterol to high-density lipoprotein cholesterol ratio and non-alcoholic fatty liver disease in US adults: a cross-sectional study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Huang X, Li J, Zhang L, Zhang C, Li C.",
+  "doi": "10.1038/s41598-024-76002-y",
+  "figures": [
+    "Flowchart of the selection of the study participants.",
+    "RCS model of the association between the NHHR and risk of NAFLD.",
+    "Subgroup analysis of the association between the NHHR and risk of NAFLD."
+  ],
+  "tables": [
+    "Weighted baseline characteristics of the included participants.",
+    "Association between the NHHR and risk of NAFLD among US adults in the NHANES 2017–2020.",
+    "The results of sensitivity analyses."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995445.3125393
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10481626",
+  "pmid": "37353972",
+  "title": "The New Zealand drug harms ranking study: A multi-criteria decision analysis.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Crossin R, Cleland L, Wilkins C, Rychert M, Adamson S, Potiki T, Pomerleau AC, MacDonald B, Faletanoai D, Hutton F, Noller G, Lambie I, Sheridan JL, George J, Mercier K, Maynard K, Leonard L, Walsh P, Ponton R, Bagshaw S, Muthukumaraswamy S, McIntosh T, Poot E, Gordon P, Sharry P, Nutt D, Boden J.",
+  "doi": "10.1177/02698811231182012",
+  "figures": [
+    "Drugs in order of their overall harm scores for the Aotearoa New Zealand population, showing contributions from harms experienced by those who use the drug and harm experienced by others. The cumulative weighted preference values (sum of all weighted scores for all the criteria of harm to those who use the drugs, and all the criteria of harm to others) for each drug are shown above each bar. Previ",
+    "Drugs in order of their overall harm scores for the Aotearoa New Zealand population, showing individual criterion contributions after weighting. The cumulative preference values (sum of weighted contribution for each criterion) for each drug are shown above each bar. Previous drug harm MCDA studies did not present drugs in order of decreasing overall harm.  MCDA: multi-criteria decision analysis.",
+    "Drugs in order of their overall harm scores for Aotearoa New Zealand youth, showing contributions from harms experienced by those who use the drug and harm experienced by others. The cumulative weighted preference values (sum of all weighted scores for all the criteria of harm to users, and all the criteria of harm to others) for each drug are shown above each bar. Previous drug harm MCDA studies ",
+    "Drugs in order of their overall harm scores for Aotearoa New Zealand youth, showing individual criterion contributions after weighting. The cumulative preference values (sum of weighted contribution for each criterion) for each drug are shown above each bar. Previous drug harm MCDA studies did not present drugs in order of decreasing overall harm.  MCDA: multi-criteria decision analysis."
+  ],
+  "tables": [
+    "Expert panel members and areas of expertise.",
+    "Harm criteria against which the drugs were ranked, separated by harm to those who use the drug, and harm to others.",
+    "Drugs evaluated by the expert panel, adjusted from previous MCDA studies for relevance to the Aotearoa New Zealand context."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060482.2705579
+}

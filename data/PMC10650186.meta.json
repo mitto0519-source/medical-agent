@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10650186",
+  "pmid": "37958009",
+  "title": "The Moderating Effect of Personal Assets in the Relationships between Subjective Health, Housing Expense, and Life Satisfaction for Korean Middle and Old-Aged.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Sun KA, Moon J.",
+  "doi": "10.3390/healthcare11212866",
+  "figures": [
+    "The research model.",
+    "Moderating effect of personal assets."
+  ],
+  "tables": [
+    "Description of variables (N = 7199).",
+    "Descriptive statistics (N = 7199).",
+    "Correlation matrix (N = 7199).",
+    "Results of hypotheses testing using main variables (N = 7199).",
+    "Results of hypotheses testing with control variables (N = 7199).",
+    "Results of moderating effect by median split."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040537.3960714
+}

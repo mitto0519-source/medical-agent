@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11505610",
+  "pmid": "39456215",
+  "title": "New Insights into Health Conditions Related to Malfunctions in Clock Genes.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Majewska K, Seremak M, Podhorodecka K, Derkaczew M, Kędziora B, Boniecka P, Zglejc-Waszak K, Korytko A, Pawłowicz M, Wojtkiewicz J.",
+  "doi": "10.3390/biom14101282",
+  "figures": [
+    "The figure shows risk factors associated with poor sleep quality (* age &lt; 22)."
+  ],
+  "tables": [
+    "Selected circadian genes’ single-nucleotide polymorphisms subject to analysis (National Library of Medicine, National Center of Biotechnology Information).",
+    "Variant allele of clock genes in the studied population.",
+    "Baseline demographic and clinical characteristics of participants.",
+    "Univariable logistic regression analysis evaluating the impact of selected factors on the risk of poor sleep quality.",
+    "Effect of the presence of a polymorphism in the  PER1  c.2247C&gt;T (rs2736611) gene on the parameters studied.",
+    "Effect of presence of a polymorphism in the  PER2  c.-12C&gt;G (rs2304672) gene on the parameters studied.",
+    "Effect of presence of a polymorphism in the  PER3  c.983T&gt;G (rs10462020) gene on the parameters studied.",
+    "Effect of the presence of polymorphism with higher risk in any of the genes ( PER1, PER2, PER3 ) on the parameters studied."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001065.0663097
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11166156",
+  "pmid": "38863482",
+  "title": "Exploring the Shared Genetic Architecture Between Obstructive Sleep Apnea and Body Mass Index.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhou P, Li L, Lin Z, Ming X, Feng Y, Hu Y, Chen X.",
+  "doi": "10.2147/nss.s459136",
+  "figures": [
+    "Overall study design of genome-wide cross-trait analysis.",
+    "Local genetic correlation between OSA and BMI. Manhattan plot displayed the calculations of the local genetic correlation and local genetic covariance between OSA and BMI, along with their respective local SNP heritability. The presence of red and blue bars in “local genetic correlation” and “local genetic covariance” indicate significant regions sharing SNP heritability. These regions meet the cr",
+    "Forest plots of bidirectional MR analysis between OSA and BMI. ( A ) forward MR analysis; ( B ) reverse MR analysis.",
+    "Tissue specific enrichment of SNP heritability for OSA and BMI. A total of 12 tissues were shared in enrichment of SNP heritability for OSA and BMI after adjustment (P &lt; 0.005/54). Blue line indicates threshold 0.05 for P value, and red line indicates 0.05/54."
+  ],
+  "tables": [
+    "Six Genes Obtained from the Intersection of Genes Identified by SMR and Those Associated with Colocalized SNPs"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002401.068227
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10928116",
+  "pmid": "38467740",
+  "title": "Mediating roles of sleep quality and resilience in the relationships between chronotypes and mental health symptoms.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Poon K, Ho MSH, Tai APL, Leung MK, Chan MCM, Lau WKW.",
+  "doi": "10.1038/s41598-024-56688-w",
+  "figures": [
+    "The finalized Pittsburgh Sleep Quality Index (PSQI) constraint model. Each exogenous variable includes an error term (e1-10). The effect of seven subscales of the PSQI on Connor-Davidson Resilience Scale (CD-RISC) was constrained to be equal, which is represented by the dotted line with an arrowhead. These subscales are subjective sleep quality (Qua), sleep latency (Lat), sleep duration (Dur), hab"
+  ],
+  "tables": [
+    "Sample characteristics (N = 200).",
+    "Spearman’s rho correlation among all variables.",
+    "Model comparison among the unconstraint and nested models.",
+    "Direct effects in the finalized constraint model.",
+    "Indirect effects in the finalized constraint model."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001617.3878205
+}

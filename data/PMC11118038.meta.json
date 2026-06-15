@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11118038",
+  "pmid": "38785912",
+  "title": "Effects of Future Subjective Expectations on Cognitive Decline and Dementia among Middle-Aged and Older Adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Sohn M, Che X, Park HJ.",
+  "doi": "10.3390/bs14050421",
+  "figures": [
+    "Flow chart of sample selection.",
+    "Trend of the seven domains of subjective expectation of the future by sex from 2008 to 2020.",
+    "Trend of the seven domains of subjective expectation of the future by age group from 2008 to 2020."
+  ],
+  "tables": [
+    "General characteristics of the study population at baseline.",
+    "Differences in dementia and mild cognitive impairment by general characteristics.",
+    "Panel regression analysis results of the effect of subjective expectation on dementia and mild cognitive impairment by sex and age."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040258.1069362
+}

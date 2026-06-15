@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11231442",
+  "pmid": "38978487",
+  "title": "Machine Learning-Based Identification of Diagnostic Biomarkers for Korean Male Sarcopenia Through Integrative DNA Methylation and Methylation Risk Score: From the Korean Genomic Epidemiology Study (KoGES).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Ahn S, Sung Y, Song W.",
+  "doi": "10.3346/jkms.2024.39.e200",
+  "figures": [
+    "Workflow for identification of sarcopenia diagnostic biomarkers and MRS. This flowchart depicts the methodology for identifying sarcopenia biomarkers in an urban cohort from the KoGES study, involving middle-aged male participants (n = 509). Sarcopenia (n = 37) and normal groups (n = 48) are divided into the 25th and 75th percentiles It highlights the key steps including data filtering, quality co",
+    "RFECV analysis for feature selection using SVC. This plot illustrates the RFECV process using a SVC as implemented by the Yellowbrick machine learning visualization library. The plot shows the accuracy score as a function of the number of features selected. The shaded area represents the range of variability of the cross-validated scores. The optimal feature count is marked by the dashed vertical ",
+    "Confusion matrix comparison across predictive models. The matrices represent the performance of six predictive models: decision tree, random forest, logistic regression, KNN, NB, and AdaBoost, along with a majority voting classifier. Each matrix illustrates the number of true positives, false negatives, true negatives, and false positives for the respective model. The top portion of each matrix pr"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population",
+    "Characteristics of eight selected candidate probes for the diagnostic model"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037358.9211721
+}

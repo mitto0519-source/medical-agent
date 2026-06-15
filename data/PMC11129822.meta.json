@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11129822",
+  "pmid": "38497505",
+  "title": "Relationship between long working hours and smoking behaviors: Evidence from population-based cohort studies in Korea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Baek SU, Lim MH, Kim T, Lee YM, Won JU, Yoon JH.",
+  "doi": "10.5271/sjweh.4147",
+  "figures": [
+    "Results of random-effect meta-analyses on the associations between long working hours and current smoking among Korean workers, adjusted for gender, age, education level, income level, marital status, occupation type, and survey year.",
+    "Results of random-effect meta-analyses on the associations between long working hours and smoking initiation among Korean workers, adjusted for gender, age, education level, income level, marital status, occupation type, and survey year.",
+    "Results of random-effect meta-analyses on the associations between long working hours and smoking cessation among Korean workers, adjusted for gender, age, education level, income level, marital status, occupation type, and survey year.",
+    "Subgroup analysis on the association between working ≥55 hours per week and current smoking, smoking initiation, and smoking cessation by gender, age, socio-economic status, and occupational types (OR=odds ratio; CI=confidence intervals)."
+  ],
+  "tables": [
+    "Association of working hours per week with current smoking, smoking initiation, and smoking cessation in each dataset. [OR=odds ratio; CI=confidence intervals]"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040746.515778
+}

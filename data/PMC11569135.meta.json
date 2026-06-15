@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11569135",
+  "pmid": "39550457",
+  "title": "Alterations of gray matter asymmetry in internet gaming disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chen S, Yan J, Lock M, Wang T, Wang M, Wang L, Yuan L, Zhuang Q, Dong GH.",
+  "doi": "10.1038/s41598-024-79659-7",
+  "figures": [
+    "The summary of the data analyses in the current study. From acquired T1-weighted images ( A ), the gray matter images ( B ) were segmented to generate asymmetry images ( C ). Then, two-sample t-test ( D ) and machine learning ( E ) analyses were performed to investigate the group differences in the asymmetrical metrics and their relationships with participants’ craving.",
+    "Brain regions showing significant rightward asymmetry of gray matter in the orbitofrontal cortex (OFC) and middle temporal gyrus (MTG) among IGD participants. The clusters showing significant differences is shown on the left. To delineate the altered asymmetrical patterns, the violin diagram of group differences using the asymmetrical values extracted at the peak voxels is presented on the right.",
+    "Brain regions showing significant leftward asymmetry of gray matter in the the medial prefrontal cortex (mPFC), precuneus, superior parietal lobule (SPL) and inferior temporal gyrus (ITG) among IGD participants. The clusters showing significant differences is shown on the left. To delineate the altered asymmetrical patterns, the violin diagram of group differences using the asymmetrical values ext",
+    "Receiver operating characteristic curves of classification results using asymmetrical features of gray matter for differentiating the IGD subjects from the RGU subjects."
+  ],
+  "tables": [
+    "Demographic data of different groups.",
+    "Regions showing group differences on abnormal structural asymmetry."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998074.2243028
+}

@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11025955",
+  "pmid": "38635783",
+  "title": "Understanding and including 'pink-collar' workers in employment-based travel demand models.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yan Y, Leung A, Burke M, McBroom J.",
+  "doi": "10.1371/journal.pone.0301001",
+  "figures": [
+    "Gender split by occupations (our data sample vs. ABS data in the region).",
+    "Silhouette width results when clusters size ranging from 2 to 8.",
+    "The t-SNE representation for three clusters.",
+    "Component analysis of three clusters by gender and occupation.",
+    "Distribution of Skill Score across the three clusters.",
+    "Mode share comparison across the three clusters.",
+    "Median trip distance distribution by mode for the three clusters."
+  ],
+  "tables": [
+    "Percentage of different occupations in our data sample vs. ABS census data for the region.",
+    "Definition of blue/white collar by ANZSCO Level 1 major groups.",
+    "Summary results at highest level of disaggregation (k = 8).",
+    "Summary results at three levels of disaggregation (k = 3)."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007415.4989393
+}

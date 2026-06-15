@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11443910",
+  "pmid": "39350277",
+  "title": "Trajectory of suicide among Indian children and adolescents: a pooled analysis of national data from 1995 to 2021.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Jena S, Swain PK, Senapati RE, Acharya SK.",
+  "doi": "10.1186/s13034-024-00818-9",
+  "figures": [
+    "A ,  B  and  C ): Top 10 Countries with Highest Adolescent Population ( A ), Top 15 adolescent suicide reporting countries in the world ( B ), and T 26 years (1995–2021) suicide trend among children, adolescents, and Youth in India ( C ).",
+    "Historical and recent trends in children and adolescent suicide rate in India",
+    "Annual percentage changes (APC) and average annual percentage changes (AAPC) in suicide rates by gender and years using joint point regression analysis",
+    "Year-wise reported suicide among children and adolescents (below 14 years) from 1995 to 2013 according to the mode of suicide",
+    "Year-wise reported suicide among children and adolescents according to the causes of suicide from 1995-2021",
+    "Year-wise reported suicide among children and adolescents based on Illness",
+    "10 year forecasted trend of children and adolescent suicide in India."
+  ],
+  "tables": [
+    "Year wise crude suicide rates per 100,000 populations with 95% confidence intervals [95% CI]",
+    "Cumulative gender-wise differences in causes of suicide among children and adolescents (1995–2021)",
+    "Government programs and policies addressing adolescent mental health issues in India"
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780051840.6634626
+}

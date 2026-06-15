@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11827852",
+  "pmid": "39959974",
+  "title": "The microbiome as a modulator of neurological health across the maternal-offspring interface.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Orchanian SB, Hsiao EY.",
+  "doi": "10.1172/jci184314",
+  "figures": [
+    "Maternal gut microbiome modulates the maternal and fetal brain.  Environmental risk factors, including diet, stress, infection, and xenobiotics, can shape the composition and function of the maternal gut microbiome in ways that impact its interactions with the nervous system in both mother and developing offspring.",
+    "Interactions between the maternal gut microbiome and offspring neurodevelopment.  The maternal gut microbiome informs offspring brain and behavioral development through multiple interacting pathways, including the signaling of microbial metabolites to neurons and neuroimmune cells, to modulate peripheral immune responses, peripheral sensory neuronal activity, and central neurodevelopment processes"
+  ],
+  "tables": [
+    "Correlations between perinatal environmental exposures and the diversity of the maternal gut microbiota",
+    "Correlations between perinatal environmental exposures and particular taxonomic alterations in the maternal gut microbiota"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056264.8853865
+}

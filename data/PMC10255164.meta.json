@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10255164",
+  "pmid": "37299460",
+  "title": "Inverse Association between Oxidative Balance Score and Incident Type 2 Diabetes Mellitus.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kwon YJ, Park HM, Lee JH.",
+  "doi": "10.3390/nu15112497",
+  "figures": [
+    "Flowchart of the study population selection.",
+    "Kaplan–Meier curves for cumulative incidence of type 2 diabetes mellitus according to the sex-specific oxidative balance score tertiles in ( a ) men and ( b ) women."
+  ],
+  "tables": [
+    "Oxidative balance score assignment scheme.",
+    "Baseline characteristics of the study population.",
+    "Individual components of the score by oxidative balance score tertiles.",
+    "Cox proportional hazard regression analysis presenting the relationship of oxidative balance scores with incident type 2 diabetes mellitus."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780042117.5316324
+}

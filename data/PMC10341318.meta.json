@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC10341318",
+  "pmid": "37444129",
+  "title": "Air Pollution Health Literacy among Active Commuters in Hamilton, Ontario.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Ciarloni R, Newbold KB.",
+  "doi": "10.3390/ijerph20136282",
+  "figures": [
+    "Knowing where to find air quality and health information.",
+    "Concern of health risks associated with air pollution.",
+    "Information on air pollution exposure during active commutes should be more available to the public.",
+    "Air quality informing active transportation decisions.",
+    "Daily AQHI checking.",
+    "Engaging in behaviour to mitigate pollution exposure."
+  ],
+  "tables": [
+    "Transportation characteristics of the participants ( n  = 192,  Section 4.1 ).",
+    "Demographic and SES characteristics of the participants ( n  = 192,  Section 4.2 ).",
+    "Air quality and health frequency table ( n  = 173,  Section 4.3  and  Section 4.4 ).",
+    "Air quality knowledge and health behavior.",
+    "Air quality knowledge and health behavior.",
+    "Air quality knowledge and health behavior."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008166.1509676
+}

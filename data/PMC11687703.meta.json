@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC11687703",
+  "pmid": "39739732",
+  "title": "Prevalence and patterns of substance use in West Africa: A systematic review and meta-analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Emmanuel GO, Akinsolu FT, Abodunrin OR, Ezechi OC.",
+  "doi": "10.1371/journal.pgph.0004019",
+  "figures": [
+    "POS framework.",
+    "Pooled prevalence of alcohol use in West Africa.",
+    "Pooled prevalence of cannabis use in West Africa.",
+    "Pooled prevalence of cigarette use in West Africa.",
+    "Pooled prevalence of cocaine use in West Africa.",
+    "Pooled prevalence of tramadol use in West Africa.",
+    "Pooled prevalence of codeine use in West Africa.",
+    "Pooled prevalence of heroin use in West Africa.",
+    "Pooled prevalence of kolanut use in West Africa.",
+    "Pooled prevalence of marijuana use in West Africa.",
+    "Pooled prevalence of sedatives use in West Africa.",
+    "Pooled prevalence of tobacco use in West Africa."
+  ],
+  "tables": [
+    "POS framework.",
+    "Characteristics of included studies.",
+    "Categories of substance use."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059822.8373692
+}

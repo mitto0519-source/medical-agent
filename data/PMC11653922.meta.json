@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11653922",
+  "pmid": "39696117",
+  "title": "How could 20-minute neighbourhoods impact health and health inequalities? A policy scoping review.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Pollack R, Olsen JR, Heppenstall A, Hoehn A, Boyd J, Hardy VP, Littlejohn J, Stevenson A, Mitchell R, Meier P, Stokes J.",
+  "doi": "10.1186/s12889-024-20928-5",
+  "figures": [
+    "PRISMA flow diagram (*Articles = Academic articles, Records = Public policy plans or documents)",
+    "Sankey diagram for proximity pathways (left to right - hypothesised concept elements, mechanisms, and health outcomes). Notes: Question marks indicate where a stage of the pathway was unclear, but other parts of the pathway were outlined (some pathways also finished with a ‘mechanism’ which other places had connected to a health outcome). Size of the bars indicates more places including the connec",
+    "Sankey diagram for place redesign pathways (left to right - hypothesised concept elements, mechanisms, and health outcome benefits). Notes: Question marks indicate where a stage of the pathway was unclear, but other parts of the pathway were outlined (some pathways also finished with a ‘mechanisms’ which other places had connected to a health outcome). Size of the bars indicates more places includ"
+  ],
+  "tables": [
+    "Coding of an extract into thematic codes",
+    "Summary of included places",
+    "Summary of health pathway codes"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008090.544623
+}

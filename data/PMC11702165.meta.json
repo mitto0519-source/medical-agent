@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11702165",
+  "pmid": "39757223",
+  "title": "The impact of the Covid-19 pandemic on outpatient visits for patients with cancer in Iran: an interrupted time series analysis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Beiranvand S, Behzadifar M, Aryankhesal A, Ehsanzadeh SJ, Darvishi Teli B, Behzadifar M.",
+  "doi": "10.1186/s13690-024-01482-3",
+  "figures": [
+    "The temporal trend of the rate of outpatient visits for patients with cancer before and after the announcement of the beginning of Covid-19 in Iran",
+    "The temporal trend of the rate of outpatient visits for patients with cancer after the waves of Covid-19 from February 2020 onward",
+    "The temporal trend of outpatient visits for patients with cancer before and after the start of Covid-19 vaccination in Iran"
+  ],
+  "tables": [
+    "Change in the number of outpatient visits of patients with cancer according to the seasonally adjusted segmented regression models considering the announcement of the beginning of Covid-19 in February 2020 in Iran",
+    "Changes in the number of outpatient visits of cancer patients during different waves of Covid-19",
+    "Change in the number of outpatient visits of patients with cancer in Iran according to the seasonally adjusted segmented regression models considering the announcement of the beginning of Covid-19 vaccination in February 2021 in Iran"
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032693.0833225
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11055571",
+  "pmid": "38680821",
+  "title": "Spontaneous Preterm Births in Malaysia: Are There Modifiable Antenatal Risk Factors?",
+  "year": 2024,
+  "journal": "",
+  "authors": "Damanhuri NH, Hairi NN, Ismail M, Jeganathan R, Karalasingam SD, Nasir MJM, Soelar SA, Musa KI, Tengku Ismail TA.",
+  "doi": "10.7759/cureus.59152",
+  "figures": [
+    "Conceptual framework.  The asterisked study factors highlighted in red are excluded as they are unlisted under the National Obstetrics Registry’s database (study data source).  Image credit: Narisa H. Damanhuri.",
+    "Graphic representation of the study design.  This study examined a cohort of women whose outcome (spontaneous preterm birth versus spontaneous term birth) occurred in 2015 with the exposure (antenatal factor) occurring before the outcome. Data on exposure to antenatal factors (antenatal records) and data on prematurity and neonatal outcome (obstetric records) were reviewed in a retrospective manne",
+    "Area under the receiving operating characteristics (ROC) curve.  The area under the ROC curve of the final model (AUC = 0.595, lower bound = 0.586, upper bound = 0.604, and standard error = 0.004)."
+  ],
+  "tables": [
+    "Summary of the selected explanatory variables at the multivariable stage.  Selected explanatory variables with p-value &lt;0.05 at the multivariable stage (listed based on its factor divisions).",
+    "Hosmer-Lemeshow goodness-of-fit test results.  This test suggests that there is no significant difference (p = 0.678) between the observed and expected probability. Therefore, the test indicates that the model is fit, i.e., it is adequate to predict the birth outcomes.  df = degree of freedom",
+    "Associated antenatal factors of spontaneous preterm birth among women attending government healthcare facilities in Malaysia in 2015 by multivariable analysis.  Fourteen statistically significant explanatory variables with a p-value &lt;0.05 remained in the final model. These associated antenatal factors of spontaneous preterm birth among women attending government healthcare facilities in Malaysi"
+  ],
+  "query": "Malaysian adolescent dietary depression",
+  "fetched_at": 1779992388.2177846
+}

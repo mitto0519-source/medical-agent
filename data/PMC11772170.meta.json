@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11772170",
+  "pmid": "39877912",
+  "title": "Neuromodulatory effect of transcranial direct current stimulation on cue reactivity and craving in young adults with internet gaming disorder: an event-related potential study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim SN, Choi JS, Park M, Yoo SY, Choi A, Koo JW, Kang UG.",
+  "doi": "10.3389/fpubh.2024.1494313",
+  "figures": [
+    "(A)  tDCS electrode placement and ERP electrode sites including CP3, CP1, P3, P1, and Pz.  (B)  Changes of late positive potential (baseline and post-tDCS at 1 month f/u) at electrodes (CP3, CP1, P3, P1, and Pz).  (C)  Late positive potential waveforms elicited by the game-related stimuli at the P3 electrode site (baseline, post-tDCS at 1 month f/u)."
+  ],
+  "tables": [
+    "Demographic and clinical characteristics at baseline (HCs and IGD) and at 1-month follow-up in IGD.",
+    "Comparison of late positive potentials (LPPs) that averaged between 350 and 700 ms post-stimulus onset across the IGD and HC groups.",
+    "Changes of late positive potential after tDCS intervention in patients with IGD."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998502.7130146
+}

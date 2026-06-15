@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11538996",
+  "pmid": "39507803",
+  "title": "Decision-making and attention deficit hyperactivity disorder: neuroeconomic perspective.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chachar AS, Shaikh MY.",
+  "doi": "10.3389/fnins.2024.1339825",
+  "figures": [
+    "Neuroeconomics combines models, tools, and techniques from economics, psychology, neuroscience, and computer science to gain insights into psychiatric disorders.",
+    "Basic computations involved in the process of making a choice. Value-based decision-making involves five basic processes: constructing a representation of the decision problem, valuing different actions, selecting an action based on its valuation, measuring the desirability of the outcomes, and using outcome evaluation to improve future decisions. Source:  Rangel et al. (2008) ."
+  ],
+  "tables": [
+    "ADHD differences according to age."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046390.3404279
+}

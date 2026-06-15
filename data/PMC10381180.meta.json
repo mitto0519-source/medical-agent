@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC10381180",
+  "pmid": "37504776",
+  "title": "Testing the Reciprocal Effect between Value of Education, Time Investment, and Academic Achievement in a Large Non-Western Sample.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Liu M, Vu T, van Atteveldt N, Meeter M.",
+  "doi": "10.3390/jintelligence11070133",
+  "figures": [
+    "The cyclical relations between motivation and achievement, mediated by effort (adapted from  Vu et al. 2022 ).",
+    "CLPM fits of longitudinal interactions between value of education and  class rank.  Note. M/m: motivation ratings, defined as value of education, A/a: achievement measure of class rank. Square and capital letters refer to observed variables, circles and small letters to latent ones. Value of education and achievement were both queried in November/December, but the reported achievement referred bac",
+    "CLPM fits of longitudinal interactions between value of education and  self-rated performance.  Note. Conventions as in  Figure 2 .",
+    "RI-CLPM fits for value of education and  class rank.  Note. Im indicates the intercept of motivation (value of education), Ia indicates the intercept of achievement. For visual clarity, variances, and covariance, latent structure for e* are not included in the picture but are included in the analysis. ** indicates that the  p  value of significant effects is lower than 0.01, * indicates that the  ",
+    "RI-CLPM fits for value of education and  self-rated performance.  Note. Conventions as in  Figure 4 .",
+    "The RC-CLPM of value of education and  class rank.  Note. Sa stands for the slope of achievement, Sm stands for the slope of value of education. ** indicates that the  p  value of significant effects is lower than 0.01, * indicates that the  p  value of significant effects is lower than 0.05.",
+    "The RC-CLPM of value of education and  self-rated performance.  Note. Conventions as in  Figure 6 .",
+    "The RI-CLPM of value of education, time investment, and  class rank.  Note. Achievement here refers to self-rated performance in three subjects during the last semester. It is assumed that the achievement in the previous semester influences the motivation in the subsequent semester, which in turn affects the time investment in the current semester. The figures illustrate the reciprocal relationshi",
+    "The RI-CLPM of value of education, time investment, and  self-rated performance.  Note. Conventions as in  Figure 8 . ** indicates that the  p  value of significant effects is lower than 0.01, * indicates that the  p  value of significant effects is lower than 0.05."
+  ],
+  "tables": [
+    "Descriptive statistics and correlations of the value of education, time investment, rank, and self-rating performance of three subjects.",
+    "Model comparison of the bivariate models of value of education and achievement (self-rated performance and class rank).",
+    "Parameters estimates from different models."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780020099.6409724
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11228610",
+  "pmid": "38978818",
+  "title": "J-Shaped Relationship Between Weight-Adjusted-Waist Index and Cardiovascular Disease Risk in Hypertensive Patients with Obstructive Sleep Apnea: A Cohort Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhao J, Cai X, Hu J, Song S, Zhu Q, Shen D, Yang W, Luo Q, Yao X, Zhang D, Hong J, Li N.",
+  "doi": "10.2147/dmso.s469376",
+  "figures": [
+    "Baseline Characteristics",
+    "Dose-response associations of WWI with incident study outcomes. ( A ) CVD. ( B ) CHD. ( C ) Stroke.",
+    "Association between WWI (per SD increment) and study outcomes in various subgroups. ( A ) CVD. ( B ) CHD. ( C ) Stroke."
+  ],
+  "tables": [
+    "Baseline Characteristics",
+    "Association of WWI with Incident CVD Events",
+    "Threshold Effect Analysis of the Association of WWI with Incident CVD Events"
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002583.0449631
+}

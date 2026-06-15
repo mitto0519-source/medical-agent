@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11196584",
+  "pmid": "38914742",
+  "title": "Sleep quality mediates the association between chronotype and mental health in young Indian adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chauhan S, Pandey R, Vakani K, Norbury R, Ettinger U, Kumari V.",
+  "doi": "10.1038/s44184-024-00076-9",
+  "figures": [
+    "Results of the SEM analyses, with solid lines representing significant paths (** p  &lt; 0.001, * p  &lt; 0.005) and dotted lines representing non-significant paths.",
+    "Results of the SEM analyses for the revised model showing all significant paths (** &lt; 0.001).",
+    "Schematic representation of proposed structural model showing the direct and indirect effects (via sleep quality) of chronotype (higher MEQ scores represent a greater preference for morningness and lower scores a greater preference for eveningness), personality traits, and childhood trauma (predictors) and mental health (outcome) relationship using SEM framework. All predictors were allowed to cov"
+  ],
+  "tables": [
+    "Demographic characteristics of the study sample",
+    "Descriptive statistics for self-report measures (chronotype, mental health, sleep quality, personality traits and childhood trauma)",
+    "Correlations (Pearson’s  r ) between chronotype and measures of mental health, sleep quality, personality traits and childhood trauma"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001482.986483
+}

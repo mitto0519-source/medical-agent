@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11624448",
+  "pmid": "39576972",
+  "title": "A Multivariable Prediction Model for Mild Cognitive Impairment and Dementia: Algorithm Development and Validation.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Oh SS, Kang B, Hong D, Kim JI, Jeong H, Song J, Jeon M.",
+  "doi": "10.2196/59396",
+  "figures": [
+    "Flow diagram for the investigation. AUC: area under the receiver operating characteristic curve; GBM: gradient-boosting machine; XGBoost: extreme gradient boosting."
+  ],
+  "tables": [
+    "Baseline characteristics of participants according to MCI a  onset (2018).",
+    "Baseline characteristics of participants according to dementia onset (2018).",
+    "AUC a  values and CIs for different models according to MCI b  and dementia prediction."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039896.577366
+}

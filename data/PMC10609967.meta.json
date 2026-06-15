@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10609967",
+  "pmid": "37895968",
+  "title": "Drug Safety and Suicidality Risk of Chronic Pain Medications.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Syed O, Jancic P, Fink AB, Knezevic NN.",
+  "doi": "10.3390/ph16101497",
+  "figures": [],
+  "tables": [
+    "Findings from national databases concerning suicide rates and suicidality in association with antidepressant use.",
+    "Findings from national databases concerning suicide rates and suicidality in association with opioid use.",
+    "Findings from national databases and population studies concerning misuse, self-harm, overdoes, and suicidality in association with gabapentinoids.",
+    "Findings from national databases and population studies concerning misuse, overdoes, and suicidality in association with benzodiazepines."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060614.3526945
+}

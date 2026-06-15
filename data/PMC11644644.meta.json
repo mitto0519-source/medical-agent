@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11644644",
+  "pmid": "39683541",
+  "title": "Genome-Wide Approach of Gene-Nutrient Intake Interaction Study for Essential Hypertension in a Large Korean Cohort (KoGES).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Song Y, Choi JE, Park JM, Kwon YJ, Hong KW, Lee JW.",
+  "doi": "10.3390/nu16234147",
+  "figures": [
+    "Study design. KoGES HEXA, Korean Genome and Epidemiology Study-Health Examinee Study; N, number; SBP, systolic blood pressure; DBP, diastolic blood pressure; GWAS, genome-wide association study; SNP, single nucleotide polymorphism; P,  p -value; DRI, Dietary Reference Intake.",
+    "Miami plots showing  p -values for the SNP associations with hypertension in subjects according to dietary intake of significant nutrients. ( A ) Iron and HTN. ( B ) Vitamin B6 and HTN. Genome-wide significant  p -value criteria ( p -value &lt; 5 × 10 −8 ) are shown by dotted lines, and genome-wide suggestive  p -value criteria (5 × 10 −8  ≤  p -value &lt; 1 × 10 −5 ) are shown in solid lines. The",
+    "Signal plot of the SNP interacting with iron and Vit.B6 associated with HTN. SNP is plotted by chromosomal position (hg19; x-axis) and association with HTN from the current study (–log 10 ( p -value); y-axis)."
+  ],
+  "tables": [
+    "General characteristics of the study population.",
+    "Single nucleotide polymorphism (SNP) showing significant interactions with nutrients associated with hypertension."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036845.326559
+}

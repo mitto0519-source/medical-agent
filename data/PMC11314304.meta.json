@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11314304",
+  "pmid": "39125319",
+  "title": "Carbohydrate Intake Levels and the Risk of Metabolic Syndrome in Korean Populations: A Prospective Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yoo H, Jo U, Park K.",
+  "doi": "10.3390/nu16152440",
+  "figures": [
+    "Flow chart of the participants in this study. CVD, cardiovascular disease; MetS, metabolic syndrome.",
+    "Multivariable adjusted hazard ratios (95% confidence intervals) for the dose–response relationship between the proportion of total energy from carbohydrates and metabolic disease risk in middle-aged Korean adults. The model is adjusted for age; sex; household income level; smoking status; alcohol consumption; physical activity level; body mass index; total energy intake; carbohydrate quality sore;"
+  ],
+  "tables": [
+    "Baseline characteristics of participants categorized by quartiles of carbohydrate energy proportion intake.",
+    "Hazard ratios (95% confidence intervals) for metabolic syndrome, stratified by quartiles of carbohydrate energy proportion intake."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037541.1723733
+}

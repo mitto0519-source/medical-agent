@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11643367",
+  "pmid": "39683455",
+  "title": "Adherence to MIND Diet and Risk of Recurrent Depressive Symptoms: Prospective Whitehall II Cohort Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Arshad H, Recchia D, Head J, Holton K, Norton J, Kivimaki M, Akbaraly TN.",
+  "doi": "10.3390/nu16234062",
+  "figures": [
+    "Association between MIND diet score assessed in 2002/04 and recurrence of depressive symptoms (DepSs) over 13 years of follow-up (2002/2004 to 2015/16) in 4824 Whitehall II participants (3526 men and 1298 women). Model 1 adjusted for: sex, age, and total energy intake. Model 2 adjusted for: M1 + ethnicity, marital status, socio-economic status, education level, smoking status, alcohol consumption,",
+    "Association between each MIND diet component (2002/04) and the recurrent depressive symptoms (DepSs) over 13 years of follow-up in 4824 Whitehall II participants after taking into account other MIND diet components. Models were adjusted for sex, age, total energy intake, and modified MIND diet score (total MIND diet score excluding the component under examination). MIND diet component score: highe",
+    "Association between each MIND diet component (2002/04) and the recurrent depressive symptoms (DepSs) over 13 years of follow-up in 4824 Whitehall II participants after taking into account other MIND diet components, socio-economic, health behavior, and health status factors. Models were adjusted for sex, age, total energy intake, modified MIND diet score (total MIND diet score excluding the compon"
+  ],
+  "tables": [
+    "Information on foods items included in each MIND diet component.",
+    "Characteristics of participants according to MIND diet scores at study baseline."
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991639.4253607
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11031233",
+  "pmid": "38066644",
+  "title": "Gene Expression Signatures Predict First-Year Response to Somapacitan Treatment in Children With Growth Hormone Deficiency.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Garner T, Clayton P, Højby M, Murray P, Stevens A.",
+  "doi": "10.1210/clinem/dgad717",
+  "figures": [
+    "Pretreatment blood transcriptome study design for REAL4. Schematic representation of pretreatment blood transcriptome cohorts from the REAL4 study, study design, and transcriptomics workflow. Prepubertal, treatment-naïve children with GHD were treated with daily GH or once-weekly somapacitan for 52 weeks. Abbreviations: GH, growth hormone; GHD, GH deficiency; RNA-seq, RNA sequencing; QC, quality c",
+    "Principle component analysis of pretreatment blood transcriptome. Principle component (PC) analysis demonstrates that pretreatment blood transcriptome variation is not dependent on treatment group. Each point represents a summary of all genes in the entire blood transcriptome (n = 19 039) for a participant (n = 121). Dark triangles and light circles distinguish which arm of the study participants "
+  ],
+  "tables": [
+    "Baseline characteristics",
+    "Efficacy and pharmacodynamic results for transcriptome cohorts after 52 weeks of treatment",
+    "Predicting growth response to somapacitan and daily GH using pretreatment RNA-seq or clinical variables",
+    "Predicting secondary efficacy and pharmacodynamic endpoints to somapacitan treatment from pretreatment RNA-seq analysis",
+    "Common gene set predicts growth response to daily GH and once-weekly somapacitan"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013181.4922776
+}

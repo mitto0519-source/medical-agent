@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11669752",
+  "pmid": "39726488",
+  "title": "Exercise Habits, Including Exercising With Partners, and the Prevalence of Self-Reported Constipation in Young Japanese People: A Cross-Sectional Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Watanabe J, Furukawa S, Yamamoto Y, Kato A, Kusumoto K, Takeshita E, Ikeda Y, Yamamoto N, Saeki Y, Miyake T, Yoshida O, Hiasa Y.",
+  "doi": "10.7759/cureus.74455",
+  "figures": [],
+  "tables": [
+    "Clinical characteristics of 12,497 study participants",
+    "Crude and adjusted odds ratios (ORs) and 95% confidence intervals (CIs) for self-reported constipation in relation to exercise habits  # p&lt;0.05 was considered statistically significant. Multiple logistic regression analyses were used to adjust for potential confounding factors. Odds ratios were adjusted for age, sex, body mass index, drinking, smoking, anemia, and sports injury.",
+    "Crude and adjusted odds ratios (ORs) and 95% confidence intervals (CIs) for self-reported constipation in relation to exercise partner.  # p&lt;0.05 was considered statistically significant. Multiple logistic regression analyses were used to adjust for potential confounding factors. *Model 1: Odds ratios were adjusted for age, sex, body mass index, drinking, smoking, anemia, and sports injury. **M",
+    "The association between exercise and constipation in previous studies  METs: metabolic equivalents  EpiHealth questionnaire: Lund University, Malmö, Sweden; Kaiser Physical Activity Survey (KPAS): Ainsworth BE, Sternfeld B, Richardson MT, Jackson K (1999); APA PsycTests;  https://doi.org/10.1037/t23316-000"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048250.6115828
+}

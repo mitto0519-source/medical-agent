@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10692079",
+  "pmid": "38040759",
+  "title": "Impact of frailty on mortality and healthcare costs and utilization among older adults in South Korea.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Nari F, Park EC, Nam CM, Jang SI.",
+  "doi": "10.1038/s41598-023-48403-y",
+  "figures": [],
+  "tables": [
+    "General characteristics of baseline study population by survival status (2008–2018).",
+    "General characteristics of the study population's healthcare costs and utilization categorized by frailty status at the 2008 baseline.",
+    "Cox proportional hazards model for frailty and all-cause mortality.",
+    "Results of GLMM for frailty on healthcare costs and utilization.",
+    "Subgroup analyses of frailty components and all-cause mortality.",
+    "Population Attributable Risk (PAR%) according to Frailty Components."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040450.5489664
+}

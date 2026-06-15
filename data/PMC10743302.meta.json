@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10743302",
+  "pmid": "38137029",
+  "title": "Epigenetic Profiling of Type 2 Diabetes Mellitus: An Epigenome-Wide Association Study of DNA Methylation in the Korean Genome and Epidemiology Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Seo H, Park JH, Hwang JT, Choi HK, Park SH, Lee J.",
+  "doi": "10.3390/genes14122207",
+  "figures": [
+    "Flowchart of this study. Among the initial 1528 potential participants from the AS-AS cohort in KoGES at the 5th follow-up, individuals were categorized into either the T2DM (case) or normal (control) groups based on blood parameters, including FPG, HbA1c, and 2 h PG, as described in the  Section 2 . This process resulted in 1134 remaining participants (T2DM = 887, normal = 247) eligible for DNA m",
+    "DMP analysis results. ( A ) Volcano plot of the DMPs. The 10 top DMPs are labeled with the names of their CpG probes, and all DMPs are depicted as red dots. The  x -axis represents △β-values between T2DM and normal groups, whereas the  y -axis indicates FDRs, also called multiplicity-adjusted  p -values. A total of 723,301 CpG probes are depicted as dots. Dark grey, green, blue, and red dots corre",
+    "Correlation between methylation levels of DMPs and diabetic markers of the blood. ( A ) Correlation analysis between FPG and DMPs with  p  &lt; 0.05; |R| ≥ 0.2 (Spearman correlation). The  x -axis indicates β-values for individuals, and the  y -axis indicates FPG levels (mg/dL). Individuals in the T2DM and normal groups are indicated by red and blue dots, respectively. The red line represents the ",
+    "Results of DMR analysis. ( A ) Bar graph illustrating counts of hypermethylated or hypomethylated DMPs in each DMR. Dark orange, cyan, and light grey sections in the bar graph indicate the count of hypermethylated, hypomethylated, and not significant probes, respectively. ( B ) Analysis of co-methylation pattern for the DMR surrounding  TXNB . The upper panel displays a regional Manhattan plot of "
+  ],
+  "tables": [
+    "Comparisons of Clinical and Biochemical Parameters in the KoGES Cohort Participants with Different Glycemic Status.",
+    "Top 10 differentially methylated probes (DMPs).",
+    "Top 10 differentially methylated regions (DMRs)."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041648.3581114
+}

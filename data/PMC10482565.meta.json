@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10482565",
+  "pmid": "37309114",
+  "title": "Association of blood pressure measurements in sitting, supine, and standing positions with the 10-year risk of mortality in Korean adults.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Baik I, Kim NH, Kim SH, Shin C.",
+  "doi": "10.4178/epih.e2023055",
+  "figures": [
+    "HRs for the joint analysis of age groups (&lt;65 and ≥65 years) and blood pressure categories in association with cardiovascular mortality. Blood pressure categories (X axis): normal, SBP &lt;120 mmHg and DBP &lt;80 mmHg; high normal/prehypertension, SBP 120-129 mmHg and DBP &lt;80 mmHg/SBP 130-139 mmHg or DBP 80-89 mmHg; grade 1 HTN, SBP 140-159 mmHg or DBP 90-99 mmHg; grade 2 HTN, SBP ≥160 mmHg ",
+    ""
+  ],
+  "tables": [
+    "Baseline characteristics of 8,901 study participants according to 4 blood pressure categories  1",
+    "Hazard ratios for the association of blood pressure measured in the sitting, supine, and standing positions with the 10-year risk of all-cause mortality (n=8,901 participants)",
+    "Hazard ratio for the association of blood pressure measured in the sitting, supine, and standing positions with the 10-year risk of cardiovascular mortality  1",
+    "Association of blood pressure measured in the sitting, supine, and standing positions with carotid IMT in 2,780 participants younger than 65 years who were free of diagnosed cardiovascular disease"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041857.8673995
+}

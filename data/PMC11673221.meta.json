@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11673221",
+  "pmid": "39735760",
+  "title": "Longitudinal trends and predictors of limitations in activities of daily living in community-dwelling older adults: evidence from the KLoSA study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Oh E, Moon S, Hong GS.",
+  "doi": "10.3389/fpubh.2024.1485732",
+  "figures": [
+    "Flow chart of the study.",
+    "Changes in the prevalence of limitations in the activities daily living during 14 years."
+  ],
+  "tables": [
+    "Characteristics of the participants at baseline (2006) (N = 1,388).",
+    "Univariate logistic regression model for total and top three ADLs with limitations ( N  = 1,388).",
+    "Multivariate logistic regression model for total and top three ADLs with limitations ( N  = 1,388)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039851.039153
+}

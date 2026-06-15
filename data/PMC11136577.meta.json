@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11136577",
+  "pmid": "38810996",
+  "title": "Age-Specific Changes in the Effects of Social Connectedness and Loneliness on Depressive Symptoms: Evidence From the Korean Longitudinal Study of Ageing Before and During the COVID-19 Pandemic.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim J, Lee J.",
+  "doi": "10.30773/pi.2023.0268",
+  "figures": [
+    "Predicted value of depressive symptoms measure (CESD) before and during COVID-19 by age groups and year (KLoSA, 2016–2020). CES-D, Center for Epidemiologic Studies-Depression Scale; COVID-19, coronavirus disease-2019; KLoSA, Korean Longitudinal Study on Ageing."
+  ],
+  "tables": [
+    "Basic statistics (KLoSA 2014–2020, N=3,642, n=12,562)",
+    "Effects of COVID-19 on depression (CES-D) (N=3,642, n=12,562)",
+    "Effects of social connectedness and loneliness on depression (CES-D) (N=3,642, n=12,562)",
+    "Effects of social connectedness and loneliness on depression (CES-D) by age groups (N=3,642)"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040093.6525137
+}

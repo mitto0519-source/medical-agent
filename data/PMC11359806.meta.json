@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11359806",
+  "pmid": "39207728",
+  "title": "Genetic determinants of obesity in Korean populations: exploring genome-wide associations and polygenic risk scores.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Jo J, Ha N, Ji Y, Do A, Seo JH, Oh B, Choi S, Choe EK, Lee W, Son JW, Won S.",
+  "doi": "10.1093/bib/bbae389",
+  "figures": [
+    "Data processing flowchart.",
+    "GWAS results on obesity-related traits on discovery dataset (A) QQ plots constructed using the GWAS summary statistics on obesity-related traits (B) Manhattan plots constructed using the GWAS summary statistics on obesity-related traits.",
+    "GWAS results on obesity on discovery dataset (A) QQ plots constructed using the GWAS summary statistics on obesity (B) Manhattan plots constructed using the GWAS summary statistics on obesity.",
+    "Gene clusters identified in MHO vs. MUO.",
+    "PRS for BMI and multiple trait PRS on obesity (A) PRS for BMI on obesity (B) Multiple trait PRS on obesity."
+  ],
+  "tables": [
+    "Baseline characteristics according to the incident obesity on discovery dataset",
+    "Summary statistics of GWAS on discovery dataset; significant SNPs identified by GWASs on BMI and WC",
+    "Summary statistics of GWAS on discovery dataset; significant SNPs identified by GWASs on obesity",
+    "Significant gene comparison in MHO versus MUO",
+    "Effect of PRS on obesity and obesity-related diseases",
+    "Summary of subgroup heterogeneity analyses summary between MHO and MUO groups"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037587.0906165
+}

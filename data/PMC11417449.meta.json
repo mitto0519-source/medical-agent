@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11417449",
+  "pmid": "38574826",
+  "title": "Nutrition survey methods and food composition database update of the Korean Genome and Epidemiology Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park SJ, Lyu J, Lee K, Lee HJ, Park HY.",
+  "doi": "10.4178/epih.e2024042",
+  "figures": [
+    "Nutrition survey period, tools, and participants of KoGES (February 2023). KoGES, Korean Genome and Epidemiology Study; HEXA, Health Examinee; CAVAS, Cardiovascular Disease Association Study; FFQ, food frequency questionnaire. 1103 Food items FFQ. 2Self-developed FFQ.",
+    "Revision process of food composition database. FFQ, food frequency questionnaire; USDA, United States Department of Agriculture.",
+    ""
+  ],
+  "tables": [
+    "Comparison of nutrient intakes after revision of the food composition database for 3 pooled cohorts (n=205,785)  1",
+    "Expanded nutrient names and reasons for selection",
+    "Intake of 48 expanded nutrients in KoGES participants (n=205,785)"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037251.2221138
+}

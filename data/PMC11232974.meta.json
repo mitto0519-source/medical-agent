@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC11232974",
+  "pmid": "38980879",
+  "title": "Are healthy ageing trajectories suitable to identify rehabilitation needs of the ageing population? An exploratory study using ATHLOS cohort data.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Sabariego C, Hodel J, Seijas V, Rodriguez-Laso A, Bickenbach J, Ehrmann C.",
+  "doi": "10.1371/journal.pone.0303865",
+  "figures": [
+    "Example of a regularized partial correlation network (RPCN) returned via the graphical least absolute shrinkage and selection operator (LASSO), which is depicting associations between pairs of functioning variables.  The node colors indicate ICF domains.",
+    "Identified class-specific mean healthy ageing trajectories for ATHLOS (upper figure) and ELSA, which is one of the studies included in the ATHLOS harmonized cohort (bottom figure).",
+    "Prevalence of health conditions for each healthy ageing trajectory class sample at baseline for ATHLOS and ELSA, which is one of the studies included in the ATHLOS harmonized cohort.  The total number of non-missing cases is used to calculate prevalence. Chronic respiratory diseases may include asthma, CPD, COPD, bronchitis, emphysema.",
+    "Prevalence of functioning problems at first and last waves for each healthy ageing trajectory class identified for ATHLOS sample.",
+    "Prevalence of functioning problems at each wave for the healthy ageing trajectory classes identified for ELSA sample, which is one of the studies included in the ATHLOS harmonized cohort.  Functioning variables are sorted by the median of the prevalence across the seven waves of the ELSA.",
+    "Expected-influence centrality (z-scores) for each functioning variable corresponding to the estimated regularized partial correlation network for each trajectory class identified for the ATHLOS sample.  The bars represent the estimates of the original sample, while the grey points represent the bootstrap means with their 2.5% and 97.5% quantiles bars. For each wave, the functioning variables with ",
+    "Expected-influence centrality (z-scores) for each functioning variable corresponding to the estimated regularized partial correlation network for each trajectory class across the seven waves of the ELSA sample, which is one of the studies included in the ATHLOS harmonized cohort.",
+    "Bridge expected-influence centrality (z-scores) for each functioning variable corresponding to the estimated regularized partial correlation network for each trajectory class identified for the ATHLOS sample.  The bars represent the estimates of the original sample, while the grey points represent the bootstrap means with their 2.5% and 97.5% quantiles bars. For each wave, the functioning variable",
+    "Bridge-influence centrality (z-scores) for each functioning variable corresponding to the estimated regularized partial correlation network for each trajectory class across the seven waves of the ELSA sample, which is one of the studies included in the ATHLOS harmonized cohort.  Functioning variables are sorted by the median of the bridge expected-influence centrality estimated across the seven wa"
+  ],
+  "tables": [
+    "ATHLOS sample characteristics at the first individual wave including the living status at the last individual wave.  The total number of non-missing cases is used to calculate the percentage.",
+    "Model fit information of linear growth mixture models in ATHLOS and ELSA samples.  ELSA is one of the studies included in the ATHLOS harmonized cohort and was used to identify longitudinal trends considering the context of a country, what is not possible with the rather heterogeneous ATHLOS harmonized cohort.",
+    "Healthy ageing trajectory classes sample characteristics at baseline for ATHLOS and ELSA.  ELSA is one of the studies included in the ATHLOS harmonized cohort and was used to identify longitudinal trends considering the context of a country, what is not possible with the rather heterogeneous ATHLOS harmonized cohort. The total number of non-missing cases is used to calculate the percentage."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040696.131949
+}

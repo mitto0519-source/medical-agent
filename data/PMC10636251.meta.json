@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10636251",
+  "pmid": "37428712",
+  "title": "The clinical effects of digital cognitive behavioral therapy for insomnia in a heterogenous study sample: results from a randomized controlled trial.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Schuffelen J, Maurer LF, Lorenz N, Rötger A, Pietrowsky R, Gieselmann A.",
+  "doi": "10.1093/sleep/zsad184",
+  "figures": [
+    "",
+    "Flow chart showing participant selection, dropout, flow, and attrition through the intervention (assessed via self-report).",
+    "Changes in primary outcome and insomnia severity, across both groups and all-assessments. Unadjusted means (±SD) are presented for both groups at baseline and posttreatment, and for the intervention group at 6- and 12-month follow-ups.",
+    "Changes in secondary outcomes: (A) depressive symptoms, (B) anxiety symptoms, (C) Well-being, and (D) Dysfunctional beliefs about sleep, across both groups and all-assessments. Unadjusted means (±SD) are presented for both groups at baseline and posttreatment, and for the intervention group at 6- and 12-month follow-ups."
+  ],
+  "tables": [
+    "Overview and description of dCBT-I modules during the intervention period",
+    "Participant baseline characteristics",
+    "Between-group effects of dCBT-I and WLC on all-outcomes",
+    "Effects of dCBT-I on sleep diary parameters of the intervention group",
+    "Within-group effects of dCBT-I at 2-, 6- and 12-months post-randomization"
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063549.1406415
+}

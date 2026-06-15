@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10151657",
+  "pmid": "37005385",
+  "title": "Social Connectedness and Cognitive Function Before and During COVID-19: A Longitudinal Study of Korean Older Adults With an Instrumental Variable Regression.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lee J, Kim J.",
+  "doi": "10.30773/pi.2022.0303",
+  "figures": [],
+  "tables": [
+    "Basic statistics before and after COVID-19",
+    "Relationships between social connectedness and cognitive function (structural models) (N=2,792)",
+    "Effects of COVID-19 on social connectedness (first-stage and reduced-form regressions)",
+    "Effects of social connectedness on cognitive function (two-stage least squares) (N=2,792)"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040728.901709
+}

@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10887068",
+  "pmid": "38391728",
+  "title": "Internet Gaming Disorder in Children and Adolescents with Autism Spectrum Disorder and Attention Deficit Hyperactivity Disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Simonelli V, Narzisi A, Sesso G, Salvati A, Milone A, Viglione V, Tolomei G, Masi G, Berloffa S.",
+  "doi": "10.3390/brainsci14020154",
+  "figures": [
+    "The figure shows the mean scores in the different subscales of the UADI in patients with scores below and above the cut-off at the IGDS9-SF. The clinical cut-off score for the UADI subscales is 50."
+  ],
+  "tables": [
+    "Baseline clinical characteristics of the ASD group.",
+    "Baseline clinical characteristics of the ADHD group.",
+    "Prevalence of IGD within patient and control groups.",
+    "Comparison between ASD subjects scoring above and below IGDS9-SF cut-off.",
+    "Comparison between ASD patients and ADHD patients with IGDS9-SF above the cut-off.",
+    "Comparison between ASD patients and ADHD patients with IGDS9-SF below the cut-off.",
+    "Baseline clinical characteristics of the follow-up group.",
+    "Difference between T0 and T1 in the measures of assessment."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998751.8789275
+}

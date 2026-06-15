@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11758766",
+  "pmid": "39526586",
+  "title": "Predictors of Selective Serotonin Reuptake Inhibitor Treatment Failure in Persons With Cystic Fibrosis.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Pettit RS, Sakon CM, Kinney KE, Brown C, Gallaway KA, Wagner SA, Tillman EM.",
+  "doi": "10.1002/ppul.27402",
+  "figures": [
+    "CYP2C19 and CYP2D6 metabolizer phenotype distribution.",
+    "SSRI treatment outcomes. (A) SSRI outcomes in PwCF with PGx results available. (B) SSRI outcomes in the total cohort with or without PGx results."
+  ],
+  "tables": [
+    "Study demographics.",
+    "SSRI prescribed."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055628.0121152
+}

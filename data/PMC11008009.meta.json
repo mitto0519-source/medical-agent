@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11008009",
+  "pmid": "38605307",
+  "title": "Change in general and domain-specific physical activity during the transition from primary to secondary education: a systematic review.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Spruijtenburg GE, van Abswoude F, Adams ILJ, Platvoet SWJ, de Niet M, Steenbergen B.",
+  "doi": "10.1186/s12889-024-18539-1",
+  "figures": [
+    "PRISMA flow diagram of the systematic literature search",
+    "Decision strategies for the selection of papers and PA outcomes",
+    "Decision strategies for the selection of results",
+    "Decision strategies for the selection of papers and associations"
+  ],
+  "tables": [
+    "Inclusion and exclusion criteria",
+    "PA synthesis units and examples of PA outcomes investigated",
+    "Groups of factors and examples of factors investigated",
+    "Summary of changes in PA synthesis units",
+    "Summary of associations between demographic factors and change in PA",
+    "Summary of associations between factors and change in PA"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008216.045011
+}

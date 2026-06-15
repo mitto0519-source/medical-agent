@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11206632",
+  "pmid": "38931244",
+  "title": "The Relationship between Patient Self-Reported, Pre-Morbid Physical Activity and Clinical Outcomes of Inpatient Treatment in Youth with Anorexia Nervosa: A Pilot Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Pech M, Correll CU, Schmidt J, Zeeck A, Hofmann T, Busjahn A, Haas V.",
+  "doi": "10.3390/nu16121889",
+  "figures": [
+    "Premorbid physical activity in grades 1-6 in adolescents with anorexia nervosa vs. healthy controls.",
+    "Physical activity in adolescents with anorexia nervosa, longitudinal data."
+  ],
+  "tables": [
+    "Disease characteristics and psychotropic medications on hospital admission.",
+    "Sociodemographic and clinical characteristics, physical activity, and eating disorder-related psychopathology.",
+    "Rank correlations between PA parameters in patients with anorexia nervosa.",
+    "Stepwise backward linear model for change %mBMI (%) and length of stay.",
+    "EDE-Q global score and subscale correlations with PA parameters.",
+    "Multivariable and univariable linear models for Change %mBMI (%).",
+    "Multivariable and univariable linear models for length of stay (days)."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057233.2125063
+}

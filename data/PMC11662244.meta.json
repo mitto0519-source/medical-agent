@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11662244",
+  "pmid": "39393497",
+  "title": "Interactions between Polygenic Risk of Obesity and Dietary Factors on Anthropometric Outcomes: A Systematic Review and Meta-Analysis of Observational Studies.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Han HY, Masip G, Meng T, Nielsen DE.",
+  "doi": "10.1016/j.tjnut.2024.10.014",
+  "figures": [
+    "Flowchart of study selection. Adapted from Page et al. [ 18 ] with permission.",
+    "Forest plot of the interactive association between PRS and HEI on BMI. The analysis was conducted without the Hartung–Knapp adjustment. CI, confidence interval; HEI, healthy eating index; PRS, Polygenic Risk Score; PRS × HEI), interaction between PRS and HEI; N, sample size; SCHS, Singapore Chinese Health Study; SE, standard error; SP2, Singapore Prospective Study Program; SNP, single nucleotide p",
+    "Forest plot of the interactive association between PRS and HEI on WC. The analysis was conducted without Hartung–Knapp adjustment. CI, confidence interval; HEI, healthy eating index; PRS, Polygenic Risk Score; PRS × HEI, interaction between PRS and HEI; N, sample size; SCHS, Singapore Chinese Health Study; SE, standard error; SNP, single nucleotide polymorphism; WC, waist circumference; wPRS, weig"
+  ],
+  "tables": [
+    "General characteristics of cohort studies.",
+    "Characteristics of dietary exposures, polygenic risk scores, and obesity-related outcomes.",
+    "Results of PRS × dietary pattern or dietary quality score on obesity-related outcomes.",
+    "Results of PRS × food and beverage group on obesity-related outcomes."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041336.9436474
+}

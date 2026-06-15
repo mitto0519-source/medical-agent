@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11471034",
+  "pmid": "39396011",
+  "title": "Trends in Mental Health: A Review of the Most Influential Research on Depression in Children and Adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Mei F, Wang Z.",
+  "doi": "10.1186/s12991-024-00520-2",
+  "figures": [
+    "The number of publications on depression in children and adolescents per year",
+    "Annual Citation Trends: This figure shows both the average number of citations received per year (yellow bars) and the average total number of citations accumulated (green shaded area) by published articles across different years",
+    "Journal Co-Citation Network: This figure shows the relationships between journals based on citations. Circles represent journals that published at least four articles (indicated by circle size) within the 100 most cited list. The color intensity of each circle represents the total citations for all the journal articles on the list (darker = more citations)",
+    "International Collaboration in Depression Research: This world map illustrates countries contributing research on childhood and adolescent depression within the top 100 cited articles. The green circle highlights the United States as the nation with the most extensive collaboration network. The curved line color intensity indicates the strength of international co-authorship",
+    "Author Collaboration Network: This network map visualizes connections between authors who have published more than twice. Circle size reflects the number of top 100 cited articles, and line thickness indicates the strength of collaboration",
+    "The co-authorship network between institutions with more than 3 articles: Circle size corresponds to the count of articles among the 100 most cited, while line thickness reflects the collaboration strength",
+    "Network map of keywords analysis with more than 5 articles: Different colors represent different clusters of keywords. The size of the circles indicates the frequency of the terms, and the curves represent the relatedness of the keywords"
+  ],
+  "tables": [
+    "The top 100 cited articles in depression among children and adolescents",
+    "Top 10 most published institutions",
+    "High-Frequency Keywords in Child and Adolescent Depression Literature (Threshold ≥ 4)",
+    "Cluster of keywords on depression in children and adolescents research field"
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999446.6591804
+}

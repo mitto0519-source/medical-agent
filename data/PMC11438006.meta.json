@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11438006",
+  "pmid": "39334420",
+  "title": "Influence of dietary cholesterol on metabolic syndrome risk in middle-aged Korean adults: using the Korean Genome and Epidemiology Study (KoGES).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kwon H, Kang M, Lim H.",
+  "doi": "10.1186/s12944-024-02271-1",
+  "figures": [
+    "Dose-response relationships of dietary cholesterol intake with metabolic syndrome components. ( A ) ~ ( F ) represents the dose-response curve for the risk of metabolic syndrome and metabolic syndrome components according to dietary cholesterol intake. Hazard ratio (solid line) and 95% CI (dashed line) were adjusted for age, sex, daily energy intake, smoking status, drinking alcohol status, exerci"
+  ],
+  "tables": [
+    "General characteristics at baseline according to quintiles of dietary cholesterol among middle-aged Korean adults 1",
+    "Daily nutrients intake at baseline according to quintiles of dietary cholesterol among middle-aged Korean adults",
+    "Change of MetS factors at baseline and follow-up study according to quintiles of dietary cholesterol among middle-aged Korean adults",
+    "Hazard ratio and 95% CI for risk of MetS according to quintiles of dietary cholesterol among middle-aged Korean adults",
+    "Hazard ratio and 95% CI for risk of MetS factors according to quintiles of dietary cholesterol among middle-aged Korean adults"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037702.5711975
+}

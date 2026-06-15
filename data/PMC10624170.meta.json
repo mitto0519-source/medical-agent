@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10624170",
+  "pmid": "37927792",
+  "title": "The efficacy of digital cognitive behavioral therapy for insomnia and depression: a systematic review and meta-analysis of randomized controlled trials.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lin W, Li N, Yang L, Zhang Y.",
+  "doi": "10.7717/peerj.16137",
+  "figures": [
+    "Study selection procedure.",
+    "Forest plot of the short-term effect of dCBT-I on insomnia at post-treatment.  Abbreviations: SD, standard deviation; Total, number of participants; IV, inverse variance; CI, confidence intervals ( Horsch et al., 2017 ;  Freeman et al., 2017 ;  Kalmbach et al., 2020 ;  Rajabi Majd et al., 2020 ;  Faaland et al., 2022 ;  Cheng et al., 2019 ;  Kyle et al., 2020 ).",
+    "Forest plot of the long-term effect of dCBT-I on insomnia at final follow-up.  Abbreviations: SD, standard deviation; Total, number of participants; IV, inverse variance; CI, confidence intervals ( Kalmbach et al., 2020 ;  Rajabi Majd et al., 2020 ;  Faaland et al., 2022 ;  Cheng et al., 2019 ).",
+    "Forest plot of the short-term effect of dCBT-I on depression at post-treatment.  Abbreviations: SD, standard deviation; Total, number of participants; IV, inverse variance; CI, confidence intervals ( Freeman et al., 2017 ;  Rajabi Majd et al., 2020 ;  Faaland et al., 2022 ;  Kyle et al., 2020 ).",
+    "Forest plot of the long-term effect of dCBT-I on depression at final follow-up.  Abbreviations: SD, standard deviation; Total, number of participants; IV, inverse variance; CI, confidence intervals ( Freeman et al., 2017 ;  Kyle et al., 2020 )."
+  ],
+  "tables": [
+    "Characteristics and quality assessment of the included studies.",
+    "Demographics of the included studies and rating scores."
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063542.1103544
+}

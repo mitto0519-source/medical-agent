@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11325357",
+  "pmid": "39149044",
+  "title": "Vitamin D status and VDR gene polymorphisms in patients with growth hormone deficiency: A case control Tunisian study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Tombari S, Amri Y, Hasni Y, Hadj Fredj S, Salem Y, Ferchichi S, Essaddam L, Messaoud T, Dabboubi R.",
+  "doi": "10.1016/j.heliyon.2024.e34947",
+  "figures": [
+    "A descriptive analysis of the biochemical parameters in GHD patients and controls.",
+    "Correlation between vitamin D and phosphocalcic parameters (ALP left panel and PTH right panel).",
+    "Distribution of the 5 SNP genotypes in patients and controls.",
+    "Violin plots (showing data density) and mean/standard deviation (Rectangle, vertical bar) for the association between genotypes ( Apa I and  Fok I) and phosphocalcic parameters (PTH, ALP, and Phosphorus (P)).",
+    "HAPLOVIEW plot of pairwise r 2  values between a set of five simulated SNPs. The block shading shows the strength of correlation. Red and white colours indicate high and low level of LD, respectively. The r 2  measures of LD are shown in the squares.",
+    "Principal Component Analysis (PCA) of different SNP genotypes according to phosphocalcic metabolism parameters (PTH, Calcium, Vitamin D, and Phosphorus)."
+  ],
+  "tables": [
+    "Biological parameter assay methods.",
+    "Characteristics of the studied population.",
+    "Distribution of haplotypes.",
+    "Interaction between haplotypes and different parameters.",
+    "Interaction between Genotypes and biological parameters."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013096.8549933
+}

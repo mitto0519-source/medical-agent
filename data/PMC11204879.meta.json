@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11204879",
+  "pmid": "38929750",
+  "title": "Survival Rate and Chronic Diseases of TCGA Cancer and KoGES Normal Samples by Clustering for DNA Methylation.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Gim JA.",
+  "doi": "10.3390/life14060768",
+  "figures": [
+    "Processes of this study. The number of samples analyzed by 450 k DNA methylation was presented separately for KoGES normal participants and two sexes of each cancer type. DNA methylation information between normal participants and cancer patients was merged, and after clustering, genes with large standard deviations for each gene were selected. In each cluster presented as an example, the highest ",
+    "Clustering, survival analysis, and confusion matrix of female DNA methylation. ( A ) The clustering results of 67 female samples from TCGA-PAAD and 220 female samples from KoGES were presented as heatmaps. ( B ) Kaplan–Meier plots for TCGA-PAAD patients in clusters 1 and 3 (unit: day). Confusion matrix according to diabetes status for 220 women in KoGES.",
+    "Clustering, survival analysis and confusion matrix of female DNA methylation. ( A ) The clustering results of 141 female samples from TCGA-HNSC and 220 female samples from KoGES are presented as heatmaps. ( B ) Kaplan–Meier plots for TCGA-HNSC patients in clusters 1 and 3 (unit: day). Confusion matrix according to allergic diseases in 220 women of KoGES.",
+    "Clustering, survival analysis, and confusion matrix of male DNA methylation. ( A ) The clustering results of 157 male samples from TCGA-COAD and 226 male samples from KoGES are presented as heatmaps. ( B ) Kaplan–Meier plots for TCGA-COAD patients in clusters 1 and 3 (unit: day). Confusion matrix according to the presence of gastritis or stomach ulcer in 226 men of KoGES.",
+    "Clustering, survival analysis, and confusion matrix of female DNA methylation. ( A ) The clustering results of 95 female samples from TCGA-LUSC and 220 female samples from KoGES are presented as heatmaps. ( B ) Kaplan–Meier plots for TCGA-LUSC patients in clusters 1, 2 and 3 (unit: day). Confusion matrix according to the presence or absence of asthma in 220 women of KoGES.",
+    "Clustering, survival analysis, and confusion matrix of male DNA methylation. ( A ) The clustering results of 270 male samples from TCGA-LUSC and 226 male samples from KoGES are presented as heatmaps. ( B ) Kaplan–Meier plots for TCGA-LUSC patients in clusters 1, 2 and 3 (unit: day). The confusion matrix for 220 men in KoGES was classified by chronic disease, but clustering was not provided.",
+    "Venn diagram of five analyses."
+  ],
+  "tables": [
+    "Commonly detected genes."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037384.0722365
+}

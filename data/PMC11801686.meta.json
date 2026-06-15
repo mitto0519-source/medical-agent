@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11801686",
+  "pmid": "39582406",
+  "title": "The 100 most influential articles in mouth breathing. A bibliometric and altmetric analysis: 2002-2021.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Campo AO, Valderrama P, Bravo M, Baca A.",
+  "doi": "10.4317/medoral.26845",
+  "figures": [
+    "Number of articles published each year.",
+    "Authors of three or more articles among the 100 Mouth Breathing papers with the highest relative citation rates (RCR) in the period 2002-2021. Lines indicate co-authorship of articles.",
+    "The network of three or more co-occurring keywords of the top RCR articles in Mouth Breathing: 2002-2021. A total of 102 nodes, five clusters, 1618 links, and a total link strength of 2828.",
+    "The network of three or more co-occurring keywords as a timeline of the top RCR articles in Mouth Breathing: 2002-2021. A total of 102 nodes, five clusters, 1618 links, and a total link strength of 2828. The color yellow represents the most recent keywords, while dark blue shows the oldest keywords."
+  ],
+  "tables": [
+    "Metrics of the top 100 most influential Mouth Breathing articles with the highest relative citation rates (RCR): 2002 - 2021.",
+    "Institutions that contributed at least two articles to the top 100 most influential Mouth Breathing articles with the highest relative citation rates (RCRs): 2002 - 2021.",
+    "Journals that contributed at least two articles to the top 100 most influential Mouth Breathing articles with the highest relative citation rates (RCRs): 2002 - 2021.",
+    "Field of study and study design of the top 100 most influential articles in Mouth Breathing (MB) by the highest relative citation rates (RCR): 2002-2021."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002497.362457
+}

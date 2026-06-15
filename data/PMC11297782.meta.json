@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11297782",
+  "pmid": "39095795",
+  "title": "Screen viewing patterns and their association with mental wellbeing and psychological distress: a cross-sectional study amongst university students.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chen M, Padmapriya N, Chua XH, Escobosa LLT, Tay AE, Tai BC, Petrunoff N, Müller-Riemenschneider F.",
+  "doi": "10.1186/s12889-024-19608-1",
+  "figures": [
+    "Flow diagram for study participants",
+    "Forest plot of sex-specific screen viewing patterns among university students. *, p-value &lt; 0.05; SD, standard deviation; CI, confidence interval. Error bars represented the 95% confidence interval, indicating the expected range of true differences. The blue reference line indicated a lack of statistical significance if the error bar crosses it"
+  ],
+  "tables": [
+    "Participant characteristics overall and according to mental wellbeing and psychological distress",
+    "Descriptive statistics of screen viewing ( n  = 997)",
+    "Associations between screen viewing and mental wellbeing among university students ( n  = 997)",
+    "Associations between screen viewing and psychological distress among university students ( n  = 997)"
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050056.5293994
+}

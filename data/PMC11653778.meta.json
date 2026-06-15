@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11653778",
+  "pmid": "39695503",
+  "title": "The relationship between non-communicable disease risk and mental wellbeing in adolescence: a cross-sectional study utilising objective measures in Indonesia.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Cini KI, Dumuid D, Francis KL, Wulan NR, Sawyer SM, Handy Agung F, Pham MD, Kennedy EC, Fisher J, Tran T, Medise BE, Devaera Y, Riyanti A, Wiweko B, Kaligis F, Wiguna T, Ansariadi A, Azzopardi PS.",
+  "doi": "10.1186/s12889-024-20902-1",
+  "figures": [
+    "Risk factor co-occurrence across the full sample, by risk domain, sorted by frequency. Note: The groups are exclusive of each other, the icons indicate which risk domains adolescents were exposed to, and the number indicates the number of people in each group",
+    "Risk ratios for population weighted prevalence of NCD risk factors, by socio-demographic factors, bars indicate 95%CI’s"
+  ],
+  "tables": [
+    "Description of measures",
+    "Descriptive characteristics and mental wellbeing outcomes stratified by sex",
+    "Weighted estimates for NCD risk factors and biomarkers, by sex. Estimate is weighted population prevalence, unless otherwise noted",
+    "Wellbeing outcomes by individual and co-occurring NCD risk factors, in adolescents",
+    "Wellbeing outcomes by individual and co-occurring risk biomarkers, in adolescents"
+  ],
+  "query": "US adolescent soft drink depression",
+  "fetched_at": 1779992375.0489094
+}

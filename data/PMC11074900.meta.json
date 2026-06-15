@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11074900",
+  "pmid": "38648087",
+  "title": "Digital Dietary Behaviors in Individuals With Depression: Real-World Behavioral Observation.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhu Y, Zhang R, Yin S, Sun Y, Womer F, Liu R, Zeng S, Zhang X, Wang F.",
+  "doi": "10.2196/47428",
+  "figures": [
+    "Flow diagram of the study design. Din: dinner; GAD-7: Generalized Anxiety Disorder Questionnaire-7; HC: healthy control; Lun: lunch; PHQ-9: Patient Health Questionnaire-9.",
+    "Alternations of dietary pattern features in mild depression and moderate-severe depression. a:  P ＜.05; b:  P ＜.01; c:  P ＜.001; and d: significance at  P ＜.05, after false discovery rate correction. The values of dietary pattern features in the graph were transformed into Z-scores. Bre: breakfast; Din: dinner; HC: healthy control; Lun: lunch; MAD: median absolute deviation; Max: maximum; MED: med",
+    "(A,B) Associations between all-day dietary behavior patterns and depression. (C) Associations between Bre-Lun-Din patterns on weekdays and comorbidity of depression and anxiety in individuals. (D) Associations between Bre-Lun-Din patterns on weekday and anxiety in individuals. (E) The mediating role of anxiety between groups (HC, mild depression, and moderate-severe depression) and Bre-Lun-Din pat"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of the study population.",
+    "The detection of depression in classification models."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001682.7954137
+}

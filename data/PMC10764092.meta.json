@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10764092",
+  "pmid": "38179088",
+  "title": "Association between Estimated Pulse Wave Velocity and Incident Nonalcoholic Fatty Liver Disease in Korean Adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim BS, Kim HJ, Shin JH.",
+  "doi": "10.1159/000535580",
+  "figures": [
+    "Study flowchart. NAFLD, nonalcoholic fatty liver disease; ePWV, estimated pulse wave velocity.",
+    "Predictive ability of ePWV for incident NAFLD using a time-dependent ROC curve analysis during the follow-up period in participants without NAFLD at baseline. ePWV, estimated pulse wave velocity; AUC, area under the ROC curve; NAFLD, nonalcoholic fatty liver disease.",
+    "Kaplan-Meier curves comparing the cumulative incidence of NAFLD according to tertiles of ePWV in participants without NAFLD at baseline. NAFLD, nonalcoholic fatty liver disease.",
+    "Subgroup analysis of the risk of incident NAFLD according to ePWV tertiles. NAFLD, nonalcoholic fatty liver disease; ePWV, estimated pulse wave velocity; HR, hazard ratio; CI, confidence interval; BMI, body mass index; HOMA-IR, homeostatic model assessment for insulin resistance."
+  ],
+  "tables": [
+    "Baseline characteristics of participants with and without NAFLD",
+    "Prevalence of NAFLD and ORs for NAFLD prevalence according to ePWV tertiles",
+    "Incidence of NAFLD and HRs for NAFLD incidence according to ePWV tertiles in participants without NAFLD at baseline"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041240.8695014
+}

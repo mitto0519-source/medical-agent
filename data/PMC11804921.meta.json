@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11804921",
+  "pmid": "39287932",
+  "title": "Identification of risk loci for postpartum depression in a genome-wide association study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Li X, Takahashi N, Narita A, Nakamura Y, Sakurai-Yageta M, Murakami K, Ishikuro M, Obara T, Kikuya M, Ueno F, Metoki H, Ohseto H, Takahashi I, Nakamura T, Warita N, Shoji T, Yu Z, Ono C, Kobayashi N, Kikuchi S, Matsuki T, Nagami F, Ogishima S, Sugawara J, Hoshiai T, Saito M, Fuse N, Kinoshita K, Yamamoto M, Yaegashi N, Ozaki N, Tamiya G, Kuriyama S, Tomita H.",
+  "doi": "10.1111/pcn.13731",
+  "figures": [
+    "The importance scores of factors in predicting postpartum depression. The figure shows the importance scores of each confounding factor based on the feature attribution analysis using the SHapley Additive exPlanations approach to reveal specific confounding factors of the whole genome association study of postpartum depression.",
+    "The top 10 pathways in which postpartum depression‐associated genes were overrepresented. The figure shows the top 10 overrepresented pathways with their enrichment ratio based on the WEB‐based Gene Set Analysis Toolkit with Over‐Representation Analysis to identify pathways defined by the KEGG functional database, to which genes belong, where single nucleotide polymorphism suggestively associated "
+  ],
+  "tables": [
+    "SNPs significantly associated with postpartum depression in the TMM‐V2 and TMM‐NEO cohorts considering the multiple potential confounding factors",
+    "SNPs significantly associated with postpartum depression in the meta‐analysis of TMM‐V2, TMM‐NEO, and NGO‐NEO cohorts considering the multiple potential confounding factors",
+    "SNPs significantly associated with postpartum depression in the TMM‐V2 and TMM‐NEO cohorts considering the two most important confounding factors",
+    "SNPs significantly associated with postpartum depression in the meta‐analysis of TMM‐V2, TMM‐NEO, and NGO‐NEO cohorts considering the two most important confounding factors"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048218.4143605
+}

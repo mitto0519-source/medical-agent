@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11409550",
+  "pmid": "39294602",
+  "title": "Investigating the mechanisms of internet gaming disorder and developing intelligent monitoring models using artificial intelligence technologies: protocol of a prospective cohort.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Huang Y, Wu R, Huang Y, Xiang Y, Zhou W.",
+  "doi": "10.1186/s12889-024-20028-4",
+  "figures": [
+    "Study hypothesis: A model of adolescent IGD based on Skinner’s reinforcement theory. Abbreviation IGD, Internet gaming disorder. This hypothesis integrates individual and environmental factors. Environmental factors include socio-cultural aspects (economic status, family relationships), internet use (device availability, usage time), and player clustering. IGD is driven by gaming rewards that rein",
+    "Prospective cohort study design. Abbreviation IGD, Internet gaming disorder",
+    "Acquiring participant gaming behavior information using Python-based web scraping combined with ChatGPT plugins. Panel A: posts made by players on gaming forums; Panel B: ChatGPT-4.0’s “Scraper” plugin; Panel C: Python-based web scraping combined with the “Scraper” plugin to acquire gaming forum post information (unstructured data); Panel D: ChatGPT-4.0’s “Make A Sheet” plugin outputting unstructu",
+    "Structuring participants’ unstructured information using Alibaba Cloud’s NLP technology. Panel A: posts made by players (unstructured text); Panel B: Application Programming Interface (API) call to Alibaba Cloud’s NLP functions; Panel C: Sentiment analysis results of participants’ natural language (indicating the player’s sentiment as “negative”)"
+  ],
+  "tables": [
+    "Content of the online epidemiological questionnaire",
+    "Risk stratification and intervention strategies for IGD"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998590.248648
+}

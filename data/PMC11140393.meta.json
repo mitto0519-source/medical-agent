@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11140393",
+  "pmid": "38310879",
+  "title": "Harnessing Metabolic Indices as a Predictive Tool for Cardiovascular Disease in a Korean Population without Known Major Cardiovascular Event.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim HJ, Kim BS, Lee Y, Ahn SB, Kim DW, Shin JH.",
+  "doi": "10.4093/dmj.2023.0197",
+  "figures": [
+    "Study population. BMI, body mass index; AST, aspartate aminotransferase; ALT, alanine aminotransferase; TG, triglyceride; GGT, gamma-glutamyl transferase; MACCE, major adverse cardiac and cerebrovascular events; CV, cardiovascular; MI, myocardial infarction; CAD, coronary artery disease; HF, heart failure; PAD, peripheral artery disease.",
+    "Time-dependent receiver operating characteristic (ROC) curve for major adverse cardiac and cerebrovascular events (MACCE) for each index. ASCVD, atherosclerotic cardiovascular disease; NAFLD, non-alcoholic fatty liver disease; TyG, triglycerides; HOMA-IR, homeostatic model assessment of insulin resistance; AUC, area under the receiver operating characteristic curve; CI, confidence interval; PPV, p",
+    "Additional value of including other metabolic indices in the metabolic syndrome severity Z-score. IR, insulin resistance; AUC, area under the receiver operating characteristic curve; CI, confidence interval.",
+    ""
+  ],
+  "tables": [
+    "Baseline characteristics",
+    "Comprehensive index for predicting MACCE using the Cox-regression analysis"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041587.5511196
+}

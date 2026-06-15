@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11024699",
+  "pmid": "38627075",
+  "title": "Transdiagnostic Associations between Anger Hostility and Chemokine Interferon-gamma Inducible Protein 10.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Soloey-Nilsen H, Nygaard-Odeh K, Kristiansen MG, Kvig EI, Brekke OL, Mollnes TE, Berk M, Reitan SK, Oiesvold T.",
+  "doi": "10.9758/cpn.23.1091",
+  "figures": [],
+  "tables": [
+    "Characteristics of study participants",
+    "Descriptive statistics of the serum cytokines",
+    "Range of symptom clusters, raw-scores from SCL-90-R",
+    "Multiple linear regression analysis of cytokines and symptom clusters, adjusted for age, sex, BMI and smoking",
+    "(B)",
+    "Descriptive statistics on patients using psychotropic medi-cation, with log 10  IP-10 and anger hostility cluster",
+    "Descriptive statistics on patients not using psychotropic medication, with log 10  IP-10 and anger hostility cluster"
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057577.3518472
+}

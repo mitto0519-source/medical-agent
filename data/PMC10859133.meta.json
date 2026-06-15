@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10859133",
+  "pmid": "38219793",
+  "title": "Does cycle commuting reduce the risk of mental ill-health? An instrumental variable analysis using distance to nearest cycle path.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Berrie L, Feng Z, Rice D, Clemens T, Williamson L, Dibben C.",
+  "doi": "10.1093/ije/dyad153",
+  "figures": [
+    "Causal diagram showing our instrument (distance to cycle path from home), exposure (whether individual cycles to work or uses another form of transport), outcome (whether individual has a mental health prescription) and confounders. Our list of confounders is for illustration and is not complete, as instrumental variable analysis does not require the strong assumption of no unmeasured confounding ",
+    "Distance travelled to work by people living in Glasgow City and City of Edinburgh council areas, aged 16–74 years on the 2011 census night who were in employment and commuted to their place of work"
+  ],
+  "tables": [
+    "Characteristics of people living in Glasgow City and City of Edinburgh council areas, aged 16–74 years on the 2011 census night who were in employment and commuted to their place of work by whether they cycle to work or not",
+    "Results of biprobit models estimating the average treatment effect of cycle commuting on each outcome"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007515.3401148
+}

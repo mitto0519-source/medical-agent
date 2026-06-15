@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10652621",
+  "pmid": "37974292",
+  "title": "Assessment HOMA as a predictor for new onset diabetes mellitus and diabetic complications in non-diabetic adults: a KoGES prospective cohort study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lee J, Kim MH, Jang JY, Oh CM.",
+  "doi": "10.1186/s40842-023-00156-3",
+  "figures": [
+    "Flow chart of study design",
+    "Kaplan–Meier survival curves according to HOMA-IR groups"
+  ],
+  "tables": [
+    "Clinical and laboratory characteristics of the study cohort",
+    "Primary and secondary outcomes according to HOMA-IR groups",
+    "Multivariate analysis of primary and secondary outcomes in the HOMA-IR groups"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041286.325599
+}

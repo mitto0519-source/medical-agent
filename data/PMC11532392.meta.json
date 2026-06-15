@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11532392",
+  "pmid": "39489841",
+  "title": "Frailty transition and burden on mortality risk in middle-aged and older population: a prospective cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Son MK, Lee K.",
+  "doi": "10.1038/s41598-024-78312-7",
+  "figures": [
+    "Kaplan-Meier curves for the incidence of death according to frailty transition.",
+    "Associations between the burden of pre-frailty or frailty during follow-up and risk of death. The burden of pre-frailty or frailty was defined as the proportion of visits with a frailty index &gt; 1 (pre-frail or frail) during follow-up based on the number of visits."
+  ],
+  "tables": [
+    "Characteristics at the first and last visits according to frailty status.",
+    "Characteristics according to frailty transition.",
+    "Association between mortality and frailty index."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037428.5843637
+}

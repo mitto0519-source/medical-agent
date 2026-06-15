@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10945720",
+  "pmid": "38505531",
+  "title": "Association of secondhand smoke with fracture risk in community-dwelling nonsmoking adults in Korea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Ahn J, Park HS, Cho SJ, Baek S, Rhee Y, Hong N.",
+  "doi": "10.1093/jbmrpl/ziae010",
+  "figures": [
+    "",
+    "Flowchart of the study process: including participants from the Korean Genome and Epidemiology Study (2001–2018).",
+    "Kaplan–Meier curves of incident fracture according to the exposure status to secondhand smoke (A) and level of exposure (B)."
+  ],
+  "tables": [
+    "Clinical characteristics of the study participants.",
+    "Hazard ratios of incident fracture risk in the secondhand smoke exposure group.",
+    "Hazard ratios of incident fracture risk in the low and high exposure groups.",
+    "Hazard ratios of incident fracture risk in the secondhand smoke exposure group adjusted for FRAX scores.",
+    "Hazard ratios of incident fracture risk in the secondhand smoke exposure group stratified by fracture site."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041376.986161
+}

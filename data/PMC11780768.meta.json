@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11780768",
+  "pmid": "39885453",
+  "title": "Effect of retirement on the body mass index in China: a nationwide study based on the regression discontinuity design.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Mi J, Han X, Cheng H, Pan Z, Guo J, Zhu H, Wang Q, Wang Y, Liu Y, Zheng C, Wang X, Cao X, Hu Z, Tian Y, Wang Z, Guan T.",
+  "doi": "10.1186/s12889-024-21044-0",
+  "figures": [
+    "Retirement rates corresponding to different standardized ages in months",
+    "The impact of retirement on BMI and overweight and obesity rate"
+  ],
+  "tables": [
+    "Descriptive statistics of participants included in this study"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034639.0850315
+}

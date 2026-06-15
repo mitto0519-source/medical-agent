@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10506251",
+  "pmid": "37723571",
+  "title": "Longitudinal trajectories of atherogenic index of plasma and risks of cardiovascular diseases: results from the Korean genome and epidemiology study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Chun DW, Lee YJ, Lee JH, Lee JW.",
+  "doi": "10.1186/s12959-023-00542-y",
+  "figures": [
+    "Study flowchart. Abbreviations: AIP, atherogenic index of plasma; CVD, cardiovascular disease",
+    "Group-based trajectory modeling according to the atherogenic index of plasma (AIP).",
+    "Kaplan–Meier curves of the cumulative incidence of CVD according to AIP trajectory groups. Abbreviations: AIP, atherogenic index of plasma; CVD, cardiovascular disease"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population",
+    "Incidence of cardiovascular disease during the follow-up",
+    "Cox proportional hazard regression analysis for incident cardiovascular disease based on the atherogenic index of plasma trajectory groups"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041787.7762306
+}

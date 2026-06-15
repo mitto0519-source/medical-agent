@@ -1,0 +1,15 @@
+{
+  "pmcid": "PMC11652267",
+  "pmid": "39697868",
+  "title": "KTED: a comprehensive web-based database for transposable elements in the Korean genome.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee JO, Lee S, Lee D, Hwang T, Joe S, Yang JO, Jeong J, Ohn JH, Kim JH.",
+  "doi": "10.1093/bioadv/vbae179",
+  "figures": [
+    "Overview of our study. (A) The genomic data and clinical information of the KoGES cohort. (B) The workflow of Transposable elements (TEs) detection using MELT and the analysis of characteristic of TEs. (C) The KTED web-server."
+  ],
+  "tables": [],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036935.8210418
+}

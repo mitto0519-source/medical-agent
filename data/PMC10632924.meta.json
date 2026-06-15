@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10632924",
+  "pmid": "37878363",
+  "title": "Web-Based Cognitive Bias Modification Program for Young People With Social Anxiety and Hazardous Alcohol Use: Feasibility, Acceptability, and Preliminary Efficacy Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Prior K, Salemink E, Piggott M, Manning V, Wiers RW, Teachman BA, Teesson M, Baillie AJ, Mahoney A, McLellan L, Newton NC, Stapinski LA.",
+  "doi": "10.2196/46008",
+  "figures": [
+    "CONSORT (Consolidated Standards of Reporting Trials) diagram showing participant flow through the study. ApBM: approach bias modification; IBM: interpretation bias modification; TAU: treatment as usual.",
+    "Example interpretation bias modification scenario for illustrating the training procedures.",
+    "Example approach bias modification scenario for illustrating the training procedures."
+  ],
+  "tables": [
+    "Baseline sociodemographic and clinical characteristics, overall and by study group.",
+    "Primary outcomes by group at 6-week and 12-week follow-up assessments.",
+    "Secondary outcomes by group at baseline and 6-week and 12-week follow-up assessments.",
+    "Mixed models for repeated measures fitted to cognitive bias outcomes with time period and group a .",
+    "Mixed models for repeated measures fitted to clinical outcomes with time period and intervention group a ."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060698.2438734
+}

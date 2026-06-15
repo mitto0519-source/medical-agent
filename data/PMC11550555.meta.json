@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11550555",
+  "pmid": "39523305",
+  "title": "Development of an approach to forecast future takeaway outlet growth around schools and population exposure to takeaways in England.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Liu B, Mytton O, Rahilly J, Amies-Cull B, Rogers N, Bishop T, Chang M, Cummins S, Derbyshire D, Hassan S, Huang Y, Medina-Lara A, Savory B, Smith R, Thompson C, White M, Adams J, Burgoine T.",
+  "doi": "10.1186/s12942-024-00383-6",
+  "figures": [
+    "Key steps in the two-stage method to forecasting future takeaway growth and population exposure",
+    "Map of the six selected adopter local authorities in England. Note: The base map of the boundaries of England was sourced from EDINA at the University of Edinburgh. © Copyright UK Data Service",
+    "Illustration of our approach to forecasting counts of takeaways within management zones in adopter local authorities, including key assumptions made",
+    "An illustration of the two-step process of deriving non-overlapping management zones with distinct densities of takeaways. Kernel density surface of takeaways in 2015 in Manchester LA  (a) . Non-overlapping management zones of high, middle, and low takeaway density  (b)",
+    "An example intersection of home, work and commuting route domains for a car commuter, with non-overlapping takeaway management zones, in Manchester LA",
+    "Historic observations (2011–2021) and ten-year ARIMA model forecasts (2021–2031) of the count of takeaways within management zones for non-adopter local authorities across six rural urban classes in England. Blue ribbons are 95% forecast intervals"
+  ],
+  "tables": [
+    "Classification of the six selected adopter local authorities across the rural/urban spectrum in England",
+    "Forecasts of counts in numbers of takeaways in management zones around schools, in non-adopter local authorities of the non-London urban with major conurbation rural urban class, to which Manchester belongs, in England. Corresponding rates of change also shown",
+    "Forecast population-level per capita exposure to takeaways within management zones and combined home, work and commuting route domains in Manchester LA. Corresponding rates of change also shown"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008137.2630324
+}

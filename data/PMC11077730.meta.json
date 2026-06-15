@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11077730",
+  "pmid": "38720323",
+  "title": "Uncovering physical activity trade-offs in transportation policy: A spatial agent-based model of Bogotá, Colombia.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Stankov I, Meisel JD, Sarmiento OL, Delclòs-Alió X, Hidalgo D, Guzman LA, Rodriguez DA, Hammond RA, Diez Roux AV.",
+  "doi": "10.1186/s12966-024-01570-1",
+  "figures": [
+    "Map of the City of Bogotá showing the extent and distribution of the TransMilenio bus rapid transit system and the six SES strata in the city (left) along with the abstract representation of the city in the ABM environment (right)",
+    "Baseline calibrated model fit to percent mode share data from the 2019 Bogotá Household Travel Survey. Each facet represents a population subgroup, ranging from overall, city-level mode share (facet 1) to SES-level mode share (columns 2–7). Within each facet, the left-hand bar depicts mode share patterns observed in the 2019 Bogotá Household Travel Survey, while the right-hand bar shows the model ",
+    "Absolute percent change in mode share (y-axis), by mode, overall and by SES (x-axis) following the implementation of  A  a 30% fare subsidy only;  B  free bus and BRT travel for all, a congestion tax of 2,000 COP only ( C ) and 20,000 COP only ( F ), and a combination of these fare subsidies and congestion taxes ( D ,  E ,  G ,  H )",
+    "Absolute change in median active and total travel time, in minutes (y-axis), by mode, overall and by SES (x-axis) following the implementation of  A  a 30% fare subsidy only;  B  free bus and BRT travel for all, a congestion tax of 2,000 COP only ( C ) and 20,000 COP only ( F ), and a combination of these fare subsidies and congestion taxes ( D ,  E ,  G ,  H )",
+    "Distribution of times spent walking to work each day (red line signifies median), overall and by SES for each scenario; the baseline model (blue section  A  no policy intervention), the congestion taxes, including 2,000 COP ( B ) and 20,000 COP tax ( C ), and the fare subsidies; 30% fare subsidy ( D ); and free public transport for all users ( E )",
+    "Absolute change in percent commuters meeting weekly recommended physical activity guidelines, overall and by SES (x-axis) following the implementation of  A  a 30% fare subsidy only;  B  free bus and BRT travel for all, a congestion tax of 2,000 COP only ( C ) and 20,000 COP only ( F ), and a combination of these fare subsidies and congestion taxes ( D ,  E ,  G ,  H )"
+  ],
+  "tables": [
+    "Summary of agent attributes at baseline, and the data/ empirical sources informing these",
+    "Summary of environmental attributes and the data/ empirical sources informing these"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007867.8102
+}

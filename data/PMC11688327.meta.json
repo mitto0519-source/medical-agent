@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC11688327",
+  "pmid": "39744723",
+  "title": "Multimodal sleep staging network based on obstructive sleep apnea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Fan J, Zhao M, Huang L, Tang B, Wang L, He Z, Peng X.",
+  "doi": "10.3389/fncom.2024.1505746",
+  "figures": [
+    "Characteristic waves in sleep stages.",
+    "The overall framework of the MSDC-SSRNet model used for automatic sleep stage classification, which contains the CCTE structure.",
+    "Causal convolution structural diagram.",
+    "Structure of multi-head attention module.",
+    "Structure of multi-scale feature extraction module.",
+    "Ground-truth and predicted hypnograms of subject SC4001E0 in the sleep-EDF-20 dataset.",
+    "Accuracy and loss during training on fold 6 in the sleep-EDF-20 dataset.",
+    "Performance on the sleep-EDF-20 dataset using different values of  H ."
+  ],
+  "tables": [
+    "Description of different sleep stages.",
+    "Detailed information on the four datasets (each sample is a 30-s calendar element).",
+    "Confusion matrices for different datasets.",
+    "Comparison of sleep staging performance with previous studies across four experimental datasets.",
+    "Ablation experiment results for sleep-EDF-20 and CSPH datasets.",
+    "Performance on the Sleep-EDF-20 dataset using different amounts of  N  s  and N  m ."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002533.2934732
+}

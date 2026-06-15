@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10577770",
+  "pmid": "37603383",
+  "title": "Development and validation of a dementia risk score in the UK Biobank and Whitehall II cohorts.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Anatürk M, Patel R, Ebmeier KP, Georgiopoulos G, Newby D, Topiwala A, de Lange AG, Cole JH, Jansen MG, Singh-Manoux A, Kivimäki M, Suri S.",
+  "doi": "10.1136/bmjment-2023-300719",
+  "figures": [
+    "Receiver-operating characteristic curves (ROC) for each risk score in the UKB test set. Sensitivity and specificity (plotted from 1 to 0) at varying thresholds to build and ROC curve for each risk score computed in the UKB test set. The highest performing score, as indicated by the greatest area under the curve, was the UKBDRS-APOE model, followed by the UKBDRS, age only, DRS, CAIDE, and ANU-ADRI."
+  ],
+  "tables": [
+    "Results of the competing risk regressions with two variants of the UKBDRS",
+    "Discrimination accuracy of models across the training and test sets",
+    "Pairwise comparisons in the UKB test set and WHII validation sample to survive FDR corrections"
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991782.1874835
+}

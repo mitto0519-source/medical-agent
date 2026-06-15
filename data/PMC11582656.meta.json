@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC11582656",
+  "pmid": "39572630",
+  "title": "Constructing causal pathways for premature cardiovascular disease mortality using directed acyclic graphs with integrating evidence synthesis and expert knowledge.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Hasani WSR, Musa KI, Chen XW, Cheng KY.",
+  "doi": "10.1038/s41598-024-80091-0",
+  "figures": [
+    "Flow chart of study constructing DAG model for premature cardiovascular mortality.",
+    "Summary of evidence synthesis for constructing DAGs (ESC-DAGs) protocol (Source: Ferguson, 2020  23  )",
+    "Framework-related variables for premature cardiovascular mortality.",
+    "ESC-DAG process for the causal pathway of premature cardiovascular disease mortality.",
+    "DAG for premature CVD mortality from first round interview by expert domains.",
+    "Final DAG for premature CVD mortality from evidence synthesis and expert consensus (available online:  https://dagitty.net/mDbAXtYkt )."
+  ],
+  "tables": [
+    "Triangular fuzzy number from 7 likert-scale.",
+    "Summary of fuzzy Delphi method findings.",
+    "Suggested adjustment set for total effect of selected exposure toward premature CVD mortality.",
+    "DAG models for expert domain rate and testing model accuracy with available data.",
+    "Expert ranked the proposed DAG model to test with available data.",
+    "Comparison model accuracy from data based on logistic regression models. DAG Model 1 adjusted with age, sex, socioeconomic status (SES) score (derived from income and education level), obesity and smoking. DAG Model 2 adjusted with age, sex, SES score (derived from income, education level, occupation and living area), abdominal obesity and smoking. DAG Model 3 adjusted with age, sex, ethnicity, ed"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021610.5239308
+}

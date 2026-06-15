@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10482093",
+  "pmid": "37680885",
+  "title": "Gene-diet interaction analysis using novel weighted food scores discovers the adipocytokine signaling pathway associated with the development of type 2 diabetes.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Apio C, Chung W, Moon MK, Kwon O, Park T.",
+  "doi": "10.3389/fendo.2023.1165744",
+  "figures": [
+    "(A)  A schematic diagram of the HisCoM model showing HisCoM-RFS calculation using three food categories. The rectangles and ellipses represent food items and food categories, respectively. So that the phenotype is a linear combination of the food items and not the food categories. HisCoM, Hierarchical Structural Component model.  (B)  Density plot distribution of RFS, HisCoM-RFS, and PLSDA-RFS bet",
+    "The odd ratios of RFS, HisCoM-RFS and PLSDA-RFS adjusted for age, sex, area, BMI, income level, education level, smoking, alcohol and coffee consumption, and METs, showing the association between dietary habits and T2D. The  P -values were calculated using multiple logistic regression. METs, metabolic equivalents; BMI, body mass index; RFS, recommended food scores.",
+    "The odd ratios of RFS, HisCoM-RFS and PLSDA-RFS diet quality groups adjusted for age, sex, area, BMI, income level, education level, smoking, alcohol and coffee consumption, and METs, showing the association between dietary quality and T2D. High diet quality group is the reference group. The  P -values were calculated using multiple logistic regression. METs, metabolic equivalents; BMI, body mass ",
+    "The odd ratios of the interaction between the genetic risk groups and diet quality groups of RFS, HisCoM-RFS and PLSDA-RFS. The analyses were adjusted for the ten covariates. Interaction of low GRC and high DQG is the reference group. METs, metabolic equivalents; BMI, body mass index; RFS, recommended food scores; GRG, genetic risk groups; DQG, diet quality groups."
+  ],
+  "tables": [
+    "Baseline characteristics and food scores of participants according to T2D case–control subjects.",
+    "List of significant genes from the gene analysis step of MAGMA for RFS and PLSDA-RFS.",
+    "List of genes from the gene set of the adipocytokine signaling pathway."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041488.5137413
+}

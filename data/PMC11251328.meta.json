@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC11251328",
+  "pmid": "39010104",
+  "title": "Circadian rhythm disruption upregulating Per1 in mandibular condylar chondrocytes mediating temporomandibular joint osteoarthritis via GSK3β/β-CATENIN pathway.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Wei J, Wang Y, Tu S, Zhang S, Feng Y, Hou Y, Ai H, Chen Z.",
+  "doi": "10.1186/s12967-024-05475-2",
+  "figures": [
+    "Chronic circadian rhythm disruption leads to TMJOA-like lesions in the rat mandibular condyles.  A  Light/dark timing schematic diagram of chronic progressive jet lag.  B  Three-dimensional reconstruction images of condyles from LD12:12 and Jet lag groups by Micro-CT.  C  Quantitative evaluation of Micro-CT data including BS/TV, BV/TV, Tb.Th, Tb.Sp and Tb.N.  D  Representative sections of H&amp;E,",
+    "Chronic circadian rhythm disruption leads to increased expression of the clock gene  Per1  and matrix degrading enzymes in the mandibular condylar cartilage.  A  Relative mRNA expression curves of core clock genes in the mandibular condylar cartilage over a 24-h period (ZT0, ZT4, ZT8, ZT12, ZT16, ZT20 and ZT24) of two groups.  B  Western blot images of PER1, MMP13, ADAMTS4, and ADAMTS5 in mandibul",
+    "Per1  positively regulates matrix-degrading enzymes and GSK3β/β-CATENIN pathway in mandibular condylar chondrocytes.  A  mRNA expression levels of  Mmp13 ,  Adamts4 ,  Adamts5  and core molecules of GSK3β/β-CATENIN pathway after downregulation of  Per1 .  B  Protein expression levels of MMP13, ADAMTS4, ADAMTS5 and core molecules of GSK3β/β-CATENIN pathway after downregulation of  Per1 .  C  Quanti",
+    "Per1  regulates the synthesis of MMP13, ADAMTS4, and ADAMTS5 through GSK3β/β-CATENIN pathway in mandibular condylar chondrocytes.  A  mRNA expression levels of cartilage matrix degrading enzymes and  β-catenin  after downregulation of  Per1  in chondrocytes and addition of LiCl.  B  Protein expression levels of cartilage matrix degrading enzymes and core molecules in the GSK3β/β-CATENIN pathway af",
+    "Downregulating  Per1  in rat mandibular condylar cartilage can alleviate TMJOA lesions caused by chronic circadian rhythm disruption in rats.  A  Three-dimensional reconstruction images of condyles from LD12:12 h + sh-Control, LD12:12 h + sh- Per1 , Jet lag + sh-Control and Jet lag + sh- Per1  groups by Micro-CT.  B  Quantitative evaluation of Micro-CT data including BS/TV, BV/TV, Tb.Th, Tb.Sp and",
+    "Downregulation of  Per1  in rat mandibular condylar cartilage can inhibit the activation of the GSK3β/β-CATENIN pathway and the increase in matrix-degrading enzymes caused by chronic circadian rhythm disruption.  A  Representative sections of immunohistochemical staining of PER1, MMP13, ADAMTS4, ADAMTS5 and β-CATENIN in mandibular condylar cartilage.  B  Average optical density of protein in condy",
+    "Schematic diagram of TMJOA mediated by upregulation of clock gene  Per1  due to chronic circadian rhythm disruption",
+    "Schematic diagram of animal allocation for the first animal experiment",
+    "Schematic diagram of animal allocation for the second animal experiment",
+    "Modeling of chronic circadian rhythm disruption in rats using an independent lighting system controlled by an intelligent timer",
+    "Verification of the efficiency of downregulation.  A  or upregulation  B  of  Per1  in mandibular condylar chondrocyte under sh- Per1  and ov- Per1  lentivirus. * P  &lt; 0.05. ** P  &lt; 0.01",
+    "A ,  B, C  Protein expression level of GSK3β, p-GSK3β and β-CATENIN in LD12:12 and Jet lag groups (n = 5).  D ,  E  Representative sections of immunohistochemical staining and average optical density of β-CATENIN in condylar cartilage tissue (n = 5). * P  &lt; 0.05. ** P  &lt; 0.01"
+  ],
+  "tables": [
+    "Primer sequence of core clock genes and cartilage-degrading factors",
+    "The serial number of rat and distribution of mandibular condyles in LD12:12 and Jet lag groups",
+    "The serial number of and distribution of mandibular condyles in LD12:12 h + sh-Control, LD12:12 h + sh- Per1 , Jet lag + sh-Control and Jet lag + sh- Per1  groups"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001463.052003
+}

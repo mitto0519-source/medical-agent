@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC11566247",
+  "pmid": "39543781",
+  "title": "F. prausnitzii potentially modulates the association between citrus intake and depression.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Samuthpongtorn C, Chan AA, Ma W, Wang F, Nguyen LH, Wang DD, Okereke OI, Huttenhower C, Chan AT, Mehta RS.",
+  "doi": "10.1186/s40168-024-01961-3",
+  "figures": [
+    "Identification of gut microbial species and metabolic pathways that may modulate relationships between citrus intake and depression. To understand the role of the gut microbiome in modulating the association between citrus intake and depression ,  we primarily leveraged data from the prospective Nurses’ Health Study II (NHS2), comprised of 32,427 middle-aged women, free of depression at baseline, ",
+    "Citrus intake is inversely associated with depression, possibly via modulation of  F. prausnitzii .  A  Greater intake of citrus is prospectively associated with a decreased risk of depression ( p -trend 0.001) after adjustment for covariates including age, BMI, activity, smoking status, menopausal hormone therapy, total caloric intake, intake of alcohol, comorbidities (history of diabetes mellitu",
+    "Metabolic pathways by which  F. prausnitzii  may influence depression.  A  Volcano plot demonstrating metagenomic carriage by 4098 pathways from all microbial species in relation to depression. S-Adenosyl-L-methionine cycle I pathway, encoded by  F. prausnitzii , was among the strongest hits.  B  S-Adenosyl-L-methionine cycle I pathway of  F. prausnitzii  is reduced in depression (generalized line"
+  ],
+  "tables": [],
+  "query": "zero-calorie beverage mental health",
+  "fetched_at": 1779974790.2954178
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11653483",
+  "pmid": "39699376",
+  "title": "Sleep medicine and chronobiology education among Brazilian medical students.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Novais YC, Borges J, Ferreira-Moraes FA, Tamura EK.",
+  "doi": "10.1590/1414-431x2024e14147",
+  "figures": [
+    "Descriptive characteristics of the study population.",
+    "Obstacles for the effective teaching of chronobiology and sleep medicine as reported by medical students. The graph illustrates the percentage of the total number of students who reported each of the different obstacles they believe interfered with the effective teaching of chronobiology and sleep medicine. n=240 students.",
+    "Frequency of correct and incorrect responses regarding different topics in chronobiology and sleep medicine. The panel describes the main topics associated with each of the 10 questions. n=240 students.",
+    "Spearman correlation analysis of the percentage of correct answers to the questions related to chronobiology and sleep medicine and the number of cycles with contact with the subject during the medical program. *P&lt;0.05; n=240 students."
+  ],
+  "tables": [
+    "Descriptive characteristics of the study population.",
+    "Contact with chronobiology and sleep medicine during the different periods of medical training.",
+    "Univariate and multivariate logistic regression analysis of performance of medical students in a questionnaire about chronobiology and sleep medicine."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001498.9864204
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11793790",
+  "pmid": "39836663",
+  "title": "Physical health in young males and risk of chronic musculoskeletal, cardiovascular, and respiratory diseases by middle age: A population-based cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Turkiewicz A, Magnusson K, Timpka S, Kiadaliri A, Dell'Isola A, Englund M.",
+  "doi": "10.1371/journal.pmed.1004517",
+  "figures": [
+    "Fitted incidence proportion by measures of physical health.  Marginal estimates from the adjusted Poisson regression model. All exposures (the 6 variables in the figure, height, drug use, smoking, alcohol consumption, overall health, headache, and gastrointestinal problems) were included in the model and they were also adjusted for parental education and occupation. The middle value on the x-axis ",
+    "Risk ratios (95% CIs) for the associations between 7 exposures related to physical health and specific musculoskeletal diseases.  All exposures included in 1 model, additionally adjusted for parental education and occupation. Estimates are per 1 standard deviation of exposure."
+  ],
+  "tables": [
+    "Variables related to physical health assessed at conscription examination and used as exposures in the current study.",
+    "International Classification of Diseases (ICD)-9 and ICD-10 codes for selected diseases.",
+    "Descriptive data of exposures of interest at the conscription examination.",
+    "Risk ratios (95% CIs) for associations between exposures and musculoskeletal, cardiovascular, and respiratory diseases.  All exposures were included in 1 model. Adjusted for parental occupation and education."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011284.5837767
+}

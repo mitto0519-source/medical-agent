@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11475630",
+  "pmid": "39402645",
+  "title": "Changes in work status after cancer diagnosis and their associations with depressive symptoms among cancer survivors: findings from the Korean longitudinal study of ageing<sup>1</sup>.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee DE, Kim Y, Kim YM, Cho SI.",
+  "doi": "10.1186/s40359-024-01970-9",
+  "figures": [
+    "Flow chart detailing the numbers following exclusion criteria and the classification of main groups based on the exposure variable",
+    "The OR of depressive symptoms with a cut-off point of 10 ( N  = 199, Observations = 799). † Adjusted for the number of household members, education level, sex, age, marital status, CHE, cancer treatment, cancer type, survivorship, and occupations",
+    "The OR of depressive symptoms with a cut-off point of 4 ( N  = 199, Observations = 799). † Adjusted for the number of household members, education level, sex, age, marital status, CHE, cancer treatment, cancer type, survivorship, and occupations"
+  ],
+  "tables": [
+    "Baseline characteristics of participants ( N  = 199, observations = 799)",
+    "Association between changes in work status and depressive symptoms by cancer types"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040061.4967456
+}

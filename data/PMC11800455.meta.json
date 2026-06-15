@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11800455",
+  "pmid": "39910521",
+  "title": "Associations of four obesity indices with diabetes mellitus in Korean middle-aged and older adults using the Korean Genome and Epidemiology Study (KoGES).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lee Y, Lim NK, Park HY.",
+  "doi": "10.1186/s12889-025-21567-0",
+  "figures": [
+    "Flowchart depicting participant screening and enrolment in the study   BMI, body mass index; WC, waist circumference; WHR, waist-to-hip circumference ratio; ABSI, a body shape index; SBP, systolic blood pressure; DBP, diastolic blood pressure; TC, total cholesterol; FBG, fasting blood glucose; TG, triglyceride",
+    "ORs (95% CI) for the prevalence of DM according to the cutoff of each index. ( A ) Total. ( B ) Male. ( C ) Female. * BMI cutoff point: 25 kg/m 2 , WC cutoff point: 90 and 85 cm for male and female participants, respectively, WHR cutoff point: 0.9 and 0.85 for male and female participants, respectively, and ABSI cutoff point: 0.08 and 0.073 m 11/6 /kg 2/3  for male and female participants, respect"
+  ],
+  "tables": [
+    "Stratification of the participants’ general characteristics by age group and DM prevalence",
+    "Difference in AUC among age group-stratified indices for DM",
+    "Reclassification of indices by age group"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037123.1773453
+}

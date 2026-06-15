@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11829440",
+  "pmid": "39953464",
+  "title": "The application of artificial intelligence in the field of mental health: a systematic review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Dehbozorgi R, Zangeneh S, Khooshab E, Nia DH, Hanif HR, Samian P, Yousefi M, Hashemi FH, Vakili M, Jamalimoghadam N, Lohrasebi F.",
+  "doi": "10.1186/s12888-025-06483-2",
+  "figures": [
+    "Diagram for the inclusion and exclusion of articles"
+  ],
+  "tables": [
+    "Search strategy (search syntax: (artificial intelligence AND mental))",
+    "Quality assessment of articles",
+    "Extracted data from articles"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048688.9057984
+}

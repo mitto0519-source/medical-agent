@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11503325",
+  "pmid": "39449311",
+  "title": "A Longitudinal Examination between Chronotype and Insomnia in Youths: A Cross-Lagged Panel Analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Cheung FTW, Sit HF, Li X, Chan JWY, Chan NY, Wing YK, Li SX.",
+  "doi": "10.3390/clockssleep6040037",
+  "figures": [
+    "Standardised path coefficients from the cross-lagged panel model. Age and sex were added in model as control variables but not depicted in figure.",
+    "Study Flowchart."
+  ],
+  "tables": [
+    "Descriptive statistics on demographic, sleep, and circadian measures.",
+    "Zero-order correlations between insomnia symptoms and chronotype.",
+    "Fit indices and chi-square difference tests."
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001601.8641944
+}

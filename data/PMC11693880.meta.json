@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11693880",
+  "pmid": "39748966",
+  "title": "Can rural elderly groups be supported by increasing the pension contribution rate?",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lin H, Xu Y, Song Y.",
+  "doi": "10.1016/j.heliyon.2024.e38666",
+  "figures": [
+    "The structure of the paper and its components."
+  ],
+  "tables": [
+    "Statistical description of original data.",
+    "The result of fix-effect model.",
+    "The result of fixed effects, GEE, random effects model.",
+    "The test of mediating effect.",
+    "Time effect."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040079.078206
+}

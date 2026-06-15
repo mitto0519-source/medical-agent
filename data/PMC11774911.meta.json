@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11774911",
+  "pmid": "39882074",
+  "title": "Case Report: Novel <i>ADA2</i> variants cause atypical adenosine deaminase 2 deficiency.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yu H, Lin S, Li L, Li J, Chen Q, Wu Y, Qi Y, Wang W, Chang X, Zhang J.",
+  "doi": "10.3389/fgene.2024.1478581",
+  "figures": [
+    "Brain CT taken at 2 years and 4 months old, and 2 weeks after disease onset: multiple spotty and patchy low-density lesions in the bilateral basal ganglia and thalamus.",
+    "Brain MRI A1-6: at 2 years and 4 months of age (2 weeks of disease duration after disease onset): T2WI, T2-FLAIR, DWI high, and T1WI low signals in the right putamen and brainstem; T2WI, T2-FLAIR, and T1WI low signals in the bilateral thalamus and basal ganglia. B1-6: at 2 years and 5 months old (1.5 months after disease onset): T2, T2-FLAIR high signals in the right putamen and right brainstem di",
+    "The Sanger sequencing of the patient’s family. The patint had compound heterozygous variants in  ADA2  gene,  NM_017424  c.1358A&gt;G p. (Tyr453Cys)and c.1082-7T&gt;A. The variant  NM_017424  c.1082-7T&gt;A was found in both the patient and her mother  (A) . The variant  NM_017424  c.1358A&gt;G p. (Tyr453Cys) was found in both the patient and her father  (B) .",
+    "The mRNA reverse transcription-Sanger sequencing in the variant c.1082-7T&gt;A. The cDNA sequence 1 of the patient showed the variant c.1082-7T&gt;A, which led to 21 nucleotides deletion in the exon6, exon 7 junction site, compared with the cDNA sequence 2  (A) . The cDNA sequence 1 of mother showed the variant c.1082-7T&gt;A, which leaded to 21 nucleotides deletion in the exon6, exon 7 junction s",
+    "The test of ADA2 enzymatic activity of the patient. Compared with the wild type individuals, the patient’s ADA2 enzyme activity showed a significnat decrease. The ADA2 enzyme activity was 0 (Normal value range &gt;0.003 mg/L)."
+  ],
+  "tables": [],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780005091.421063
+}

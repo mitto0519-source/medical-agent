@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11348658",
+  "pmid": "39192238",
+  "title": "Body weight and eating attitudes influence improvement of depressive symptoms in children and pre-adolescents with eating disorders: a prospective multicenter cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Suzuki Y, Nagamitsu S, Eshima N, Inoue T, Otani R, Sakuta R, Iguchi T, Ishii R, Uchida S, Okada A, Kitayama S, Koyanagi K, Suzuki Y, Sumi Y, Takamiya S, Fujii C, Fukai Y.",
+  "doi": "10.1186/s12887-024-05024-2",
+  "figures": [
+    "Patient flow diagram for this study",
+    "Changes in assessment items from the initial phase to the 12-month follow-up . a  The CDI score was significantly decreased after 12 months of treatment ( p  &lt; 0.001).  b  The BMI-SDS was significantly increased after 12 months of treatment ( p  &lt; 0.001). CDI, Children’s Depression Inventory; BMI-SDS, body mass index-standard deviation score.  c  The ChEAT26 score was significantly decreased"
+  ],
+  "tables": [
+    "Comparison of background characteristics at the initial visit between patients in12-month-follow-up and dropout groups",
+    "Multiple regression analysis of the effect of prognostic factors on CDI improvement",
+    "Multiple regression analysis of the effect of prognostic factors on BMI-SDS improvement"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048195.3212209
+}

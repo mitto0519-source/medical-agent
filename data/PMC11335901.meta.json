@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11335901",
+  "pmid": "39164273",
+  "title": "A novel constraint-based structure learning algorithm using marginal causal prior knowledge.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yu Y, Hou L, Liu X, Wu S, Li H, Xue F.",
+  "doi": "10.1038/s41598-024-68379-7",
+  "figures": [
+    "Algorithm 1 . The PC PC-stable algorithm",
+    "An example to illustrate Theorem  1 .",
+    "Algorithm 2 . Causal Relation Scanning Algorithm",
+    "An example to illustrate how MPPC (Algorithm 3) works.",
+    "Algorithm 3 . MPPC algorithm",
+    "Experiments results on randomly generated causal models, with     N  =  10  ,  000    ,     p  =  10  ,   20  ,   30     and     n  =  50  ,   100  ,   150  ,  200  ,  250    . The F1 score, SHD and CSR of different methods are reported.",
+    "Experiments results on randomly generated causal models, with     N  =  10  ,  000    ,     p  =  10  ,   20  ,   30     and     d  =  1  ,   2  ,   3  ,   4    . The F1 score, SHD and CSR of different methods are reported.",
+    "The number of statistical tests and CPU time of different methods on randomly generated causal models.",
+    "Experimental results on ECOLI70, MAGIC-IRRI and ARTH150 network."
+  ],
+  "tables": [
+    "The results of different methods on ALARM dataset."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021539.0477805
+}

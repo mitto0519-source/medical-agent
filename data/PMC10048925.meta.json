@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10048925",
+  "pmid": "36981759",
+  "title": "Exploring the Relationships between Multilevel Built Environments and Commute Durations in Dual-Earner Households: Does Gender Matter?",
+  "year": 2023,
+  "journal": "",
+  "authors": "Wang X, Wang W, Yin C.",
+  "doi": "10.3390/ijerph20064851",
+  "figures": [
+    "Conceptual framework."
+  ],
+  "tables": [
+    "Summary of causes of transport inequity in China.",
+    "Statistical descriptions of variables at the individual level.",
+    "Statistical descriptions of neighborhood- and city-level variables.",
+    "Model fitness of the multi-group GMSEM.",
+    "Impact of multilevel BE on traffic congestion, car ownership, and commuting modes.",
+    "Gender differences in the impact of multilevel BE on commuting durations."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007963.7404232
+}

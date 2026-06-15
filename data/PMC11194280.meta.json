@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11194280",
+  "pmid": "38910177",
+  "title": "Vortioxetine's impact on the autonomic nervous system in depressed children and adolescents: analysis of the heart rate variability.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Krivosova M, Hutka P, Ondrejka I, Visnovcova Z, Funakova D, Hrtanek I, Ferencova N, Mlyncekova Z, Kovacova V, Macejova A, Kukucka T, Mokry J, Tonhajzerova I.",
+  "doi": "10.1038/s41598-024-65278-9",
+  "figures": [
+    "STROBE flow chart of participant selection procedure."
+  ],
+  "tables": [
+    "Psychiatric rating scale scores before and after short vortioxetine treatment in hospital.",
+    "HRV parameters in all subjects, responders, and non-responders before and after short vortioxetine treatment in hospital: RMSSD, HF, LF, RRi, pNN50.",
+    "HRV parameter characteristics."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056524.7131312
+}

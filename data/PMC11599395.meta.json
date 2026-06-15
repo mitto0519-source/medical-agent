@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11599395",
+  "pmid": "39143265",
+  "title": "On the rise or a return to pre-pandemic levels? A cross-sectional online survey on nicotine, alcohol, and illicit drug use among youth.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Fanninger S, Mayer A, Goreis A, Kothgassner OD, Matjazic J, Schoegl P, Schmelzle N, Wollenek V, Skala K.",
+  "doi": "10.1007/s40211-024-00503-5",
+  "figures": [
+    "Participants who scored below the cutoff are represented in light gray; those who met cutoff criteria for problematic substance use are represented in dark gray.  CAGE  Questionnaire for Alcohol Misuse,  CAST  Cannabis Abuse Screening Tool,  HSI  Heaviness of Smoking Index",
+    "Change in substance use during lockdowns, reported retrospectively",
+    "Trends in the frequency of substance use during the pandemic, by age group, for three different substance classes.  SP  spring,  SU  summer,  FA  fall,  WI  winter",
+    "Trends in the frequency of substance use during the pandemic, grouped by score on screening measures, for three different substance classes.  SP  spring,  SU  summer,  FA  fall,  WI  winter"
+  ],
+  "tables": [
+    "Sample characteristics a",
+    "Prevalence of (problematic) substance use a"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059850.7638695
+}

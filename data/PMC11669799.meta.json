@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11669799",
+  "pmid": "",
+  "title": "Association between air pollution (PM10, PM2.5), greenness and depression in older adults: a longitudinal study in South Korea",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park H, Kang C, AiMS-CREATE Team, Kim H.",
+  "doi": "",
+  "figures": [
+    "Associations between air pollution exposure (per 10         increase) and depression by NDVI quantiles.   Note : The OR was derived from the GEE model, with depression characterized by a CES-D 10 score of 20 or higher. Unadjusted model: adjusted for particulate matter (PM 10  or PM 2.5 ), NDVI quantiles, and interaction term of particulate matter and NDVI quantiles. Minimally adjusted model: adjus",
+    "(a) Subgroup analysis of associations between air pollution (PM 10 ) exposure (per 10 increase) and depression by NDVI quantiles. (b) Subgroup analysis of associations between air pollution (PM 2.5 ) exposure (per 10         increase) and depression by NDVI quantiles.   Note : The OR was derived from the GEE model, with depression characterized by a CES-D 10 score of 20 or higher. The models were "
+  ],
+  "tables": [
+    "Descriptive characteristics of the variables in the baseline of participants (Mean (SD) or proportion)",
+    "Descriptive and correlation table of air pollution and greenness averaged between 2016, 2018 and 2020"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040304.1541545
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11554836",
+  "pmid": "39143422",
+  "title": "The role of IGF1 in determining body composition in children and adolescents with growth hormone deficiency and those with idiopathic short stature.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zaitoon H, Yackobovitch-Gavan M, Midlej E, Uretzky A, Laurian I, Dorfman A, Interator H, Lebenthal Y, Brener A.",
+  "doi": "10.1007/s12020-024-03992-0",
+  "figures": [
+    "The study flowchart. Growth hormone deficiency; ISS, idiopathic short stature; MPHD, multiple pituitary hormone deficiency",
+    "Violin plots for the distribution of body composition components and insulin-like growth factor 1 in pediatric patients with growth hormone deficiency and those with idiopathic short stature at first BIA.  A  Fat percentage (FATP);  B  appendicular skeletal muscle mass (ASMM) z-score;  C  Muscle-to-fat (MFR) z-score;  D  IGF1 z-score"
+  ],
+  "tables": [
+    "Sociodemographic and clinical characteristics of patients with growth hormone deficiency (GHD) or idiopathic short stature (ISS)",
+    "Characteristics of patients with growth hormone deficiency (GHD) or idiopathic short stature (ISS) at first bioimpedance analysis assessment (BIA), classified as treated versus not treated with rhGH at first BIA",
+    "Generalized estimating equations (GEE) linear models applied to evaluate contributory factors for body composition parameters: fat percentage (FATP), muscle-to-fat ratio (MFR) z-score and appendicular skeletal muscle mass (ASMM) z-score"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013054.2493503
+}

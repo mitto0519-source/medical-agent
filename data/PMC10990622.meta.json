@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10990622",
+  "pmid": "38569588",
+  "title": "Internet Gaming Disorder and Mental Health Literacy: A Latent Profile Analysis of Korean Adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yoon J, Chun J, Bhang SY.",
+  "doi": "10.30773/pi.2023.0303",
+  "figures": [
+    "Graph of mean scores on MHL items across classes. MHL, mental health literacy."
+  ],
+  "tables": [
+    "Model fit indices, number of classes for MHL latent profiles analysis models",
+    "Estimated mean for MHL items of the three latent profiles (N=1,936)",
+    "Characteristic differences by latent profiles (N=1,936)",
+    "Predictors of MHL profiles membership (N=1,831)"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998622.4627843
+}

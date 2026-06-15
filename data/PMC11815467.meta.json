@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11815467",
+  "pmid": "39929512",
+  "title": "Relationship between sleep disorders and depressive symptoms among young women in Japan: a web-based cross-sectional study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Tashiro T, Maeda N, Mizuta R, Abekura T, Oda S, Onoue S, Arima S, Suzuki Y, Urabe Y.",
+  "doi": "10.1136/bmjopen-2024-089360",
+  "figures": [
+    "Flowchart of the participant recruitment price.",
+    ""
+  ],
+  "tables": [
+    "Sociodemographic characteristics of respondents with and without depressive symptoms",
+    "Respondents’ lifestyle habits and health-related characteristics with and without depressive symptoms",
+    "Respondents’ sleep-related habits with and without depressive symptoms",
+    "Multiple logistic analysis for the relationship between the presence of depressive symptoms and PSQI-J subitems"
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048107.9922855
+}

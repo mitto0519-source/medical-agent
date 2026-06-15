@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10649373",
+  "pmid": "37914411",
+  "title": "Seasonal trends in antidepressant prescribing, depression, anxiety and self-harm in adolescents and young adults: an open cohort study using English primary care data.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Jack RH, Joseph RM, Hollis C, Hippisley-Cox J, Butler D, Waldram D, Coupland C.",
+  "doi": "10.1136/bmjment-2023-300855",
+  "figures": [
+    "Incidence rates for SSRIs, depression, anxiety and self-harm per 1000 person-years for each month, by age and sex, England, 2006–2019. SSRIs, selective serotonin reuptake inhibitors.",
+    "Incidence rate ratios for SSRIs, depression, anxiety and self-harm adjusted for year, region, deprivation, ethnic group and working days, for each month, by age and sex, England, 2006–2019. SSRIs, selective serotonin reuptake inhibitors."
+  ],
+  "tables": [
+    "Characteristics of the entire study population aged 14–28 years, England, 2006–2019",
+    "Overall incidence rates per 1000 person-years for each outcome by age and sex, England, 2006–2019"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056376.132098
+}

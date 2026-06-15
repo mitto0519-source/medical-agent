@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11548146",
+  "pmid": "39519577",
+  "title": "No Effects of Omega-3 Supplementation on Kynurenine Pathway, Inflammation, Depressive Symptoms, and Stress Response in Males: A Placebo-Controlled Trial.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Bidzan-Wiącek M, Tomczyk M, Błażek M, Mika A, Antosiewicz J.",
+  "doi": "10.3390/nu16213744",
+  "figures": [
+    "Distributions of the group x time interaction effect on the fatty acids profiles in the Placebo (black) and Omega-3 (blue) groups at times t0 (before supplementation) and t1 (after supplementation). Large points represent mean values, with error bars representing a 95% confidence interval around the mean value. Small points represent single observations.",
+    "Distributions of the group x time interaction effect on the kynurenine pathway in the Placebo (black) and Omega-3 (blue) groups at times t0 (before supplementation) and t1 (after supplementation). Large points represent mean values, with error bars representing a 95% confidence interval around the mean value. Small points represent single observations.",
+    "Distributions of the group x time interaction effect on the KYN pathway in the Placebo (black) and Omega-3 (blue) groups at times t1 (after supplementation), t2 (straight after stress induction), and t3 (one hour after stress induction). Large points represent mean values, with error bars representing a 95% confidence interval around the mean value. Small points represent single observations.",
+    "Distributions of the group x time interaction effect on inflammation markers in the Placebo (black) and Omega-3 (blue) groups at times t0 (before supplementation) and t1 (after supplementation). Large points represent mean values, with error bars representing a 95% confidence interval around the mean value. Small points represent single observations.",
+    "Distributions of the group x time interaction effect on mood and depressive symptoms in the Placebo (black) and Omega-3 (blue) groups at times t0 (before supplementation) and t1 (after supplementation). Large points represent means, with error bars representing a 95% confidence interval around the mean. Small points represent single observations."
+  ],
+  "tables": [
+    "Characteristics of participants (Omega-3 and Placebo groups).",
+    "Means, standard averages, and analysis of variance results for fatty acids profile, kynurenine pathway, inflammation markers, mood, and depressive symptoms."
+  ],
+  "query": "omega 3 fatty acid mood",
+  "fetched_at": 1780003706.9211497
+}

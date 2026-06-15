@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10398367",
+  "pmid": "37467026",
+  "title": "Accelerometer-Measured Physical Activity Data Sets (Global Physical Activity Data Set Catalogue) That Include Markers of Cardiometabolic Health: Systematic Scoping Review.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Thomas JJC, Daley AJ, Esliger DW, Kettle VE, Coombe A, Stamatakis E, Sanders JP.",
+  "doi": "10.2196/45599",
+  "figures": [
+    "PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) diagram of the screening and extraction process. The black dotted line represents the separation between the first and second stage of screening. CPCI-S: Conference Proceedings Citation Index–Science; WHO ICTRP: World Health Organization International Clinical Trials Registry Platform.",
+    "A screenshot of the home page of the Global Physical Activity Data set (GPAD) cards’ web-based data visualization tool.",
+    "More detailed screenshots of the Global Physical Activity Data set (GPAD) catalogue tool. (A) The health markers screen that allows data sets shown to be filtered by the health markers they collect, (B) a visualization of a single data set within the tool, (C) a comparison of 2 data sets within the GPAD, and (D) the bottom of the home page showing grouped health markers and accelerometer informati",
+    "Choropleth world map showing countries where data sets have been collected and how many participants’ data have been collected in each country (log transformed).",
+    "Number of data sets that collected each health outcome split by the continent of data collection. DBP: diastolic blood pressure; HDL: high-density lipoprotein; LDL: low-density lipoprotein; SBP: systolic blood pressure; VLDL: very low-density lipoprotein."
+  ],
+  "tables": [
+    "Characteristics of the data sets identified as part of this review."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780054297.8697724
+}

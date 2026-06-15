@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11505704",
+  "pmid": "39452031",
+  "title": "Sleep Matters in Chronotype and Mental Health Association: Evidence from the UK and Germany.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chauhan S, Faßbender K, Pandey R, Norbury R, Ettinger U, Kumari V.",
+  "doi": "10.3390/brainsci14101020",
+  "figures": [
+    "Proposed structural model displaying the direct and indirect (through sleep quality) influences of chronotype and personality traits (predictors; allowed to covary) on mental health (outcome).",
+    "Results of the initial SEM analyses in the UK-based sample. Solid lines denote significant paths (**  p  &lt; 0.001, *  p  &lt; 0.005) and dotted lines denote non-significant paths.",
+    "Revised (final) model displaying significant paths (**  p  &lt; 0.001, *  p  &lt; 0.005) in the UK-based sample.",
+    "Results of the initial SEM analyses in the Germany-based sample. Solid lines denote significant paths (**  p  &lt; 0.001, *  p  &lt; 0.005) and dotted lines denote non-significant paths.",
+    "Revised (final) model displaying significant paths (**  p  &lt; 0.001, *  p  &lt; 0.005) in the Germany-based sample."
+  ],
+  "tables": [
+    "Demographic characteristics of the UK and Germany-based participants.",
+    "Descriptive statistics for chronotype, mental health, sleep quality, personality traits, and childhood trauma measures.",
+    "Chronotype (MEQ) associations (Pearson’s  r ) with mental health, quality of sleep, personality traits, and childhood trauma."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001258.5395849
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11067892",
+  "pmid": "38708340",
+  "title": "Structural equation models of health behaviour, psychological well-being, symptom severity and quality of life in abdominal bloating.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Abdullah N, Kueh YC, Kuan G, Wong MS, Tee V, Tengku Alang TAI, Hamid N, Lee YY.",
+  "doi": "10.7717/peerj.17265",
+  "figures": [
+    "Hypothesised conceptual framework.",
+    "Finalised SEM model (Model 4).  Note: I, intention; ATT, attitude and PBC, perceived behavioural control from HB-Bloat; DIET, diet; HA, health and treatment awareness; and PA, physical activity from HPB-Bloat; SS, social support from SS-Bloat; DEPRES-SION, depression from HADS; SEVG, severity general and SEV24, severity 24 h from BSQ-M; QoL, QoL from BLQoL-M."
+  ],
+  "tables": [
+    "Findings of fitness tests for model 1 to model 4 ( n  = 323).",
+    "Paths relationship of the final model (Model 4,  n  = 323).",
+    "Standardised direct, total indirect, and total effects ( n  = 323)."
+  ],
+  "query": "Malaysian adolescent dietary depression",
+  "fetched_at": 1779992350.8200867
+}

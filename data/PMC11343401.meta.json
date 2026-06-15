@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC11343401",
+  "pmid": "39178190",
+  "title": "Individual, family, school and neighborhood predictors related to different levels of physical activity in adolescents: A cross-sectional study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Caetano IT, Dos Santos FK, Andaki ACR, Gomes TNQF, Amorim PRDS.",
+  "doi": "10.1371/journal.pone.0304737",
+  "figures": [],
+  "tables": [
+    "Median values and interquartile range of continuous variables and absolute and relative frequency values of categorical variables for the total sample and separated by gender.",
+    "Association between individual, family, school and neighborhood variables with LPA minutes per day and MVPA per day using simple linear regression.",
+    "Robust Linear Regression for the association between individual, family, school, and neighborhood variables with the LPA minutes per day and MVPA minutes per day."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007289.8965569
+}

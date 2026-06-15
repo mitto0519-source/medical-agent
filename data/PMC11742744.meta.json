@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11742744",
+  "pmid": "39839805",
+  "title": "Baseline Clinical Factors Associated with Cessation of Growth Hormone Therapy in Patients with Severe Growth Hormone Deficiency - Real World Evidence.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Nadarajah N, Ssemmondo E, Brooks S, Akinyombo R, Adeleke K, Deshmukh H, Sathyapalan T.",
+  "doi": "10.5812/ijem-147825",
+  "figures": [
+    "Flowchart diagram of patient data selection process",
+    "Pie chart showing reasons for stopping growth hormone among patients who discontinued growth hormone replacement."
+  ],
+  "tables": [
+    "Baseline Characteristic of Study Participants   a",
+    "Logistics Regression Model Showing Factors Associated with Cessation of Growth Hormone Replacement"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013158.7782109
+}

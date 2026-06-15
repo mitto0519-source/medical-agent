@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC11201557",
+  "pmid": "",
+  "title": "Exploring Stroke Risk through Mendelian Randomization: A Comprehensive Study Integrating Genetics and Metabolic Traits in the Korean Population",
+  "year": 2024,
+  "journal": "",
+  "authors": "",
+  "doi": "",
+  "figures": [
+    "Clinical characteristics of cardiometabolic traits among constitutional types. ( a ) The distributions of cardiometabolic characteristics (BMI; total-C, LDL-C, HDL-C, TG, fasting glucose levels; SBP; and DBP) among the constitutional types show significant differences (Kruskal–Wallis test,  p  &lt; 0.05). ( b ) Forest plots depicting the odd ratios show differences in disease risk (hypertension an",
+    "Directed acyclic flowchart of Mendelian Randomization (MR) for the causal relationship between constitutional type and stroke subtype. ( a ) Instrumental variables (IVs) correlated with the constitutional type but not with confounding factors other than those affecting stroke subtype. ( b ) Exposure and outcome datasets were obtained from KoGES and stroke cohorts. (MEGASTROKE, BBJ, Biobank, ISGC).",
+    "Association between constitutional type and stroke subtype, as determined using two-sample Mendelian Randomization (MR). ( a ) A scatter plot of two sample MR results for the TE type and SE type for CES. The slope of different colored lines represents the estimated MR effect of different MR methods (inverse variance weighted, weighted median, MR Egger, weighted mode). ( b ) Forest plot of MR effec"
+  ],
+  "tables": [],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037606.5282123
+}

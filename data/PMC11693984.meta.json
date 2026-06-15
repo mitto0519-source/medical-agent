@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11693984",
+  "pmid": "39686869",
+  "title": "Muscle Mass Index Decline as a Predictor of Lung Function Reduction in the General Population.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Choi JY, Rhee CK, Kim SH, Jo YS.",
+  "doi": "10.1002/jcsm.13663",
+  "figures": [
+    "Longitudinal trend of lung function by MMI decline rate. (A) FEV 1  showed a decline of −43.3 mL/year (95% CI: [−44.7, −42.0]) for cT1, −38.4 mL/year (95% CI: [−40.6, −36.1]) for cT2 ( p  &lt; 0.05 compared with cT1 and cT3), and −33.2 mL/year (95% CI: [−35.7, −30.8]) for cT3 ( p  &lt; 0.05 compared with cT1). (B) FVC decreased by −38.5 mL/year (95% CI: [−40.2, −36.8]) in cT1, −32.8 mL/year (95% C",
+    "The Kaplan–Meier curves for the onset of (A) wheezing and (B) wheezing or dyspnoea, stratified by MMI decline rate. (a)  # \n p  = 0.142; *** p  = 0.034 and (b)  # \n p  = 0.504; *** p  = 0.093."
+  ],
+  "tables": [
+    "Baseline characteristics by muscle mass index (MMI) categories.",
+    "Time to first exacerbation."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037339.1095765
+}

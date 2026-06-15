@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10348527",
+  "pmid": "37450472",
+  "title": "Factors associated with home death in South Korea: Using the exit data from the Korean Longitudinal Study of Aging, 2008-2018.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Cheon J, Kim DH, Cho CM.",
+  "doi": "10.1371/journal.pone.0288165",
+  "figures": [
+    "Sampling process."
+  ],
+  "tables": [
+    "Characteristics of the decedents (N = 1,565).",
+    "Home deaths according to the characteristics of the decedents (N = 1,565).",
+    "Factors associated with home death (N = 1,565)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040532.4872937
+}

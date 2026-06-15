@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10110905",
+  "pmid": "37081956",
+  "title": "The health benefits of bicycling to school among adolescents in China: A propensity score matching study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Ding P, Ding C, Feng S.",
+  "doi": "10.3389/fpubh.2023.1049254",
+  "figures": [
+    "Description of the variables."
+  ],
+  "tables": [
+    "Description of the variables.",
+    "Descriptive statistics.",
+    "Propensity score (cycling to school vs. non-bicycling).",
+    "Parallel hypothesis in estimating the ATT of bicycling to school on the health.",
+    "Effects of bicycling on adolescent health (bicycling vs. walking; bicycling vs. non-active commute).",
+    "Effects of bicycling on adolescent health (bicycling vs. non-bicycling).",
+    "Effects of bicycling on adolescent health in different regions."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008180.9676418
+}

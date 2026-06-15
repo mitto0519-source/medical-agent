@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10980721",
+  "pmid": "38553504",
+  "title": "Signal mining and risk analysis of Alprazolam adverse events based on the FAERS database.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Huang F, San X, Liu Q, Zhu H, Xu W.",
+  "doi": "10.1038/s41598-024-57909-y",
+  "figures": [],
+  "tables": [
+    "Contingency table.",
+    "ROR, PRR, BCPNN, and EBGM methods, formulas, and thresholds.",
+    "Constituent ratio of yearly data of AEs related to Alprazolam.",
+    "The signal strength of AEs of Alprazolam at the SOC level.",
+    "The top 30 adverse events of Alprazolam ranked by case reports.",
+    "The top signal strength of AEs of Alprazolam ranked by EBGM at the PTs level."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059796.994993
+}

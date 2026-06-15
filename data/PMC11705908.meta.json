@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC11705908",
+  "pmid": "39773705",
+  "title": "Pharmacological treatment in autism: a proposal for guidelines on common co-occurring psychiatric symptoms.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Manter MA, Birtwell KB, Bath J, Friedman NDB, Keary CJ, Neumeyer AM, Palumbo ML, Thom RP, Stonestreet E, Brooks H, Dakin K, Hooker JM, McDougle CJ.",
+  "doi": "10.1186/s12916-024-03814-0",
+  "figures": [
+    "Pharmacological treatment pathway for sleep disturbances in patients with ASD",
+    "Pharmacological treatment pathway for ADHD in patients with ASD",
+    "Pharmacological treatment pathway for anxiety in patients with ASD",
+    "Pharmacological treatment pathway for depression in patients with ASD",
+    "Pharmacological treatment pathway for irritability in patients with ASD"
+  ],
+  "tables": [
+    "Behavioral indications of and medical conditions associated with sleep disturbances in ASD",
+    "Medication options and dosing for sleep disturbances in patients with ASD",
+    "Signs and Symptoms of ADHD in ASD",
+    "Medication options and dosing for ADHD in patients with ASD",
+    "Signs and Symptoms of Anxiety in ASD",
+    "Medication options and dosing for anxiety in patients with ASD",
+    "Signs and Symptoms of Depression in ASD",
+    "Medication options and dosing for depression in patients with ASD",
+    "Medication options and dosing for irritability in patients with ASD"
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001365.7715704
+}

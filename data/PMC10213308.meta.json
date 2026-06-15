@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10213308",
+  "pmid": "37252140",
+  "title": "Comparison of olanzapine-induced weight gain and metabolism abnormalities between topiramate and vitamin C in patients with schizophrenia: a preliminary study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhang J, Chen S, Chen J, Zhang H, Rao WW.",
+  "doi": "10.3389/fpsyt.2023.1152953",
+  "figures": [
+    "Profile plot of the patients’ metabolic indexes during 12-weeks follow-up.  (A1)  Comparison in BMI between OLZ + TPM group and OLZ + VC group at different time;  (A2)  comparison in BMI over time at different groups;  (B1)  comparison in high-density lipoprotein between OLZ + TPM group and OLZ + VC group at different time;  (B2)  comparison in high-density lipoprotein over time at different group",
+    "Predicted mean of BMI, triglyceride, high-density lipoprotein, low-density lipoprotein and cholesterol over time across latent profiles. OLZ, olanzapine; TPM, topiramate; VC, vitamin C; BMI, body mass index; Pre-BMI, pre-treatment BMI; BMI-2 W, 2-week treatment BMI; BMI-4W, 4-week treatment BMI; BMI-8W, 8-week treatment BMI; BMI-12W, 12-week treatment BMI; HDL, high-density lipoprotein; Pre-HDL, p"
+  ],
+  "tables": [
+    "The basic information between two groups before treatment.",
+    "The changes in metabolic indexes at pre-treatment and 2-, 4-, 8-, and 12-week treatment.",
+    "Comparison of adverse events between two groups."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057753.7406669
+}

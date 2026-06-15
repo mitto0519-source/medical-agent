@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11825634",
+  "pmid": "39945909",
+  "title": "Exercise and eating behaviors among Austrian transgender and gender-diverse adolescents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Knaus S, Teutsch F, Steininger J, Alguacil DE, Riedl S.",
+  "doi": "10.1007/s00431-025-06014-x",
+  "figures": [
+    "Instances of vigorous physical activity: graph comparing national sample and transgender and gender-diverse participants’ responses to the question “In your free time, how often are you normally physically active to the point of exertion (sweating, out of breath)?”",
+    "Comparison between national sample and transgender and gender-diverse adolescents’ responses to the question “On how many days in the past week were you physically active for at least 60 min?”"
+  ],
+  "tables": [
+    "",
+    "Linear regression model coefficient: vigorous physical activity ( N  = 9478/ R  2  = 0.12)",
+    "Linear regression model coefficient: daily physical activity &gt; 60 min ( N  = 6630/ R  2  = 0.142)",
+    "Comparison of self-reported body image between transgender and gender-diverse adolescents and the national sample"
+  ],
+  "query": "US adolescent soft drink depression",
+  "fetched_at": 1779992557.6506534
+}

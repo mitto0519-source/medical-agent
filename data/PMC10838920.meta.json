@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10838920",
+  "pmid": "38311657",
+  "title": "Impact of frailty severity and severe pain on cognitive function for community-dwelling older adults with arthritis: a cross-sectional study in Korea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Baek W, Suh Y, Ji Y.",
+  "doi": "10.1038/s41598-024-53431-3",
+  "figures": [
+    "The participant-selection flow chart.  KLoSA  Korean Longitudinal Study of Aging.",
+    "Groups categorized by severe pain and frailty status (n = 1098).",
+    "Density plot of cognitive function by severe pain and frailty status groups.  K-MMSE  Korean version of Mini-Mental Statement Examination."
+  ],
+  "tables": [
+    "Participant characteristics and MMSE scores (n = 1098).",
+    "Groups categorized by pain severity and frailty status (n = 1098).",
+    "MMSE scores according to categorical variables (n = 1098).",
+    "Relationship between MMSE scores and continuous variables (n = 1098).",
+    "Multivariate linear regression for MMSE scores in older adults (n = 1098)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040494.8381543
+}

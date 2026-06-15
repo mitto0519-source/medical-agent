@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11140388",
+  "pmid": "38827439",
+  "title": "Trajectories of activities of daily living according to dementia among middle-aged and older people in South Korea: a longitudinal study from 2006 to 2020 (14 years).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chae SE.",
+  "doi": "10.3389/fpsyt.2024.1356124",
+  "figures": [
+    "Demographic information of the study participants - 7th year (2018).",
+    "ADL Latent Growth Model Linear Function – From the First Wave (2006) to the Eighth Wave (2020).",
+    "IADL Latent Growth Model Linear Function – From the First Wave (2006) to the Eighth Wave (2020).",
+    "Difficulty in Performing Daily Living Activities – Comparison Between Older Adults with Dementia and Without Dementia.",
+    "Difficulty in Performing Instrumental Daily Living Activities – Comparison Between Older Adults with Dementia and Without Dementia."
+  ],
+  "tables": [
+    "Demographic information of the study participants - 7th year (2018).",
+    "Model fit indices for IADL latent growth models.",
+    "Interaction effects between dementia diagnosis and ADL scores over time.",
+    "Interaction effects between dementia diagnosis and IADL scores over time within subjects effects."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040113.260784
+}

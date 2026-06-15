@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10892959",
+  "pmid": "38398872",
+  "title": "Sex-Specific Association between Sodium Intake Estimated by 24-Hour Urinary Sodium Excretion and Nonalcoholic Fatty Liver Disease: The Community-Based Prospective Cohort Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee J, Lee JY, Yang YJ.",
+  "doi": "10.3390/nu16040548",
+  "figures": [
+    "The selection procedure for the study population derived from the Ansung–Ansan cohort.",
+    "Cumulative incidence of NAFLD according to the 24-h sodium excretion tertiles (T) in ( A ) all subjects, ( B ) males, and ( C ) females using the Cox proportional hazard model. NAFLD, nonalcoholic fatty liver disease; T1, lowest tertile; T2, middle tertile; T3, highest tertile.",
+    "Cumulative incidence of hepatic fibrosis according to 24-h sodium excretion tertiles (T) in ( A ) all subjects, ( B ) males, and ( C ) females using the Cox proportional hazard model. T1, lowest tertile; T2, middle tertile; T3, highest tertile."
+  ],
+  "tables": [
+    "Distribution of 24-h urinary sodium excretion levels (mmol/day) in study participants.",
+    "Baseline characteristics of study participants ( n  = 2582) according to 24-h urinary sodium excretion.",
+    "Hazard ratios (95% CI) for the incidence of NAFLD according to 24-h urinary sodium excretion.",
+    "Hazard ratios (95% CI) for the incidence of hepatic fibrosis according to the 24-h urinary sodium excretion."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041533.1542702
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11574502",
+  "pmid": "39496163",
+  "title": "Interaction Effects Between Low Self-Control and Meaning in Life on Internet Gaming Disorder Symptoms and Functioning in Chinese Adolescents: Cross-Sectional Latent Moderated Structural Equation Modeling Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Fong TC, Cui K, Yip PS.",
+  "doi": "10.2196/59490",
+  "figures": [
+    "Conceptual model and hypothesized relationships among the study variables in the present study. Positive and negative associations are hypothesized and depicted in solid orange arrows and dash blue arrows, respectively. The dotted green arrows denote the potential moderating role of meaning in life on the relationships between low self-control and outcome variables.",
+    "Standardized path coefficients and standard errors (in parenthesis) from low self-control factors and meaning in life factors to school commitment and family functioning through internet gaming disorder symptoms in the structural equation model. * P &lt;.05; ** P &lt;.01.",
+    "Effects of impulsivity on internet gaming disorder symptoms conditional on presence of meaning in life. For presence of meaning in life, high levels=mean+1.5SD and low levels=mean−1.5SD.",
+    "Effects of temper on family functioning conditional on presence of meaning in life and search for meaning in life. For presence of meaning in life and search for meaning in life, high levels=mean+1.5SD and low levels=mean−1.5SD."
+  ],
+  "tables": [
+    "Latent mean difference of males compared with females in the study variables in the scalar invariance model (N=2064).",
+    "Standardized indirect effects from low self-control and meaning in life to school commitment and family functioning through internet gaming disorder symptoms in the structural equation model (N=2064)."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998829.0533593
+}

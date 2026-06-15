@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10135887",
+  "pmid": "37189719",
+  "title": "The eGFR Decline as a Risk Factor for Metabolic Syndrome in the Korean General Population: A Longitudinal Study of Individuals with Normal or Mildly Reduced Kidney Function.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Han SH, Lee SK, Shin C, Han SY.",
+  "doi": "10.3390/biomedicines11041102",
+  "figures": [
+    "Flowchart of the study participants. eGFR: estimated glomerular filtration rate.",
+    "Kaplan–Meier survival curves of incident MS according to eGFR category. Kaplan–Meier survival curves were adjusted for age, sex, education, smoking status, exercise, alcohol consumption, BMI, and menopause for women. MS: metabolic syndrome; eGFR: estimated glomerular filtration rate; BMI: body mass index.",
+    "Joint interaction of eGFR with potential confounders on incident metabolic syndrome. Plots show HR and  p -values for interactions by eGFR category. ( a ) age, ( b ) gender, ( c ) BMI, ( d ) exercise, ( e ) alcohol consumption, ( f ) smoking status, and ( g ) education. HR: hazard ratio; eGFR: estimated glomerular filtration rate; BMI: body mass index; MET: metabolic equivalent of task."
+  ],
+  "tables": [
+    "Baseline characteristics of the KoGES cohort study participants based on eGFR category ( n  = 3869).",
+    "Cox proportional hazard model of MS development based on eGFR category in the cohort follow-up period."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041899.6096318
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11391349",
+  "pmid": "39267698",
+  "title": "Association between cognitive insight and anxiety among community-dwelling schizophrenia patients: the chain mediating effects of family cohesion and chronotype.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Dong M, Wu D, Mao G, Yan Z.",
+  "doi": "10.3389/fpsyt.2024.1371431",
+  "figures": [
+    "Status quo and univariate analysis results of anxiety among community-dwelling schizophrenics.",
+    "Mediation model of Self-reflection on anxiety."
+  ],
+  "tables": [
+    "Status quo and univariate analysis results of anxiety among community-dwelling schizophrenics.",
+    "Correlation of cognitive insight, anxiety, chronotype and family cohesion.",
+    "Results of linear regression analysis of cognitive insight, anxiety, chronotype and family cohesion.",
+    "Results of the Bootstrap test of the mediating effect of cognitive insight on anxiety.",
+    "Results of linear regression analysis of self-reflection, anxiety, chronotype and family cohesion.",
+    "Results of the Bootstrap test of the mediating effect of self-reflection on anxiety."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001154.8358543
+}

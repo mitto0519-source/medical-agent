@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10670123",
+  "pmid": "",
+  "title": "EEG Biofeedback Decreases Theta and Beta Power While Increasing Alpha Power in Insomniacs: An Open-Label Study",
+  "year": 2023,
+  "journal": "",
+  "authors": "Wang H, Hou Y, Zhan S, Li N, Liu J, Song P, Wang Y, Wang H.",
+  "doi": "",
+  "figures": [
+    "Flow diagram of the study. BFB, biofeedback.",
+    "Experimental program schematic. ( a ) Biofeedback treatment flow chart for one session. ( b ) All process sketches including biofeedback treatment sessions and scale assessments. BDI-II, Beck Depression Inventory; BFB, biofeedback; EEG, electroencephalography; EMG, electromyography; PSQI, Pittsburgh Sleep Quality Index; STAI-S/T, State-Trait Anxiety Inventory.",
+    "Changes in clinical scale scores before and after biofeedback sessions. ( a ) The PSQI scores before treatment and after the 5th, 10th, and 20th biofeedback sessions. ( b ) The BDI-II scores before treatment and after the 5th, 10th, and 20th biofeedback sessions. ( c ) The STAI-S scores before treatment and after the 5th, 10th, and 20th biofeedback sessions. ( d ) The STAI-T scores before treatmen",
+    "Changes in EEG waves pre- and post-treatment. ( a ) Alpha power before and after each of the 20 biofeedback sessions. ( b ) Beta power before and after each of the 20 biofeedback sessions. ( c ) Theta power before and after each of the 20 biofeedback sessions. Data presented as mean ± standard error. EEG, electroencephalography.",
+    "EMG power before and after each biofeedback session. EMG, electromyography. Data presented as mean ± standard error.",
+    "Regression results for EMG and BDI-II. The slash represents the slope. BDI-II, Beck Depression Inventory; EMG, electromyography.",
+    "Correlation of insomnia duration and STAI. ( a ) State anxiety change after 5 sessions. ( b ) State anxiety change after 10 sessions. The dashed line represents the standard error and the slash represents the slope. STAI-S/T, State-Trait Anxiety Inventory."
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of the participants.",
+    "Improvement in the final EEG and EMG power compared with baseline after BFB treatment."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060814.9471822
+}

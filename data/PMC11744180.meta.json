@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11744180",
+  "pmid": "39838996",
+  "title": "Evaluation of gray-matter and white-matter microstructural abnormalities in children with growth hormone deficiency: a comprehensive assessment with synthetic magnetic resonance imaging.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Lin L, Cheng Y, Qiu H, Yan Z, Hou W, Huang S, Cui W, Cheung GL, Yang Z, Chen Q, Qian L, Su S.",
+  "doi": "10.21037/qims-24-1404",
+  "figures": [
+    "Compared to the TD group, the GHD group exhibited (A; red) increased T2 relaxometry values and (B; blue) decreased T1 relaxometry values in gray-matter regions. The detailed information can be found in   Table 3  . TD, typically developing; GHD, growth hormone deficiency.",
+    "Compared to the TD group, the GHD group exhibited (red) increased MVF in the white-matter regions. The detailed information can be found in   Table 4  . TD, typically developing; GHD, growth hormone deficiency; MVF, myelin volume fraction.",
+    "Correlations between quantitative parameters and clinical variables in pediatric GHD. The T1 relaxation values in the (A) left SMG and (B) right SMG had a significant positive correlation with total scores of the Achenbach Child Behavior Checklist. Moreover, the T2 relaxation values in the (C) left cuneus and (D) MVF in the right corticospinal tract had a positive correlation with IGF-1. SMG, supr"
+  ],
+  "tables": [
+    "Demographic and clinical data of the GHD and TD groups",
+    "The comparison of the whole-brain tissue volume between GHD and TD children",
+    "The comparison of atlas-based T1 and T2 values of gray matter between the GHD and TD groups",
+    "The comparison of atlas-based MVF and T1 and T2 values of the white matter between the GHD and TD groups"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013011.8688846
+}

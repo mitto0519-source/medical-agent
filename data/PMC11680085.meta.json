@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11680085",
+  "pmid": "39769412",
+  "title": "Alterations in Striatal Architecture and Biochemical Markers' Levels During Postnatal Development in the Rat Model of an Attention Deficit/Hyperactivity Disorder (ADHD).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Bogdańska-Chomczyk E, Wojtacha P, Tsai ML, Huang ACW, Kozłowska A.",
+  "doi": "10.3390/ijms252413652",
+  "figures": [
+    "The figure shows the dynamics of changes in the volume of the striatal areas: caudate putamen (CPu; ( A , B )), external globus pallidus (EGP; ( C , D )), lateral accumbens shell (LaCBsH; ( E , F )), and nucleus accumbens core (AcbC; ( G , H )) in the postnatal (4–10 weeks of age) development of SHRs and WKYs (n = 5 or 6 for each strain in each developmental stage studied). Note that the most sign",
+    "The figure represents a comparison of the mean neuronal density [mm 3  ] in different areas of the striatum—( A ) CPu right hemisphere; ( B ) CPu left hemisphere; ( C ) EGP right hemisphere; ( D ) EGP left hemisphere; ( E ) LaCBsH right hemisphere; ( F ) LaCBsH left hemisphere; ( G ) AcbC right hemisphere; and ( H ) AcbC left hemisphere—in the postnatal (4–10 weeks of age) development of SHRs and ",
+    "Quantification of interleukin (IL)-1α ( A ), IL-1β ( B ), IL-6 ( C ), serine/threonine-protein mammalian target of rapamycin (mTOR; ( D )), glucocorticoid receptor (GCsRβ; ( E )), transforming growth factor beta (TGF-β; ( F )), and RAC-alpha serine/threonine-protein kinase (AKT-1; ( G )) levels in striatum supernatants. Notice the increase in immune markers in juvenile SHRs as well as in adult WKY",
+    "Quantification of malondialdehyde (MDA; ( A )) and sulfhydryl group (-SH; ( B )), superoxide dismutase (SOD; ( C )), peroxidase (POD; ( D )), glutathione reductase (GSR; ( E )), and glutathione S transferases (GST; ( F )) levels/activity in striatum supernatants. Observe the elevation of oxidative stress markers in both juvenile SHRs and adult WKYs. Results are presented as the mean ± SEM (n = 6/p",
+    "Quantification of glucose (G; ( A )), fructosamine (FrAm; ( B )), iron (Fe; ( C )), lactic acid (LA; ( D )), lactate dehydrogenase (LDH; ( E )), alanine transaminase (ALT; ( F )), and aspartate transaminase (ALT; ( G )) levels/activity in striatum supernatants. Take a look at the increase in metabolic markers in both young SHRs and adult WKYs. Results are presented as the mean ± SEM (n = 6/per gro",
+    "The figure presents stained and digitized (magnification ×5) coronal brain sections of 6-week-old WKYs with the outlined studied areas of the striatum (A: CPu, LaCBsH, and AcbC; and B: CPu and EGP) according to The Rat Brain Atlas [ 208 ] (( A ) bregma 1.20 mm; and ( B ) bregma −0.84 mm)."
+  ],
+  "tables": [
+    "Body weight of SHRs and WKYs at different age stages.",
+    "The table outlines comprehensive procedures for quantifying and determining the activity of selected markers."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780047115.9053679
+}

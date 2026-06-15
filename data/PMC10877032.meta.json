@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10877032",
+  "pmid": "38379618",
+  "title": "Exploring the predictors affecting the sense of community of Korean high school students: application of random forests and SHAP.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Jang E, Chung H.",
+  "doi": "10.3389/fpsyg.2024.1337512",
+  "figures": [
+    "Average absolute SHAP values for the top 10 features ordered by feature importance.",
+    "SHAP summary plot with the top 10 features ordered by feature importance.",
+    "SHAP dependence plot illustrating the distribution of Shapley values."
+  ],
+  "tables": [
+    "Predictive variables used in the random forests model."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019403.4760673
+}

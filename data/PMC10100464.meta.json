@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10100464",
+  "pmid": "37046254",
+  "title": "The prescription drug monitoring program in a multifactorial approach to the opioid crisis: PDMP data, Pennsylvania, 2016-2020.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Adalbert JR, Syal A, Varshney K, George B, Hom J, Ilyas AM.",
+  "doi": "10.1186/s12913-023-09272-3",
+  "figures": [
+    "Total number of oxycodone, hydrocodone, and morphine prescriptions dispensed in PA from August 2016 to March 2020 per the PDMP",
+    "Total number of oxycodone, hydrocodone, and morphine refills dispensed in PA from August 2016 to March 2020 per the PDMP",
+    "Number of opioid prescriptions by length of prescription days dispensed in PA from August 2016 to March 2020 per the PDMP",
+    "Number of opioid prescriptions by quantity of opioid pills dispensed in PA from August 2016 to March 2020 per the PDMP",
+    "Average MME amount per opioid prescription dispensed in PA from August 2016 to March 2020 per the PDMP"
+  ],
+  "tables": [
+    "Five prescription opioid metrics reported for each calendar quarter (August 2016 to March 2020) by the PA PDMP",
+    "Summary of opioid prescribing in PA between 2016 and 2020 as per the PDMP and associated data",
+    "Opioid-related legislative measures/initiatives adopted in PA to address the opioid crisis"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060457.071279
+}

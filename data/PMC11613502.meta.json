@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11613502",
+  "pmid": "39628800",
+  "title": "The efficacy of cognitive behavioral therapy for insomnia in adolescents: a systematic review and meta-analysis of randomized controlled trials.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Mei Z, Cai C, Luo S, Zhang Y, Lam C, Luo S.",
+  "doi": "10.3389/fpubh.2024.1413694",
+  "figures": [
+    "PubMed search strategy.",
+    "Risk of bias graph.",
+    "Risk of bias summary.",
+    "Meta-analysis of the efficacy of CBT-I on insomnia.",
+    "Meta-analysis of the efficacy of CBT-I on SOL.",
+    "Meta-analysis of the efficacy of CBT-I on TST.",
+    "Meta-analysis of the efficacy of CBT-I on SE."
+  ],
+  "tables": [
+    "PubMed search strategy.",
+    "Main characteristics of included randomized controlled trials.",
+    "Sensitivity analysis for outcomes by omitting individual studies."
+  ],
+  "query": "insomnia melatonin adolescent",
+  "fetched_at": 1780001580.9956062
+}

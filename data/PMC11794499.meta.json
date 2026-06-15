@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11794499",
+  "pmid": "39911865",
+  "title": "Association between SPISE and NAFLD in patients with type 2 diabetes.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zhao H, Ji B, Wang X, Shi S, Sheng J, Ma X, Ban B, Gao G.",
+  "doi": "10.3389/fmed.2025.1454938",
+  "figures": [],
+  "tables": [
+    "Clinical and biochemical characteristics stratified by gender.",
+    "Comparison of clinical and biochemical characteristics between non-NAFLD and NAFLD groups.",
+    "Comparison of variables according to the categories of the SPISE.",
+    "The correlation between NAFLD and different variables by univariate analysis.",
+    "The relative risk for NAFLD by logistic regression analysis.",
+    "Analysis of areas under the ROC curves for predicting NAFLD."
+  ],
+  "query": "non-alcoholic fatty liver disease adolescent",
+  "fetched_at": 1779995434.5744138
+}

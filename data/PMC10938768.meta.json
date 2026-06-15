@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10938768",
+  "pmid": "38481177",
+  "title": "Changes in diet and physical activity following a community-wide pilot intervention to tackle childhood obesity in a deprived inner-London ward.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Bijlani C, Vrinten C, Junghans C, Chang K, Lewis E, Mulla U, Seferidi P, Laverty AA, Vamos EP.",
+  "doi": "10.1186/s12889-024-18192-8",
+  "figures": [
+    "Specific Go-Golborne Interventions Implemented Between 2016–2019",
+    "Study flow chart for study inclusion"
+  ],
+  "tables": [
+    "Baseline sample characteristics of the Go-Golborne cohort by gender ( N  = 1,650)",
+    "Multilevel linear random slope model estimated changes in dietary outcomes, unadjusted and adjusted models*",
+    "Multilevel logistic random slope model estimated changes in physical activity outcomes, unadjusted and adjusted models*"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007689.6212065
+}

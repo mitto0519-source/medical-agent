@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11709272",
+  "pmid": "39775401",
+  "title": "SEMdag: Fast learning of Directed Acyclic Graphs via node or layer ordering.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Grassi M, Tarantino B.",
+  "doi": "10.1371/journal.pone.0317283",
+  "figures": [
+    "The assumptions of the considered structure learning methods.",
+    "Experimental design scheme.",
+    "Heatmap of differentially expressed genes (DEGs) for each train/test dataset of each specific disease.  The heatmap illustrates expression levels for all DEGs, where red indicates high expression and blue indicates low expression.",
+    "MDS plots across causal discovery methods divided by disease (AD, ALS, BRCA, COVID-19).",
+    "MCC score of RF predictions across causal discovery methods divided by disease (AD, ALS, BRCA, COVID-19)."
+  ],
+  "tables": [
+    "The assumptions of the considered structure learning methods.",
+    "Overview of the considered structure learning methods.",
+    "Description of the selected training/testing datasets for each disease.",
+    "Descriptive table of recovered DAG/CPDAG structures for each method.  V counts the number of Vertices in the network and E the number of Edges; S reports the number of Source nodes and T the number of Targer nodes; D stands for mean(Degree) and B for mean(Betweenness)."
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780020983.9677758
+}

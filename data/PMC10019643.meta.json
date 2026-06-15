@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10019643",
+  "pmid": "36928656",
+  "title": "Efficacy and tolerance of second-generation antipsychotics in anorexia nervosa: A systematic scoping review.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Thorey S, Blanchet C, Guessoum SB, Moro MR, Ludot M, Carretier E.",
+  "doi": "10.1371/journal.pone.0278189",
+  "figures": [
+    "PRISMA 2020 flow chart of the systematic scoping review."
+  ],
+  "tables": [
+    "Articles about olanzapine included in the scoping review.",
+    "Articles included in the scoping review concerning aripiprazole, quetiapine, and risperidone.",
+    "Literature reviews and meta-analyses of atypical antipsychotic drugs in AN included in the scoping review."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057369.9161663
+}

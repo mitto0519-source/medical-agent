@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10914841",
+  "pmid": "37505291",
+  "title": "Higher striatal glutamate in male youth with internet gaming disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Klar J, Slotboom J, Lerch S, Koenig J, Wiest R, Kaess M, Kindler J.",
+  "doi": "10.1007/s00406-023-01651-5",
+  "figures": [
+    "Voxel placement. T1 structural image of one representative participant using spectrIm-QMRS. The magnetic resonance spectroscopy voxel (20 × 20 × 20 mm, green box) was placed in the left striatum",
+    "Regression analysis with the square-root transformed data showed a significant effect of group on Glx levels (Glx/Cr ratio). In the striatum a significant higher level of Glx/creatine ratio ( p  &lt; 0.05) was detected in the IGD group as compared to HC. Mean and distribution,  HC  healthy controls,  IGD  Internet gaming disorder,  Glx  glutamate + glutamine,  sqrt  squareroot"
+  ],
+  "tables": [
+    "Sample demographics",
+    "Correlations between glx and diagnostic instruments"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998744.87503
+}

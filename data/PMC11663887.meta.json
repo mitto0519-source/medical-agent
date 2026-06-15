@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11663887",
+  "pmid": "39717381",
+  "title": "Phytochemicals in the treatment of patients with depression: a systemic review.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Picheta N, Piekarz J, Daniłowska K, Mazur K, Piecewicz-Szczęsna H, Smoleń A.",
+  "doi": "10.3389/fpsyt.2024.1509109",
+  "figures": [
+    "Massive depression disorders treatment algorithm based on National Institute for Health and Care Excellence (NICE) guidelines ( 9 ).",
+    "Preferred Reporting Items for Systematic Reviews and Meta-analyses (PRISMA) flow diagram of study identification, inclusion, and exclusion.",
+    "Summary of all the medicinal effects of saffron, lavender, turmeric and  H. perforatum L.  ( 20 ,  24 ,  26 ,  35 ).",
+    "Other potential effects of curcumin in combating depression – acts as an antioxidant, has a positive effect on neuroplasticity in the brain, protects mitochondria and therefore reduces oxidative stress, regulates the endocannabinoid system – influences the modulation of inflammatory reactions and anxiety, and regulates serotonin, dopamine and glutamate ( 49 ,  61 ,  69 )."
+  ],
+  "tables": [
+    "Side effects reported by patients after taking saffron ( 41 ).",
+    "Level 5 - HT in patients’ serum before and after lavender oil treatment ( 56 ).",
+    "Statement of side effects when using St. John’s wort ( 75 ).",
+    "A summary of the works presented in the review."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056484.456603
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11227213",
+  "pmid": "38971833",
+  "title": "Association of preserved ratio impaired spirometry with mortality and cardiovascular diseases: a systematic review and meta-analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Li M, Chen M, Li Y, Liu Z, Li X, Lang X, Hu B, Li W.",
+  "doi": "10.1186/s13643-024-02549-6",
+  "figures": [
+    "Flowchart of the selection of studies included in the meta-analysis",
+    "Meta-analysis of the effects of PRISm on outcomes"
+  ],
+  "tables": [
+    "The characteristics of included studies in the meta-analysis",
+    "Quality assessment of observational studies included in the meta-analysis assessed by the Newcastle–Ottawa scale",
+    "Results of meta-regression"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041441.3937142
+}

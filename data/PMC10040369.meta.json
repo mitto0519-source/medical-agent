@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10040369",
+  "pmid": "37008746",
+  "title": "Post-pandemic shared mobility and active travel in Alabama: A machine learning analysis of COVID-19 survey data.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Xu N, Nie Q, Liu J, Jones S.",
+  "doi": "10.1016/j.tbs.2023.100584",
+  "figures": [
+    "Primary commuting mode before and during the pandemic.",
+    "Changes of walking and riding a bike during the pandemic."
+  ],
+  "tables": [
+    "Examples shared mobility and active travel-related studies under the context of the COVID-19 pandemic.",
+    "Survey items used in data analysis.",
+    "Descriptive statistic of modeling variables after data imputation (N = 481).",
+    "Correlates on future travel preferences (Whether a person will no longer use shared mobility after the pandemic).",
+    "Correlates on future travel preferences (Whether a person will make more active travel after the pandemic)."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008245.2913532
+}

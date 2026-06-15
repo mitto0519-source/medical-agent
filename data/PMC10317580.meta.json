@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10317580",
+  "pmid": "37404330",
+  "title": "Hyperinsulinemic Hypoglycemia and Growth Hormone Deficiency Secondary to 20p11 Deletion.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Wee E, Herriges J, Dileepan K, Tsai SL, Alaimo JT, Paprocki E.",
+  "doi": "10.1155/2023/8658540",
+  "figures": [
+    "Copy number analysis by NGS detected a 5.8 Mb loss of 20p11.22p11.21, marked in red. The deletion breakpoints were chr20: 16662148–22464994 in genome build GRCh38."
+  ],
+  "tables": [
+    "Results of critical sample.",
+    "Results of glucagon test.",
+    "Results of growth hormone stimulation test."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013198.158624
+}

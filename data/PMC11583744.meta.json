@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11583744",
+  "pmid": "39578788",
+  "title": "Suicide-related risk among patients using branded and generic fluoxetine: a propensity score-matched, new-user design in Taiwan.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zheng CW, Huang YC, Wen YL, Yang HW, To SY, Kao LT.",
+  "doi": "10.1186/s12888-024-06293-y",
+  "figures": [
+    "Flowchart for fluoxetine brand-name users and generic users",
+    "5-year suicidal ideation, suicide mortality, and all-cause mortality-free survival rates for study patients. ( A ) full cohort for suicidal ideation; ( B ) full cohort for suicide mortality; ( C ) full cohort for all-cause mortality; ( D ) propensity-score matched cohort for suicidal ideation; ( E ) propensity-score matched cohort for s suicide mortality; ( F ) propensity-score matched cohort for "
+  ],
+  "tables": [
+    "Characteristics of the study patients",
+    "Incidence and hazard ratios for suicidal ideation, suicide mortality, and all-cause mortality during the 5-year follow-up period among study patients",
+    "Hazard ratios for suicidal ideation, suicide mortality, and all-cause mortality during the 5-year follow-up period, stratified by different subgroups",
+    "Sensitivity analysis"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056096.5762665
+}

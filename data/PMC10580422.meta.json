@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10580422",
+  "pmid": "37908469",
+  "title": "Late-Onset Isolated Growth Hormone Deficiency.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Samuels JG, Chimatapu SN, Savage MO, Rapaport R.",
+  "doi": "10.1210/jcemcr/luad011",
+  "figures": [
+    "Patient 1 Growth Chart. Longitudinal growth chart in patient 1 before and after growth hormone treatment. GH, growth hormone; MPTH, Mid-Parental Target Height.",
+    "Patient 2 Growth Chart. Longitudinal growth chart in patient 2 before and after growth hormone treatment. GH, growth hormone; MPTH, Mid-Parental Target Height."
+  ],
+  "tables": [
+    "Patient 1",
+    "Patient 2"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013192.955147
+}

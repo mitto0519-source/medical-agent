@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10719819",
+  "pmid": "38019563",
+  "title": "Using Mobile Ecological Momentary Assessment to Understand Consumption and Context Around Online Food Delivery Use: Pilot Feasibility and Acceptability Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Jia SS, Allman-Farinelli M, Roy R, Phongsavan P, Hyun K, Gibson AA, Partridge SR.",
+  "doi": "10.2196/49135",
+  "figures": [
+    "Flowchart of the data collection processes. mEMA: mobile-based ecological momentary assessment; REDCap: Research Electronic Data Capture.",
+    "Overview of the 2 varying mobile-based ecological momentary assessment sampling protocols used in the study: signal-contingent (Prompts) group compared with the event-contingent (No Prompts) group. Participants in the No Prompts group were observed over 1 week (7 days), whereas those in the Prompts group were observed over 1 week with prompts sent on 3 separate days. EMA: ecological momentary asse",
+    "Selection of questions from the survey delivered through the mEMASense app to capture context surrounding an online food delivery event.",
+    "Participant recruitment process and attrition."
+  ],
+  "tables": [
+    "Demographics of participants (N=102).",
+    "Online food delivery (OFD) behaviors at baseline and self-reported lifestyle behavioral risk factors (N=102).",
+    "Results from the multilevel logistic regression model to examine observation level and within-person level factors and their influence on a participant’s likelihood to respond to prompts (n=53).",
+    "Comparison of the number of online food delivery (OFD) events captured between varying sampling approaches (event-contingent vs signal-contingent; n=58 unique participants).",
+    "Incidence rate ratios (IRRs) of demographic and lifestyle risk factors in a zero-inflated negative binomial regression model (N=101)."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053955.6783707
+}

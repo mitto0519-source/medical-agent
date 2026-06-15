@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11811512",
+  "pmid": "39944846",
+  "title": "Retrospective analysis of a decade of general anesthesia for dental treatment in patients with disabilities at a regional university dental hospital in South Korea.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shin S.",
+  "doi": "10.17245/jdapm.2025.25.1.67",
+  "figures": [
+    "The distribution of male and female frequencies by year is shown for the remaining 2,199 patients, excluding those without disabilities. The total number of patients with disabilities undergoing general anesthesia has increased over the years. Additionally, the ratio of males to females indicates a higher percentage of males than females.",
+    "The distribution by year and age group is depicted for the remaining 2,199 patients, excluding those without disabilities. The highest number of patients is in the 20–30 age group, followed by the 30–39 age group, with both numbers increasing over the years. The number in the 40–49 age group has also been rising over the years.",
+    "This boxplot illustrates the duration of general anesthesia by types of disability.",
+    "This boxplot shows the duration of general anesthesia by age group.",
+    "This boxplot shows the trend in the duration of general anesthesia over the years.",
+    "The graph shows the changes in the number of patients by type of disability over the years."
+  ],
+  "tables": [
+    "Analysis of patient distribution by disability type among those undergoing dental treatment under general anesthesia",
+    "Analysis of age distribution by disability type among those undergoing dental treatment under general anesthesia"
+  ],
+  "query": "autism spectrum disorder Korea",
+  "fetched_at": 1779996223.1370158
+}

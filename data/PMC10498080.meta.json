@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10498080",
+  "pmid": "37337823",
+  "title": "Genome-wide association and replication studies for handedness in a Korean community-based cohort.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Song Y, Lee D, Choi JE, Lee JW, Hong KW.",
+  "doi": "10.1002/brb3.3121",
+  "figures": [
+    "Manhattan plots showing the genome‐wide association study (GWAS) results. (a) Left‐handedness and (b) ambidexterity. Genome‐wide significant  p ‐value criteria ( p ‐value &lt; 5 × 10 −8 ) are shown in red, and genome‐wide suggestive  p ‐value criteria (5 × 10 −8  ≤  p ‐value &lt; 1 × 10 −5 ) are shown in blue. The  y ‐axis is –log 10  ( p ‐value) of the single nucleotide polymorphisms (SNPs), and ",
+    "Regional association plots for lead single nucleotide polymorphisms (SNPs). (a/b) Left‐handedness and (c) ambidexterity. SNP is plotted by chromosomal position (hg19;  x ‐axis) and association with handedness from the current study (–log 10  (p‐value);  y ‐axis)."
+  ],
+  "tables": [
+    "Baseline demographic of the study population.",
+    "Significant single nucleotide polymorphisms (SNPs) in the replication genome‐wide association study (GWAS).",
+    "Single nucleotide polymorphisms (SNPs) associated with handedness by genome‐wide association study (GWAS)."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041780.1646936
+}

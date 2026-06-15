@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11704802",
+  "pmid": "39757817",
+  "title": "Effect of the Interaction Between Depression and Sleep Disorders on Stroke Occurrence: A 17-Year Prospective Cohort Study in Korea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Jung E, Ryu HH, Ryu SJ.",
+  "doi": "10.30773/pi.2024.0088",
+  "figures": [],
+  "tables": [
+    "Demographics of the study population according to the presence and category of depression",
+    "Demographics of the study population according to the presence of insomnia",
+    "Cox proportional logistic regression analysis of the study outcome",
+    "Interaction analysis between depression and insomnia on the study outcome"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037629.1379592
+}

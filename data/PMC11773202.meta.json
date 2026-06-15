@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11773202",
+  "pmid": "39877261",
+  "title": "The impact of the U.S federal minimum legal drinking age law on alcohol involved firearm suicide: a regression discontinuity approach.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Jain V, Miller M, Hemenway D.",
+  "doi": "10.1016/j.eclinm.2024.103057",
+  "figures": [
+    "The impact of the MLDA on alcohol positive suicide rates.",
+    "Mean blood alcohol content in alcohol positive suicides across age-years."
+  ],
+  "tables": [
+    "Differences in alcohol test positivity and alcohol positive suicide rates at age 20 and 21.",
+    "The effect of the MLDA on alcohol positive suicide rates: regression discontinuity estimates."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780035949.0160694
+}

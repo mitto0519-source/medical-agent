@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11610357",
+  "pmid": "39601360",
+  "title": "Resting-state EEG microstate analysis of internet gaming disorder and alcohol use disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim JS, Song YW, Kim S, Lee JY, Yoo SY, Jang JH, Choi JS.",
+  "doi": "10.1080/19585969.2024.2432913",
+  "figures": [
+    "Overview of EEG microstate analysis.",
+    "Microstate template maps obtained from IGD, AUD, HC, and grand mean among three groups.",
+    "Correlation between microstate parameters and scores of psychological measures in AUD group."
+  ],
+  "tables": [
+    "Participant demographic and psychological characteristics.",
+    "Mean and standard deviations value of microstate parameters, including GEV, duration, occurrence, and coverage among IGD, AUD, and HC group.",
+    "Mean and standard deviation values of microstate transition probabilities (%) among IGD, AUD, and HC group."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998228.123581
+}

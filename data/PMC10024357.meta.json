@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10024357",
+  "pmid": "36932383",
+  "title": "Frailty transition and depression among community-dwelling older adults: the Korean Longitudinal Study of Aging (2006-2020).",
+  "year": 2023,
+  "journal": "",
+  "authors": "Nerobkova N, Park YS, Park EC, Shin J.",
+  "doi": "10.1186/s12877-022-03570-x",
+  "figures": [
+    "Flowchart of the study participants from 2006 to 2020",
+    "Subgroup analysis of Frailty Instrument (FI) components with depression. The exhaustion domain of the FI showed the most significant association with depression"
+  ],
+  "tables": [
+    "General characteristics of the study population (baseline 2006→2008)",
+    "Generalized linear model using the GEE with CES-D-10 score in 2008–2020",
+    "Subgroup analysis using the GEE of CES-D-10 score with frailty transition in 2006–2020"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040583.8932908
+}

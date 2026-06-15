@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11066219",
+  "pmid": "38706545",
+  "title": "Regression discontinuity design for the study of health effects of exposures acting early in life.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Popovic M, Zugna D, Tilling K, Richiardi L.",
+  "doi": "10.3389/fpubh.2024.1377456",
+  "figures": [
+    "Summary of the settings  (A)  and assignment variables  (B)  used in RDD studies on health effects of early life exposures ( N  = 125). The Sankey diagram in  (C)  depicts the connections between assignment variables and the study settings in which they were used.",
+    "Flow diagram for the selection of RDD studies on the health effects of exposures acting early in life.",
+    "Hypothetical sharp and fuzzy regression discontinuity design.  (A)  Sharp (deterministic) regression discontinuity design.  (B)  Fuzzy (probabilistic) regression discontinuity design. Simulated data.",
+    "Graphical representation of RDD for predetermined covariates for a hypothetical example of gestational age as an assignment variable for obstetrician’s instead of midwife’s supervision of delivery. Simulated data.  (A)  Maternal body mass index (BMI),  (B)  Maternal age at delivery,  (C)  Gestational hypertension,  (D)  Low maternal educational level."
+  ],
+  "tables": [
+    "Assignment variables and exposures as possible RDD models for DOHaD research.",
+    "The main assumptions of RDD.",
+    "Percentage of the original study available for RDD for different bandwidths and cut-offs, assuming normally distributed assignment variable  X ."
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034653.3551977
+}

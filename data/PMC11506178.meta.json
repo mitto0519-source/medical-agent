@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11506178",
+  "pmid": "39457211",
+  "title": "Prevalence of Antidepressant Prescription in Adolescents Newly Diagnosed with Depression in Germany.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kaur N, Doege C, Kostev K.",
+  "doi": "10.3390/children11101246",
+  "figures": [
+    "Flow chart of patients included in the study. Abbreviation: ICD–10 International Classification of Diseases, 10th revision.",
+    "Cumulative incidence of antidepressant prescription in adolescents with depression by severity.",
+    "Cumulative incidence of antidepressant prescription in adolescents with depression by sex.",
+    "Cumulative incidence of antidepressant prescription in adolescents with depression by age.",
+    "Distribution of antidepressant drug classes among adolescents with antidepressant prescriptions."
+  ],
+  "tables": [
+    "Baseline characteristics of the study sample.",
+    "Variables associated with the probability of antidepressant prescription in adolescents with depression diagnosis."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055980.3956935
+}

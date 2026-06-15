@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10876571",
+  "pmid": "38374428",
+  "title": "Prefrontal cortex structural and developmental associations with callous-unemotional traits and aggression.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Hostetler N, Tavares TP, Ritchie MB, Oliver LD, Chen VV, Greening S, Finger EC, Mitchell DGV.",
+  "doi": "10.1038/s41598-024-54481-3",
+  "figures": [
+    "Neurostructural correlates of CU traits. Neurostructural relationships between ( a ) ACC volume and CU traits, and ( b ) ACC surface area and CU traits. Morphometrics are expressed as a fraction of whole-brain values.  CU  callous-unemotional,  ACC  anterior cingulate cortex .",
+    "Age-specific neurostructural correlates of CU traits. Simple slopes analysis showing distinguishable associations between mOFC volume and CU traits at varying levels of the moderator variable age (1SD below mean age, mean age, 1SD above mean age). Morphometrics are expressed as a fraction of whole-brain values.  CU  callous-unemotional,  mOFC  medial orbitofrontal cortex .",
+    "Age-specific neurostructural correlates of reactive aggression. Simple slopes analysis showing distinguishable associations between mOFC surface area and reactive aggression at varying levels of the moderator variable age (1SD below mean age, mean age, 1SD above mean age). Morphometrics are expressed as a fraction of whole-brain values.  CU  callous-unemotional,  mOFC  medial orbitofrontal cortex "
+  ],
+  "tables": [
+    "Correlational analyses investigating the relationships between cortical morphometrics and both CU traits and aggression.",
+    "Regression analyses investigating age as a moderating variable in the relationship between cortical morphometrics and CU traits.",
+    "Regression analyses investigating age as a moderating variable in the relationship between cortical morphometrics and proactive aggression, reactive aggression, and total aggression.",
+    "Demographic and clinical characteristics of our sample.",
+    "Regions of interest expressed as the sums of raw FreeSurfer outputs."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780046924.8193088
+}

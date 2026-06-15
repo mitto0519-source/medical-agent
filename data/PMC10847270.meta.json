@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10847270",
+  "pmid": "38327569",
+  "title": "Effects of physical activity participation on cognitive impairment in older adults population with disabilities.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lim ST, Kwak HB, Kang JH, Chang E, Joa KL, Park HJ, Park DH.",
+  "doi": "10.3389/fpubh.2024.1293023",
+  "figures": [
+    "A flowchart detailing study sample selection.",
+    "Pearson’s correlation coefficients between the cognitive score and grip strength.  (A)  all participants,  (B)  male participants,  (C)  female participants."
+  ],
+  "tables": [
+    "Medical determination of disability.",
+    "Characteristics of the study participants.",
+    "Physical activity time, grip strength, ADL, and IADL scores for each group.",
+    "Independent associations of objectively measured physical activity time with cognitive impairment in older adults adults with disabilities.",
+    "Independent associations of participation in regular physical activity with cognitive impairment in older adults adults with disabilities."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040380.42502
+}

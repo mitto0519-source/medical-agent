@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11493374",
+  "pmid": "39008957",
+  "title": "A Reciprocal Relationship between Formal and Informal Social Engagement and Handgrip Strength of Older Adults in South Korea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Son J, Sung P.",
+  "doi": "10.1159/000540344",
+  "figures": [
+    "Sample composition across waves.",
+    "Cross-lagged reciprocal relationship between social engagement (“soceng”) and handgrip strength (“hgs”), taking both lagged and proximal effects into account.",
+    "Cross-lagged reciprocal relationships between social engagement (number of association memberships and frequency of organizational activities) and handgrip strength (based on models 4 and 5 in  Table 2  and models 1 and 2 in  Table 3 )."
+  ],
+  "tables": [
+    "Variables in the analyses",
+    "ML-SEM of handgrip strength on social engagement",
+    "ML-SEM of social engagement on handgrip strength"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040108.5797954
+}

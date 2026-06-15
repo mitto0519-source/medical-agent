@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11274889",
+  "pmid": "39062007",
+  "title": "Relationship between Serum Sirtuin 1 and Growth Hormone/Insulin-like Growth Factor 1 Concentrations in Children with Growth Hormone Deficiency and Idiopathic Short Stature.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Fedorczak A, Kowalik D, Kopciuch J, Głowacka E, Mikołajczyk K, Tkaczyk M, Lewiński A, Stawerska R.",
+  "doi": "10.3390/biomedicines12071433",
+  "figures": [
+    "Comparison of SIRT1 concentrations in short children with ISS (GH secretion ≥ 10 ng/mL) and GHD (GH secretion &lt; 10 ng/mL) and in the control group.",
+    "Correlations between sirtuin 1 and height SDS, IGF-1 and IGF-1/IGFBP-3 molar ratio in whole analyzed group of children.",
+    "Correlations between serum SIRT1 concentration and body mass SDS, as well as serum SIRT1 and BMI SDS in analyzed group of short-stature children.",
+    "Comparison of SIRT1 levels in ISS (GH secretion ≥ 10 ng/mL), pGHD (GH secretion ≥ 7 and &lt;10 ng/mL) and sGHD (GH secretion &lt; 7 ng/mL) groups."
+  ],
+  "tables": [
+    "Study groups characteristics with respect to diagnosis (numerical variables are given as means ± SD and min; max range).",
+    "The results of the serum tests performed on the study groups (GHD and ISS) and on the control group (numerical variables are presented as the means ± SD and min; max range).",
+    "Comparison of auxological parameters in ISS, pGHD and sGHD groups (numerical variables are presented as mean ± SD and min; max range).",
+    "Sirtuin 1 levels in short-stature subjects in groups with respect to maximal growth hormone secretion in stimulation tests."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013369.2986555
+}

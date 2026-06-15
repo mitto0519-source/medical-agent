@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11298265",
+  "pmid": "39089704",
+  "title": "Different Characteristics of Psychological and Sleep Symptoms Across Social Media Addiction and Internet Gaming Disorder in Chinese Adolescents- A Network Analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhang W, Jiang L, Yu M, Ma R, Wang T, Liang X, He R, Xu C, Hu S, Tan Y, Liu K, Xiang B.",
+  "doi": "10.30773/pi.2023.0103",
+  "figures": [
+    "Networks of anxiety-depression-addiction-sleep disorder symptoms in SMA group (N=713) (A), IGD group (N=789) (B), and control group (N=5,744) (C). Nodes represent anxiety-depression-addiction-sleep disorder symptoms, and edges represent partial correlations between symptoms. Edge thickness indicates the strength of the partial correlations (minimum and maximum edge values are set to be equal acros",
+    "Standardized estimates of centrality for anxiety-depression-addiction-sleep disorder symptoms by three groups. The red line represents the control group, the green line represents the IGD group, and the blue line represents the SMA group. See Supplementary Table 4 for anxiety-depression-addiction-sleep disorder items corresponding to each node. PHQ1–9 refers to the items of PHQ-9, GAD1–7 refers to",
+    "Centrality stability for anxiety-depression-addiction-sleep disorder symptoms network in SMA group (A), IGD group (B), and control group (C). The x-axis illustrates the sample decrease from 95% to 25% of the original sample. The y-axis depicts the changes in correlation estimates between the subsample and the original sample. Lines indicate the means, and areas indicate the range from the 2.5th qu"
+  ],
+  "tables": [
+    "Sample characteristics of the IGD group and SMA group (N=7,246)",
+    "Mood and sleep characteristics in adolescents with IGD and SMA (N=7,246)"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998697.529607
+}

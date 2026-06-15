@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10876060",
+  "pmid": "38375195",
+  "title": "Effects of light therapy on sleep and circadian rhythm in older type 2 diabetics living in long-term care facilities: a randomized controlled trial.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Wang Q, Wu S, Luo Z, Pu L, Wang X, Guo M, Zhang M, Tang H, Chen M, Kong L, Huang P, Chen L, Li Z, Zhao D, Xiong Z.",
+  "doi": "10.3389/fendo.2024.1307537",
+  "figures": [
+    "CONSOR flow diagram.",
+    "Summarizes the number of participants included in each analysis for sleep parameters as measured by sleep monitoring bracelet at each data collection time point and the reasons for missing data.",
+    "Comparison of PSQ, MEQ and GSP mean scores at T0, T1 and T2. Pittsburgh Sleep Quality Index (PSQI)  (A) , Morningness-Eveningness Questionnaire (MEQ)  (B) , Glycosylated Serum Protein (GSP)  (C) ; T0, baseline; T1, immediate post-treatment; 4-week follow-up (T2). *** p  &lt; 0.001 ( vs . the control group);  ### \n p  &lt; 0.001 ( vs . T0 in LT group); NS ( p  &gt; 0.05,  vs . control group); ns ( "
+  ],
+  "tables": [
+    "Descriptive statistics at baseline for the 45 participants.",
+    "Comparison of outcomes between the light therapy (LT) group and control group (mean ± standard deviation).",
+    "Sensitivity analysis.",
+    "Results of the  post hoc  analyses."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001751.038347
+}

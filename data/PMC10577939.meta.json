@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10577939",
+  "pmid": "37845619",
+  "title": "Analytical description of adolescent binge drinking patients.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Haas C, Salzmann AP, Binz TM, Staubli G, Seiler M, Steuer AE.",
+  "doi": "10.1186/s12887-023-04325-2",
+  "figures": [
+    "GCS and BAC levels of 71 patients in the study cohort. (BAC of 1 patient was missing). BAC levels are depicted in red, GCS scores are shown in green. Squares indicate co-ingestion of drugs, as indicated by the patients or paramedics (12 patients)",
+    "Relation between measured BAC (x-axis, g/kg) and EtG in hair (y-axis, pg/mg). The dotted line represents the commonly accepted cut-off value of 7 pg/mg for abstinence",
+    "Drug consumption – results from blood and hair analysis. “negative” includes negative results (except for ethanol) and typical emergency drugs or analgesics. One case can be positive for several substances, therefore all data together do not add up to 100%",
+    "Summary of detected drug intake in blood and hair samples"
+  ],
+  "tables": [],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060523.563218
+}

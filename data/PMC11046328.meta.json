@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11046328",
+  "pmid": "38513362",
+  "title": "Discontinuation of long-term growth hormone treatment in adults with growth hormone deficiency: a survey of UK practice.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Criseno S, Gleeson H, Toogood AA, Gittoes N, Topping A, Karavitaki N.",
+  "doi": "10.1530/ec-23-0533",
+  "figures": [
+    "Number of adult patients (aged 18 years and over) with growth hormone deficiency (GHD) on growth hormone (GH) treatment (responses to question 2: ‘In total, how many adult patients (over the age of 18 years) with GHD do you currently treat with growth hormone in your practice?’).",
+    "Number of adult patients (aged 25 years and over) with growth hormone deficiency (GHD) on growth hormone (GH) treatment (responses to question 3: ‘How many of your adult patients on growth hormone treatment are over the age of 25 years?’).",
+    "Number of adult patients (aged 25 years and over) with growth hormone deficiency (GHD) on growth hormone (GH) treatment for more than 5 years (responses to question 4: ‘How many of your adult patients, over the age of 25 years who are currently on growth hormone treatment, have been on this therapy for more than 5 years?’).",
+    "Responses to Q11 of the survey: ‘If you are currently offering (or if you were to offer) a trial of growth hormone treatment discontinuation in adult patients, what monitoring do you complete during follow-up clinic visit?’"
+  ],
+  "tables": [
+    "Characteristics of endocrine clinicians who participated in the online survey ( n  = 102).",
+    "Current practice of offering growth hormone treatment discontinuation in adults with growth hormone deficiency."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013143.6829374
+}

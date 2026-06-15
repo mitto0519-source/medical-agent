@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11672919",
+  "pmid": "39765884",
+  "title": "Effects of the Interaction Between Oxidative Balance Score and Polygenic Risk Scores on Incidence of Metabolic Syndrome in Middle-Aged Korean Adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim M, Shin D.",
+  "doi": "10.3390/antiox13121556",
+  "figures": [
+    "A flow diagram of the study design and participant enrolment, including the number of participants and the exclusion criteria.",
+    "A Manhattan plot of major single nucleotide polymorphisms (SNPs) associated with metabolic syndrome (MetS). This plot represents the association between the SNP (rs651821) with the highest  p -value among the 16 SNPs selected through genome-wide association studies (GWAS) and the clustering analysis and MetS. The cutoff point is  p  = 5 × 10 −8 , and statistically significant and insignificant SNP",
+    "A flowchart of genome-wide association study (GWAS)-based variant identification, polygenic risk score (PRS) construction, and interaction analysis with oxidative balance score (OBS) in metabolic syndrome (MetS). GWAS, genome-wide association study; SNP, single nucleotide polymorphism; PRS, polygenic risk score; MetS, metabolic syndrome; OBS, oxidative balance score; KoGES, Korea Genome and Epidem"
+  ],
+  "tables": [
+    "Single-nucleotide polymorphisms (SNPs) associated with metabolic syndrome (MetS).",
+    "Demographic characteristics of study participants based on the presence of metabolic syndrome (MetS).",
+    "Demographic characteristics of study participants based on polygenic risk score (PRS) tertiles.",
+    "Adjusted hazard ratios (HRs) and 95% confidence intervals (CIs) of metabolic syndrome (MetS) incidence based on oxidative balance score (OBS).",
+    "Adjusted HRs and 95% CIs of metabolic syndrome incidence based on polygenic risk score (PRS).",
+    "Adjusted HRs and 95% CIs of metabolic syndrome (MetS) incidence based on weighted polygenic risk score (PRS) and oxidative balance score (OBS)."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037354.1790836
+}

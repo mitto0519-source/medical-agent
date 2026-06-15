@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10762940",
+  "pmid": "38172858",
+  "title": "Particulate matters (PM<sub>2.5</sub>, PM<sub>10</sub>) and the risk of depression among middle-aged and older population: analysis of the Korean Longitudinal Study of Aging (KLoSA), 2016-2020 in South Korea.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park H, Kang C, AiMS-CREATE Team, Kim H.",
+  "doi": "10.1186/s12940-023-01043-1",
+  "figures": [
+    "Geographical distribution of PM 2.5 , PM 10  concentration, and CES-D 10 score averaged of 2016–2020. The map was presented for PM 2.5  ( A ), PM 10  ( B ), and CES-D 10 score ( C ) in South Korea. PM 2.5 : particulate matter with an aerodynamic diameter ≤ 2.5 μm; PM 10 : particulate matter with an aerodynamic diameter ≤ 10 μm; CES-D: Center for Epidemiology Studies of Depression scale",
+    "Associations between long-term air pollution exposure (per 10        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\mathrm{\\mu g}/{m}^{3}$$\\end{document}     μ  g   /    m   3  "
+  ],
+  "tables": [
+    "Descriptive statistics of the study population in KLoSA, 2016–2020",
+    "Descriptive summary of particulate matter concentrations and CES-D 10 score by KLoSA panel year",
+    "Associations between long-term air pollution exposure (per 10        \\documentclass[12pt]{minimal}\n\t\t\t\t\\usepackage{amsmath}\n\t\t\t\t\\usepackage{wasysym} \n\t\t\t\t\\usepackage{amsfonts} \n\t\t\t\t\\usepackage{amssymb} \n\t\t\t\t\\usepackage{amsbsy}\n\t\t\t\t\\usepackage{mathrsfs}\n\t\t\t\t\\usepackage{upgreek}\n\t\t\t\t\\setlength{\\oddsidemargin}{-69pt}\n\t\t\t\t\\begin{document}$$\\mathrm{\\mu g}/{m}^{3}$$\\end{document}     μ  g   /    m   3  "
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040142.508268
+}

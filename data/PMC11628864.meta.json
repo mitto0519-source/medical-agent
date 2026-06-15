@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11628864",
+  "pmid": "39659948",
+  "title": "Safety and Effectiveness of a Biosimilar Recombinant Growth Hormone in Adults with Growth Hormone Deficiency: Analysis of Final Data from PATRO Adults, an International Post-Marketing Surveillance Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Beck-Peccoz P, Höybye C, Simsek S, Stalla G, Murray RD, Esmael A, Urosevic D, Boldea A, Zabransky M.",
+  "doi": "10.2147/dddt.s471967",
+  "figures": [
+    "IGF-1 SDS over time in ( A ) rhGH-naïve patients and ( B ) pretreated patients (full effectiveness population, N = 1386). Data shown are mean ± SD.   Abbreviations : IGF-1, insulin-like growth factor-1; rhGH, recombinant human growth hormone; SD, standard deviation; SDS, standard deviation score.",
+    "Quality-of-life change from previous assessment within the first year for rhGH-naïve patients in the UK (effectiveness population subgroup, N = 189).   Abbreviations : GHD, growth hormone deficiency; rhGH, recombinant human growth hormone."
+  ],
+  "tables": [
+    "Patient Characteristics at Enrollment (Safety Analysis Set)",
+    "Diagnostic Details (Safety Population, N = 1527)",
+    "Summary of AEs (Safety Population, N = 1527)",
+    "Patients with Confirmed Diabetes Mellitus by GHD Type (Safety Population, N = 1527)",
+    "Newly Occurring Malignancies Overall and by GHD Type (Safety Population, N = 1527)",
+    "Summary of AEs by Pretreatment and GHD-Type Subgroups (Safety Population, N = 1527)"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013175.884507
+}

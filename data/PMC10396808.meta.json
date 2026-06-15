@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10396808",
+  "pmid": "36996866",
+  "title": "No association between genetically predicted C-reactive protein levels and colorectal cancer survival in Korean: two-sample Mendelian randomization analysis.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Choi CK, Yang JH, Shin MH, Cho SH, Kweon SS.",
+  "doi": "10.4178/epih.e2023039",
+  "figures": [
+    ""
+  ],
+  "tables": [
+    "Selected SNPs used as instrumental variables for log 2 -transformed CRP levels",
+    "Mendelian randomization results for the effects of serum CRP levels on overall and CRC-specific mortality",
+    "Subgroup analysis by metastasis of CRC"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041867.977637
+}

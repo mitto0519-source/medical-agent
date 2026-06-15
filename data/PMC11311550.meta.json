@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11311550",
+  "pmid": "39120293",
+  "title": "The Antidepressant Action of Fluoxetine Involves the Inhibition of <i>Dlx5/6</i> in Cortical GABAergic Neurons through a TrkB-Dependent Pathway.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Aouci R, Fontaine A, Vion A, Belz L, Levi G, Narboux-Nême N.",
+  "doi": "10.3390/cells13151262",
+  "figures": [
+    "Dlx5/6  expression in GABAergic neurons is correlated with immobility time in the forced swim test. Adult  Dlx5/6 VgatCre/+   ( n  = 9),  Dlx5/6 VgatCre   ( n  = 16) and control littermates ( n  = 14) ( A ) and  GABAergic Dlx5/+   and control littermates ( n  = 23) ( B ) mice and their corresponding control littermates were submitted to the forced swim test (FST). Mice with reduced ( Dlx5/6 VgatCr",
+    "Fluoxetine administration induces a rapid and sustained inhibition of  Dlx5 ,  Dlx6  and  Dlx6-AS1  expression in the cerebral cortex. C57BL/6 adult mice were treated with Flx or vehicle, and the effects on  Dlx5 ,  Dlx6  and the LncRNA  Dlx6-AS1  cortical expression were measured by qPCR. ( A – C ) Chronic administration of fluoxetine in drinking water resulted in a stable 75% reduction in  Dlx5 ",
+    "Fluoxetine administration counteracts the phenotypes induced by  Dlx5  overexpression in GABAergic neurons. ( A ) Control ( n  = 6) and  GABAergic Dlx5/+  mice ( n  = 7) were chronically treated with Flx or vehicle in drinking water for 3 weeks and the cortical expression of  Dlx5  was measured by qPCR. ( A ) Flx treatment induced a reduction in cortical  Dlx5  expression compared to vehicle-treat",
+    "Dlx5  expression is inhibited by the activation of a TrkB-CREB signalling pathway. C57BL/6 mice were treated with IP injections of Flx and of compounds interacting with the TrKB signalling pathways, and the effects on cortical  Dlx5  expression were measured after 24 h by qPCR. ( A ) 7–8DHF, a TrkB agonist, induced a reduction in  Dlx5  expression similar to that of Flx (vehicle  n  = 5, Flx  n  =",
+    "Human  DLX5/6  genomic region has long-range enhancers that include loci associated with depression and schizophrenia. The regulatory region governing  DLX5 ,  DLX6  and  DLX6-AS1  expression spans over more than 1 MB 5′ from  DLX5  and contains at least 31 enhancers that control different aspects of genes and LncRNA expression from the locus. This region also contains 3 genes:  DYNC1L1 ,  SLC25A1"
+  ],
+  "tables": [
+    "Primers used in this study for RT-qPCR."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056514.4062052
+}

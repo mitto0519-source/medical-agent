@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11137395",
+  "pmid": "38817706",
+  "title": "Feasibility of Using an Artificial Intelligence-based Telephone Application for Dietary Assessment and Nudging to Improve the Quality of Food Choices of Female Adolescents in Vietnam: Evidence from a Randomized Pilot Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Braga BC, Nguyen PH, Tran LM, Hoang NT, Bannerman B, Doyle F, Folson G, Gangupantulu R, Karachiwalla N, Kolt B, McCloskey P, Palloni G, Thi Tran TH, Thuy Thi Trơưng D, Hughes D, Gelli A.",
+  "doi": "10.1016/j.cdnut.2023.102063",
+  "figures": [
+    "CONSORT diagram. All participants recruited to the study were enrolled.",
+    "Timeline of the randomized pilot and feasibility study.",
+    "Wireframe A shows options of food consumption goals for 3 of the 5 food groups (in addition to dairy and meat). Wireframe B shows the slide bars to indicate the proportion consumed of the meal recorded, and wireframe C shows the badges. Wireframe D is the home dashboard, and wireframe E is the activity screen, where users can share achievements with friends, which can react to it by clicking in th",
+    "Centered 3-d moving average of Minimum Dietary Diversity for Women score (A) and Eat-Lancet Diet Score (B) was used to smooth noise in the data. From left to right, horizontal reference lines mark the start of the randomized pilot period, and the end of randomized periods and start of the feasibility period. Solid lines are for the intervention group and dashed for the control group. The figure sh",
+    "Number of complete food records, adherence (percentage of complete food records), and percentage of meals recorded per day. The first vertical bar from left to right marks the start of the randomized controlled pilot period, and the second marks the end of the randomized pilot and the start of the feasibility period.",
+    "Share of participants who consumed each of the food groups of the MDDW and the ELDS per day during the whole study period. Solid lines are for the intervention group and dashed for the control group. Colors divide types of food groups. ELDS, Eat-Lancet Diet Score; MDDW, Minimum Dietary Diversity for Women."
+  ],
+  "tables": [
+    "Characteristics of the pilot study participants, their parents, and households ( N  = 36).",
+    "Agreement with acceptability and usability statements about FRANI  1",
+    "Impact of the intervention, time, and the interaction of intervention and time on the Minimum Dietary Diversity for Women and the Eat-Lancet Diet Score."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053290.6941533
+}

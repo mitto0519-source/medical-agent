@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10997584",
+  "pmid": "38580693",
+  "title": "Long-acting growth hormone in the treatment of growth hormone deficiency in children: a systematic literature review and network meta-analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhu J, Yuan K, Rana S, Jakki SL, Bhat AS, Liang L, Wang C.",
+  "doi": "10.1038/s41598-024-58616-4",
+  "figures": [
+    "PRISMA flow chart.",
+    "Forest plot comparing HV between LAGH and DGH.  CrI  credible interval;  GH  growth hormone;  HV  height velocity;  LAGH  long-acting growth hormone.",
+    "Forest plot comparing HSDS between LAGH and DGH.  CrI  credible interval;  GH  growth hormone;  HSDS  height standard deviation score;  LAGH  long-acting growth hormone.",
+    "Forest plot comparing AEs between LAGH and DGH.  AEs  adverse events;  CrI  credible interval;  GH  growth hormone;  LAGH  long-acting growth hormone."
+  ],
+  "tables": [
+    "Study characteristics."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013232.8122942
+}

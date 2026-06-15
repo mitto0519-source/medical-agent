@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11330968",
+  "pmid": "39155281",
+  "title": "Impact of activity limitations due to fear of falling on changes in frailty in Korean older adults: a longitudinal study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Baek W, Min A, Ji Y, Park CG, Kang M.",
+  "doi": "10.1038/s41598-024-69930-2",
+  "figures": [
+    "Participant flow chart. KLoSA, Korean Longitudinal Study of Aging.",
+    "Frailty index patterns from 2006 to 2020. Frailty index was calculated by multiplying the obtained frailty index by 100.",
+    "Frailty index patterns according to the baseline frailty status. ( A ) Spaghetti plot; ( B ) Mean plot. Frailty index patterns are presented from 2008 to 2020 according to the baseline frailty status. Frailty index was calculated by multiplying the obtained frailty index by 100."
+  ],
+  "tables": [
+    "Baseline participant demographics (N = 1601).",
+    "Linear mixed-effects model of frailty (N = 1601).",
+    "Linear mixed-effects model of frailty according to the baseline frail status (N = 1601)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039827.9187758
+}

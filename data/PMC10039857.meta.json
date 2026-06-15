@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10039857",
+  "pmid": "36966184",
+  "title": "Digital cognitive behavioral therapy for insomnia on depression and anxiety: a systematic review and meta-analysis.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lee S, Oh JW, Park KM, Lee S, Lee E.",
+  "doi": "10.1038/s41746-023-00800-3",
+  "figures": [
+    "PRISMA flow diagram.  Search and study selection process.",
+    "The effect of dCBT-I on depression.  Forest plot of studies reporting the effect of dCBT-I on depression.",
+    "The effect of dCBT-I on anxiety.  Forest plot of studies reporting the effect of dCBT-I on anxiety.",
+    "The effect of dCBT-I on sleep outcome and sleep efficiency.  Forest plot of studies reporting the effect of dCBT-I on sleep outcome and sleep efficiency.",
+    "The effect of dCBT-I among dCBT-I completers (&gt;65%).  Forest plot of studies reporting the effect of dCBT-I among dCBT-I completers with more than 65% of completion rate."
+  ],
+  "tables": [
+    "Summary characteristics of the included studies."
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063554.6479776
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11773966",
+  "pmid": "39871353",
+  "title": "The association of chronotype, sleep duration and trajectories of health-risk behaviors among college students: a cohort study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Che W, Wang C, Tao S, Li T, Xie Y, Tao F, Wu X.",
+  "doi": "10.1186/s13034-025-00861-0",
+  "figures": [
+    "The flow chart of participants",
+    "Latent Class Growth Analysis of health-risk behaviors",
+    "Logistic regression of chronotype, sleep duration and trajectories of health-risk behaviors"
+  ],
+  "tables": [
+    "The difference of demographic characteristics between analysis data and missing data",
+    "Fit indices for latent class growth analysis of health-risk behaviors",
+    "Participants characteristics of health-risk behaviors trajectory groups"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001096.1905406
+}

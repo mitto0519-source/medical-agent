@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11821656",
+  "pmid": "39950172",
+  "title": "Parsing the heterogeneity of depression: a data-driven subgroup derived from cognitive function.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Xu C, Tao Y, Lin Y, Zhu J, Li Z, Li J, Wang M, Huang T, Shi C.",
+  "doi": "10.3389/fpsyt.2025.1537331",
+  "figures": [
+    "Demographics and clinical characteristics of MDD and HC.",
+    "Longitudinal change of cognitive function in two subgroups.  (A)  TMT-A, Trail Making Test, Part A;  (B)  Digit Span;  (C)  CPT, Continuous Performance Test;  (D)  Symbol Coding. The effects (95% confidence interval) of group difference and interaction (group*time) in each figure were estimated in linear mixed effects mode."
+  ],
+  "tables": [
+    "Demographics and clinical characteristics of MDD and HC.",
+    "Comparison between the two subgroups across demographics, clinical characteristics and occupation function.",
+    "Univariate logistic regression analysis and multivariate stepwise regression analysis."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060305.9011247
+}

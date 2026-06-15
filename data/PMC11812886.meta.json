@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11812886",
+  "pmid": "40017932",
+  "title": "Insights from a codesigned dynamic modelling study of child and adolescent obesity in Australia.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chiu SK, Baur LA, Occhipinti JA, Carrello J, Golley RK, Hayes A, Hunter KE, Kreuger LK, Lawson K, Okely AD, Seidler AL, Wyse R, Freebairn L.",
+  "doi": "10.1136/bmjph-2024-001164",
+  "figures": [
+    "Overview of model structure. BMI, body mass index. Note: Images with greater detailed Stella model structure and explanation are presented in  online supplemental material .",
+    "Percentage point reduction in the prevalence of obesity after implementing interventions. Note: Model results reflect the modelled years between intervention rollout and the end of the model (2025-2057). The shaded regions represent the 2.5th to 97.5th quantiles for the modelled results.",
+    "Estimated median reduction in obesity between interventions by 2057. Note: Uncertainty is estimated over 10,000 model simulations. The 2.5th to 97.5th quantile range represents the region that captures 95% of modelled results. The synergy ratio is the effect of the combined scenario divided by the sum of the separate individual scenario effects."
+  ],
+  "tables": [
+    "Intervention scenario descriptions",
+    "Cumulative economic results for each tested scenario"
+  ],
+  "query": "sugar-sweetened beverage adolescent depression",
+  "fetched_at": 1779975667.6814284
+}

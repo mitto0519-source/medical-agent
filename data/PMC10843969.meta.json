@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10843969",
+  "pmid": "38317447",
+  "title": "Validation of the Framingham Diabetes Risk Model Using Community-Based KoGES Data.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee HA, Park H, Hong YS.",
+  "doi": "10.3346/jkms.2024.39.e47",
+  "figures": [
+    "Study summary.  The data sources used in this study, predictive models evaluated, and variables included therein are presented.  KoGES = Korean Genome and Epidemiology Study, KoGES-CAVAS = Korean Genome and Epidemiology Study-cardiovascular disease association study, FDRM = Framingham Diabetes Risk Model, HTN = hypertension, TG = triglyceride, HDL-C = high-density lipoprotein cholesterol, FBG = fa",
+    "Relative importance of features included in the improved predictive models for diabetes. ( A ) Modified Framingham Diabetes Risk Model and ( B ) expanded clinical model.  HTN was defied as blood pressure ≥ 140/90 mmHg or the use of antihypertensive drugs. Due to the skewed distribution, γ-GTP values were log-transformed. Hypo HDL-C was defined as HDL-C &lt; 40 mg/dL for males and &lt; 50 mg/dL for",
+    "Validation of the FDRM for predicting diabetes and comparison with the modified FDRM and expanded clinical model. ( A ) Derivation data, ( B ) internal validation data, ( C ) temporal validation data, and ( D ) external validation data.  FDRM = Framingham Diabetes Risk Model."
+  ],
+  "tables": [
+    "Basic characteristics of the participants in the derivation and validation datasets",
+    "Estimates and ORs for predictive models of incident diabetes based on the derivation dataset"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780042103.9934323
+}

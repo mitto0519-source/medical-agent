@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11729237",
+  "pmid": "39807002",
+  "title": "Effects of Genetic Risk and Lifestyle Habits on Gout: A Korean Cohort Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim H, Do H, Son CN, Jang JW, Choi SS, Moon KW.",
+  "doi": "10.3346/jkms.2025.40.e1",
+  "figures": [
+    "ORs and 95% CIs for gout according to genetic risk ( A ), lifestyle ( B ), and metabolic status ( C ).  OR = odds ratio, CI = confidence interval.",
+    "ORs and 95% CIs for gout based on the interaction between genetic risk and lifestyle habits ( A ) and between genetic risk and metabolic status ( B ).  OR = odds ratio, CI = confidence interval.",
+    "Forest plot for gout risk reduced by lifestyle habits ( A ) and metabolic health status ( B ) in the genetic risk group.  OR = odds ratio, CI = confidence interval."
+  ],
+  "tables": [
+    "Baseline characteristics of participants"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036810.6489131
+}

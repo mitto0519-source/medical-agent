@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11697940",
+  "pmid": "39754130",
+  "title": "Generation Victoria (GenV): protocol for a longitudinal birth cohort of Victorian children and their parents.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Hughes EK, Siero W, Gülenç A, Clifford SA, Frugier T, Hall SM, Mohal J, North K, Zaritski N, Goldfeld S, Saffery R, Wake M.",
+  "doi": "10.1186/s12889-024-21108-1",
+  "figures": [
+    "A research platform to speed up solutions for complex early and later life challenges",
+    "GenV pregnancies and births in relation to major climate, health and political/social/economic events",
+    "GenV’s guiding principles",
+    "GenV’s primary life course framework. Adapted from Shonkoff J 2010 [ 41 ] with permission from John Wiley and Sons",
+    "GenV’s secondary life course framework",
+    "GenV data and sample collection journey.  Notes.  PBS = Pharmaceutical Benefits Scheme; NAPLAN = National Assessment Program – Literacy and Numeracy; VAED = Victorian Admitted Episodes Dataset; VPDC = Victorian Perinatal Data Collection",
+    "GenV biosamples and their downstream Utility (A-G).  Notes.  GBS = Group B Streptococcus; MSS = Maternal Serum Screening; NIPT = Non-invasive Prenatal Testing; VCGS = Victorian Clinical Genetics Services.  a  Implemented October 2022.  b  To be implemented late 2024"
+  ],
+  "tables": [
+    "Key GenV peer-reviewed publications and Working Papers to date, providing additional conceptualisation and methodological detail",
+    "Minimum estimable odds ratio detectable for different prevalence levels of exposure and example outcomes assuming four controls per case",
+    "GenV consent components",
+    "Recruitment and ‘GenV and Me’ assessment constructs"
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780054552.8147774
+}

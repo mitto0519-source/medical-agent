@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10234465",
+  "pmid": "37270395",
+  "title": "What a difference a year makes: Objective rest/activity patterns, circadian phase markers, and sleep quality before and during the COVID-19 pandemic.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Esquivel-Mendoza J, Burgess HJ, Gren LH, Shoaf K, Baron KG.",
+  "doi": "10.1016/j.sleh.2023.04.002",
+  "figures": [
+    "Sleep differences across time. *Change in sleep time is significant at the 0.05 level (2-tailed)",
+    "Correlation between chronotype and DLMO change.  P  = .031*"
+  ],
+  "tables": [
+    "Participant characteristics",
+    "Change in sleep and circadian variables"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001612.1076617
+}

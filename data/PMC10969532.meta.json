@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10969532",
+  "pmid": "38534799",
+  "title": "Association of Meal Timing with Sleep Quality and Anxiety According to Chronotype: A Study of University Students.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Luz CSDS, Fonseca AETPD, Santos JS, Araujo JF, Duarte LL, Moreno CRC.",
+  "doi": "10.3390/clockssleep6010011",
+  "figures": [
+    "Mean dinnertime (last meal) and bedtime, stratified by students who dine before and after 20:00 h.",
+    "Anxiety and sleep quality according to chronotype and time of last meal. MEQ: Horne-Ostberg Morningness-Eveningness Questionnaire (chronotype). STAI: State-Trait Anxiety Inventory. PSQI: Pittsburgh Sleep Quality Index. EB20h: Evening types who eat before 20:00 h; EA20h: evening types who eat after 20:00 h; MB20h: morning types who eat before 20:00 h; MA20h: morning types who eat after 20:00 h. Sig",
+    "Anxiety and sleep quality according to chronotype and main meal time. MEQ: Horne-Ostberg Morningness-Eveningness Questionnaire (Chronotype). STAI: State-Trait Anxiety Inventory. PSQI: Pittsburgh Sleep Quality Index. EBF: Evening types who reported breakfast as main meal; ELD: evening types who reported lunch/dinner as main meal; MBF: morning types who reported breakfast as main meal; MLD: morning "
+  ],
+  "tables": [
+    "Average (24 h clock) wake-up, first class start, and main and last meal times of students, by course study period (classified according to class start time into morning, afternoon, and evening).",
+    "Sample characteristics for trait anxiety.",
+    "Sample characteristics for state anxiety."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001379.2287822
+}

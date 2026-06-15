@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11236817",
+  "pmid": "38910511",
+  "title": "Estimated pulse wave velocity as a forefront indicator of developing metabolic syndrome in Korean adults.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim HJ, Kim BS, Kim DW, Shin JH.",
+  "doi": "10.3904/kjim.2024.015",
+  "figures": [
+    "",
+    "Study flowchart. TG, triglyceride; HDL, high-density lipoprotein.",
+    "Time-dependent ROC curve analyses. ePWV, estimated pulse wave velocity; AUC, area under curve; ROC, receiver operating characteristic.",
+    "Kaplan–Meier curves comparing the cumulative incidence of metabolic syndrome according to tertiles of ePWV in participants. MetS, metabolic syndrome; ePWV, estimated pulse wave velocity.",
+    "Subgroup analysis for the risk of metabolic syndrome according to tertiles of ePWV. aHR, adjusted hazard ratio; CI, confidence interval; ePWV, estimated pulse wave velocity."
+  ],
+  "tables": [
+    "Baseline characteristics",
+    "Predictive value of the estimated pulse wave velocity for the development of metabolic syndrome"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041341.8235056
+}

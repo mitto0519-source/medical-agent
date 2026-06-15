@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11427227",
+  "pmid": "38263900",
+  "title": "Association between Processed Meat Protein Consumption and Incident Osteoporosis in Adults Aged 50 Years and Older: A Prospective Cohort Study Based on Korean Genome and Epidemiology Study Data (2005-2020).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee D, Lee SH, Park KH, Han K, Jeong E.",
+  "doi": "10.4082/kjfm.23.0183",
+  "figures": [
+    "Kaplan-Meier curves showing the cumulative incidence of osteoporosis according to processed meat intake. CI, confidence interval."
+  ],
+  "tables": [
+    "Baseline characteristics of the study groups",
+    "Incidence of osteoporosis during follow-up",
+    "Cox proportional hazard regression analysis for incident osteoporosis according to processed meat intake"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037707.4545534
+}

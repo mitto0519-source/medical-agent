@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10799054",
+  "pmid": "38242881",
+  "title": "Reliability of sucrose preference testing following short or no food and water deprivation-a Systematic Review and Meta-Analysis of rat models of chronic unpredictable stress.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Berrio JP, Hestehave S, Kalliokoski O.",
+  "doi": "10.1038/s41398-024-02742-0",
+  "figures": [
+    "Systematic search flow diagram.  Summary of the selection process during both the title and abstract screening and the full-text screenings. For a detailed description of the exclusion criteria, see Supplementary Table  1 . From an initial sample of 1719 unique records, 159 fulfilled all inclusion criteria after full-text screening. Of those, 132 fulfilled all criteria and had complete data. 183 u",
+    "Percentage of screened studies that performed SPT by length of food and water deprivation before the test.  The studies graphed include those employing rats exposed to CUS that habituated to the sweet and performed the SPT. This includes studies that were either included in our analysis or excluded because of other criteria (860 studies: 728 excluded, 132 included). 73.5% employed more than 12 h o",
+    "Model characteristics of the included experiments.  Distribution of the included experiments by ( A ) rat stock/strain, ( B ) sex of the animals, ( C ) age, and ( D ) length of the chronic unpredictable stress in weeks. Methodology of the SPT in the included experiments. Charts of ( E ) food and water deprivation (inner ring) and the length of the SPT that followed it (outer ring), ( F ) the type ",
+    "Random effects models.   A  Simplified forest plot of the sweet consumption in stressed animals compared to unstressed controls. Each line represents the outcome of an individual experiment with its 95% confidence interval. The dotted line to the left of the zero line represents the average effect estimate. Studies falling on the left side of the zero line found a decreased consumption in stressed",
+    "Exploration of heterogeneity.   A  Bubble plot displaying the result of the meta-regression of length of food and water deprivation when studies using short fasting and long fasting were included. Each symbol represents an individual experiment and its size the inverse variance of the estimated effect (the bigger the symbol, the smaller the variance). Some extreme effect values excluded from the f",
+    "Funnel plot of experiments reporting preference ( n  = 117).  The standard error of the experiments is plotted against their observed effect sizes (MD).The  y -axis is inverted with studies with the lowest standard errors on top."
+  ],
+  "tables": [],
+  "query": "artificial sweetener depression",
+  "fetched_at": 1779975131.448974
+}

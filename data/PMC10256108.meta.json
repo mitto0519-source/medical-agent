@@ -1,0 +1,29 @@
+{
+  "pmcid": "PMC10256108",
+  "pmid": "37299934",
+  "title": "Integration of IoT-Enabled Technologies and Artificial Intelligence (AI) for Smart City Scenario: Recent Advancements and Future Trends.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Alahi MEE, Sukkuea A, Tina FW, Nag A, Kurdthongmee W, Suwannarat K, Mukhopadhyay SC.",
+  "doi": "10.3390/s23115206",
+  "figures": [
+    "Comparison of date rate, power consumption, cost, and a coverage range of available communication technologies.",
+    "Available communication technologies in various applications for smart cities.",
+    "Trends in academic publications on “smart city”, “smart city and IoT”, and “smart city, IoT, and AI” since 2010. The graph presents the number of published articles gathered from a search conducted on the PubMed search engine.",
+    "An overview of the methodology for introducing applications in a smart city through integrating IoT and AI.",
+    "Architectures for supporting the M2M communications in smart cities.",
+    "The reference architecture for the weightless system.",
+    "The reference architecture of LoRaWAN.",
+    "Probable characteristics of IoT-enabled 5G networks that would be useful for smart cities.",
+    "Illustration of the combination of IoT, 5G and AI, which would be the integral components of a futuristic smart city."
+  ],
+  "tables": [
+    "Various definitions and concepts of the term ‘smart city’.",
+    "Evolution of Cellular communication technologies for M2M [ 94 , 95 ].",
+    "A comparison of different short-range communication standards.",
+    "Short-range communication standards for multi-tier IoT architectures.",
+    "Summary of the impact of AI on smart city technologies."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780020238.5556662
+}

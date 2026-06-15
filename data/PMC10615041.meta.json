@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10615041",
+  "pmid": "37902517",
+  "title": "Effective service coverage of long-term care among older persons in South Korea.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Leigh JH, Lee H, Yoon J, Han EJ, Park E, Jung TR, Amuthavalli Thiyagarajan J, Han ZA.",
+  "doi": "10.1093/ageing/afad120",
+  "figures": [
+    "Cascade of health gain through LTCI for older people wanting care."
+  ],
+  "tables": [
+    "Weighted percentage of study population and unmet care needs by covariates from 2014 to 2020",
+    "Association between LTC insurance and unmet care needs among people with care from 2014 to 2020"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040439.3467777
+}

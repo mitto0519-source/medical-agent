@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11831817",
+  "pmid": "39963478",
+  "title": "Systematic identification and quantification of factors and their interactions with age, sex, and panel wave influencing cognitive function in Korean older adults.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim E, Oh J, Gim J, Huh I.",
+  "doi": "10.3389/fpubh.2025.1547575",
+  "figures": [
+    "Flow chart of the filtering process of the study participants. KLoSA, Korean Longitudinal Study of Aging; K-MMSE, Korean Mini-Mental State Examination.",
+    "The significant interactions of the influencing factors with age, sex, and wave number on cognitive function.  (A)  The effect of regular exercise interacted with age and sex.  (B)  The effect of marital status interacted with age.  (C)  The effect of education level interacted with sex.  (D)  The effect of depressive symptoms interacted with sex.  (E)  The effect of depressive symptoms interacted"
+  ],
+  "tables": [
+    "Summary of the characteristics in the participants ( N  = 2,535).",
+    "The generalized least squares regression results on cognitive function, including the main and interaction effects.",
+    "The delta  R  2  of the individual factors and the factor groups."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039797.0319505
+}

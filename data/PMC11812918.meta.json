@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11812918",
+  "pmid": "40018109",
+  "title": "Health benefits of pedestrian and cyclist commuting: evidence from the Scottish Longitudinal Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Friel C, Walsh D, Whyte B, Dibben C, Feng Z, Baker G, Kelly P, Demou E, Dundas R.",
+  "doi": "10.1136/bmjph-2024-001295",
+  "figures": [
+    "Health outcomes by mode of travel to work or study in Scotland. Hazard ratios and 95% confidence intervals, active modes compared to non-active travel. CVD, cardiovascular disease."
+  ],
+  "tables": [
+    "Covariates and categories tabulated by mode of commuting",
+    "Outcome variables and definitions",
+    "Risk of various adverse health outcomes for active (cyclist, pedestrian) commuters versus non-active commuters, 2001–2018"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007996.4038596
+}

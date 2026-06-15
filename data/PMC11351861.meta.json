@@ -1,0 +1,16 @@
+{
+  "pmcid": "PMC11351861",
+  "pmid": "39194422",
+  "title": "A Survey Study of the 3D Facial Landmark Detection Techniques Used as a Screening Tool for Diagnosis of the Obstructive Sleep Apnea Syndrome.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Hornák R, Duchoň F.",
+  "doi": "10.3390/arm92040030",
+  "figures": [
+    "An example of an annotated lateral cephalogram showing all 19 landmark positions used by the authors in their study [ 17 ]. The authors aimed to develop and validate an automatic landmark annotation system.",
+    "The categorization of landmark identification techniques is presented in the study [ 26 ]. The authors have divided the techniques into two major categories: knowledge-based techniques and AI-based techniques."
+  ],
+  "tables": [],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002221.288837
+}

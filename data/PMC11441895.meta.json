@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11441895",
+  "pmid": "39354930",
+  "title": "Impact of tailored message notifications for frailty prevention in older adults: a quasi-randomized controlled study using a regression discontinuity design.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kurasawa Y, Yokokawa Y.",
+  "doi": "10.1589/jpts.36.647",
+  "figures": [
+    "Process for selecting analyzed population",
+    "Effect of message notifications on KCL score in the following year in the\npre-frailty group  KCL: Kihon Checklist",
+    "Effect of message notifications on KCL score in the following year in the frailty\ngroup  KCL: Kihon Checklist"
+  ],
+  "tables": [
+    "Message alerts to participants in the pre-frailty and frailty groups",
+    "Demographic characteristics of the analyzed population for the pre-frailty\nthreshold: comparison of message intervention vs. control groups\n(n=2,550) a",
+    "Demographic characteristics of the analyzed population for the frailty\nthreshold: comparison of message intervention vs. control groups\n(n=2,126) a",
+    "Participant characteristics (n=6,382)",
+    "Effect of message notification intervention on reducing KCL scores in the\nfollowing year for pre-frailty",
+    "Effect of message notification intervention on reducing KCL scores in the\nfollowing year for frailty",
+    "Subgroup analysis of the effect of message notification intervention on reducing\nKihon Checklist (KCL) scores in the following year for pre-frailty",
+    "Subgroup analysis of the effect of message notification intervention on reducing\nKihon Checklist (KCL) scores in the following year for frailty"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034658.4747272
+}

@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11657296",
+  "pmid": "39696457",
+  "title": "Cannabinoids for treating psychiatric disorders in youth: a systematic review of randomized controlled trials.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Köck P, Badek A, Meyer M, Klaassen AL, Walter M, Kindler J.",
+  "doi": "10.1186/s13034-024-00846-5",
+  "figures": [
+    "Forest plot for Hedges’ g. Forest plot showing standardized mean differences (Hedges’ g) with 95% confidence intervals for cannabinoid treatment versus placebo across studies. The size of squares represents the relative weight of each study in the meta-analysis based on inverse variance weighting. Horizontal lines indicate 95% confidence intervals. The black diamond at the bottom represents the ov",
+    "Cochrane Risk of Bias 2 tool (RoB2) for Cannabinoids for psychiatric symptoms in youth",
+    "Flow diagram according to PRISMA 2020"
+  ],
+  "tables": [
+    "Study overview: participants receiving cannabinoids vs. placebo, age range",
+    "Study overview: cannabinoid type, dosage, formulation and application",
+    "Study overview: description of objectives, exclusion criteria, questionnaires",
+    "Description of statistical findings and results",
+    "Overview of cannabinoid naivity, concomitant medications, and adverse events",
+    "Primary outcome effect sizes"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060493.9314322
+}

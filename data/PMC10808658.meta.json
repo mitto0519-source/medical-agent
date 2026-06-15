@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10808658",
+  "pmid": "38274418",
+  "title": "Prescribed psychotropic medication patterns among treated Foster Care enrollees: a single institution study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Cosme CG, Rudig NO, Borsellino PJ, Chea D, Krider RI, Durette L.",
+  "doi": "10.3389/fpsyt.2023.1278233",
+  "figures": [
+    "Prescribed psychotropic medication classes by age group. Psychotropic medication prescribing trends by age group between 2019 to 2022. The figure displays the percentage of children prescribed a major medication class by age group in relation to the total number of subjects in the age group.",
+    "60-day overlapping concomitant class use (2–6 classes) among prescribed psychotropic by age group. Polypharmacy was defined as having two or more psychotropic medications with 60-day concurrent use."
+  ],
+  "tables": [
+    "Demographics of 273 youths with 569 prescription treatment episodes in a 3-year treatment period.",
+    "Percent prevalence, age at first prescription, duration, dose change and polypharmacy among 273 youth with 569 prescribed psychotropics.",
+    "60-day concomitant psychotropic use according to number of concurrent classes."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780056810.6732068
+}

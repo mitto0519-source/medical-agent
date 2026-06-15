@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11309331",
+  "pmid": "38860706",
+  "title": "Synthesizing Subject-matter Expertise for Variable Selection in Causal Effect Estimation: A Case Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Debertin J, Jurado Vélez JA, Corlin L, Hidalgo B, Murray EJ.",
+  "doi": "10.1097/ede.0000000000001758",
+  "figures": [
+    "Directed acyclic graph (DAG) for the baseline outcome-driven DAG-building approach. Covariates are colored by conceptual category for ease of reading. Covariate enclosed in dashed box is unmeasured; that enclosed in solid box is restricted by study design. This graph represents the implied DAG used in the 1980 Coronary Drug Project placebo adherence assessment.",
+    "Directed acyclic graph (DAG) for the longitudinal outcome-driven DAG-building approach. Covariates are colored by conceptual category for ease of reading. Covariates enclosed in dashed boxes are unmeasured; those enclosed in solid boxes are restricted by study design. This graph represents the implied DAG used in the 2016 reanalysis of the 1980 Coronary Drug Project placebo adherence assessment in",
+    "Directed acyclic graph (DAG) for the baseline trimmed DAG, including covariates with one or fewer descendants. Covariates are colored by conceptual category for ease of reading. Dashed box indicates unmeasured covariate; solid box indicates covariate restricted by study design.",
+    "Directed acyclic graph (DAG) for the longitudinal maximal DAG, excluding covariates with one or fewer descendants. Covariates are colored by conceptual category for ease of reading. Dashed boxes indicate unmeasured covariates; solid boxes indicate covariates restricted by study design.",
+    "P  value functions for effect estimates adjusting for baseline and time-varying covariates by adjustment set. The  P  value functions display the  P  values for each set of model results compared to null hypotheses from risk difference of −3 to risk difference of 11. Dotted gray lines indicate the location of the null hypothesis risk difference of 0, and the alpha value  P  = 0.05.",
+    "",
+    ""
+  ],
+  "tables": [
+    "Final Variable List for Each Directed Acyclic Graph (DAG)-building Approach",
+    "Estimated Risk Difference (Percentage Points; 95% CI  a  ) for the Effect of Adherence on 5-year Mortality Among the Placebo Arm, Coronary Drug Project (N = 2410  b  )",
+    "Strength of Associations With Death and Adherence for Removed and Newly Added Covariates Identified During the Maximal DAG-building Process"
+  ],
+  "query": "directed acyclic graph DAG epidemiology",
+  "fetched_at": 1780021329.4459126
+}

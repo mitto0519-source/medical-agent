@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11609732",
+  "pmid": "39460501",
+  "title": "Real-world predictors of severe psychological distress during the COVID-19 pandemic in Japan: Insights from a large-scale internet-based cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Tokumitsu K, Sugawara N, Tabuchi T, Yasui-Furukori N.",
+  "doi": "10.1002/npr2.12495",
+  "figures": [
+    "Flow chart of study population for analysis."
+  ],
+  "tables": [
+    "Clinical and demographic characteristics of study participants.",
+    "Predictors of severe psychological distress based on binomial logistic regression analysis with inverse probability weighting."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048274.9540389
+}

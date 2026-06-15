@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11026505",
+  "pmid": "38637538",
+  "title": "Exploring the role of apolipoprotein E gene promoter polymorphisms in susceptibility to normal-tension glaucoma in a Korean population.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park YJ, Shin HY, Kim JI.",
+  "doi": "10.1038/s41598-024-58442-8",
+  "figures": [
+    "Gene structure of single-nucleotide polymorphisms (SNPs) in the apolipoprotein E ( APOE ) gene locus."
+  ],
+  "tables": [
+    "General information and MAF from 1000 Genomes database of five investigated SNPs of the  APOE  gene.",
+    "Genotype and allele frequencies of the promoter region and exon 4 SNPs of the  APOE  gene.",
+    "Haplotype frequencies of the five SNPs of the NTG and control groups."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037592.830852
+}

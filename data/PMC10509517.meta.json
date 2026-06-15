@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10509517",
+  "pmid": "37314019",
+  "title": "Increased glutamate in type 2 diabetes in the Korean population is associated with increased plasminogen levels.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lee HJ, Yeom JW, Yun JH, Jang HB, Yoo MG, Kim HJ, Koo SK, Lee HJ.",
+  "doi": "10.1111/1753-0407.13429",
+  "figures": [
+    "Insulin resistance elevates plasminogen levels. (A) Transcriptional levels of glutamate‐related genes ( FRMD4B ,  PLG ,  PARD3 ) were analyzed in SK‐Hep‐1 cells treated with palmitate (PA; 24 h, 500 μM) via real‐time polymerase chain reaction. (B and C) The expression of plasminogen was analyzed in whole‐cell lysates of SK‐Hep‐1 cells treated with thapsigargin (24 h; 0, 0.3, 0.5, or 1 μM) or oligo",
+    "Excessive glutamate‐induced insulin resistance elevates plasminogen levels. (A) Protein expression associated with the endoplasmic reticulum stress response and gluconeogenesis was analyzed in whole‐cell lysates of SK‐Hep‐1 cells treated with monosodium glutamate (MSG; 24 h; 0, 10, 20, or 40 mM) by western blotting. (B and C) Expression of plasminogen and mGluR5 (metabotropic glutamate receptor 5)",
+    "mGluR5 activation increased plasminogen levels during insulin resistance. (A) The expression of mGluR5 was analyzed in whole‐cell lysates of SK‐Hep‐1 cells treated with oligomycin (24 h; 20 or 40 μM) by western blotting. (B) Whole lysates were extracted from liver tissues of C57BL6 mice fed a high‐fat diet and age‐matched mice fed a standard diet, and mGluR5 levels were analyzed via western blotti",
+    "Excessive glutamate increases plasminogen levels through the regulation of plasminogen activator inhibitor levels. (A and B) The levels of secreted plasminogen and plasminogen activator inhibitor were measured in supernatants of SK‐Hep‐1 cells treated with monosodium glutamate (MSG; 24 h; 0, 10, 20, or 40 mM) via ELISA. *Significant differences between groups at  p  &lt; .05. **Significant differe"
+  ],
+  "tables": [
+    "Association of baseline glutamate levels with the incidence of diabetes."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041662.733452
+}

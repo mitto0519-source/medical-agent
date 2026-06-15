@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11515297",
+  "pmid": "39448937",
+  "title": "Insomnia symptoms in children and adolescents: screening for sleep problems with the two-item Sleep Condition Indicator (SCI-02).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Illingworth G, Mansfield KL, Skripkauskaite S, Fazel M, Waite F.",
+  "doi": "10.1186/s12889-024-20310-5",
+  "figures": [
+    "Estimated latent sleep profiles. The y-axis represents scaled and centered values for each classification variable and the shaded area represents 95% CIs",
+    "Relative odds ratios (ORs) comparing the likelihood of sleep profiles per hypothesised predictor variable (reference group: Good Sleepers). Error bars represent 95% CIs for the ORs. OR and 95% CI &gt; 1 (to right of dotted line) indicate an increased likelihood of belonging to one of these sleep profiles compared with Good Sleepers, whereas OR and 95% CI &lt; 1 (to left of dotted line) indicate a "
+  ],
+  "tables": [
+    "Sample characteristics for those who provided SCI-02 with at least 2 indicator variables ( n  = 29,304)",
+    "Spearman’s rho correlation matrix for classification variables",
+    "Characteristics of SCI-02, indicator and predictor variables for sleep profiles"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001704.4335237
+}

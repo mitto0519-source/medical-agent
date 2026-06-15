@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC11298268",
+  "pmid": "39089701",
+  "title": "Decreased Serum Cocaine- and Amphetamine-Regulated Transcript Level in Internet Gaming Disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Cho A, Lee H, Cheon DH, Yoo SY, Pyeon A, Chun JW, Back JH, Park YE, Kim DJ, Lee JE, Choi JS.",
+  "doi": "10.30773/pi.2023.0397",
+  "figures": [
+    "Box-and whisker plots with dots representing the serum CART concentrations of 31 IGD and 42 HC samples. The average serum CART concentrations in the IGD and HC groups were 0.967 and 1.513 ng/mL, respectively (p=0.023, Mann–Whitney test). CART, cocaine- and amphetamine-regulated transcript; IGD, internet gaming disorder; HC, healthy control."
+  ],
+  "tables": [
+    "Demographic and clinical characteristics in IGD vs. HC"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998339.6763544
+}

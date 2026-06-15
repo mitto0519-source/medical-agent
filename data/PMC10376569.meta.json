@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC10376569",
+  "pmid": "37504058",
+  "title": "Prioritizing Career Preparation: Learning Achievements and Extracurricular Activities of Undergraduate Students for Future Success.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kang D.",
+  "doi": "10.3390/bs13070611",
+  "figures": [
+    "Korean undergraduates’ thoughts on their preparation level and important factors on job preparation. Notes. All measurement units are expressed as percentages (%). Importance ( Panel A ) and difficulties ( Panel B ) are the result of multiple choices. The sample size was 6006 undergraduate students in Korea. Source: Kim, Min [ 1 ], designed and integrated by the author.",
+    "The research model of this study.",
+    "Nine degree of answer points in respondents’ pairwise comparison. Notes. This research revises Saaty [ 23 ], Podvezko [ 28 ], and Zhou and Du [ 29 ]’s expressions.",
+    "Analytic flow of this research. Notes. This study adopts and revises the analytic framework of Byun [ 30 ] and Yoon and Choi [ 31 ].",
+    "The matrix of pairwise comparison in the element       C        . Notes. This research revises Saaty [ 23 ], Zhou and Du [ 29 ], Kubler, and Robert [ 32 ]’s expressions. Elements (      C  1    ,      C  2    ,  …  ,      C  m        with value       v   i  ,  j     .     i  ,  j  =  1  ,     2  ,     …  ,     m     ) in a layer  k .       b   i  ,  j     =   w  j    /   w  i    .            w  i ",
+    "Values of random inconsistency with the number of elements. Notes. This research adopts Saaty [ 23 ] and Zhou and Du [ 29 ]’s values of RI. RI: random inconsistency or index; FOD: first-order differences.",
+    "Correlation table between demographic and job-relevant factors. Notes. All the variables in the figures are dummy factors. fem1: female; ptj1: students experiencing a part-time job more than once. int1: students experiencing internships more than once; nom1: students majoring in topics other than management; lics1: students acquiring licenses more than once; gyr4: whether students were freshmen (=",
+    "The AHP results without experience in undertaking internships. Notes. Unit: percentage (%); Global: the weights of global (value) are the weighted sum of the local values (performance, importance, and help). Help: need for external help; Extra activities: extracurricular activities; Major: GPA and/or knowledge of major courses; Networking: networking with alumni/universities.",
+    "The AHP results with experience in acquiring employment-related qualifications. Notes. Unit: percentage (%); Global: the weights of global (value) are the weighted sum of the local values (performance, importance, and help).",
+    "The AHP results with experience in performing extracurricular activities. Notes. Unit: percentage (%); Global: the weights of global (value) are the weighted sum of the local values (performance, importance, and help)."
+  ],
+  "tables": [
+    "Forty-one survey questions in this research (Panel A, B, C1, C2, C3, and D).",
+    "Meanings and references of criteria and alternative activities about job preparation.",
+    "Descriptive statistics of demographic and job-relevant factors.",
+    "Main results by AHP analysis.",
+    "Results of sub-analysis with different features of job preparation."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780020070.6729932
+}

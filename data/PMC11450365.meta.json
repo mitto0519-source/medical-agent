@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11450365",
+  "pmid": "39298753",
+  "title": "Association Between Internet Gaming Disorder and Suicidal Ideation Mediated by Psychosocial Resources and Psychosocial Problems Among Adolescent Internet Gamers in China: Cross-Sectional Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yu Y, Wu AMS, Fong VWI, Zhang J, Li JB, Lau JTF.",
+  "doi": "10.2196/48439",
+  "figures": [
+    "Structural equation modeling testing the mediation effect of psychosocial coping resources and psychosocial problems between internet gaming disorder (IGD) and suicidal ideation (standard coefficients were reported)."
+  ],
+  "tables": [
+    "Descriptive statistics.",
+    "Between-group differences in psychosocial resources and problems by IGD status (N=1693).",
+    "Correlation analysis (n=1693).",
+    "Univariate and multivariate logistic regression analysis on the individual associations between independent variables and suicidal ideation (n=1693). There are 10 individual models in total, 5 for univariate logistic regression and the other 5 for multivariate logistic regression."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998800.4669285
+}

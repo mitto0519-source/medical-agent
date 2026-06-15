@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10657007",
+  "pmid": "37978468",
+  "title": "The relationship between internet gaming disorder and psychotic experiences: cyberbullying and insomnia severity as mediators.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Fekih-Romdhane F, Lamloum E, Loch AA, Cherif W, Cheour M, Hallit S.",
+  "doi": "10.1186/s12888-023-05363-x",
+  "figures": [
+    "Conceptual models for the possible pathways linking IGD, insomnia, cyberbullying/cyber-victimization and psychotic experiences",
+    "( a ) Relation between internet gaming disorder and insomnia severity (R 2  = .247); ( b ) Relation between insomnia severity and paranoid ideation (R 2  = .358); ( c ) Total effect of internet gaming disorder on paranoid ideation (R 2  = .354); ( c’ ) Direct effect of internet gaming disorder on paranoid ideation. Numbers are displayed as regression coefficients (standard error). * p  &lt; 0.05; ",
+    "( a ) Relation between internet gaming disorder and cyberbullying (R 2  = .260); ( b ) Relation between cyberbullying and psychoticism (R 2  = .452); ( c ) Total effect of internet gaming disorder on psychoticism (R 2  = .447); ( c’ ) Direct effect of internet gaming disorder on psychoticism. Numbers are displayed as regression coefficients (standard error). ** p  &lt; 0.01; *** p  &lt; 0.001",
+    "( a ) Relation between insomnia severity and internet gaming disorder (R 2  = .252); ( b ) Relation between internet gaming disorder and psychoticism (R 2  = .455); ( c ) Total effect of insomnia severity on psychoticism (R 2  = .444); ( c’ ) Direct effect of insomnia severity on psychoticism. Numbers are displayed as regression coefficients (standard error). * p  &lt; 0.05; ** p  &lt; 0.01; *** p"
+  ],
+  "tables": [
+    "Sociodemographic and other characteristics of the participants (N = 851)",
+    "Bivariate analysis of factors associated with paranoid ideation and psychoticism",
+    "Correlation matrix of continuous variables",
+    "Mediation analyses results, taking the internet gaming disorder as the independent variable, insomnia severity/cyber-victimization/cyberbullying as mediators and paranoid ideation/psychoticism as dependent variables"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998777.1057634
+}

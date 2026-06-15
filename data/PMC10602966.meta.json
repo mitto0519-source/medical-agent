@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10602966",
+  "pmid": "37728764",
+  "title": "Frequency of actionable secondary findings in 7472 Korean genomes derived from the National Project of Bio Big Data pilot study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kim Y, Kim JM, Cho HW, Park HY, Park MH.",
+  "doi": "10.1007/s00439-023-02592-8",
+  "figures": [
+    "Flow chart for screening pathogenic/likely pathogenic variants in actionable secondary finding genes from the ACMG SF list v3.1.  GS  genome sequencing,  KoGES  Korean Genome and Epidemiology Study,  AF  allele frequency,  P/LP  pathogenic/likely pathogenic",
+    "Secondary finding rate in the study participants.  a  SF rate among the total participants.  b  SF variant rate according to phenotypes.  c  SF variant rate according to genes.  SF  secondary finding; the  OTC  is related to the inborn errors of metabolism phenotypes",
+    "Frequency of shared and de novo secondary finding pathogenic variants among rare disease study probands in trio/quartet/quintet families.  a  Overall P/LP variant frequency.  b  P/LP variant frequency of related phenotypes.  c  P/LP variant frequency of the SF genes.  SF  secondary finding; Unknown, P/LP variants of the probands in singleton or duo family. The  OTC  is related to the inborn errors"
+  ],
+  "tables": [
+    "Pathogenic/likely pathogenic variants identified in five or more participants among the study participants",
+    "Secondary finding frequency according to the study participants"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037713.0658731
+}

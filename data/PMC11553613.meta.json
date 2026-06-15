@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11553613",
+  "pmid": "39534147",
+  "title": "Associations between cognitive disengagement syndrome, Internet addiction, and Internet gaming disorder among medical students - A cross-sectional study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Murugan Y, Thakkar D, Ram R, Dhanapal K.",
+  "doi": "10.4103/ipj.ipj_325_23",
+  "figures": [
+    "Shows the Correlation hHeatmap"
+  ],
+  "tables": [
+    "Socio-demographic characteristics of the participants,  n =303",
+    "Association between IA and other factors in the study participants",
+    "Association between IGD and other factors in the study participants",
+    "Correlation matrix between IGD, IA, and SCT"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998610.792449
+}

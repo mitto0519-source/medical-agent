@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10876444",
+  "pmid": "37946412",
+  "title": "Age-specific findings on lifestyle and trajectories of cognitive function from the Korean Longitudinal Study of Aging.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lim S, Yoo E, Hong I, Park JH.",
+  "doi": "10.4178/epih.e2023098",
+  "figures": [
+    ""
+  ],
+  "tables": [
+    "Demographic characteristics of the participants according to age group",
+    "Lifestyle characteristics of the participants according to age group",
+    "Intercepts and slopes of the cognitive trajectories",
+    "Effects of lifestyle factors on intercepts and slopes among age group  1"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040474.4554968
+}

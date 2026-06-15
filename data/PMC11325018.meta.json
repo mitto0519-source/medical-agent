@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11325018",
+  "pmid": "39143076",
+  "title": "Identification of interactions between genetic risk scores and dietary patterns for personalized prevention of kidney dysfunction in a population-based cohort.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Jang MJ, Tan LJ, Park MY, Shin S, Kim JM.",
+  "doi": "10.1038/s41387-024-00316-z",
+  "figures": [
+    "Flow chart of the participants for the kidney dysfunction study.  Participants were selected from the Ansan and Ansung cohort of the KoGES study, starting with an initial pool of 10,030 individuals. Exclusions were made for missing dietary intake or serum creatinine data, history of CKD, extreme energy intake or BMI, and missing genotype data, resulting in a final sample of 8230 participants.",
+    "Manhattan plot of the genome-wide association analysis results of eGFR levels.  The GWAS results for eGFR levels are shown, with –log 10 \n P -values for SNPs plotted across all chromosomes. The red horizontal line indicates the genome-wide significance threshold of  P -value &lt; 5 × 10 –8 .",
+    "Functional analysis of significant genes.   A  Gene Ontology treemaps of biological processes, cell components, and molecular function according to significant genes.  B  Bar graph of Kyoto Encyclopedia of Genes and Genomes (KEGG) pathways.",
+    "Factor loading for major dietary patterns identified via factor analysis.   A  “Prudent pattern”,  B  “Flour-based and animal food pattern”,  C  “White rice pattern”. The dietary patterns were named based on the top food groups that had the highest factor-loading values."
+  ],
+  "tables": [
+    "Basic characteristics according to genetic risk of kidney dysfunction among Korean adults.",
+    "The numbers of available SNPs in the Ansung and Ansan cohort and average interval distances between adjacent SNPs.",
+    "The odds ratios of kidney dysfunction according to the dietary pattern score tertiles stratified by the GRS among Korean adults.",
+    "The odds ratios of kidney dysfunction according to the joint categories of each dietary pattern score and the GRS among Korean adults."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037458.19991
+}

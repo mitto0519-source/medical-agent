@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10005935",
+  "pmid": "36494461",
+  "title": "Brain ageing in schizophrenia: evidence from 26 international cohorts via the ENIGMA Schizophrenia consortium.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Constantinides C, Han LKM, Alloza C, Antonucci LA, Arango C, Ayesa-Arriola R, Banaj N, Bertolino A, Borgwardt S, Bruggemann J, Bustillo J, Bykhovski O, Calhoun V, Carr V, Catts S, Chung YC, Crespo-Facorro B, Díaz-Caneja CM, Donohoe G, Plessis SD, Edmond J, Ehrlich S, Emsley R, Eyler LT, Fuentes-Claramonte P, Georgiadis F, Green M, Guerrero-Pedraza A, Ha M, Hahn T, Henskens FA, Holleran L, Homan S, Homan P, Jahanshad N, Janssen J, Ji E, Kaiser S, Kaleda V, Kim M, Kim WS, Kirschner M, Kochunov P, Kwak YB, Kwon JS, Lebedeva I, Liu J, Mitchie P, Michielse S, Mothersill D, Mowry B, de la Foz VO, Pantelis C, Pergola G, Piras F, Pomarol-Clotet E, Preda A, Quidé Y, Rasser PE, Rootes-Murdy K, Salvador R, Sangiuliano M, Sarró S, Schall U, Schmidt A, Scott RJ, Selvaggi P, Sim K, Skoch A, Spalletta G, Spaniel F, Thomopoulos SI, Tomecek D, Tomyshev AS, Tordesillas-Gutiérrez D, van Amelsvoort T, Vázquez-Bourgon J, Vecchio D, Voineskos A, Weickert CS, Weickert T, Thompson PM, Schmaal L, van Erp TGM, ",
+  "doi": "10.1038/s41380-022-01897-w",
+  "figures": [
+    "Case-control differences in brain-PAD.  Forest plot of differences in mean brain-PAD scores (predicted brain age - chronological age) between patients with schizophrenia (SZ) and controls across (26 −1) 25 cohorts (a total of 2792 cases and 2598 controls; excluding 1 cohort that contributed data for patients only), controlling for sex, age and age 2  and scanning site. Regression coefficients (in ",
+    "Correlation coefficients of predicted brain age and FreeSurfer features across control and schizophrenia (SZ) groups.  Bivariate correlations are shown to provide an indication of the relative contribution of features in brain age prediction. The figure shows Pearson correlations between predicted brain age and cortical thickness features (top row), cortical surface areas (middle row) and subcorti"
+  ],
+  "tables": [
+    "Participant characteristics for patients and controls across cohorts.",
+    "Clinical characteristics and brain-PAD in individuals with SZ."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057672.078365
+}

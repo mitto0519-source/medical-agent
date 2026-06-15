@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11222592",
+  "pmid": "38966010",
+  "title": "Assessing causality between obstructive sleep apnea with the dyslipidemia and osteoporosis: a Mendelian randomization study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Hong PY, Liu D, Liu A, Su X, Zhang XB, Zeng YM.",
+  "doi": "10.3389/fgene.2024.1359108",
+  "figures": [
+    "Mendelian randomization model of OSA, Dyslipidemia and Osteoporosis. Abbreviation: OSA, obstructive sleep apnea.",
+    "The scatter plots of the association between genetically predicted OSA and dyslipidemia. Abbreviation: TG, serum triglycerides; TC, serum total cholesterol; LDL-C, serum low-density lipoprotein cholesterol; HDL-C, serum high-density lipoprotein cholesterol.",
+    "Multivariate Mendelian randomization analysis of the causal effect of dyslipidemia on OSA. Abbreviation: TG, serum triglycerides; TC, serum total cholesterol; LDL-C, serum low-density lipoprotein cholesterol; HDL-C, serum high-density lipoprotein cholesterol."
+  ],
+  "tables": [
+    "Details of the GWASs included in the Mendelian randomization.",
+    "MR results for the relationship between OSA on level of lipids.",
+    "MR results for the relationship between dyslipidemia and Gout on OSA."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002446.3349388
+}

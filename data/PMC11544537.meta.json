@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11544537",
+  "pmid": "39525462",
+  "title": "Analysis of the relationship between sleep-related disorders and cadmium in the US population.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Luo Z, Zhu N, Xiong K, Qiu F, Cao C.",
+  "doi": "10.3389/fpubh.2024.1476383",
+  "figures": [
+    "Flowchart for selecting eligible participants in this study.",
+    "Non-linear relationship between blood cadmium concentrations and the prevalence of sleep-related disorders by restricted cubic spline fitting (RCS). (A) Cadmium concentrations and insufficient sleep. (B) Cadmium concentrations and excessive sleep. (C) Cadmium concentrations and obstructive sleep apnea (OSA) symptoms. (D) Cadmium concentrations and trouble sleeping; (E) Cadmium concentrations and d"
+  ],
+  "tables": [
+    "Weighted characteristics of participants in the NHANES (2005–2008 and 2015–2020) by blood cadmium levels.",
+    "Weighted logistic regression (OR and 95% CI) of sleep duration with blood cadmium in NHANES (2005–2008 and 2015–2020).",
+    "Weighted logistic regression (OR and 95% CI) of sleep-related disorders with blood cadmium in NHANES (2005–2008 and 2015–2020).",
+    "Subgroup analysis for the association between blood cadmium level and the risk of insufficient sleep."
+  ],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002451.8108475
+}

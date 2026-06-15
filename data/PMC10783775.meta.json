@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10783775",
+  "pmid": "38206920",
+  "title": "Changes in instrumental activities daily living limitations and their associated factors according to gender in community-residing older adults: A longitudinal cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Moon S, Oh E, Chung D, Hong GS.",
+  "doi": "10.1371/journal.pone.0296796",
+  "figures": [
+    "Study flow chart.",
+    "Changes in IADL total scores over 14 years.",
+    "Changes in IADL limitation prevalence over 14 years (Total participants).",
+    "Changes in IADL limitation prevalence over 14 years (Men, Women)."
+  ],
+  "tables": [
+    "Characteristics of the participants at baseline (2006) (N = 1,230).",
+    "Univariate logistic regression models of total IADL limitations and the top three ranked IADL limitations after 14 years (N = 1,230).",
+    "Multivariate logistic regression models of total IADL limitations and the top three ranked IADL limitations after 14 years (N = 1,230)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040670.2740803
+}

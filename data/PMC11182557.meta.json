@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11182557",
+  "pmid": "38887253",
+  "title": "Prevalence of smartphone addiction and its relation with psychological distress and internet gaming disorder among medical college students.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhang M, Chi C, Liu Q, Zhang Y, Tao X, Liu H, Xuan B.",
+  "doi": "10.3389/fpubh.2024.1362121",
+  "figures": [
+    "Sample selection process for this cross-sectional study.",
+    "Smartphone addiction total score vs. K-6 total score Pearson Correlation.",
+    "Smartphone addiction total score vs. internet gaming disorder total score Pearson Correlation.",
+    "Forest plot: factors affecting smartphone addiction using binary logistic regression analysis."
+  ],
+  "tables": [
+    "Participants’ demographic information ( n  = 656).",
+    "Characteristics of the participants based on the presence of smartphone addiction ( n  = 656).",
+    "Binary logistic regression analysis of factors associated with smartphone addiction."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998676.7194319
+}

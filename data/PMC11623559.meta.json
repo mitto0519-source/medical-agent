@@ -1,0 +1,31 @@
+{
+  "pmcid": "PMC11623559",
+  "pmid": "39642115",
+  "title": "Getting there: How commuting time and distance impact students' health.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chairassamee N, Chancharoenchai K, Saraithong W.",
+  "doi": "10.1371/journal.pone.0314687",
+  "figures": [
+    "Vehicle percentage used by Thai students.   Source:  Authors’ calculations from NSO data.",
+    "Vehicles percentage used by Thai students in Bangkok.   Source:  Authors’ calculations from NSO data.",
+    "Vehicles percentage used by Thai students in other provinces.   Source:  Authors’ calculations from NSO data.",
+    "School commuting distance by area.   Note:  No data available in 2015.  Source:  Authors’ calculations from NSO data.",
+    "School commuting time by area.   Source:  Authors’ calculations from NSO data.",
+    "School commuting distance per time by area.   Note:  No data available in 2015.  Source:  Authors’ calculations from NSO data.",
+    "Conceptual framework of commuting effects on well-being.   Note:  * indicates the variable investigated in the present study.  Source:  Created by the authors.",
+    "Percentage of students by school-home location.   Note:  All areas in Bangkok are classified as municipal areas.  Source:  Authors’ calculations from NSO data.",
+    "Average commuting distance by school-home location.   Note:  All areas in Bangkok are classified as municipal areas.  Source:  Authors’ calculations from NSO data.",
+    "Average commuting time by school-home location.   Note:  All areas in Bangkok are classified as municipal areas.  Source:  Authors’ calculations from NSO data.",
+    "Average commuting distance per hour by school-home location.   Note:  All areas in Bangkok are classified as municipal areas.  Source:  Authors’ calculations from NSO data."
+  ],
+  "tables": [
+    "Descriptive statistics.",
+    "Commuting effects on mental health.",
+    "Commuting effects on physical health.",
+    "Commuting effects on mental health by school-home location in other provinces.",
+    "Commuting effects on physical health by school-home location in other provinces."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007109.9062793
+}

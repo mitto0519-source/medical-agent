@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11327438",
+  "pmid": "39157288",
+  "title": "Associations between socioeconomic inequalities and progression to psychological and cognitive multimorbidities after onset of a physical condition: a multicohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhou Y, Kivimäki M, Yan LL, Carrillo-Larco RM, Zhang Y, Cheng Y, Wang H, Zhou M, Xu X.",
+  "doi": "10.1016/j.eclinm.2024.102739",
+  "figures": [
+    "The flowchart of the study design. ( A ) The study design and concept map. ( B ) The participants selection. HRS, the US Health and Retirement Study; ELSA, the English Longitudinal Study on Ageing; SHARE, the Survey of Health, Ageing and Retirement in Europe; CHARLS, the China Health and Retirement Longitudinal Study; KLoSA, the Korean Longitudinal Study of Aging.",
+    "Associations between socioeconomic status and progression of psychological and cognitive multimorbidities after onset of a specific physical condition. PP-MM, physical-psychological multimorbidity; PC-MM, physical-cognitive multimorbidity; PPC-MM, physical-psychological-cognitive multimorbidity. Socioeconomic status is a summed score (ranging 0–5) of educational level (0, 1, or 2) and total househ",
+    "Meta-analyses of associations between socioeconomic status and progression of psychological and cognitive multimorbidities in participants with a new-onset physical condition including study-specific findings. (A) Progression to physical-psychological multimorbidity; (B) progression to physical-cognitive multimorbidity; (C) progression to physical-psychological-cognitive multimorbidity. The models",
+    "Multi-state models for health transitions by socioeconomic status . (A) Numbers (percentages) of participants in transition from a physical condition to physical, psychological and cognitive multimorbidities. (B) Mean multimorbidity-free time of participants in transition from a physical condition to multimorbidities. (C) Hazard ratios and 95% confidence intervals for associations between socioeco"
+  ],
+  "tables": [
+    "Characteristics of participants at the onset of a physical condition by socioeconomic status (n = 20,250).",
+    "Events, multimorbidity-free time, and incidence rates of psychological and cognitive multimorbidities in participants with a new-onset physical condition (n = 20,250).",
+    "Subdistribution hazard ratios and 95% confidence intervals for the association between socioeconomic status and progression to psychological and cognitive multimorbidities in participants with a new-onset physical condition (n = 20,250)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040118.5817158
+}

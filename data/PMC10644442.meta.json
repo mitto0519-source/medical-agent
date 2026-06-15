@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10644442",
+  "pmid": "37957738",
+  "title": "Comparison of METS-IR and HOMA-IR for predicting new-onset CKD in middle-aged and older adults.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Yoon J, Heo SJ, Lee JH, Kwon YJ, Lee JE.",
+  "doi": "10.1186/s13098-023-01214-7",
+  "figures": [
+    "Flow chart of the study population. KoGES, Korean Genome and Epidemiology Study;  METS-IR  metabolic score for insulin resistance,  HOMA-IR  homeostatic assessment for insulin resistance,  CKD  chronic kidney disease,  AUROC  area under the receiver operating characteristic curve",
+    "Comparison of predictive power for prevalent chronic kidney disease of metabolic score for insulin resistance and homeostasis model assessment for insulin resistance. A comparison was made between the predictive powers of METS-IR and HOMA-IR for prevalent CKD in the 9261 participants at baseline using the area under the receiver operating characteristic curves. The cut-off values for such predicti",
+    "Forest plot showing the predictive power for incident chronic kidney disease by subgroups according to sex and diabetes mellitus, hypertension, smoking, and obesity status. During the 14 year follow-up period, Heagerty’s integrated AUC was used as time-dependent AUC with an unadjusted survival analysis framework approach. A bootstrapping method to calculate the differences and 95% CI of Heagerty’s"
+  ],
+  "tables": [
+    "Baseline characteristics of the population with or without CKD at the baseline survey",
+    "Baseline characteristics of the study population according to new-onset CKD",
+    "Cox proportional hazard regression model for CKD incidence of two different insulin resistance indices",
+    "Comparison of the predictive power for CKD incidence between METS-IR and HOMA-IR using time-dependent receiver operating characteristics curves analysis"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780042149.654884
+}

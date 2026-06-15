@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10284813",
+  "pmid": "37344483",
+  "title": "A better alignment between chronotype and school timing is associated with lower grade retention in adolescents.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Rodríguez Ferrante G, Goldin AP, Sigman M, Leone MJ.",
+  "doi": "10.1038/s41539-023-00171-0",
+  "figures": [
+    "Slopes of the regression lines between chronotype (i.e. MSFsc) and academic performance depend on school timing, age and school subject.  Slopes for 1st year and 5th year students. A null slope implies no association. A negative slope indicates higher academic performance for earlier chronotypes. A positive slope indicates higher academic performance for later chronotypes; raw values are provided ",
+    "Grade retention depends on academic performance, chronotype, and its interaction with school timing.  The proportion of repeating students in different school timings varies between quadrants defined by chronotype (i.e. MSFsc) and grades medians. We calculated the mean grade for either Math and Language for each student, and then we divided those values in two groups in each school timing: the one"
+  ],
+  "tables": [
+    "Slopes intercepts and grades for a chronotype 1 h later than average.",
+    "Grade retention depends on the interplay between chronotype, school timing and grades."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001699.1275985
+}

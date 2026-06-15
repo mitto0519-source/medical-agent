@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10955651",
+  "pmid": "38516105",
+  "title": "Role of cardiovascular health factors in mediating social inequalities in the incidence of dementia in the UK: two prospective, population-based cohort studies.",
+  "year": 2024,
+  "journal": "",
+  "authors": "van der Heide FCT, Valeri L, Dugravot A, Danilevicz I, Landre B, Kivimaki M, Sabia S, Singh-Manoux A.",
+  "doi": "10.1016/j.eclinm.2024.102539",
+  "figures": [
+    "Counterfactual mediation framework.  Directed Acyclic Graph (DAG) for the analysis of the contribution of modifiable risk factors, estimated from the Life's Essential 8 score, to the association between SEP and dementia, and secondary outcomes (stroke, coronary heart disease, and mortality).  Abbreviation  SEP: socioeconomic position (measured using occupational position in Whitehall II and using ",
+    "Flow-chart for participants included in the analyses in Whitehall II and UK Biobank cohort studies.  ∗ not mutually exclusive.  Abbreviation  SEP: socioeconomic position."
+  ],
+  "tables": [
+    "Baseline characteristics of participants in Whitehall II and UK Biobank studies as a function of dementia, stroke, coronary heart disease, and mortality.",
+    "Associations of SEP with Life's Essential 8 score, and that of Life's Essential 8 score with all outcomes.",
+    "Association of SEP with dementia and secondary outcomes (stroke, coronary heart disease, and mortality): total, direct, and indirect effects and the proportion mediated by Life's Essential 8 score.",
+    "Associations of SEP with Alzheimer's disease and vascular dementia: total, direct, and indirect effects in UK Biobank."
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991754.494906
+}

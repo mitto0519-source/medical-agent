@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11783840",
+  "pmid": "39885467",
+  "title": "Longitudinal association between hemoglobin and lung function with insights into the incidence of airflow obstruction: an observational study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kim J, Kim YT, Leem AY, Jung JY, Kim YS, Park Y.",
+  "doi": "10.1186/s12890-025-03505-3",
+  "figures": [
+    "Flowchart of the participant selection process. Chronic lung disease refers to either baseline FEV 1 /FVC &lt; 70% or current inhaler use. Abnormal hemoglobin level indicates anemia or erythrocytosis  Abbreviations: FEV 1 , forced expiratory volume in 1 s; FVC, forced vital capacity; Hb, hemoglobin"
+  ],
+  "tables": [
+    "Baseline characteristics and follow-up data of study participants",
+    "Multiple linear regression analysis of the cross-sectional associations between hemoglobin level and lung function in men, women, and postmenopausal women",
+    "Multiple linear mixed regression analysis of the long-term associations between hemoglobin level and lung function in men, women, and postmenopausal women",
+    "Odds ratio for the incidence of airflow obstruction according to hemoglobin levels in men, women, and postmenopausal women"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041301.3838098
+}

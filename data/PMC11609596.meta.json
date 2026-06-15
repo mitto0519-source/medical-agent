@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11609596",
+  "pmid": "39618343",
+  "title": "Change in Cardiorespiratory Fitness and the Risk of Colorectal and Prostate Cancer Incidence in Men.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Bojsen-Møller E, Bolam KA, Väisänen D, Paulsson S, Lindwall M, Rundqvist H, Nyberg J, Åberg M, Ekblom-Bak E.",
+  "doi": "10.1002/cam4.70430",
+  "figures": [
+    "Study participant characteristics in relation to cardiorespiratory fitness level at conscript.",
+    "Restricted cubic splines of the cox proportional hazard model examining the association between standardised change in relative V̇O 2max  (mL∙kg −1 ∙min −1 , upper figures) and absolute V̇O 2max  (L∙min −1 , bottom figures). Model 1: Baseline V̇O 2max , Model 2: + education, Model 3: + body mass index (BMI) and cardiovascular disease co‐morbidity.  Z ‐scores at conscription are calculated with the"
+  ],
+  "tables": [
+    "Study participant characteristics in relation to cardiorespiratory fitness level at conscript.",
+    "Associations between cardiorespiratory fitness at conscription and at HPA and colorectal and prostate cancer incidence.",
+    "Associations between change in cardiorespiratory fitness between conscription and HPA, and colorectal and prostate cancer incidence.",
+    "Associations between change in cardiorespiratory fitness between conscription and HPA, and colorectal and prostate cancer incidence, in relation to tertiles of CRF level at conscription."
+  ],
+  "query": "cardiorespiratory fitness youth",
+  "fetched_at": 1780011385.6149125
+}

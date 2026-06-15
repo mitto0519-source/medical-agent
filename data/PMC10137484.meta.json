@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10137484",
+  "pmid": "37107934",
+  "title": "Intergenerational Resource Transfer Patterns between Parents and Children in South Korea and Depression.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kim J, Chon Y, Kim MI.",
+  "doi": "10.3390/healthcare11081100",
+  "figures": [],
+  "tables": [
+    "Latent Class Analysis Results (n = 5099).",
+    "Components of each class and naming.",
+    "Sociodemographic Factors in Each Pattern.",
+    "Multinomial Logistic Regressions.",
+    "Mean Comparison of CES-D Scores by Patterns.",
+    "Multiple Regression Analysis on Depression by Patterns  1 ."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040841.3210974
+}

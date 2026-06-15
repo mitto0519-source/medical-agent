@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC10623872",
+  "pmid": "37924133",
+  "title": "Internet gaming disorder and psychological well-being among university students in Egypt.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Shouman A, Elez WA, Ibrahim IMA, Elwasify M.",
+  "doi": "10.1186/s40359-023-01418-6",
+  "figures": [
+    "Flowchart of sample size calculation",
+    "Distribution of internet gaming scale",
+    "Distribution of psychological well-being scale",
+    "Scatter diagram showing the correlation between internet gaming disorder scores and psychological well-being scale scores among the sample"
+  ],
+  "tables": [
+    "sociodemographic data of the study group:",
+    "Pattern of internet and gaming use",
+    "Univariate analysis of the predictors of risky and disordered gamers among studied students",
+    "multivariate analysis of the predictors of risky gamers among the study group:",
+    "relation between Internet gaming and domains of psychological well-being among studied students:",
+    "linear regression of prediction of psychological well-being among studied cases by internet gaming score"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998727.2246652
+}

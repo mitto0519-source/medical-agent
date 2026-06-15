@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10764659",
+  "pmid": "38170286",
+  "title": "Physical Activity Participation Decreases the Risk of Depression in Older Adults: The ATHLOS Population-Based Cohort Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lima RA, Condominas E, Sanchez-Niubo A, Olaya B, Koyanagi A, de Miquel C, Haro JM.",
+  "doi": "10.1186/s40798-023-00664-7",
+  "figures": [
+    "Flow diagram of the data selection process",
+    "Longitudinal association between levels of physical activity (light-to-moderate and vigorous intensities) with depression in older adults by sex (male and female), age group (50–59, 60–69, 70+ years), study (HRS, KLOSA and SHARE) and the ATHLOS healthy ageing status at baseline (1st to 4th quartile). Data presented as incidence risk ratio and respective 95% confidence intervals"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population with information on light-to-moderate and vigorous physical activity",
+    "Longitudinal association between levels of physical activity (light-to-moderate and vigorous intensities) with depression in older adults"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040335.3313634
+}

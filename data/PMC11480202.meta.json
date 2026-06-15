@@ -1,0 +1,26 @@
+{
+  "pmcid": "PMC11480202",
+  "pmid": "39261416",
+  "title": "Efficacy and Safety of Somapacitan Relative to Somatrogon and Lonapegsomatropin in Pediatric Growth Hormone Deficiency: Systematic Literature Review and Network Meta-analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "de Fries Jensen L, Antavalis V, Odgaard-Jensen J, Rossi A, Pietropoli A, Højby M.",
+  "doi": "10.1007/s12325-024-02966-y",
+  "figures": [
+    "Base case and alternative evidence network for the indirect comparisons of somapacitan versus somatrogon and lonapegsomatropin.  Nodes shown in light gray  are included only in the alternative evidence network.  GH  growth hormone",
+    "PRISMA flow diagram for SLR and studies included in ICs of somapacitan versus somatrogon and lonapegsomatropin.  a Some of the unique studies identified in the updates had been identified in the original review and thus may not count as unique trials when combining numbers from all three reviews. The total number of unique studies included one study of eftansomatropin, which was not included in th",
+    "Forest plots of results of  a  base-case and  b  alternative evidence analyses for the indirect comparisons of somapacitan versus somatrogon and lonapegsomatropin.  Crl  credible interval,  GH  growth hormone,  SDS  standard deviation score"
+  ],
+  "tables": [
+    "",
+    "PICOS selection criteria for the systematic literature review and indirect comparisons",
+    "Overview of data availability across included trials for indirect comparison of somapacitan versus somatrogon",
+    "Summary of baseline characteristics of participants in studies included in the indirect comparisons",
+    "Annualized height velocity trial results used for the indirect comparisons",
+    "Height velocity SDS trial results used for the indirect comparisons",
+    "Change from baseline in height SDS trial results used for the indirect comparisons",
+    "Safety data for somapacitan, somatrogon and lonapegsomatropin from clinical trials identified in the systematic literature review"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013108.1527455
+}

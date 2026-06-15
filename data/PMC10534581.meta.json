@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10534581",
+  "pmid": "37765171",
+  "title": "Therapeutic Drug Monitoring in Children and Adolescents: Findings on Fluoxetine from the TDM-VIGIL Trial.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Frey M, Smigielski L, Tini E, Fekete S, Fleischhaker C, Wewetzer C, Karwautz A, Correll CU, Gerlach M, Taurines R, Plener PL, Malzahn U, Kornbichler S, Weninger L, Brockhaus M, Reuter-Dang SY, Reitzle K, Rock H, Imgart H, Heuschmann P, Unterecker S, Briegel W, Banaschewski T, Fegert JM, Hellenschmidt T, Kaess M, Kölch M, Renner T, Rexroth C, Walitza S, Schulte-Körne G, Romanos M, Egberts KM.",
+  "doi": "10.3390/pharmaceutics15092202",
+  "figures": [
+    "Significant linear associations between fluoxetine (FLX) daily dose ( x -axis) and steady-state serum concentrations of FLX, norfluoxetine (NORFLX), and the active moiety (FLX+NORFLX) ( y -axis; from left to right). The blue diagonal line is the best-fit line. The black dots represent data points."
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of the study sample.",
+    "Analyses with serum concentrations and multiple predictors.",
+    "Analyses with serum concentrations and clinical/adverse effects.",
+    "Serum concentrations for responders to fluoxetine."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057739.1978521
+}

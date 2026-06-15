@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10506168",
+  "pmid": "37727598",
+  "title": "Investigating Heterogeneity in the Relationship Between Marital Satisfaction and Cognitive Health by Gender and Across the Cognitive Function Distribution.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kim J, Kwon KY.",
+  "doi": "10.1093/geroni/igad079",
+  "figures": [
+    "Unconditional quantile and mean estimates of the association between marital satisfaction and cognitive function, by gender."
+  ],
+  "tables": [
+    "Descriptive Statistics, Korean Longitudinal Study of Ageing (KLoSA), 2006",
+    "Regression Models of Cognitive Function on Marital Satisfaction, by Gender",
+    "Unconditional Quantile Regression Models of Cognitive Function on Marital Satisfaction, By Gender"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040500.3605745
+}

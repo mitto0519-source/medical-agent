@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11584255",
+  "pmid": "39583082",
+  "title": "Behavioral Determinants of Childhood Obesity in the United States: An Exploratory Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Palit S, Sufyani T, Inungu JN, Cheng CI, Nartey E.",
+  "doi": "10.1155/2024/9224425",
+  "figures": [
+    "Multifactorial influences of childhood obesity. Source: Ang et al. [ 12 ]. Reprinted from Multifactorial Influences of Childhood Obesity, authored by Ang, Y. N., Wee, B. S., Poh, B. K., &amp; Ismail, M. N. (2012). Permission to use this figure was granted by the publisher under a licensing agreement (license number: CC-BY-NC-SA 5737700641356).",
+    "Graphical representation of the BMI category depending on the participant's sex.",
+    "Graphical representation of the race depending on the participant's sex."
+  ],
+  "tables": [
+    "BMI distribution by sex (total sample number 12836).",
+    "Bivariate analysis or unadjusted regression analysis for BMI status among children (12–17 years of age) in 2021.",
+    "Multivariable logistic regression using stepwise selection."
+  ],
+  "query": "US adolescent soft drink depression",
+  "fetched_at": 1779992440.3419042
+}

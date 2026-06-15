@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11291597",
+  "pmid": "38658475",
+  "title": "Efficacy, safety, and patient satisfaction of norditropin and sogroya in patients with growth hormone deficiency: a systematic review and meta-analysis of randomized controlled trials.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Altobaishat O, Abouzid M, Moawad MHED, Sharaf A, Al-Ajlouni Y, Umar TP, Bani-Salameh A, Tanashat M, Bataineh OA, Nashwan AJ.",
+  "doi": "10.1007/s12020-024-03834-z",
+  "figures": [
+    "PRISMA flow chart of the screening process",
+    "Quality assessment of risk of bias in the included trials. The upper panel presents a schematic representation of risks (low = red, unclear = yellow, and high = red) for specific types of biases of each of the studies in the review. The lower panel presents risks (low = red, unclear = yellow, and high = red) for the subtypes of biases of the combination of studies included in this review",
+    "a  Comparison between different doses of somapacitan and Norditropin in the effect on height velocity in children;  b  Comparison between different doses of somapacitan and Norditropin in the effect on height velocity-SDS in children",
+    "Comparison between somapacitan and Norditropin use in adults regarding adverse events",
+    "a  Comparison between the adult patients taking Norditropin and somapacitan in IGF-1 SDS;  b  Comparison between the adult patients taking Norditropin and those taking somapacitan in TSQM-9 scale"
+  ],
+  "tables": [
+    "Summary of the characteristics of the included studies and participants"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013355.708181
+}

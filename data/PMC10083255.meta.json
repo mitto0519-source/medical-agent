@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10083255",
+  "pmid": "37051145",
+  "title": "Using support vector machine to explore the difference of function connection between deficit and non-deficit schizophrenia based on gray matter volume.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhu W, Wang Z, Yu M, Zhang X, Zhang Z.",
+  "doi": "10.3389/fnins.2023.1132607",
+  "figures": [
+    "Demographic and clinical characteristics.",
+    "Significant correlations between the gray matter volume (GMV) values of brain regions with classification weights in the top 1% and clinical features in the whole patient group [deficit schizophrenia (DS) group and non-deficit schizophrenia (NDS) group]. The significance threshold was set at  p  &lt; 0.05 (uncorrected). Parietal_inf_R, right inferior parietal lobule; Thalamus_R, right thalamus; Pr",
+    "Group comparisons of functional connectivity (FC) in six region of interests (ROIs) among deficit schizophrenia (DS), non-deficient schizophrenia (NDS), and health controls (HC).  (A)  Group analyses of the FC in the right inferior parietal lobule between NDS and HC groups. The significance threshold was set at  p  &lt; 0.05 after false discovery rate (FDR) was corrected (voxel  p  &lt; 0.05, clus",
+    "The circular graph obtained by comparing the functional connections between the three groups based on the three region of interests (ROIs) (IPL.R, THA.R, ITG.R). IPL.R, right inferior parietal lobule; THA.R, right thalamus; ITG.R, right inferior temporal gyrus.",
+    "The relationships between altered functional connectivity (FC) value of right thalamus (THA-R) with clinical symptoms.  (A)  The relationships between the FC value of THA.R and SMN with the Scale for the Assessment of Negative Symptoms (SANS) score in the deficient schizophrenia (DS) group.  (B)  The relationships between the FC value of THA.R and SMN with the Scale for the Assessment of Positive "
+  ],
+  "tables": [
+    "Demographic and clinical characteristics.",
+    "Classification results of deficit schizophrenia (DS)/non-deficit schizophrenia (NDS)/healthy control (HC) using support vector machine (SVM) classifier based on gray matter volume (GMV).",
+    "Altered regions of functional connectivity (FC) analysis based on the region of interest (ROI) of right thalamus (THA-R)."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057599.947266
+}

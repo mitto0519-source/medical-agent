@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC10040056",
+  "pmid": "36958774",
+  "title": "Active travel to school: a longitudinal millennium cohort study of schooling outcomes.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Walker I, Gamble T.",
+  "doi": "10.1136/bmjopen-2022-068388",
+  "figures": [
+    "School exam scores at age 16 from n=6778 children according to household income quintile and travel mode at age 14. Walking was set as the travel reference category. *p&lt;0.05, **p&lt;0.01. GCSE, General Certificate of Secondary Education."
+  ],
+  "tables": [
+    "Linear regression model predicting total school exam scores at age 16 from demographic and travel variables. Part 1: demographics",
+    "Linear regression model predicting total school exam scores at age 16 from demographic and travel variables. Part 2: travel behaviour"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007951.689989
+}

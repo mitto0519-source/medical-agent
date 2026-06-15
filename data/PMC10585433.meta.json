@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10585433",
+  "pmid": "37792468",
+  "title": "The Appa Health App for Youth Mental Health: Development and Usability Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Giovanelli A, Sanchez Karver T, Roundfield KD, Woodruff S, Wierzba C, Wolny J, Kaufman MR.",
+  "doi": "10.2196/49998",
+  "figures": [
+    "Appa Health participant PHQ-8 scores by week (N=14). PHQ-8: Patient Health Questionnaire-8.",
+    "Appa Health participant GAD-7 Anxiety scores by week (N=14). GAD-7: Generalized Anxiety Disorder-7.",
+    "Appa Health participant report of Youth Top Problems at midpoint (participant: n=14 and problems: n=42)."
+  ],
+  "tables": [
+    "Appa Health participant sociodemographic and background characteristics at baseline.",
+    "Feasibility and acceptability of Appa Health app.",
+    "Participants’ mental health scores and classification by weeks (N=14).",
+    "Top Problems Assessment ratings (N=14)."
+  ],
+  "query": "social media depression teenager",
+  "fetched_at": 1779999705.179411
+}

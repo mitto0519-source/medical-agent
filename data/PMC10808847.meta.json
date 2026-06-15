@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10808847",
+  "pmid": "38376031",
+  "title": "EEG components of inhibitory control ability in internet gaming disorder: A systematic review and meta-analysis of randomized controlled trials.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yu J, Abdullah MFIL, Mansor NS.",
+  "doi": "10.1002/brb3.3388",
+  "figures": [
+    "PRISMA flow chart diagram showing the process of study selection for inclusion in the systematic review and meta‐analysis.",
+    "Risk of bias summary.",
+    "Risk of bias graph.",
+    "The funnel plots of N2.",
+    "The funnel plots of P3."
+  ],
+  "tables": [
+    "Characteristics of the reviewed studies.",
+    "Forest plot of N2 amplitude.",
+    "Forest plot of P3 amplitude."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998818.250627
+}

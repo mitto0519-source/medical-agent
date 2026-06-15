@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10836241",
+  "pmid": "38052061",
+  "title": "Electrocardiography score based on the Minnesota code classification system predicts cardiovascular mortality in an asymptomatic low-risk population.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kim WD, Lee Y, Kim BS, Kim HJ, Shin JH, Park JK, Park HC, Lim YH, Shin J.",
+  "doi": "10.1080/07853890.2023.2288306",
+  "figures": [
+    "Associations between ECG findings and the risk of CV death in univariate models. ST depression, T-wave flattening, major and minor ST-T wave abnormalities, atrial fibrillation and high amplitude in the left and right precordial leads, left axis deviation, left anterior fascicular block, tachycardia and PR ≥ 70 bpm are associated with an increased risk of CV death. HR: hazard ratio; CI: confidence ",
+    "Nomogram of the multivariate Cox proportional hazard model and the C-statistics of the prediction scores. A) The maximum value of the nomogram was set to 100. The numbers on the scales of individual predictors indicate the normalized coefficient of the predictors. The points were rounded to the closest integers. B) The scores ranged between 0 and 167. The survival ROC curve analysis showed a gradu",
+    "Goodness of fit of the ECG score model for predicting CV death. A) Participants were divided into groups based on their ECG scores (Group 1 [black], &lt;30 points; Group 2 [red], 30–59 points; Group 3 [blue], ≥60 points). The cumulative incidence of CV death increased with the ECG scores. The solid lines represent the observed cumulative incidence of CV death, and the broken lines represent the cu",
+    "Predictive performances of the combined ECG score. A) The combined ECG score comprised the ECG score, age, the presence of diabetes and current smoking. B) The C-statistics of the combined ECG score gradually increased while remain &gt;0.820 throughout the follow-up period. T = N indicates the time of the observation (Months) and the numbers indicate C-statistics and the 95% confidence intervals o"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population.",
+    "Multivariate Cox proportional hazard model of ECG findings for CV deaths.",
+    "Comparisons of the ECG score with conventional risk estimators for CV deaths."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041498.660398
+}

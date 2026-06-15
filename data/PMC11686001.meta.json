@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11686001",
+  "pmid": "39738997",
+  "title": "Conquering diabetes by overcoming psychological barriers and embracing health.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Őry F, Kiss BL, Zsidó AN, Teleki SÁ.",
+  "doi": "10.1038/s41598-024-83837-y",
+  "figures": [
+    "Group scores visualized as boxplots presented on separate panels. The significant group differences can be seen on the BRQ I, BRQ PD, MHES Identified regulation and MLQ Search subscales. The groups:  C  Control;  IR  Insulin resistant;  T1   Type 1 diabetes;  T2   Type 2 diabetes. The variables:  HES  Health Empowerment Scale,  MHES   Motivation for Healthy Eating Scale,  BRQ_I   Body Responsivene",
+    "Patient group scores ( IR   Insulin resistant;  T1   Type 1 diabetes;  T2    Type 2 diabetes) on the four subscales ( EB    Emotional Burden,  PD   Physician Distress,  RB   Regimen Burden,  ID   Interpersonal Distress) of the Diabetes Distress Scale (DDS) visualized as boxplots presented on separate panels. Significant group differences can be found on the Emotional Burden (EB) and Physician Dist",
+    "ROC curves for the three patient groups based on the results of the boosting classification model.",
+    "The relative influence values of independent variables in the boosting classification model."
+  ],
+  "tables": [
+    "Detailed demographic data on samples, including place of residence, highest level of education, marital status, time since diagnosis and type of treatment.",
+    "Detailed statistical results for differences among the four groups on the BRQ, MHES and MLQ subscales, the HES scale and age with main effects and follow-up pairwise comparisons.",
+    "Detailed statistical results for differences among the IR, T1DM and T2DM groups on the diabetes distress scale (DDS) subscales and the time since receiving their diagnosis with main effects and follow-up pairwise comparisons.",
+    "Detailed results showing performance metrics of the boosting classification model for the IR, T1DM and T2DM groups."
+  ],
+  "query": "polycystic ovary syndrome teenager",
+  "fetched_at": 1780011834.2190106
+}

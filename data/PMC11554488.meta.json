@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11554488",
+  "pmid": "39534220",
+  "title": "The influence of depth of sedation on motor evoked potentials monitoring in youth from 4 to 23 years old: preliminary data from a prospective observational study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Hudec J, Kosinová M, Prokopová T, Zelinková H, Hudáček K, Repko M, Gál R, Štourač P.",
+  "doi": "10.3389/fmed.2024.1471450",
+  "figures": [
+    "Motor evoked potentials (MEP) recording timeline in all phases of the surgery."
+  ],
+  "tables": [
+    "Patient’s characteristics, demographic, and epidemiologic data.",
+    "Motor evoked potentials parameters (amplitude and latency) recorded in all phases of the surgery.",
+    "Statistically significant difference in motor evoked potentials parameters in dependence on the sedation depth."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780059584.4299347
+}

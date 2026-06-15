@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10267420",
+  "pmid": "37324815",
+  "title": "Prescription drug dependence with and without concurrent illicit drug use: a multicenter cross-sectional survey among an addiction treatment seeking population.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Nawaz A, Nielsen S, Mehmood T, Abdullah A, Ahmed A, Ullah W, Khan A.",
+  "doi": "10.3389/fpsyt.2023.1133606",
+  "figures": [
+    "Sampling, enrollment, and screening of study participants.",
+    "Primary and secondary choice of drugs reported by patients with current non-medical use. *Represents total percentage of each drug used as either primary choice of drugs or secondary choice. NA/prescription opioids means narcotics analgesics/prescription opioids."
+  ],
+  "tables": [
+    "Demographic characteristics and drug use disorders history of two groups of participants including individuals with prescription drug dependence (PDD) with and without concurrent illicit drug use.",
+    "Commonly used pharmaceuticals by addiction treatment seeking individuals.",
+    "Bivariate analysis of the possible factors in association with PDD and PIDU.",
+    "Influential factors in association with prescription drugs use using binary logistic regression model."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060087.785695
+}

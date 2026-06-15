@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC10306206",
+  "pmid": "37379276",
+  "title": "Test cricketers score quickly during the 'nervous nineties': Evidence from a regression discontinuity design.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Roberts L, Little DR, Jackson M, Spittal MJ.",
+  "doi": "10.1371/journal.pone.0287700",
+  "figures": [
+    "RD estimates of the number of runs per ball.  Note: Unadjusted mean runs are averaged over innings, matches and players and do not account for each components’ separate intercept. Adjusted mean runs are averaged over the model’s random intercepts.",
+    "RD estimates of the probability of a boundary.  Note: Unadjusted probabilities are averaged over innings, matches and players and do not account for each players’ separate intercept. Adjusted probabilities of a boundary are averaged over the model’s random intercepts.",
+    "RD estimates of the probability of dismissal.  Note: Unadjusted probabilities are averaged over innings, matches and players and do not account for each players’ separate intercept. Adjusted probabilities of a dismissal are averaged over the model’s random intercepts."
+  ],
+  "tables": [],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034676.8104167
+}

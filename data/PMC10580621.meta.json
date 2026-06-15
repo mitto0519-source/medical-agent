@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10580621",
+  "pmid": "37845703",
+  "title": "Association of internet gaming disorder with impulsivity: role of risk preferences.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhu L, Zhu Y, Li S, Jiang Y, Mei X, Wang Y, Yang D, Zhao J, Mu L, Wang W.",
+  "doi": "10.1186/s12888-023-05265-y",
+  "figures": [
+    "Comparison of IGD, BIS, and RPI in Gender. Comparison of IGD and impulsiveness and RPI between males and females. The y-axis shows mean scores of RPI or IGD or impulsiveness. IGD, internet gaming disorder; BIS, Barratt impulsiveness scale; RPI, Risk appetite index. * P  &lt; 0.05, ** P  &lt; 0.01",
+    "Comparison of IGD, BIS, and RPI in terms of game time. Comparison of IGD, BIS, and RPI between gaming group with a daily time of 4 h or more, gaming group with less than 4 h, and non-gaming group. The y-axis shows mean scores of RPI or IGD or impulsiveness. RPI, Risk appetite index; IGD, internet gaming disorder. * P  &lt; 0.05, ** P  &lt; 0.01",
+    "Mediation model of RPI between motor impulsiveness and IGD. Construct a mediation model with motor impulsiveness as the independent variable, IGD as the dependent variable, and risk appetite index as the mediating variable. RPI, Risk appetite index; IGD, internet gaming disorder"
+  ],
+  "tables": [
+    "Demographic and internet behaviors information of participants (n = 624)",
+    "Comparison of IGD, BIS, and RPI in gender (M ± SD)",
+    "Comparison of IGD and BIS and RPI in terms of playtime ( M  ± SD)",
+    "Correlation analysis of IGD and BIS and RPI",
+    "Mediating effects of RPI and BIS between IGD in college students",
+    "Decomposition of total effect, direct effect and mediating effect"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998604.5700223
+}

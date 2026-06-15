@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10099220",
+  "pmid": "37096134",
+  "title": "Impacts of commute mode on body mass index: A longitudinal analysis before and during the COVID-19 pandemic.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Commers G, Victoriano-Habit R, Rodrigue L, Kestens Y, El-Geneidy A.",
+  "doi": "10.1016/j.jth.2023.101615",
+  "figures": [
+    "Data filters used to derive the analytical sample.",
+    "Context map of study area: neighborhood WalkScore© and home location of survey respondents."
+  ],
+  "tables": [
+    "Characteristics of employed women and men by survey wave.",
+    "Body Mass Index associated with neighborhood walkability and commute, estimated through random-coefficient models: REM survey, Montréal, Canada, 2019–2021."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008114.139331
+}

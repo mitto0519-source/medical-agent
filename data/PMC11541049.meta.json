@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11541049",
+  "pmid": "39512898",
+  "title": "Psychiatric comorbidities of attention deficit/hyperactivity disorder in Japan: a nationwide population-based study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Okada T, Sotodate T, Ogasawara-Shimizu M, Nishigaki N.",
+  "doi": "10.3389/fpsyt.2024.1359872",
+  "figures": [
+    "Patient flow diagram for the cross-sectional study, showing the number of patients in each population from 2017 to 2021.  a The overall population was the population who were continuously observed for 12 months in the year of the analysis.  b Population 1A was the population with a diagnosis of ADHD in each year.  c Population 1B was the population with a diagnosis of ADHD and prescription of ADHD",
+    "Annual prevalence  (A, B)  and incidence  (C, D)  of ADHD defined by diagnostic code (ICD-10 code) from 2017 to 2021. Circles and solid line: males; squares and dotted line: females. ADHD, attention deficit/hyperactivity disorder; ICD-10, International Statistical Classification of Diseases and Related Health Problems 10th Revision.",
+    "Patient flow diagram for the retrospective cohort study (longitudinal study). ADHD, attention deficit/hyperactivity disorder.",
+    "Percentage of child and adolescent patients  (A)  and adult patients  (B)  with ADHD who were first diagnosed with a psychiatric disorder 2 years before (black columns) or after (grey columns) the initial diagnosis of ADHD. Tables show summary statistics for the number of psychiatric disorders diagnosed before and after the initial ADHD diagnosis. ADHD was defined by ICD-10 diagnostic codes (F90 a"
+  ],
+  "tables": [
+    "Twelve-month psychiatric comorbidities of ADHD a  in 2019.",
+    "ADHD a  as a 12-month comorbidity of various psychiatric disorders in 2019."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780048624.250755
+}

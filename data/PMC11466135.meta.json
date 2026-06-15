@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11466135",
+  "pmid": "38941412",
+  "title": "Effects of psychosocial characteristics on cognitive function in middle-aged and older adults: Focusing on change by year using the Korean Longitudinal Study of Aging panel data (2014-2018).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park JY, Jung HS.",
+  "doi": "10.1097/md.0000000000038637",
+  "figures": [
+    "Plot of men’s cognitive function interaction of psychosocial characteristics and year.",
+    "Plot of women’s cognitive function interaction of psychosocial characteristics and year."
+  ],
+  "tables": [
+    "Characteristics and cognitive function of participants.",
+    "Cognitive function according to characteristics of male participants.",
+    "Cognitive function according to characteristics of female participants.",
+    "Mixed model analysis of the effect of men’s psychosocial characteristics on cognitive function.",
+    "Mixed model analysis of the effect of women’s psychosocial characteristics on cognitive function."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040167.2441354
+}

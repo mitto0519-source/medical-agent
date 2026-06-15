@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11617396",
+  "pmid": "39639946",
+  "title": "Midlife heart rate variability and cognitive decline: A large longitudinal cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Jandackova VK, Scholes S, Britton A, Steptoe A.",
+  "doi": "10.1016/j.ijchp.2024.100518",
+  "figures": [
+    "Study flowchart for the main analysis.",
+    "Predicted cognitive change and 95% confidence intervals in adults aged 44 to 69 years by RMSSD (A) and HF-HRV (B) category over a 10 year follow-up period. The estimates of decline for each HRV category were predictions from a linear mixed-effects model including category of HRV (lowest HF or RMSSD quintile at baseline versus upper 4 quintiles), time-in-study, age-at-baseline, sex, ethnicity, educ"
+  ],
+  "tables": [
+    "Descriptive characteristics of the sample at baseline (phase 5: 1997–1999) by the main heart rate variability measures (lowest vs upper 4 quintiles).",
+    "Associations (Mixed Models Analysis) between Heart rate variability and Heart rate at baseline (1997–1999) and global cognitive decline over 10 years (1997–1999, 2002–2004, 2007–2009)¹ ( n  = 2702).",
+    "Explanatory models of longitudinal associations (Mixed-Models Analyses) between log-transformed HF-HRV and RMSSD (1997–1999) and cognitive decline over 10 years (1997–1999, 2002–2004, 2007–2009) ( n  = 2702).",
+    "Association between HRV and heart rate at baseline (1997–1999) and odds of low cognitive function (lowest quintile) at follow-up (2007–2009) ( n  = 2189)."
+  ],
+  "query": "Whitehall II cohort depression",
+  "fetched_at": 1779991691.1976953
+}

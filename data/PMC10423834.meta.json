@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10423834",
+  "pmid": "37583792",
+  "title": "Impulsivity-related right superior frontal gyrus as a biomarker of internet gaming disorder.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Zhang P, Pan Y, Zha R, Song H, Yuan C, Zhao Q, Piao Y, Ren J, Chen Y, Liang P, Tao R, Wei Z, Zhang X.",
+  "doi": "10.1136/gpsych-2022-100985",
+  "figures": [
+    "Enrolment of study participants. DSM-5, Diagnostic and Statistical Manual of Mental Disorders, 5th edition; EIU, excessive internet game user; fMRI, functional magnetic resonance imaging; HC, healthy control; IGD, internet gaming disorder.",
+    "Relationship between the hubness of the right ORBsupmed and the degree of excessive internet gaming. (A) Position of the right ORBsupmed (red area). Only the right hemisphere was plotted. (B) Distributions of closeness centrality in each group and the statistical results. (C) Distributions of nodal efficiency in each group and the statistical results. (D) Distributions of degree centrality in each",
+    "Relationship between closeness centrality or nodal efficiency of the right ORBsupmed and impulsivity in decision-making. (A) Illustration of the logistic regression from one participant. (B) Illustration of the hyperbolic discounting curve from one participant. A steeper discounting curve indicates higher impulsivity for the individual. (C–F) The number of delayed choices was plotted against the h",
+    "Relationship between performance in the Iowa gambling task (IGT) and closeness centrality or nodal efficiency of the right ORBsupmed. (A) The number of good choices was plotted against the closeness centrality of the right ORBsupmed. (B) The number of good choices was plotted against the nodal efficiency of the right ORBsupmed. (C) Total net score was plotted against closeness centrality of the ri",
+    "Modelling analysis of behaviour data in the Iowa gambling task (IGT). (A) Trace plot of the MCMC samples of the EIU group-level parameters in the VPP model. The first 3000 iterations were not plotted since they were burn-in samples. MCMC samples were well mixed and converged, which was consistent with their R values. The trace plot of the HC and IGD subjects are provided in online supplemental fig"
+  ],
+  "tables": [
+    "Sample demographics"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998835.2017329
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11128981",
+  "pmid": "38800951",
+  "title": "Network analysis of additional clinical features of (Internet) gaming disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Martončik M, Adamkovič M, Ropovik I.",
+  "doi": "10.1002/mpr.2021",
+  "figures": [
+    "Descriptive statistics.",
+    "Nodes' strength parameter across different IGD/GD operationalizations.",
+    "Bootstrapped difference tests for the nodes' strength within IGD/GD networks."
+  ],
+  "tables": [
+    "Descriptive statistics.",
+    "Results of network comparison tests for the strength parameter across different IGD/GD operationalizations."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998301.095537
+}

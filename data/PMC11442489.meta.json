@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11442489",
+  "pmid": "39349570",
+  "title": "Metabolic syndrome clustering patterns and the association with cardiovascular disease among post-menopausal Korean women.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Choi YJ, Kim GS, Chu SH, Lee KH, Park CG, Sohn M.",
+  "doi": "10.1038/s41598-024-72403-1",
+  "figures": [
+    "Information criterion based on the number of latent classes.  AIC  Akaike information criterion,  BIC  Bayesian information criterion,  SABIC  sample size-adjusted BIC.",
+    "Response probability of metabolic syndrome components in each latent class.",
+    "Odds ratio for cardiovascular disease by metabolic syndrome latent class."
+  ],
+  "tables": [
+    "Comparison of different latent classes based on model selection statistics.",
+    "Distribution of metabolic syndrome components among the participants (N = 2479).",
+    "Response probability of metabolic syndrome components for each latent class.",
+    "Characteristics associated with metabolic syndrome class membership (ref. low-risk group).",
+    "Comparing the risk of cardiovascular disease by metabolic syndrome latent classes."
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037399.6091535
+}

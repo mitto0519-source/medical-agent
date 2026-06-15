@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11093829",
+  "pmid": "38429617",
+  "title": "Informing Equitable Prevention Practices: A Statewide Disaggregated Analysis of Suicide for Ethnoracially Minoritized Adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Richardson SC, Williams JA, Vance MM, Phipps-Bennett M, Stevenson AP, Herbert R.",
+  "doi": "10.1007/s11121-024-01654-1",
+  "figures": [
+    "Scatter plot of dependent variables by race/ethnicity and year for high school YRBS North Carolina"
+  ],
+  "tables": [
+    "Demographic totals by race/ethnicity, sex, and sexual orientation high school YRBS North Carolina (1991–2019)",
+    "Demographic totals for variables of suicide ideation, plan, and attempt by race/ethnicity, sex, and sexual orientation high school YRBS North Carolina (1991–2019)",
+    "Multinominal logistic regression of sex, race/ethnicity, and sexual orientation on suicide ideation in the last 12 months for the high school YRBS North Carolina",
+    "Multinominal logistic regression of sex, race/ethnicity, and sexual orientation on suicide plan in the last 12 months for the high school YRBS North Carolina",
+    "Multinominal logistic regression of sex, race/ethnicity, and sexual orientation on suicide attempt in the last 12 months for the high school YRBS North Carolina"
+  ],
+  "query": "Indian adolescent suicide",
+  "fetched_at": 1780052766.394115
+}

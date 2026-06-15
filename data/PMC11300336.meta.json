@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11300336",
+  "pmid": "39109162",
+  "title": "Pre-COVID-19 short sleep duration and eveningness chronotype are associated with incident suicidal ideation during COVID-19 pandemic in medical students: a retrospective cohort study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zheng D, Qin Q, Peng Y, Zhong H, Huang Y, Wang H, Tan Q, Li Y.",
+  "doi": "10.3389/fpubh.2024.1406396",
+  "figures": [
+    "The flowchart of this study. SI, suicidal ideation; STCSSC, Shantou College Student Sleep Cohort.",
+    "Comparison in total sleep duration between subjects with or without incident SI. Comparison in total sleep duration between subjects with or without incident SI during the COVID-19 pandemic by using independent  t -test. Means with error bars (SD) of the sleep duration are shown for each group. SD, standard error; SI, suicidal ideation.",
+    "Proportion of incident SI in different chronotypes. Comparison of the proportions of incident SI in each chronotype group by using  χ  2  test. P 1 : Morningness vs. Intermediateness. P 2 : Morningness vs. Eveningness. P 3 : Intermediateness vs. Eveningness. SI, suicidal ideation."
+  ],
+  "tables": [
+    "Demographic, sleep and mood characteristics of the included subjects at pre-COVID-19 period.",
+    "The association between baseline short sleep duration, eveningness chronotype and incident SI."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001434.1906335
+}

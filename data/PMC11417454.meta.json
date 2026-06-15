@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC11417454",
+  "pmid": "38754474",
+  "title": "Expansion of a food composition database for the food frequency questionnaire in the Korean Genome and Epidemiology Study (KoGES): a comprehensive database of dietary antioxidants and total antioxidant capacity.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee J, Kong JS, Woo HW, Kim MK.",
+  "doi": "10.4178/epih.e2024050",
+  "figures": [],
+  "tables": [
+    "All 48 individual antioxidants, 5 classes of antioxidants, and 7 subclasses of flavonoids in the antioxidant database for the estimation of dietary total antioxidant capacity",
+    "Number of foods used to develop the antioxidant database and the coverage of each component by original database and imputation method",
+    "Unadjusted and age-adjusted dTAC and daily consumption of antioxidants for participants in all 3 general population cohorts, KoGES (n=195,961)  1",
+    "Age- and gender-adjusted dTAC, along with daily consumption of 5 antioxidant classes and 7 flavonoid subclasses, by general characteristics",
+    "dTAC, along with daily consumption of 5 antioxidant classes and 7 flavonoid subclasses, by disease status  1"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037518.7818222
+}

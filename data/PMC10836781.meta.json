@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10836781",
+  "pmid": "38290144",
+  "title": "Risk Factors and Inequities in Transportation Injury and Mortality in the Canadian Census Health and Environment Cohorts (CanCHECs).",
+  "year": 2024,
+  "journal": "",
+  "authors": "Branion-Calles M, Winters M, Rothman L, Harris MA.",
+  "doi": "10.1097/ede.0000000000001696",
+  "figures": [
+    "Fatality cohort construction.",
+    "Hospitalization cohort construction."
+  ],
+  "tables": [
+    "Main Mode of Commute Variable and Its Corresponding Categories From the Census",
+    "Follow-up Periods for Health Outcome Data by Canadian Census Health and Environment Cohort",
+    "Sociodemographic and Injury Characteristics of the CanCHEC Hospitalization Cohort",
+    "Sociodemographic and Injury Characteristics of the CanCHEC Fatality Cohort",
+    "Hazard Ratio for Hospitalization and Death as a Bicyclist Within the Hospitalization and Fatality Cohorts",
+    "Hazard Ratio for Hospitalization and Death as a Motor Vehicle Occupant Within the Hospitalization and Fatality Cohorts",
+    "Hazard Ratio for Hospitalization and Death as a Pedestrian Within the Hospitalization and Fatality Cohorts"
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008256.1602526
+}

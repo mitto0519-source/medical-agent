@@ -1,0 +1,25 @@
+{
+  "pmcid": "PMC11479962",
+  "pmid": "39416929",
+  "title": "Reassessing the non-linear causal link between long-duration commuting and self-rated health: do behavioral preferences and built environment matter?",
+  "year": 2024,
+  "journal": "",
+  "authors": "Qiu N, Li W, Cui D, Du M, Xing Z, Cui D, Xinyu H.",
+  "doi": "10.3389/fpubh.2024.1452014",
+  "figures": [
+    "Theoretical framework and research hypothesis.",
+    "Dose–response function of commuting time on self-rated health.",
+    "Gender-heterogeneous dose–response function of commuting time on self-rated health.",
+    "Age-heterogeneous dose–response function of commuting time on self-rated health.",
+    "Income-heterogeneous dose–response function of commuting time on self-rated health."
+  ],
+  "tables": [
+    "Summary statistics.",
+    "Effects of commuting time on self-rated health.",
+    "Effects of commuting on physical discomfort.",
+    "2SLS estimation results of the impact of commuting time on self-rated health.",
+    "Results of moderating effects."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007284.5399609
+}

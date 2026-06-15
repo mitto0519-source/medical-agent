@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11363818",
+  "pmid": "39219625",
+  "title": "Micronutrient deficiencies and the double burden of malnutrition in Vietnamese female adolescents: a national cross-sectional study in 2020.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Tan X, Tan PY, Som SV, Nguyen SD, Tran DT, Tran NT, Tran VK, Moore JB, Gong YY.",
+  "doi": "10.1016/j.lanwpc.2024.101164",
+  "figures": [
+    "Prevalence of malnutrition in female adolescents aged 10–18 years old living in Vietnam in different age groups. Data show the prevalence of overweight, stunting and thinness  (a) , anaemias  (b) , MNDs  (c)  and distribution of any MNDs (any of ID, low serum zinc or low serum retinol)  (d) . Prevalence was estimated based on sampling weight. Dash lines represented the overall prevalence. ID: iron"
+  ],
+  "tables": [
+    "Socio-demographic characteristics of female adolescents living in Vietnam between 10 and 18 years old (n = 1471).",
+    "Anthropometric, biochemical characteristics and micronutrient status of female adolescents living in Vietnam between 10 and 18 years old (n = 1471).",
+    "Unadjusted binominal and multi-nominal logistic regression between micronutrient status and body weight status among female adolescents aged 10–18 years old living in Vietnam (n = 1471).",
+    "Adjusted binominal and multi-nominal logistic regressions between micronutrient status and growth indices among female adolescents aged between 10 and 18 years old (n = 1471)."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780052978.1385357
+}

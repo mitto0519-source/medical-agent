@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10401580",
+  "pmid": "37545575",
+  "title": "Amino acid intake with protein food source and incident dyslipidemia in Korean adults from the Ansan and Ansung Study and the Health Examinee Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Chung S, Park JH, Joung H, Ha K, Shin S.",
+  "doi": "10.3389/fnut.2023.1195349",
+  "figures": [
+    "Flow chart of the participants used in this study from the Ansan and Ansung Study and the Health Examinee Study in Korea.",
+    "Essential and nonessential amino acid intake from plant- and animal-based food sources."
+  ],
+  "tables": [
+    "Baseline characteristics of the study subjects according to the quartiles of amino acid intake.",
+    "Top ten food sources contributing to amino acid intake.",
+    "Hazard ratios and 95% confidence intervals for the incidence of dyslipidemia and its components, based on the amino acid intake quartile a .",
+    "Hazard ratios and 95% confidence intervals for the incidence of dyslipidemia and its components, based on the protein intake quartile a ."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041346.8994174
+}

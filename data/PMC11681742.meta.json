@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11681742",
+  "pmid": "39731009",
+  "title": "Investigating the influence of working status changes on physical activity and non-communicable diseases in Korean middle-aged and older adults: insights from a longitudinal panel study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park JH, Choe JP, Kim J, Hwang IW, Lee JM.",
+  "doi": "10.1186/s12889-024-21112-5",
+  "figures": [
+    "Flow chart of participant selection"
+  ],
+  "tables": [
+    "Population characteristics compared within different working status groups by chi-square test (2006-2008 baseline year)",
+    "Multinomial logit analysis to examine the association between changes in working status and physical activity and non-communicable diseases"
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780039891.4682233
+}

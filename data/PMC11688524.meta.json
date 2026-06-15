@@ -1,0 +1,27 @@
+{
+  "pmcid": "PMC11688524",
+  "pmid": "39744252",
+  "title": "Prevalence of Substance Use and Sleep-Related Problems Among Driver Victims Involved in Road Traffic Accidents Presenting to a Tertiary Care Hospital in India.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lalringzo E, Dhiman V, Gupta R, Sarkar B, Bhute AR, Naithani M, Basu A.",
+  "doi": "10.7759/cureus.74934",
+  "figures": [
+    "Consort diagram of participant recruitment",
+    "Driving experience of the participants",
+    "Details on previous involvement in road traffic accident (RTA), injury sustained in the previous accident, and history of challan",
+    "Traffic rules violated at the time of the accident",
+    "Sleepiness and its related details of the participants",
+    "Risk of substance use according to the Alcohol, Smoking and Substance Involvement Screening Test (ASSIST)"
+  ],
+  "tables": [
+    "Sociodemographic details of the participants",
+    "Distribution of accident characteristics by vehicle, collision, and road and environmental factors",
+    "Distribution of participants based on sleep-related factors, daytime sleepiness, and chronotype",
+    "Functional outcome of the sleep details of the participants",
+    "Distribution of participants on the basis of substance use and its type",
+    "Distribution of participants based on the injury sustained due to the accident"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001571.200105
+}

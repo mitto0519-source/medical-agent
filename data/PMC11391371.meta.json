@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11391371",
+  "pmid": "38988091",
+  "title": "Identifying risk factors for COVID-19 cluster infections in schools in the Republic of Korea: a case-control study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Choi J, Choi S, Lee B, Park YJ, Lee SE.",
+  "doi": "10.24171/j.phrp.2023.0351",
+  "figures": [
+    "Epidemic curve.",
+    "Transmission relationships of the infected individuals.",
+    ""
+  ],
+  "tables": [
+    "General characteristics of the 3-school COVID-19 outbreak",
+    "Clinical symptoms of the 3 schools’ COVID-19 cases",
+    "Risk assessment table for each facility type",
+    "Analysis of the risk factors for COVID-19 infection based on visits to multi-use facilities",
+    "Comparative analysis of the number of visits to multi-use facilities and usage duration according to infection"
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019424.485683
+}

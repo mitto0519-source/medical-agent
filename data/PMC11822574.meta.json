@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11822574",
+  "pmid": "39950007",
+  "title": "Handshake antimicrobial stewardship for adult surgical patients.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kosharek A, Neuner E, Welch E, January S, Bewley A, Hsueh K, Sayood S.",
+  "doi": "10.1017/ash.2024.498",
+  "figures": [
+    "Baseline characteristics",
+    "Antimicrobial usage by month on general surgery units (black dots); average consumption from the predicted distribution of the interrupted time series segmented regression model (blue line) with loess smoother (gray dashed line); intervention started at red line.",
+    "Antimicrobial usage by month on general surgery units (black dots); average spectrum score from the predicted distribution of the interrupted time series segmented regression model (blue line) with loess smoother (gray dashed line); intervention started at red line."
+  ],
+  "tables": [
+    "Baseline characteristics",
+    "Handshake antimicrobial stewardship interventions",
+    "Antimicrobial use",
+    "Patient outcomes"
+  ],
+  "query": "interrupted time series segmented regression",
+  "fetched_at": 1780032835.2778163
+}

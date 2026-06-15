@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11649568",
+  "pmid": "39266712",
+  "title": "Safety of psychotropic medications in pregnancy: an umbrella review.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Fabiano N, Wong S, Gupta A, Tran J, Bhambra N, Min KK, Dragioti E, Barbui C, Fiedorowicz JG, Gosling CJ, Cortese S, Gandhi J, Saraf G, Shorr R, Vigod SN, Frey BN, Delorme R, Solmi M.",
+  "doi": "10.1038/s41380-024-02697-0",
+  "figures": [
+    "Study selection flow.  Flowchart and decision-making process for the inclusion of meta-analyses."
+  ],
+  "tables": [
+    "Characteristics of included meta-analyses.",
+    "Meta-analytical associations between antidepressants and adverse health outcomes in foetus or pregnant individuals supported by convincing, highly suggestive, suggestive, or weak evidence.",
+    "Meta-analytical associations between mood stabilizers and adverse health outcomes in fetus or pregnant people supported by convincing, highly suggestive, suggestive, or weak evidence.",
+    "Meta-analytical associations between antipsychotics and adverse health outcomes in foetus or pregnant people supported by convincing, highly suggestive, suggestive, or weak evidence."
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780056065.1500876
+}

@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11586203",
+  "pmid": "39588159",
+  "title": "Association between elevated glycosylated hemoglobin and cognitive impairment in older Korean adults: 2009-2010 Ansan cohort of the Korean genome and epidemiology study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim JS, Chun BC, Lee K.",
+  "doi": "10.3389/fpubh.2024.1417236",
+  "figures": [
+    "Selection of study participants. MMSE, Mini-Mental State Examination; MoCA, Montreal Cognitive Assessment."
+  ],
+  "tables": [
+    "Clinical characteristics and cognitive function of study participants.",
+    "Association between characteristics of study participants and glycosylated hemoglobin level.",
+    "Association analysis for factors related to MMSE and MoCA scores in study participants.",
+    "Multiple logistic regression analysis of MMSE and MoCA score decline"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037423.3568697
+}

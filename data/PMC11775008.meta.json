@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11775008",
+  "pmid": "39882522",
+  "title": "Evolution of artificial intelligence in healthcare: a 30-year bibliometric study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Xie Y, Zhai Y, Lu G.",
+  "doi": "10.3389/fmed.2024.1505692",
+  "figures": [
+    "Annual publication volume of artificial intelligence in healthcare.",
+    "Country-specific production. The color intensity is proportional to the number of documents. Higher blue intensity refers to greater number of documents (dark blue = high productivity; gray = no documents).",
+    "Corresponding author’s countries. Countries of the top 20 most relevant corresponding authors’ articles of artificial intelligence in health care in the Web of Science Core Collection. SCP, Single Country Publications; MCP, Multiple Country Publications.",
+    "Trend topic analysis of artificial intelligence in healthcare.",
+    "Co-occurrence network analysis of titles of artificial intelligence in healthcare."
+  ],
+  "tables": [
+    "Top most globally cited reviews and articles."
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019762.7160444
+}

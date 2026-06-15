@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10631192",
+  "pmid": "37941071",
+  "title": "Chronotype characteristics of professional athletes in China: a comprehensive descriptive study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Tan C, Lu J, Wang J, An Y, Cao G, Zhao D, Qiu J.",
+  "doi": "10.1186/s40101-023-00343-2",
+  "figures": [
+    "Distribution of chronotype scores among all athletes",
+    "Chronotype characteristics of athletes across different demographic and sport-related factors (including differences in gender ( A ), age-related correlations ( B ), distinctions between different sports ( C ), and variations among different sports levels ( D ). * p  &lt; .050, ** p  &lt; .010, *** p  &lt; .001. Dotted lines in the scatter plots represent the 95% confidence intervals for linear tr",
+    "Chronotype characteristics of athletes across different sleep symptoms and habits (including correlations with the severity of sleep disorders ( A ), differences in the presence of sleep breathing disorders ( B ), differences in the presence of travel-related sleep issues ( C ), differences in napping habits ( D ), differences in daily caffeine intake ( E ), and differences in daily pre-sleep elec"
+  ],
+  "tables": [
+    "Descriptive results of chronotype scores among athletes by different demographic and sports factors",
+    "Descriptive results of chronotype scores among athletes by different sleep symptoms and habits",
+    "Descriptive results of mental energy",
+    "Standardized regression coefficients and model fit of linear regression for chronotype and other factors on mental energy"
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001734.5425537
+}

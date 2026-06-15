@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11708002",
+  "pmid": "39780058",
+  "title": "HCV and HBV genotypes: vital in the progression of HCV/ HBV co-infection.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Badshah Y, Shabbir M, Khan K, Zafar S, Afsar T, Husain FM, Amor H, Razak S.",
+  "doi": "10.1186/s12876-025-03587-7",
+  "figures": [
+    "Liver function parameters in HCV-HBV Co-infected Patients. (A) Serum ALT (U/L), (B) Serum ALP (U/L), Total bilirubin (mg/dL)",
+    "Frequency distribution of HCV genotypes among co-infected patients",
+    "Frequency distribution of HBV genotypes among co-infected patients"
+  ],
+  "tables": [
+    "The sequences of used primers",
+    "Logistic regression analysis; dependent factor: co-infection, independent factors: age, sex (male)",
+    "Genotyping of HBV-HCV in co-infected patients",
+    "Odds ratios of genotypes associated with viral load"
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053926.043495
+}

@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC10220598",
+  "pmid": "37242268",
+  "title": "Association of NAFLD with FGF21 Polygenic Hazard Score, and Its Interaction with Protein Intake Level in Korean Adults.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lee HJ, Shon J, Park YJ.",
+  "doi": "10.3390/nu15102385",
+  "figures": [
+    "A flow chart of the study population.",
+    "Eight SNPs of FGF21-related loci. The horizontal black lines represent ( a ) KLB, ( b ) FGFR1, and ( c ) FGFR2 loci. The black blocks on the line represent exons. The SNPs used to calculate the PHS are shown their locations in each locus.",
+    "Expression quantitative trace loci (eQTL) analysis of genetic variants. The effect of genetic variables involved in gene expression in other tissues is shown using an eQTL violin plot. Each plot shows the density distribution of each genotype in ( a – c ) FGFR1 rs881301, ( d , e ) FGFR2 rs9420328, and ( f , g ) FGFR2 rs2420941. The white line on the black box plot represents the median value of th"
+  ],
+  "tables": [
+    "Study participants’ baseline characteristics according to NAFLD incidence.",
+    "HRs for NAFLD and information of SNPs in PHS.",
+    "Adjusted HRs for NAFLD according to PHS.",
+    "Association between protein intake and NAFLD incidence using Cox regression.",
+    "Interaction between the PHS and NAFLD incidence by protein intake using Cox regression."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041582.6392324
+}

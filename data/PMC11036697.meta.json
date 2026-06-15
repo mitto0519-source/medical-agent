@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11036697",
+  "pmid": "38649847",
+  "title": "Trajectories of atherosclerotic cardiovascular disease risk scores as a predictor for incident chronic kidney disease.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee HS, Lim HI, Moon TJ, Lee SY, Lee JH.",
+  "doi": "10.1186/s12882-024-03583-1",
+  "figures": [
+    "Flowchart of the study population",
+    "Trajectory modeling with the revised ASCVD risk pooled cohort equation using the latent variable mixture model. Red line: increasing ASCVD risk trajectory group, blue line: stable ASCVD risk trajectory group. Abbreviation: ASCVD, atherosclerotic cardiovascular disease",
+    "Kaplan–Meier curves showing the cumulative incidence rates of CKD based on the ASCVD risk trajectory groups. Abbreviations: CKD, chronic kidney disease; ASCVD, atherosclerotic cardiovascular disease",
+    "A forest plot illustrating the subgroup analysis of ASCVD risk trajectory groups and their association with the risk of incident CKD. Abbreviations: ASCVD, atherosclerotic cardiovascular disease; CKD, chronic kidney disease"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population",
+    "Cox proportional hazard regression analysis showing the relationship of ASCVD risk trajectories with incident chronic kidney disease",
+    "The prevalence of proteinuria according to the ASCVD risk trajectory groups"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041235.9174469
+}

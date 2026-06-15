@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10091171",
+  "pmid": "37040111",
+  "title": "Comparative Effectiveness of Digital Cognitive Behavioral Therapy vs Medication Therapy Among Patients With Insomnia.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Lu M, Zhang Y, Zhang J, Huang S, Huang F, Wang T, Wu F, Mao H, Huang Z.",
+  "doi": "10.1001/jamanetworkopen.2023.7597",
+  "figures": [
+    "Cohort Selection Procedure  dCBT-I indicates digital cognitive behavioral therapy for insomnia; ESS, Epworth Sleepiness Score; and PSQI, Pittsburgh Sleep Quality Index.",
+    "Forest Plots of Primary Outcomes of Digital Cognitive Behavioral Therapy for Insomnia (dCBT-I) vs Medication Therapy  Each horizontal line represents the 95% CI of outcome comparison (Cohen  d  effect size), and the result is plotted as a box in the middle of the horizontal line. The vertical line is a reference line, placed at the value where there is no difference between 2 interventions. PSQI i",
+    "Forest Plots of Secondary Outcomes of Digital Cognitive Behavioral Therapy for Insomnia (dCBT-I) vs Medication Therapy  Each horizontal line represents the 95% CI of outcome comparison (Cohen  d  effect size), and the results are plotted as a box in the middle of the horizontal line. The vertical line is a reference line, placed at the value where there is no difference between the 2 interventions",
+    "Subgroup Analysis Comparing the Effectiveness of Digital Cognitive Behavioral Therapy for Insomnia (dCBT-I) and Medication Therapy  Each horizontal line represents the 95% CI of comparison (Cohen  d  effect size) of the Pittsburgh Sleep Quality Index score at month 6 in a subgroup, and the result is plotted as a box in the middle of the horizontal line. The last row indicates the comparison of eff"
+  ],
+  "tables": [
+    "Demographic and Clinical Characteristics of the Cohort"
+  ],
+  "query": "digital cognitive behavioral therapy",
+  "fetched_at": 1780063566.9942183
+}

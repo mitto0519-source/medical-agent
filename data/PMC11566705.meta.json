@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11566705",
+  "pmid": "39486388",
+  "title": "Abnormal Granger causal connectivity based on altered gray matter volume and associated neurotransmitters of adolescents with internet gaming disorder revealed by a multimodal neuroimaging study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Niu X, Zhang M, Gao X, Dang J, Sun J, Tao Q, Lang Y, Wang W, Wei Y, Han S, Xu H, Guo Y, Cheng J, Zhang Y.",
+  "doi": "10.1016/j.dcn.2024.101472",
+  "figures": [
+    "Brain regions with significant group differences in GMV. Group differences of GMV between the IGD and HC groups were identified using two sample  t  tests (GRF corrected,  P  voxel &lt;0.005,  P  cluster &lt;0.05). Abbreviations: GMV, gray matter volume; IGD, internet gaming disorder; HC, healthy control; GRF, gaussian random field theory; * indicates statistically significant differences.",
+    "Schematic diagram of altered Granger causal connectivity in the IGD group compared with the HC group (GRF corrected,  P  voxel &lt;0.005,  P  cluster &lt;0.05). The red nodes indicate the brain regions with altered GMV (i.e. Caudate.L and LG.R). The red arrows represent higher Granger causal connectivity from input brain regions (Insula, Putamen, SMA, MCC) to the Caudate.L, as shown in (A). The bl",
+    "Results of whole-brain GCA analysis based on the left caudate nucleus are shown in (A). The red area indicates the brain regions where the IGD adolescents have higher Granger causal connectivity from the whole brain to the left caudate nucleus relative to HC (GRF corrected,  P  voxel &lt;0.005,  P  cluster &lt;0.05). Results of whole-brain GCA analysis based on the right lingual gyrus are shown in",
+    "Barplots of cross-modal correlations between neurotransmitter systems and seed-based Granger causal connectivity maps. The ordinate is the Fisher's z-transformed correlation coefficients, and the abscissa shows respective neurotransmitters. (A) Correlations between brain maps of differences in the Granger causal connectivity based on left caudate nucleus between IGD and HC groups and neurotransmit"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of participants.",
+    "Brain regions with significant group differences in GMV.",
+    "Brain regions with significant group differences in the Granger causal connectivity."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998706.1634715
+}

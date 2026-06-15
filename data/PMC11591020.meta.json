@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11591020",
+  "pmid": "39594554",
+  "title": "<i>N</i>-3 Fatty Acids in Seafood Influence the Association Between the Composite Dietary Antioxidant Index and Depression: A Community-Based Prospective Cohort Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Moon J, Kim M, Kim Y.",
+  "doi": "10.3390/antiox13111413",
+  "figures": [
+    "A flowchart of the study population."
+  ],
+  "tables": [
+    "General characteristics according to seafood-consumption quintile.",
+    "Food consumption according to seafood-consumption quintile.",
+    "Nutrient intake according to seafood-consumption quintile.",
+    "Hazard ratios and 95% confidence intervals for depression according to the seafood consumption quintile.",
+    "Correlation between composite dietary antioxidant index and Beck Depression Inventory scores according to  n -3 PUFAs status."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041397.46196
+}

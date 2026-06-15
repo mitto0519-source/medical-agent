@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11616512",
+  "pmid": "39640421",
+  "title": "Risk of all-cause mortality in patients with knee osteoarthritis: A systematic review and meta-analysis of cohort studies.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Kao PE, Ker A.",
+  "doi": "10.1016/j.ocarto.2024.100541",
+  "figures": [
+    "Preferred Reporting Items for Systematic Reviews and Meta-analyses (PRISMA) flowchart. ∗Not-relevant study designs included those that were not cohort studies, such as interventional studies, conference abstracts, case-control studies, cross-sectional studies, editorials, review articles, and letters to the editor.",
+    "Forest plot on the association between risk of all-cause mortality and knee osteoarthritis (OA) in cohort studies. Subgroup analyses based on the classification of knee OA were performed. CI: confidence interval; ELSA: English Longitudinal Study of Aging; IFLS: Indonesian Family Life Survey; IV: inverse variance; KLoSA: the Korean Longitudinal Study of Aging; OA: osteoarthritis; SE: standard error",
+    "Funnel plot of effect sizes for the included cohort studies in the meta-analysis. This funnel plot illustrates the hazard ratios of cohort studies in relation to their standard errors. Published cohort studies are represented by different markers: dark circles for studies reporting radiographic knee osteoarthritis (OA) only, green squares for studies reporting symptomatic knee OA only, and red dia"
+  ],
+  "tables": [
+    "Characteristics of the included studies.",
+    "Quality assessment of the included cohort studies.",
+    "The one-study removed sensitivity analysis for knee osteoarthritis (OA).",
+    "Summary of risk estimates for the association between all-cause mortality and knee osteoarthritis (OA)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040269.0160863
+}

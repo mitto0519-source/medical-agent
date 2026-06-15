@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11761680",
+  "pmid": "39671511",
+  "title": "Associations of nonoccupational sedentary behaviors with cardiometabolic outcomes: coronary artery risk development in young adults (CARDIA).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Zieff G, Bancks MP, Gabriel KP, Barone Gibbs B, Moore JB, Reis JP, Stone K, Stoner L.",
+  "doi": "10.1093/abm/kaae074",
+  "figures": [
+    "Relative contributions of context-specific sedentary behaviors to total sedentary behavior. The individual slices of the pie chart represent the relative daily time (duration) contributions of each of the 6 context-specific sedentary behaviors. Altogether, the context-specific sedentary behaviors cumulatively reflect the total amount of daily SB which we term “total SB” in the current study. ( n  ",
+    "Postestimation probability plot for marginal effects of context-specific sedentary behaviors on incident hypertension. This figure shows the marginal effects of context-specific sedentary behaviors on incident hypertension. Note that television is the only context-specific sedentary behavior in which error bars do not cross zero. Abbreviations: HTN, hypertension; Office/paper, non-work-related off"
+  ],
+  "tables": [
+    "Baseline (year 25) participant characteristics across total sedentary behavior quartiles ( n  = 3370).",
+    "Baseline (year 25) cross-sectional associations between SB and cardiometabolic outcomes.",
+    "Association between SB at baseline (year 25) and incident cardiometabolic outcomes at year 30."
+  ],
+  "query": "sedentary behavior cardiometabolic",
+  "fetched_at": 1780006764.028148
+}

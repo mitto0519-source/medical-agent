@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11392350",
+  "pmid": "39264926",
+  "title": "MULT: An allometric body mass index (ABMI) reference to assess nutritional status of multiethnic children and adolescents.",
+  "year": 2024,
+  "journal": "",
+  "authors": "de Oliveira MH, Mazzeti CMDS, Araújo J, Severo M, Ramos E, Rodrigues KAS, Pereira DBDS, Conde WL.",
+  "doi": "10.1371/journal.pone.0305790",
+  "figures": [
+    "Flowchart of the subject and anthropometric data selection.  n: number of participants. obs: number of observations. Measurement Errors: children and adolescents who had decreased their height over the years. Implausible values: height-for-age z-score below –6 SD or above +6 SD or BMI-for-age z-score below –5 SD or above +5 SD. Outliers at the population level: weight-for-age z-score below -2SD or",
+    "Allometric body mass index exponents values for boys and girls.   Exponents  of the ABMI were previously estimated by Mazzeti et al. (2018) [ 9 ].",
+    "M curve and z-score differences of the five BMI references and the MULT ABMI reference in boys and girls.",
+    "S and L curves of the five BMI references and the ABMI reference in boys and girls.",
+    "BMI percentile cutoffs for obesity at 18, 19, and 20 years old of the five BMI references and the ABMI reference in boys and girls.  I—BMI value of 30kg/m 2  applied as the cutoff for obesity at 18 years old. II—BMI value of 30kg/m 2  applied as the cutoff for obesity at 19 years old. III—BMI value of 30kg/m 2  applied as the cutoff for obesity at 20 years old.",
+    "ABMI-for-age growth chart for boys aged 0 to 20 years old.",
+    "ABMI-for-age growth chart for girls aged 0 to 20 years old."
+  ],
+  "tables": [
+    "Number of observations per age group and sex included in the construction of the LMS parameters of the MULT ABMI reference.",
+    "MULT ABMI LMS reference values and ABMI pt exponents specified by age for boys and girls."
+  ],
+  "query": "Vietnamese adolescent nutrition",
+  "fetched_at": 1780053941.0258172
+}

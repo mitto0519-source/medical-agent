@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11416985",
+  "pmid": "39315326",
+  "title": "Resting-state brain networks alterations in adolescents with Internet Gaming Disorder associate with cognitive control impairments.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhao T, Zhang Y, Li Y, Wu J, Wang R, Lv Q, Li D, Lang Y.",
+  "doi": "10.3389/fpsyt.2024.1404050",
+  "figures": [
+    "Extracted independent components. From the group ICA of resting-state data, five independent components were identified and classified as follows: DMN (default mode network), ECN (executive control network), SN (salience network), VAN (ventral attention network), and DAN (dorsal attention network).",
+    "Resting-state activity differences within ICNs. Notes:  (A)  Resting state activity in the frontal gyrus and precentral gyrus within the executive control network(ECN) was significantly higher in the adolescent group with Internet Gaming Disorder (IGD) than in the healthy control group (HC).  (B)  In contrast, resting state activity in the frontal eye area within dorsal attention network(DAN) was ",
+    "Functional connectivity differences between networks. Notes:  (A)  Heat map of functional connectivity between brain networks in the IGD group. Warm and cool colors represent areas with higher or lower functional connectivity between networks.  (B)  Display the statistical significance of functional connectivity between networks in brain 3D rendering of networks. The functional connectivity betwee",
+    "Correlation analysis in IGD group. Notes:  (A)  Abnormal resting-state activity of ECN was positively correlated with BIS-11 score.  (B)  Abnormal functional connections of SN-ECN were correlated with the score of BIS-11.  (C)  The abnormal resting-state activity of DAN was correlated with NEF value.  (D)  The abnormal functional connection strength of ECN-DAN was positively correlated with the to"
+  ],
+  "tables": [
+    "Demographic and clinical characteristics of participants.",
+    "Brain regions with differences in resting-state activity in the IGD group."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998471.0103302
+}

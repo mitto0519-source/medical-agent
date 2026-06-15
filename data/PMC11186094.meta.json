@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11186094",
+  "pmid": "38890613",
+  "title": "The association between screen time exposure and myopia in children and adolescents: a meta-analysis.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zong Z, Zhang Y, Qiao J, Tian Y, Xu S.",
+  "doi": "10.1186/s12889-024-19113-5",
+  "figures": [
+    "The flowchart of literature search",
+    "Forest plot for the association between screen time exposure and risk of myopia in children and adolescents. ( A ) screen time (high vs. low) and myopia in cross-sectional studies; ( B ) screen time (high vs. low) and myopia in cohort studies; ( C ) screen time (per 1 h/d increase) and myopia in cross-sectional studies; ( D ) screen time (per 1 h/d increase) and myopia in cohort studies",
+    "Funnel plots show the risk of publication bias in the meta-analysis. ( A ) screen time (high vs. low) and myopia in cross-sectional studies; ( B ) screen time (per 1 h/d increase) and myopia in cross-sectional studies",
+    "Sensitivity analysis using leave-one-out method for the association between screen time exposure and myopia. ( A ) screen time (high vs. low) and myopia in cross-sectional studies; ( B ) screen time (per 1 h/d increase) and myopia in cross-sectional studies"
+  ],
+  "tables": [
+    "Characteristics of included studies"
+  ],
+  "query": "after school private tutoring Korea",
+  "fetched_at": 1780019508.6717865
+}

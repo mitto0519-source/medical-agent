@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11429951",
+  "pmid": "39334436",
+  "title": "Whole genome sequencing analysis identifies sex differences of familial pattern contributing to phenotypic diversity in autism.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim SW, Lee H, Song DY, Lee GH, Ji J, Park JW, Han JH, Lee JW, Byun HJ, Son JH, Kim YR, Lee Y, Kim J, Jung A, Lee J, Kim E, Kim SH, Lee JH, Satterstrom FK, Girirajan S, Børglum AD, Grove J, Kim E, Werling DM, Yoo HJ, An JY.",
+  "doi": "10.1186/s13073-024-01385-6",
+  "figures": [
+    "Overview of WGS and phenotype datasets used in this study.  A  Worldwide distribution of autism WGS cohorts with individuals ≥ 100. The largest published autism GWAS data, to date, is also illustrated in the map. The size of each cohort is illustrated by the size of bands and the composition of ancestries are represented by colors in bands (peach, European; yellow, East Asian; lavender, American; ",
+    "Autism-associated de novo and polygenic burden and their sex differences.  A  Data analysis workflow. DNV calling and PS calculations were conducted separately for each cohort, with the exception of the Korean autism and KoGES datasets, where SNP intersection and PS calculations were carried out jointly. For the Korean autism and the KoGES cohort, AF harmonization was performed to align with Europ",
+    "Effects of ID and total symptom severity on sex differences in de novo and polygenic burden.  A  The percent of autism cases carrying a de novo PTV in females and males, with or without ID. The  P  -values were calculated using a one-sided Fisher’s exact test and 95% confidence intervals (CIs) were calculated using a binomial test with siblings. Dashed line displays the percent of siblings carryin",
+    "Male-to-female sex ratio in children with autism depending on comorbid ID and total symptom severity.  A , B  The number of females and males and male-to-female ratio;  A  in children with autism across ID comorbid state;  B  in children with autism depending on total symptom severity and ID comorbid state. The y axis and bar plot represent the percentage of female and male samples. Dashed lines c",
+    "Effects of polygenic burden for various phenotypes in female and male siblings.  A , B  Comparison of social communication deficit scores across four groups of sibling-case sex pairs in siblings. Phenotypic scores include  A  abnormalities in reciprocal social interaction (ADIR A);  B  abnormalities in verbal communication (ADIR B verbal). Two-way ANOVA test, followed by Tukey’s multiple compariso",
+    "Effects of polygenic burden for various phenotypes in mothers and fathers.   A  Comparison of z -transformed phenotypic scores, including total symptom severity, social communication, and restricted/repetitive behaviors. Two-sample t tests were conducted for the comparisons between groups. Points represent mean scores and error bars represent the 95% CIs. Group and sex are represented by colors an"
+  ],
+  "tables": [],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037487.8894715
+}

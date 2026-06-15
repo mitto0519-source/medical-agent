@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11278388",
+  "pmid": "39064091",
+  "title": "Examining Anxiety and Insomnia in Internship Students and Their Association with Internet Gaming Disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Alshammari TK, Rogowska AM, Alobaid AM, Alharthi NW, Albaker AB, Alshammari MA.",
+  "doi": "10.3390/jcm13144054",
+  "figures": [
+    "Pearson’s correlations between internet gaming disorder, anxiety, and insomnia symptoms ( N  = 263). ***  p  &lt; 0.001.",
+    "Network structure of associations between the insomnia (AIS), anxiety (GAD), and gaming disorder (IGDS) scales. Note. The blue line represents a positive relationship, while the orange line indicates a negative association between nodes in the network model. AIS = Athens Insomnia Scale, AIS_1 = delaying sleep, AIS_2 = problems with waking during the night, AIS_3 = final awakening earlier than desi",
+    "Centrality plot. Note. AIS = Athens Insomnia Scale, AIS_1 = delaying sleep, AIS_2 = problems with waking during the night, AIS_3 = final awakening earlier than desired, AIS_4 = sense of total sleep duration sufficiency, AIS_5 = overall satisfaction of sleep quality, AIS_6 = sense of well-being during the day, AIS_7 = physical and mental functioning during the day, AIS_8 = sleepiness during the day"
+  ],
+  "tables": [
+    "Demographic characteristics of students ( N  = 263).",
+    "Frequencies of particular categories of internet gaming disorder, anxiety, and insomnia symptoms.",
+    "Descriptive statistics ( N  = 263)."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998291.0630069
+}

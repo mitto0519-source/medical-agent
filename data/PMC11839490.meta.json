@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11839490",
+  "pmid": "39980859",
+  "title": "Association between maternal history of mental illness and neurodevelopment of children during the first 3 years: The Japan Environment and Children's Study.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Ohara N, Mitsuda N, Yamasaki K, Eitoku M, Suganuma N, Komatsu S, Kazui H, Takahashi H, and the Japan Environment and Children's Study.",
+  "doi": "10.1002/pcn5.70073",
+  "figures": [
+    "Flowchart depicting the recruitment and exclusion criteria for mothers and children. From an initial dataset of 104,062 records, 3759 fetuses were excluded due to incomplete data on live births, miscarriages, and stillbirths (2123) or due to miscarriages and stillbirths alone (1636). Of the 100,303 live births, 35,914 were excluded due to missing data on offspring sex (15 cases), indeterminate off"
+  ],
+  "tables": [
+    "Demographic data for mothers and children ( n  = 64,389).",
+    "Proportion of children below screen‐positive threshold by maternal mental illness history during the first 3 years.",
+    "Mean J‐ASQ‐3 scores (±SD) by maternal mental illness history during the first 3 years.",
+    "Association between maternal history of mental illness and risk of developmental delay of children during the first 3 years ( n  = 64,389)."
+  ],
+  "query": "Japanese adolescent depression cohort",
+  "fetched_at": 1780047823.413987
+}

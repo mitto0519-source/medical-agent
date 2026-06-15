@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10441085",
+  "pmid": "37591654",
+  "title": "Effect of no cost sharing for paediatric care on healthcare usage by household income levels: regression discontinuity design.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Fukuma S, Kato H, Takaku R, Tsugawa Y.",
+  "doi": "10.1136/bmjopen-2023-071976",
+  "figures": [
+    "Selection process of study participants. Figure shows selection process of study participants from the database. We excluded 13 children due to missing income level, 2888 children due to very high healthcare spending which is covered by the government and 130 787 children who live in the areas with income restrictions on subsidies. Finally, we analysed 244 549 children for the main analysis.",
+    "Regression discontinuity plots for outcomes. (A) Outpatient treatment. (B) Inpatient treatment. Figure shows discontinuity in outcomes around the age threshold.",
+    "Effect of no cost sharing on healthcare usage by income categories. (A) Outpatient treatment. (B) Inpatient treatment. We estimated the effects of no cost sharing on healthcare usages as differences adjusted for age, gender, parent’s age, number of children in a family, fiscal year (2018–2021), whether individuals were living in the full-subsidy area and diagnosed diseases in the previous year (‘C"
+  ],
+  "tables": [
+    "Characteristics of total participants and participants within optimal bandwidths",
+    "Effects of no cost sharing on healthcare usages"
+  ],
+  "query": "regression discontinuity design",
+  "fetched_at": 1780034701.9875143
+}

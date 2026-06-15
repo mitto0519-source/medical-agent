@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11704389",
+  "pmid": "39781336",
+  "title": "A scoping review on peer-led interventions to improve youth mental health in low- and middle-income countries.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Chow D, Matungwa DJ, Blackwood ER, Pronyk P, Dow D.",
+  "doi": "10.1017/gmh.2024.149",
+  "figures": [
+    "PRISMA flowchart."
+  ],
+  "tables": [
+    "Data extraction of included studies",
+    "Description of peer leaders",
+    "Mental health outcomes and quotes from qualitative papers",
+    "The mechanisms that make peer-led interventions effective and their implementation challenges"
+  ],
+  "query": "Singapore youth wellbeing",
+  "fetched_at": 1780050186.6414323
+}

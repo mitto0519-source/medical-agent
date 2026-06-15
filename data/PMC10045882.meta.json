@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10045882",
+  "pmid": "36975236",
+  "title": "Cognitive Function, and Its Relationships with Comorbidities, Physical Activity, and Muscular Strength in Korean Older Adults.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kim S.",
+  "doi": "10.3390/bs13030212",
+  "figures": [
+    "An illustration of the relationship between comorbidities (X) and cognitive function (Y) moderated by physical activity (W) and lower-body muscle strength (Z).",
+    "Effect of physical activity (PA) on the relationship between comorbidities and cognitive function."
+  ],
+  "tables": [
+    "Descriptive statistics of study participants by comorbidity.",
+    "Beta coefficients of simple linear regression for cognitive function.",
+    "Odds ratios (ORs) and 95% confidence intervals (CIs) of cognitive impairment by levels of physical activity (PA) and lower-body muscle strength (LBMS).",
+    "A moderation analysis of physical activity and lower-body muscle strength on the relationship between comorbidity and cognitive function."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040846.8927898
+}

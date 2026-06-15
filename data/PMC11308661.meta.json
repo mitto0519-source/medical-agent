@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11308661",
+  "pmid": "39113063",
+  "title": "Oral aripiprazole in the treatment of tic disorders in China: a cost-effectiveness analysis based on a mapping algorithm derived from a Chinese children and adolescents population.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Chen C, Chen T, Ke Z, Wu Y, Liu M, Chen Y, Zheng B.",
+  "doi": "10.1186/s13034-024-00786-0",
+  "figures": [
+    "Schematic representation of model structure. A decision-tree analysis assessed aripiprazole as monotherapy management of Tourette disorders over a time horizon of 52 weeks",
+    "The Tornado Charts (ICER) of high-dose aripiprazole vs. low-dose aripiprazole",
+    "The acceptability curves of high-dose aripiprazole vs. low-dose aripiprazole",
+    "The scatter plots of high-dose aripiprazole vs. low-dose aripiprazole"
+  ],
+  "tables": [
+    "Parameter input",
+    "The characteristics of the patients",
+    "Fit measures for the different models used to predict the EQ-5D-Y utilities based on YGTSS scores. ( n  = 144)",
+    "Costs and health outcomes over 52 weeks in China"
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057694.0871499
+}

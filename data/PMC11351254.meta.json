@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11351254",
+  "pmid": "39198834",
+  "title": "Genome-wide association study for metabolic syndrome reveals APOA5 single nucleotide polymorphisms with multilayered effects in Koreans.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Park YJ, Moon S, Choi J, Kim J, Kim HJ, Son HY, Im SW, Kim JI.",
+  "doi": "10.1186/s12944-024-02248-0",
+  "figures": [
+    "Manhattan and Quantile-Quantile plot of the genome-wide association study of metabolic syndrome(MetS) in Koreans. The x-axis represents the SNP markers on each chromosome. y-axis shows the minus log10 scale. The red horizontal line represents the genome-wide significant threshold  P  = 5E-08 and the blue horizontal line represents the genome-wide suggestive threshold  P  = 1E-05. Five candidate lo",
+    "Multilayered effects of rs651821 and rs2266788 in MetS prevalence, TG and HDL. Metabolic syndrome prevalence percentage ( A-C ), plasma TG ( D-F ) and plasma HDL ( G-I ) levels according to rs651821 and rs2266788 genotypes. Corresponding values according to rs651821 genotypes ( A ,  D ,  G ), rs2266788 genotypes ( B ,  E ,  H ), rs2266788 genotypes within rs651821 CC subgroup ( C ,  F ,  I ) are d",
+    "Effects of multilayered SNPs in MetS component TG levels and their interactions with lifestyle factors. TG levels according to rs651821, rs2266788 genotypes associated with stratified levels of smoking ( A-C ), alcohol drinking ( D-F ) and physical activity ( G-I ). The purple arrows referring to the boxes ( C ,  F ,  I ) indicate minor homozygous subgroup of rs651821 CC genotype. All error bars r"
+  ],
+  "tables": [
+    "Baseline characteristics of the study population ( N  = 58,600)",
+    "MetS associated independent SNPs in the KoGES cohort grouped by each locus",
+    "GWAS and conditioned results of  APOA5  major SNPs on TG and HDL"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780037163.3485453
+}

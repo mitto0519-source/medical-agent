@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10475965",
+  "pmid": "37533176",
+  "title": "Triglyceride-Glucose Index Predicts Future Atherosclerotic Cardiovascular Diseases: A 16-Year Follow-up in a Prospective, Community-Dwelling Cohort Study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Moon JH, Kim Y, Oh TJ, Moon JH, Kwak SH, Park KS, Jang HC, Choi SH, Cho NH.",
+  "doi": "10.3803/enm.2023.1703",
+  "figures": [
+    "Cumulative survival for incident cardiovascular disease according to triglyceride-glucose (TyG) index. (A, B) Cumulative survivals for incident cardiovascular disease ( n =8,551; 931 [10.9%] developed cardiovascular disease [CVD]) according to quartiles of TyG index in (A) men and (B) women during 16 years of follow-up are depicted using Kaplan-Meier analysis.",
+    "Receiver operating characteristic (ROC) analysis of triglyceride-glucose (TyG) and other indices for predicting incident cardiovascular disease. (A) The ROC curves are plotted to compare the predictive power for incident cardiovascular disease of indices including TyG index. The estimates of the ROC curves including the area under the curve (AUC), Youden index, Euclidean r, and their corresponding"
+  ],
+  "tables": [
+    "Clinical Characteristics and Incidence of Cardiovascular Disease according to Triglyceride-Glucose Index",
+    "Hazard Ratios for Cardiovascular Disease according to Triglyceride-Glucose Index",
+    "Presence of Carotid Plaque and Carotid Intima-Media Thickness according to Triglyceride-Glucose Index among Non-Diabetic Subjects"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041392.1162837
+}

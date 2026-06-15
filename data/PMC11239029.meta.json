@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11239029",
+  "pmid": "38990809",
+  "title": "Cognitive-behavioral statuses in depression and internet gaming disorder of adolescents: A transdiagnostic approach.",
+  "year": 2024,
+  "journal": "",
+  "authors": "She R, Lin J, Wong KM, Yang X.",
+  "doi": "10.1371/journal.pone.0304715",
+  "figures": [
+    "Prevalence of IGD group, depression group, comorbidity group and healthy group by sex.  *Note: Total sample n = 3120 (27 cases with missing value on sex were excluded), Male n = 1498, Female n = 1622.",
+    "Levels of cognitive–behavioral variables by clusters."
+  ],
+  "tables": [
+    "Comparison of socio–demographic, mental disorders, and cognitive–behavioral variables between different condition groups.",
+    "Associations between sociodemographic characteristics and statuses of depression and IGD using multinomial logistic regression.",
+    "Pearson’s correlations between studied variables.",
+    "Associations between cognitive–behavioral characteristics and statuses of depression and IGD using multinomial logistic regression."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998374.7730224
+}

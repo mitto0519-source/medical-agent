@@ -1,0 +1,31 @@
+{
+  "pmcid": "PMC11675817",
+  "pmid": "39767477",
+  "title": "Assessing the Polarising Impacts of Low-Traffic Neighbourhoods: A Community Perspective from Birmingham, UK.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Whelan I, Luiu C, Pope FD.",
+  "doi": "10.3390/ijerph21121638",
+  "figures": [
+    "Air quality sensor passive diffusion tubes’ location in Kings Heath.",
+    "Mean annual nitrogen dioxide (NO 2 ) concentrations (μg/m 3 ) across 19 locations in Kings Heath for January 2021–July 2023, referencing the WHO AQG of 2005 (40 µg/m 3 ) and 2021 (10 µg/m 3 ). It is noted that the 2010 UK AQS is the same as the WHO AQG of 2005.",
+    "Mean monthly seasonal nitrogen dioxide (NO 2 ) concentrations (µg/m 3 ) comparing winter and summer months from 2020 to 2023, referencing the WHO AQG of 2005 (40 µg/m 3 ) and 2021 (10 µg/m 3 ). It is noted that the 2010 UK AQS is the same as the WHO AQG of 2005.",
+    "Projected mean annual NO 2  concentrations (µg/m 3 ) on North High Street, Kings Heath, from 2016, 2019, 2020, 2021, and 2022. The future linear forecast is represented by a green dotted line. In 2020, Kings Heath introduced Phase 1 LTNs alongside the onset of the COVID- 19 pandemic. Referencing the WHO AQG of 2005 (40 µg/m 3 ) and 2021 (10 µg/m 3 ). It is noted that the 2010 UK AQS is the same as",
+    "Monthly mean nitrogen dioxide (NO 2 ) concentrations (µg/m 3 ) on LTN and non-LTN Roads in Kings Heath from December 2020 to July 2023.",
+    "Essential criteria for LTN acceptance.",
+    "LTN impacts on individuals’ health by general opinion on LTN;  p  &lt; 0.001 (Kruskal–Wallis H test).",
+    "LTNs’ impacts on the local air quality by general opinion on LTN;  p  &lt; 0.001 (Kruskal–Wallis H test).",
+    "Primary mode of transportation into Kings Heath before and after the implementation of LTNs.",
+    "Changes in traffic volume due to LTN by general opinion about LTN;  p  &lt; 0.001 (Kruskal–Wallis H test).",
+    "Experiencing longer journeys into Kings Heath due to the LTN by general opinion on LTN;  p  &lt; 0.001 (Kruskal–Wallis H test).",
+    "Safety as a pedestrian/cyclist within the LTN areas by general opinion on LTN;  p  &lt; 0.001 (Kruskal–Wallis H test)."
+  ],
+  "tables": [
+    "Comparison of pollutant levels from the air quality guidelines from WHO and UK Government (adapted from [ 10 ]).",
+    "Sample socio-demographic characteristics.",
+    "Overall opinion about LTN by gender and age.",
+    "Percentage of air pollution reduction to accept LTN scheme."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780007873.5243835
+}

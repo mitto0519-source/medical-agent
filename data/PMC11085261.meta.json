@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11085261",
+  "pmid": "38737549",
+  "title": "Association of genetically determined chronotype with circulating testosterone: a Mendelian randomization study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Ichikawa T, Kobayashi T, Hachiya T, Ikehata Y, Isotani S, Ide H, Horie S.",
+  "doi": "10.3389/fendo.2024.1264410",
+  "figures": [
+    "One-sample Mendelian randomization (MR) study design.",
+    "Scatter plots for MR analyses of chronotype and sex steroids hormone.  (A)  Total testosterone,  (B)  bioavailable testosterone,  (C)  sex hormone-binding globulin. Analyses were conducted using the IVW and WM methods using chronotype associated 155 variants.",
+    "Scatter plots for MR analyses of sleep duration and sex steroids hormone.  (A)  Total testosterone,  (B)  bioavailable testosterone, and  (C)  sex hormone-binding globulin. Analyses were conducted using the IVW and WM methods using sleep duration associated 69 variants."
+  ],
+  "tables": [
+    "MR analyses of chronotype and sex steroids hormone.",
+    "MR analyses of sleep duration and sex steroids hormone."
+  ],
+  "query": "circadian rhythm chronotype student",
+  "fetched_at": 1780001286.907703
+}

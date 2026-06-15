@@ -1,0 +1,18 @@
+{
+  "pmcid": "PMC11520985",
+  "pmid": "39470521",
+  "title": "Assessing the effects of HMGCR, LPL, and PCSK9 inhibition on sleep apnea: Mendelian randomization analysis of drug targets.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Tan W, Deng X, Tan X, Tan G.",
+  "doi": "10.1097/md.0000000000040194",
+  "figures": [
+    "Design scheme of this study.",
+    "The results of the TSMR analysis of the associations between LDL-C, HDL-C, TG, and TC and sleep apnea syndrome risk were obtained using the IVW, MR-Egger, and weighted median methods. The lipid levels mentioned above were validated using CHD as a positive control. number of SNPs.",
+    "Results of MVMR analysis.",
+    "DMR analysis of the 8 drug targets. DMR validation analysis of the above drug targets and CHD incidence. Number of SNPs."
+  ],
+  "tables": [],
+  "query": "obstructive sleep apnea youth",
+  "fetched_at": 1780002142.3181257
+}

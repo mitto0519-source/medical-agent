@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11638737",
+  "pmid": "39677181",
+  "title": "Effect of Growth Hormone Treatment on Growth Rates in Patients With Growth Hormone Deficiency, Idiopathic Short Stature, and Small for Gestational Age.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Guliyeva L, Dundar I, Akinci A, Gozukara Bag HG.",
+  "doi": "10.7759/cureus.73571",
+  "figures": [
+    "Changes in the height SDS of the groups by years  SDS: standard deviation score; PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature",
+    "Graph showing the change in Δ (height SDS-target height SDS) across groups over the years  SDS: standard deviation score; Δ: difference; PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature",
+    "Changes in the height velocity of the groups over the years  PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature"
+  ],
+  "tables": [
+    "Δ height SDS values of the cases during the treatment according to the diagnoses  NS: not significant; Δ: difference; SDS: standard deviation score; PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature  p a : Comparison of height SDS values between the time of diagnosis and the first year of treatment  p b ",
+    "Δ height SDS values of the cases during the treatment according to the diagnoses  NS: not significant; SDS: standard deviation score; Δ: difference; PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature  p 1 : Comparison of Δ height SDS values between PGHD and CGHD at the first year of treatment  p a : Compa",
+    "Δ height SDS values of the cases during the treatment according to the diagnoses  NS: not significant; SDS: standard deviation score; Δ: difference; PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature  p 2 : Comparison of Δ (height SDS-target height SDS) values between CGHD and ISS groups at the second yea",
+    "Δ (height SDS-target height SDS) of the cases during the treatment according to the diagnoses  NS: not significant; Δ: difference; PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature  p a : Comparison of height velocity values between pre-treatment and first year of treatment  p b : Comparison of height ve",
+    "PAH values of the cases during the treatment according to the diagnoses  NS: not significant; PAH: predicted adult height; PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature  p a : Comparison of PAH values between the time of diagnosis and the second year of treatment  p b : Comparison of PAH values betwe",
+    "Change of IGF-1 SDS values of patient groups during treatment  NS: not significant; IGF-1: insulin-like growth factor 1; SDS: standard deviation score; PGHD: partial growth hormone deficiency; CGHD: complete growth hormone deficiency; SGA: small for gestational age; ISS: idiopathic short stature  p 1 : Comparison of IGF-1 SDS values between CGHD and SGA groups at the time of diagnosis  p a : Compa"
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013006.596613
+}

@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11608794",
+  "pmid": "38965885",
+  "title": "Influence of reinforcement learning on the inhibitory control of Internet gaming disorder.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Zhang M, Zhao C, Zhang M, Mao S, Yang M, Mao Z, Xing X.",
+  "doi": "10.1002/pchj.772",
+  "figures": [
+    "Flow chart of the experiment. (A) A single process of Go trial and a single process of No‐Go trial in neutral signal stop task. (B) A single flow chart of reward learning stage and three stimulus pairs. (C) A single process of Go trial and a single process of No‐Go trial in stop signal task of reward and punishment related stimulation",
+    "(A) Line chart of the accuracy of reinforcement learning phase for three blocks. (B) Line chart of the reaction time (RT) of reinforcement learning phase for three blocks. Asterisks represent significant differences according to post hoc Bonferroni tests at the ** p &lt;  .01, *** p &lt;  .001 levels. HC, healthy control group; IGD, Internet gaming disorder group.",
+    "(A) Line chart of the accuracy of test phase for three pairs. (B) Line chart of the reaction time (RT) of test phase for three pairs. Asterisks represent significant differences according to post hoc Bonferroni tests at the * p &lt;  .05, ** p &lt;  .01, *** p &lt;  .001 levels. HC, healthy control group; IGD, Internet gaming disorder group.",
+    "(A) Line chart of the accuracy of transfer phase. (B) Line chart of the reaction time (RT) of transfer phase. The asterisk indicates that the reaction time of the addicted group is slightly higher than that of the HC group ( p  = .064). Asterisks represent significant differences according to post hoc Bonferroni tests at the * p &lt;  .05, ** p &lt;  .01, *** p &lt;  .001 levels. HC, healthy contr",
+    "The correct rate of signal stop task in No‐Go trials. Asterisks represent significant differences according to post hoc Bonferroni tests at the ** p &lt;  .01, *** p &lt;  .001 levels. HC, healthy control group; IGD, Internet gaming disorder group."
+  ],
+  "tables": [
+    "Data analysis results of self‐report questionnaire ( M  ±  SD )"
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998265.3310845
+}

@@ -1,0 +1,32 @@
+{
+  "pmcid": "PMC11607380",
+  "pmid": "39614074",
+  "title": "Air quality and transport behaviour: sensors, field, and survey data from Warsaw, Poland.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Hassani A, Nicińska A, Drabicki A, Zawojska E, Sousa Santos G, Kula G, Grythe H, Zawieska J, Jaczewska J, Rachubik J, Archanowicz-Kudelska K, Zagórska K, Grzenda M, Kubecka M, Luckner M, Jakubczyk M, Wolański M, Castell N, Gora P, Skedsmo PW, Rożynek S, Horosiewicz S.",
+  "doi": "10.1038/s41597-024-04111-4",
+  "figures": [
+    "An overview of data sets’ design.",
+    "The placement of diffusive samplers, air quality sensors, and noise sensors near the Kajki, Trocka, and Kruczkowskiego primary schools. KA0, TR0, and KR0 were positioned indoors (AQ: Air Quality).",
+    "Traffic observation sites around each case-study school in Warsaw. Marked areas denote the identified drop-off and pick-up locations during both (AM and PM peak) observation periods. Main stopping (parking) locations are marked in blue and auxiliary (less-frequent) locations in orange. All these sites were observed in-situ by surveying personnel.",
+    "Evaluating low-cost sensor NO 2  measurements against corresponding measurements of NO 2  diffusive samplers. ( a ) mean NO 2  concentration measured by Airly low-cost sensors against the NO 2  diffusive sampler records. ( b ) mean bias of the measured NO 2  by Airly low-cost sensors compared to NO 2  diffusive sampler measurements during each period. The size of the scatter points in panel  a  co",
+    "Results of remote calibration for PM 2.5  sensor measurements, aligned with corresponding measurements from the nearest reference station. The calibration process utilized the mean of measurements from the two sensors.  R  2 : Coefficient of Determination;  R  M  S  E : Root Mean Square Error.",
+    "Results of remote calibration for O 3  sensor measurements, aligned with corresponding measurements from the nearest reference station. The calibration process utilized the mean of measurements from the two sensors.  R  2 : Coefficient of Determination;  R  M  S  E : Root Mean Square Error.",
+    "Distribution of stopping duration (in seconds), pooled data and by each school.",
+    "Distribution of travel duration and speed for various means of transport.",
+    "Selected Level of Service features. The feature distribution is presented on the diagonal. The relation between two features with a trend line is presented below, and their correlation is above. (W) - walking, (T) - public Transport, (C) - car."
+  ],
+  "tables": [
+    "Start and end dates of the nine periods during which NO 2  diffusive samplers were placed near the schools.",
+    "Field school-traffic observations: dataset attributes.",
+    "Population and sample structures for surveyed schools.",
+    "Performed transformations on indirect identifiers in the survey data sets.",
+    "Results of the Disclosure Risk Assessment.",
+    "Acceptable range and thresholds for daily differences between the two sensors’ measurements near schools, used for Quality Control of the air quality sensors’ measurements.",
+    "Technical validation of  in-situ  observation.",
+    "Summary of interviews status, and objections."
+  ],
+  "query": "active transport school commute",
+  "fetched_at": 1780008275.1521466
+}

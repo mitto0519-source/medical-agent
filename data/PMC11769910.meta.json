@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11769910",
+  "pmid": "39679551",
+  "title": "Across the multiverse: exploring a diverse set of specifications related to cross-sectional and prospective associations between adolescent alcohol use and emotional problems.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Halladay J, Visontay R, Slade T, Devine EK, Smout S, Andrews JL, Champion KE, Teesson M, Sunderland M.",
+  "doi": "10.1017/s0033291724002502",
+  "figures": [
+    "Summary of multiverse specifications",
+    "Specification Curve Multiverse B. The specification curve plot in the top part of the figure plots standardized emotional problems parameter estimates from each universe in multiverse B from smallest to largest. The blue dots represent parameter estimates that are statistically significant at a p&lt;0.05. The red dots represent parameter estimates that are not statistically significant. Dots below",
+    "(a) Box Plot Multiverse A. The box plot shows the median eLect, interquartile range, and full range of all universes (or models) where the specification indicated on the left side of the figure was included. For example, Binge Drink Monthly (T5) has a black line at the median eLect of 0.23, reflecting the median eLect across all crosssectional specifications where Binge Drinking Monthly was includ",
+    "The box plot shows the median eLect, interquartile range, and full range of all universes (or models) where the specification indicated on the left side of the figure was included. For example, PHQ-A binary (T5) has a black line at the median eLect of 0.17, reflecting the median eLect across all crosssectional specifications where PHQ-A binary was included. The blue box around the median eLect is ",
+    "(a)  p  value Plot Multiverse A. This figure shows the proportion of statistically significant alcohol eLects ( p &lt;0.05) that are positively related to emotional problems (Sig +) and inversely related to emotional problems (Sig -) of all universes (or models) where the specification indicated on the left side of the figure was included.",
+    "P-value Plot Multiverse B. This figure shows the proportion of statistically significant emotional problems eLects ( p &lt;0.05) that are positively related to alcohol variables (Sig +) and inversely related to alcohol variables (Sig -) of all universes (or models) where the specification indicated on the left side of the figure was included."
+  ],
+  "tables": [
+    "Summary of multiverse specifications",
+    "Descriptive Alcohol Use and Emotional Problem Sample Characteristics"
+  ],
+  "query": "US adolescent soft drink depression",
+  "fetched_at": 1779992339.8889248
+}

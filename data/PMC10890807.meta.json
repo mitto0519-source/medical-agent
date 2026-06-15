@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10890807",
+  "pmid": "38406383",
+  "title": "Cannabis and Anxiety: A Critical Review.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Beletsky A, Liu C, Lochte B, Samuel N, Grant I.",
+  "doi": "10.1159/000534855",
+  "figures": [
+    "PRISMA diagram. The figure demonstrates the identification, screening and inclusion of studies for review."
+  ],
+  "tables": [
+    "Studies reporting no relationship between cannabis and anxiety",
+    "Studies supporting the self-medication hypothesis",
+    "Studies suggesting cannabis use causes anxiety disorders",
+    "Studies suggesting anxiety disorders predispose to cannabis use",
+    "Studies supporting the common factor theory"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060100.9414637
+}

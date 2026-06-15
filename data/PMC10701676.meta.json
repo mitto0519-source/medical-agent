@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10701676",
+  "pmid": "38075232",
+  "title": "Association of skeletal muscle mass and risk of hypertension in Korean adults: secondary analysis of data from the community-based prospective cohort study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Bu SY.",
+  "doi": "10.3389/fnut.2023.1254109",
+  "figures": [
+    "Flow diagram for selection of study participants.",
+    "Kaplan–Meier curve of the incidence of hypertension according to RSM tertiles. Event-free rates are significantly associated with skeletal muscle mass, with the worst event-free survival curve for T1 in  (A)  men and  (B)  women. Log-rank tests indicated  P  = 0.0002 and  P  = 0.0005 for men and women, respectively. RSM in men: T1, &lt; 72.68; T2, 72.68 ≤ RSM &lt; 76.79, T3, ≤ 76.79; Women RSM: T1",
+    "Risk of incident hypertension according to relative skeletal muscle mass in stratified population. Cox hazard ratios (HRs) with 95% CI for the risk of hypertension are plotted according to relative skeletal muscle mass (RSM) in stratified population using  (A)  total daily energy intake,  (B)  sodium intake,  (C)  obesity, and  (D)  abdominal obesity. Men RSM: T1, &lt; 72.68; T2, 72.68 ≤ RSM &lt; "
+  ],
+  "tables": [
+    "Characteristics according to RSM tertiles of study participants at baseline.",
+    "Nutrition intake status according to RSM tertiles of participants.",
+    "Number of hypertension incidents during 16-year follow-up.",
+    "Relationship between RSM tertiles and hypertension incidence during 16-year follow-up."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041677.5533981
+}

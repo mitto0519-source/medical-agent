@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10354999",
+  "pmid": "37468880",
+  "title": "Dietary patterns associated with colorectal cancer risk in the Malaysian population: a case-control study with exploratory factor and regression analysis.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Abd Rashid AA, Ashari LS, Shafiee NH, Raja Ali RA, Yeong Yeh L, Shahril MR, Jan Mohamed HJ.",
+  "doi": "10.1186/s12889-023-16283-6",
+  "figures": [
+    "Flow chart indicating screening, recruitment, and dietary assessment finalization. CA, cancer; FFQ, food frequency questionnaire",
+    "Food groups within four dietary patterns with positive and negative loadings. Absolute values less than 0.2 were not listed for simplicity, and those above 0.3 were presented to visually emphasize the strength of association. The green box indicates positive factor loading, and the red box indicates negative factor loading"
+  ],
+  "tables": [
+    "Baseline characteristics of the study patients ( n  = 264)",
+    "Odds ratios and 95% CI of colorectal cancer according to the four major dietary patterns"
+  ],
+  "query": "Malaysian adolescent dietary depression",
+  "fetched_at": 1779992294.5688488
+}

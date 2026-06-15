@@ -1,0 +1,23 @@
+{
+  "pmcid": "PMC11811752",
+  "pmid": "39935628",
+  "title": "Emulating a randomized clinical trial with real-world data to evaluate the effect of antidepressant use in PTSD patients with high suicide risk.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Miranda O, Qi X, Brannock MD, Whitworth R, Kosten T, Ryan ND, Haas GL, Kirisci L, Wang L.",
+  "doi": "10.3389/fpsyt.2024.1526488",
+  "figures": [
+    "Participant screening and enrollment flowchart.",
+    "Emulation selection process overview.",
+    "Percent of eligible patients with PTSD using a certain type of antidepressant.",
+    "Standardized survival curve based on head-to-head comparisons of venlafaxine and citalopram. The curve shows significant differences in survival rates compared between venlafaxine and citalopram.",
+    "Standardized survival curve based on head-to-head comparisons of fluoxetine and sertraline. The curve shows that both fluoxetine and sertraline have statistically same survival rates when compared."
+  ],
+  "tables": [
+    "Baseline characteristics of the patients included in this study are categorized as follows: Level 0 indicates absence of a diagnosis fitting under the category, while Level 1 indicates presence of such a diagnosis.",
+    "Number of patients, events, and unique patients, ratio and average number of months of follow-up for each antidepressant treatment respectively.",
+    "Head-to-head comparisons of antidepressants, adjusted for social determinants of health and concurrent PTSD medications, using truncating weights."
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060651.137077
+}

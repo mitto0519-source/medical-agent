@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11779557",
+  "pmid": "39773770",
+  "title": "The impact of published guidance on trends in the pharmacological management of depression in children and adolescents- a whole population e-cohort data linkage study in Wales, UK.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Marchant A, McGregor J, Del Pozo Banos M, Lloyd K, Williams D, Thapar A, Watkins A, John A.",
+  "doi": "10.1017/s0033291724002861",
+  "figures": [
+    "Incidence per 1000 PYAR (95% CI) and IRR  a   (95% CI)  b   of depression and antidepressant prescriptions in primary care",
+    "Change in trend of incident antidepressant prescriptions following clinical guidance."
+  ],
+  "tables": [
+    "Incidence per 1000 PYAR (95% CI) and IRR  a   (95% CI)  b   of depression and antidepressant prescriptions in primary care",
+    "n , % (95% CI) of antidepressant prescriptions by potential indication for prescription, stratified by antidepressant type, sex and age",
+    "Incidence per 1000 PYAR (95% CI) and IRR  a   (95% CI)  b   of antidepressant prescriptions in primary care stratified by subtype",
+    "Time trend analysis of changes in the incidence per 1000 PYAR (95% CI) of antidepressant prescriptions following NICE, WHC, WeMeRec clinical guidelines"
+  ],
+  "query": "SSRI fluoxetine adolescent depression",
+  "fetched_at": 1780055656.2029707
+}

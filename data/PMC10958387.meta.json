@@ -1,0 +1,17 @@
+{
+  "pmcid": "PMC10958387",
+  "pmid": "38512297",
+  "title": "Analysis and Optimization of Equitable US Cancer Clinical Trial Center Access by Travel Time.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee H, Bates AS, Callier S, Chan M, Chambwe N, Marshall A, Terry MB, Winkfield K, Janowitz T.",
+  "doi": "10.1001/jamaoncol.2023.7314",
+  "figures": [
+    "Characterization of the 78 Most Active US Cancer Clinical Trial Center Catchment Populations  A, Swarmplot showing the deprivation index for each cancer clinical trial hospital catchment population and for each US county population. Deprivation index values closer to 1 represent greater social deprivation. Unpaired mean difference and 95% CI with bootstrap resampling shown on right axis (−0.035 un",
+    "Identification of New Locations With Equitable Commuting Access for Racially Diverse Catchment Populations  A, Sensitivity analysis showing locations of the top 20th percentile and top 50th percentile of US hospitals ranked by the diversity scores of their catchment populations (defined as inhabitants living in tracts within 30-minute 1-way drive) and has sufficient population size to enroll patie",
+    "Mapped Visualization of Diversity Scores and Socioeconomic Deprivation Indices With Overlay of Potential New Trial Site Locations and Commute Boundaries From Existing Cancer Clinical Trial Centers  A, New York-Jersey City Metropolitan division map of commuting-populations within 30-minute travel time to existing cancer research hospitals. Top left inset outline the areas that fall under 120-, 60-,"
+  ],
+  "tables": [],
+  "query": "active transport school commute",
+  "fetched_at": 1780007928.4910092
+}

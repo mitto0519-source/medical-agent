@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11818349",
+  "pmid": "39934787",
+  "title": "Association between annual concentration of air pollutants and incidence of metabolic syndrome among Korean adults: Korean Genome and Epidemiology Study (KoGES).",
+  "year": 2025,
+  "journal": "",
+  "authors": "Shin H, Song M, Bae S.",
+  "doi": "10.1186/s12940-025-01158-7",
+  "figures": [
+    "Flowchart of study population selection",
+    "Hazard ratios of metabolic syndrome per interquartile range width increment in air pollution exposure during follow-up stratified by sex, age, and smoking status ( n =7,428). Note: IQR for PM 2.5 : 3.48 µg/m 3 , SO 2 : 1.17 ppb, NO 2 : 8.87 ppb, CO: 172.71 ppb, O 3 : 2.65 ppb. Abbreviations: PM 2.5 , particulate matter with aerodynamic diameters ≤ 2.5 μm; SO 2 , sulfur dioxide; NO 2 , nitrogen dio"
+  ],
+  "tables": [
+    "Baseline descriptive characteristics of study population (2005–2012)",
+    "Average annual concentration of air pollutants and meteorological exposure during follow-up",
+    "Hazard ratios of metabolic syndrome per interquartile range width increment in air pollution exposure during follow-up ( n  = 7,428)",
+    "Hazard ratios of metabolic syndrome components per interquartile range width increment in air pollution exposure during follow-up"
+  ],
+  "query": "Korean Genome Epidemiology Study KoGES",
+  "fetched_at": 1780036859.3887658
+}

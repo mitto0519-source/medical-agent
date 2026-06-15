@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10926637",
+  "pmid": "38468265",
+  "title": "Sex differences in the relationship between serum total bilirubin and risk of incident metabolic syndrome in community-dwelling adults: Propensity score analysis using longitudinal cohort data over 16 years.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Kim AH, Son DH, Moon ME, Jeon S, Lee HS, Lee YJ.",
+  "doi": "10.1186/s12933-024-02182-6",
+  "figures": [
+    "Flow chart for selection of the study population",
+    "Cumulative incidence of MetS according to serum total bilirubin quartiles in men and in women before and after propensity score matching: (A) men before matching, (B) men after matching, (C) women before matching, and (D) women after matching"
+  ],
+  "tables": [
+    "Baseline characteristics of study population by serum total bilirubin quartiles in men before and after propensity score matching",
+    "Baseline characteristics of study population by serum total bilirubin quartiles in women before and after propensity score matching",
+    "Hazard ratios and 95% confidence intervals for incident metabolic syndrome by serum total bilirubin quartiles in men and women before and after propensity score matching"
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041465.6713347
+}

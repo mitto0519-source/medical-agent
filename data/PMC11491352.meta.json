@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11491352",
+  "pmid": "39435354",
+  "title": "The clinical and genetic aspects of six individuals with <i>GH1</i> variants and isolated growth hormone deficiency type II.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Huang X, Chen H, Shangguan H, Wu W, Ai Z, Chen Z, Chen R.",
+  "doi": "10.3389/fendo.2024.1363050",
+  "figures": [
+    "Growth chart of the three patients with heterozygous  GH1  variants with the rhGH therapies. Height and weight standardized growth charts for Chinese children and adolescents aged 0 to 18 years. The dots represent records.  (A)  Patient 1 height and weight trends during rhGH treatment.  (B)  Patient 2 height and weight trends during rhGH treatment.  (C)  Patient 3 height and weight trends during r",
+    "GH1  gene variants in the patients and their family members. Squares represent males, and circles represent females. The proband is indicated by an arrow. Black-filled symbols indicate subjects with  GH1  gene variants. The oblique line filled-in symbol represents affected individuals carrying homozygous variants of the GHRHR gene. Bar chart demonstrating the copy number of  GH1 .  (A)  qPCR confi",
+    "Homology modeling and structural analysis of human growth hormone (GH).  (A, B)  Molecular visualization images for GH and growth hormone receptor (GHR) complexes were produced using PyMOL. The figure shows the relative positions of GH (blue) combined with GHR (pink). Trp112 is represented by a stick model in red.  (C)  Δ Vibrational Entropy EnergyVisual representation of variant: Amino acids are ",
+    "Height SDS and age at diagnosis in children harboring different types of heterozygous variants of the  GH1  gene.  (A)  Comparative analysis of height SDS in children with different  GH1  gene heterozygous variants.  (B)  Comparative analysis of diagnostic age of children with different  GH1  gene heterozygous variants. * indicates  p  &lt; 0.05, *** indicate  p  &lt; 0.001, and **** indicate  p  "
+  ],
+  "tables": [
+    "Clinical data of patients.",
+    "Patients’ response to growth hormone therapy.",
+    "Genotypes of six patients."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780012889.2745008
+}

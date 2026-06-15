@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC11575446",
+  "pmid": "39563322",
+  "title": "Iron deficiency anemia and its association with cognitive function among adolescents in the Ashanti Region - Ghana.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Yeboah FA, Bioh J, Amoani B, Effah A, Senu E, Mensah OSO, Agyei A, Kwarteng S, Agomuo SKS, Opoku S, Agordzo SK, Aidoo EK, Sakyi SA.",
+  "doi": "10.1186/s12889-024-20640-4",
+  "figures": [
+    "Prevalence of anemia and iron deficiency anemia among adolescents recruited in the study",
+    "Cognitive test scores of study participants, very good (≥ 60%), good (40–59%) and poor (&lt; 40%)",
+    "Spearman correlation between weight ( A-B ), height ( C-D ), BMI ( E-F ) and levels of hemoglobin and ferritin",
+    "Cognitive performance test scores stratified by IDA status",
+    "Correlation between ( A ) ferritin, ( B ) hemoglobin and cognitive performance test score (CPT)"
+  ],
+  "tables": [
+    "Sociodemographic characteristics of study participants",
+    "Anthropometric, biochemical, hematological characteristics, and Cognitive Performance Test scores (CPTS) of adolescents stratified by gender",
+    "Sociodemographic predictors of IDA among study participants",
+    "Predictors of very good cognitive performance"
+  ],
+  "query": "iron deficiency anemia girl",
+  "fetched_at": 1780005026.6869097
+}

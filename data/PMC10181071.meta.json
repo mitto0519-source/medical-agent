@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC10181071",
+  "pmid": "37432202",
+  "title": "Effect of the Interaction between Seaweed Intake and <i>LPL</i> Polymorphisms on Metabolic Syndrome in Middle-Aged Korean Adults.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Kwak J, Hong G, Lee KJ, Kim CG, Shin D.",
+  "doi": "10.3390/nu15092066",
+  "figures": [
+    "Process flow diagram outlining the steps involved in this analysis."
+  ],
+  "tables": [
+    "General characteristics of study participants according to metabolic syndrome.",
+    "General characteristics of the study participants according to  LPL  rs17482753 genotypes.",
+    "Association between total seaweed intake and the incidence of metabolic syndrome.",
+    "Association between  LPL  rs17482753 genotypes and the incidence of metabolic syndrome.",
+    "Association between  LPL  rs17482753 genotypes and the incidence of metabolic syndrome, stratified by total seaweed intake."
+  ],
+  "query": "Ansan Ansung cohort follow-up",
+  "fetched_at": 1780041592.3828318
+}

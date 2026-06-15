@@ -1,0 +1,21 @@
+{
+  "pmcid": "PMC11520168",
+  "pmid": "39444020",
+  "title": "A scoping review on barriers and facilitators to harm reduction care among youth in British Columbia, Canada.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Beck K, Pallot K, Amri M.",
+  "doi": "10.1186/s12954-024-01063-1",
+  "figures": [
+    "PRISMA flow diagram"
+  ],
+  "tables": [
+    "MEDLINE search strategy",
+    "Articles collated in the scoping review",
+    "Barrier and facilitator themes and sub-themes",
+    "Depiction of themes that appear across articles",
+    "Funding declaration for evidence included in this scoping review"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060002.0324056
+}

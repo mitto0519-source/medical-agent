@@ -1,0 +1,30 @@
+{
+  "pmcid": "PMC10968660",
+  "pmid": "38534863",
+  "title": "Metaheuristic-Based Feature Selection Methods for Diagnosing Sarcopenia with Machine Learning Algorithms.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lee J, Yoon Y, Kim J, Kim YH.",
+  "doi": "10.3390/biomimetics9030179",
+  "figures": [
+    "A flowchart for a typical genetic algorithm.",
+    "A flowchart for typical harmony search.",
+    "An overview of dataset preparation and preprocessing.",
+    "Box plots for machine learning performance on various feature sets.",
+    "The average accuracy of the solutions founded by our harmony search according to HMCR.",
+    "The average accuracy of the solutions founded by our genetic algorithm according to mutation rate."
+  ],
+  "tables": [
+    "Data distribution of sarcopenia and normal data.",
+    "Genetic algorithm parameters in our experiment.",
+    "Harmony search parameters in our experiment.",
+    "The ranges of dynamic parameters in this experiment.",
+    "Machine learning performance on various feature sets. The data showcasing the highest performance for each machine learning algorithm are highlighted in bold for reference.",
+    "Performance comparison of harmony search with dynamic HMCR and fixed HMCR. The data showcasing the highest performance for each machine learning algorithm are highlighted in bold for reference.",
+    "Performance comparison of genetic algorithm with dynamic mutation rate and fixed parameters. The data showcasing the highest performance for each machine learning algorithm are highlighted in bold for reference.",
+    "",
+    "Key parameters of machine learning algorithm applied in this study."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040596.309925
+}

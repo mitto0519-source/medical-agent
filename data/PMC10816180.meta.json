@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10816180",
+  "pmid": "38256113",
+  "title": "Social Interaction in Adolescent Rats with Neonatal Ethanol Exposure: Impact of Sex and CE-123, a Selective Dopamine Reuptake Inhibitor.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Socha J, Grochecki P, Smaga I, Jastrzębska J, Wronikowska-Denysiuk O, Marszalek-Grabska M, Slowik T, Kotlinski R, Filip M, Lubec G, Kotlinska JH.",
+  "doi": "10.3390/ijms25021041",
+  "figures": [
+    "Effects of neonatal ethanol administration on social novelty discrimination in adolescents. *  p  &lt; 0.05; **  p  &lt; 0.01; ***  p  &lt; 0.001; n = 8–10/group. PND—postnatal day, SI—sham intubation (i.g.), EtOH—ethanol intubation (i.g.).",
+    "Effect of CE-123 administration on neonatal ethanol-induced deficits in social novelty discrimination in ( A ) PND28 male; ( B ) PND42; ( C ) PND28 female; and ( D ) PND42 female rats. *  p  &lt; 0.05; **  p  &lt; 0.01; ***  p  &lt; 0.001; n = 10/group. PND—postnatal day, SI—sham intubation (i.g.), EtOH—ethanol intubation (i.g.).",
+    "Effects of neonatal ethanol administration on BDNF expression in PND28 and PND42 ( A ) male and ( B ) female rats, as well as on TrkB expression in ( C ) PND28 male and ( D ) PND42 female rats in the hippocampus. Effect of CE-123. *  p  &lt; 0.05; **  p  &lt; 0.01; n = 10/group. PND—postnatal day, SI—sham intubation (i.g.), EtOH—ethanol intubation (i.g.).",
+    "Effect of neonatal ethanol administration on short-term memory in ( A ) PND28 male, ( B ) PND42, ( C ) PND28 female, and ( D ) PND42 female rats; n = 6–7/group. PND—postnatal day, SI—sham intubation (i.g.), EtOH—ethanol intubation (i.g.) in NOR task. Effect of CE-123."
+  ],
+  "tables": [
+    "Effects of neonatal ethanol administration on locomotor activity and anxiety behavior in adolescents. Effect of CE-123. Results are presented as mean ± standard errors (SEM). **  p  &lt; 0.01 vs. SI/vehicle;  # \n p  &lt; 0.05 vs. ethanol/vehicle."
+  ],
+  "query": "neuroplasticity prefrontal cortex puberty",
+  "fetched_at": 1780047360.202751
+}

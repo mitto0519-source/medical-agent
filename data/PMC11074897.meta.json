@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC11074897",
+  "pmid": "38648634",
+  "title": "Psychometric Properties of the Metacognitions About Online Gaming Scale in the Chinese Population and Its Relationship With Internet Gaming Disorder: Cross-Sectional Study.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Lin S, Chen X, Tan L, Liao Z, Li Y, Tang Y, Huang Q, Shen H.",
+  "doi": "10.2196/45985",
+  "figures": [
+    "The bifactor model of the Chinese version of the Metacognitions about Online Gaming Scale (C-MOGS), showing the latent factors as ovals, the 12 items in the C-MOGS as rectangles, the error terms (e1-e14) as circles, and the standardized factor loading above the arrows. N-MOG: Negative Metacognitions about Online Gaming; N-MOGD: Negative Metacognitions about the Dangers of Online Gaming; N-MOGU: Ne"
+  ],
+  "tables": [
+    "Sociodemographic and Internet gaming characteristics of the sample (n=772).",
+    "Item-factor loadings of the Chinese version of the Metacognitions about Online Gaming Scale (C-MOGS) based on exploratory factor analyses (sample-1, n=390).",
+    "Model fit indices of the confirmatory factor analyses for the Chinese version of the Metacognitions about Online Gaming Scale (C-MOGS; Sample 2, n=382).",
+    "Descriptive statistics for the variables (n=772).",
+    "Spearman correlation coefficients among the variables (n=772).",
+    "Hierarchical multiple regression analyses with the Internet Gaming Disorder Scale-Short Form (IGDS9-SF) as the outcome variable and the Chinese version of the Metacognitions about Online Gaming Scale (C-MOGS) factors as predictor variables, together with gender, weekly gaming hours, motives related to online gaming, depression, and anxiety (n=772)."
+  ],
+  "query": "internet gaming disorder",
+  "fetched_at": 1779998863.1209402
+}

@@ -1,0 +1,19 @@
+{
+  "pmcid": "PMC10363723",
+  "pmid": "37492067",
+  "title": "Potential biomarker of brain response to opioid antagonism in adolescents with eating disorders: a pilot study.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Stancil SL, Yeh HW, Brucks MG, Bruce AS, Voss M, Abdel-Rahman S, Brooks WM, Martin LE.",
+  "doi": "10.3389/fpsyt.2023.1161032",
+  "figures": [
+    "A priori -defined Regions of Interest (ROIs). ROIs displayed on 3D merged image from all study participant brains. MNI coordinates expressed as  x, y, z  for regions of interest: ACC (L) -4, 32, 18 (R) 4, 32, 18; dlPFC -22, 52, 30; NAc (L) -12, 8, −8 (R) 14, 10, −8; vmPFC 9, 46, −13.",
+    "Group level reward pathway modulation by opioid antagonism. The forest plots display the linear random mixed effects model-derived mean and 95% confidence interval for %BOLD signal change following naltrexone.  A priori  regions of interest were nucleus accumbens, NAc, ventromedial prefrontal cortex, vmPFC, anterior cingulate cortex, ACC, and dorsolateral prefrontal cortex, dlPFC. Contrasts select",
+    "Individual-level Δ%BOLD following opioid antagonism. The boxplots display individual-level data points that represent the raw values of Δ%BOLD. The size of the data point corresponds with the amount of uncensored data for that individual (e., 1.0 means 100% of the data for that individual were uncensored; 0.8 means 80% of that individual’s data were uncensored and 20% censored due to motion). Foll"
+  ],
+  "tables": [
+    "Participant characteristics ( n  = 12)."
+  ],
+  "query": "antipsychotic atypical youth weight",
+  "fetched_at": 1780057543.1920092
+}

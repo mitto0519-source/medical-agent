@@ -1,0 +1,24 @@
+{
+  "pmcid": "PMC10887308",
+  "pmid": "38397339",
+  "title": "Once-Weekly Somapacitan as an Alternative Management of Growth Hormone Deficiency in Prepubertal Children: A Systematic Review and Meta-Analysis of Randomized Controlled Trial.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Tsurayya G, Nazhifah CA, Pirwanja MR, Zulfa PO, Tatroman MRR, Fakri F, Iqhrammullah M.",
+  "doi": "10.3390/children11020227",
+  "figures": [
+    "PRISMA flowchart of the included studies.",
+    "Traffic-light plot for the risk of bias of the included studies according to Cochrane’s RoB 2.0.",
+    "Forest plot of efficacy comparing Somapacitan at a dose of 0.16 mg/kg/week to daily growth hormone/Norditropin at 0.034 mg/kg/day. Size of the red box indicates the study weight. The black diamond indicates the value for the total estimates.",
+    "Forest plot of overall adverse events of Somapacitan versus Norditropin. Size of the blue box indicates the study weight. The black diamond indicates the value for the total estimates.",
+    "Forest plot of odds ratio adherence in Somapacitan compared to daily growth hormone/Norditropin. Size of the blue box indicates the study weight. The black diamond indicates the value for the total estimates.",
+    "Forest plot for the Growth Hormone Deficiency–Child Impact Measure (GHD-CIM) comparing Somapacitan to daily growth hormone/Norditropin. Size of the red box indicates the study weight. The black diamond indicates the value for the total estimates."
+  ],
+  "tables": [
+    "Characteristics of the included studies.",
+    "Characteristics of subjects, intervention, and outcomes.",
+    "Summary of the overall effects for subgroups of adverse events."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013392.747942
+}

@@ -1,0 +1,22 @@
+{
+  "pmcid": "PMC10606450",
+  "pmid": "37893824",
+  "title": "Predictors of Variation in the Cognitive Function Trajectories among Older Adults Living Alone: A Growth Mixture Modeling Approach.",
+  "year": 2023,
+  "journal": "",
+  "authors": "Park S, Lee S, Jeong KH.",
+  "doi": "10.3390/healthcare11202750",
+  "figures": [
+    "Estimation of changes in cognitive function of the older adults living alone."
+  ],
+  "tables": [
+    "Demographic characteristics of study participants (N = 1217).",
+    "Descriptive analysis of major variable (N = 1217).",
+    "Goodness of fit of latent growth model of cognitive function.",
+    "Goodness of fit of the growth mixture model.",
+    "Estimated initial value and rate of change for each latent class of cognitive function.",
+    "Binary logistic regression model of types of change in cognitive function (N = 1217)."
+  ],
+  "query": "Korean Longitudinal Study Aging KLoSA",
+  "fetched_at": 1780040791.9579008
+}

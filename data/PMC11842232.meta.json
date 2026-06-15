@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC11842232",
+  "pmid": "39991735",
+  "title": "Efficacy in Japanese adults with growth hormone deficiency receiving weekly somapacitan or daily growth hormone: results from phase 3 REAL 1 trial.",
+  "year": 2025,
+  "journal": "",
+  "authors": "Otsuka F, Rasmussen MH, Endo T, Sværke C, Tahara S, Johannsson G.",
+  "doi": "10.3389/fendo.2025.1534891",
+  "figures": [
+    "Participant characteristics at baseline.",
+    "IGF-I SDS  (A)  and IGF-I/IGFBP-3 molar ratio  (B)  from baseline to week 34. Data are presented as mean with error bars representing SD. The grey area in panel  (A)  indicates the intended normal reference range (-2 to +2 SDS). For visual purposes, trough IGF-I samples are not included. The first 8 weeks were a titration period to achieve a steady state IGF-I SDS target of -0.50 to +1.75. GH, gro"
+  ],
+  "tables": [
+    "Participant characteristics at baseline.",
+    "Baseline values and observed changes from baseline to week 34 in DXA-derived body composition measures.",
+    "Adverse events."
+  ],
+  "query": "growth hormone deficiency",
+  "fetched_at": 1780013027.3981388
+}

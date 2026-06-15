@@ -1,0 +1,20 @@
+{
+  "pmcid": "PMC10997690",
+  "pmid": "38578372",
+  "title": "Who gets screened and who tests positive? Drug screening among justice-involved youth in a midwestern urban county.",
+  "year": 2024,
+  "journal": "",
+  "authors": "Clifton RL, Carson I, Dir AL, Tu W, Zapolski TCB, Aalsma MC.",
+  "doi": "10.1186/s40352-024-00273-w",
+  "figures": [
+    "Flow diagram depicting youth who were assigned to DS, and of those, who screened positive for which substances"
+  ],
+  "tables": [
+    "Descriptive statistics for assignment to DS for youth on probation",
+    "Logistic regression of likelihood of being assigned to DS",
+    "Descriptive statistics for DS result for youth on probation assigned to DS",
+    "Logistic regression of likelihood of positive UDS"
+  ],
+  "query": "benzodiazepine dependence youth",
+  "fetched_at": 1780060078.395192
+}
