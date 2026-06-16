@@ -206,25 +206,58 @@ def _load_projects() -> list[dict]:
             with get_engine().connect() as conn:
                 if owner:
                     rows = conn.execute(_sql(
-                        "SELECT id, title, updated_at FROM ma_working_papers "
+                        "SELECT id, title, updated_at, data_json FROM ma_working_papers "
                         "WHERE owner_email=:oe ORDER BY updated_at DESC LIMIT 50"),
                         {"oe": owner}).mappings().all()
                 else:
                     rows = conn.execute(_sql(
-                        "SELECT id, title, updated_at FROM ma_working_papers "
+                        "SELECT id, title, updated_at, data_json FROM ma_working_papers "
                         "ORDER BY updated_at DESC LIMIT 20")).mappings().all()
             for r in rows:
                 pid = r["id"]
                 if pid in seen_ids:
                     continue
-                seen_ids.add(pid)
-                title = (r["title"] or "Untitled")[:60]
+                raw_title = (r["title"] or "").strip()
                 ts = r["updated_at"] or 0
+                # ★ Supabase title 정정 (2026-06-16): title이 pid 그대로 또는 chat_로 시작
+                # 또는 '새 작업/대화/Untitled' 같은 stale placeholder면 첫 user msg로 대체
+                meaningful_title = (raw_title and raw_title != pid and
+                                       not raw_title.startswith("chat_") and
+                                       raw_title not in ("새 작업","새 대화","제목 없음","Untitled"))
+                fallback_used = False
+                if not meaningful_title:
+                    # data_json에서 첫 user msg 추출
+                    try:
+                        dj = r.get("data_json") or {}
+                        if isinstance(dj, str):
+                            dj = json.loads(dj)
+                        msgs = (dj or {}).get("messages") or []
+                        for m in msgs:
+                            if m.get("role") == "user" and m.get("content"):
+                                raw_title = m["content"][:60].strip()
+                                fallback_used = True
+                                break
+                        # 그래도 없으면 sections 첫 본문
+                        if not fallback_used:
+                            secs = (dj or {}).get("sections") or {}
+                            for k in ("Abstract", "abstract", "Introduction", "introduction", "full"):
+                                v = secs.get(k)
+                                if isinstance(v, str) and v.strip():
+                                    raw_title = v.strip()[:60]
+                                    fallback_used = True
+                                    break
+                    except Exception:
+                        pass
+                # 모든 fallback 실패 + 의미없는 placeholder면 skip (RECENT에 노이즈 안 박음)
+                if not raw_title or raw_title == pid or raw_title.startswith("chat_"):
+                    continue
+                seen_ids.add(pid)
+                title = raw_title[:60]
                 edited = datetime.fromtimestamp(ts).strftime("Edited %Y-%m-%d") if ts else "Edited (cloud)"
                 out.append({"title": title, "edited": edited,
                              "status": "☁ Cloud",
                              "gradient": grads[len(out) % len(grads)],
-                             "id": pid})
+                             "id": pid, "mtime": float(ts) if ts else 0.0})
     except Exception:
         pass
 
@@ -939,34 +972,32 @@ def _render_chat_page(pid: str):
     </style>
     """, unsafe_allow_html=True)
 
-    # ★ 컴포저 시각 통합 (2026-06-16): chat_input과 같은 박스로 보이게 CSS
+    # ★ 컴포저 시각 통합 (2026-06-16 v2): Streamlit은 markdown div로 cols 못 감쌈.
+    # 대신 chat_input 위 액션을 더 작게 + 사이 여백 0 + chat_input 자체 box-shadow로
+    # 시각적으로 묶이게. popover 버튼·selectbox 높이 균일화.
     st.markdown("""
     <style>
-    /* chat_input 바로 위 컴포저 row를 chat_input과 시각적으로 한 박스로 묶기 */
-    .stChatInput { margin-top:0 !important; }
-    .composer-bar {
-        background:#FFFFFF; border:1px solid rgba(15,23,42,0.10);
-        border-radius:14px 14px 0 0; border-bottom:none;
-        padding:6px 10px; margin:0 0 -1px 0;
-        display:flex; align-items:center; gap:8px;
-        font-size:0.82rem;
+    /* chat_input 위 마지막 row와 chat_input 사이 여백 최소화 */
+    [data-testid='stChatInput'] { margin-top:-4px !important; }
+    /* 컴포저 row의 popover 버튼: 작고 투명하게 */
+    div[data-testid='stPopover'] button {
+        padding:5px 12px !important; font-size:0.8rem !important;
+        background:rgba(255,255,255,0.6) !important;
+        border:1px solid rgba(15,23,42,0.10) !important;
+        color:#475569 !important;
+        height:36px !important;
     }
-    .composer-bar .stPopover button {
-        background:transparent !important; border:none !important;
-        padding:4px 8px !important; font-size:0.82rem !important;
-        color:#64748B !important;
+    div[data-testid='stPopover'] button:hover {
+        background:rgba(255,255,255,0.95) !important; color:#0F172A !important;
     }
-    .composer-bar .stPopover button:hover { color:#0F172A !important; background:rgba(15,23,42,0.04) !important; }
-    .composer-bar [data-testid='stSelectbox'] { min-width:140px; }
+    /* 모델 selectbox 높이 맞춤 */
+    [data-testid='stSelectbox'] > div > div { min-height:36px !important; }
+    /* 첨부 칩 */
     .attached-chips { display:flex; flex-wrap:wrap; gap:6px; padding:0 4px 6px 4px; }
     .attached-chip {
         background:#EFF6FF; border:1px solid #BFDBFE; border-radius:14px;
         padding:3px 10px; font-size:0.76rem; color:#1E40AF;
         display:inline-flex; align-items:center; gap:4px;
-    }
-    /* chat_input의 위쪽 모서리 직각으로 맞춰 컴포저와 이어지게 */
-    [data-testid='stChatInput'] > div {
-        border-radius:0 0 14px 14px !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -1004,8 +1035,7 @@ def _render_chat_page(pid: str):
                     _save_project(project)
                     st.rerun()
 
-    # 2) 컴포저 row — chat_input 바로 위 한 박스로
-    st.markdown("<div class='composer-bar'>", unsafe_allow_html=True)
+    # 2) 컴포저 row — chat_input 바로 위
     _composer_col1, _composer_col2, _composer_col3 = st.columns([0.42, 0.34, 0.24])
     with _composer_col1:
         with st.popover(f"📎 첨부 ({len(attachments)})",
@@ -1088,7 +1118,6 @@ def _render_chat_page(pid: str):
             st.caption(f"📎 {att_n} · 🤖 {_model_choices.get(sel,sel).split('—')[0].strip()}")
         else:
             st.caption(f"🤖 {_model_choices.get(sel,sel).split('—')[0].strip()}")
-    st.markdown("</div>", unsafe_allow_html=True)
 
     # ★ UX-1: 빈 채팅이면 "연구 아이디어 한 줄" 안내, 진행 중이면 일반 안내
     _placeholder = (
