@@ -238,16 +238,30 @@ def _load_projects() -> list[dict]:
                 continue
             try:
                 data = json.loads(jp.read_text(encoding="utf-8"))
-                title = (data.get("title") or
-                         (data.get("topic") or {}).get("title") or pid)[:60]
+                # ★ 빈 채팅 필터 (2026-06-16): messages=[] + 제목없음 = RECENT 노이즈
+                raw_title = (data.get("title") or
+                             (data.get("topic") or {}).get("title") or "").strip()
+                n_msgs = len(data.get("messages") or [])
+                has_sections = bool(data.get("sections"))
+                # 의미 있는 프로젝트만: 메시지 1개+ 또는 sections 있음 또는 사용자가 지은 제목
+                meaningful = (n_msgs > 0 or has_sections or
+                               (raw_title and raw_title not in ("새 작업", "새 대화", "제목 없음", "Untitled")))
+                if not meaningful:
+                    continue
+                title = (raw_title or pid)[:60]
                 edited = datetime.fromtimestamp(jp.stat().st_mtime).strftime("Edited %Y-%m-%d")
                 status = "Published" if data.get("status") == "published" else ""
                 seen_ids.add(pid)
                 out.append({"title": title, "edited": edited, "status": status,
-                             "gradient": grads[len(out) % len(grads)], "id": pid})
+                             "gradient": grads[len(out) % len(grads)], "id": pid,
+                             "n_msgs": n_msgs})
             except Exception:
                 continue
 
+    # ★ Supabase에서도 빈 title 필터 (직접 SQL에서 못 한 것 사후 정리)
+    out = [p for p in out
+            if p.get("title") and p["title"].strip() not in
+            ("새 작업", "새 대화", "제목 없음", "Untitled")]
     return out[:30]
 
 
