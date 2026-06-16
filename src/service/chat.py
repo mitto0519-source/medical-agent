@@ -43,6 +43,18 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
             + "\n--- END EVIDENCE ---"
         )
 
+    # ★ 첨부 파일 컨텍스트 inject (2026-06-16) — project["attachments"]에 저장된 텍스트 추출본
+    # universal_loader.load()로 미리 추출됐고 영속화됨. 다음 turn마다 system prompt에 자동.
+    attachments = project.get("attachments") or []
+    if attachments:
+        try:
+            from src.ingestion.universal_loader import render_for_llm
+            att_block = render_for_llm(attachments[-6:], max_text_per_file=4000)
+            if att_block:
+                full_sys = full_sys + "\n\n" + att_block
+        except Exception as e:
+            _log.debug("attachments inject fail: %s", e)
+
     rule_overlay = (
         "\n\n--- RULE-8 (vibe paper) ---\n"
         "사용자 주제가 모호하면 PICO·데이터·통계·하위군 중 짧은 역질문 2-3개로 좁히세요.\n"

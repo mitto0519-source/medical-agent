@@ -673,28 +673,7 @@ def _render_welcome_chat(project: dict, owner_email: str = "") -> None:
         "color:#1E40AF;'>"
         "🚀 주제 입력 후 <b>'알아서 해'</b>라고 말씀하시면 PICO·통계·초안까지 한 번에 진행합니다."
         "</div>", unsafe_allow_html=True)
-
-    # 최근 3개 프로젝트
-    try:
-        projs = _load_projects()
-        # owner 필터 + 메시지 있는 것만
-        if owner_email:
-            projs = [p for p in projs
-                      if (p.get("owner_email") == owner_email
-                          or not p.get("owner_email"))]
-        projs = [p for p in projs if p.get("title") and p["title"] != "새 작업"]
-        if projs:
-            st.markdown(
-                "<div style='margin:18px 0 6px 0;font-size:0.78rem;color:#94A3B8;"
-                "letter-spacing:0.08em;'>최근 프로젝트</div>",
-                unsafe_allow_html=True)
-            for p in projs[:3]:
-                if st.button(f"📄 {p['title'][:60]}", key=f"sg_recent_w_{p['id']}",
-                              use_container_width=True):
-                    st.session_state["sg_active_project"] = p["id"]
-                    st.rerun()
-    except Exception:
-        pass
+    # 최근 프로젝트는 사이드바 RECENT에 이미 있음 — 중앙 중복 제거 (사용자 사고 2026-06-16)
 
 
 def _friendly_error(kind: str, raw_msg: str,
@@ -899,31 +878,90 @@ def _render_chat_page(pid: str):
     </style>
     """, unsafe_allow_html=True)
 
-    # ★ 채팅 컴포저 (2026-06-15 UX_CHAT_DESIGN_SPEC §4) — 첨부 + 모델 picker + 입력
-    # 입력은 페이지 하단 고정(st.chat_input), 그 바로 위에 컴포저 액션 표시.
+    # ★ 채팅 컴포저 (2026-06-16): chat_input 바로 위에 통합. 첨부 칩 미리보기 + 모델 picker.
+    # 첨부는 즉시 universal_loader.load() → project["attachments"]에 텍스트 추출본 저장 →
+    # 다음 LLM turn의 system prompt에 자동 inject (양방향 binding + 영속화).
     initial = st.session_state.pop("sg_initial_prompt", None)
 
-    # 컴포저 액션 row (입력창 위에 작게)
+    # 1) 기존 첨부 칩 (가로 row, x 제거 가능)
+    attachments = project.setdefault("attachments", [])
+    if attachments:
+        chip_html = "<div style='display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px 0;'>"
+        for att in attachments[-8:]:
+            kind_icon = {"image": "🖼", "office": "📄", "data": "💾",
+                          "text": "📝", "notebook": "📓"}.get(att.get("kind",""), "📎")
+            n_chars = len(att.get("text", "") or "")
+            chip_html += (
+                f"<div style='background:#EFF6FF;border:1px solid #BFDBFE;"
+                f"border-radius:14px;padding:3px 10px;font-size:0.78rem;"
+                f"color:#1E40AF;display:inline-flex;align-items:center;gap:4px;'>"
+                f"{kind_icon} <b>{att.get('name','?')[:28]}</b>"
+                f"<span style='color:#64748B;font-size:0.72rem;'>"
+                f"({att.get('size_kb','?')}KB · {n_chars:,}자)</span></div>"
+            )
+        chip_html += "</div>"
+        st.markdown(chip_html, unsafe_allow_html=True)
+        # 제거 버튼 row
+        if len(attachments) > 0:
+            _rm_cols = st.columns(min(len(attachments), 8))
+            for _ci, att in enumerate(attachments[-8:]):
+                with _rm_cols[_ci]:
+                    if st.button(f"✕ {att.get('name','?')[:10]}",
+                                  key=f"rm_att_{pid}_{att.get('id', _ci)}",
+                                  use_container_width=True):
+                        attachments.remove(att)
+                        _save_project(project)
+                        st.rerun()
+
+    # 2) 컴포저 row: [📎 + 첨부] [🤖 모델] [📊 표시]
     _composer_col1, _composer_col2, _composer_col3 = st.columns([0.42, 0.34, 0.24])
     with _composer_col1:
-        with st.popover("📎 첨부 (파일/이미지/논문)",
+        with st.popover(f"📎 첨부 ({len(attachments)})",
                           use_container_width=True):
             up = st.file_uploader(
-                "PDF·DOCX·논문·이미지·CSV·.sav 등",
-                type=["pdf", "docx", "doc", "txt", "md", "csv",
-                       "sav", "dta", "png", "jpg", "jpeg"],
+                "30+ 확장자 — PDF/DOCX/PPTX/XLSX/이미지/SPSS/STATA/CSV/노트북/텍스트",
+                type=["pdf", "docx", "doc", "pptx", "ppt", "xlsx", "xls",
+                       "txt", "md", "csv", "tsv", "json", "yaml",
+                       "sav", "dta", "sas7bdat",
+                       "png", "jpg", "jpeg", "gif", "webp",
+                       "ipynb", "py", "html"],
                 accept_multiple_files=True,
                 key=f"composer_upload_{pid}",
                 label_visibility="collapsed",
             )
             if up:
-                try:
-                    _enqueue_uploaded_files(
-                        up, prompt_hint=f"project:{pid}")
-                    st.success(f"✅ {len(up)}개 첨부 — 백로그에 enqueue (자동 처리)")
-                except Exception as _e:
-                    st.warning(f"첨부 큐 실패: {_e}")
-            # 첨부 패널 안 + 사용자 본인 논문(StyleProfiler) 진입점도
+                # ★ 즉시 universal_loader로 텍스트 추출 → project.attachments에 저장
+                from src.ingestion.universal_loader import load as _ul_load
+                import uuid as _uuid
+                added = 0
+                for f in up:
+                    # 이미 같은 이름 있으면 skip
+                    if any(a.get("name") == f.name for a in attachments):
+                        continue
+                    # 임시 파일로 저장 후 load
+                    tmp_dir = Path(f"data/attachments/{pid}")
+                    tmp_dir.mkdir(parents=True, exist_ok=True)
+                    tmp_path = tmp_dir / f.name
+                    try:
+                        tmp_path.write_bytes(f.getvalue())
+                        loaded = _ul_load(tmp_path)
+                        attachments.append({
+                            "id": _uuid.uuid4().hex[:10],
+                            "name": f.name,
+                            "kind": loaded.get("kind", "unknown"),
+                            "size_kb": tmp_path.stat().st_size // 1024,
+                            "text": (loaded.get("text") or "")[:50000],   # 50KB 본문 cap
+                            "image_data_uri": loaded.get("image_data_uri"),
+                            "added_at": datetime.now().isoformat(),
+                            "local_path": str(tmp_path),
+                        })
+                        added += 1
+                    except Exception as _e:
+                        st.caption(f"⚠ {f.name}: {str(_e)[:80]}")
+                if added:
+                    _save_project(project)
+                    st.success(f"✅ {added}개 첨부 완료 — 다음 응답에 컨텍스트로 자동 주입")
+                    st.rerun()
             owner_for_uploader = (st.session_state.get("user") or {}).get("email") or \
                                    st.session_state.get("user_email", "")
             if owner_for_uploader:
@@ -946,15 +984,18 @@ def _render_chat_page(pid: str):
         )
         if sel != st.session_state.get("sg_model_override"):
             st.session_state["sg_model_override"] = sel
-            # service.chat 이 읽도록 환경변수에도 설정 (process-wide)
             import os as _os
             if sel == "auto":
                 _os.environ.pop("LLM_MODEL_OVERRIDE", None)
             else:
-                _os.environ["LLM_MODEL_OVERRIDE"] = sel  # "fast" / "premium"
+                _os.environ["LLM_MODEL_OVERRIDE"] = sel
 
     with _composer_col3:
-        st.caption(f"📊 model: **{_model_choices.get(sel,sel).split('—')[0].strip()}**")
+        att_n = len(attachments)
+        if att_n:
+            st.caption(f"📎 {att_n} · 🤖 {_model_choices.get(sel,sel).split('—')[0].strip()}")
+        else:
+            st.caption(f"🤖 {_model_choices.get(sel,sel).split('—')[0].strip()}")
 
     # ★ UX-1: 빈 채팅이면 "연구 아이디어 한 줄" 안내, 진행 중이면 일반 안내
     _placeholder = (
@@ -1188,9 +1229,24 @@ def _render_chat_page(pid: str):
                         "</style>",
                         unsafe_allow_html=True)
 
+                    # ★ Silent reducer (2026-06-16): status/tool 메시지는 활동 placeholder
+                    # 한 곳에만 (chat에 영구 row 추가 X). warning/badge는 expander로 숨김.
+                    # error만 친절히 한 줄 표시. 사용자가 본문만 깔끔히 봄.
                     tool_log: list[str] = []
                     body_buf: list[str] = []
-                    confidence_msg = ""
+                    badges: list[tuple] = []      # 사후 표시용
+                    warnings: list[tuple] = []
+                    errors: list[tuple] = []
+                    last_activity_msg = "🔍 검색·합성 중…"
+
+                    def _set_activity(text: str):
+                        activity.markdown(
+                            "<div class='msg-asst' style='font-size:0.78rem;"
+                            "background:#F1F5F9;padding:6px 10px;color:#475569;'>"
+                            "<span class='loading-dot'>●</span>"
+                            "<span class='loading-dot'>●</span>"
+                            "<span class='loading-dot'>●</span> "
+                            f"{text}</div>", unsafe_allow_html=True)
 
                     _mt = 4500 if full else 2000
                     for evt in stream_turn(
@@ -1201,69 +1257,65 @@ def _render_chat_page(pid: str):
                         et = evt.type
                         d = evt.data or {}
                         if et == "status":
-                            tool_log.append(f"⏱ {d.get('msg','')}")
-                            activity.markdown(
-                                "<div class='msg-asst' style='font-size:0.78rem;"
-                                "background:#F1F5F9;padding:6px 10px;'>" +
-                                "<br>".join(l.replace("<","&lt;") for l in tool_log[-6:]) +
-                                "</div>", unsafe_allow_html=True)
+                            # 1줄짜리 activity placeholder만 갱신, chat row 안 만듦
+                            msg = d.get("msg", "")[:80]
+                            if msg:
+                                last_activity_msg = msg
+                                _set_activity(msg)
                         elif et == "tool_start":
-                            tool_log.append(f"🔧 {d.get('tool','?')} start")
-                            activity.markdown(
-                                "<div class='msg-asst' style='font-size:0.78rem;"
-                                "background:#F1F5F9;padding:6px 10px;'>" +
-                                "<br>".join(l.replace("<","&lt;") for l in tool_log[-6:]) +
-                                "</div>", unsafe_allow_html=True)
+                            tool = d.get("tool", "")
+                            last_activity_msg = f"🔧 {tool}"
+                            _set_activity(last_activity_msg)
+                            tool_log.append(f"🔧 {tool}")
                         elif et == "tool_result":
-                            tool_log.append(f"✓ {d.get('tool','?')}")
-                            activity.markdown(
-                                "<div class='msg-asst' style='font-size:0.78rem;"
-                                "background:#F1F5F9;padding:6px 10px;'>" +
-                                "<br>".join(l.replace("<","&lt;") for l in tool_log[-6:]) +
-                                "</div>", unsafe_allow_html=True)
+                            tool = d.get("tool", "")
+                            tool_log.append(f"✓ {tool}")
                         elif et == "token":
                             body_buf.append(d.get("text", ""))
                             safe = "".join(body_buf).replace("<","&lt;").replace(">","&gt;")
                             preview_ph.markdown(
                                 f"<div class='msg-asst'>{safe}▌</div>",
                                 unsafe_allow_html=True)
+                            # 첫 토큰 시점에 activity 박스 비움 (응답 시작됨)
+                            if len(body_buf) == 1:
+                                activity.empty()
                         elif et == "warning":
-                            st.markdown(
-                                f"<div class='msg-asst' style='font-size:0.78rem;"
-                                f"background:#FEF3C7;border-left:3px solid #F59E0B;"
-                                f"padding:4px 8px;'>⚠ {d.get('kind','')}: "
-                                f"{(d.get('msg','') or '')[:200].replace('<','&lt;')}</div>",
-                                unsafe_allow_html=True)
+                            warnings.append((d.get("kind", ""), d.get("msg", "")))
                         elif et == "badge":
-                            kind = d.get("kind", "")
-                            val = d.get("value", "")
-                            confidence_msg = f"🏷️ {kind}={val}"
-                            st.markdown(
-                                f"<div class='msg-asst' style='font-size:0.78rem;"
-                                f"background:#ECFDF5;border-left:3px solid #10B981;"
-                                f"padding:4px 8px;'>{confidence_msg}</div>",
-                                unsafe_allow_html=True)
+                            badges.append((d.get("kind", ""), d.get("value", "")))
                         elif et == "error":
-                            st.markdown(
-                                f"<div class='msg-asst' style='font-size:0.82rem;"
-                                f"background:#FEE2E2;border-left:3px solid #DC2626;"
-                                f"padding:6px 10px;'>❌ {d.get('where','?')}: "
-                                f"{(d.get('msg','') or '')[:200]}</div>",
-                                unsafe_allow_html=True)
+                            errors.append((d.get("where", "?"), d.get("msg", "")))
                         elif et == "done":
-                            elapsed = d.get("elapsed_ms", 0)
-                            tool_log.append(f"✓ done ({elapsed}ms)")
-                            activity.markdown(
-                                "<div class='msg-asst' style='font-size:0.78rem;"
-                                "background:#F1F5F9;padding:6px 10px;'>" +
-                                "<br>".join(l.replace("<","&lt;") for l in tool_log[-6:]) +
-                                "</div>", unsafe_allow_html=True)
+                            activity.empty()
 
                     reply = (badge + "".join(body_buf)).strip()
                     safe = reply.replace("<","&lt;").replace(">","&gt;")
                     preview_ph.markdown(
                         f"<div class='msg-asst'>{safe}</div>",
                         unsafe_allow_html=True)
+
+                    # ★ 사후 표시 (silent) — error만 친절 표시, warning/badge는 expander로 숨김
+                    if errors:
+                        for where, msg in errors[:2]:
+                            st.markdown(
+                                f"<div class='msg-asst' style='font-size:0.82rem;"
+                                f"background:#FEE2E2;border-left:3px solid #DC2626;"
+                                f"padding:8px 12px;color:#991B1B;'>"
+                                f"❌ <b>{where}</b><br>"
+                                f"<span style='font-size:0.78rem;'>{msg[:200].replace('<','&lt;')}</span></div>",
+                                unsafe_allow_html=True)
+                    if warnings or badges or tool_log:
+                        with st.expander(
+                                f"🔧 응답 세부정보 ({len(tool_log)} 도구"
+                                f"{', '+str(len(warnings))+' 경고' if warnings else ''}"
+                                f"{', '+str(len(badges))+' 배지' if badges else ''})",
+                                expanded=False):
+                            if tool_log:
+                                st.caption("**도구 호출**: " + " · ".join(tool_log[:10]))
+                            for kind, msg in warnings[:5]:
+                                st.caption(f"⚠ {kind}: {msg[:150]}")
+                            for kind, val in badges[:5]:
+                                st.caption(f"🏷 {kind}={val}")
 
                     # ★ Full IMRAD 후처리 chain (capability_bench 약점 자동 fix)
                     if full and not wide and not deep:  # Full IMRAD trigger 일 때만
