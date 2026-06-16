@@ -332,10 +332,12 @@ def _login_gate():
         email = st.text_input("이메일 주소", value=saved_email, placeholder="your@email.com")
         col_r, col_a = st.columns(2)
         with col_r:
-            remember = st.checkbox("이메일 기억하기", value=bool(saved_email))
+            # ★ 2026-06-16: F5 안전을 위해 기본 체크. 사용자가 끄지 않으면 자동 저장.
+            remember = st.checkbox("이메일 기억하기", value=True)
         with col_a:
-            autologin = st.checkbox("자동 로그인", value=auto_login,
-                                    help="다음 방문 시 이메일 확인 없이 바로 접속")
+            # ★ 자동 로그인도 기본 ON. F5 누를 때마다 풀리는 사고 차단.
+            autologin = st.checkbox("자동 로그인", value=True,
+                                    help="F5(새로고침)·재방문 시 이메일 확인 없이 바로 접속")
         submitted = st.form_submit_button("접속하기", use_container_width=True, type="primary")
 
     if submitted:

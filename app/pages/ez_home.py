@@ -87,6 +87,44 @@ from app.styles.sapphire_glass import (
 )
 
 
+# ★ F5 로그인 풀림 사고 fix (2026-06-16): ez_home은 Streamlit 멀티페이지로 직접 URL 접근 가능
+# → streamlit_app.py의 _login_gate를 안 거치고 user 없이 로드됨.
+# 여기서 query_params 기반 자동 로그인 + session_state 복원을 직접 수행.
+def _ensure_logged_in() -> bool:
+    """session_state에 user 없으면 URL ?email=&auto=1로 자동 로그인 시도.
+    실패 시 streamlit_app.py 본 페이지로 redirect.
+    """
+    if "user" in st.session_state:
+        return True
+    qp = st.query_params
+    try:
+        saved_email = qp.get("email", "") if hasattr(qp, "get") else ""
+        auto_login = (qp.get("auto", "") == "1") if hasattr(qp, "get") else False
+    except Exception:
+        saved_email, auto_login = "", False
+    if saved_email and auto_login:
+        try:
+            from src.auth.users import get_user_by_email
+            user = get_user_by_email(saved_email.strip().lower())
+            if user:
+                st.session_state["user"] = user
+                st.session_state["user_email"] = user.get("email", saved_email)
+                return True
+        except Exception:
+            pass
+    # 자동 로그인 실패 → streamlit_app.py로 redirect (게이트 page)
+    try:
+        st.switch_page("streamlit_app.py")
+    except Exception:
+        st.error("로그인이 필요합니다. 메인 페이지로 돌아가 다시 접속해주세요.")
+        st.stop()
+    return False
+
+
+if not _ensure_logged_in():
+    st.stop()
+
+
 _PROJECTS_DIR = Path("data/working_papers")
 _UPLOAD_DIR = Path("data/uploads")
 
