@@ -939,42 +939,73 @@ def _render_chat_page(pid: str):
     </style>
     """, unsafe_allow_html=True)
 
-    # ★ 채팅 컴포저 (2026-06-16): chat_input 바로 위에 통합. 첨부 칩 미리보기 + 모델 picker.
+    # ★ 컴포저 시각 통합 (2026-06-16): chat_input과 같은 박스로 보이게 CSS
+    st.markdown("""
+    <style>
+    /* chat_input 바로 위 컴포저 row를 chat_input과 시각적으로 한 박스로 묶기 */
+    .stChatInput { margin-top:0 !important; }
+    .composer-bar {
+        background:#FFFFFF; border:1px solid rgba(15,23,42,0.10);
+        border-radius:14px 14px 0 0; border-bottom:none;
+        padding:6px 10px; margin:0 0 -1px 0;
+        display:flex; align-items:center; gap:8px;
+        font-size:0.82rem;
+    }
+    .composer-bar .stPopover button {
+        background:transparent !important; border:none !important;
+        padding:4px 8px !important; font-size:0.82rem !important;
+        color:#64748B !important;
+    }
+    .composer-bar .stPopover button:hover { color:#0F172A !important; background:rgba(15,23,42,0.04) !important; }
+    .composer-bar [data-testid='stSelectbox'] { min-width:140px; }
+    .attached-chips { display:flex; flex-wrap:wrap; gap:6px; padding:0 4px 6px 4px; }
+    .attached-chip {
+        background:#EFF6FF; border:1px solid #BFDBFE; border-radius:14px;
+        padding:3px 10px; font-size:0.76rem; color:#1E40AF;
+        display:inline-flex; align-items:center; gap:4px;
+    }
+    /* chat_input의 위쪽 모서리 직각으로 맞춰 컴포저와 이어지게 */
+    [data-testid='stChatInput'] > div {
+        border-radius:0 0 14px 14px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # ★ 채팅 컴포저 (2026-06-16): chat_input과 시각 통합. 첨부 칩 + 액션 + 모델 picker.
     # 첨부는 즉시 universal_loader.load() → project["attachments"]에 텍스트 추출본 저장 →
     # 다음 LLM turn의 system prompt에 자동 inject (양방향 binding + 영속화).
     initial = st.session_state.pop("sg_initial_prompt", None)
 
-    # 1) 기존 첨부 칩 (가로 row, x 제거 가능)
     attachments = project.setdefault("attachments", [])
+
+    # 1) 첨부 칩 (chat_input 바로 위, 한 박스로 시각화)
     if attachments:
-        chip_html = "<div style='display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px 0;'>"
+        chip_html = "<div class='attached-chips'>"
         for att in attachments[-8:]:
             kind_icon = {"image": "🖼", "office": "📄", "data": "💾",
                           "text": "📝", "notebook": "📓"}.get(att.get("kind",""), "📎")
             n_chars = len(att.get("text", "") or "")
             chip_html += (
-                f"<div style='background:#EFF6FF;border:1px solid #BFDBFE;"
-                f"border-radius:14px;padding:3px 10px;font-size:0.78rem;"
-                f"color:#1E40AF;display:inline-flex;align-items:center;gap:4px;'>"
-                f"{kind_icon} <b>{att.get('name','?')[:28]}</b>"
-                f"<span style='color:#64748B;font-size:0.72rem;'>"
+                f"<div class='attached-chip'>"
+                f"{kind_icon} <b>{att.get('name','?')[:24]}</b>"
+                f"<span style='color:#64748B;font-size:0.7rem;margin-left:3px;'>"
                 f"({att.get('size_kb','?')}KB · {n_chars:,}자)</span></div>"
             )
         chip_html += "</div>"
         st.markdown(chip_html, unsafe_allow_html=True)
-        # 제거 버튼 row
-        if len(attachments) > 0:
-            _rm_cols = st.columns(min(len(attachments), 8))
-            for _ci, att in enumerate(attachments[-8:]):
-                with _rm_cols[_ci]:
-                    if st.button(f"✕ {att.get('name','?')[:10]}",
-                                  key=f"rm_att_{pid}_{att.get('id', _ci)}",
-                                  use_container_width=True):
-                        attachments.remove(att)
-                        _save_project(project)
-                        st.rerun()
+        # 제거 row (압축)
+        _rm_cols = st.columns(min(len(attachments), 8))
+        for _ci, att in enumerate(attachments[-8:]):
+            with _rm_cols[_ci]:
+                if st.button(f"✕ {att.get('name','?')[:10]}",
+                              key=f"rm_att_{pid}_{att.get('id', _ci)}",
+                              use_container_width=True):
+                    attachments.remove(att)
+                    _save_project(project)
+                    st.rerun()
 
-    # 2) 컴포저 row: [📎 + 첨부] [🤖 모델] [📊 표시]
+    # 2) 컴포저 row — chat_input 바로 위 한 박스로
+    st.markdown("<div class='composer-bar'>", unsafe_allow_html=True)
     _composer_col1, _composer_col2, _composer_col3 = st.columns([0.42, 0.34, 0.24])
     with _composer_col1:
         with st.popover(f"📎 첨부 ({len(attachments)})",
@@ -1057,6 +1088,7 @@ def _render_chat_page(pid: str):
             st.caption(f"📎 {att_n} · 🤖 {_model_choices.get(sel,sel).split('—')[0].strip()}")
         else:
             st.caption(f"🤖 {_model_choices.get(sel,sel).split('—')[0].strip()}")
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # ★ UX-1: 빈 채팅이면 "연구 아이디어 한 줄" 안내, 진행 중이면 일반 안내
     _placeholder = (
