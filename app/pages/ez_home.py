@@ -230,7 +230,6 @@ def _load_projects() -> list[dict]:
 
     # 2) 로컬 working_papers/*.json (보조 — 동일 id 중복 제거)
     if _PROJECTS_DIR.exists():
-        # 평탄: data/working_papers/{user}/{pid}.json + 직접 data/working_papers/{pid}.json
         all_jsons = list(_PROJECTS_DIR.glob("*.json")) + list(_PROJECTS_DIR.glob("*/*.json"))
         for jp in sorted(all_jsons, key=lambda p: p.stat().st_mtime, reverse=True):
             pid = jp.stem
@@ -238,30 +237,40 @@ def _load_projects() -> list[dict]:
                 continue
             try:
                 data = json.loads(jp.read_text(encoding="utf-8"))
-                # ★ 빈 채팅 필터 (2026-06-16): messages=[] + 제목없음 = RECENT 노이즈
+                # ★ 빈 채팅 필터
                 raw_title = (data.get("title") or
                              (data.get("topic") or {}).get("title") or "").strip()
                 n_msgs = len(data.get("messages") or [])
                 has_sections = bool(data.get("sections"))
-                # 의미 있는 프로젝트만: 메시지 1개+ 또는 sections 있음 또는 사용자가 지은 제목
                 meaningful = (n_msgs > 0 or has_sections or
                                (raw_title and raw_title not in ("새 작업", "새 대화", "제목 없음", "Untitled")))
                 if not meaningful:
                     continue
-                title = (raw_title or pid)[:60]
-                edited = datetime.fromtimestamp(jp.stat().st_mtime).strftime("Edited %Y-%m-%d")
+                # ★ title이 pid와 같으면(=옛 데이터, 제목 업데이트 누락) 첫 user message로 대체
+                if not raw_title or raw_title == pid or raw_title.startswith("chat_"):
+                    for m in (data.get("messages") or []):
+                        if m.get("role") == "user" and m.get("content"):
+                            raw_title = m["content"][:60].strip()
+                            break
+                title = (raw_title or "(제목 없음)")[:60]
+                mtime = jp.stat().st_mtime
+                edited = datetime.fromtimestamp(mtime).strftime("Edited %Y-%m-%d")
                 status = "Published" if data.get("status") == "published" else ""
                 seen_ids.add(pid)
                 out.append({"title": title, "edited": edited, "status": status,
                              "gradient": grads[len(out) % len(grads)], "id": pid,
-                             "n_msgs": n_msgs})
+                             "n_msgs": n_msgs, "mtime": mtime})
             except Exception:
                 continue
 
-    # ★ Supabase에서도 빈 title 필터 (직접 SQL에서 못 한 것 사후 정리)
+    # ★ Supabase + 로컬 통합 후 mtime/updated_at으로 정확히 재정렬 (사용자 사고: '최신 반영 안 됨')
+    def _sort_key(p):
+        return p.get("mtime") or 0
+    out.sort(key=_sort_key, reverse=True)
+    # 빈 title 사후 필터
     out = [p for p in out
             if p.get("title") and p["title"].strip() not in
-            ("새 작업", "새 대화", "제목 없음", "Untitled")]
+            ("새 작업", "새 대화", "제목 없음", "Untitled", "(제목 없음)")]
     return out[:30]
 
 
