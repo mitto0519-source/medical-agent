@@ -66,8 +66,26 @@ def _conn() -> sqlite3.Connection:
     c.execute("CREATE INDEX IF NOT EXISTS ix_events_task ON events(task_id, id)")
     c.execute("CREATE INDEX IF NOT EXISTS ix_events_type_ts ON events(type, ts)")
     c.execute("CREATE INDEX IF NOT EXISTS ix_events_ts ON events(ts)")
+    # ★ MEMORY_HARDENING_SPEC §1 기법 ① — 서버리스 내용기반 수렴 (memorize 이식)
+    # dedup_key = sha256(actor+type+payload_canonical). 두 머신이 같은 사건을 독립 기록해도
+    # 같은 hash → Supabase 없이도 자연스럽게 dedup.
+    try:
+        c.execute("ALTER TABLE events ADD COLUMN dedup_key TEXT")
+    except Exception:
+        pass  # 이미 존재
+    c.execute("CREATE INDEX IF NOT EXISTS ix_events_dedup ON events(dedup_key)")
     _LOCAL.conn = c
     return c
+
+
+def _compute_dedup_key(type: str, payload: Any, actor: str | None) -> str:
+    """내용 결정론 hash — 같은 (type, actor, payload) 이면 같은 key."""
+    import hashlib
+    canon = json.dumps(
+        {"t": type, "a": actor or "", "p": payload if payload is not None else None},
+        ensure_ascii=False, sort_keys=True, default=str,
+    )
+    return hashlib.sha256(canon.encode("utf-8")).hexdigest()[:32]
 
 
 def append(
@@ -78,17 +96,32 @@ def append(
     actor: str | None = None,
     state_before_hash: str | None = None,
     state_after_hash: str | None = None,
+    *,
+    dedup_window_sec: float | None = None,
 ) -> int:
-    """이벤트 append. 실패해도 호출자 망가지지 않게 swallow (감사용은 부수효과)."""
+    """이벤트 append. 실패해도 호출자 망가지지 않게 swallow (감사용은 부수효과).
+
+    dedup_window_sec: 지정 시 같은 dedup_key가 그 시간 내에 있으면 INSERT skip, 기존 id 반환.
+                       기본 None = 항상 INSERT (기존 동작 유지, 하위호환).
+    """
     try:
         c = _conn()
+        dk = _compute_dedup_key(type, payload, actor)
+        if dedup_window_sec is not None and dedup_window_sec > 0:
+            existing = c.execute(
+                "SELECT id FROM events WHERE dedup_key=? AND ts >= ? ORDER BY id DESC LIMIT 1",
+                (dk, time.time() - dedup_window_sec)
+            ).fetchone()
+            if existing:
+                return int(existing[0])
         cur = c.execute(
-            "INSERT INTO events(ts, task_id, parent_event_id, actor, type, payload_json, state_before_hash, state_after_hash) "
-            "VALUES (?,?,?,?,?,?,?,?)",
+            "INSERT INTO events(ts, task_id, parent_event_id, actor, type, payload_json, "
+            "state_before_hash, state_after_hash, dedup_key) "
+            "VALUES (?,?,?,?,?,?,?,?,?)",
             (
                 time.time(), task_id, parent_event_id, actor, type,
                 json.dumps(payload, ensure_ascii=False, default=str) if payload is not None else "null",
-                state_before_hash, state_after_hash,
+                state_before_hash, state_after_hash, dk,
             ),
         )
         return int(cur.lastrowid or 0)
