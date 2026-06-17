@@ -1249,6 +1249,9 @@ def _render_chat_page(pid: str):
                     badges: list[tuple] = []      # 사후 표시용
                     warnings: list[tuple] = []
                     errors: list[tuple] = []
+                    # ★ AGENT_OUTPUT_UX_SPEC §2: 사고 과정 트레이스 (실제 ChatEvent 기반).
+                    # LLM이 '음 생각해보면…' 가짜 추론 X — status/tool_start/tool_result 실 로그.
+                    trace: list[tuple] = []
                     last_activity_msg = "🔍 검색·합성 중…"
 
                     def _set_activity(text: str):
@@ -1274,14 +1277,18 @@ def _render_chat_page(pid: str):
                             if msg:
                                 last_activity_msg = msg
                                 _set_activity(msg)
+                                trace.append(("status", msg))
                         elif et == "tool_start":
                             tool = d.get("tool", "")
                             last_activity_msg = f"🔧 {tool}"
                             _set_activity(last_activity_msg)
                             tool_log.append(f"🔧 {tool}")
+                            trace.append(("tool_start", tool, d.get("args_brief", "")))
                         elif et == "tool_result":
                             tool = d.get("tool", "")
                             tool_log.append(f"✓ {tool}")
+                            trace.append(("tool_result", tool,
+                                            str(d.get("preview", ""))[:200]))
                         elif et == "token":
                             body_buf.append(d.get("text", ""))
                             safe = "".join(body_buf).replace("<","&lt;").replace(">","&gt;")
@@ -1316,6 +1323,39 @@ def _render_chat_page(pid: str):
                                 f"❌ <b>{where}</b><br>"
                                 f"<span style='font-size:0.78rem;'>{msg[:200].replace('<','&lt;')}</span></div>",
                                 unsafe_allow_html=True)
+                    # ★ AGENT_OUTPUT_UX_SPEC §2: 사고 과정 트레이스 (가짜 추론 X — 실 ChatEvent)
+                    if trace:
+                        with st.expander(
+                                f"🧠 사고 과정 ({len(trace)} 단계)",
+                                expanded=False):
+                            st.caption("✏️ 이 트레이스는 **실제 진행 로그**입니다 — "
+                                         "LLM 추론 연기가 아니라 status/tool 이벤트의 사람 읽기 형태.")
+                            _STEP_ICON = {
+                                "status": "💭",
+                                "tool_start": "🔧",
+                                "tool_result": "✓",
+                            }
+                            for i, step in enumerate(trace[:30], 1):
+                                kind = step[0]
+                                icon = _STEP_ICON.get(kind, "·")
+                                if kind == "status":
+                                    st.markdown(f"`{i:02d}` {icon} {step[1]}")
+                                elif kind == "tool_start":
+                                    tool, args = step[1], step[2]
+                                    if args:
+                                        st.markdown(f"`{i:02d}` {icon} **{tool}** "
+                                                      f"<span style='color:#94A3B8;font-size:0.8rem;'>"
+                                                      f"({args[:80]})</span>",
+                                                      unsafe_allow_html=True)
+                                    else:
+                                        st.markdown(f"`{i:02d}` {icon} **{tool}**")
+                                elif kind == "tool_result":
+                                    tool, preview = step[1], step[2]
+                                    st.markdown(f"`{i:02d}` {icon} **{tool}** 결과: "
+                                                  f"<span style='color:#64748B;font-size:0.8rem;'>"
+                                                  f"{preview.replace('<','&lt;')}</span>",
+                                                  unsafe_allow_html=True)
+
                     if warnings or badges or tool_log:
                         # ★ 친절 라벨/의미 매핑 (의학 연구자가 즉시 이해)
                         _KIND_LABEL = {
