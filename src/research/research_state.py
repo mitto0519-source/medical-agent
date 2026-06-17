@@ -216,6 +216,9 @@ class ResearchProject:
     messages: List[Dict] = _df(default_factory=list)
     attachments: List[Dict] = _df(default_factory=list)
     updated_at: str = ""
+    # ★ RESEARCH_PIPELINE_SPEC — 단계 상태기계 (백엔드가 단계 강제)
+    # SCOPE → SKELETON → HYPOTHESIS → STATS → SECTIONS → POLISH → DONE
+    stage: str = "SCOPE"
 
     @property
     def sections(self) -> Dict:
