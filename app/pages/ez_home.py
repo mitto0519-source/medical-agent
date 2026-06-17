@@ -501,82 +501,21 @@ def _detect_figure_request(text: str) -> str | None:
 
 
 def _generate_figure(project: dict, figure_type: str) -> tuple[bytes, str] | None:
-    """research_state.stat_result에서 figure 1종 생성. (png_bytes, caption) 반환."""
-    try:
-        from src.export.publication_figure_generator import (
-            make_forest_plot, make_subgroup_forest, make_coefficient_plot,
-            make_roc_curve, make_prevalence_bar, make_table1_image, make_table2_image)
-        from pathlib import Path
-        rs = project.get("research_state") or {}
-        stat_result = rs.get("stat_result") or {}
-        if not stat_result:
-            return None
-        out_dir = Path(f"data/drafts/figures/{project.get('id','tmp')}")
-        out_dir.mkdir(parents=True, exist_ok=True)
-        fn = {
-            "forest": make_forest_plot,
-            "subgroup": make_subgroup_forest,
-            "coef": make_coefficient_plot,
-            "roc": make_roc_curve,
-            "prev": make_prevalence_bar,
-            "table1": make_table1_image,
-            "table2": make_table2_image,
-        }.get(figure_type)
-        if not fn:
-            return None
-        result = fn(stat_result, out_dir)
-        if result is None:
-            return None
-        png_bytes, _svg_path, _png_path, caption = result[:4] if len(result) >= 4 else (result + ("",))
-        return png_bytes, caption
-    except Exception as e:
-        return None
+    """Delegate → src.service.figures.generate_figure (FRONTEND_MIGRATION_SPEC Phase 1)."""
+    from src.service.figures import generate_figure
+    return generate_figure(project, figure_type)
 
 
 def _strip_korean_prelude(text: str) -> str:
-    """Manuscript는 영어만 허용 — LLM이 앞에 붙인 한국어 해설 제거.
-
-    첫 번째 영어 markdown 헤더('## Title' / '# Title' / 'Title:' 등) 이후만 살림.
-    """
-    if not text:
-        return text
-    import re
-    # IMRAD 구조 첫 marker
-    patterns = [
-        r"(##?\s*Title\b)",
-        r"(##?\s*Abstract\b)",
-        r"(\*\*Title:?\*\*)",
-        r"(^Title:\s)",
-    ]
-    for pat in patterns:
-        m = re.search(pat, text, re.MULTILINE)
-        if m:
-            return text[m.start():].strip()
-    return text
+    """Delegate → src.service.paper.strip_korean_prelude."""
+    from src.service.paper import strip_korean_prelude
+    return strip_korean_prelude(text)
 
 
 def _hits_to_references(rag_context: str) -> list:
-    """RAG context에서 PMID를 뽑아 Reference 객체 list로 변환.
-
-    citation_workflow.Reference 사용 — minimal metadata지만 inline citation에 충분.
-    """
-    if not rag_context:
-        return []
-    import re
-    try:
-        from src.export.citation_workflow import Reference
-    except Exception:
-        return []
-    pmids = re.findall(r"PMID:(\d+)", rag_context)
-    refs = []
-    seen = set()
-    for pmid in pmids:
-        if pmid in seen:
-            continue
-        seen.add(pmid)
-        refs.append(Reference(pmid=pmid, title=f"PubMed {pmid}",
-                                citation_key=f"PMID{pmid}"))
-    return refs
+    """Delegate → src.service.paper.hits_to_references."""
+    from src.service.paper import hits_to_references
+    return hits_to_references(rag_context)
 
 
 def _post_process_imrad(draft: str, rag_context: str) -> tuple[str, dict]:
@@ -636,76 +575,27 @@ def _rag_retrieve(query: str, top_k: int = 5) -> str:
         return ""
 
 
-def _build_full_system(project: dict, user_msg: str) -> str:
-    """단일 코어 system prompt 합성 (CLAUDE.md 규칙 12) + RAG retrieve + per-user style.
-
-    2026-06-13: owner_email 양식 양식 양식 양식 — yoosun 단일 시드 양식 양식 양식 양식
-    사용자 본인 문체 프로파일 (StyleProfiler)이 있으면 system prompt에 자동 inject.
-    """
+def _owner_email() -> str:
+    """Streamlit session_state에서 owner_email 추출 — Phase 1 추출 후 service에 인자 전달용."""
     import streamlit as _st
-    owner_email = (_st.session_state.get("user") or {}).get("email") or \
-                   _st.session_state.get("user_email", "") or ""
-    try:
-        from src.agent.persona import get_system_prompt
-        base_sys = get_system_prompt(task="paper_writing", owner_email=owner_email or None)
-    except Exception:
-        base_sys = "당신은 의학 연구 코파일럿입니다."
-    try:
-        from app.agentic_loop import build_system_with_preview
-        full_sys = build_system_with_preview(base_sys, project, user_msg)
-    except Exception:
-        full_sys = base_sys
+    return ((_st.session_state.get("user") or {}).get("email")
+            or _st.session_state.get("user_email", "") or "")
 
-    # ★ RAG retrieve (paper-grounded) — 사용자 정직 진단 2026-06-12에 추가.
-    # 이전엔 ChromaDB 인덱스만 있고 query → inject 회로가 끊겨 답변 generic.
-    rag_ctx = _rag_retrieve(user_msg, top_k=5)
-    if rag_ctx:
-        full_sys = (full_sys +
-            "\n\n--- RETRIEVED MEDICAL EVIDENCE (cite by PMID inline as [PMID:xxx]) ---\n"
-            + rag_ctx +
-            "\n--- END EVIDENCE ---")
 
-    rule_overlay = (
-        "\n\n--- RULE-8 (vibe paper) ---\n"
-        "사용자 주제가 모호하면 PICO·데이터·통계·하위군 중 짧은 역질문 2-3개로 좁히세요.\n"
-        "'알아서 해' '그냥 해' '한번에' 같은 trigger를 들으면 그때 자동 파이프라인을 진행합니다.\n"
-        "응답은 한국어 대화체, 동료 의학연구자 어투, 마크다운 짧게.\n"
-        "위 RETRIEVED MEDICAL EVIDENCE를 참고해 답변에 PMID 인라인 인용을 넣으세요."
-    )
-    return full_sys + rule_overlay
+def _build_full_system(project: dict, user_msg: str) -> str:
+    """Delegate → src.service.chat.build_full_system. st.session_state는 caller가 분리.
+
+    Phase 1 ★: pure logic은 service. ez_home은 owner_email 추출만 담당.
+    """
+    from src.service.chat import build_full_system
+    return build_full_system(project, user_msg, owner_email=_owner_email())
 
 
 def _stream_reply(project: dict, user_msg: str, extra_system: str = "", max_tokens: int = 1200):
-    """generator — token 단위 yield. failover 클라이언트의 generate_streamed 사용.
-
-    extra_system: Go wide / Go deep / Full IMRAD 등 트리거가 추가하는 system prompt overlay.
-    max_tokens: Full IMRAD는 4500+ 권장, 일반 대화 1200.
-    """
-    try:
-        from src.llm import get_llm_client
-    except Exception as e:
-        yield f"(LLM 클라이언트 import 실패: {e})"
-        return
-
-    full_sys = _build_full_system(project, user_msg)
-    if extra_system:
-        full_sys = full_sys + "\n\n--- TASK OVERLAY ---\n" + extra_system
-    history = "\n".join(
-        f"{'사용자' if m['role']=='user' else '코파일럿'}: {m['content']}"
-        for m in project.get("messages", [])[-10:])
-    prompt = f"{history}\n사용자: {user_msg}\n코파일럿:"
-
-    try:
-        client = get_llm_client(task="paper_writing")
-        yielded = False
-        for chunk in client.generate_streamed(prompt, system_prompt=full_sys, max_tokens=max_tokens):
-            if chunk:
-                yielded = True
-                yield chunk
-        if not yielded:
-            yield "(빈 응답)"
-    except Exception as e:
-        yield f"(LLM 호출 실패: {e})"
+    """Delegate → src.service.chat.stream_reply."""
+    from src.service.chat import stream_reply
+    yield from stream_reply(project, user_msg, extra_system=extra_system,
+                              max_tokens=max_tokens, owner_email=_owner_email())
 
 
 def _post_turn_hooks(project: dict, user_msg: str, full_reply: str, owner_email: str = ""):
