@@ -129,15 +129,33 @@ def aggregate(*, draft: str = "",
         "claim": claim_confidence(claims),
     }
 
+    # ★ 친절한 한국어 메시지 (의학 연구자가 의미 + 다음 행동 즉시 인지)
     issues: List[str] = []
     if comp["citation"] < 0.6:
-        issues.append("citation: <60% of inline PMIDs verified — risk of hallucinated cites")
+        rate = int(comp["citation"] * 100)
+        issues.append(
+            f"📚 **인용 검증 부족** ({rate}%) — 본문에 박힌 PMID 중 절반 이상이 "
+            f"RAG/그래프에서 미확인. 가짜 인용(hallucination) 위험. "
+            f"→ 인용을 PubMed에서 직접 확인하거나, '/pubmed_search 주제'로 실시간 검증 권장."
+        )
     if comp["stat"] < 0.5:
-        issues.append("stat: missing CI/p/n/design — see provenance fingerprint")
+        issues.append(
+            "📊 **통계 정보 미완** — 신뢰구간(95% CI)/p값/표본수(n)/연구설계 중 일부 누락. "
+            "→ 본문에 'aOR 1.04 (95% CI 1.02-1.06, p=0.001, n=12,345)' 양식으로 채우거나 "
+            "/stat_run 으로 stat_bridge 분석 실행."
+        )
     if comp["novelty"] < 0.3:
-        issues.append("novelty: prior work overlap high — consider re-framing angle")
+        issues.append(
+            "🔍 **신규성 낮음** — 비슷한 주제 선행 연구 많음. "
+            "→ 각도 재구성 권장 (예: 다른 outcome, 다른 subgroup, 또는 mediator 분석). "
+            "/novelty 명령으로 gap 분석 가능."
+        )
     if comp["claim"] < 0.5:
-        issues.append("claim: >50% sentences ungrounded — add citations or dataset hooks")
+        rate = int((1 - comp["claim"]) * 100)
+        issues.append(
+            f"💭 **근거 없는 문장 {rate}%** — 절반 이상의 문장에 인용·데이터 출처 없음. "
+            f"→ 주장마다 [PMID:xxx] 인라인 인용 추가, 통계는 본인 분석 결과 직접 박기."
+        )
 
     # Weighted geometric mean (penalizes single low component)
     eps = 1e-6

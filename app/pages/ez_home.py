@@ -1427,17 +1427,43 @@ def _render_chat_page(pid: str):
                                 f"<span style='font-size:0.78rem;'>{msg[:200].replace('<','&lt;')}</span></div>",
                                 unsafe_allow_html=True)
                     if warnings or badges or tool_log:
+                        # ★ 친절 라벨/의미 매핑 (의학 연구자가 즉시 이해)
+                        _KIND_LABEL = {
+                            "provenance": "🛡 근거 검증",
+                            "confidence": "📈 신뢰도",
+                            "no_tools": "ℹ 도구 미사용",
+                            "dispatch": "⚠ 호출 오류",
+                            "gates": "🛡 검증 게이트",
+                        }
+                        n_warn = len(warnings)
                         with st.expander(
-                                f"🔧 응답 세부정보 ({len(tool_log)} 도구"
-                                f"{', '+str(len(warnings))+' 경고' if warnings else ''}"
-                                f"{', '+str(len(badges))+' 배지' if badges else ''})",
+                                f"🔧 응답 점검 결과 — "
+                                f"{('보완 권장 ' + str(n_warn) + '건') if n_warn else '문제 없음'}"
+                                f"{(' · 도구 ' + str(len(tool_log))) if tool_log else ''}",
                                 expanded=False):
+                            st.caption("✏️ 아래 항목은 **자동 점검 결과**입니다. 본문에 직접 영향 X — "
+                                         "참고만 하시고 필요한 곳에 인용·통계 보완을 권장합니다.")
                             if tool_log:
-                                st.caption("**도구 호출**: " + " · ".join(tool_log[:10]))
+                                st.caption("**사용한 도구**: " + " · ".join(tool_log[:10]))
+                            # warnings: kind를 친절 라벨로 변환, msg는 그대로 (confidence.py가 이미 한국어)
                             for kind, msg in warnings[:5]:
-                                st.caption(f"⚠ {kind}: {msg[:150]}")
+                                label = _KIND_LABEL.get(kind, f"⚠ {kind}")
+                                st.markdown(f"- {label} · {msg[:280]}")
+                            # badges: confidence는 점수 의미 자동 표시
                             for kind, val in badges[:5]:
-                                st.caption(f"🏷 {kind}={val}")
+                                if kind == "confidence":
+                                    try:
+                                        v = float(val)
+                                        if v >= 0.8: tier = "높음 ✓ (근거 충실)"
+                                        elif v >= 0.5: tier = "중간 (보완 권장)"
+                                        elif v >= 0.2: tier = "낮음 (인용·통계 추가 필요)"
+                                        else: tier = "매우 낮음 (초안 단계 — 검증 미진행)"
+                                        st.markdown(f"- 📈 **신뢰도 점수**: {v:.2f} / 1.00 — {tier}")
+                                    except Exception:
+                                        st.markdown(f"- 📈 신뢰도: {val}")
+                                else:
+                                    label = _KIND_LABEL.get(kind, kind)
+                                    st.markdown(f"- {label}: {val}")
 
                     # ★ Full IMRAD 후처리 chain (capability_bench 약점 자동 fix)
                     if full and not wide and not deep:  # Full IMRAD trigger 일 때만
