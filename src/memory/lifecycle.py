@@ -57,10 +57,15 @@ def _conn() -> sqlite3.Connection:
             created_at REAL NOT NULL,
             last_validated_at REAL NOT NULL,
             expires_at REAL,
-            supersedes TEXT                  -- JSON list of superseded ids
+            supersedes TEXT,                 -- JSON list of superseded ids
+            -- ★ MEMORY_HARDENING_SPEC §1 기법 ④: bitemporal '그땐 참, 지금 아님'
+            -- NULL = 현재 유효. 값 박혀 있으면 '~ts까지 유효였음'. DELETE 안 함 → reopen 가능.
+            valid_to REAL,
+            valid_close_reason TEXT
         );
         CREATE INDEX IF NOT EXISTS ix_items_type ON items(type, last_validated_at);
         CREATE INDEX IF NOT EXISTS ix_items_conf ON items(confidence);
+        CREATE INDEX IF NOT EXISTS ix_items_active ON items(valid_to);
 
         CREATE TABLE IF NOT EXISTS archive (
             id TEXT PRIMARY KEY,
@@ -99,6 +104,90 @@ def revalidate(item_id: str, boost: float = 0.05) -> None:
     if row:
         new_conf = min(1.0, row[0] + boost)
         c.execute("UPDATE items SET confidence=?, last_validated_at=? WHERE id=?", (new_conf, now, item_id))
+
+
+# ── ★ Bitemporal (MEMORY_HARDENING_SPEC §1 기법 ④, memorize 이식) ───────────
+# '그땐 참, 지금 아님' — 삭제 X, 유효기간 닫기. 재발견 시 reopen.
+
+def close_validity(item_id: str, *, reason: str = "superseded",
+                     at: float | None = None) -> bool:
+    """항목의 valid_to 박음 (DELETE 안 함). 같은 사실 재발견 시 reopen() 가능.
+
+    memorize 통찰: 삭제 = 정보 손실. 유효기간 닫기는 '한때는 참'을 보존한다.
+    """
+    ts = at if at is not None else time.time()
+    c = _conn()
+    row = c.execute("SELECT id FROM items WHERE id=?", (item_id,)).fetchone()
+    if not row:
+        return False
+    c.execute("UPDATE items SET valid_to=?, valid_close_reason=? WHERE id=?",
+              (ts, reason[:120], item_id))
+    try:
+        _events.append("memory_validity_closed",
+                         {"id": item_id, "at": ts, "reason": reason},
+                         actor="lifecycle")
+    except Exception:
+        pass
+    return True
+
+
+def reopen(item_id: str, *, reason: str = "rediscovered") -> bool:
+    """닫힌 유효기간을 다시 NULL로 — 같은 사실을 외부 evidence에서 재확인했을 때."""
+    c = _conn()
+    row = c.execute("SELECT id, valid_to FROM items WHERE id=?", (item_id,)).fetchone()
+    if not row or row[1] is None:
+        return False  # 존재하지 않거나 이미 active
+    now = time.time()
+    c.execute("UPDATE items SET valid_to=NULL, valid_close_reason=NULL, "
+              "last_validated_at=? WHERE id=?", (now, item_id))
+    try:
+        _events.append("memory_validity_reopened",
+                         {"id": item_id, "at": now, "reason": reason},
+                         actor="lifecycle")
+    except Exception:
+        pass
+    return True
+
+
+def active_items(*, type: str | None = None, limit: int = 100) -> list[dict]:
+    """현재 유효한 items만 (valid_to IS NULL) 반환. retrieve가 닫힌 사실 안 본다."""
+    c = _conn()
+    if type:
+        rows = c.execute(
+            "SELECT id, type, text, confidence, last_validated_at "
+            "FROM items WHERE valid_to IS NULL AND type=? "
+            "ORDER BY last_validated_at DESC LIMIT ?",
+            (type, limit)).fetchall()
+    else:
+        rows = c.execute(
+            "SELECT id, type, text, confidence, last_validated_at "
+            "FROM items WHERE valid_to IS NULL "
+            "ORDER BY last_validated_at DESC LIMIT ?",
+            (limit,)).fetchall()
+    return [{"id": r[0], "type": r[1], "text": r[2],
+              "confidence": r[3], "last_validated_at": r[4]} for r in rows]
+
+
+def superseded_items(*, type: str | None = None, limit: int = 100) -> list[dict]:
+    """닫힌 항목 조회 — '한때는 참'이었던 사실 (감사·역사·복원 용)."""
+    c = _conn()
+    if type:
+        rows = c.execute(
+            "SELECT id, type, text, valid_to, valid_close_reason "
+            "FROM items WHERE valid_to IS NOT NULL AND type=? "
+            "ORDER BY valid_to DESC LIMIT ?",
+            (type, limit)).fetchall()
+    else:
+        rows = c.execute(
+            "SELECT id, type, text, valid_to, valid_close_reason "
+            "FROM items WHERE valid_to IS NOT NULL "
+            "ORDER BY valid_to DESC LIMIT ?",
+            (limit,)).fetchall()
+    return [{"id": r[0], "type": r[1], "text": r[2],
+              "valid_to": r[3], "reason": r[4]} for r in rows]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 
 
 def _days_since(ts: float) -> float:
