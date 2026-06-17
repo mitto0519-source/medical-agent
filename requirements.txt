@@ -62,3 +62,8 @@ networkx>=3.1
 
 # ── File Locking (멀티유저 agent_memory.json 안전 접근) ───────────────
 filelock>=3.12.0
+
+# Phase 2 FastAPI (FRONTEND_MIGRATION_SPEC §5)
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-jose[cryptography]>=3.3.0
