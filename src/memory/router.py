@@ -144,6 +144,18 @@ def write(
     if extra_meta:
         meta.update(extra_meta)
 
+    # ★ MEMORY_HARDENING_SPEC §1 기법 ② — 워터마크 + 영속 후 전진 + 출처 dedup (memorize 이식)
+    # 같은 (text, type, owner_email) 30초 idempotency: 재시도해도 중복 commit X.
+    import hashlib as _hl
+    _idem_key = _hl.sha256(
+        f"{type}|{owner_email or ''}|{text[:500]}".encode("utf-8")
+    ).hexdigest()[:24]
+    _events.append("memory_write_start",
+                     {"idem_key": _idem_key, "type": type, "source": source,
+                      "owner_email": owner_email, "text_len": len(text)},
+                     actor="memory_router", task_id=task_id,
+                     dedup_window_sec=30)
+
     # 1차 게이트 (기존 memory_gate — 짧음/환각/중복).
     # type별 최소 길이: 목표·규칙은 짧을 수 있음("Submit paper" 등) → 완화.
     _MIN_LEN = {"goal": 6, "procedural": 12, "semantic": 16, "episodic": 20}
@@ -209,13 +221,26 @@ def write(
         )
         return {"decision": decision, "id": None, "scores": scores, "gate_reason": None}
 
+    # 워터마크 #2: 게이트·점수·schema 통과 후 저장 직전
+    _events.append("memory_write_stage",
+                     {"idem_key": _idem_key, "stage": "pre_store",
+                      "decision": decision, "tier1": tier1},
+                     actor="memory_router", task_id=task_id)
+
     try:
         store_fn = _STORE[type]
         mem_id = store_fn(text, meta_full)
     except Exception as e:
         _log.warning("memory store 실패(type=%s): %s", type, e)
-        _events.append("memory_store_error", {"type": type, "error": str(e)[:200]}, actor="memory_router")
+        _events.append("memory_store_error",
+                         {"idem_key": _idem_key, "type": type, "error": str(e)[:200]},
+                         actor="memory_router", task_id=task_id)
         return {"decision": "error", "id": None, "scores": scores, "gate_reason": str(e)[:120]}
+
+    # 워터마크 #3: 저장 완료 (영속 후 전진 — 후속 단계 안전)
+    _events.append("memory_write_stage",
+                     {"idem_key": _idem_key, "stage": "stored", "mem_id": mem_id},
+                     actor="memory_router", task_id=task_id)
 
     # truth_hierarchy 자동 부착 — 다른 LLM 호출에 컨텍스트 주입 가능 여부 미리 결정
     try:

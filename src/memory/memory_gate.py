@@ -63,6 +63,118 @@ def _audit(reason: str, text: str, source: str) -> None:
         pass
 
 
+# ── ★ MEMORY_HARDENING_SPEC §1 기법 ③ — 티켓+Curator+Policy Gate (agentlas 이식) ──
+# raw observation → MemoryTicket → Curator 결정(drop/accept/route_to_policy_gate) →
+# Policy Gate (semantic/procedural 승격은 citation OR stat OR human 중 하나 충족) → ledger.
+
+from dataclasses import dataclass, field
+from typing import Any, Literal
+
+
+@dataclass
+class MemoryTicket:
+    """raw 메모리 후보 — Curator가 판정 전 양식.
+
+    evidence: 'citation' / 'stat_result' / 'human_approval' / 'rag_hit' 중 1개 이상이면
+    semantic/procedural 승격 가능. 없으면 episodic까지만.
+    """
+    text: str
+    proposed_type: Literal["working", "episodic", "semantic", "procedural", "goal"]
+    source: str = "observation"
+    owner_email: Optional[str] = None
+    evidence: List[Dict[str, Any]] = field(default_factory=list)
+    raw_meta: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class CuratorDecision:
+    """drop / accept / route_to_policy_gate. 라우터가 이 결정만 보고 진행."""
+    action: Literal["drop", "accept", "route_to_policy_gate"]
+    reason: str
+    final_tier: Optional[str] = None       # accept 시: "verified"/"auto"
+    promotion_allowed: bool = False         # policy_gate 통과 시 True
+
+
+def curator_decide(ticket: MemoryTicket) -> CuratorDecision:
+    """단순 룰 기반 Curator — LLM 무관.
+
+    규칙:
+      R1: assess() 가 quarantine → drop.
+      R2: episodic + verified source → accept (그대로 저장).
+      R3: semantic/procedural 승격은 evidence 있어야 → route_to_policy_gate.
+      R4: 그 외 → accept (default tier).
+    """
+    g1 = assess(ticket.text, source=ticket.source)
+    if not g1.get("ok", True):
+        return CuratorDecision(action="drop", reason=g1.get("reason", "gate_assess_fail"))
+
+    if ticket.proposed_type in ("semantic", "procedural"):
+        # 승격 — Policy Gate 통과 필요
+        return CuratorDecision(
+            action="route_to_policy_gate",
+            reason="promotion_to_semantic_or_procedural",
+            final_tier=None,
+            promotion_allowed=False,
+        )
+
+    return CuratorDecision(
+        action="accept",
+        reason="default_accept",
+        final_tier=g1.get("tier", "auto"),
+        promotion_allowed=False,
+    )
+
+
+def policy_gate(ticket: MemoryTicket) -> CuratorDecision:
+    """semantic/procedural 승격 게이트 — citation OR stat_result OR human_approval.
+
+    evidence 양식: [{"kind": "citation", "pmid": "..."}, {"kind": "stat_result", ...},
+                   {"kind": "human_approval", "email": "..."}, {"kind": "rag_hit", ...}]
+    """
+    accepted_kinds = {"citation", "stat_result", "human_approval"}
+    has_accepted_evidence = any(
+        e.get("kind") in accepted_kinds for e in (ticket.evidence or [])
+    )
+    if has_accepted_evidence:
+        return CuratorDecision(
+            action="accept", reason="policy_gate_passed",
+            final_tier="verified", promotion_allowed=True,
+        )
+    return CuratorDecision(
+        action="drop", reason="policy_gate_blocked_no_evidence",
+        final_tier=None, promotion_allowed=False,
+    )
+
+
+def process_ticket(ticket: MemoryTicket) -> CuratorDecision:
+    """티켓 → Curator → (필요시) Policy Gate → 최종 결정 + ledger 기록."""
+    d = curator_decide(ticket)
+    if d.action == "route_to_policy_gate":
+        d = policy_gate(ticket)
+    try:
+        from src.evolution.ledger import record_candidate
+        record_candidate(
+            kind="memory_ticket",
+            id=f"tk_{ticket.proposed_type}_{abs(hash(ticket.text[:80]))%10**12:012d}",
+            payload={
+                "text_preview": ticket.text[:160],
+                "proposed_type": ticket.proposed_type,
+                "source": ticket.source,
+                "evidence_kinds": [e.get("kind") for e in (ticket.evidence or [])],
+                "curator_action": d.action,
+                "curator_reason": d.reason,
+                "final_tier": d.final_tier,
+            },
+            actor="memory_gate.curator",
+        )
+    except Exception as _e:
+        _log.debug("ledger record_candidate fail: %s", _e)
+    return d
+
+
+# ───────────────────────────────────────────────────────────────────────────
+
+
 def assess(text: str, source: str = "observation",
            existing: Optional[List[str]] = None, min_len: int = 20) -> Dict:
     """메모리 후보 평가 → {ok, tier, confidence, reason}. LLM 불필요.

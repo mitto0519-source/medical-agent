@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ★ DESIGN.md sapphire_glass + DESIGN-LANGUAGE craft 규칙 base layer. */
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    /* DESIGN-LANGUAGE §1: 순흑/순백 금지 — 가장 어두운 텍스트는 #222222 */
+    color: #222222;
+    background: #f7f7f9;
+  }
+  *:focus-visible {
+    outline: 2px solid #1f4e79;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* DESIGN-LANGUAGE §3: 콘텐츠는 항상 카드 안 */
+  .card {
+    @apply bg-white rounded-xl shadow-glass p-4;
+  }
+  /* DESIGN-LANGUAGE §2: 숫자 크게 · 단위 작게 2:1 */
+  .stat-number {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  .stat-unit {
+    @apply text-base text-ink-subtle;
+  }
+}

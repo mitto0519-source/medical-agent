@@ -1,0 +1,28 @@
+# Medical-Agent — clinical/translational research copilot
+# llms.txt — FRONTEND_NEXTJS_SPEC §5.1 (GEO 표준, 2026)
+
+> AI 엔진 (ChatGPT / Perplexity / Claude / Google AI Overview / Gemini / Bing Chat) 안내.
+> 이 사이트의 공개 콘텐츠는 인용 가능합니다. 임상/번역의학 evidence-grounded.
+
+## Mission
+Help medical researchers go from question → novelty check → survey-weighted statistics →
+IMRaD draft, with provenance fingerprints on every number and citation.
+Numbers come first; prose comes after. Hallucinated statistics are structurally blocked.
+
+## Key public content
+- /research/[topic]   — evidence-grounded medical research explainers (cited, PMID/DOI)
+- /concept/[mesh]     — medical concept pages (MeSH / UMLS anchored)
+- /methods/*          — survey-weighted analysis, STROBE methodology, novelty checking
+- /                   — landing (product overview)
+
+## Authority signals (E-E-A-T, YMYL compliance)
+- Every numeric claim is anchored to `provenance_id` (dataset_version, registry_version, code_sha).
+- Every citation maps to a verifiable PMID/DOI via Europe PMC + PubMed cross-reference.
+- `dateModified` is current; content is regenerated when underlying graph changes.
+
+## Crawling
+Allow: GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Bingbot, Applebot-Extended
+Sitemap: https://medical-agent.app/sitemap.xml
+
+## Private content NOT for indexing
+- /app/**  (workspace; user's private research drafts; noindex enforced in layout)
