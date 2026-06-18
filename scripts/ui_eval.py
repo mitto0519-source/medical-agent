@@ -315,6 +315,58 @@ def task_dataset_known(page: Page) -> list:
     return res
 
 
+def task_knhanes_upf_masld(page: Page) -> list:
+    """J7 — ★ 가장 식별적 테스트 (외부 LLM 통찰 2026-06-19):
+    'KNHANES UPF × MASLD 분석' 입력 → masld_classification/fib4_index/upf_share 호출 인지 +
+    'MASLD 정의는?' / '데이터 어디' 재질문 없음.
+
+    RESEARCH_STATE_SPEC §1.5 (Decision Lock + 묻지말고결정 + 매턴 state 로드)와
+    KNHANES 도메인 함수 inject가 실제로 LLM 응답에 반영되는지의 진짜 첫 테스트.
+    """
+    res = []
+    nav(page, "논문 작업실")
+    chat = page.locator('[data-testid="stChatInput"] textarea, textarea[placeholder*="요청"]').first
+    # ★ 핵심 시나리오 — 분석 시작 트리거
+    chat.fill("KNHANES 2023 데이터로 UPF(NOVA 4) 섭취와 MASLD(2023 신정의) 연관 분석 시작해줘. "
+                "ultrasonography는 없어. fibrotic MASLD 양식으로 끝까지.")
+    chat.press("Enter")
+    page.wait_for_timeout(30000)  # LLM 응답 충분 대기
+    body = page.locator("body").inner_text()
+    page.screenshot(path=str(OUT / "j7_knhanes_upf_masld.png"))
+
+    # PASS 1: KNHANES 도메인 함수 호출/언급 (LLM이 인지)
+    knows_functions = sum(1 for s in [
+        "masld_classification", "fib4_index", "fib4_stratify",
+        "upf_share_by_person", "upf_intake_share", "classify_nova",
+        "fli(", "hsi(", "FLI", "HSI", "FIB-4", "Rinella"
+    ] if s in body)
+    # PASS 2: MASLD 정의 재질문 양식 없음
+    asks_definition = any(s in body for s in [
+        "MASLD 정의는", "MASLD 정의가 뭐", "MASLD가 무엇",
+        "MASLD 양식 알려", "어떤 양식으로", "정의를 알려주",
+    ])
+    # PASS 3: 데이터 위치 재질문 없음
+    asks_location = any(s in body for s in [
+        "KNHANES 어디", "데이터 어디", "데이터셋 경로", "파일 위치",
+        "원본 파일 어디", "업로드 해 주", "위치를 알려",
+    ])
+    # PASS 4: 자동 분석 진행 양식 (table/aOR/CI/n=)
+    progresses = any(s in body for s in [
+        "aOR", "95% CI", "p-interaction", "logistic", "Cox",
+        "Methods", "Results", "Table 1", "n =", "n=", "person-years",
+    ])
+
+    res.append(("knows_knhanes_functions", knows_functions >= 2,
+                  f"인지 함수: {knows_functions}/12 (>= 2 PASS)"))
+    res.append(("no_asking_masld_definition", not asks_definition,
+                  "MASLD 정의 재질문 X" if not asks_definition else "★ FAIL: MASLD 정의 또 물음"))
+    res.append(("no_asking_data_location", not asks_location,
+                  "데이터 위치 재질문 X" if not asks_location else "★ FAIL: 위치 또 물음"))
+    res.append(("progresses_to_analysis", progresses,
+                  "분석 진행 양식 검출" if progresses else "★ FAIL: 통계 산출 양식 없음"))
+    return res
+
+
 def main() -> int:
     suite = []
     with sync_playwright() as p:
@@ -341,6 +393,8 @@ def main() -> int:
         suite.append(("j5:topic_lock", task_topic_lock(page)))
         # ★ J6 — 데이터셋 인지 (DATASETS 블록 매 턴 inject)
         suite.append(("j6:dataset_known", task_dataset_known(page)))
+        # ★ J7 — KNHANES UPF × MASLD 풀체인 (가장 식별적 — RESEARCH_STATE §1.5 + KNHANES 도메인 inject 실작동)
+        suite.append(("j7:knhanes_upf_masld", task_knhanes_upf_masld(page)))
 
         # 관리자 단위 페이지 렌더 회귀 (관리자 모드 ON)
         for sel in ['[data-testid="stCheckbox"]', 'label:has-text("관리자 모드")']:
