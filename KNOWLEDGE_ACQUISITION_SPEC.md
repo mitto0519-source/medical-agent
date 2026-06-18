@@ -141,5 +141,55 @@ service.rag(T0)+evidence_reader(T1)+web_reader(T2)+oa_bulk_fetcher(T4) ─▶ ro
                                                           └─▶ RESEARCH_PIPELINE novelty 단계 결합
                                                           (FRONTEND §5.5 BACKGROUND lane으로 비동기)
 ```
-> 요약: 4티어 부품은 다 있다(T3만 신규). **라우터가 '언제 무엇으로' 결정하고, 가져온 걸 내재화하고, novelty/유사성/트렌드 질의에 결합**한다.
-> 이게 "필요할 때 외부 지식을 가져와 내재화하는 백엔드"의 완성 구조다.
+---
+
+## 11. Deep Research 루프 (실시간 RAG 강화 — khoj deep-research 원리 차용, 코드 아님)
+
+> 딥리서치 = 한 방 검색이 아니라 **반복으로 RAG를 실시간 강화**: 검색→공백탐지→라이브획득→내재화→재검색→합성.
+
+```python
+def deep_research(query, *, max_iters=4, cost_cap, coverage_target=0.8) -> Result:
+    for i in range(max_iters):                  # ★한도(통제)
+        hits = router.acquire(query, intent="evidence")      # T0→T1→…
+        if coverage(hits) >= coverage_target: break
+        gaps = detect_gaps(hits, query)         # 개념·연도·반대근거 공백
+        router.acquire(gaps, need_fulltext=True)# 공백만 라이브 보강 + 내재화(§3)
+        if spent >= cost_cap: break              # ★비용 상한(통제)
+    return synthesize(hits, provenance=True)
+```
+- **실시간 RAG 강화 = 내재화 루프(§3) 결합**: 가져온 즉시 인제스트 → 다음 iter엔 로컬이 더 강해짐.
+- **통제**: max_iters·cost_cap·coverage_target·킬스위치 + iter별 provenance.
+- 연계: RESEARCH_PIPELINE SCOPE/novelty에서 호출, FRONTEND §5.5 BACKGROUND(응답 안 막음).
+
+## 12. 논문 최신화/트렌드 Study 루프 (도메인판 "자동화" — 뉴스레터 아님)
+
+> 범용 자동화·뉴스레터 X. **네 활성 주제의 최신 논문·트렌드·노벨티 변화를 주기적으로 study**.
+
+```python
+def currency_study(owner, *, topics=active_topics(owner), cost_cap, opt_in=True):
+    for t in topics:
+        latest = router.acquire(t, intent="trend", recency_days=180)  # 연도윈도
+        internalize(latest)                       # 코퍼스 최신화
+        update_state(t, novelty=novelty_shift(t, latest))  # RESEARCH_STATE.gates
+        surface(owner, t, "신규 N편 / 트렌드↑ / novelty 재평가")  # 알림 아닌 study 카드
+```
+- 트리거: heartbeat(기존 인프라) 주기 + 채팅 on-demand("이 주제 최신 봐줘"). **opt-in·주제별**.
+- 통제: cost_cap·주제 화이트리스트·빈도 한도·끄기. 결과=푸시알림 아닌 *study 카드*.
+- 연계: heartbeat job 1개 추가(인프라 중복 X) + §3 내재화 + novelty 도구.
+
+---
+
+## 13. ★ 통제 가능성 규율 (비개발자용 — 모든 루프 공통, 누락 0)
+
+루프는 강력한 만큼 위험(무한·비용폭주·조용한 오염). **모든 루프에 5개 강제**:
+1. **한도** max_iters/cost_cap/time_cap — 무한 금지.
+2. **킬스위치** ENV 또는 1버튼 즉시 정지.
+3. **관측** events.db+provenance — "조용히" 도는 것 금지.
+4. **휴먼 게이트** 고위험(대량 코퍼스 변경·큰 비용)은 승인 후.
+5. **고아 0** `audit_wiring.py`로 호출부·출력처 연결 확인(규칙10).
+> 이 5개가 "누락없이+연계완벽+통제가능"의 실체. 비개발자가 안심하고 맡기는 전제.
+
+---
+
+> 요약: 4티어 + **딥리서치 루프(실시간 RAG 강화)** + **최신화 study 루프(도메인 자동화)**, 전부 §13 통제 규율 위에서.
+> khoj는 *원리 참고*만(AGPL 코드 복제 금지). 보강은 네 스펙·인프라에 재구현.

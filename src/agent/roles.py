@@ -107,6 +107,43 @@ ROLES: Dict[str, RoleSpec] = {
         allowed_tools=["pubmed_search", "cross_modal_query", "rag_search"],
         fallback_llm_task="standard",
     ),
+    # ★ KNOWLEDGE_ACQUISITION_SPEC §11/§12 — 선언적 config 보강 (khoj 빌더 X, 단순 정리).
+    "novelty_hunter": RoleSpec(
+        name="novelty_hunter",
+        description="활성 주제의 novelty 변화 추적 — 새 evidence 등장 시 재평가.",
+        system_prompt=(
+            "You are the NOVELTY_HUNTER agent. Continuously compare the user's research topic "
+            "against fresh evidence (last 180 days). If a similar study just appeared, surface "
+            "it with exact PMID + distance score (novelty shift). Do not invent citations."),
+        allowed_tools=["pubmed_search", "rag_search", "external_evidence",
+                        "consensus_search", "novelty"],
+        fallback_llm_task="standard",
+    ),
+    "trend_scout": RoleSpec(
+        name="trend_scout",
+        description="필드 단위 트렌드 study — 노출/결과 변수의 신규 측정·방법 출현.",
+        system_prompt=(
+            "You are the TREND_SCOUT agent. Identify newly emerging measurement methods, "
+            "outcome definitions, or sub-population analyses in the user's research field "
+            "(180-day window). Output: top-5 trend signals with provenance pins (PMID + "
+            "year + change vs prior baseline). Honor cost cap."),
+        allowed_tools=["pubmed_search", "longitudinal_trend", "external_evidence",
+                        "rag_search"],
+        fallback_llm_task="standard",
+    ),
+    "deep_researcher": RoleSpec(
+        name="deep_researcher",
+        description="딥리서치 루프 — 검색→공백탐지→라이브획득→내재화→재검색→합성.",
+        system_prompt=(
+            "You are the DEEP_RESEARCHER agent. Treat the question as a multi-iteration "
+            "loop: (1) local RAG retrieve, (2) detect coverage gaps, (3) acquire via "
+            "evidence_reader (PubMed/Crossref/EuropePMC) only if gap, (4) ingest to RAG "
+            "(self-reinforcement), (5) re-retrieve, (6) synthesize with provenance. "
+            "Respect max_iters and cost_cap; emit one summary per iteration. Never invent."),
+        allowed_tools=["rag_search", "pubmed_search", "external_evidence",
+                        "consensus_search", "cross_modal_query", "patch_preview"],
+        fallback_llm_task="standard",
+    ),
 }
 
 
@@ -123,6 +160,11 @@ ACTION_TO_ROLE: Dict[str, str] = {
     "pubmed_search":   "researcher",
     "rag_search":      "researcher",
     "cross_modal_query": "researcher",
+    # ★ §11/§12 신규 action 매핑
+    "novelty_check":   "novelty_hunter",
+    "trend_study":     "trend_scout",
+    "deep_research":   "deep_researcher",
+    "currency_study":  "trend_scout",
 }
 
 
