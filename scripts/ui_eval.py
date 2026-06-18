@@ -260,6 +260,61 @@ def task_citation_fullset(page: Page) -> list:
     return res
 
 
+def task_topic_lock(page: Page) -> list:
+    """J5 (E2E_PILOT_TEST_PLAN 확장) — 주제 잠금: A 입력 → 무관 B 입력 → A 유지.
+
+    외부 LLM 통찰(2026-06-18): 흡연-심혈관 잡았는데 다른 주제 입력하면 ZCB로 회귀.
+    RESEARCH_STATE_SPEC §1.5 (Decision Lock + 매 턴 강제 로드) 검증.
+    """
+    res = []
+    nav(page, "논문 작업실")
+    chat = page.locator('[data-testid="stChatInput"] textarea, textarea[placeholder*="요청"]').first
+    # 1차: 주제 명확히 잡음
+    chat.fill("흡연이 심혈관 사건 위험에 미치는 효과 — Cox 모형으로 분석할 거야")
+    chat.press("Enter")
+    page.wait_for_timeout(15000)
+    # 2차: 무관한 잡음
+    chat.fill("그러면 다른 주제도 볼까?")
+    chat.press("Enter")
+    page.wait_for_timeout(15000)
+    # 응답에 'ZCB' '제로음료' '우울' '카페인' 같은 회귀 단어 나오면 FAIL
+    body = page.locator("body").inner_text()
+    regression_words = ["제로음료", "ZCB", "zero-calorie", "depression", "우울", "카페인", "caffeine"]
+    found_regression = [w for w in regression_words if w.lower() in body.lower()]
+    kept_topic = any(w in body.lower() for w in ["흡연", "smoking", "cox", "심혈관", "cardiovascular"])
+    page.screenshot(path=str(OUT / "j5_topic_lock.png"))
+    res.append(("topic_kept_after_distraction", kept_topic,
+                  "흡연/cox/심혈관 유지" if kept_topic else "주제 잃음"))
+    res.append(("no_regression_to_seed_demo", not found_regression,
+                  f"회귀 단어: {found_regression}" if found_regression else "회귀 없음"))
+    return res
+
+
+def task_dataset_known(page: Page) -> list:
+    """J6 — '데이터셋 어디 있어?'에 묻지 않고 답하는지 검증.
+
+    DATASETS 블록 매 턴 inject 확인. LLM이 "위치 알려주세요" 반응하면 FAIL.
+    """
+    res = []
+    nav(page, "논문 작업실")
+    chat = page.locator('[data-testid="stChatInput"] textarea, textarea[placeholder*="요청"]').first
+    chat.fill("KYRBS 2025 데이터로 카페인-우울 분석 시작해줘. 데이터 어디 있어?")
+    chat.press("Enter")
+    page.wait_for_timeout(20000)
+    body = page.locator("body").inner_text()
+    page.screenshot(path=str(OUT / "j6_dataset_known.png"))
+    # PASS: data/raw/kyrbs2025.sav 또는 'data/raw' 언급 + "어디" 같은 되묻기 없음
+    knows_path = any(s in body for s in ["data/raw/kyrbs2025", "data/raw", "KYRBSLoader",
+                                              "21년", "2005~2025", "이미 보유", "이미 등록"])
+    asks_back = any(s in body for s in ["경로 알려주", "어디 있나요", "업로드 해 주",
+                                            "위치를 알려"])
+    res.append(("knows_dataset_path", knows_path,
+                  "DATASETS 블록 inject됨" if knows_path else "위치 인지 못함"))
+    res.append(("no_asking_back", not asks_back,
+                  "되묻지 않음" if not asks_back else "위치 되물음"))
+    return res
+
+
 def main() -> int:
     suite = []
     with sync_playwright() as p:
@@ -282,6 +337,10 @@ def main() -> int:
         suite.append(("flow:citation_fullset", task_citation_fullset(page)))
         # J4 (E2E_PILOT_TEST_PLAN) — KYRBS survey-weighted logistic litmus test
         suite.append(("j4:kyrbs_survey_logistic", task_kyrbs_survey_logistic(page)))
+        # ★ J5 — 주제 잠금 (Decision Lock + locked_decisions 매 턴 강제 로드)
+        suite.append(("j5:topic_lock", task_topic_lock(page)))
+        # ★ J6 — 데이터셋 인지 (DATASETS 블록 매 턴 inject)
+        suite.append(("j6:dataset_known", task_dataset_known(page)))
 
         # 관리자 단위 페이지 렌더 회귀 (관리자 모드 ON)
         for sel in ['[data-testid="stCheckbox"]', 'label:has-text("관리자 모드")']:
