@@ -13,19 +13,138 @@ from src.service import rag as rag_service
 _log = get_logger(__name__)
 
 
-def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") -> str:
-    """Single-core system prompt: persona → RAG inject → rule overlay.
+def _load_datasets_block(owner_email: str = "") -> str:
+    """★ 사용자가 '데이터셋 위치 어디?'를 매번 묻게 되는 J3 fix.
 
-    Per UX_CHAT_DESIGN_SPEC §1: chat 말풍선엔 chat_style 주입(결론 먼저, 거대헤더 금지,
-    짧은 문단). paper_writing이 아닌 chat task로 호출 → prompt_loader가 chat_style
-    합성 → 응답 톤이 문서체 → 대화체로 전환.
+    이미 등록된 데이터셋(Supabase ma_datasets + 로컬 dataset_*.json)과 실 파일
+    (data/raw/*.sav)을 매 턴 system 최상단 블록으로 inject.
+    LLM이 "데이터 위치 알려주세요" 같은 헛질문을 안 하게.
     """
+    parts = ["--- ★ REGISTERED DATASETS (서버·로컬에 이미 로드됨, 위치 묻지 말 것) ---"]
+
+    # 1) DatasetLibrary 등록본 (Supabase + 로컬)
+    try:
+        from src.library.dataset_library import DatasetLibrary
+        lib = DatasetLibrary()
+        registered = list(lib._datasets.keys()) if hasattr(lib, "_datasets") else []
+        if registered:
+            parts.append(f"등록 데이터셋: {', '.join(registered[:20])}")
+    except Exception as _e:
+        _log.debug("DatasetLibrary load fail: %s", _e)
+
+    # 2) 실 파일 — KYRBS 21년치
+    from pathlib import Path as _P
+    raw = _P("data/raw")
+    if raw.exists():
+        kyrbs = sorted([f.stem for f in raw.glob("kyrbs*.sav")])
+        if kyrbs:
+            years = sorted(set(int(s.replace("kyrbs", "")) for s in kyrbs
+                                  if s.replace("kyrbs", "").isdigit()))
+            if years:
+                parts.append(f"★ KYRBS (청소년건강행태조사) .sav: {len(years)}년 — "
+                              f"{years[0]}~{years[-1]} 전체 보유 (data/raw/kyrbs{{year}}.sav)")
+        knhanes_dir = raw / "knhanes"
+        if knhanes_dir.exists():
+            kns = list(knhanes_dir.glob("HN*.zip"))
+            if kns:
+                parts.append(f"★ KNHANES (국민건강영양조사) ZIP: {len(kns)}개 "
+                              f"(data/raw/knhanes/HN*.zip — 자동 압축해제+로드)")
+        misc = [f.name for f in raw.glob("*.xlsx")] + [f.name for f in raw.glob("*.csv")]
+        if misc:
+            parts.append(f"기타 raw 파일: {', '.join(misc[:10])}")
+
+    # 3) 컴포넌트 라이브러리 (data/library/components.db) 통계
+    try:
+        import sqlite3
+        comp_db = _P("data/library/components.db")
+        if comp_db.exists():
+            conn = sqlite3.connect(str(comp_db))
+            try:
+                n = conn.execute("SELECT COUNT(*) FROM components").fetchone()[0]
+                if n: parts.append(f"★ 컴포넌트 라이브러리: {n:,}개 (도표·인용·문체 단위 검색 가능)")
+            except Exception: pass
+            conn.close()
+    except Exception:
+        pass
+
+    # 4) 사용자별 본인 코호트 (attachments는 project에서, 여기선 hint만)
+    parts.append("")
+    parts.append("★ 데이터 로딩 양식 (절대 위치 묻지 말 것):")
+    parts.append("  - KYRBS: from src.data.kyrbs_raw_loader import KYRBSLoader; KYRBSLoader().load('data/raw/kyrbs2025.sav')")
+    parts.append("  - KNHANES: from src.data.knhanes_raw_loader import KNHANESLoader; KNHANESLoader().load(year=2023)")
+    parts.append("  - 사용자 코호트 xlsx: project['attachments']에 universal_loader로 미리 로드돼 system prompt 하단에 inject됨.")
+    parts.append("  - 통계: from src.data.stat_bridge import StatBridge; StatBridge().run(df, spec)")
+    parts.append("--- END DATASETS ---")
+    return "\n".join(parts)
+
+
+def _load_research_state_block(project: dict) -> str:
+    """★ RESEARCH_STATE_SPEC §1.5: 매 턴 강제 로드.
+
+    project가 활성 연구라면 objective + locked_decisions + forbidden_changes를
+    system 최상단 블록으로 반환. 이게 빠지면 매번 시드 데모(ZCB)로 회귀 → 멍청함.
+    """
+    rs = (project.get("research_state") or {}) if isinstance(project, dict) else {}
+    if not rs:
+        return ""
+    parts = ["--- ★ ACTIVE RESEARCH PROJECT (mandatory state load, 매 턴 강제) ---"]
+    obj = rs.get("objective") or rs.get("topic") or project.get("title")
+    if obj:
+        parts.append(f"OBJECTIVE: {obj}")
+    pico = rs.get("pico") or {}
+    if isinstance(pico, dict) and any(pico.values()):
+        for k in ("population", "exposure", "outcome", "study_design"):
+            v = pico.get(k)
+            if v: parts.append(f"  {k.upper()}: {v}")
+    locked = rs.get("locked_decisions") or {}
+    if isinstance(locked, dict) and locked:
+        parts.append("LOCKED_DECISIONS (절대 변경 금지 — 사용자가 명시 승인 없이는 X):")
+        for k, v in locked.items():
+            if v: parts.append(f"  · {k}: {v}")
+    forb = rs.get("forbidden_changes") or []
+    if forb:
+        parts.append("FORBIDDEN_CHANGES (이 방향으로 절대 회귀 X):")
+        for f in forb[:6]:
+            parts.append(f"  · {f}")
+    dataset = rs.get("dataset")
+    if dataset:
+        parts.append(f"DATASET: {dataset}")
+    parts.append("")
+    parts.append("★ '묻지 말고 결정' 규율 (§1.5 B):")
+    parts.append("  - 불확실해도 '추가 정보 주세요'로 사용자에 핑퐁 금지.")
+    parts.append("  - 가장 방어적 설계 + 가정 명시 + 진행 (예: '나이 누락 → AGE 결측 listwise drop 가정').")
+    parts.append("  - STATS gate 외에는 멈추지 말고 완성까지.")
+    parts.append("--- END ACTIVE PROJECT ---")
+    return "\n".join(parts)
+
+
+def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") -> str:
+    """Single-core system prompt: ★ ACTIVE PROJECT (mandatory) → persona → RAG → rules.
+
+    RESEARCH_STATE_SPEC §1.5 강제: 매 턴 시작에 활성 프로젝트 state 로드 → system 최상단.
+    이게 빠지면 '제로음료-우울' 시드 데모로 회귀하는 J3 root cause.
+    """
+    # ★ MANDATORY 1: 등록된 데이터셋 블록 (위치 묻지 마라)
+    datasets_block = _load_datasets_block(owner_email)
+
+    # ★ MANDATORY 2: 활성 프로젝트 state 최상단 (다른 모든 것보다 먼저)
+    active_state = _load_research_state_block(project)
+
     try:
         from src.agent.persona import get_system_prompt
         base_sys = get_system_prompt(task="chat", owner_email=owner_email or None)
     except Exception as e:
         _log.warning("persona load fail: %s", e)
         base_sys = "당신은 의학 연구 코파일럿입니다."
+
+    # 데이터셋 + 활성 state 둘 다 base_sys보다 앞 (LLM이 가장 먼저 읽음)
+    prefix = ""
+    if datasets_block:
+        prefix += datasets_block + "\n\n"
+    if active_state:
+        prefix += active_state + "\n\n"
+    if prefix:
+        base_sys = prefix + base_sys
 
     try:
         from app.agentic_loop import build_system_with_preview
@@ -57,8 +176,14 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
 
     rule_overlay = (
         "\n\n--- RULE-8 (vibe paper) ---\n"
-        "사용자 주제가 모호하면 PICO·데이터·통계·하위군 중 짧은 역질문 2-3개로 좁히세요.\n"
-        "'알아서 해' '그냥 해' '한번에' 같은 trigger를 들으면 그때 자동 파이프라인을 진행합니다.\n"
+        "★ RESEARCH_STATE_SPEC §1.5 강제 (위 ACTIVE PROJECT 블록이 있다면):\n"
+        "  - LOCKED_DECISIONS는 사용자가 명시 승인 없이 절대 변경 X.\n"
+        "  - FORBIDDEN_CHANGES 방향으로 절대 회귀 X (예: 흡연-심혈관 잡았는데 '제로음료-우울'로 돌아가기 X).\n"
+        "  - 사용자가 다른 주제 단어를 던져도 ACTIVE PROJECT가 있으면 그 안에서 보조 발견(secondary)으로 정리.\n"
+        "  - exposure/outcome을 또 묻지 말 것 — 이미 LOCKED. 데이터셋도 또 묻지 말 것.\n"
+        "★ '묻지 말고 결정':\n"
+        "  - 모호하면 PICO·통계·하위군 중 짧은 역질문 2-3개. **단 ACTIVE PROJECT 있으면 묻지 말고 기본값으로 진행** + 가정 명시.\n"
+        "  - '알아서 해' '그냥 해' '한번에' = STATS gate 외엔 안 묻고 완성까지.\n"
         "응답은 한국어 대화체, 동료 의학연구자 어투, 마크다운 짧게.\n"
         "위 RETRIEVED MEDICAL EVIDENCE를 참고해 답변에 PMID 인라인 인용을 넣으세요."
     )

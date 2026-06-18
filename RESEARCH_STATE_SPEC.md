@@ -47,6 +47,57 @@ class ResearchState:
 
 ---
 
+## 1.5 ★ Decision Lock + 묻지말고결정 + 매턴 강제로드 (★ "멍청함" 직격 — 실사용 사고 2026-06-18)
+
+> 증상: 흡연-심혈관으로 주제 잡았는데 제로음료-우울로 회귀 · outcome/exposure 반복질문 · 데이터 없다 부정 · 매턴 초기화.
+> 진단: 메모리·RAG 문제 아님. **research_state를 매 턴 *읽고 강제*하지 않아서** 매번 재해석함. 3개 추가 필수.
+
+### A. Decision Lock — 스키마에 추가 (확정 결정은 못 바꾸게)
+```python
+    locked_decisions: dict     # {population, exposure, outcome, model, frame} — 확정·불변
+    forbidden_changes: list    # ["do not switch to depression", "do not switch to beverage"]
+    candidate_secondary: list  # 새 아이디어는 *변경*이 아니라 여기 후보로 적재
+    objective: str             # 한 줄 프로젝트 목표 (모든 턴 최상단 주입)
+```
+규칙:
+- 사용자가 주제·exposure·outcome을 정하면 → `locked_decisions`에 박고 `forbidden_changes` 자동 생성.
+- 이후 "우울도 볼까?" 같은 입력 → **변경 금지. "현재 objective와 충돌 → secondary 후보로 저장"** 후 본 흐름 유지.
+- locked 변경은 사용자가 *명시적으로* "주제 바꿔"라고 할 때만(확인 1회).
+
+### B. 묻지 말고 결정 (decide-don't-ask) — 행동 규칙
+```
+불확실 →  ❌ 질문                ✅ 가장 방어적인 설계 선택 + "가정: …" 명시 + 진행
+```
+- 논문 작업에선 "모르겠음→질문"이 아니라 "모르겠음→연구적으로 가장 타당한 선택 + 가정 기록".
+- 예: 연도 안 정해짐 → "2024 단일년(가장 최근, 가정)으로 진행, 변경 원하면 말씀". 멈추고 묻지 않음.
+- "알아서 해" 신호 = **전 단계 자동 진행**(RESEARCH_PIPELINE auto), STATS 게이트에서만 확인.
+- chat_style/persona에 이 규칙 주입: *"확인 질문 최소화. 불확실은 가정 명시로 대체."*
+
+### C. 매 턴 강제 로드 (이게 빠져서 '멍청'한 거다 — 배선)
+```
+모든 채팅 턴 시작:
+  ① 활성 프로젝트 research_state 로드 (없으면 새로 생성)
+  ② objective + locked_decisions + forbidden_changes + next_tasks 를 system 최상단 주입
+  ③ conversation recall은 *이 프로젝트로 스코프* (옛 ZCB 데모 맥락 유입 차단)
+  ④ 그 다음에야 LLM 호출
+```
+> **스펙이 있어도 매 턴 안 읽으면 무의미.** ez_home가 지금 이걸 안 한다 = 매번 시드 데모(ZCB)로 회귀. **mandatory_state_load가 빠진 게 진짜 버그.**
+
+### D. 실패 학습 (FAILURE_PATTERNS에 등록)
+```yaml
+failure: {type: context_reset, cause: project_state_not_loaded,
+          solution: load_research_state_before_generation, prevent: mandatory_state_check}
+```
+→ 매 생성 전 state check 강제. SELF_EVOLUTION이 이 패턴 재발 시 경고.
+
+### 수용(이 사고 재현 안 되게)
+- 주제 확정 후 다른 주제 입력 → **회귀 0**(secondary 후보로만 적재).
+- outcome/exposure 재질문 0(locked면 안 물음).
+- 매 턴 system에 objective+locked 들어가는지 로그 확인.
+- "알아서 해" → STATS 게이트 외 질문 0, 완성본까지 진행.
+
+---
+
 ## 2. 영속 · 트랜잭션 (Control Plane, 원자적 전이)
 
 - **Supabase = 컨트롤플레인**: `ma_research_state`(신규 테이블, 기존 `ma_drafts` 확장/대체) + `ma_checkpoints`. 로컬 JSON은 캐시/오프라인용.

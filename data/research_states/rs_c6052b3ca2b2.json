@@ -1,0 +1,25 @@
+{
+  "id": "rs_c6052b3ca2b2",
+  "owner_email": "test@local",
+  "title": "E2E smoke",
+  "schema_version": "1.0.0",
+  "rq": {},
+  "dataset": {},
+  "variable_selection": {},
+  "analysis_spec": {},
+  "results": {},
+  "manuscript": {
+    "sections": {
+      "Abstract": "smoke test"
+    }
+  },
+  "citations": [],
+  "gates": {},
+  "provenance_ids": [],
+  "checkpoint_id": "",
+  "parent_checkpoint": null,
+  "messages": [],
+  "attachments": [],
+  "updated_at": "2026-06-16T23:21:21",
+  "_derived_manuscript_text_len": 22
+}
