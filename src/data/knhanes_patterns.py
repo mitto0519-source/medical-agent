@@ -51,6 +51,42 @@ def fli(df):
 
 
 # ── 2. Hepatic Steatosis Index (Lee 2010) ───────────────────────────────────
+def fib4_index(df):
+    """FIB-4 = (age × AST) / (platelet × √ALT) — Sterling 2006.
+
+    임상 cutoff (NAFLD/MASLD 섬유화 평가):
+      < 1.30  : low risk (advanced fibrosis 배제)
+      1.30~2.67: intermediate (재평가 또는 영상/탄력도 추가)
+      > 2.67  : high risk (advanced fibrosis F3-F4 의심)
+
+    KNHANES 컬럼: HE_age (또는 age), HE_AST (U/L), HE_PLT (10³/μL), HE_ALT (U/L).
+    누락 시 NaN. MASLD 2023 신정의에서 ultrasonography 없을 때 FIB-4>1.30 +
+    FLI≥60 또는 HSI>36 조합으로 fibrotic MASLD proxy 가능.
+    """
+    import pandas as pd
+    import numpy as np
+    age_col = "HE_age" if "HE_age" in df.columns else ("age" if "age" in df.columns else None)
+    required = [age_col, "HE_AST", "HE_PLT", "HE_ALT"]
+    if age_col is None or not _has_cols(df, [c for c in required if c], "fib4_index"):
+        return pd.Series([np.nan] * len(df), index=df.index, name="FIB4")
+    age = df[age_col].astype(float)
+    ast = df["HE_AST"].astype(float).clip(lower=0.1)
+    plt = df["HE_PLT"].astype(float).clip(lower=0.1)
+    alt = df["HE_ALT"].astype(float).clip(lower=0.1)
+    out = (age * ast) / (plt * np.sqrt(alt))
+    return pd.Series(out, index=df.index, name="FIB4")
+
+
+def fib4_stratify(fib4_series):
+    """FIB-4 → 'low' / 'intermediate' / 'high' 범주화 (cutoff 1.30 / 2.67)."""
+    import pandas as pd
+    out = pd.Series(["unknown"] * len(fib4_series), index=fib4_series.index, name="FIB4_cat")
+    out[fib4_series < 1.30] = "low"
+    out[(fib4_series >= 1.30) & (fib4_series <= 2.67)] = "intermediate"
+    out[fib4_series > 2.67] = "high"
+    return out
+
+
 def hsi(df):
     """HSI = 8 × (ALT/AST) + BMI (+2 여성, +2 DM). HSI ≥ 36 → likely steatosis."""
     import pandas as pd
