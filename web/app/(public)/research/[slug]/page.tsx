@@ -16,27 +16,29 @@ type ResearchTopic = {
 };
 
 async function fetchTopic(slug: string): Promise<ResearchTopic | null> {
-  // Phase 3 골격 — 다음 사이클: FastAPI /research/{slug} 호출.
-  // 지금은 정적 시드(MASLD 예시) 한 건만 반환.
-  if (slug === "masld-classification") {
+  // FastAPI GET /research/{slug} — server-side fetch (RSC, ISR 캐시 위에).
+  const base = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+  try {
+    const res = await fetch(`${base}/research/${encodeURIComponent(slug)}`, {
+      next: { revalidate: 7776000 }, // 3개월 (페이지 ISR과 정합)
+    });
+    if (!res.ok) return null;
+    const d = await res.json();
     return {
-      slug,
-      title: "MASLD vs MetALD vs NAFLD — 2026 명명 체계 변화",
-      abstract:
-        "다국제 학회 합의로 도입된 MASLD(Metabolic dysfunction-associated steatotic liver disease) 정의가 임상 진단·역학 분석·신약 시험 설계에 미치는 영향. NAFLD 진단 기준 차이, FLI/HSI 지표의 검증 양식, MetALD 중간 카테고리 적용.",
-      publishedDate: "2026-04-01",
-      modifiedDate: "2026-06-15",
+      slug: d.slug,
+      title: d.title || "(제목 없음)",
+      abstract: d.abstract || "",
+      publishedDate: d.year ? `${d.year}-01-01` : "2026-01-01",
+      modifiedDate: d.modified_at || new Date().toISOString().slice(0, 10),
       authors: [{ name: "Medical-Agent Research Team" }],
-      citations: [
-        { pmid: "38542705", title: "Multi-society Delphi consensus on MASLD nomenclature", journal: "Hepatology", year: 2024 },
-      ],
-      meshTopics: [
-        { code: "D000094263", label: "Metabolic dysfunction-associated steatotic liver disease" },
-        { code: "D065626", label: "Non-alcoholic Fatty Liver Disease" },
-      ],
+      citations: [{ pmid: d.pmid, title: d.title, journal: d.journal, year: d.year }],
+      meshTopics: (d.related_concepts || []).slice(0, 6).map((c: string) => ({
+        code: c, label: c.replace(/^C_/, "").replace(/_/g, " "),
+      })),
     };
+  } catch {
+    return null;
   }
-  return null;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

@@ -310,6 +310,94 @@ def export_docx_bundle(
     raise HTTPException(status_code=500, detail="export: unexpected result shape")
 
 
+# ── /research /concept (FRONTEND_NEXTJS_SPEC §3 — (public) 데이터 소스) ──
+
+@app.get("/research/{slug}")
+def get_research_topic(slug: str):
+    """Phase 3 web (public) /research/[slug] → ScholarlyArticle JSON-LD 데이터 공급.
+
+    graph.json에서 paper 노드 검색 (slug=pmid 또는 slugified title).
+    """
+    import json as _json
+    from pathlib import Path as _P
+    try:
+        g = _json.loads((_P("data/knowledge_graph/graph.json")).read_text(encoding="utf-8"))
+    except Exception as e:
+        raise HTTPException(status_code=503, detail=f"graph unavailable: {e}")
+    paper = None
+    # 1) slug == pmid
+    for n in g.get("nodes", []):
+        if n.get("type") == "paper":
+            if str(n.get("pmid")) == slug or n.get("id") == slug:
+                paper = n
+                break
+    if paper is None:
+        raise HTTPException(status_code=404, detail=f"research topic '{slug}' not found")
+    # 인용/관련 concepts
+    pmid = str(paper.get("pmid") or slug)
+    related = []
+    for e in g.get("edges", [])[:10000]:
+        if e.get("source") == f"paper:{pmid}" or e.get("from") == f"paper:{pmid}":
+            tgt = e.get("target") or e.get("to") or ""
+            if tgt.startswith("concept:") or tgt.startswith("C_"):
+                related.append(tgt.replace("concept:", ""))
+            if len(related) >= 8:
+                break
+    return {
+        "slug": slug,
+        "pmid": pmid,
+        "title": paper.get("title", ""),
+        "abstract": paper.get("abstract", "")[:1500],
+        "year": paper.get("year"),
+        "journal": paper.get("journal", ""),
+        "related_concepts": related,
+        "modified_at": paper.get("updated_at"),
+    }
+
+
+@app.get("/concept/{cui}")
+def get_concept(cui: str):
+    """Phase 3 web (public) /concept/[cui] → MedicalCondition JSON-LD 데이터 공급.
+
+    medical_ontology에서 concept 검색.
+    """
+    try:
+        from src.knowledge.medical_ontology import MedicalOntology
+        ont = MedicalOntology()
+        c = None
+        for axis_concepts in (ont.concepts() if hasattr(ont, "concepts") else []):
+            if axis_concepts.get("concept_id") == cui or axis_concepts.get("cui") == cui:
+                c = axis_concepts
+                break
+    except Exception:
+        c = None
+    if c is None:
+        # graph.json fallback
+        import json as _json
+        from pathlib import Path as _P
+        try:
+            g = _json.loads(_P("data/knowledge_graph/graph.json").read_text(encoding="utf-8"))
+            for n in g.get("nodes", []):
+                if n.get("type") == "concept" and (
+                    str(n.get("id", "")) == cui or str(n.get("cui", "")) == cui
+                ):
+                    c = n
+                    break
+        except Exception:
+            pass
+    if c is None:
+        raise HTTPException(status_code=404, detail=f"concept '{cui}' not found")
+    return {
+        "cui": cui,
+        "label": c.get("label") or c.get("name") or cui,
+        "domain": c.get("domain_label") or c.get("axis") or c.get("domain") or "",
+        "definition": c.get("definition") or c.get("description") or "",
+        "mesh": c.get("mesh"),
+        "umls": c.get("umls"),
+        "keywords": c.get("keywords") or [],
+    }
+
+
 # ── /pipeline (RESEARCH_PIPELINE_SPEC orchestrator 노출) ─────────────────
 
 class PipelineAdvanceIn(BaseModel):

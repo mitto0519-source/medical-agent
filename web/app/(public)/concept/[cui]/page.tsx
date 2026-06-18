@@ -15,30 +15,26 @@ type Concept = {
 };
 
 async function fetchConcept(cui: string): Promise<Concept | null> {
-  // Phase 3 골격 — 다음 사이클에 FastAPI /concept/{cui} 또는 graph.json 직접 read.
-  const stub: Record<string, Concept> = {
-    "D000094263": {
-      cui: "D000094263",
-      label: "Metabolic dysfunction-associated steatotic liver disease (MASLD)",
-      domain: "Hepatology",
-      definition:
-        "지방간 + 대사이상(비만/당뇨/이상지질혈증/고혈압 중 하나) 기반 신규 명명. 2023년 다국제 학회 합의에서 NAFLD를 대체.",
-      mesh: "D000094263",
-      relatedPapers: [
-        { pmid: "38542705", title: "Multi-society Delphi consensus on MASLD nomenclature", year: 2024 },
-      ],
-    },
-    "C_adolescent": {
-      cui: "C_adolescent",
-      label: "Adolescent (청소년)",
-      domain: "Population",
-      definition:
-        "13~19세. KYRBS(청소년건강행태조사) 표준 대상 인구. survey-weighted 분석 기본.",
-      mesh: "D000293",
+  // FastAPI GET /concept/{cui} — medical_ontology + graph.json fallback (RSC).
+  const base = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+  try {
+    const res = await fetch(`${base}/concept/${encodeURIComponent(cui)}`, {
+      next: { revalidate: 7776000 },
+    });
+    if (!res.ok) return null;
+    const d = await res.json();
+    return {
+      cui: d.cui,
+      label: d.label || cui,
+      domain: d.domain || "Medical Concept",
+      definition: d.definition || (d.keywords?.length ? `Keywords: ${d.keywords.join(", ")}` : ""),
+      mesh: d.mesh,
+      umls: d.umls,
       relatedPapers: [],
-    },
-  };
-  return stub[cui] || null;
+    };
+  } catch {
+    return null;
+  }
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ cui: string }> }): Promise<Metadata> {
