@@ -4,6 +4,20 @@ import { notFound } from "next/navigation";
 // FRONTEND_NEXTJS_SPEC §3 + §5.2 — ISR + ScholarlyArticle/MedicalWebPage JSON-LD.
 export const revalidate = 7776000; // 3개월 (GEO freshness)
 
+// ★ Top-N 페이지는 빌드 시 사전 렌더 (Lighthouse SEO 향상 + 첫 크롤 즉시 색인).
+// 나머지는 on-demand ISR (revalidate=3개월).
+export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
+  const apiBase = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+  try {
+    const res = await fetch(`${apiBase}/sitemap-top?limit=200`);
+    if (!res.ok) return [];
+    const d: { papers?: string[] } = await res.json();
+    return (d.papers || []).map((slug) => ({ slug }));
+  } catch {
+    return [];
+  }
+}
+
 type ResearchTopic = {
   slug: string;
   title: string;

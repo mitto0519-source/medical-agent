@@ -4,6 +4,18 @@ import { notFound } from "next/navigation";
 // FRONTEND_NEXTJS_SPEC §3 + §5.2: ISR + MedicalCondition JSON-LD (MeSH/UMLS).
 export const revalidate = 7776000; // 3개월
 
+export async function generateStaticParams(): Promise<Array<{ cui: string }>> {
+  const apiBase = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+  try {
+    const res = await fetch(`${apiBase}/sitemap-top?limit=200`);
+    if (!res.ok) return [];
+    const d: { concepts?: string[] } = await res.json();
+    return (d.concepts || []).map((cui) => ({ cui }));
+  } catch {
+    return [];
+  }
+}
+
 type Concept = {
   cui: string;
   label: string;

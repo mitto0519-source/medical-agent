@@ -312,6 +312,51 @@ def export_docx_bundle(
 
 # ── /research /concept (FRONTEND_NEXTJS_SPEC §3 — (public) 데이터 소스) ──
 
+@app.get("/sitemap-data")
+def sitemap_data():
+    """web/app/sitemap.ts가 호출 — 동적 paper PMIDs + concept CUIs 수집.
+
+    응답: {papers: [pmid, ...], concepts: [cui, ...]}.
+    캐시: web/ next:revalidate=86400으로 1일.
+    """
+    import json as _json
+    from pathlib import Path as _P
+    papers: List[str] = []
+    concepts: List[str] = []
+    try:
+        g = _json.loads(_P("data/knowledge_graph/graph.json").read_text(encoding="utf-8"))
+        for n in g.get("nodes", []):
+            t = n.get("type")
+            if t == "paper" and n.get("pmid"):
+                papers.append(str(n["pmid"]))
+            elif t == "concept":
+                cid = n.get("id") or n.get("cui") or n.get("concept_id")
+                if cid:
+                    concepts.append(str(cid))
+    except Exception as e:
+        _log.warning("sitemap-data graph load fail: %s", e)
+    return {
+        "papers": papers[:10000],
+        "concepts": concepts[:2000],
+        "total_papers": len(papers),
+        "total_concepts": len(concepts),
+    }
+
+
+@app.get("/sitemap-top")
+def sitemap_top(limit: int = 200):
+    """generateStaticParams용 — Top-N 인기 paper/concept만 사전 렌더 대상.
+
+    현재는 graph node 첫 N개. 향후 popularity 기준으로 정렬 가능.
+    """
+    d = sitemap_data()
+    return {
+        "papers": (d.get("papers") or [])[:limit],
+        "concepts": (d.get("concepts") or [])[:max(20, limit // 5)],
+    }
+
+
+
 @app.get("/research/{slug}")
 def get_research_topic(slug: str):
     """Phase 3 web (public) /research/[slug] → ScholarlyArticle JSON-LD 데이터 공급.
