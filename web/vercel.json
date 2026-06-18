@@ -7,7 +7,7 @@
   "regions": ["icn1"],
   "env": {
     "NEXT_PUBLIC_API_BASE": "@medical_agent_api_base",
-    "NEXT_PUBLIC_SITE_URL": "https://medical-agent.vercel.app"
+    "NEXT_PUBLIC_SITE_URL": "@medical_agent_site_url"
   },
   "headers": [
     {
