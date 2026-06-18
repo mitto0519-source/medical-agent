@@ -14,20 +14,59 @@ _log = get_logger(__name__)
 
 
 def _load_yoosun_style_block() -> str:
-    """★ 조유선 5편 마디별 분석 (yoosun_style_v2) — 문체 가이드 매 턴 inject.
+    """★ 조유선 풀텍스트 v3 (1저자 7편: 풀텍스트 5 + 메타 2) — 매 턴 inject.
 
-    초록 찌끄라기 X — M1~M8 마디별 템플릿 + 정량 metric + 통계 reporting 양식.
-    paper_writing task에서 이 양식 그대로 따라가게.
+    사용자 명시(2026-06-19): "abstract 찌끄라기 X — 본문 마디·스타일별 제대로".
+    v3 = mitto 첨부 PDF 본문 → IMRaD 마디별 추출 + 공저자 2편 제외.
+    + skills/yoosun_cho_writing/SKILL.md (외부 LLM 풀텍스트 13편 분석) supersedes prompts/yoosun_style.md v1.
     """
     from pathlib import Path as _P
     import json as _json
-    p = _P("data/agent_self/yoosun_style_v2.json")
+    # ★ v3 우선, 없으면 v2 폴백
+    p3 = _P("data/agent_self/yoosun_style_v3.json")
+    p2 = _P("data/agent_self/yoosun_style_v2.json")
+    p = p3 if p3.exists() else p2
     if not p.exists():
         return ""
     try:
         d = _json.loads(p.read_text(encoding="utf-8"))
     except Exception:
         return ""
+    # v3은 본문 기반 — 풍부한 템플릿 + SKILL.md cross-ref
+    if "moves" in d:  # v3 양식
+        m = d.get("metrics", {})
+        r = d.get("style_rules", {})
+        mv = d.get("moves", {})
+        parts = ["--- ★ YOOSUN STYLE v3 (1저자 7편 본문 마디 분석, 2026-06-19) ---"]
+        parts.append(f"[skills/yoosun_cho_writing/SKILL.md supersedes prompts/yoosun_style.md v1]")
+        parts.append(f"문장 길이: 평균 {m.get('avg_sent_len_words','?')} 단어 (중앙값 {m.get('median_sent_len_words','?')}, IQR {m.get('sent_len_iqr')}).")
+        parts.append(f"표본 N: {m.get('min_n',0):,} ~ {m.get('max_n',0):,} (중앙값 {m.get('median_n',0):,}). 95% CI 추출 {m.get('ci_estimates_extracted')}개.")
+        parts.append("")
+        parts.append("★ IMRaD 마디 (M1~M10) 본문 양식:")
+        for key in ("M1_intro_opening", "M2_gap", "M3_aim", "M4_methods_skeleton",
+                      "M5_results_inline", "M6_discussion_opening",
+                      "M7_mechanism_3steps", "M8_limitations_6items",
+                      "M9_strengths", "M10_conclusions"):
+            move = mv.get(key, {})
+            if isinstance(move, dict) and move.get("template"):
+                parts.append(f"  {key}: {move['template']}")
+        parts.append("")
+        parts.append("★ Discussion 시그니처 오프닝 (가장 식별적):")
+        parts.append("  [설계] of [N] [Korean adults] (mean age, X) with [Y person-years], [노출] was associated with [결과].")
+        parts.append("")
+        parts.append("★ 통계 reporting (★ 고정):")
+        parts.append(f"  - {r.get('stats_reporting','')}")
+        parts.append(f"  - {r.get('effect_modification','')}")
+        parts.append(f"  - per 1000 person-years · median follow-up X years · 성별 쌍 끝에 'respectively'")
+        parts.append("")
+        parts.append("★ 어휘:")
+        parts.append("  권장: associated with · remained significant · effect modification · more pronounced · By contrast · even after adjustment for")
+        parts.append(f"  금지: {', '.join(r.get('forbidden_overclaim', []))}")
+        parts.append("")
+        parts.append(f"★ Cohort: {', '.join(r.get('preferred_cohorts', [])[:2])}")
+        parts.append(f"★ Estimators: {' · '.join(r.get('preferred_estimators', [])[:4])}")
+        parts.append("--- END YOOSUN STYLE v3 ---")
+        return "\n".join(parts)
     m = d.get("metrics", {})
     r = d.get("style_rules", {})
     mv = d.get("moves_pattern", {})
