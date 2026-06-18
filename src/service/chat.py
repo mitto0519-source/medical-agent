@@ -13,6 +13,51 @@ from src.service import rag as rag_service
 _log = get_logger(__name__)
 
 
+def _load_yoosun_style_block() -> str:
+    """★ 조유선 5편 마디별 분석 (yoosun_style_v2) — 문체 가이드 매 턴 inject.
+
+    초록 찌끄라기 X — M1~M8 마디별 템플릿 + 정량 metric + 통계 reporting 양식.
+    paper_writing task에서 이 양식 그대로 따라가게.
+    """
+    from pathlib import Path as _P
+    import json as _json
+    p = _P("data/agent_self/yoosun_style_v2.json")
+    if not p.exists():
+        return ""
+    try:
+        d = _json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    m = d.get("metrics", {})
+    r = d.get("style_rules", {})
+    mv = d.get("moves_pattern", {})
+    parts = ["--- ★ YOOSUN STYLE v2 (5편 마디별 정량 분석, 2026-06-19) ---"]
+    parts.append(f"문장 길이 목표: 평균 {m.get('avg_sent_len_words','?')} 단어 (중앙값 {m.get('median_sent_len_words','?')}, IQR {m.get('sent_len_p25_p75')}).")
+    parts.append(f"수동태 비율 {m.get('passive_per_sentence','?')} · 헤지 {m.get('hedge_per_sentence','?')}.")
+    parts.append(f"샘플 N 중앙값 {m.get('median_n','?'):,} · follow-up {m.get('follow_up_years_range')}년.")
+    parts.append("")
+    parts.append("★ Abstract 마디 (M1~M8) 강제 양식:")
+    parts.append(f"  M1 (Gap): {mv.get('M1_gap_template','')}")
+    parts.append(f"  M2 (Aim): {mv.get('M2_aim_template','')}")
+    parts.append(f"  M3 (Methods): {' · '.join(mv.get('M3_methods_skeleton', []))}")
+    parts.append(f"  M4 (Result): {mv.get('M4_result_template','')}")
+    parts.append(f"  M5 (Secondary): {mv.get('M5_secondary_template','')}")
+    parts.append(f"  M6 (Sensitivity): {mv.get('M6_sensitivity_template','')}")
+    parts.append(f"  M7 (Added value): {mv.get('M7_added_value_template','')}")
+    parts.append(f"  M8 (Conclusion): {mv.get('M8_conclusion_template','')}")
+    parts.append("")
+    parts.append("★ 통계 reporting 양식:")
+    parts.append(f"  - {r.get('estimate_format','')}")
+    parts.append(f"  - {r.get('interaction','')}")
+    parts.append(f"  - {r.get('covariate_adjustment','')}")
+    parts.append("")
+    parts.append("★ 금지 (과대주장): " + ", ".join(r.get('forbidden_overclaim', [])))
+    parts.append("★ 권장 추정기: " + " · ".join(r.get('preferred_estimator', [])))
+    parts.append("★ Cohort 표현: " + r.get('preferred_cohort_phrase', ''))
+    parts.append("--- END YOOSUN STYLE v2 ---")
+    return "\n".join(parts)
+
+
 def _load_datasets_block(owner_email: str = "") -> str:
     """★ 사용자가 '데이터셋 위치 어디?'를 매번 묻게 되는 J3 fix.
 
@@ -130,6 +175,9 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
     # ★ MANDATORY 2: 활성 프로젝트 state 최상단 (다른 모든 것보다 먼저)
     active_state = _load_research_state_block(project)
 
+    # ★ MANDATORY 3: 조유선 5편 마디별 스타일 v2 (yoosun_style_v2)
+    yoosun_block = _load_yoosun_style_block()
+
     try:
         from src.agent.persona import get_system_prompt
         base_sys = get_system_prompt(task="chat", owner_email=owner_email or None)
@@ -137,12 +185,14 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
         _log.warning("persona load fail: %s", e)
         base_sys = "당신은 의학 연구 코파일럿입니다."
 
-    # 데이터셋 + 활성 state 둘 다 base_sys보다 앞 (LLM이 가장 먼저 읽음)
+    # 데이터셋 + 활성 state + yoosun v2 셋 다 base_sys보다 앞 (LLM이 가장 먼저 읽음)
     prefix = ""
     if datasets_block:
         prefix += datasets_block + "\n\n"
     if active_state:
         prefix += active_state + "\n\n"
+    if yoosun_block:
+        prefix += yoosun_block + "\n\n"
     if prefix:
         base_sys = prefix + base_sys
 
