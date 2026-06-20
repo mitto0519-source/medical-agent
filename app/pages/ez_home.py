@@ -426,19 +426,15 @@ def _sidebar():
 
 
 def _project_path(pid: str) -> Path:
-    _PROJECTS_DIR.mkdir(parents=True, exist_ok=True)
-    return _PROJECTS_DIR / f"{pid}.json"
+    """Delegate → src.service.projects.path_for (Phase 1 추출, 2026-06-21)."""
+    from src.service.projects import path_for
+    return path_for(pid)
 
 
 def _load_or_init_project(pid: str, initial_title: str = "새 작업") -> dict:
-    p = _project_path(pid)
-    if p.exists():
-        try:
-            return json.loads(p.read_text(encoding="utf-8"))
-        except Exception:
-            pass
-    return {"id": pid, "title": initial_title[:60], "messages": [],
-            "sections": {}, "updated": datetime.now().isoformat()}
+    """Delegate → src.service.projects.load_or_init (Phase 1)."""
+    from src.service.projects import load_or_init
+    return load_or_init(pid, initial_title)
 
 
 def _save_project(project: dict) -> None:
@@ -477,30 +473,10 @@ def _is_go_wide_trigger(text: str) -> bool:
 
 
 def _detect_figure_request(text: str) -> str | None:
-    """figurelabs 양식 — 자연어에서 figure 종류 감지.
-
-    반환: forest / subgroup / coef / roc / prev / table1 / table2 / None
-    """
-    if not text:
-        return None
-    t = text.strip().lower()
-    if any(k in t for k in ["forest plot", "forest 그", "forest plot 만"]):
-        if "subgroup" in t or "하위군" in t:
-            return "subgroup"
-        return "forest"
-    if "subgroup" in t and ("plot" in t or "그림" in t or "그려" in t):
-        return "subgroup"
-    if any(k in t for k in ["coefficient plot", "coef plot", "회귀 계수"]):
-        return "coef"
-    if any(k in t for k in ["roc curve", "auc", "roc 그", "roc plot"]):
-        return "roc"
-    if any(k in t for k in ["prevalence", "유병률", "prevalence bar"]):
-        return "prev"
-    if "table 1" in t or "표 1" in t or "table1" in t:
-        return "table1"
-    if "table 2" in t or "표 2" in t or "table2" in t:
-        return "table2"
-    return None
+    """Delegate → src.service.paper.detect_figure_request (Phase 1, 2026-06-21).
+    중복 정의 제거 — figurelabs 양식 자연어 figure 종류 감지는 service 단일소스."""
+    from src.service.paper import detect_figure_request
+    return detect_figure_request(text)
 
 
 def _generate_figure(project: dict, figure_type: str) -> tuple[bytes, str] | None:
@@ -663,26 +639,9 @@ def _render_welcome_chat(project: dict, owner_email: str = "") -> None:
 
 def _friendly_error(kind: str, raw_msg: str,
                        alternatives: list = None) -> str:
-    """★ UX-5: 에러 메시지 친절화 — 원인 + 대안.
-
-    kind: stat / data / llm / network / file
-    """
-    titles = {
-        "stat": "📊 통계 분석 실패",
-        "data": "💾 데이터 로드 실패",
-        "llm":  "🤖 AI 호출 실패",
-        "network": "🌐 외부 연결 실패",
-        "file": "📁 파일 처리 실패",
-    }
-    title = titles.get(kind, "⚠ 작업 실패")
-    msg = f"<b>{title}</b><br>"
-    msg += f"<span style='color:#555555;font-size:0.84rem;'>원인: {raw_msg[:200]}</span>"
-    if alternatives:
-        msg += "<br><b style='font-size:0.84rem;'>해결책:</b><ul style='margin:4px 0 0 20px;font-size:0.84rem;'>"
-        for alt in alternatives[:4]:
-            msg += f"<li>{alt}</li>"
-        msg += "</ul>"
-    return msg
+    """Delegate → src.service.errors.friendly_error (Phase 1, 2026-06-21)."""
+    from src.service.errors import friendly_error
+    return friendly_error(kind, raw_msg, alternatives)
 
 
 # ★ 2026-06-20: _pin_to_section 제거 — '📌 프리뷰에 박기' 기능 통째 폐기 (사용자 요청).
