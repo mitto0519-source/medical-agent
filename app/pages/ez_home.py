@@ -324,7 +324,7 @@ def _sidebar():
     if _owner:
         _render_my_papers_uploader(_owner)
 
-    st.sidebar.markdown("<div style='margin:24px 0 6px 0;color:#94A3B8;"
+    st.sidebar.markdown("<div style='margin:24px 0 6px 0;color:#888888;"
                          "font-size:0.72rem;letter-spacing:0.08em;'>RECENT</div>",
                          unsafe_allow_html=True)
     projects = _load_projects()
@@ -396,8 +396,8 @@ def _sidebar():
             if _alerts:
                 st.sidebar.markdown(
                     "<div style='margin:8px 0;padding:8px 10px;"
-                    "background:#FEF3C7;border-left:3px solid #F59E0B;"
-                    "border-radius:6px;font-size:0.78rem;color:#92400E;'>"
+                    "background:#fff8e0;border-left:3px solid #a26b00;"
+                    "border-radius:6px;font-size:0.78rem;color:#a26b00;'>"
                     "<b>👤 사용자 검토 필요</b><br>" +
                     "<br>".join(_alerts[:4]) + "</div>",
                     unsafe_allow_html=True)
@@ -627,7 +627,7 @@ def _render_welcome_chat(project: dict, owner_email: str = "") -> None:
         "<div class='msg-asst' style='background:#F8FAFC;border:none;'>"
         "<div style='font-size:1.0rem;font-weight:600;color:#0F172A;margin-bottom:6px;'>"
         "👋 무엇을 연구하시겠어요?</div>"
-        "<div style='font-size:0.86rem;color:#475569;margin-bottom:14px;'>"
+        "<div style='font-size:0.86rem;color:#555555;margin-bottom:14px;'>"
         "연구 아이디어 한 줄만 입력하면 PICO·변수·통계·신규성·저널까지 자동으로 정리합니다. "
         "막막하면 아래 예시를 누르세요.</div>"
         "</div>", unsafe_allow_html=True)
@@ -652,9 +652,9 @@ def _render_welcome_chat(project: dict, owner_email: str = "") -> None:
 
     # 알아서 해 버튼 (옵션 — 주제 입력 후 자동 트리거 안내)
     st.markdown(
-        "<div style='margin-top:14px;padding:10px 14px;background:#EFF6FF;"
-        "border-left:3px solid #3B82F6;border-radius:6px;font-size:0.82rem;"
-        "color:#1E40AF;'>"
+        "<div style='margin-top:14px;padding:10px 14px;background:#eef3f8;"
+        "border-left:3px solid #1f4e79;border-radius:6px;font-size:0.82rem;"
+        "color:#1f4e79;'>"
         "🚀 주제 입력 후 <b>'알아서 해'</b>라고 말씀하시면 PICO·통계·초안까지 한 번에 진행합니다."
         "</div>", unsafe_allow_html=True)
     # 최근 프로젝트는 사이드바 RECENT에 이미 있음 — 중앙 중복 제거 (사용자 사고 2026-06-16)
@@ -675,7 +675,7 @@ def _friendly_error(kind: str, raw_msg: str,
     }
     title = titles.get(kind, "⚠ 작업 실패")
     msg = f"<b>{title}</b><br>"
-    msg += f"<span style='color:#475569;font-size:0.84rem;'>원인: {raw_msg[:200]}</span>"
+    msg += f"<span style='color:#555555;font-size:0.84rem;'>원인: {raw_msg[:200]}</span>"
     if alternatives:
         msg += "<br><b style='font-size:0.84rem;'>해결책:</b><ul style='margin:4px 0 0 20px;font-size:0.84rem;'>"
         for alt in alternatives[:4]:
@@ -736,7 +736,7 @@ def _render_msg(role: str, content: str, *, msg_idx: int = -1,
 
     with st.container():
         st.markdown(
-            "<div style='font-size:0.74rem;color:#64748B;margin:2px 0 4px 0;"
+            "<div style='font-size:0.74rem;color:#555555;margin:2px 0 4px 0;"
             "padding-left:4px;'>📌 프리뷰에 박기:</div>",
             unsafe_allow_html=True)
         # 9 sections in 3 rows of 3
@@ -820,7 +820,7 @@ def _render_chat_page(pid: str):
                  padding:10px 14px; margin:8px 0 8px auto; max-width:74ch;
                  width:fit-content; font-size:15px; line-height:1.55;
                  white-space:pre-wrap; word-wrap:break-word; }
-    .msg-asst { background:#F1F5F9; color:#0F172A; border-radius:14px 14px 14px 4px;
+    .msg-asst { background:#f7f7f9; color:#0F172A; border-radius:14px 14px 14px 4px;
                  padding:13px 16px; margin:8px auto 8px 0; max-width:74ch;
                  width:fit-content; font-size:15px; line-height:1.65;
                  white-space:pre-wrap; word-wrap:break-word; }
@@ -854,7 +854,7 @@ def _render_chat_page(pid: str):
     .preview-box h2 { font-size:1.0rem; color:#0F172A; margin:18px 0 6px 0;
                        border-bottom:1px solid rgba(15,23,42,0.08); padding-bottom:4px; }
     .preview-box p  { color:#334155; font-size:0.92rem; line-height:1.7; margin:0 0 10px 0; }
-    .preview-empty  { color:#94A3B8; font-size:0.9rem; text-align:center; padding-top:140px; }
+    .preview-empty  { color:#888888; font-size:0.9rem; text-align:center; padding-top:140px; }
     /* st.container(height=...) 내부 스크롤바 정돈 */
     [data-testid='stVerticalBlockBorderWrapper'] > div > div > [data-testid='stVerticalBlock']::-webkit-scrollbar {
         width: 6px;
@@ -874,7 +874,7 @@ def _render_chat_page(pid: str):
         padding:5px 12px !important; font-size:0.8rem !important;
         background:rgba(255,255,255,0.6) !important;
         border:1px solid rgba(15,23,42,0.10) !important;
-        color:#475569 !important;
+        color:#555555 !important;
         height:36px !important;
     }
     div[data-testid='stPopover'] button:hover {
@@ -885,8 +885,8 @@ def _render_chat_page(pid: str):
     /* 첨부 칩 */
     .attached-chips { display:flex; flex-wrap:wrap; gap:6px; padding:0 4px 6px 4px; }
     .attached-chip {
-        background:#EFF6FF; border:1px solid #BFDBFE; border-radius:14px;
-        padding:3px 10px; font-size:0.76rem; color:#1E40AF;
+        background:#eef3f8; border:1px solid #BFDBFE; border-radius:14px;
+        padding:3px 10px; font-size:0.76rem; color:#1f4e79;
         display:inline-flex; align-items:center; gap:4px;
     }
     </style>
@@ -909,7 +909,7 @@ def _render_chat_page(pid: str):
             chip_html += (
                 f"<div class='attached-chip'>"
                 f"{kind_icon} <b>{att.get('name','?')[:24]}</b>"
-                f"<span style='color:#64748B;font-size:0.7rem;margin-left:3px;'>"
+                f"<span style='color:#555555;font-size:0.7rem;margin-left:3px;'>"
                 f"({att.get('size_kb','?')}KB · {n_chars:,}자)</span></div>"
             )
         chip_html += "</div>"
@@ -1046,7 +1046,7 @@ def _render_chat_page(pid: str):
             kind = result.get("kind", "text")
             if kind == "json":
                 import json as _j
-                body_html = f"<pre style='font-size:0.78rem;background:#F1F5F9;padding:8px;border-radius:6px;overflow-x:auto;'>{_j.dumps(body, indent=2, ensure_ascii=False, default=str)[:3000]}</pre>"
+                body_html = f"<pre style='font-size:0.78rem;background:#f7f7f9;padding:8px;border-radius:6px;overflow-x:auto;'>{_j.dumps(body, indent=2, ensure_ascii=False, default=str)[:3000]}</pre>"
             elif kind == "table":
                 rows = result.get("rows") or []
                 if rows:
@@ -1063,11 +1063,18 @@ def _render_chat_page(pid: str):
                 unsafe_allow_html=True)
         except Exception as _e:
             st.markdown(
-                f"<div class='msg-asst' style='background:#FEE2E2;'>"
+                f"<div class='msg-asst' style='background:#fef0f0;'>"
                 f"slash 명령 실패: {_e}</div>", unsafe_allow_html=True)
         user_msg = None  # 일반 LLM 흐름 안 타게
 
     col_chat, col_preview = st.columns([0.46, 0.54], gap="medium")
+
+    # ★ 우측 진행 상황 패널 (2026-06-20 v4) — VS Code 양식: 응답 중 우측에 단계 카드 sticky.
+    # DESIGN.md navy(#1f4e79) + panel_bg(#eef3f8) + border(#dddddd) 색감 적용.
+    # col_chat의 stream_turn 루프에서 update — placeholder는 col_preview 안에 미리 생성.
+    right_status_panel = None
+    with col_preview:
+        right_status_panel = st.empty()
 
     with col_chat:
         # 고정 높이 스크롤 박스 — 무한정 늘어나지 않음
@@ -1163,16 +1170,16 @@ def _render_chat_page(pid: str):
                                        "write": "4) 초안 작성",
                                        "polish": "5) 후처리(인용·그림)",
                                        "save": "6) 저장 + 프리뷰"}[s]
-                            color = {"done": "#10B981", "running": "#3B82F6",
-                                       "fail": "#DC2626", "pending": "#94A3B8",
-                                       "skip": "#94A3B8"}.get(st_, "#94A3B8")
-                            extra = f"<span style='color:#64748B;font-size:0.78rem;margin-left:8px;'>{_stage_msgs.get(s,'').replace('<','&lt;')[:120]}</span>" if _stage_msgs.get(s) else ""
+                            color = {"done": "#10B981", "running": "#1f4e79",
+                                       "fail": "#a02828", "pending": "#888888",
+                                       "skip": "#888888"}.get(st_, "#888888")
+                            extra = f"<span style='color:#555555;font-size:0.78rem;margin-left:8px;'>{_stage_msgs.get(s,'').replace('<','&lt;')[:120]}</span>" if _stage_msgs.get(s) else ""
                             rows.append(
                                 f"<div style='padding:4px 0;color:{color};font-size:0.86rem;'>"
                                 f"{icon} <b>{label}</b>{extra}</div>")
                         progress_box.markdown(
                             "<div class='msg-asst' style='padding:12px 16px;'>"
-                            "<div style='font-size:0.78rem;color:#94A3B8;margin-bottom:6px;'>"
+                            "<div style='font-size:0.78rem;color:#888888;margin-bottom:6px;'>"
                             "🚀 알아서 해 파이프라인</div>" +
                             "".join(rows) +
                             "</div>", unsafe_allow_html=True)
@@ -1234,7 +1241,7 @@ def _render_chat_page(pid: str):
                     # stream_turn 첫 status event 전에 미리 spinner 메시지 표시.
                     activity.markdown(
                         "<div class='msg-asst' style='font-size:0.82rem;"
-                        "background:#F1F5F9;padding:8px 12px;'>"
+                        "background:#f7f7f9;padding:8px 12px;'>"
                         "<span class='loading-dot'>●</span>"
                         "<span class='loading-dot'>●</span>"
                         "<span class='loading-dot'>●</span> "
@@ -1242,7 +1249,7 @@ def _render_chat_page(pid: str):
                         "<style>"
                         "@keyframes blink { 0%,100% {opacity:0.2;} 50% {opacity:1;} }"
                         ".loading-dot { display:inline-block; margin:0 1px;"
-                        " animation: blink 1.4s infinite; color:#3B82F6; }"
+                        " animation: blink 1.4s infinite; color:#1f4e79; }"
                         ".loading-dot:nth-child(2) { animation-delay:0.2s; }"
                         ".loading-dot:nth-child(3) { animation-delay:0.4s; }"
                         "</style>",
@@ -1261,41 +1268,84 @@ def _render_chat_page(pid: str):
                     trace: list[tuple] = []
                     last_activity_msg = "🔍 검색·합성 중…"
 
-                    # ★ 2026-06-20 v2 UI 강화 (사용자 정직 지적: "그냥 멈추면 고장난거처럼 보이잖아").
-                    # 활동 박스 = 카드 양식 + 진행 단계 카운트 + 최근 3건 tool 라인 + 펄스 spinner.
-                    # VS Code Claude 우측 "진행 상황" 패널 효과.
+                    # ★ 2026-06-20 v4 UI 강화 — DESIGN.md navy(#1f4e79) + 우측 진행 상황 패널.
+                    # 좌측 활동 박스 (chat 내부) + 우측 단계 체크리스트 (col_preview 상단 sticky).
+                    # VS Code "진행 상황" 사이드 양식 동일.
                     step_count = {"n": 0}
                     recent_tools: list[str] = []
+                    all_steps: list[dict] = []   # {"kind": "status|tool", "text": ..., "done": bool}
 
                     def _set_activity(text: str, kind: str = "status"):
                         step_count["n"] += 1
                         if kind == "tool_start":
                             recent_tools.append(f"🔧 {text}")
+                            all_steps.append({"kind": "tool", "text": text, "done": False})
                         elif kind == "tool_result":
                             recent_tools.append(f"✓ {text}")
+                            # 직전 같은 tool name을 done 표시
+                            for s in reversed(all_steps):
+                                if s["kind"] == "tool" and not s["done"]:
+                                    s["done"] = True
+                                    break
+                        else:  # status
+                            all_steps.append({"kind": "status", "text": text, "done": True})
                         tail = recent_tools[-3:]
                         tools_html = ""
                         if tail:
                             tools_html = (
                                 "<div style='margin-top:6px;font-size:0.72rem;"
-                                "color:#64748b;line-height:1.5;'>" +
+                                "color:#555555;line-height:1.5;'>" +
                                 "<br>".join(t.replace("<", "&lt;") for t in tail) +
                                 "</div>")
+                        # ★ 좌측 활동 박스 (chat 내부) — DESIGN.md navy 색
                         activity.markdown(
                             f"<div class='msg-asst' style='font-size:0.82rem;"
-                            f"background:linear-gradient(90deg,#F8FAFC,#EFF6FF);"
-                            f"border-left:3px solid #3B82F6;padding:10px 14px;"
-                            f"color:#1E293B;border-radius:6px;'>"
+                            f"background:#eef3f8;"
+                            f"border-left:3px solid #1f4e79;padding:10px 14px;"
+                            f"color:#222222;border-radius:6px;'>"
                             f"<div style='display:flex;align-items:center;gap:8px;'>"
-                            f"<span class='loading-dot' style='color:#3B82F6;'>●</span>"
-                            f"<span class='loading-dot' style='color:#3B82F6;'>●</span>"
-                            f"<span class='loading-dot' style='color:#3B82F6;'>●</span>"
-                            f"<b style='color:#3B82F6;'>진행 중</b>"
-                            f"<span style='color:#94a3b8;font-size:0.7rem;'>"
+                            f"<span class='loading-dot' style='color:#1f4e79;'>●</span>"
+                            f"<span class='loading-dot' style='color:#1f4e79;'>●</span>"
+                            f"<span class='loading-dot' style='color:#1f4e79;'>●</span>"
+                            f"<b style='color:#1f4e79;'>진행 중</b>"
+                            f"<span style='color:#888888;font-size:0.7rem;'>"
                             f"step {step_count['n']}</span></div>"
                             f"<div style='margin-top:4px;font-size:0.85rem;'>{text}</div>"
                             f"{tools_html}"
                             f"</div>", unsafe_allow_html=True)
+                        # ★ 우측 진행 상황 패널 (col_preview 상단) — VS Code 양식 체크리스트
+                        if right_status_panel is not None:
+                            checklist_items = []
+                            for s in all_steps[-10:]:   # 최근 10 단계
+                                if s["kind"] == "tool":
+                                    icon = "✓" if s["done"] else "⏳"
+                                    color = "#1f6e3a" if s["done"] else "#a26b00"
+                                else:
+                                    icon = "●"
+                                    color = "#1f4e79"
+                                txt = (s["text"] or "")[:60].replace("<", "&lt;")
+                                checklist_items.append(
+                                    f"<div style='display:flex;gap:8px;padding:4px 0;"
+                                    f"border-bottom:1px solid #f0f0f3;'>"
+                                    f"<span style='color:{color};font-weight:600;width:14px;'>"
+                                    f"{icon}</span>"
+                                    f"<span style='color:#222222;font-size:0.8rem;'>{txt}</span>"
+                                    f"</div>"
+                                )
+                            checklist_html = "".join(checklist_items)
+                            right_status_panel.markdown(
+                                f"<div style='background:#ffffff;"
+                                f"border:1px solid #dddddd;border-radius:8px;"
+                                f"padding:14px 16px;margin-bottom:12px;'>"
+                                f"<div style='display:flex;align-items:center;gap:8px;"
+                                f"padding-bottom:8px;border-bottom:2px solid #1f4e79;"
+                                f"margin-bottom:8px;'>"
+                                f"<span style='color:#1f4e79;font-size:1.1rem;'>🧠</span>"
+                                f"<b style='color:#1f4e79;font-size:0.92rem;'>진행 상황</b>"
+                                f"<span style='color:#888888;font-size:0.72rem;"
+                                f"margin-left:auto;'>{step_count['n']} 단계</span></div>"
+                                f"{checklist_html}"
+                                f"</div>", unsafe_allow_html=True)
 
                     # ★ 출력 짤림 단일원인 fix (사용자: "10개 추천 짤려서 다 안나옴")
                     # 4500/2000 → 16K/8K (Sonnet 4.x은 출력 64K 지원, 안전 마진)
@@ -1340,6 +1390,7 @@ def _render_chat_page(pid: str):
                                 f"<div class='msg-asst'>{safe}▌</div>",
                                 unsafe_allow_html=True)
                             # 첫 토큰 시점에 activity 박스 비움 (응답 시작됨)
+                            # ★ 우측 진행 상황 패널은 stream 끝까지 유지 — 사용자가 단계 확인 가능
                             if len(body_buf) == 1:
                                 activity.empty()
                         elif et == "warning":
@@ -1350,6 +1401,9 @@ def _render_chat_page(pid: str):
                             errors.append((d.get("where", "?"), d.get("msg", "")))
                         elif et == "done":
                             activity.empty()
+                            # 우측 진행 상황 패널도 완료 양식으로 마지막 update 후 비움
+                            if right_status_panel is not None:
+                                right_status_panel.empty()
 
                     reply = (badge + "".join(body_buf)).strip()
                     safe = reply.replace("<","&lt;").replace(">","&gt;")
@@ -1362,8 +1416,8 @@ def _render_chat_page(pid: str):
                         for where, msg in errors[:2]:
                             st.markdown(
                                 f"<div class='msg-asst' style='font-size:0.82rem;"
-                                f"background:#FEE2E2;border-left:3px solid #DC2626;"
-                                f"padding:8px 12px;color:#991B1B;'>"
+                                f"background:#fef0f0;border-left:3px solid #a02828;"
+                                f"padding:8px 12px;color:#a02828;'>"
                                 f"❌ <b>{where}</b><br>"
                                 f"<span style='font-size:0.78rem;'>{msg[:200].replace('<','&lt;')}</span></div>",
                                 unsafe_allow_html=True)
@@ -1388,7 +1442,7 @@ def _render_chat_page(pid: str):
                                     tool, args = step[1], step[2]
                                     if args:
                                         st.markdown(f"`{i:02d}` {icon} **{tool}** "
-                                                      f"<span style='color:#94A3B8;font-size:0.8rem;'>"
+                                                      f"<span style='color:#888888;font-size:0.8rem;'>"
                                                       f"({args[:80]})</span>",
                                                       unsafe_allow_html=True)
                                     else:
@@ -1396,7 +1450,7 @@ def _render_chat_page(pid: str):
                                 elif kind == "tool_result":
                                     tool, preview = step[1], step[2]
                                     st.markdown(f"`{i:02d}` {icon} **{tool}** 결과: "
-                                                  f"<span style='color:#64748B;font-size:0.8rem;'>"
+                                                  f"<span style='color:#555555;font-size:0.8rem;'>"
                                                   f"{preview.replace('<','&lt;')}</span>",
                                                   unsafe_allow_html=True)
 
@@ -1468,7 +1522,7 @@ def _render_chat_page(pid: str):
                                 for b in gate_blocks:
                                     st.markdown(
                                         f"<div class='msg-asst' style='font-size:0.82rem;"
-                                        f"background:#FEF3C7;border-left:3px solid #F59E0B;"
+                                        f"background:#fff8e0;border-left:3px solid #a26b00;"
                                         f"padding:8px 12px;'>{b.replace('<','&lt;').replace('>','&gt;')}</div>",
                                         unsafe_allow_html=True)
 
@@ -1491,8 +1545,8 @@ def _render_chat_page(pid: str):
                                                       "detail": i.detail[:200]}
                                                      for i in prov.issues[:10]],
                                     }
-                                    severity_bg = "#FEE2E2" if not prov.ok else "#ECFDF5"
-                                    severity_bd = "#DC2626" if not prov.ok else "#10B981"
+                                    severity_bg = "#fef0f0" if not prov.ok else "#ECFDF5"
+                                    severity_bd = "#a02828" if not prov.ok else "#10B981"
                                     label = "❌ PROVENANCE BLOCK" if not prov.ok else "✅ PROVENANCE OK"
                                     summary_html = (
                                         f"<div class='msg-asst' style='font-size:0.82rem;"
@@ -1518,7 +1572,7 @@ def _render_chat_page(pid: str):
                             if improved != reply:
                                 reply = improved
                                 # 후처리 결과 chat에 표시
-                                summary = (f"<div class='msg-asst' style='font-size:0.82rem;color:#475569;'>"
+                                summary = (f"<div class='msg-asst' style='font-size:0.82rem;color:#555555;'>"
                                             f"📋 후처리 chain — {meta.get('refs_count',0)} refs cited · "
                                             f"steps: {len(meta.get('steps',[]))} · "
                                             f"warnings: {len(meta.get('warnings',[]))}</div>")
@@ -1576,13 +1630,13 @@ def _render_chat_page(pid: str):
                     <div style='font-size:1.4rem;font-weight:600;color:#0F172A;margin-bottom:6px;'>
                       Medical-Agent
                     </div>
-                    <div style='color:#64748B;font-size:0.92rem;margin-bottom:24px;'>
+                    <div style='color:#555555;font-size:0.92rem;margin-bottom:24px;'>
                       Vibe paper copilot · clinical / translational medicine
                     </div>
-                    <div style='color:#94A3B8;font-size:0.82rem;line-height:1.6;
+                    <div style='color:#888888;font-size:0.82rem;line-height:1.6;
                                  max-width:340px;margin:0 auto;'>
                       대화로 주제·데이터·통계가 합의되고<br>
-                      <b style='color:#475569;'>'알아서 해'</b>라고 말씀하시면<br>
+                      <b style='color:#555555;'>'알아서 해'</b>라고 말씀하시면<br>
                       이곳에 논문 초안이 실시간으로 작성됩니다.<br><br>
                       <span style='font-size:0.78rem;'>"논문 쓰자" → Full IMRAD · English<br>
                       "3가지로 펼쳐" → Go wide (PICO 변형)<br>
@@ -1598,7 +1652,7 @@ def _render_chat_page(pid: str):
             st.markdown(
                 f"<div style='display:flex;justify-content:space-between;align-items:center;"
                 f"padding:6px 12px;background:#F8FAFC;border:1px solid rgba(15,23,42,0.08);"
-                f"border-radius:8px;margin-bottom:8px;font-size:0.82rem;color:#475569;'>"
+                f"border-radius:8px;margin-bottom:8px;font-size:0.82rem;color:#555555;'>"
                 f"<span>{tj_label}</span><span>📖 {ref_style.title()} style · {len(refs)} refs</span></div>",
                 unsafe_allow_html=True)
 
@@ -1677,7 +1731,7 @@ def _render_chat_page(pid: str):
                         else:
                             r_obj = rd
                         formatted = format_reference(r_obj, i, ref_style).replace("<","&lt;").replace(">","&gt;")
-                        html_parts.append(f"<p style='font-size:0.85rem;color:#475569;'>{formatted}</p>")
+                        html_parts.append(f"<p style='font-size:0.85rem;color:#555555;'>{formatted}</p>")
                 except Exception:
                     pass
 
