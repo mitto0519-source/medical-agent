@@ -123,7 +123,10 @@ def _apply_publication_style(ax, grid: bool = False):
 
 
 def _save(fig, out_dir: Path, stem: str, dpi: int = 300) -> Tuple[bytes, str, str]:
-    """PNG + SVG 저장, PNG bytes 반환.
+    """벡터 우선 저장: SVG(편집용) + PDF(벡터) + PNG(미리보기). PNG bytes 반환.
+
+    ★ 2026-06-20 v6: figure_style.save_figure로 위임 (DESIGN_GOVERNANCE §8.5-A 벡터 우선).
+    이전: PNG + SVG 2종 저장 → 신규: SVG + PDF + PNG 3종 (PDF 추가 = 저널 제출 양식 직결).
 
     환경변수 `ENABLE_FIGURE_VISION_CHECK=1`이면 저장 직후 `figure_validator.validate_figure`
     로 자체 검증 (Claude Vision) → 문제 시 safety audit_trail에 기록. 기본 OFF (Vision 비용).
@@ -131,10 +134,21 @@ def _save(fig, out_dir: Path, stem: str, dpi: int = 300) -> Tuple[bytes, str, st
     import os as _os
     import matplotlib.pyplot as plt
     out_dir.mkdir(parents=True, exist_ok=True)
-    png_path = str(out_dir / f"{stem}.png")
-    svg_path = str(out_dir / f"{stem}.svg")
-    fig.savefig(png_path, dpi=dpi, bbox_inches="tight", facecolor=_PALETTE["bg"])
-    fig.savefig(svg_path, format="svg", bbox_inches="tight", facecolor=_PALETTE["bg"])
+    # ★ figure_style.save_figure 위임 — SVG + PDF + PNG 3종
+    try:
+        from src.export.figure_style import save_figure as _save_fig
+        paths = _save_fig(fig, stem, out_dir=str(out_dir), dpi=dpi)
+        png_path = paths.get("png", str(out_dir / f"{stem}.png"))
+        svg_path = paths.get("svg", str(out_dir / f"{stem}.svg"))
+        # pdf_path도 paths['pdf']에 있음 — caller가 필요시 활용
+    except Exception as _e:
+        # fallback: 이전 양식 (figure_style 없으면 PNG + SVG)
+        _log.debug("figure_style.save_figure fail, fallback: %s", _e)
+        png_path = str(out_dir / f"{stem}.png")
+        svg_path = str(out_dir / f"{stem}.svg")
+        fig.savefig(png_path, dpi=dpi, bbox_inches="tight", facecolor=_PALETTE["bg"])
+        fig.savefig(svg_path, format="svg", bbox_inches="tight", facecolor=_PALETTE["bg"])
+    # PNG bytes (Word 임베드용 — 반환값 호환 유지)
     buf = io.BytesIO()
     fig.savefig(buf, format="png", dpi=dpi, bbox_inches="tight", facecolor=_PALETTE["bg"])
     buf.seek(0)
