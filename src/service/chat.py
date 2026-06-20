@@ -106,13 +106,43 @@ def _load_datasets_block(owner_email: str = "") -> str:
     """
     parts = ["--- ★ REGISTERED DATASETS (서버·로컬에 이미 로드됨, 위치 묻지 말 것) ---"]
 
-    # 1) DatasetLibrary 등록본 (Supabase + 로컬)
+    # 1) DatasetLibrary 등록본 (Supabase ma_datasets + 로컬 dataset_*.json) — 풍부 inject
+    # 사용자 정직 지적(2026-06-20): '서버에 DBMS + 데이터 마트 + Graph 카탈로그까지
+    # 만들어놨는데 위치 알려달라는게 말이 안 됨'. 자산은 풍부한데 LLM에 전달 안 함이 정답.
     try:
         from src.library.dataset_library import DatasetLibrary
         lib = DatasetLibrary()
-        registered = list(lib._datasets.keys()) if hasattr(lib, "_datasets") else []
-        if registered:
-            parts.append(f"등록 데이터셋: {', '.join(registered[:20])}")
+        if hasattr(lib, "_datasets"):
+            for name, ds in lib._datasets.items():
+                desc = (ds.get("description") or "")[:160]
+                vars_d = ds.get("variables") or {}
+                notes = ds.get("analysis_notes") or []
+                conf = ds.get("common_confounders") or []
+                papers = ds.get("papers_using_this") or []
+                parts.append(f"")
+                parts.append(f"★ {name} 데이터셋 (Supabase ma_datasets + 로컬 등록):")
+                if desc:
+                    parts.append(f"  설명: {desc}")
+                if vars_d:
+                    parts.append(f"  변수 정의: {len(vars_d)}개 (Supabase ma_datasets.variables JSONB)")
+                    # 상위 8개 변수명 + 의미 노출
+                    sample_vars = list(vars_d.items())[:8]
+                    for vn, vmeta in sample_vars:
+                        if isinstance(vmeta, dict):
+                            label = vmeta.get("label") or vmeta.get("description") or ""
+                        else:
+                            label = str(vmeta)
+                        parts.append(f"    · {vn}: {str(label)[:80]}")
+                    if len(vars_d) > 8:
+                        parts.append(f"    ... (+{len(vars_d)-8}개 더 — DatasetLibrary.get({name!r})로 전체)")
+                if notes:
+                    parts.append(f"  분석 노트: {len(notes)}개")
+                    for n in notes[:5]:
+                        parts.append(f"    · {str(n)[:140]}")
+                if conf:
+                    parts.append(f"  공통 보정변수 (default covariates): {', '.join(str(c) for c in conf[:12])}")
+                if papers:
+                    parts.append(f"  관련 논문 PMID: {len(papers)}편 등록 (citation backing)")
     except Exception as _e:
         _log.debug("DatasetLibrary load fail: %s", _e)
 

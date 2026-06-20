@@ -1686,7 +1686,31 @@ def render() -> None:
     # 2) URL 우선, 없으면 session_state
     active = url_pid or st.session_state.get("sg_active_project")
 
-    # 3) 둘 다 없거나 "new"면 새 UUID
+    # ★ 사용자 정직 지적(2026-06-20): '껐다가 키더라도 직전까지 하던 상태 유지'.
+    # URL/session_state 둘 다 없으면 → 가장 최근 mtime project 자동 활성화 (ChatGPT 양식).
+    if not active or active == "new":
+        try:
+            from pathlib import Path as _P
+            chat_dir = _P("data/runtime/projects")
+            if chat_dir.exists():
+                # 가장 최근 mtime의 chat_*.json 자동 선택
+                files = sorted(chat_dir.glob("chat_*.json"),
+                                  key=lambda p: p.stat().st_mtime, reverse=True)
+                if files:
+                    candidate = files[0].stem  # chat_xxxxxxxxxx
+                    # 빈 채팅이 아닌지 확인 (messages 1개 이상)
+                    try:
+                        import json as _json
+                        d = _json.loads(files[0].read_text(encoding="utf-8"))
+                        if d.get("messages"):
+                            active = candidate
+                            st.session_state["sg_active_project"] = active
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+
+    # 3) 그래도 없으면 새 UUID
     if not active or active == "new":
         active = f"chat_{_uuid.uuid4().hex[:10]}"
 
