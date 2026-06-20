@@ -184,130 +184,25 @@ def _enqueue_uploaded_files(uploaded_files, prompt_hint: str = "") -> None:
 
 
 def _load_projects() -> list[dict]:
-    """data/working_papers/*.json 스캔 + Supabase ma_working_papers 통합 (2026-05-30).
-    로컬 docker에서 만든 프로젝트는 Supabase로 자동 sync되므로,
-    클라우드에서 같은 user_email로 로그인하면 자동 표시."""
-    out: list[dict] = []
-    seen_ids: set = set()
-    # ★ 2026-06-20 v5: 무지개 4종 (#1E1B4B/#312E81/#7C3AED/#581C87/#EC4899/#06B6D4/#1E3A8A) →
-    # sapphire_glass 라이트 톤 단일 baseline + 미묘한 4 variant (DESIGN-LANGUAGE §1 무지개 금지).
-    # 모두 sapphire 계열 (#DBEAFE/#E0E7FF/#F5F3FF/#ECFEFF) + 부드러운 핑크 액센트 (sapphire_glass.py:272).
+    """Delegate → src.service.projects.list_projects + gradient renderer 양식 합성.
+
+    ★ 2026-06-21 Phase 1: 본문은 src/service로 이동, ez_home은 owner_email 추출 + gradient 양식만 담당.
+    """
+    from src.service.projects import list_projects
+    owner = (st.session_state.get("user") or {}).get("email") or \
+             st.session_state.get("user_email", "")
+    # sapphire 톤 4 variant (DESIGN-LANGUAGE §1 무지개 금지)
     grads = [
-        "linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 60%, #FCE7F3 100%)",  # sapphire baseline
-        "linear-gradient(135deg, #E0E7FF 0%, #DBEAFE 60%, #F5F3FF 100%)",  # indigo tint
-        "linear-gradient(135deg, #DBEAFE 0%, #ECFEFF 60%, #E0E7FF 100%)",  # cyan tint
-        "linear-gradient(135deg, #E0E7FF 0%, #F5F3FF 60%, #FCE7F3 100%)",  # violet tint
+        "linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 60%, #FCE7F3 100%)",
+        "linear-gradient(135deg, #E0E7FF 0%, #DBEAFE 60%, #F5F3FF 100%)",
+        "linear-gradient(135deg, #DBEAFE 0%, #ECFEFF 60%, #E0E7FF 100%)",
+        "linear-gradient(135deg, #E0E7FF 0%, #F5F3FF 60%, #FCE7F3 100%)",
     ]
-
-    # 1) Supabase (있으면 우선) — 클라우드에서 데이터 없어도 프로젝트 보기·첨삭 가능
-    try:
-        from src.cloud.db import cloud_available, get_engine
-        if cloud_available():
-            from sqlalchemy import text as _sql
-            owner = (st.session_state.get("user") or {}).get("email") or \
-                     st.session_state.get("user_email", "")
-            with get_engine().connect() as conn:
-                if owner:
-                    rows = conn.execute(_sql(
-                        "SELECT id, title, updated_at, data_json FROM ma_working_papers "
-                        "WHERE owner_email=:oe ORDER BY updated_at DESC LIMIT 50"),
-                        {"oe": owner}).mappings().all()
-                else:
-                    rows = conn.execute(_sql(
-                        "SELECT id, title, updated_at, data_json FROM ma_working_papers "
-                        "ORDER BY updated_at DESC LIMIT 20")).mappings().all()
-            for r in rows:
-                pid = r["id"]
-                if pid in seen_ids:
-                    continue
-                raw_title = (r["title"] or "").strip()
-                ts = r["updated_at"] or 0
-                # ★ Supabase title 정정 (2026-06-16): title이 pid 그대로 또는 chat_로 시작
-                # 또는 '새 작업/대화/Untitled' 같은 stale placeholder면 첫 user msg로 대체
-                meaningful_title = (raw_title and raw_title != pid and
-                                       not raw_title.startswith("chat_") and
-                                       raw_title not in ("새 작업","새 대화","제목 없음","Untitled"))
-                fallback_used = False
-                if not meaningful_title:
-                    # data_json에서 첫 user msg 추출
-                    try:
-                        dj = r.get("data_json") or {}
-                        if isinstance(dj, str):
-                            dj = json.loads(dj)
-                        msgs = (dj or {}).get("messages") or []
-                        for m in msgs:
-                            if m.get("role") == "user" and m.get("content"):
-                                raw_title = m["content"][:60].strip()
-                                fallback_used = True
-                                break
-                        # 그래도 없으면 sections 첫 본문
-                        if not fallback_used:
-                            secs = (dj or {}).get("sections") or {}
-                            for k in ("Abstract", "abstract", "Introduction", "introduction", "full"):
-                                v = secs.get(k)
-                                if isinstance(v, str) and v.strip():
-                                    raw_title = v.strip()[:60]
-                                    fallback_used = True
-                                    break
-                    except Exception:
-                        pass
-                # 모든 fallback 실패 + 의미없는 placeholder면 skip (RECENT에 노이즈 안 박음)
-                if not raw_title or raw_title == pid or raw_title.startswith("chat_"):
-                    continue
-                seen_ids.add(pid)
-                title = raw_title[:60]
-                edited = datetime.fromtimestamp(ts).strftime("Edited %Y-%m-%d") if ts else "Edited (cloud)"
-                out.append({"title": title, "edited": edited,
-                             "status": "☁ Cloud",
-                             "gradient": grads[len(out) % len(grads)],
-                             "id": pid, "mtime": float(ts) if ts else 0.0})
-    except Exception:
-        pass
-
-    # 2) 로컬 working_papers/*.json (보조 — 동일 id 중복 제거)
-    if _PROJECTS_DIR.exists():
-        all_jsons = list(_PROJECTS_DIR.glob("*.json")) + list(_PROJECTS_DIR.glob("*/*.json"))
-        for jp in sorted(all_jsons, key=lambda p: p.stat().st_mtime, reverse=True):
-            pid = jp.stem
-            if pid in seen_ids:
-                continue
-            try:
-                data = json.loads(jp.read_text(encoding="utf-8"))
-                # ★ 빈 채팅 필터
-                raw_title = (data.get("title") or
-                             (data.get("topic") or {}).get("title") or "").strip()
-                n_msgs = len(data.get("messages") or [])
-                has_sections = bool(data.get("sections"))
-                meaningful = (n_msgs > 0 or has_sections or
-                               (raw_title and raw_title not in ("새 작업", "새 대화", "제목 없음", "Untitled")))
-                if not meaningful:
-                    continue
-                # ★ title이 pid와 같으면(=옛 데이터, 제목 업데이트 누락) 첫 user message로 대체
-                if not raw_title or raw_title == pid or raw_title.startswith("chat_"):
-                    for m in (data.get("messages") or []):
-                        if m.get("role") == "user" and m.get("content"):
-                            raw_title = m["content"][:60].strip()
-                            break
-                title = (raw_title or "(제목 없음)")[:60]
-                mtime = jp.stat().st_mtime
-                edited = datetime.fromtimestamp(mtime).strftime("Edited %Y-%m-%d")
-                status = "Published" if data.get("status") == "published" else ""
-                seen_ids.add(pid)
-                out.append({"title": title, "edited": edited, "status": status,
-                             "gradient": grads[len(out) % len(grads)], "id": pid,
-                             "n_msgs": n_msgs, "mtime": mtime})
-            except Exception:
-                continue
-
-    # ★ Supabase + 로컬 통합 후 mtime/updated_at으로 정확히 재정렬 (사용자 사고: '최신 반영 안 됨')
-    def _sort_key(p):
-        return p.get("mtime") or 0
-    out.sort(key=_sort_key, reverse=True)
-    # 빈 title 사후 필터
-    out = [p for p in out
-            if p.get("title") and p["title"].strip() not in
-            ("새 작업", "새 대화", "제목 없음", "Untitled", "(제목 없음)")]
-    return out[:30]
+    out = list_projects(owner_email=owner)
+    # gradient 양식만 ez_home에서 추가 (renderer 양식 — service는 raw data만)
+    for i, p in enumerate(out):
+        p["gradient"] = grads[i % len(grads)]
+    return out
 
 
 def _sidebar():

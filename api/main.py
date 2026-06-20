@@ -112,33 +112,17 @@ class ProjectCreateIn(BaseModel):
 
 
 @app.get("/projects")
-def list_projects(email: str = Depends(require_email)):
-    """ez_home._load_projects의 service 양식. Supabase 우선 → 로컬 폴백."""
-    try:
-        from src.cloud.db import cloud_available, get_engine
-        from sqlalchemy import text as _sql
-        if cloud_available():
-            with get_engine().begin() as conn:
-                rows = conn.execute(_sql(
-                    "SELECT id, title, updated_at, data_json "
-                    "FROM ma_working_papers WHERE owner_email=:e "
-                    "ORDER BY updated_at DESC LIMIT 50"
-                ), {"e": email}).all()
-                items = []
-                for r in rows:
-                    pid, title, ts, dj = r[0], r[1] or "", r[2], r[3] or {}
-                    if not title or title.startswith("chat_") or title == pid:
-                        msgs = (dj if isinstance(dj, dict) else json.loads(dj)).get("messages", [])
-                        for m in msgs:
-                            if m.get("role") == "user":
-                                title = m.get("content", "")[:60]
-                                break
-                    items.append({"id": pid, "title": title or "제목 없음",
-                                    "updated_at": ts})
-                return items
-    except Exception as e:
-        _log.warning("list_projects fail: %s", e)
-    return []
+def list_projects_route(email: str = Depends(require_email)):
+    """Delegate → src.service.projects.list_projects (Phase 1, 2026-06-21).
+
+    이전: api/main.py 안에 직접 Supabase 양식. 신규: src/service/projects 단일 진실원본.
+    Next.js RecentSidebar + Streamlit ez_home._load_projects 양쪽 같은 함수 호출."""
+    from src.service.projects import list_projects
+    items = list_projects(owner_email=email)
+    # Next.js Project 양식 정합 — updated_at은 mtime 양식
+    return {"projects": [{"id": p["id"], "title": p["title"],
+                            "updated_at": p.get("mtime"),
+                            "status": p.get("status", "")} for p in items]}
 
 
 @app.post("/projects")
