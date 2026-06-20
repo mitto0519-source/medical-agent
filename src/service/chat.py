@@ -239,6 +239,17 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
     # ★ MANDATORY 3: 조유선 5편 마디별 스타일 v2 (yoosun_style_v2)
     yoosun_block = _load_yoosun_style_block()
 
+    # ★ MANDATORY 4 (2026-06-20 사용자 정직 진단): 5층 장기 메모리 통합 회상
+    # 'md 스펙들엔 다 박혔는데 왜 통합 연동 안 됨?' 정답 = build_full_system에 회상 호출 0건.
+    # 이제부터 conversation_memory + change_log + lifecycle + persona + research_state 5층 회상.
+    memory_block = ""
+    try:
+        from src.memory.facade import recall_all_layers
+        memory_block = recall_all_layers(user_msg, project=project,
+                                            owner_email=owner_email, max_chars=2000)
+    except Exception as e:
+        _log.debug("memory.facade.recall_all_layers fail: %s", e)
+
     try:
         from src.agent.persona import get_system_prompt
         base_sys = get_system_prompt(task="chat", owner_email=owner_email or None)
@@ -246,7 +257,7 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
         _log.warning("persona load fail: %s", e)
         base_sys = "당신은 의학 연구 코파일럿입니다."
 
-    # 데이터셋 + 활성 state + yoosun v2 셋 다 base_sys보다 앞 (LLM이 가장 먼저 읽음)
+    # 데이터셋 + 활성 state + yoosun v3 + ★ 5층 장기 메모리 — 모두 base_sys 앞
     prefix = ""
     if datasets_block:
         prefix += datasets_block + "\n\n"
@@ -254,6 +265,8 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
         prefix += active_state + "\n\n"
     if yoosun_block:
         prefix += yoosun_block + "\n\n"
+    if memory_block:  # ★ 신규 — 5층 통합 회상
+        prefix += memory_block + "\n\n"
     if prefix:
         base_sys = prefix + base_sys
 
