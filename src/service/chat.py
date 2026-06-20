@@ -236,8 +236,27 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
     # ★ MANDATORY 2: 활성 프로젝트 state 최상단 (다른 모든 것보다 먼저)
     active_state = _load_research_state_block(project)
 
-    # ★ MANDATORY 3: 조유선 5편 마디별 스타일 v2 (yoosun_style_v2)
+    # ★ MANDATORY 3: 조유선 풀텍스트 v3 (1저자 7편 본문 마디) + skills SKILL.md
+    # 파일 우선순위: data/agent_self/yoosun_style_v3.json (정량+템플릿) → v2 fallback
+    # 보조: skills/yoosun_cho_writing/SKILL.md (외부 LLM 13편 분석, 실문장 few-shot 4문장)
+    # paper_writing task에서 v3 정량 + SKILL.md 실문장 두 양식 통합 inject.
     yoosun_block = _load_yoosun_style_block()
+    # SKILL.md 실문장 few-shot 추가 (paper_writing 회로 강화)
+    try:
+        from pathlib import Path as _P
+        skill_md = _P("skills/yoosun_cho_writing/SKILL.md")
+        if skill_md.exists():
+            md = skill_md.read_text(encoding="utf-8")
+            # frontmatter 제외 + 핵심 시그니처 + few-shot 추출
+            if "## 4. few-shot" in md or "few-shot" in md:
+                idx = md.find("## 4")
+                if idx > 0:
+                    fewshot = md[idx:idx + 1500]
+                    yoosun_block = (yoosun_block + "\n\n"
+                                       + "★ skills/yoosun_cho_writing/SKILL.md §4 실문장 few-shot:\n"
+                                       + fewshot)
+    except Exception as _e:
+        _log.debug("SKILL.md fewshot inject fail: %s", _e)
 
     # ★ MANDATORY 4 (2026-06-20 사용자 정직 진단): 5층 장기 메모리 통합 회상
     # 'md 스펙들엔 다 박혔는데 왜 통합 연동 안 됨?' 정답 = build_full_system에 회상 호출 0건.
