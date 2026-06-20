@@ -925,61 +925,11 @@ def _render_chat_page(pid: str):
                     _save_project(project)
                     st.rerun()
 
-    # 2) 컴포저 row — chat_input 바로 위
-    _composer_col1, _composer_col2, _composer_col3 = st.columns([0.42, 0.34, 0.24])
+    # 2) 컴포저 row — ★ 2026-06-20 v3: 모델 picker만 (첨부는 chat_input 안에 통합).
+    # 사용자 정직 지적: '첨부+채팅박스 합쳐서 VS Code/Claude 양식으로'.
+    # Streamlit 1.30+ chat_input(accept_file="multiple") = 한 박스 안에 📎+text+전송.
+    _composer_col1, _composer_col2 = st.columns([0.7, 0.3])
     with _composer_col1:
-        with st.popover(f"📎 첨부 ({len(attachments)})",
-                          use_container_width=True):
-            up = st.file_uploader(
-                "30+ 확장자 — PDF/DOCX/PPTX/XLSX/이미지/SPSS/STATA/CSV/노트북/텍스트",
-                type=["pdf", "docx", "doc", "pptx", "ppt", "xlsx", "xls",
-                       "txt", "md", "csv", "tsv", "json", "yaml",
-                       "sav", "dta", "sas7bdat",
-                       "png", "jpg", "jpeg", "gif", "webp",
-                       "ipynb", "py", "html"],
-                accept_multiple_files=True,
-                key=f"composer_upload_{pid}",
-                label_visibility="collapsed",
-            )
-            if up:
-                # ★ 즉시 universal_loader로 텍스트 추출 → project.attachments에 저장
-                from src.ingestion.universal_loader import load as _ul_load
-                import uuid as _uuid
-                added = 0
-                for f in up:
-                    # 이미 같은 이름 있으면 skip
-                    if any(a.get("name") == f.name for a in attachments):
-                        continue
-                    # 임시 파일로 저장 후 load
-                    tmp_dir = Path(f"data/attachments/{pid}")
-                    tmp_dir.mkdir(parents=True, exist_ok=True)
-                    tmp_path = tmp_dir / f.name
-                    try:
-                        tmp_path.write_bytes(f.getvalue())
-                        loaded = _ul_load(tmp_path)
-                        attachments.append({
-                            "id": _uuid.uuid4().hex[:10],
-                            "name": f.name,
-                            "kind": loaded.get("kind", "unknown"),
-                            "size_kb": tmp_path.stat().st_size // 1024,
-                            "text": (loaded.get("text") or "")[:50000],   # 50KB 본문 cap
-                            "image_data_uri": loaded.get("image_data_uri"),
-                            "added_at": datetime.now().isoformat(),
-                            "local_path": str(tmp_path),
-                        })
-                        added += 1
-                    except Exception as _e:
-                        st.caption(f"⚠ {f.name}: {str(_e)[:80]}")
-                if added:
-                    _save_project(project)
-                    st.success(f"✅ {added}개 첨부 완료 — 다음 응답에 컨텍스트로 자동 주입")
-                    st.rerun()
-            owner_for_uploader = (st.session_state.get("user") or {}).get("email") or \
-                                   st.session_state.get("user_email", "")
-            if owner_for_uploader:
-                st.caption("📚 본인 논문 PDF는 사이드바 '내 논문 업로드'에 두면 문체 그라운딩됩니다")
-
-    with _composer_col2:
         _model_choices = {
             "auto":    "🤖 자동 (균형)",
             "fast":    "⚡ Haiku — 빠름·간단",
@@ -1002,12 +952,14 @@ def _render_chat_page(pid: str):
             else:
                 _os.environ["LLM_MODEL_OVERRIDE"] = sel
 
-    with _composer_col3:
+    with _composer_col2:
         att_n = len(attachments)
-        if att_n:
-            st.caption(f"📎 {att_n} · 🤖 {_model_choices.get(sel,sel).split('—')[0].strip()}")
-        else:
-            st.caption(f"🤖 {_model_choices.get(sel,sel).split('—')[0].strip()}")
+        owner_for_uploader = (st.session_state.get("user") or {}).get("email") or \
+                               st.session_state.get("user_email", "")
+        suffix = f" · 📎 {att_n}" if att_n else ""
+        st.caption(f"{_model_choices.get(sel,sel).split('—')[0].strip()}{suffix}")
+        if owner_for_uploader and not att_n:
+            st.caption("💡 chat 박스 📎로 PDF/CSV 첨부 가능")
 
     # ★ UX-1: 빈 채팅이면 "연구 아이디어 한 줄" 안내, 진행 중이면 일반 안내
     _placeholder = (
@@ -1015,7 +967,62 @@ def _render_chat_page(pid: str):
         if not project.get("messages")
         else "메시지를 입력하세요… (/help · 'Intro 써줘' · '알아서 해')"
     )
-    user_msg = st.chat_input(_placeholder, key=f"chat_input_{pid}")
+    # ★ VS Code/Claude 양식: chat_input 한 박스에 📎 첨부 + 텍스트 + 전송 통합
+    chat_result = st.chat_input(
+        _placeholder,
+        key=f"chat_input_{pid}",
+        accept_file="multiple",
+        file_type=["pdf", "docx", "doc", "pptx", "ppt", "xlsx", "xls",
+                     "txt", "md", "csv", "tsv", "json", "yaml",
+                     "sav", "dta", "sas7bdat",
+                     "png", "jpg", "jpeg", "gif", "webp",
+                     "ipynb", "py", "html"],
+    )
+    user_msg = None
+    new_files = []
+    if chat_result:
+        # Streamlit 1.30+ accept_file 결과: ChatInputValue(text, files) — dict 양식
+        user_msg = getattr(chat_result, "text", None) or (
+            chat_result.get("text") if isinstance(chat_result, dict) else str(chat_result))
+        new_files = getattr(chat_result, "files", None) or (
+            chat_result.get("files") if isinstance(chat_result, dict) else []) or []
+
+    # ★ chat_input의 첨부 즉시 처리 — universal_loader.load() → project.attachments
+    if new_files:
+        try:
+            from src.ingestion.universal_loader import load as _ul_load
+            import uuid as _uuid
+            added = 0
+            for f in new_files:
+                if any(a.get("name") == f.name for a in attachments):
+                    continue
+                tmp_dir = Path(f"data/attachments/{pid}")
+                tmp_dir.mkdir(parents=True, exist_ok=True)
+                tmp_path = tmp_dir / f.name
+                try:
+                    tmp_path.write_bytes(f.getvalue())
+                    loaded = _ul_load(tmp_path)
+                    attachments.append({
+                        "id": _uuid.uuid4().hex[:10],
+                        "name": f.name,
+                        "kind": loaded.get("kind", "unknown"),
+                        "size_kb": tmp_path.stat().st_size // 1024,
+                        "text": (loaded.get("text") or "")[:50000],
+                        "image_data_uri": loaded.get("image_data_uri"),
+                        "added_at": datetime.now().isoformat(),
+                        "local_path": str(tmp_path),
+                    })
+                    added += 1
+                except Exception as _e:
+                    st.caption(f"⚠ {f.name}: {str(_e)[:80]}")
+            if added:
+                _save_project(project)
+                # text 없이 첨부만이면 user_msg를 placeholder로
+                if not (user_msg or "").strip():
+                    user_msg = f"[첨부 {added}건 분석 시작 — universal_loader.load 완료, 다음 응답에 자동 inject]"
+        except Exception as _e:
+            st.caption(f"⚠ 첨부 처리 실패: {str(_e)[:80]}")
+
     if not user_msg and initial and not project["messages"]:
         user_msg = initial
         if not project.get("title") or project["title"] == "새 작업":
