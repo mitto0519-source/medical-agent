@@ -32,39 +32,18 @@ def _load_yoosun_style_block() -> str:
         d = _json.loads(p.read_text(encoding="utf-8"))
     except Exception:
         return ""
-    # v3은 본문 기반 — 풍부한 템플릿 + SKILL.md cross-ref
+    # v3은 본문 기반 — ★ 2026-06-20 다이어트: IMRaD 마디 10개 dump → 시그니처 1줄 + 핵심만
     if "moves" in d:  # v3 양식
         m = d.get("metrics", {})
         r = d.get("style_rules", {})
-        mv = d.get("moves", {})
-        parts = ["--- ★ YOOSUN STYLE v3 (1저자 7편 본문 마디 분석, 2026-06-19) ---"]
-        parts.append(f"[skills/yoosun_cho_writing/SKILL.md supersedes prompts/yoosun_style.md v1]")
-        parts.append(f"문장 길이: 평균 {m.get('avg_sent_len_words','?')} 단어 (중앙값 {m.get('median_sent_len_words','?')}, IQR {m.get('sent_len_iqr')}).")
-        parts.append(f"표본 N: {m.get('min_n',0):,} ~ {m.get('max_n',0):,} (중앙값 {m.get('median_n',0):,}). 95% CI 추출 {m.get('ci_estimates_extracted')}개.")
-        parts.append("")
-        parts.append("★ IMRaD 마디 (M1~M10) 본문 양식:")
-        for key in ("M1_intro_opening", "M2_gap", "M3_aim", "M4_methods_skeleton",
-                      "M5_results_inline", "M6_discussion_opening",
-                      "M7_mechanism_3steps", "M8_limitations_6items",
-                      "M9_strengths", "M10_conclusions"):
-            move = mv.get(key, {})
-            if isinstance(move, dict) and move.get("template"):
-                parts.append(f"  {key}: {move['template']}")
-        parts.append("")
-        parts.append("★ Discussion 시그니처 오프닝 (가장 식별적):")
-        parts.append("  [설계] of [N] [Korean adults] (mean age, X) with [Y person-years], [노출] was associated with [결과].")
-        parts.append("")
-        parts.append("★ 통계 reporting (★ 고정):")
-        parts.append(f"  - {r.get('stats_reporting','')}")
-        parts.append(f"  - {r.get('effect_modification','')}")
-        parts.append(f"  - per 1000 person-years · median follow-up X years · 성별 쌍 끝에 'respectively'")
-        parts.append("")
-        parts.append("★ 어휘:")
-        parts.append("  권장: associated with · remained significant · effect modification · more pronounced · By contrast · even after adjustment for")
-        parts.append(f"  금지: {', '.join(r.get('forbidden_overclaim', []))}")
-        parts.append("")
-        parts.append(f"★ Cohort: {', '.join(r.get('preferred_cohorts', [])[:2])}")
-        parts.append(f"★ Estimators: {' · '.join(r.get('preferred_estimators', [])[:4])}")
+        parts = ["--- ★ YOOSUN STYLE v3 (1저자 7편, 본문 압축) ---"]
+        parts.append(f"문장: 평균 {m.get('avg_sent_len_words','?')} 단어 · N {m.get('min_n',0):,}~{m.get('max_n',0):,}")
+        parts.append("Discussion 오프닝(가장 식별적): 'In this [설계] of [N] Korean adults (mean age, X) with [Y person-years], [노출] was associated with [결과].'")
+        parts.append(f"통계: {r.get('stats_reporting','')[:120]}")
+        parts.append("어휘: associated with · remained significant · effect modification · more pronounced · By contrast")
+        parts.append(f"금지: {', '.join(r.get('forbidden_overclaim', [])[:5])}")
+        parts.append(f"Estimators: {' · '.join(r.get('preferred_estimators', [])[:3])}")
+        parts.append("(전체 마디 M1~M10 + 실문장 few-shot: skills/yoosun_cho_writing/SKILL.md)")
         parts.append("--- END YOOSUN STYLE v3 ---")
         return "\n".join(parts)
     m = d.get("metrics", {})
@@ -271,31 +250,30 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
     # 보조: skills/yoosun_cho_writing/SKILL.md (외부 LLM 13편 분석, 실문장 few-shot 4문장)
     # paper_writing task에서 v3 정량 + SKILL.md 실문장 두 양식 통합 inject.
     yoosun_block = _load_yoosun_style_block()
-    # SKILL.md 실문장 few-shot 추가 (paper_writing 회로 강화)
-    try:
-        from pathlib import Path as _P
-        skill_md = _P("skills/yoosun_cho_writing/SKILL.md")
-        if skill_md.exists():
-            md = skill_md.read_text(encoding="utf-8")
-            # frontmatter 제외 + 핵심 시그니처 + few-shot 추출
-            if "## 4. few-shot" in md or "few-shot" in md:
-                idx = md.find("## 4")
-                if idx > 0:
+    # ★ 2026-06-20 다이어트: SKILL.md few-shot 1500자 자동 inject 제거 (paper_writing 시만 opt-in).
+    # 사용자가 'yoosun 양식으로 써줘'/'Discussion 마디별로'/'IMRaD'/'마디' 등 명시할 때만.
+    _skill_kws = ("yoosun", "조유선", "마디", "imrad", "discussion", "abstract", "manuscript")
+    if any(k in (user_msg or "").lower() for k in _skill_kws):
+        try:
+            from pathlib import Path as _P
+            skill_md = _P("skills/yoosun_cho_writing/SKILL.md")
+            if skill_md.exists():
+                md = skill_md.read_text(encoding="utf-8")
+                if "## 4" in md:
+                    idx = md.find("## 4")
                     fewshot = md[idx:idx + 1500]
                     yoosun_block = (yoosun_block + "\n\n"
-                                       + "★ skills/yoosun_cho_writing/SKILL.md §4 실문장 few-shot:\n"
+                                       + "★ SKILL.md §4 실문장 few-shot (opt-in):\n"
                                        + fewshot)
-    except Exception as _e:
-        _log.debug("SKILL.md fewshot inject fail: %s", _e)
+        except Exception as _e:
+            _log.debug("SKILL.md fewshot inject fail: %s", _e)
 
-    # ★ MANDATORY 4 (2026-06-20 사용자 정직 진단): 5층 장기 메모리 통합 회상
-    # 'md 스펙들엔 다 박혔는데 왜 통합 연동 안 됨?' 정답 = build_full_system에 회상 호출 0건.
-    # 이제부터 conversation_memory + change_log + lifecycle + persona + research_state 5층 회상.
+    # ★ MANDATORY 4 (2026-06-20): 5층 장기 메모리 통합 회상 — 1500자 상한 (다이어트)
     memory_block = ""
     try:
         from src.memory.facade import recall_all_layers
         memory_block = recall_all_layers(user_msg, project=project,
-                                            owner_email=owner_email, max_chars=2000)
+                                            owner_email=owner_email, max_chars=1500)
     except Exception as e:
         _log.debug("memory.facade.recall_all_layers fail: %s", e)
 
@@ -326,14 +304,19 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
         _log.warning("agentic_loop build fail: %s", e)
         full_sys = base_sys
 
-    rag_block = rag_service.retrieve_as_text_block(user_msg, top_k=5, max_text_per_hit=600)
-    if rag_block:
-        full_sys = (
-            full_sys
-            + "\n\n--- RETRIEVED MEDICAL EVIDENCE (cite by PMID inline as [PMID:xxx]) ---\n"
-            + rag_block
-            + "\n--- END EVIDENCE ---"
-        )
+    # ★ 2026-06-20 다이어트: RAG 자동 inject → opt-in (사용자가 근거/PMID/인용 등 명시할 때만).
+    # 이전엔 3.7K chars 매 turn 자동 박혀서 LLM 추론 여력 잠식.
+    _evidence_kws = ("근거", "evidence", "pmid", "인용", "cite", "논문", "참고문헌",
+                       "reference", "literature", "선행연구", "메타분석")
+    if any(k in (user_msg or "").lower() for k in _evidence_kws):
+        rag_block = rag_service.retrieve_as_text_block(user_msg, top_k=5, max_text_per_hit=600)
+        if rag_block:
+            full_sys = (
+                full_sys
+                + "\n\n--- RETRIEVED MEDICAL EVIDENCE (cite by PMID inline as [PMID:xxx]) ---\n"
+                + rag_block
+                + "\n--- END EVIDENCE ---"
+            )
 
     # ★ 첨부 파일 컨텍스트 inject (2026-06-16) — project["attachments"]에 저장된 텍스트 추출본
     # universal_loader.load()로 미리 추출됐고 영속화됨. 다음 turn마다 system prompt에 자동.
@@ -347,24 +330,15 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
         except Exception as e:
             _log.debug("attachments inject fail: %s", e)
 
+    # ★ 2026-06-20 다이어트: RULE-8 overlay 8줄 → 4줄 압축. 본질만.
     rule_overlay = (
-        "\n\n--- RULE-8 (vibe paper) ---\n"
-        "★ RESEARCH_STATE_SPEC §1.5 강제 (위 ACTIVE PROJECT 블록이 있다면):\n"
-        "  - LOCKED_DECISIONS는 사용자가 명시 승인 없이 절대 변경 X.\n"
-        "  - FORBIDDEN_CHANGES 방향으로 절대 회귀 X (예: 흡연-심혈관 잡았는데 '제로음료-우울'로 돌아가기 X).\n"
-        "  - 사용자가 다른 주제 단어를 던져도 ACTIVE PROJECT가 있으면 그 안에서 보조 발견(secondary)으로 정리.\n"
-        "  - exposure/outcome을 또 묻지 말 것 — 이미 LOCKED. 데이터셋도 또 묻지 말 것.\n"
-        "★ '묻지 말고 결정':\n"
-        "  - 모호하면 PICO·통계·하위군 중 짧은 역질문 2-3개. **단 ACTIVE PROJECT 있으면 묻지 말고 기본값으로 진행** + 가정 명시.\n"
-        "  - '알아서 해' '그냥 해' '한번에' = STATS gate 외엔 안 묻고 완성까지.\n"
-        "★ ★ 함수명/경로 명시 응답 강제 (J6/J7 root cause fix):\n"
-        "  - KYRBS 분석: 응답에 'KYRBSLoader' 또는 'data/raw/kyrbs{year}.sav' 1회 이상 명시.\n"
-        "  - KNHANES MASLD 분석: 'masld_classification' 또는 'fib4_index' 또는 'FLI≥60/HSI>36' 중 1개 이상 명시.\n"
-        "  - UPF 분석: 'classify_nova' 또는 'upf_share_by_person' 또는 'NOVA 4' 중 1개 이상 명시.\n"
-        "  - '데이터 어디' 또는 '경로 알려주' 재질문 양식 절대 X — 이미 위 DATASETS 블록에 등록됨.\n"
-        "  - 분석 시작 시 첫 응답에 호출할 함수명 1줄 헤더로 박을 것 (예: '→ KYRBSLoader().load(\"data/raw/kyrbs2023.sav\") + masld_classification(df)').\n"
-        "응답은 한국어 대화체, 동료 의학연구자 어투, 마크다운 짧게.\n"
-        "위 RETRIEVED MEDICAL EVIDENCE를 참고해 답변에 PMID 인라인 인용을 넣으세요."
+        "\n\n--- RULE ---\n"
+        "1) ACTIVE PROJECT 있으면 LOCKED_DECISIONS·exposure·outcome·dataset 재질문 X. "
+        "다른 주제 단어 와도 secondary로 정리.\n"
+        "2) '알아서 해'/'그냥 해' = 묻지 말고 기본값+가정 명시로 완성까지 (STATS gate 외).\n"
+        "3) 함수명/경로 명시: KYRBS→KYRBSLoader, KNHANES MASLD→masld_classification/fib4_index, "
+        "UPF→classify_nova/upf_share_by_person. 데이터 위치 재질문 X (DATASETS 등록됨).\n"
+        "4) 한국어 대화체·동료 의학연구자 어투·마크다운 짧게. EVIDENCE 있으면 [PMID:xxx] 인라인."
     )
     return full_sys + rule_overlay
 
@@ -388,10 +362,12 @@ def stream_reply(
     if extra_system:
         full_sys = full_sys + "\n\n--- TASK OVERLAY ---\n" + extra_system
 
+    # ★ 2026-06-20 v2: -40 → -100 (사용자: "동일 컨텍스트 100턴은 해야지"). turn별 6K 상한.
     history_lines = []
-    for m in project.get("messages", [])[-10:]:
+    for m in project.get("messages", [])[-100:]:
         role = "사용자" if m.get("role") == "user" else "코파일럿"
-        history_lines.append(f"{role}: {m.get('content','')}")
+        content = (m.get("content") or "")[:6000]
+        history_lines.append(f"{role}: {content}")
     prompt = "\n".join(history_lines) + f"\n사용자: {user_msg}\n코파일럿:"
 
     try:

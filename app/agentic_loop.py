@@ -936,46 +936,51 @@ def build_system_with_preview(base_prompt: str, project: dict,
     except Exception:
         pass
 
-    # ── AUTO RAG EVIDENCE (사용자 user_msg에 대한 5개 hit 자동 사전 주입) ──
-    # 사용자가 patch 요청만 해도 LLM이 항상 evidence를 곁들이도록 미리 가져온다.
-    # 2026-05-30: intent emphasis + persona keywords로 query augment → 통일된 톤·관심으로 검색
-    if user_msg:
+    # ── AUTO RAG EVIDENCE — ★ 2026-06-20 opt-in 전환 (사용자 명시 의도 시만) ──
+    # 이전엔 매 turn 자동 3.7K chars 박혀서 LLM 추론 여력 잠식 (사용자 정직 지적: VS Code 압도적 성능차이).
+    # 이제: '근거/PMID/인용/논문/cite/evidence/reference/선행연구' 같은 키워드 명시 또는 intent_emphasis에
+    # 'evidence' 시그널 있을 때만 inject.
+    _evidence_kws = ("근거", "evidence", "pmid", "인용", "cite", "논문", "참고문헌",
+                       "reference", "literature", "선행연구", "메타분석", "patch_preview",
+                       "discussion", "introduction", "methods", "results")  # 본문 patch도 evidence 필요
+    _wants_evidence = (
+        any(k in (user_msg or "").lower() for k in _evidence_kws)
+        or "evidence" in (intent_emphasis_kws or [])
+    )
+    if user_msg and _wants_evidence:
         try:
             from src.vectordb.store import get_vector_store
             store = get_vector_store()
-            # 의도 키워드로 augment된 쿼리
             aug_kws = (intent_persona_kws[:3] + intent_emphasis_kws[:2])
-            aug_query = user_msg
-            if aug_kws:
-                aug_query = user_msg + " " + " ".join(aug_kws)
-            hits = store.search(aug_query, n_results=5) or []
+            aug_query = user_msg + (" " + " ".join(aug_kws) if aug_kws else "")
+            # ★ 다이어트: 5 hits → 3, snippet 280 → 180, src 라인 제거
+            hits = store.search(aug_query, n_results=3) or []
             if hits:
-                parts.append("# AUTO-PULLED RAG EVIDENCE (24K OA seed — 위 요청 관련)")
-                for i, h in enumerate(hits[:5], 1):
+                parts.append("# RAG EVIDENCE (3 hits — opt-in trigger)")
+                for i, h in enumerate(hits[:3], 1):
                     md = h.get("metadata") or {}
-                    src = md.get("source") or md.get("doi") or md.get("pmid") or md.get("title", "")
-                    score = h.get("score", 0) or h.get("final_score", 0)
-                    snippet = (h.get("text") or "")[:280]
-                    parts.append(f"[{i}] (score={score:.3f}) {snippet}…")
-                    if src:
-                        parts.append(f"    src: {str(src)[:120]}")
-                parts.append("→ 이 evidence를 patch_preview 내용에 인용/근거로 활용하라.")
+                    src = md.get("pmid") or md.get("doi") or (md.get("title", "") or "")[:60]
+                    snippet = (h.get("text") or "")[:180]
+                    parts.append(f"[{i}] {snippet}… (src: {src})")
                 parts.append("")
         except Exception:
             pass
 
-        # ── AUTO COMPONENTS (재사용 가능한  시드 — ComponentLibrary) ──
-        try:
-            from src.library.components import get_library as _get_comp_lib
-            comp_hint = _get_comp_lib().sample(
-                kind="topic_sentence", n=3, contains=user_msg[:60])
-            if comp_hint:
-                parts.append("# AUTO-PULLED COMPONENT TEMPLATES (Yoosun-style topic sentences)")
-                for c in comp_hint[:3]:
-                    parts.append(f"- {str(c.get('text', '') or c)[:200]}")
-                parts.append("")
-        except Exception:
-            pass
+        # ── COMPONENTS (writing topic sentences) — paper_writing 의도시만 ──
+        _writing_kws = ("써", "작성", "manuscript", "topic", "yoosun", "조유선", "마디",
+                          "introduction", "discussion", "methods", "results", "abstract")
+        if any(k in (user_msg or "").lower() for k in _writing_kws):
+            try:
+                from src.library.components import get_library as _get_comp_lib
+                comp_hint = _get_comp_lib().sample(
+                    kind="topic_sentence", n=3, contains=user_msg[:60])
+                if comp_hint:
+                    parts.append("# COMPONENT TEMPLATES (Yoosun topic sentences — opt-in)")
+                    for c in comp_hint[:3]:
+                        parts.append(f"- {str(c.get('text', '') or c)[:160]}")
+                    parts.append("")
+            except Exception:
+                pass
 
     # ★ 공유 코어 — VS Code/Streamlit 어디서 호출되든 같은 메모리/이력 보게 함
     try:

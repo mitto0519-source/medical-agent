@@ -345,13 +345,14 @@ class ClaudeClient:
         effective_task = task or self._task
         system = self._build_system(system_prompt, None, task=effective_task)
         messages: List[dict] = []
-        # ★ prior_messages 누적 (단 user/assistant role 정상화 + content str)
+        # ★ prior_messages 누적 (사용자 정직 지적 2026-06-20: "동일 컨텍스트 100턴은 해야지")
+        # 최근 100턴 · turn별 6K char 상한 → 합산 ~150K tokens (Anthropic 200K 안전 한도).
         if prior_messages:
-            for m in prior_messages[-40:]:  # 최근 40턴 (~Anthropic 200K context 안전 한도)
+            for m in prior_messages[-100:]:
                 r = m.get("role")
                 c = m.get("content")
                 if r in ("user", "assistant") and isinstance(c, str) and c.strip():
-                    messages.append({"role": r, "content": c[:8000]})  # turn별 8K 상한
+                    messages.append({"role": r, "content": c[:6000]})
         messages.append({"role": "user", "content": user_message})
         trace: list = []
         full_text_parts: list = []

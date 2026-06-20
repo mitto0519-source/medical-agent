@@ -1254,16 +1254,45 @@ def _render_chat_page(pid: str):
                     trace: list[tuple] = []
                     last_activity_msg = "🔍 검색·합성 중…"
 
-                    def _set_activity(text: str):
-                        activity.markdown(
-                            "<div class='msg-asst' style='font-size:0.78rem;"
-                            "background:#F1F5F9;padding:6px 10px;color:#475569;'>"
-                            "<span class='loading-dot'>●</span>"
-                            "<span class='loading-dot'>●</span>"
-                            "<span class='loading-dot'>●</span> "
-                            f"{text}</div>", unsafe_allow_html=True)
+                    # ★ 2026-06-20 v2 UI 강화 (사용자 정직 지적: "그냥 멈추면 고장난거처럼 보이잖아").
+                    # 활동 박스 = 카드 양식 + 진행 단계 카운트 + 최근 3건 tool 라인 + 펄스 spinner.
+                    # VS Code Claude 우측 "진행 상황" 패널 효과.
+                    step_count = {"n": 0}
+                    recent_tools: list[str] = []
 
-                    _mt = 4500 if full else 2000
+                    def _set_activity(text: str, kind: str = "status"):
+                        step_count["n"] += 1
+                        if kind == "tool_start":
+                            recent_tools.append(f"🔧 {text}")
+                        elif kind == "tool_result":
+                            recent_tools.append(f"✓ {text}")
+                        tail = recent_tools[-3:]
+                        tools_html = ""
+                        if tail:
+                            tools_html = (
+                                "<div style='margin-top:6px;font-size:0.72rem;"
+                                "color:#64748b;line-height:1.5;'>" +
+                                "<br>".join(t.replace("<", "&lt;") for t in tail) +
+                                "</div>")
+                        activity.markdown(
+                            f"<div class='msg-asst' style='font-size:0.82rem;"
+                            f"background:linear-gradient(90deg,#F8FAFC,#EFF6FF);"
+                            f"border-left:3px solid #3B82F6;padding:10px 14px;"
+                            f"color:#1E293B;border-radius:6px;'>"
+                            f"<div style='display:flex;align-items:center;gap:8px;'>"
+                            f"<span class='loading-dot' style='color:#3B82F6;'>●</span>"
+                            f"<span class='loading-dot' style='color:#3B82F6;'>●</span>"
+                            f"<span class='loading-dot' style='color:#3B82F6;'>●</span>"
+                            f"<b style='color:#3B82F6;'>진행 중</b>"
+                            f"<span style='color:#94a3b8;font-size:0.7rem;'>"
+                            f"step {step_count['n']}</span></div>"
+                            f"<div style='margin-top:4px;font-size:0.85rem;'>{text}</div>"
+                            f"{tools_html}"
+                            f"</div>", unsafe_allow_html=True)
+
+                    # ★ 출력 짤림 단일원인 fix (사용자: "10개 추천 짤려서 다 안나옴")
+                    # 4500/2000 → 16K/8K (Sonnet 4.x은 출력 64K 지원, 안전 마진)
+                    _mt = 16000 if full else 8000
                     for evt in stream_turn(
                             project, user_msg,
                             owner_email=owner_email,
@@ -1280,12 +1309,20 @@ def _render_chat_page(pid: str):
                                 trace.append(("status", msg))
                         elif et == "tool_start":
                             tool = d.get("tool", "")
-                            last_activity_msg = f"🔧 {tool}"
-                            _set_activity(last_activity_msg)
+                            args_brief = str(d.get("args_brief", ""))[:60]
+                            last_activity_msg = f"🔧 {tool} 호출 중…"
+                            _set_activity(last_activity_msg,
+                                            kind="tool_start")
+                            # tail에 도구명+args 표시
+                            recent_tools[-1] = f"🔧 {tool}({args_brief})"
                             tool_log.append(f"🔧 {tool}")
                             trace.append(("tool_start", tool, d.get("args_brief", "")))
                         elif et == "tool_result":
                             tool = d.get("tool", "")
+                            preview = str(d.get("preview", ""))[:80]
+                            _set_activity(f"✓ {tool} 완료",
+                                            kind="tool_result")
+                            recent_tools[-1] = f"✓ {tool} → {preview}"
                             tool_log.append(f"✓ {tool}")
                             trace.append(("tool_result", tool,
                                             str(d.get("preview", ""))[:200]))
