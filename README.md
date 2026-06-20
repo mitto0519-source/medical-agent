@@ -4,7 +4,7 @@ emoji: 🔬
 colorFrom: blue
 colorTo: indigo
 sdk: docker
-app_port: 3000
+app_port: 8501
 pinned: false
 license: mit
 short_description: Vibe paper copilot for clinical/translational medicine
