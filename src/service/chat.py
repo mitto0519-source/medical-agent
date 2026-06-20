@@ -295,6 +295,12 @@ def build_full_system(project: dict, user_msg: str, *, owner_email: str = "") ->
         "★ '묻지 말고 결정':\n"
         "  - 모호하면 PICO·통계·하위군 중 짧은 역질문 2-3개. **단 ACTIVE PROJECT 있으면 묻지 말고 기본값으로 진행** + 가정 명시.\n"
         "  - '알아서 해' '그냥 해' '한번에' = STATS gate 외엔 안 묻고 완성까지.\n"
+        "★ ★ 함수명/경로 명시 응답 강제 (J6/J7 root cause fix):\n"
+        "  - KYRBS 분석: 응답에 'KYRBSLoader' 또는 'data/raw/kyrbs{year}.sav' 1회 이상 명시.\n"
+        "  - KNHANES MASLD 분석: 'masld_classification' 또는 'fib4_index' 또는 'FLI≥60/HSI>36' 중 1개 이상 명시.\n"
+        "  - UPF 분석: 'classify_nova' 또는 'upf_share_by_person' 또는 'NOVA 4' 중 1개 이상 명시.\n"
+        "  - '데이터 어디' 또는 '경로 알려주' 재질문 양식 절대 X — 이미 위 DATASETS 블록에 등록됨.\n"
+        "  - 분석 시작 시 첫 응답에 호출할 함수명 1줄 헤더로 박을 것 (예: '→ KYRBSLoader().load(\"data/raw/kyrbs2023.sav\") + masld_classification(df)').\n"
         "응답은 한국어 대화체, 동료 의학연구자 어투, 마크다운 짧게.\n"
         "위 RETRIEVED MEDICAL EVIDENCE를 참고해 답변에 PMID 인라인 인용을 넣으세요."
     )

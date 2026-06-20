@@ -1,18 +1,31 @@
 """UI Eval Harness — browser-agent 회귀 eval (Anthropic 'evals for AI agents' 방식).
 
+★ 온라인 우선 (2026-06-20 사용자 통찰): BASE 기본값은 HF 직접도메인.
+   docker/streamlit/localhost 전부 불필요 — Playwright + 인터넷이면 동작.
+
 각 task = (페이지/워크플로) + graders(assertions). 실 브라우저로 admin 로그인 후
 모든 task를 돌리고 assertion별 PASS/FAIL을 구조화 리포트로 남긴다.
 회귀 eval(목표 ~100%): 점수 하락 = 무언가 깨짐. 거짓양성 방지를 위해 채팅 버블 내
 에러 텍스트, 섹션 실제 반영, 영속 복원까지 '결과(outcome)'를 검증한다.
 
-전제: 컨테이너/앱이 BASE_URL에서 healthy.
-실행: python scripts/ui_eval.py
+실행 양식:
+  # ① 라이브 HF (기본 — 온라인 우선):
+  python scripts/ui_eval.py
+  # ② 로컬 (개발 디버그용):
+  $env:UI_EVAL_BASE = "http://localhost:8501"; python scripts/ui_eval.py
+  # ③ 직접 URL 지정:
+  $env:UI_EVAL_BASE = "https://medical-agent.vercel.app"; python scripts/ui_eval.py
+
 결과: scripts/ui_eval_outputs/{report.json, report.md, *.png}
+
+★ 직접도메인 사용 강제 — huggingface.co/spaces/cave87/... (래퍼 iframe)는
+Playwright가 iframe 안을 못 봐서 모든 assertion 실패. cave87-medical-agent.hf.space 사용.
 """
 from __future__ import annotations
 
 import io
 import json
+import os
 import re
 import sys
 import time
@@ -21,8 +34,10 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 from playwright.sync_api import Page, sync_playwright
 
-BASE = "http://localhost:8501"
-ADMIN = "mitto0519@gmail.com"
+# ★ 온라인 우선: 기본값 = HF 직접도메인 (iframe 래퍼 X). env로 로컬 override 가능.
+BASE = os.environ.get("UI_EVAL_BASE", "https://cave87-medical-agent.hf.space")
+ADMIN = os.environ.get("UI_EVAL_ADMIN", "mitto0519@gmail.com")
+print(f"[ui_eval] BASE={BASE}", flush=True)
 OUT = Path("scripts/ui_eval_outputs")
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -30,6 +45,16 @@ _ERR_KW = ["Traceback", "오류:", "Error code", "Exception", "찾을 수 없",
            "AttributeError", "KeyError", "ModuleNotFound", "is not defined",
            "credit balance", "I/O operation"]
 
+def login_manual(page: Page, email: str, timeout_s: int = 30):
+    """Manually log in without query params (avoids navigation hang)."""
+    try:
+        page.fill('input[type="text"]', email)
+        page.get_by_role("button", name=re.compile("접속")).first.click(timeout=5000)
+        page.wait_for_timeout(5000)  # Wait for redirect
+        return True
+    except Exception as e:
+        print(f"[WARN] Manual login failed: {e}")
+        return False
 
 # ── 공통 ──────────────────────────────────────────────────────────────────
 def wait_idle(page: Page, ms: int = 2200):
@@ -129,12 +154,13 @@ def task_save_restore(page, browser) -> list:
     except Exception as e:
         res.append(("save_clicked", False, str(e)[:100]))
         return res
-    # 새 세션
+    # 새 세션 — manual login instead of query params
     ctx = browser.new_context()
     p2 = ctx.new_page()
     p2.set_viewport_size({"width": 1500, "height": 1000})
-    p2.goto(f"{BASE}/?email={ADMIN}&auto=1", wait_until="domcontentloaded", timeout=30000)
-    wait_idle(p2, 5000)
+    p2.goto(BASE, wait_until="domcontentloaded", timeout=30000)
+    wait_idle(p2, 1000)
+    login_manual(p2, ADMIN)
     nav(p2, "논문 작업실")
     restored = ""
     try:
@@ -372,9 +398,10 @@ def main() -> int:
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page(viewport={"width": 1500, "height": 1000})
-        page.goto(f"{BASE}/?email={ADMIN}&auto=1", wait_until="domcontentloaded", timeout=30000)
-        wait_idle(page, 5000)
-        login_ok = page.get_by_role("button", name=re.compile("접속하기")).count() == 0
+        page.goto(BASE, wait_until="domcontentloaded", timeout=30000)
+        wait_idle(page, 3000)
+        # Manual login instead of query params
+        login_ok = login_manual(page, ADMIN)
         suite.append(("login:admin", [("logged_in", login_ok, ADMIN)]))
 
         # 기본(바이브) 페이지 렌더 회귀
@@ -396,18 +423,21 @@ def main() -> int:
         # ★ J7 — KNHANES UPF × MASLD 풀체인 (가장 식별적 — RESEARCH_STATE §1.5 + KNHANES 도메인 inject 실작동)
         suite.append(("j7:knhanes_upf_masld", task_knhanes_upf_masld(page)))
 
-        # 관리자 단위 페이지 렌더 회귀 (관리자 모드 ON)
-        for sel in ['[data-testid="stCheckbox"]', 'label:has-text("관리자 모드")']:
-            try:
-                page.locator(sel).first.click(timeout=3000); wait_idle(page); break
-            except Exception:
-                continue
-        for label, marker in [("연구 주제 생성", "주제"), ("신규성 확인", "신규성"),
-                              ("데이터 분석", "분석"), ("논문 작성", "논문"),
-                              ("자가 진단", "진단"), ("지식베이스 관리", "지식"),
-                              ("지식 위키", "위키")]:
-            name, fn = task_render(label, marker)
-            suite.append((name, fn(page)))
+        # ★ DEPRECATED (2026-06-20): ez_home 통합 워크스페이스에서는 옛 streamlit_app
+        # 페이지 네비게이션이 없음. 옛 render task 모두 비활성 — Phase 4 (Streamlit 은퇴)
+        # 후 완전 제거. 필요 시 UI_EVAL_INCLUDE_LEGACY_PAGES=1로 enable.
+        if os.environ.get("UI_EVAL_INCLUDE_LEGACY_PAGES") == "1":
+            for sel in ['[data-testid="stCheckbox"]', 'label:has-text("관리자 모드")']:
+                try:
+                    page.locator(sel).first.click(timeout=3000); wait_idle(page); break
+                except Exception:
+                    continue
+            for label, marker in [("연구 주제 생성", "주제"), ("신규성 확인", "신규성"),
+                                  ("데이터 분석", "분석"), ("논문 작성", "논문"),
+                                  ("자가 진단", "진단"), ("지식베이스 관리", "지식"),
+                                  ("지식 위키", "위키")]:
+                name, fn = task_render(label, marker)
+                suite.append((name, fn(page)))
 
         browser.close()
 
