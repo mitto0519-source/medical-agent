@@ -20,15 +20,15 @@ last_updated: 2026-05-30
 1. **Q1 핵심 발견(또는 주장)이 무엇인가?**
    → **첫 문장**에 그것을 둬라. "topic sentence first."
    → 약하게: "We observed an association..."
-   → 강하게: "Daily ZCB intake was independently associated with 1.27-fold higher odds of depressive symptoms (aOR 1.27; 95% CI 1.03–1.56)."
+   → 강하게 (양식 — 본 프로젝트 변수로 치환): "Daily [exposure] was independently associated with [aOR]-fold higher odds of [outcome] (aOR [E]; 95% CI [Lo]–[Hi])."
 
 2. **Q2 독자가 놀랄 만한 또는 행동을 바꿀 만한 숫자/대조가 있는가?**
    → **두 번째 문장 또는 그 직후**에 그 숫자/대조를 명시.
-   → "We found a sex-specific effect (P for interaction < 0.001), with the association evident only in females."
+   → 양식: "We found a sex-specific effect (P for interaction < 0.001), with the association evident only in [subgroup]."
 
 3. **Q3 기존 문헌과 다른 점, 또는 임상·정책 함의는 무엇인가?**
    → **단락 끝**에 그것으로 닫아라. 뻔한 "warrants further research"는 금지.
-   → "Unlike Smith et al. (2023), who pooled all soft drinks, our isolated ZCB exposure suggests sweetener-specific neuro­behavioral pathways."
+   → 양식: "Unlike [prior author] et al. ([year]), who [prior approach], our [current approach] suggests [mechanism/insight]."
 
 ---
 
