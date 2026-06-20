@@ -25,6 +25,14 @@ from src.config.logging_config import get_logger
 
 _log = get_logger(__name__)
 
+# ★ 2026-06-20: figure_style 단일소스 적용 — default matplotlib → Nature/JAMA 출판급 톤.
+# 기존 _PALETTE/_setup_korean_font 보유하지만 figure_style가 단일 권위 (DESIGN.md data_viz).
+try:
+    from src.export.figure_style import apply_publication_style as _apply_style
+    _apply_style(korean=True)
+except Exception as _e:
+    _log.debug("figure_style apply fail: %s", _e)
+
 
 def _setup_korean_font():
     """한글 폰트 등록 (크로스플랫폼). Docker(리눅스)엔 NanumGothic 필요 — 없으면 한글이 □□□로 깨짐."""

@@ -9,6 +9,14 @@ from src.config.logging_config import get_logger
 
 _log = get_logger(__name__)
 
+# ★ 2026-06-20: figure_style 단일소스 적용 — default matplotlib → Nature/JAMA 출판급 톤.
+# despine·1강조색·#2A2A2A 텍스트·navy/maroon prop_cycle·범례박스 제거 (DESIGN.md data_viz 따름).
+try:
+    from src.export.figure_style import apply_publication_style as _apply_style
+    _apply_style(korean=True)
+except Exception as _e:
+    _log.debug("figure_style apply fail: %s", _e)
+
 
 def _setup_korean_font():
     """Windows Malgun Gothic 한글 폰트 등록."""

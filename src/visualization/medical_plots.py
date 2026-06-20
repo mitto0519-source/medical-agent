@@ -18,6 +18,14 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 
+# ★ 2026-06-20: figure_style 단일소스 적용 — default matplotlib → Nature/JAMA 출판급 톤.
+# despine·1강조색·#2A2A2A 텍스트·navy/maroon prop_cycle (DESIGN.md data_viz 따름).
+try:
+    from src.export.figure_style import apply_publication_style as _apply_style
+    _apply_style(korean=True)
+except Exception:
+    pass
+
 _FIGURE_DIR = Path("data/figures")
 
 

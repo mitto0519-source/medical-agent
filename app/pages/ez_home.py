@@ -189,11 +189,14 @@ def _load_projects() -> list[dict]:
     클라우드에서 같은 user_email로 로그인하면 자동 표시."""
     out: list[dict] = []
     seen_ids: set = set()
+    # ★ 2026-06-20 v5: 무지개 4종 (#1E1B4B/#312E81/#7C3AED/#581C87/#EC4899/#06B6D4/#1E3A8A) →
+    # sapphire_glass 라이트 톤 단일 baseline + 미묘한 4 variant (DESIGN-LANGUAGE §1 무지개 금지).
+    # 모두 sapphire 계열 (#DBEAFE/#E0E7FF/#F5F3FF/#ECFEFF) + 부드러운 핑크 액센트 (sapphire_glass.py:272).
     grads = [
-        "linear-gradient(135deg, #1E1B4B, #312E81)",
-        "linear-gradient(135deg, #312E81, #7C3AED)",
-        "linear-gradient(135deg, #581C87, #EC4899)",
-        "linear-gradient(135deg, #1E3A8A, #06B6D4)",
+        "linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 60%, #FCE7F3 100%)",  # sapphire baseline
+        "linear-gradient(135deg, #E0E7FF 0%, #DBEAFE 60%, #F5F3FF 100%)",  # indigo tint
+        "linear-gradient(135deg, #DBEAFE 0%, #ECFEFF 60%, #E0E7FF 100%)",  # cyan tint
+        "linear-gradient(135deg, #E0E7FF 0%, #F5F3FF 60%, #FCE7F3 100%)",  # violet tint
     ]
 
     # 1) Supabase (있으면 우선) — 클라우드에서 데이터 없어도 프로젝트 보기·첨삭 가능
