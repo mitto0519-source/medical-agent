@@ -719,44 +719,15 @@ def _pin_to_section(project: dict, content: str, section: str,
 
 
 def _render_msg(role: str, content: str, *, msg_idx: int = -1,
-                  project: dict = None, allow_pin: bool = True) -> None:
-    """단일 메시지를 chat bubble HTML 로 렌더 + assistant 메시지엔 📌 핀 row 추가.
+                  project: dict = None, allow_pin: bool = False) -> None:
+    """단일 메시지를 chat bubble HTML 로 렌더.
 
-    msg_idx: messages 리스트 인덱스 — Streamlit button key 고유성 보장용
-    project: 핀 적용 대상 project dict
-    allow_pin: False면 핀 row 생략 (스트리밍 중간 표시 등 일회성 렌더)
+    ★ 2026-06-20: '📌 프리뷰에 박기' 핀 row 완전 제거 (사용자: '저런식으로 하는 기능이 아니야').
+    project/allow_pin 인자는 호출부 호환을 위해 남겨둠 — 무시됨.
     """
     safe = (content or "").replace("<", "&lt;").replace(">", "&gt;")
     cls = "msg-user" if role == "user" else "msg-asst"
     st.markdown(f"<div class='{cls}'>{safe}</div>", unsafe_allow_html=True)
-
-    # 핀 row — assistant 메시지에만, project 제공된 경우만
-    if role != "assistant" or not allow_pin or project is None or not content:
-        return
-    if msg_idx < 0:
-        msg_idx = abs(hash(content)) % 100000
-    key_prefix = f"pin_{project.get('id','x')}_{msg_idx}"
-
-    with st.container():
-        st.markdown(
-            "<div style='font-size:0.74rem;color:#555555;margin:2px 0 4px 0;"
-            "padding-left:4px;'>📌 프리뷰에 박기:</div>",
-            unsafe_allow_html=True)
-        # 9 sections in 3 rows of 3
-        cols_r1 = st.columns(3)
-        cols_r2 = st.columns(3)
-        cols_r3 = st.columns(3)
-        rows = [cols_r1, cols_r2, cols_r3]
-        for i, sec in enumerate(_PIN_SECTIONS):
-            row, col = divmod(i, 3)
-            with rows[row][col]:
-                if st.button(sec, key=f"{key_prefix}_{sec}",
-                              use_container_width=True,
-                              help=f"이 응답을 {sec} 섹션에 추가"):
-                    _pin_to_section(project, content, sec, mode="append")
-                    st.toast(f"📌 {sec}에 박았습니다 ({len(content):,}자)",
-                              icon="✅")
-                    st.rerun()
 
 
 def _render_my_papers_uploader(owner_email: str) -> None:
@@ -1072,14 +1043,15 @@ def _render_chat_page(pid: str):
 
     col_chat, col_preview = st.columns([0.46, 0.54], gap="medium")
 
-    # ★ 우측 진행 상황 패널 (2026-06-20 v4) — VS Code 양식: 응답 중 우측에 단계 카드 sticky.
-    # DESIGN.md navy(#1f4e79) + panel_bg(#eef3f8) + border(#dddddd) 색감 적용.
-    # col_chat의 stream_turn 루프에서 update — placeholder는 col_preview 안에 미리 생성.
-    right_status_panel = None
-    with col_preview:
-        right_status_panel = st.empty()
+    # ★ 진행 상황 패널 (2026-06-20 v5 정정) — 채팅 로그 *위*에 sticky.
+    # 사용자 정직 지적: '오른쪽 프리뷰 쪽이 아니고 채팅 로그 위에 순차적으로 나와야'.
+    # col_preview(우측 docx preview) X → col_chat의 msgs_box *위*에 배치.
+    chat_status_panel = None
 
     with col_chat:
+        # ★ 채팅 로그 위 sticky 자리 — stream 중에만 단계 카드 표시, done시 empty()
+        chat_status_panel = st.empty()
+
         # 고정 높이 스크롤 박스 — 무한정 늘어나지 않음
         msgs_box = st.container(height=600, border=False)
         with msgs_box:
@@ -1317,7 +1289,7 @@ def _render_chat_page(pid: str):
                             f"{tools_html}"
                             f"</div>", unsafe_allow_html=True)
                         # ★ 우측 진행 상황 패널 (col_preview 상단) — VS Code 양식 체크리스트
-                        if right_status_panel is not None:
+                        if chat_status_panel is not None:
                             checklist_items = []
                             for s in all_steps[-10:]:   # 최근 10 단계
                                 if s["kind"] == "tool":
@@ -1336,7 +1308,7 @@ def _render_chat_page(pid: str):
                                     f"</div>"
                                 )
                             checklist_html = "".join(checklist_items)
-                            right_status_panel.markdown(
+                            chat_status_panel.markdown(
                                 f"<div style='background:#ffffff;"
                                 f"border:1px solid #dddddd;border-radius:8px;"
                                 f"padding:14px 16px;margin-bottom:12px;'>"
@@ -1405,8 +1377,8 @@ def _render_chat_page(pid: str):
                         elif et == "done":
                             activity.empty()
                             # 우측 진행 상황 패널도 완료 양식으로 마지막 update 후 비움
-                            if right_status_panel is not None:
-                                right_status_panel.empty()
+                            if chat_status_panel is not None:
+                                chat_status_panel.empty()
 
                     reply = (badge + "".join(body_buf)).strip()
                     safe = reply.replace("<","&lt;").replace(">","&gt;")
