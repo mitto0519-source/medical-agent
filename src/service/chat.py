@@ -469,11 +469,15 @@ def stream_turn(project: dict, msg: str, *,
         active = getattr(client, "_active", client)
 
         # ★ Streaming + tools (2026-06-15) — 토큰 단위 yield로 Claude/VS Code 양식 효과
+        # ★ 2026-06-20: prior_messages wire (사용자 정직 지적 "VS Code랑 압도적 성능차이" 단일원인).
+        #   이전엔 user_message 한 줄만 LLM에 닿아 매 turn 까먹음. 이제 project["messages"] 누적.
+        _prior = project.get("messages") or []
         if hasattr(active, "generate_with_tools_streamed"):
             text_acc: list = []
             for chunk in active.generate_with_tools_streamed(
                     user_message=msg, tools=TOOL_SCHEMAS, tool_handler=handler,
-                    system_prompt=full_sys, max_tokens=max_tokens, max_iters=max_iters):
+                    system_prompt=full_sys, max_tokens=max_tokens, max_iters=max_iters,
+                    prior_messages=_prior):
                 ct = chunk.get("type")
                 if ct == "text_delta":
                     text_acc.append(chunk.get("text", ""))

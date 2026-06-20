@@ -324,11 +324,17 @@ class ClaudeClient:
         max_tokens: int = 4096,
         max_iters: int = 6,
         task: Optional[str] = None,
+        prior_messages: Optional[List[dict]] = None,
     ):
         """★ Streaming + tools generator (2026-06-15).
 
         토큰 단위 yield → 사용자가 텍스트 한 글자씩 흘러나오는 효과 (Claude/VS Code 양식).
         tool_use 블록은 streaming 끝난 후 dispatch → tool_start/tool_result yield.
+
+        Args:
+            prior_messages: 이전 대화 누적 (project["messages"]). 양식 = [{"role": "user|assistant",
+                "content": str}, ...]. ★ 2026-06-20: 이 인자가 누락되어 있어 ezhome agent가
+                매 turn마다 직전 대화를 다 까먹는 양식 (VS Code Claude와 결정적 성능 차이 단일원인).
 
         Yields:
             {"type":"text_delta", "text": "..."} — 토큰 청크
@@ -338,7 +344,15 @@ class ClaudeClient:
         """
         effective_task = task or self._task
         system = self._build_system(system_prompt, None, task=effective_task)
-        messages = [{"role": "user", "content": user_message}]
+        messages: List[dict] = []
+        # ★ prior_messages 누적 (단 user/assistant role 정상화 + content str)
+        if prior_messages:
+            for m in prior_messages[-40:]:  # 최근 40턴 (~Anthropic 200K context 안전 한도)
+                r = m.get("role")
+                c = m.get("content")
+                if r in ("user", "assistant") and isinstance(c, str) and c.strip():
+                    messages.append({"role": r, "content": c[:8000]})  # turn별 8K 상한
+        messages.append({"role": "user", "content": user_message})
         trace: list = []
         full_text_parts: list = []
 
