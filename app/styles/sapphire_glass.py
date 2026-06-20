@@ -49,35 +49,61 @@ def inject_sapphire_glass(*, hide_streamlit_chrome: bool = True) -> None:
 
     st.markdown(f"""
 <style>
-/* ── Global root — Light palette (2026-06-01: AI Visibility 첨부  톤다운) ── */
+/* ── Root — DESIGN-LANGUAGE §1-9 정합 (2026-06-20 v5 강화) ── */
+/* 사용자 정직 지적 'Next.js 옮긴다 했지만 Streamlit 하나도 안 바뀜' → CSS 토큰 자체 정정.
+   DESIGN-LANGUAGE §1: 순흑/순백 금지(#2A2A2A) · 빨강 금지(#a02828) · sapphire 단일 강조.
+   §3: 카드 radius 18px. §7: 8px grid (section 32 / panel 16 / 단락 12).
+   §8: transition 150-250ms cubic-bezier · hover lift translateY(-2px). */
 :root {{
-  --sg-bg:          #F8FAFC;   /* slate-50, 거의 흰색 베이스 */
+  --sg-bg:          #F8FAFC;
   --sg-bg-from:     #FFFFFF;
-  --sg-bg-via:      #F1F5F9;   /* slate-100 */
+  --sg-bg-via:      #f7f7f9;
   --sg-bg-to:       #FFFFFF;
   --sg-surface:     #FFFFFF;
-  --sg-glass:       rgba(255, 255, 255, 0.78);   /* 글래스 살리되 라이트 */
+  --sg-glass:       rgba(255, 255, 255, 0.78);
   --sg-glass-hover: rgba(255, 255, 255, 0.92);
   --sg-glass-active:rgba(249, 250, 251, 0.95);
-  --sg-border:      rgba(15, 23, 42, 0.06);      /* 얇고 은은하게 (slate-900 6%) */
-  --sg-border-strong:rgba(15, 23, 42, 0.10);
-  --sg-border-focus:rgba(59, 130, 246, 0.45);    /* sapphire focus ring */
-  --sg-text:        #0F172A;   /* slate-900 */
-  --sg-text-sub:    #475569;   /* slate-600 */
-  --sg-text-muted:  #94A3B8;   /* slate-400 */
-  --sg-accent-sap:  #3B82F6;   /* blue-500 */
-  --sg-accent-cyan: #06B6D4;
-  --sg-accent-vio:  #8B5CF6;
-  --sg-accent-mint: #10B981;   /* emerald-500 — positive/growth */
-  --sg-accent-rose: #EF4444;   /* red-500 — negative */
-  --sg-accent-amber:#F59E0B;
-  --sg-radius-card: 14px;
+  --sg-border:      rgba(34, 34, 34, 0.08);          /* #222 8% */
+  --sg-border-strong:rgba(34, 34, 34, 0.14);
+  --sg-border-focus:rgba(59, 130, 246, 0.45);
+  /* ★ DESIGN-LANGUAGE §1 순흑 금지 — 가장 어두운 텍스트 #2A2A2A */
+  --sg-text:        #2A2A2A;
+  --sg-text-sub:    #555555;                          /* DESIGN.md text_subtle */
+  --sg-text-muted:  #888888;                          /* DESIGN.md text_muted */
+  /* ★ DESIGN-LANGUAGE §1: 강조색 단 하나 = sapphire. 의미색 (success/warning/danger)만 별도. */
+  --sg-accent-sap:  #3B82F6;                          /* 단일 강조 */
+  --sg-success:     #1f6e3a;                          /* DESIGN.md semantic.success */
+  --sg-warning:     #a26b00;                          /* DESIGN.md semantic.warning */
+  --sg-danger:      #a02828;                          /* DESIGN.md semantic.danger (★ 빨강 #EF4444 금지) */
+  /* legacy 호환 (점진 제거) */
+  --sg-accent-rose: #a02828;
+  --sg-accent-amber:#a26b00;
+  --sg-accent-mint: #1f6e3a;
+  /* ★ DESIGN-LANGUAGE §3 카드 radius 18px (이전 14px → 18px) */
+  --sg-radius-card: 18px;
+  --sg-radius-panel:12px;
   --sg-radius-chip: 999px;
-  --sg-shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04);
-  --sg-shadow-card: 0 1px 3px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.06);
+  /* ★ DESIGN-LANGUAGE §7 8px 그리드 spacing 토큰 */
+  --sg-space-1: 4px;
+  --sg-space-2: 8px;
+  --sg-space-3: 12px;                                 /* 단락 */
+  --sg-space-4: 16px;                                 /* 패널 */
+  --sg-space-5: 20px;                                 /* 카드 padding */
+  --sg-space-6: 24px;
+  --sg-space-8: 32px;                                 /* 섹션 */
+  /* ★ DESIGN-LANGUAGE §6 타이포 3단계 (4종+ 금지) */
+  --sg-fs-body:    0.92rem;
+  --sg-fs-h2:      1.1rem;
+  --sg-fs-caption: 0.78rem;
+  --sg-fw-bold:    600;
+  /* 그림자: 거의 안 보임 (DESIGN-LANGUAGE §3 opacity 4-8%) */
+  --sg-shadow-soft: 0 1px 2px rgba(34, 34, 34, 0.04), 0 4px 12px rgba(34, 34, 34, 0.04);
+  --sg-shadow-card: 0 1px 3px rgba(34, 34, 34, 0.05), 0 8px 24px rgba(34, 34, 34, 0.06);
   --sg-shadow-glow: 0 0 0 3px rgba(59, 130, 246, 0.10);
+  /* DESIGN-LANGUAGE §8 모션 */
   --sg-trans-fast:  150ms cubic-bezier(0.4, 0, 0.2, 1);
   --sg-trans-med:   250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --sg-lift:        translateY(-2px);
 }}
 
 html, body, [data-testid="stApp"] {{
@@ -111,20 +137,27 @@ html, body, [data-testid="stApp"] {{
   background: var(--sg-glass) !important;
   color: var(--sg-text) !important;
   border: 1px solid var(--sg-border) !important;
-  border-radius: 10px !important;
-  padding: 9px 18px !important;
-  font-weight: 500 !important;
-  font-size: 0.88rem !important;
+  border-radius: var(--sg-radius-panel) !important;            /* 12px panel radius */
+  padding: var(--sg-space-2) var(--sg-space-5) !important;     /* 8px 20px */
+  font-weight: var(--sg-fw-bold) !important;
+  font-size: var(--sg-fs-body) !important;                     /* 0.92rem */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  transition: var(--sg-trans-fast);
+  transition: var(--sg-trans-med);
   box-shadow: var(--sg-shadow-soft);
+  letter-spacing: -0.01em;
 }}
 .stButton > button:hover,
 [data-testid="stFormSubmitButton"] > button:hover {{
   background: var(--sg-glass-hover) !important;
   border-color: var(--sg-border-strong) !important;
   box-shadow: var(--sg-shadow-card);
+  transform: var(--sg-lift);                                   /* ★ DESIGN-LANGUAGE §8 hover lift */
+}}
+.stButton > button:active,
+[data-testid="stFormSubmitButton"] > button:active {{
+  transform: translateY(0);
+  transition: 80ms cubic-bezier(0.4, 0, 0.2, 1);
 }}
 .stButton > button[kind="primary"],
 .stButton > button.sg-primary {{

@@ -607,9 +607,7 @@ def _post_turn_hooks(project: dict, user_msg: str, full_reply: str, owner_email:
     post_turn_hooks(project, user_msg, full_reply, owner_email=owner_email)
 
 
-_PIN_SECTIONS = ("Abstract", "Introduction", "Methods", "Results",
-                  "Discussion", "Conclusion", "Tables", "Figures", "References")
-
+# ★ 2026-06-20: _PIN_SECTIONS 제거 — '📌 프리뷰에 박기' 기능 통째 폐기 (사용자 요청).
 
 # ★ UX-1: 빈 채팅 환영 화면 — 사용자가 "연구 아이디어 한 줄" 입력으로 시작하게
 _EXAMPLE_TOPICS = [
@@ -687,36 +685,8 @@ def _friendly_error(kind: str, raw_msg: str,
     return msg
 
 
-def _pin_to_section(project: dict, content: str, section: str,
-                       *, mode: str = "append") -> None:
-    """assistant 응답(또는 선택 블록)을 sections에 박는 핵심 액션.
-
-    mode='append': 기존 내용 뒤에 \\n\\n+content
-    mode='overwrite': 통째로 교체
-    저장 후 _save_project → 우측 프리뷰 즉시 반영 + 다음 turn에 build_system_with_preview가
-    sections snapshot으로 LLM 컨텍스트에 자동 주입(=양방향 binding).
-    """
-    if not content or not section:
-        return
-    secs = project.setdefault("sections", {})
-    cur = secs.get(section) or ""
-    if isinstance(cur, dict):
-        # 기존 구조가 dict (Abstract.Background 등) — _appended 슬롯에 추가
-        cur_text = str(cur.get("_appended", "") or "")
-        new = (cur_text + "\n\n" + content).strip() if (mode == "append" and cur_text) else content
-        cur["_appended"] = new
-        secs[section] = cur
-    else:
-        cur_text = str(cur or "")
-        new = (cur_text + "\n\n" + content).strip() if (mode == "append" and cur_text) else content
-        secs[section] = new
-    # research_state.manuscript_text도 동시 갱신 (autopilot이 쓰는 키)
-    # ★ RESEARCH_STATE_SPEC §1: manuscript_text 이중쓰기 제거.
-    # sections가 유일 정본 — manuscript_text는 더 이상 저장하지 않음 (파생 getter 사용).
-    # legacy 키는 None으로 명시(이전 저장본 호환), 새로 저장하지 않음.
-    project.setdefault("research_state", {})["manuscript_text"] = None
-    _save_project(project)
-
+# ★ 2026-06-20: _pin_to_section 제거 — '📌 프리뷰에 박기' 기능 통째 폐기 (사용자 요청).
+# 호출처 0건 확인 → dead code. sections에 박는 동등 동작은 patch_preview tool로 LLM이 직접.
 
 def _render_msg(role: str, content: str, *, msg_idx: int = -1,
                   project: dict = None, allow_pin: bool = False) -> None:
@@ -788,39 +758,50 @@ def _render_chat_page(pid: str):
                 f"padding:4px 0 12px 0;'>{title_text[:80]}</div>",
                 unsafe_allow_html=True)
 
+    # ★ 2026-06-20 v5: DESIGN-LANGUAGE 정합 (사용자 정직 지적 'CSS 강화 즉시').
+    # §1 순흑 금지 (#0F172A → #2A2A2A) · §3 radius 18px · §7 8px 그리드 (16px gap·12px margin)
+    # §8 transition 250ms cubic-bezier (hover lift는 button에만, 카드는 정적).
     st.markdown("""
     <style>
-    .msg-user { background:#0F172A; color:#FFFFFF; border-radius:14px 14px 4px 14px;
-                 padding:10px 14px; margin:8px 0 8px auto; max-width:74ch;
-                 width:fit-content; font-size:15px; line-height:1.55;
-                 white-space:pre-wrap; word-wrap:break-word; }
-    .msg-asst { background:#f7f7f9; color:#0F172A; border-radius:14px 14px 14px 4px;
-                 padding:13px 16px; margin:8px auto 8px 0; max-width:74ch;
-                 width:fit-content; font-size:15px; line-height:1.65;
-                 white-space:pre-wrap; word-wrap:break-word; }
-    /* UX_CHAT_DESIGN_SPEC §6.1 — 채팅 말풍선 헤더/타이포 규율 (문서급 거대 헤더 차단) */
-    .msg-asst h1, .msg-asst h2 { font-size:1.05rem; font-weight:700;
-                                  margin:14px 0 6px; line-height:1.3;
-                                  color:#0F172A; border:none; padding:0; }
-    .msg-asst h3 { font-size:0.95rem; font-weight:600; margin:12px 0 4px;
-                    color:#0F172A; }
-    .msg-asst p  { margin:0 0 10px; line-height:1.65; text-indent:0;
+    .msg-user { background:#2A2A2A; color:#FFFFFF; border-radius:18px 18px 4px 18px;
+                 padding:12px 16px; margin:12px 0 12px auto; max-width:74ch;
+                 width:fit-content; font-size:0.92rem; line-height:1.55;
+                 white-space:pre-wrap; word-wrap:break-word;
+                 box-shadow:0 1px 2px rgba(34,34,34,0.04), 0 4px 12px rgba(34,34,34,0.04);
+                 transition:250ms cubic-bezier(0.4,0,0.2,1); }
+    .msg-asst { background:#f7f7f9; color:#2A2A2A; border-radius:18px 18px 18px 4px;
+                 padding:16px 20px; margin:12px auto 12px 0; max-width:74ch;
+                 width:fit-content; font-size:0.92rem; line-height:1.65;
+                 white-space:pre-wrap; word-wrap:break-word;
+                 box-shadow:0 1px 2px rgba(34,34,34,0.04), 0 4px 12px rgba(34,34,34,0.04);
+                 transition:250ms cubic-bezier(0.4,0,0.2,1); }
+    /* DESIGN-LANGUAGE §6 타이포 3단계 (h1·h2 1.1rem/600, h3 1.0rem/600) — 4종+ 금지 */
+    .msg-asst h1, .msg-asst h2 { font-size:1.1rem; font-weight:600;
+                                  margin:16px 0 8px; line-height:1.35;
+                                  color:#2A2A2A; border:none; padding:0;
+                                  letter-spacing:-0.01em; }
+    .msg-asst h3 { font-size:1.0rem; font-weight:600; margin:12px 0 4px;
+                    color:#2A2A2A; }
+    .msg-asst p  { margin:0 0 12px; line-height:1.65; text-indent:0;
                     text-align:left; }
-    .msg-asst ul, .msg-asst ol { margin:6px 0 10px; padding-left:22px; }
-    .msg-asst li { margin:2px 0; line-height:1.6; }
-    .msg-asst table { font-size:0.88rem; border-collapse:collapse; margin:8px 0; }
-    .msg-asst th, .msg-asst td { padding:4px 8px;
-                                  border:1px solid rgba(15,23,42,0.12); }
+    .msg-asst ul, .msg-asst ol { margin:8px 0 12px; padding-left:24px; }
+    .msg-asst li { margin:4px 0; line-height:1.6; }
+    .msg-asst table { font-size:0.88rem; border-collapse:collapse; margin:12px 0; }
+    .msg-asst th, .msg-asst td { padding:8px 12px;
+                                  border:1px solid rgba(34,34,34,0.08); }
+    .msg-asst th { background:#eef3f8; font-weight:600; color:#1f4e79;
+                    text-align:left; }
     .msg-asst code { font-size:0.86em;
                       font-family:ui-monospace,"SF Mono",Consolas,monospace;
-                      background:rgba(15,23,42,0.05); padding:1px 5px;
-                      border-radius:4px; }
-    .msg-asst pre { background:rgba(15,23,42,0.05); padding:10px 12px;
-                     border-radius:8px; overflow-x:auto; margin:8px 0; }
-    .msg-asst strong, .msg-asst b { font-weight:700; }
-    .msg-asst blockquote { margin:8px 0; padding:6px 12px;
-                            border-left:3px solid rgba(15,23,42,0.18);
-                            background:rgba(15,23,42,0.03); }
+                      background:rgba(34,34,34,0.05); padding:2px 6px;
+                      border-radius:4px; color:#1f4e79; }
+    .msg-asst pre { background:rgba(34,34,34,0.05); padding:12px 16px;
+                     border-radius:12px; overflow-x:auto; margin:12px 0; }
+    .msg-asst strong, .msg-asst b { font-weight:600; }
+    .msg-asst blockquote { margin:12px 0; padding:8px 16px;
+                            border-left:3px solid #1f4e79;
+                            background:#eef3f8; border-radius:0 8px 8px 0;
+                            color:#1f4e79; }
     .preview-box { background:#FFFFFF; border:1px solid rgba(15,23,42,0.08);
                     border-radius:12px; padding:32px; min-height:600px;
                     box-shadow:0 1px 3px rgba(15,23,42,0.04); }
