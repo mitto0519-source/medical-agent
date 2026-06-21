@@ -10,21 +10,20 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-// ★ 2026-06-21: 반응형 3-pane (사용자 정직: '비율 안 맞음').
-//   · 모바일(<768px): 채팅만
-//   · 태블릿(>=768px): 좌 사이드바 + 채팅
-//   · 데스크탑(>=1280px): 3-pane (좌 + 채팅 + 우)
+// ★ 2026-06-21: 반응형 3-pane + 높이 고정 (사용자 정직: 'Composer가 밑으로 밀려남').
+//   · h-screen on root + min-h-0 on grid items = 자식이 부모 밀어내는 거 차단
+//   · 각 컬럼 = h-screen overflow-hidden (각자 스크롤)
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-screen grid bg-surface-alt
+    <div className="h-screen overflow-hidden grid bg-surface-alt
                     grid-cols-1
                     md:grid-cols-[240px_1fr]
                     xl:grid-cols-[260px_1fr_440px]">
-      <div className="hidden md:block">
+      <div className="hidden md:block h-screen min-h-0 overflow-hidden">
         <RecentSidebar />
       </div>
-      <main className="flex flex-col overflow-hidden">{children}</main>
-      <div className="hidden xl:block">
+      <main className="flex flex-col h-screen min-h-0 overflow-hidden">{children}</main>
+      <div className="hidden xl:block h-screen min-h-0 overflow-hidden">
         <PreviewPane />
       </div>
     </div>

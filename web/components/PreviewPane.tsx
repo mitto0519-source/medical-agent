@@ -18,7 +18,7 @@ export default function PreviewPane() {
   const [tab, setTab] = useState<Tab>("manuscript");
 
   return (
-    <aside className="border-l border-ink-muted/15 bg-white flex flex-col">
+    <aside className="border-l border-ink-muted/15 bg-white h-full flex flex-col overflow-hidden">
       {/* 탭 헤더 (DESIGN-LANGUAGE §5: 5개 미만 → pill 양식) */}
       <div className="flex border-b border-ink-muted/15 px-2 pt-3 gap-1">
         {TABS.map((t) => (

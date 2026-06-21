@@ -42,7 +42,7 @@ export default function RecentSidebar() {
   }
 
   return (
-    <aside className="border-r border-ink-muted/15 bg-white overflow-y-auto">
+    <aside className="border-r border-ink-muted/15 bg-white h-full overflow-y-auto flex flex-col">
       <div className="p-4 border-b border-ink-muted/15">
         <button
           onClick={newChat}
