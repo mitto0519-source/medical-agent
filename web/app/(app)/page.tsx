@@ -2,13 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import { streamChat } from "@/lib/sse";
+import Composer from "@/components/composer/Composer";
 
-// FRONTEND_NEXTJS_SPEC §6 + AGENT_OUTPUT_UX_SPEC §2/§3 골격.
-// Phase 3 — 채팅 본문 + 사고 트레이스 expander + 컴포저.
+// FRONTEND_NEXTJS_SPEC §6: 채팅 본문 + 사고 트레이스. 2026-06-21 — Composer 컴포넌트 사용 (첨부 자리 살아남).
 export default function AppPage() {
   const [messages, setMessages] = useState<Array<{ role: "user" | "assistant"; content: string }>>([]);
   const [trace, setTrace] = useState<Array<{ kind: string; text: string }>>([]);
-  const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -16,11 +15,16 @@ export default function AppPage() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  async function send() {
-    const msg = input.trim();
-    if (!msg || streaming) return;
-    setInput("");
-    setMessages((m) => [...m, { role: "user", content: msg }]);
+  async function send(msg: string, attachments?: File[]) {
+    if (!msg.trim() || streaming) return;
+
+    // 첨부 표시 (1차 — 파일명만 메시지에 prepend. multipart 전송은 다음 사이클)
+    const attachNote = attachments && attachments.length > 0
+      ? `📎 ${attachments.map(f => f.name).join(", ")}\n\n`
+      : "";
+    const fullMsg = attachNote + msg;
+
+    setMessages((m) => [...m, { role: "user", content: fullMsg }]);
     setTrace([]);
     setStreaming(true);
 
@@ -42,7 +46,7 @@ export default function AppPage() {
         }
       }
     } catch (e) {
-      console.warn("stream fail", e);
+      setMessages((m) => [...m, { role: "assistant", content: `[연결 실패: ${String(e).slice(0, 120)}]` }]);
     } finally {
       setStreaming(false);
     }
@@ -54,7 +58,8 @@ export default function AppPage() {
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.length === 0 && (
           <div className="text-center text-ink-subtle text-sm py-20">
-            연구 아이디어를 한 줄로 적어보세요.
+            연구 아이디어를 한 줄로 적어보세요. <br />
+            <span className="text-xs text-ink-muted">예: KNHANES UPF × MASLD · KYRBS 청소년 우울 · 카페인 대사증후군</span>
           </div>
         )}
         {messages.map((m, i) => (
@@ -62,17 +67,17 @@ export default function AppPage() {
             key={i}
             className={
               m.role === "user"
-                ? "ml-auto max-w-2xl bg-sapphire-50 rounded-xl px-4 py-3 text-ink"
-                : "mr-auto max-w-2xl bg-white rounded-xl px-4 py-3 shadow-glass text-ink"
+                ? "ml-auto max-w-2xl bg-sapphire/10 rounded-xl px-4 py-3 text-ink whitespace-pre-wrap"
+                : "mr-auto max-w-2xl bg-white rounded-xl px-4 py-3 shadow-sm border border-ink-muted/10 text-ink whitespace-pre-wrap"
             }
           >
             {m.content}
           </div>
         ))}
 
-        {/* 사고 트레이스 (AGENT_OUTPUT_UX §2) */}
+        {/* 사고 트레이스 */}
         {trace.length > 0 && (
-          <details className="mr-auto max-w-2xl text-sm text-ink-subtle bg-surface-alt rounded-lg px-3 py-2">
+          <details className="mr-auto max-w-2xl text-sm text-ink-subtle bg-surface-alt rounded-lg px-3 py-2 border border-ink-muted/10">
             <summary className="cursor-pointer">🧠 사고 과정 ({trace.length} 단계)</summary>
             <ol className="mt-2 space-y-1 list-decimal pl-4">
               {trace.slice(-20).map((t, i) => (
@@ -88,26 +93,7 @@ export default function AppPage() {
         <div ref={bottomRef} />
       </div>
 
-      {/* 컴포저 (UX_CHAT_DESIGN §4: 단일 박스, 첨부칩·모델·@ref 내장) */}
-      <div className="border-t border-ink-muted/15 bg-white p-4">
-        <div className="max-w-3xl mx-auto flex gap-2">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), send())}
-            disabled={streaming}
-            placeholder="MASLD vs MetALD 정의를 비교하고 싶어… 같이"
-            className="flex-1 px-4 py-2.5 border border-ink-muted/20 rounded-md text-sm focus:border-sapphire outline-none"
-          />
-          <button
-            onClick={send}
-            disabled={streaming || !input.trim()}
-            className="px-5 py-2.5 bg-sapphire text-white rounded-md text-sm font-medium disabled:opacity-50"
-          >
-            {streaming ? "..." : "↑"}
-          </button>
-        </div>
-      </div>
+      <Composer onSend={send} disabled={streaming} />
     </>
   );
 }
