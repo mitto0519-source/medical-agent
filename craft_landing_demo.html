@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Research Agent — Craft Landing</title>
+<style>
+  /* ===== CRAFT_SPEC applied ===== */
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --txt-primary:#FFFFFF; --txt-secondary:#B4B4B8; --txt-muted:#8A8A93;
+    --border:rgba(255,255,255,.08); --border-hover:rgba(255,255,255,.14);
+    --surface-a:rgba(255,255,255,.03); --surface-b:rgba(255,255,255,.05);
+    --surface-c:rgba(18,20,28,.92); --hover:rgba(255,255,255,.06); --active:rgba(255,255,255,.10);
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font);background:#09090B;color:var(--txt-primary);
+       overflow:hidden;-webkit-font-smoothing:antialiased}
+  /* L0 + L1 Atmosphere — mesh gradient (4 blobs + heavy blur) */
+  .atmosphere{position:fixed;inset:-200px;z-index:0;filter:blur(120px);
+    background:
+      radial-gradient(900px 700px at 22% 18%,  rgba(47,94,255,.80), transparent 60%),
+      radial-gradient(1150px 880px at 82% 28%, rgba(18,43,94,.85), transparent 62%),
+      radial-gradient(1000px 820px at 48% 95%, rgba(34,211,238,.32), transparent 60%),
+      radial-gradient(820px 720px at 72% 78%,  rgba(124,92,255,.28), transparent 60%),
+      #0B1020;
+    animation:drift 24s ease-in-out infinite alternate;}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-30px,-20px) scale(1.06)}}
+  .app{position:relative;z-index:1;display:grid;grid-template-columns:248px 1fr;height:100vh}
+
+  /* ===== L4 Sidebar ===== */
+  .side{display:flex;flex-direction:column;padding:16px 12px;
+        background:rgba(11,16,32,.55);backdrop-filter:blur(20px);
+        border-right:1px solid var(--border)}
+  .switcher{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;
+            border-radius:12px;border:1px solid var(--border);background:var(--surface-a);
+            cursor:pointer;transition:background .18s cubic-bezier(.4,0,.2,1)}
+  .switcher:hover{background:var(--hover)}
+  .switcher .logo{width:22px;height:22px;border-radius:7px;
+    background:linear-gradient(135deg,#2F5EFF,#22D3EE);flex:none}
+  .switcher .nm{font-size:13.5px;font-weight:500}
+  .switcher .nm small{display:block;font-size:11px;color:var(--txt-muted);font-weight:400}
+  .switcher .chev{margin-left:auto;color:var(--txt-muted);font-size:14px}
+  .seclabel{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+            color:var(--txt-muted);padding:0 12px;margin:22px 0 8px}
+  .nav{display:flex;flex-direction:column;gap:2px}
+  .item{display:flex;align-items:center;gap:11px;height:36px;padding:0 12px;
+        border-radius:10px;color:var(--txt-secondary);font-size:13.5px;cursor:pointer;
+        transition:background .18s cubic-bezier(.4,0,.2,1),color .18s}
+  .item:hover{background:var(--hover);color:var(--txt-primary)}
+  .item.active{background:var(--active);color:var(--txt-primary)}
+  .item .ic{width:17px;text-align:center;opacity:.85;font-size:15px}
+  .side-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+  .card-cta{padding:12px;border-radius:14px;border:1px solid var(--border);
+            background:var(--surface-a)}
+  .card-cta .t{font-size:12.5px;font-weight:500}
+  .card-cta .d{font-size:11px;color:var(--txt-muted);margin:3px 0 9px;line-height:1.4}
+  .card-cta button{width:100%;height:30px;border-radius:9px;border:none;cursor:pointer;
+    background:linear-gradient(135deg,#2F5EFF,#5B7BFF);color:#fff;font-size:12px;font-weight:500;
+    font-family:inherit;transition:transform .18s}
+  .card-cta button:hover{transform:translateY(-1px)}
+
+  /* ===== Hero ===== */
+  .main{display:flex;flex-direction:column;align-items:center;justify-content:center;
+        padding:0 32px;position:relative}
+  .pill{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;
+        border-radius:999px;border:1px solid var(--border);background:var(--surface-b);
+        backdrop-filter:blur(12px);font-size:12.5px;color:var(--txt-secondary);margin-bottom:28px}
+  .pill .dot{width:6px;height:6px;border-radius:50%;background:#22D3EE;box-shadow:0 0 8px #22D3EE}
+  h1{font-size:52px;font-weight:700;letter-spacing:-.02em;line-height:1.05;text-align:center}
+  .sub{margin:18px 0 40px;font-size:17px;color:var(--txt-secondary);text-align:center;
+       max-width:520px;line-height:1.5}
+  /* Input box = Surface C, floating object */
+  .composer{width:680px;max-width:100%;background:var(--surface-c);backdrop-filter:blur(24px);
+            border:1px solid var(--border);border-radius:28px;padding:20px 22px;
+            box-shadow:0 0 0 1px rgba(255,255,255,.04), 0 1px 0 rgba(0,0,0,.25);
+            transition:border-color .18s}
+  .composer:focus-within{border-color:var(--border-hover)}
+  .composer textarea{width:100%;background:none;border:none;outline:none;resize:none;
+    color:var(--txt-primary);font-family:inherit;font-size:16px;line-height:1.5;height:48px}
+  .composer textarea::placeholder{color:var(--txt-muted)}
+  .ctools{display:flex;align-items:center;gap:8px;margin-top:8px}
+  .tpill{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;
+         border-radius:999px;border:1px solid var(--border);background:var(--surface-a);
+         color:var(--txt-secondary);font-size:12.5px;cursor:pointer;transition:background .18s}
+  .tpill:hover{background:var(--hover)}
+  .ico-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+    background:var(--surface-a);color:var(--txt-secondary);cursor:pointer;display:grid;
+    place-items:center;font-size:15px;transition:background .18s}
+  .ico-btn:hover{background:var(--hover)}
+  .send{margin-left:auto;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
+    background:linear-gradient(135deg,#2F5EFF,#22D3EE);color:#fff;display:grid;place-items:center;
+    font-size:16px;transition:transform .18s,box-shadow .18s}
+  .send:hover{transform:scale(1.06);box-shadow:0 0 18px rgba(47,94,255,.5)}
+  /* Template grid */
+  .templates{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+             width:680px;max-width:100%;margin-top:24px}
+  .tcard{padding:14px 16px;border-radius:16px;border:1px solid var(--border);
+         background:var(--surface-a);cursor:pointer;transition:background .18s,transform .18s,border-color .18s}
+  .tcard:hover{background:var(--surface-b);transform:translateY(-2px);border-color:var(--border-hover)}
+  .tcard .ti2{font-size:16px;margin-bottom:8px;display:block}
+  .tcard .tt{font-size:13.5px;font-weight:500}
+  .tcard .td{font-size:11.5px;color:var(--txt-muted);margin-top:3px;line-height:1.35}
+</style>
+</head>
+<body>
+  <div class="atmosphere"></div>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="side">
+      <div class="switcher">
+        <div class="logo"></div>
+        <div class="nm">수수's Lab<small>Research workspace</small></div>
+        <div class="chev">⌄</div>
+      </div>
+      <div class="seclabel">Workspace</div>
+      <nav class="nav">
+        <div class="item active"><span class="ic">◇</span>Dashboard</div>
+        <div class="item"><span class="ic">▤</span>Projects</div>
+        <div class="item"><span class="ic">✎</span>Manuscripts</div>
+        <div class="item"><span class="ic">∿</span>Analysis</div>
+        <div class="item"><span class="ic">⊞</span>Knowledge</div>
+        <div class="item"><span class="ic">❝</span>References</div>
+      </nav>
+      <div class="seclabel">Recents</div>
+      <nav class="nav">
+        <div class="item"><span class="ic">·</span>Smoking &amp; CVD cohort</div>
+        <div class="item"><span class="ic">·</span>UPF / MetS draft</div>
+        <div class="item"><span class="ic">·</span>MASLD risk (KNHANES)</div>
+      </nav>
+      <div class="side-foot">
+        <div class="card-cta">
+          <div class="t">Upgrade to Pro</div>
+          <div class="d">Unlimited analyses, full-text RAG, priority models.</div>
+          <button>Upgrade</button>
+        </div>
+        <div class="item"><span class="ic">⚙</span>Settings</div>
+      </div>
+    </aside>
+
+    <!-- Hero -->
+    <main class="main">
+      <div class="pill"><span class="dot"></span>Connected to KNHANES · KNHANES · PubMed</div>
+      <h1>Ready to research, 수수?</h1>
+      <p class="sub">Transform questions into evidence, analysis and publications.</p>
+
+      <div class="composer">
+        <textarea placeholder="Ask a research question…  e.g. Association between smoking and CVD in Korean adults"></textarea>
+        <div class="ctools">
+          <div class="tpill">Research ⌄</div>
+          <button class="ico-btn" title="Attach">⌗</button>
+          <button class="ico-btn" title="Voice">🎙</button>
+          <button class="send" title="Send">↑</button>
+        </div>
+      </div>
+
+      <div class="templates">
+        <div class="tcard"><span class="ti2">📊</span><div class="tt">KNHANES Analysis</div><div class="td">Survey-weighted, ready to run</div></div>
+        <div class="tcard"><span class="ti2">⊕</span><div class="tt">Meta-analysis</div><div class="td">Pooled effects + forest plot</div></div>
+        <div class="tcard"><span class="ti2">◷</span><div class="tt">Cohort Study</div><div class="td">KM · Cox · person-years</div></div>
+        <div class="tcard"><span class="ti2">▤</span><div class="tt">Systematic Review</div><div class="td">PRISMA-guided screening</div></div>
+        <div class="tcard"><span class="ti2">✎</span><div class="tt">Manuscript Draft</div><div class="td">Cho-style, journal-ready</div></div>
+        <div class="tcard"><span class="ti2">∿</span><div class="tt">Statistical Analysis</div><div class="td">Pick test, get table+figure</div></div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

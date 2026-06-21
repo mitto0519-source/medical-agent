@@ -1,12 +1,38 @@
-/* Pretendard — 한국어 + 영문 통일 양식 (DESIGN-LANGUAGE §6 타이포 단일소스). */
+/* Pretendard — 한국어 + 영문 통일 */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ★ DESIGN.md sapphire_glass + DESIGN-LANGUAGE craft 규칙 base layer (2026-06-21 강화). */
+/* ★ CRAFT_SPEC.md base layer (2026-06-21 v3).
+   토큰 아래의 craft 규칙 — Layer/Surface/Border/Blur/Spacing/Motion. */
 @layer base {
+  :root {
+    /* Layer Architecture (5층) */
+    --l0-bg: #09090B;
+    --l0-bg-warm: #0B0B0F;
+    --surface-a: rgba(255, 255, 255, 0.03);
+    --surface-b: rgba(255, 255, 255, 0.05);
+    --surface-c: rgba(18, 20, 28, 0.92);
+    --hover: rgba(255, 255, 255, 0.06);
+    --active: rgba(255, 255, 255, 0.10);
+
+    /* Border (있는데 안 보이게) */
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.14);
+
+    /* Typography (헤드라인 빼면 회색) */
+    --txt-primary: #FFFFFF;
+    --txt-secondary: #B4B4B8;
+    --txt-muted: #8A8A93;
+
+    /* Light workspace (작업 중) */
+    --light-bg: #F7F7F9;
+    --light-card: #FFFFFF;
+    --light-text: #222222;
+  }
+
   html {
     color-scheme: light;
     -webkit-font-smoothing: antialiased;
@@ -14,28 +40,22 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    /* DESIGN-LANGUAGE §1 순흑 금지 #222 + Pretendard 폰트 단일소스 */
-    color: #222222;
-    font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
-      "Apple SD Gothic Neo", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    color: var(--light-text);
+    font-family: "Pretendard Variable", "Pretendard", "Inter", -apple-system,
+      BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", "Roboto",
+      "Helvetica Neue", Arial, sans-serif;
     font-feature-settings: "ss01", "ss02", "tnum";
     letter-spacing: -0.011em;
-
-    /* 배경 — 미세 그라데이션 (FigureLabs 양식: 흰 종이 톤 + sapphire glass 미감) */
-    background:
-      radial-gradient(900px 600px at 8% -5%, rgba(31, 78, 121, 0.045), transparent 60%),
-      radial-gradient(800px 500px at 100% 0%, rgba(31, 78, 121, 0.03), transparent 55%),
-      linear-gradient(180deg, #ffffff 0%, #f7f7f9 100%);
-    background-attachment: fixed;
+    background: var(--light-bg);
     min-height: 100vh;
   }
   *:focus-visible {
-    outline: 2px solid #1f4e79;
+    outline: 2px solid #2F5EFF;
     outline-offset: 2px;
     border-radius: 6px;
   }
 
-  /* 스크롤바 — 절제 (FigureLabs 양식) */
+  /* 스크롤바 (절제) */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
@@ -44,56 +64,158 @@
     border: 2px solid transparent;
     background-clip: padding-box;
   }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(34, 34, 34, 0.2); background-clip: padding-box; }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 34, 34, 0.2);
+    background-clip: padding-box;
+  }
 }
 
 @layer components {
-  /* DESIGN-LANGUAGE §3: 콘텐츠는 항상 카드 안. radius 18px, 그림자 opacity 4-8%. */
-  .card {
-    @apply bg-white rounded-2xl p-5 border border-ink/5;
-    box-shadow: 0 1px 2px rgba(34, 34, 34, 0.04), 0 8px 24px rgba(34, 34, 34, 0.04);
+  /* ★ L1 Atmosphere = 메시 그라데이션 (CRAFT_SPEC §2)
+     4 blobs (royal blue + deep navy + cyan + soft violet) + blur 120px + drift */
+  .atmosphere {
+    position: absolute;
+    inset: -200px;
+    z-index: 0;
+    filter: blur(120px);
+    background:
+      radial-gradient(900px 700px at 22% 18%, rgba(47, 94, 255, 0.80), transparent 60%),
+      radial-gradient(1150px 880px at 82% 28%, rgba(18, 43, 94, 0.85), transparent 62%),
+      radial-gradient(1000px 820px at 48% 95%, rgba(34, 211, 238, 0.32), transparent 60%),
+      radial-gradient(820px 720px at 72% 78%, rgba(124, 92, 255, 0.28), transparent 60%),
+      #0B1020;
+    animation: atmosphere-drift 24s ease-in-out infinite alternate;
+    pointer-events: none;
   }
-  .card-hover {
-    @apply transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)];
+  @keyframes atmosphere-drift {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(-30px, -20px) scale(1.06); }
   }
-  .card-hover:hover {
-    box-shadow: 0 2px 4px rgba(34, 34, 34, 0.05), 0 16px 40px rgba(34, 34, 34, 0.06);
-    transform: translateY(-2px);
+
+  /* Surface C — 떠있는 다크 입력박스 */
+  .surface-c {
+    background: var(--surface-c);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
   }
-  /* DESIGN-LANGUAGE §2: 숫자 크게 · 단위 작게 2:1 */
-  .stat-number {
-    @apply text-2xl font-semibold tracking-tight tabular-nums;
+
+  /* Floating pill (배지) */
+  .floating-pill {
+    @apply inline-flex items-center gap-2 px-3.5 h-8 rounded-full text-[0.78rem];
+    background: var(--surface-b);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--txt-secondary);
   }
-  .stat-unit {
-    @apply text-base text-ink-subtle;
-  }
-  /* 사고 과정 카드 — 응답 중 진행 표시 (사용자 정직 '껍데기 양식') */
-  .think-card {
-    @apply rounded-2xl bg-white/80 backdrop-blur-sm border border-ink/5 px-4 py-3;
-    box-shadow: 0 1px 2px rgba(34, 34, 34, 0.04);
-  }
-  /* 펄스 도트 — 응답 중 활성 표시 */
+
+  /* 펄스 도트 */
   .pulse-dot {
     @apply inline-block w-1.5 h-1.5 rounded-full bg-sapphire;
     animation: pulse-soft 1.4s ease-in-out infinite;
   }
+  .think-card {
+    @apply rounded-2xl bg-white/80 backdrop-blur-sm border border-ink/5 px-4 py-3;
+    box-shadow: 0 1px 2px rgba(34, 34, 34, 0.04);
+  }
+
   /* 토큰 스트리밍 커서 */
   .stream-cursor::after {
     content: "▌";
     display: inline-block;
     margin-left: 2px;
-    color: #1f4e79;
+    color: #2F5EFF;
     animation: blink 1s steps(2) infinite;
   }
-  /* 종이 양식 reading view */
-  .prose-paper {
-    @apply text-[0.95rem] leading-[1.75];
-    color: #222;
+
+  /* ChatMarkdown 컨테이너 (이미지·표·코드 인라인 렌더) */
+  .chat-md {
+    color: inherit;
+    line-height: 1.7;
+  }
+  .chat-md p { margin: 0 0 0.6em; }
+  .chat-md p:last-child { margin-bottom: 0; }
+  .chat-md h1, .chat-md h2, .chat-md h3 {
+    font-weight: 600;
+    margin: 1.2em 0 0.5em;
+    letter-spacing: -0.01em;
+  }
+  .chat-md h1 { font-size: 1.2rem; }
+  .chat-md h2 { font-size: 1.08rem; }
+  .chat-md h3 { font-size: 0.98rem; }
+  .chat-md ul, .chat-md ol {
+    margin: 0.4em 0 0.6em;
+    padding-left: 1.5em;
+  }
+  .chat-md li { margin: 0.18em 0; }
+  .chat-md code {
+    background: rgba(34, 34, 34, 0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.85em;
+    color: #2F5EFF;
+  }
+  .chat-md pre {
+    background: #0B1020;
+    color: #E8EAF0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    overflow-x: auto;
+    margin: 0.8em 0;
+    font-size: 0.82rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .chat-md pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+  }
+  .chat-md img {
+    max-width: 100%;
+    border-radius: 14px;
+    margin: 0.8em 0;
+    border: 1px solid rgba(34, 34, 34, 0.08);
+    box-shadow: 0 1px 2px rgba(34, 34, 34, 0.04), 0 8px 24px rgba(34, 34, 34, 0.06);
+  }
+  .chat-md table {
+    border-collapse: collapse;
+    margin: 0.8em 0;
+    font-size: 0.88rem;
+    width: 100%;
+  }
+  .chat-md th, .chat-md td {
+    border: 1px solid rgba(34, 34, 34, 0.1);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  .chat-md th {
+    background: #eef3f8;
+    font-weight: 600;
+    color: #2F5EFF;
+  }
+  .chat-md blockquote {
+    border-left: 3px solid #2F5EFF;
+    background: rgba(47, 94, 255, 0.06);
+    margin: 0.8em 0;
+    padding: 0.4em 1em;
+    border-radius: 0 8px 8px 0;
+    color: var(--light-text);
+  }
+  .chat-md a {
+    color: #2F5EFF;
+    text-decoration: underline;
+    text-decoration-color: rgba(47, 94, 255, 0.3);
+    text-underline-offset: 2px;
+  }
+  .chat-md a:hover {
+    text-decoration-color: rgba(47, 94, 255, 0.8);
   }
 }
 
 @layer utilities {
-  /* 펄스 — DESIGN-LANGUAGE §8 모션 (250ms cubic-bezier) */
   @keyframes pulse-soft {
     0%, 100% { opacity: 0.35; transform: scale(0.9); }
     50% { opacity: 1; transform: scale(1.1); }
@@ -106,7 +228,19 @@
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  @keyframes figure-shimmer {
+    0%, 100% { opacity: 0.2; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
   .anim-slide-in {
     animation: slide-in 220ms cubic-bezier(0.4, 0, 0.2, 1);
   }
+  .figure-shimmer {
+    animation: figure-shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+/* Hero textarea placeholder — Surface C 안 muted */
+.hero-textarea::placeholder {
+  color: var(--txt-muted);
 }
