@@ -18,7 +18,9 @@
     "@tiptap/react": "^2.10.0",
     "@tiptap/starter-kit": "^2.10.0",
     "schema-dts": "^1.1.2",
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.5.0",
+    "diff": "^7.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

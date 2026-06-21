@@ -1,33 +1,112 @@
+/* Pretendard — 한국어 + 영문 통일 양식 (DESIGN-LANGUAGE §6 타이포 단일소스). */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ★ DESIGN.md sapphire_glass + DESIGN-LANGUAGE craft 규칙 base layer. */
+/* ★ DESIGN.md sapphire_glass + DESIGN-LANGUAGE craft 규칙 base layer (2026-06-21 강화). */
 @layer base {
   html {
     color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   body {
-    /* DESIGN-LANGUAGE §1: 순흑/순백 금지 — 가장 어두운 텍스트는 #222222 */
+    /* DESIGN-LANGUAGE §1 순흑 금지 #222 + Pretendard 폰트 단일소스 */
     color: #222222;
-    background: #f7f7f9;
+    font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
+      "Apple SD Gothic Neo", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-feature-settings: "ss01", "ss02", "tnum";
+    letter-spacing: -0.011em;
+
+    /* 배경 — 미세 그라데이션 (FigureLabs 양식: 흰 종이 톤 + sapphire glass 미감) */
+    background:
+      radial-gradient(900px 600px at 8% -5%, rgba(31, 78, 121, 0.045), transparent 60%),
+      radial-gradient(800px 500px at 100% 0%, rgba(31, 78, 121, 0.03), transparent 55%),
+      linear-gradient(180deg, #ffffff 0%, #f7f7f9 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
   *:focus-visible {
     outline: 2px solid #1f4e79;
     outline-offset: 2px;
+    border-radius: 6px;
   }
+
+  /* 스크롤바 — 절제 (FigureLabs 양식) */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(34, 34, 34, 0.12);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(34, 34, 34, 0.2); background-clip: padding-box; }
 }
 
 @layer components {
-  /* DESIGN-LANGUAGE §3: 콘텐츠는 항상 카드 안 */
+  /* DESIGN-LANGUAGE §3: 콘텐츠는 항상 카드 안. radius 18px, 그림자 opacity 4-8%. */
   .card {
-    @apply bg-white rounded-xl shadow-glass p-4;
+    @apply bg-white rounded-2xl p-5 border border-ink/5;
+    box-shadow: 0 1px 2px rgba(34, 34, 34, 0.04), 0 8px 24px rgba(34, 34, 34, 0.04);
+  }
+  .card-hover {
+    @apply transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)];
+  }
+  .card-hover:hover {
+    box-shadow: 0 2px 4px rgba(34, 34, 34, 0.05), 0 16px 40px rgba(34, 34, 34, 0.06);
+    transform: translateY(-2px);
   }
   /* DESIGN-LANGUAGE §2: 숫자 크게 · 단위 작게 2:1 */
   .stat-number {
-    @apply text-2xl font-semibold tracking-tight;
+    @apply text-2xl font-semibold tracking-tight tabular-nums;
   }
   .stat-unit {
     @apply text-base text-ink-subtle;
+  }
+  /* 사고 과정 카드 — 응답 중 진행 표시 (사용자 정직 '껍데기 양식') */
+  .think-card {
+    @apply rounded-2xl bg-white/80 backdrop-blur-sm border border-ink/5 px-4 py-3;
+    box-shadow: 0 1px 2px rgba(34, 34, 34, 0.04);
+  }
+  /* 펄스 도트 — 응답 중 활성 표시 */
+  .pulse-dot {
+    @apply inline-block w-1.5 h-1.5 rounded-full bg-sapphire;
+    animation: pulse-soft 1.4s ease-in-out infinite;
+  }
+  /* 토큰 스트리밍 커서 */
+  .stream-cursor::after {
+    content: "▌";
+    display: inline-block;
+    margin-left: 2px;
+    color: #1f4e79;
+    animation: blink 1s steps(2) infinite;
+  }
+  /* 종이 양식 reading view */
+  .prose-paper {
+    @apply text-[0.95rem] leading-[1.75];
+    color: #222;
+  }
+}
+
+@layer utilities {
+  /* 펄스 — DESIGN-LANGUAGE §8 모션 (250ms cubic-bezier) */
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.35; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+  }
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .anim-slide-in {
+    animation: slide-in 220ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 }

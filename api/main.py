@@ -146,10 +146,18 @@ def get_project(pid: str, email: str = Depends(require_email)):
 
 # ── /chat (SSE — ChatEvent 스트림) ───────────────────────────────────────
 
+class AttachmentIn(BaseModel):
+    """첨부 1건 — 파일명 + MIME + base64 본문 (최대 50KB 텍스트 추출)."""
+    name: str
+    type: str = ""
+    data: str = ""  # base64 인코딩
+
+
 class ChatIn(BaseModel):
     project_id: Optional[str] = None
     message: str
     max_tokens: int = 2048
+    attachments: Optional[list] = None  # list[AttachmentIn]
 
 
 def _sse_serialize(ev) -> str:
