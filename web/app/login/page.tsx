@@ -17,23 +17,32 @@ function LoginForm() {
     setError("");
     setSubmitting(true);
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000"}/auth/login`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.trim().toLowerCase(), password: "" }),
-        }
-      );
+      const base = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+      const res = await fetch(`${base}/auth/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), password: "" }),
+      });
       if (!res.ok) {
-        setError("초대받지 않은 이메일입니다.");
+        const t = await res.text().catch(() => "");
+        setError(`로그인 실패 (${res.status}): ${t.slice(0, 80) || "초대 이메일 확인"}`);
         return;
       }
-      // full page reload — cookie 동기화 후 middleware 게이트 통과
-      window.location.href = redirect || "/";
-    } catch {
-      setError("서버 연결 실패.");
+      // ★ 2026-06-21 fix: 응답 body 토큰을 localStorage에 백업 + cookie 동기화 대기
+      // HF Space 등 일부 환경에서 cookie 동기화 timing 양식 양식 양식 X 양식 양식 X.
+      // 응답 body 토큰을 localStorage에 임시 저장 → 다음 페이지 양식 양식 확인 가능.
+      try {
+        const data = await res.json();
+        if (data?.token) {
+          localStorage.setItem("ma_token_backup", data.token);
+        }
+      } catch {}
+      // 짧은 대기 후 reload — cookie 양식 양식 양식 양식 양식
+      await new Promise((r) => setTimeout(r, 150));
+      window.location.replace(redirect || "/");
+    } catch (err) {
+      setError(`서버 연결 실패: ${String(err).slice(0, 100)}`);
     } finally {
       setSubmitting(false);
     }

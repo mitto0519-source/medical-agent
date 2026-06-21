@@ -86,9 +86,18 @@ def auth_login(body: LoginIn):
         raise HTTPException(status_code=401, detail="invalid credentials")
     token = create_token(body.email)
     resp = JSONResponse({"email": body.email, "token": token})
+    # ★ 2026-06-21 fix: HF Space HTTPS + Next.js rewrite same-origin.
+    # secure 양식 환경 자동 (HF SPACE_HOST 양식 = HTTPS / localhost = HTTP).
+    # samesite 'none' + secure True 양식 = cross-site OK (Next.js → FastAPI proxy 양식).
+    # 단 same-origin (/fastapi/auth/login) 양식 lax 양식 양식 양식 양식.
+    import os as _os
+    is_https = bool(_os.environ.get("SPACE_HOST") or _os.environ.get("HF_SPACE_ID"))
     resp.set_cookie(
-        key="ma_token", value=token, httponly=True, secure=False,
-        samesite="lax", max_age=7 * 24 * 3600,
+        key="ma_token", value=token, httponly=True,
+        secure=is_https,           # HF HTTPS 양식 양식 secure cookie
+        samesite="lax",            # same-origin proxy 양식 OK
+        max_age=7 * 24 * 3600,
+        path="/",
     )
     return resp
 
