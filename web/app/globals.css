@@ -213,6 +213,56 @@
   .chat-md a:hover {
     text-decoration-color: rgba(47, 94, 255, 0.8);
   }
+
+  /* ★ 라이트 워크스페이스 카드 (CRAFT_SPEC §13 light) — login/landing이 참조하던 미정의 클래스 배선 */
+  .card {
+    background: var(--light-card);
+    border: 1px solid rgba(34, 34, 34, 0.06);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(31, 78, 121, 0.04), 0 8px 24px rgba(31, 78, 121, 0.05);
+  }
+  .stat-number {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-top: 0.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-unit {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--txt-muted);
+  }
+
+  /* 세그먼트 토글 (PreviewPane 5-mode · light) */
+  .seg-group {
+    display: inline-flex;
+    gap: 3px;
+    background: rgba(34, 34, 34, 0.04);
+    border: 1px solid rgba(34, 34, 34, 0.06);
+    border-radius: 12px;
+    padding: 3px;
+  }
+  .seg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #555555;
+    background: none;
+    cursor: pointer;
+    transition: background 180ms cubic-bezier(0.4, 0, 0.2, 1), color 180ms;
+  }
+  .seg-btn:hover { color: #222222; }
+  .seg-btn[data-on="true"] {
+    background: linear-gradient(135deg, #2F5EFF, #4F7BFF);
+    color: #ffffff;
+  }
 }
 
 @layer utilities {

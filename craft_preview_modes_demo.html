@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Research Agent — Preview Modes</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0E1014; --txt:#E8EAF0; --txt-sec:#9AA0B0; --txt-muted:#646A7A;
+    --border:rgba(255,255,255,.08); --border-hover:rgba(255,255,255,.16);
+    --surface:rgba(255,255,255,.035); --surface-2:rgba(255,255,255,.06); --accent:#2F5EFF;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Pretendard',sans-serif;
+    --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font);background:var(--bg);color:var(--txt);overflow:hidden;-webkit-font-smoothing:antialiased}
+  .pane{display:flex;flex-direction:column;height:100vh}
+
+  /* ===== mode toggle (Lovable-style segmented) ===== */
+  .bar{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border)}
+  .seg{display:flex;gap:3px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:4px}
+  .seg button{display:flex;align-items:center;gap:7px;height:32px;padding:0 14px;border:none;border-radius:9px;
+    background:none;color:var(--txt-sec);font-family:inherit;font-size:12.5px;cursor:pointer;
+    transition:background .18s,color .18s}
+  .seg button .i{font-size:13px;opacity:.9}
+  .seg button:hover{color:var(--txt)}
+  .seg button.on{background:linear-gradient(135deg,#2F5EFF,#4F7BFF);color:#fff}
+  .crumb{margin-left:auto;font-size:12px;color:var(--txt-muted)}
+  .savebtn{height:30px;padding:0 14px;border-radius:9px;border:1px solid var(--border);background:var(--surface-2);
+    color:var(--txt);font-size:12px;cursor:pointer}
+
+  .body{flex:1;overflow-y:auto}
+  .body::-webkit-scrollbar{width:9px}.body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:5px}
+  .mode{display:none;height:100%}.mode.on{display:block}
+
+  /* ---- Preview (typeset paper) ---- */
+  .pwrap{padding:34px 40px;display:flex;justify-content:center}
+  .paper{width:100%;max-width:640px;background:#FbFbFd;color:#1a1c22;border-radius:8px;
+    padding:46px 56px;box-shadow:0 20px 60px rgba(0,0,0,.4);font-family:Georgia,serif}
+  .paper h2{font-size:21px;line-height:1.35;margin-bottom:12px;font-weight:600}
+  .paper .meta{font-size:12px;color:#6a6e78;margin-bottom:22px;font-family:var(--font)}
+  .paper h3{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#2F5EFF;margin:20px 0 7px;font-family:var(--font)}
+  .paper p{font-size:14px;line-height:1.78;margin-bottom:11px}
+
+  /* ---- Edit (direct manuscript editing) ---- */
+  .ewrap{max-width:760px;margin:0 auto;padding:24px 28px}
+  .block{display:grid;grid-template-columns:108px 1fr;gap:18px;padding:14px 0;border-bottom:1px solid var(--border)}
+  .block .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--txt-muted);padding-top:4px}
+  .block .edit{font-size:14px;line-height:1.7;color:var(--txt);outline:none;border-radius:8px;padding:8px 10px;margin:-8px -10px;
+    transition:background .18s,box-shadow .18s}
+  .block .edit:hover{background:var(--surface)}
+  .block .edit:focus{background:var(--surface-2);box-shadow:0 0 0 1px var(--accent)}
+  .block .edit.h{font-size:18px;font-weight:600;line-height:1.4}
+  .hint{font-size:11.5px;color:var(--txt-muted);margin:14px 0 0;display:flex;align-items:center;gap:7px}
+
+  /* ---- Tables ---- */
+  .twrap{max-width:760px;margin:0 auto;padding:26px 28px}
+  .tcap{font-size:13px;color:var(--txt-sec);margin:0 0 10px}.tcap b{color:var(--txt);font-weight:500}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:26px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border)}
+  th{color:var(--txt-sec);font-weight:500;font-size:12px}
+  td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+
+  /* ---- Figures ---- */
+  .fwrap{padding:30px;display:flex;justify-content:center}
+  .fcard{width:100%;max-width:600px;background:#FbFbFd;border-radius:10px;padding:20px 22px 8px;box-shadow:0 16px 50px rgba(0,0,0,.4)}
+  .fcap{font-size:12px;color:#555;font-family:var(--font);padding:8px 4px 6px;line-height:1.5}
+
+  /* ---- Sources ---- */
+  .swrap{max-width:760px;margin:0 auto;padding:24px 28px;display:flex;flex-direction:column;gap:10px}
+  .file{display:flex;align-items:center;gap:13px;padding:13px 15px;border:1px solid var(--border);
+    border-radius:12px;background:var(--surface);cursor:pointer;transition:background .18s}
+  .file:hover{background:var(--surface-2)}
+  .file .fi{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:15px;flex:none;
+    background:rgba(47,94,255,.14);color:#7c9bff}
+  .file .nm{font-size:13.5px}.file .nm small{display:block;color:var(--txt-muted);font-size:11.5px;margin-top:2px}
+  .file .sz{margin-left:auto;font-size:11.5px;color:var(--txt-muted)}
+</style>
+</head>
+<body>
+<div class="pane">
+  <div class="bar">
+    <div class="seg" id="seg">
+      <button data-m="preview" class="on"><span class="i">◑</span>Preview</button>
+      <button data-m="edit"><span class="i">✎</span>Edit</button>
+      <button data-m="tables"><span class="i">▦</span>Tables</button>
+      <button data-m="figures"><span class="i">∿</span>Figures</button>
+      <button data-m="sources"><span class="i">▤</span>Sources</button>
+    </div>
+    <span class="crumb" id="crumb">manuscript · Results</span>
+    <button class="savebtn">⤓ Export</button>
+  </div>
+
+  <div class="body">
+    <!-- PREVIEW -->
+    <div class="mode on" data-m="preview">
+      <div class="pwrap"><div class="paper">
+        <h2>Smoking status and incident cardiovascular disease among Korean adults: a prospective cohort study</h2>
+        <div class="meta">KNHANES-linked cohort · N = 18,420 · 94,300 person-years</div>
+        <h3>Results</h3>
+        <p>In this cohort study of 18,420 Korean adults (mean age, 47.2 years) with 94,300 person-years of follow-up, current smoking was associated with a higher risk of incident cardiovascular disease (adjusted HR, 1.74; 95% CI, 1.41–2.15) compared with never smoking.</p>
+        <p>A dose-response relationship was observed across smoking-quantity tertiles (P for trend &lt; .001). The association was stronger among men than women (P for interaction = .03).</p>
+      </div></div>
+    </div>
+
+    <!-- EDIT (direct text editing) -->
+    <div class="mode" data-m="edit">
+      <div class="ewrap">
+        <div class="block"><div class="tag">Title</div><div class="edit h" contenteditable="true">Smoking status and incident cardiovascular disease among Korean adults: a prospective cohort study</div></div>
+        <div class="block"><div class="tag">Abstract</div><div class="edit" contenteditable="true">We examined the association between smoking status and incident cardiovascular disease in a nationally representative cohort of Korean adults…</div></div>
+        <div class="block"><div class="tag">Results</div><div class="edit" contenteditable="true">In this cohort study of 18,420 Korean adults (mean age, 47.2 years) with 94,300 person-years of follow-up, current smoking was associated with a higher risk of incident cardiovascular disease (adjusted HR, 1.74; 95% CI, 1.41–2.15) compared with never smoking. A dose-response relationship was observed across smoking-quantity tertiles (P for trend &lt; .001).</div></div>
+        <div class="block"><div class="tag">Discussion</div><div class="edit" contenteditable="true">In this large prospective cohort, smoking was independently associated with cardiovascular risk, consistent with prior evidence and extending it to a Korean population…</div></div>
+        <p class="hint">✎ 문단을 클릭하면 바로 수정돼. 변경은 좌측 채팅과 Preview에 동기화됨 · ⌘↵ 저장</p>
+      </div>
+    </div>
+
+    <!-- TABLES -->
+    <div class="mode" data-m="tables">
+      <div class="twrap">
+        <p class="tcap"><b>Table 1.</b> Baseline characteristics by smoking status</p>
+        <table>
+          <tr><th>Characteristic</th><th class="r">Never</th><th class="r">Former</th><th class="r">Current</th></tr>
+          <tr><td>N</td><td class="r">10,240</td><td class="r">3,980</td><td class="r">4,200</td></tr>
+          <tr><td>Age, mean (y)</td><td class="r">46.1</td><td class="r">50.3</td><td class="r">45.0</td></tr>
+          <tr><td>Male, %</td><td class="r">28.4</td><td class="r">74.1</td><td class="r">81.2</td></tr>
+          <tr><td>Hypertension, %</td><td class="r">22.0</td><td class="r">29.5</td><td class="r">27.8</td></tr>
+        </table>
+        <p class="tcap"><b>Table 2.</b> Adjusted hazard ratios for incident CVD</p>
+        <table>
+          <tr><th>Smoking status</th><th class="r">Events</th><th class="r">aHR (95% CI)</th><th class="r">P</th></tr>
+          <tr><td>Never (ref)</td><td class="r">412</td><td class="r">1.00</td><td class="r">—</td></tr>
+          <tr><td>Former</td><td class="r">298</td><td class="r">1.28 (1.05–1.56)</td><td class="r">.01</td></tr>
+          <tr><td>Current</td><td class="r">521</td><td class="r">1.74 (1.41–2.15)</td><td class="r">&lt;.001</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- FIGURES -->
+    <div class="mode" data-m="figures">
+      <div class="fwrap"><div class="fcard">
+        <svg viewBox="0 0 560 290" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+          <line x1="58" y1="20" x2="58" y2="240" stroke="#2A2A2A" stroke-width="1.2"/>
+          <line x1="58" y1="240" x2="540" y2="240" stroke="#2A2A2A" stroke-width="1.2"/>
+          <g fill="#2A2A2A" font-size="10" text-anchor="end"><text x="50" y="244">0.85</text><text x="50" y="186">0.90</text><text x="50" y="128">0.95</text><text x="50" y="72">1.00</text></g>
+          <g stroke="#E6E8EE"><line x1="58" y1="68" x2="540" y2="68"/><line x1="58" y1="124" x2="540" y2="124"/><line x1="58" y1="182" x2="540" y2="182"/></g>
+          <g fill="#2A2A2A" font-size="10" text-anchor="middle"><text x="58" y="256">0</text><text x="178" y="256">2</text><text x="298" y="256">4</text><text x="418" y="256">6</text><text x="538" y="256">8</text></g>
+          <text x="299" y="278" fill="#2A2A2A" font-size="11" text-anchor="middle">Follow-up (years)</text>
+          <polyline fill="none" stroke="#1f4e79" stroke-width="2.2" points="58,68 118,74 178,82 238,90 298,100 358,108 418,118 478,126 538,134"/>
+          <polyline fill="none" stroke="#3d7068" stroke-width="2.2" points="58,68 118,80 178,94 238,110 298,126 358,144 418,160 478,176 538,190"/>
+          <polyline fill="none" stroke="#7d2e2e" stroke-width="2.2" points="58,68 118,86 178,108 238,130 298,154 358,176 418,196 478,214 538,230"/>
+          <g font-size="10.5" fill="#2A2A2A"><line x1="360" y1="34" x2="382" y2="34" stroke="#1f4e79" stroke-width="2.2"/><text x="388" y="37">Never</text><line x1="360" y1="48" x2="382" y2="48" stroke="#3d7068" stroke-width="2.2"/><text x="388" y="51">Former</text><line x1="360" y1="62" x2="382" y2="62" stroke="#7d2e2e" stroke-width="2.2"/><text x="388" y="65">Current</text></g>
+        </svg>
+        <div class="fcap"><b>Figure 1.</b> Kaplan–Meier survival curves by smoking status. Log-rank P &lt; .001.</div>
+      </div></div>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="mode" data-m="sources">
+      <div class="swrap">
+        <div class="file"><div class="fi">▦</div><div class="nm">KNHANES_2019_2021.sav<small>SPSS · survey-weighted · 18,420 rows</small></div><div class="sz">42.8 MB</div></div>
+        <div class="file"><div class="fi">▦</div><div class="nm">cohort_linked_followup.csv<small>person-years · events · covariates</small></div><div class="sz">6.1 MB</div></div>
+        <div class="file"><div class="fi">⧉</div><div class="nm">Cho_2021_smoking_CVD.pdf<small>reference · Kangbuk Samsung Health Study</small></div><div class="sz">1.2 MB</div></div>
+        <div class="file"><div class="fi">⧉</div><div class="nm">PRISMA_checklist.pdf<small>systematic-review support</small></div><div class="sz">340 KB</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const seg=document.getElementById('seg'), crumb=document.getElementById('crumb');
+  const labels={preview:'manuscript · Results',edit:'manuscript · editing',tables:'analysis · tables',figures:'analysis · figures',sources:'data · sources'};
+  seg.addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    const m=b.dataset.m;
+    [...seg.children].forEach(x=>x.classList.toggle('on',x===b));
+    document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('on',x.dataset.m===m));
+    crumb.textContent=labels[m];
+  });
+</script>
+</body>
+</html>

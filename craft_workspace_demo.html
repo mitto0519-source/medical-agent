@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Research Agent — Workspace</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0E1014; --panel:#121419; --txt:#E8EAF0; --txt-sec:#9AA0B0; --txt-muted:#646A7A;
+    --border:rgba(255,255,255,.08); --border-hover:rgba(255,255,255,.16);
+    --surface:rgba(255,255,255,.035); --surface-2:rgba(255,255,255,.06);
+    --accent:#2F5EFF;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font);background:var(--bg);color:var(--txt);overflow:hidden;
+       -webkit-font-smoothing:antialiased}
+  .app{display:grid;grid-template-columns:minmax(420px,44%) 1fr;height:100vh}
+
+  /* ===== LEFT: chat ===== */
+  .chat{display:flex;flex-direction:column;border-right:1px solid var(--border);min-width:0}
+  .chat-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+  .chat-head .logo{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#2F5EFF,#22D3EE)}
+  .chat-head .nm{font-size:13.5px;font-weight:500}
+  .chat-head .nm small{display:block;font-size:11px;color:var(--txt-muted);font-weight:400}
+  .log{flex:1;overflow-y:auto;padding:20px 18px;display:flex;flex-direction:column;gap:18px}
+  .log::-webkit-scrollbar{width:8px}.log::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:4px}
+
+  .ai-text{font-size:13.5px;line-height:1.65;color:var(--txt)}
+  .ai-text.dim{color:var(--txt-sec)}
+  .ts{align-self:center;font-size:11px;color:var(--txt-muted);margin:4px 0}
+
+  /* work-summary card (Lovable style) */
+  .wcard{border:1px solid var(--border);border-radius:14px;background:var(--surface);overflow:hidden}
+  .wcard-head{display:flex;align-items:center;gap:10px;padding:13px 15px}
+  .wcard-head .t{font-size:13.5px;font-weight:500;flex:1}
+  .wcard-head .bm{color:var(--txt-muted);font-size:15px;cursor:pointer}
+  .seg{display:flex;gap:8px;padding:0 12px 12px}
+  .seg button{flex:1;height:34px;border-radius:9px;border:1px solid var(--border);
+    background:transparent;color:var(--txt-sec);font-family:inherit;font-size:12.5px;cursor:pointer;
+    transition:background .18s,color .18s}
+  .seg button.on{background:var(--surface-2);color:var(--txt)}
+  .seg button:hover{background:var(--surface-2);color:var(--txt)}
+
+  /* message action row */
+  .acts{display:flex;gap:14px;color:var(--txt-muted);font-size:14px;margin-top:-6px}
+  .acts span{cursor:pointer;transition:color .18s}.acts span:hover{color:var(--txt)}
+
+  /* user message */
+  .user{align-self:flex-end;max-width:82%;background:var(--surface-2);border:1px solid var(--border);
+    border-radius:16px;padding:12px 15px;font-size:13.5px;line-height:1.6}
+
+  /* composer area */
+  .composer-wrap{padding:14px 18px 18px;border-top:1px solid var(--border)}
+  .refbar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--txt-sec);
+    padding:9px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);margin-bottom:10px}
+  .refbar .at{color:var(--txt-muted)}
+  .refbar .add{margin-left:auto;height:26px;padding:0 12px;border-radius:999px;border:1px solid var(--border);
+    background:var(--surface-2);color:var(--txt);font-size:11.5px;cursor:pointer}
+  .refbar .x{color:var(--txt-muted);cursor:pointer}
+  .composer{border:1px solid var(--border);border-radius:18px;background:var(--surface);padding:14px 14px 10px;
+    transition:border-color .18s}
+  .composer:focus-within{border-color:var(--border-hover)}
+  .composer textarea{width:100%;background:none;border:none;outline:none;resize:none;color:var(--txt);
+    font-family:inherit;font-size:14px;line-height:1.5;height:24px}
+  .composer textarea::placeholder{color:var(--txt-muted)}
+  .crow{display:flex;align-items:center;gap:8px;margin-top:8px}
+  .crow .plus{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:none;
+    color:var(--txt-sec);cursor:pointer;display:grid;place-items:center;font-size:16px}
+  .crow .build{margin-left:auto;height:30px;padding:0 13px;border-radius:999px;border:1px solid var(--border);
+    background:var(--surface-2);color:var(--txt);font-size:12.5px;cursor:pointer;display:flex;align-items:center;gap:5px}
+  .crow .mic{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:none;
+    color:var(--txt-sec);cursor:pointer;display:grid;place-items:center;font-size:14px}
+  .crow .send{width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;display:grid;place-items:center;
+    background:linear-gradient(135deg,#2F5EFF,#4F7BFF);color:#fff;font-size:15px;transition:transform .18s}
+  .crow .send:hover{transform:scale(1.07)}
+
+  /* ===== RIGHT: preview ===== */
+  .preview{display:flex;flex-direction:column;background:var(--bg);min-width:0}
+  .pv-head{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border)}
+  .pv-tabs{display:flex;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:3px}
+  .pv-tabs button{height:28px;padding:0 14px;border-radius:7px;border:none;background:none;color:var(--txt-sec);
+    font-family:inherit;font-size:12.5px;cursor:pointer}
+  .pv-tabs button.on{background:var(--surface-2);color:var(--txt)}
+  .pv-head .url{margin-left:12px;flex:1;height:30px;border-radius:8px;border:1px solid var(--border);
+    background:var(--surface);color:var(--txt-muted);font-size:12px;display:flex;align-items:center;padding:0 12px}
+  .pv-body{flex:1;overflow-y:auto;padding:34px 40px;display:flex;justify-content:center}
+  .paper{width:100%;max-width:620px;background:#FbFbFd;color:#1a1c22;border-radius:8px;
+    padding:46px 54px;box-shadow:0 20px 60px rgba(0,0,0,.4);font-family:Georgia,'Times New Roman',serif}
+  .paper h2{font-size:21px;line-height:1.35;margin-bottom:14px;font-weight:600}
+  .paper .meta{font-size:12.5px;color:#6a6e78;margin-bottom:24px;font-family:var(--font)}
+  .paper h3{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#2F5EFF;margin:22px 0 8px;font-family:var(--font)}
+  .paper p{font-size:14px;line-height:1.75;margin-bottom:12px}
+  .paper .fig{margin:18px 0;border:1px solid #e6e8ee;border-radius:8px;height:160px;
+    display:grid;place-items:center;color:#9aa0b0;font-size:12px;font-family:var(--font);background:#fff}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- LEFT: chat -->
+  <section class="chat">
+    <div class="chat-head">
+      <div class="logo"></div>
+      <div class="nm">흡연 &amp; 심혈관질환 코호트<small>Research · last saved 2분 전</small></div>
+    </div>
+    <div class="log">
+      <div class="ai-text dim">"던전을 불러올 수 없습니다" 대신 — KNHANES 2019–2021 흡연 변수 결측을 확인하겠습니다.</div>
+
+      <div class="wcard">
+        <div class="wcard-head"><span class="t">코호트 정의 + 결측 처리</span><span class="bm">🔖</span></div>
+        <div class="seg"><button class="on">Details</button><button>Preview</button></div>
+      </div>
+      <div class="ai-text">현재 흡연·과거 흡연·비흡연 3군으로 재코딩하고, 추적기간(person-years)을 산출했습니다. 결측 1.8%는 다중대치로 처리했고, 다음 단계에서 Cox 모형 공변량을 확정할 수 있습니다.</div>
+      <div class="acts"><span>↩</span><span>👍</span><span>👎</span><span>⧉</span><span>⋯</span></div>
+
+      <div class="ts">오늘 · 오전 7:57</div>
+
+      <div class="user">피격·생존분석은 됐고, 성별 교호작용(p for interaction)이랑 KM 곡선까지 한 번에 뽑아줘. 흡연량 dose-response도 보고 싶어.</div>
+
+      <div class="wcard">
+        <div class="wcard-head"><span class="t">Cox 회귀 + KM 곡선 + 교호작용</span><span class="bm">🔖</span></div>
+        <div class="seg"><button class="on">Details</button><button>Preview</button></div>
+      </div>
+      <div class="ai-text">성별 층화 Cox 모형(aHR, 95% CI)과 Kaplan–Meier 곡선을 생성하고, 흡연량 3분위 dose-response 및 p for interaction(sex)을 산출해 우측 프리뷰의 Table 2·Figure 1에 반영했습니다.</div>
+      <div class="acts"><span>↩</span><span>👍</span><span>👎</span><span>⧉</span><span>⋯</span></div>
+    </div>
+
+    <div class="composer-wrap">
+      <div class="refbar"><span class="at">@</span>다른 프로젝트 작업 재사용<span class="add">Add reference</span><span class="x">✕</span></div>
+      <div class="composer">
+        <textarea placeholder="Ask Medical Agent…"></textarea>
+        <div class="crow">
+          <button class="plus">＋</button>
+          <button class="build">Research ⌄</button>
+          <button class="mic">🎙</button>
+          <button class="send">↑</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT: preview -->
+  <section class="preview">
+    <div class="pv-head">
+      <div class="pv-tabs"><button class="on">Preview</button><button>Compare</button><button>&lt;/&gt;</button></div>
+      <div class="url">manuscript · Results</div>
+    </div>
+    <div class="pv-body">
+      <div class="paper">
+        <h2>Smoking status and incident cardiovascular disease among Korean adults: a prospective cohort study</h2>
+        <div class="meta">KNHANES-linked cohort · N = 18,420 · 94,300 person-years</div>
+        <h3>Results</h3>
+        <p>In this cohort study of 18,420 Korean adults (mean age, 47.2 years) with 94,300 person-years of follow-up, current smoking was associated with a higher risk of incident cardiovascular disease (adjusted HR, 1.74; 95% CI, 1.41–2.15) compared with never smoking.</p>
+        <div class="fig">Figure 1 · Kaplan–Meier survival curves by smoking status</div>
+        <p>A dose-response relationship was observed across smoking-quantity tertiles (p for trend &lt; .001). The association was stronger among men than women (p for interaction = .03).</p>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
