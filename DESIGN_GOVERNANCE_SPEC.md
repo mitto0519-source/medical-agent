@@ -113,6 +113,64 @@ python scripts/design_lint.py app/ web/      # BLOCK 0건이어야 ship
 
 ---
 
+## 6.5 ★ platform-mapping (Nothing Design Skill 차용 — 단일소스 → 다중타겟)
+
+> 위험: Streamlit CSS와 Next Tailwind가 *토큰을 따로* 정의 → 드리프트. Nothing의 platform-mapping 패턴으로 봉쇄.
+> 디자인 스킬 구조로 재구성(내용 그대로, 모듈화): `skills/medical_agent_design/SKILL.md` + `references/{tokens,components,platform-mapping}.md`.
+
+`references/platform-mapping.md` = **DESIGN.md 토큰 1개 → 각 타겟 출력 매핑**:
+| DESIGN.md 토큰 | Streamlit (CSS var) | Next.js (Tailwind) | (artifact) |
+|---|---|---|---|
+| `accent.sapphire` | `--sg-accent: #3B82F6` | `theme.colors.accent` / `bg-accent` | inline |
+| `radius.card` | `--sg-radius-card: 18px` | `rounded-[18px]` | |
+| `spacing.card_gap` | `gap: 16px` | `gap-4` | |
+| `data_viz.male` | (figure_style) | (figure_style) | navy 고정 |
+- 한 곳(DESIGN.md)만 바꾸면 Streamlit·Next·figure 전부 따라온다. design_lint가 *양 타겟 모두* color budget 검사(임의 색 = BLOCK).
+- `references/components.md` = 버튼/카드/표/오버레이를 **상태(hover/focus/disabled/loading/empty/error)와 함께** 카탈로그 → 에이전트가 매번 추측 안 함.
+- 효과: DESIGN.md(토큰) + DESIGN-LANGUAGE(craft) + 이 거버넌스를 **모듈형 design SKILL로 통폐합** + 마이그레이션 단일소스 보장.
+
+---
+
+## 8.5 ★ Figure Output Quality (FigureLabs급 산출물 — 데이터 vs 스키매틱 분리)
+
+> 능력은 있음(`publication_figure_generator`·`figure_builder.kaplan_meier`·`medical_plots`). 목표 = *출판급 품질*.
+> ★ 불변식: **LLM은 figure *명세*만, 렌더는 deterministic 엔진(matplotlib/Graphviz/SVG).** diffusion으로 의학 스키매틱 생성 금지(해부·기전 환각 = 의료 위험).
+
+### A. 데이터/통계 figure (forest·KM·bar — 폴리시로 출판급)
+| 레버 | 규칙 |
+|---|---|
+| 벡터 우선 | **SVG/PDF 주산출물** + 폰트 임베드. PNG는 미리보기 |
+| 저널 규격 | 컬럼폭(mm)·최소폰트(pt)·DPI·포맷 = `journal_intel`에 저널별 테이블 |
+| 색 | data_viz 팔레트만(navy/maroon 불변), 색맹+흑백 시뮬 통과 |
+| 다패널 | A/B/C 축·스타일·폰트 일치 |
+| 주석 완결 | n · p · CI · 유의표시 · 단위 · 범례 |
+| 타입별 | forest=pooled diamond+ref line+weight · KM=numbers-at-risk+censoring tick |
+
+### B. 개념 스키매틱 figure (study flow·기전·graphical abstract = FigureLabs 영역)
+- **재건축 X**(전용 학습모델). 현실 경로:
+  - **Graphviz / D2 / Mermaid → 깨끗한 벡터** (STROBE/CONSORT flow, 노출→경로→결과 박스-화살표). deterministic, 환각 0.
+  - **큐레이션 의학 SVG 컴포넌트 라이브러리** 조합(장기·세포·화살표).
+  - **FigureLabs/BioRender 외부 도구 통합**(일러스트는 그들이 낫다).
+- diffusion 금지(의학 figure 환각 위험).
+
+### C. Figure QA 게이트 (peer_reviewer 루브릭 재사용 — UI 게이트와 동형)
+figure 산출 시 자동 검사, BLOCK/WARN + 근거:
+- 벡터인가 · 폰트 임베드 · 저널 규격(폭/DPI/포맷) 준수 · data_viz 색 준수 · 색맹/흑백 안전 · 주석 완결(n/p/CI/단위) · 통계 일치(state.results 참조, numbers-before-prose).
+- 통과 못 하면 "완료" 금지. ("좋아보여요" 금지 = figure에도 적용)
+
+### D. 배선 (중복 0)
+| 요소 | 기존 | 변경 |
+|---|---|---|
+| 통계 figure | `publication_figure_generator`·`figure_builder` | 벡터/저널규격/주석 강화 |
+| 저널 규격 | `journal_intel` | figure spec 테이블 추가 |
+| 스키매틱 | (없음/약함) | Graphviz/D2 엔진 + SVG 컴포넌트 lib (신규) 또는 외부 통합 |
+| QA 게이트 | `peer_reviewer`·`cost_optimizer` | figure 항목 재사용 |
+| 색·규격 토큰 | `DESIGN.md` data_viz/figure | 그대로(단일소스) |
+
+> 요약: **통계 figure = 폴리시(벡터·저널규격·QA게이트)로 출판급 달성. 스키매틱 = Graphviz/SVG 또는 외부통합(재건축 X). LLM 명세→엔진 렌더 불변식.**
+
+---
+
 ## 9. 펀치라인 (왜 이게 "이상한 UI" 해법인가)
 지금까지 UI 리뷰가 "느낌이 좀…"이라 매번 다른 게 나왔다. **DESIGN.md(기준) + lint/리뷰게이트(강제) = 리뷰가 의견싸움이 아니라 *대조 작업*이 된다.** Component 락 이후 색·radius가 안 바뀐다 = "페이지마다 다른 서비스"의 구조적 해결. **Next.js 빌드 전에 이걸 깔면, VS Code가 만드는 UI가 DESIGN.md를 못 벗어난다** — 이상한 게 *구조적으로* 안 나온다.
 

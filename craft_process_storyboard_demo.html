@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Agent — Process Storyboard</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0E1014; --txt:#E8EAF0; --txt-sec:#9AA0B0; --txt-muted:#646A7A;
+    --border:rgba(255,255,255,.08); --border-hover:rgba(255,255,255,.18);
+    --surface:rgba(255,255,255,.035); --surface-2:rgba(255,255,255,.06); --accent:#2F5EFF;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font);background:var(--bg);color:var(--txt);overflow:hidden;-webkit-font-smoothing:antialiased}
+  .app{display:grid;grid-template-columns:minmax(440px,46%) 1fr;height:100vh}
+
+  /* LEFT — process storyboard */
+  .left{display:flex;flex-direction:column;border-right:1px solid var(--border);min-width:0}
+  .lhead{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+  .lhead .logo{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#2F5EFF,#22D3EE)}
+  .lhead .nm{font-size:13.5px;font-weight:500}
+  .lhead .nm small{display:block;font-size:11px;color:var(--txt-muted)}
+  .userq{align-self:flex-end;max-width:80%;margin:16px 18px 6px auto;background:var(--surface-2);
+    border:1px solid var(--border);border-radius:16px;padding:11px 15px;font-size:13.5px}
+  .flowlbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--txt-muted);padding:8px 20px 4px}
+  .steps{flex:1;overflow-y:auto;padding:6px 18px 18px;display:flex;flex-direction:column;gap:0}
+  .steps::-webkit-scrollbar{width:8px}.steps::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:4px}
+
+  /* step card — timeline */
+  .step{position:relative;padding:0 0 4px 30px}
+  .step::before{content:'';position:absolute;left:9px;top:26px;bottom:-6px;width:2px;background:var(--border)}
+  .step:last-child::before{display:none}
+  .dot{position:absolute;left:2px;top:14px;width:16px;height:16px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--accent);display:grid;place-items:center;z-index:1}
+  .dot.done{background:var(--accent)}
+  .dot.run{border-color:#22D3EE;animation:pulse 1.3s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,211,238,.4)}50%{box-shadow:0 0 0 5px rgba(34,211,238,0)}}
+  .scard{margin:8px 0;border:1px solid var(--border);border-radius:14px;background:var(--surface);
+    overflow:hidden;cursor:pointer;transition:border-color .18s,transform .18s,background .18s}
+  .scard:hover{border-color:var(--border-hover);transform:translateY(-1px)}
+  .scard.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .scard-h{display:flex;align-items:center;gap:9px;padding:11px 13px}
+  .scard-h .ic{font-size:14px}
+  .scard-h .t{font-size:13px;font-weight:500;flex:1}
+  .scard-h .st{font-size:10.5px;color:var(--txt-muted)}
+  /* thumbnail — actual screen state */
+  .thumb{margin:0 13px;border-radius:9px;overflow:hidden;border:1px solid var(--border);background:#FbFbFd;
+    height:118px;position:relative}
+  .thumb .mini{transform:scale(.62);transform-origin:top left;width:161%;height:161%;padding:12px 14px;color:#1a1c22}
+  .scard-f{display:flex;align-items:center;gap:8px;padding:10px 13px}
+  .pickbtn{height:28px;padding:0 12px;border-radius:8px;border:1px solid var(--border);background:transparent;
+    color:var(--txt-sec);font-family:inherit;font-size:11.5px;cursor:pointer;transition:all .18s}
+  .scard.sel .pickbtn{background:linear-gradient(135deg,#2F5EFF,#4F7BFF);border:none;color:#fff}
+  .star{margin-left:auto;color:var(--txt-muted);font-size:14px;cursor:pointer}
+  .star.on{color:#FFC83D}
+
+  /* RIGHT — preview of selected step */
+  .right{display:flex;flex-direction:column;background:#fafaf7;min-width:0}
+  .rhead{display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid #e8e8e2;background:#fff}
+  .rtag{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#2F5EFF;font-weight:600}
+  .rstep{font-size:12px;color:#888}
+  .setprev{margin-left:auto;height:30px;padding:0 14px;border-radius:8px;border:none;cursor:pointer;
+    background:linear-gradient(135deg,#2F5EFF,#22D3EE);color:#fff;font-size:12px;font-weight:500}
+  .rbody{flex:1;overflow-y:auto;padding:30px 36px;display:flex;justify-content:center}
+  .screen{width:100%;max-width:640px}
+  /* shared mini-screen styles (used in thumb + big) */
+  .doc h2{font-size:19px;font-weight:600;margin-bottom:8px;font-family:Georgia,serif;color:#1a1c22}
+  .doc .meta{font-size:11.5px;color:#6a6e78;margin-bottom:16px}
+  .doc h3{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#2F5EFF;margin:14px 0 6px}
+  .doc p{font-size:13.5px;line-height:1.7;color:#222;margin-bottom:9px;font-family:Georgia,serif}
+  table{width:100%;border-collapse:collapse;font-size:12px;margin:6px 0}
+  th,td{text-align:left;padding:6px 9px;border-bottom:1px solid #eee}.r{text-align:right}
+  .pmid{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid #eee;font-size:12px}
+  .pmid b{color:#2F5EFF;font-weight:500;white-space:nowrap}
+  .obj{background:#eef3fb;border:1px solid #d8e3f5;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#1a2a4a}
+  .obj b{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#2F5EFF;margin-bottom:5px}
+  svg.km{width:100%;height:auto}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- LEFT storyboard -->
+  <section class="left">
+    <div class="lhead"><div class="logo"></div>
+      <div class="nm">흡연 &amp; 심혈관질환<small>논문 작성 — 단계별 진행</small></div></div>
+    <div class="userq">국건영 데이터로 흡연과 CVD 연관성 논문 써줘 (Cho 스타일)</div>
+    <div class="flowlbl">⛓ 작업 플로우 — 각 단계를 눌러 미리보기 · 마음에 드는 단계를 Preview로 고정</div>
+    <div class="steps" id="steps"></div>
+  </section>
+
+  <!-- RIGHT preview -->
+  <section class="right">
+    <div class="rhead">
+      <span class="rtag" id="rtag">Step</span><span class="rstep" id="rstep"></span>
+      <button class="setprev" onclick="setPreview()">이 단계를 Preview로 ✓</button>
+    </div>
+    <div class="rbody"><div class="screen doc" id="screen"></div></div>
+  </section>
+</div>
+
+<script>
+  const STEPS = [
+    { ic:"◇", t:"질문 이해 + 주제 잠금", st:"done", star:false, screen:`
+      <div class="obj"><b>Objective (locked)</b>흡연 상태 → 심혈관질환 발생 (한국 성인, 전향 코호트)</div>
+      <table><tr><th>LOCKED</th><th class="r">값</th></tr>
+      <tr><td>exposure</td><td class="r">smoking status</td></tr>
+      <tr><td>outcome</td><td class="r">incident CVD</td></tr>
+      <tr><td>dataset</td><td class="r">KNHANES-linked</td></tr></table>` },
+    { ic:"🔍", t:"신규성 검색 (PubMed 라이브)", st:"done", star:true, screen:`
+      <h3>PubMed novelty — live</h3>
+      <div class="pmid"><b>PMID 38xxxx</b><span>Smoking and CVD in Korean adults — cross-sectional only</span></div>
+      <div class="pmid"><b>PMID 37xxxx</b><span>Cohort, but no sex interaction reported</span></div>
+      <div class="pmid"><b>PMID 36xxxx</b><span>Western cohort — generalizability gap</span></div>
+      <p style="font-family:inherit;font-size:12.5px;color:#1f6e3a">▶ 갭 확인: 한국 코호트 + 성별 교호작용 미보고 → novelty 7.2/10</p>` },
+    { ic:"∿", t:"통계 분석 (Cox aHR)", st:"done", star:false, screen:`
+      <h3>Table 2 · adjusted HR</h3>
+      <table><tr><th>Smoking</th><th class="r">Events</th><th class="r">aHR (95% CI)</th><th class="r">P</th></tr>
+      <tr><td>Never (ref)</td><td class="r">412</td><td class="r">1.00</td><td class="r">—</td></tr>
+      <tr><td>Former</td><td class="r">298</td><td class="r">1.28 (1.05–1.56)</td><td class="r">.01</td></tr>
+      <tr><td>Current</td><td class="r">521</td><td class="r">1.74 (1.41–2.15)</td><td class="r">&lt;.001</td></tr></table>
+      <p style="font-family:inherit;font-size:12px;color:#666">p-interaction by sex = .03 · engine: lifelines</p>` },
+    { ic:"📈", t:"Figure 생성 (KM 곡선)", st:"done", star:true, screen:`
+      <h3>Figure 1 · Kaplan–Meier</h3>
+      <svg class="km" viewBox="0 0 520 230" font-family="Inter">
+        <line x1="48" y1="16" x2="48" y2="196" stroke="#2A2A2A"/><line x1="48" y1="196" x2="500" y2="196" stroke="#2A2A2A"/>
+        <polyline fill="none" stroke="#1f4e79" stroke-width="2" points="48,40 160,48 270,58 380,70 500,82"/>
+        <polyline fill="none" stroke="#3d7068" stroke-width="2" points="48,40 160,58 270,82 380,104 500,128"/>
+        <polyline fill="none" stroke="#7d2e2e" stroke-width="2" points="48,40 160,70 270,104 380,140 500,172"/>
+        <g font-size="10" fill="#2A2A2A"><text x="360" y="30">— never</text><text x="360" y="44" fill="#3d7068">— former</text><text x="360" y="58" fill="#7d2e2e">— current</text></g>
+        <text x="270" y="218" font-size="10" fill="#2A2A2A" text-anchor="middle">Follow-up (years)</text>
+      </svg>
+      <p style="font-family:inherit;font-size:12px;color:#666">log-rank P &lt; .001 · 벡터(SVG/PDF/PNG)</p>` },
+    { ic:"✎", t:"Results 작성 (Cho 스타일)", st:"run", star:false, screen:`
+      <h2>Smoking status and incident CVD among Korean adults</h2>
+      <div class="meta">KNHANES-linked · N=18,420 · 94,300 person-years</div>
+      <h3>Results</h3>
+      <p>In this cohort study of 18,420 Korean adults (mean age, 47.2 years) with 94,300 person-years of follow-up, current smoking was associated with a higher risk of incident cardiovascular disease (adjusted HR, 1.74; 95% CI, 1.41–2.15) compared with never smoking.</p>
+      <p>The association was stronger among men than women (P for interaction = .03).</p>` },
+    { ic:"⊞", t:"Discussion + 제출 패키지", st:"todo", star:false, screen:`
+      <h3>대기 중</h3>
+      <p style="font-family:inherit;color:#888;font-size:13px">Results 확정 후 Discussion(6-limitations 정형) + Word+EndNote XML 패키지가 여기 생성됩니다.</p>` },
+  ];
+
+  let selected = 1, preview = 4;
+  const stepsEl = document.getElementById('steps');
+
+  function render(){
+    stepsEl.innerHTML = STEPS.map((s,i)=>`
+      <div class="step">
+        <div class="dot ${s.st==='done'?'done':s.st==='run'?'run':''}"></div>
+        <div class="scard ${i===selected?'sel':''}" onclick="sel(${i})">
+          <div class="scard-h"><span class="ic">${s.ic}</span><span class="t">${s.t}</span>
+            <span class="st">${s.st==='done'?'완료':s.st==='run'?'작성 중…':'대기'}</span></div>
+          <div class="thumb"><div class="mini doc">${s.screen}</div></div>
+          <div class="scard-f">
+            <button class="pickbtn" onclick="event.stopPropagation();sel(${i})">${i===preview?'✓ Preview':'미리보기'}</button>
+            <span class="star ${s.star?'on':''}" onclick="event.stopPropagation();star(${i})">★</span>
+          </div>
+        </div>
+      </div>`).join('');
+    const s = STEPS[selected];
+    document.getElementById('rtag').textContent = s.t;
+    document.getElementById('rstep').textContent = `step ${selected+1} / ${STEPS.length}` + (selected===preview?' · Preview 고정됨':'');
+    document.getElementById('screen').innerHTML = s.screen;
+  }
+  function sel(i){ selected=i; render(); }
+  function star(i){ STEPS[i].star=!STEPS[i].star; render(); }
+  function setPreview(){ preview=selected; render(); }
+  render();
+</script>
+</body>
+</html>

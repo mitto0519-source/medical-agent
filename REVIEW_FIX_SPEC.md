@@ -473,6 +473,27 @@ ls data/oa_papers/PMC*.txt | wc -l  # > 0 이어야 PASS
 
 ---
 
+## FIX-12 — ★ 저장소 OneDrive 탈출 (며칠째 사고의 물리적 근본원인)
+
+**문제**: 저장소가 **OneDrive 폴더 안**(`C:\Users\mitto\OneDrive\Desktop\Medical-Agent`)에 있다. OneDrive는 디스크 절약차 파일을 *오프로드(on-demand stub)* 하고, 큰 파일은 *스트리밍*해서 — 에이전트/마운트가 읽을 때 블로킹·부분읽기·증발이 난다. (sfs/Mirage가 정확히 지적한 문제)
+→ 이번 세션 내내의 증상이 전부 이것: 마운트 stale(src/service·loops·specs 안 보임), **oa_papers .txt 소실**, **"working directory empty"**, graph.json torn-read, filter-repo 사고 증폭.
+
+**변경 (ops — 코드 아님)**:
+1. 저장소를 **OneDrive 밖 일반 경로로 이전**: 예 `C:\dev\Medical-Agent`. (git remote·.venv 그대로 이동)
+2. **데이터플레인 분리**(MASTER §1): raw/oa_papers/chromadb는 OneDrive·git 둘 다 금지 → HF private/S3/Supabase Storage. 워킹카피는 재생성 캐시.
+3. OneDrive 백업이 필요하면 *문서/산출물만* 별도 폴더로, *코드·데이터 저장소는 OneDrive 밖*.
+4. (대안) sfs류로 `--remote s3://...` 마운트 — 오프로드 없는 동기화.
+
+**다운스트림**: 모든 경로 참조는 상대경로라 이전만으로 동작. hf_bootstrap·docker 마운트 경로 확인. git remote(origin/hf) 유지.
+**검증**: 이전 후 `dir`·`git status` 안정, 마운트 stale 없음, 큰 파일 즉시 읽힘.
+**롤백**: 경로 복원(데이터 손실 없음 — 복사 이전).
+> ★ 이게 #1 즉효다. "왜 자꾸 망가지고 안 보이나"의 답이 *OneDrive*다. 다른 fix 전에 이거부터.
+
+### FIX-12b — agent-time vs human-time 추정 정책 (EstreGenesis 차용, ops)
+AI는 작업기간을 인간기준 **5~10× 부풀린다**. 계획 시 모드 고정: Cautious 2~4× / Proactive 5~6× / Burst 6~8× / Sprint 9~10×. 추정을 *에이전트작업+사람검토+실경과*로 분리 보고. (계획 신뢰성↑, 너 없던 정책)
+
+---
+
 ## 백로그 (별도 사이클 — 지금 건드리지 말 것)
 
 - **persona/self_model/insights/knowledge_graph per-user 분리**: 현재 전역 단일 파일. "그 사람에게 최적화"가 다중사용자로 가면 필요. 단일사용자 운영이면 보류.

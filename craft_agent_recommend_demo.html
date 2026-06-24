@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Agent — Agent-led recommendation</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0B0D12; --txt:#EAECF2; --txt-sec:#9298AB; --txt-mut:#5B6072;
+    --border:rgba(255,255,255,.08); --border-hi:rgba(255,255,255,.18);
+    --surface:rgba(255,255,255,.035); --surface-2:rgba(255,255,255,.06);
+    --accent:#3B6BFF; --cyan:#22D3EE; --green:#34D399;
+    --font:'Inter',-apple-system,'Segoe UI','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font);background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+  .atmo{position:fixed;inset:-200px;z-index:0;filter:blur(150px);opacity:.4;pointer-events:none;
+    background:radial-gradient(700px 560px at 20% 8%,rgba(59,107,255,.5),transparent 60%),
+               radial-gradient(800px 640px at 88% 30%,rgba(18,30,70,.7),transparent 62%),#0B0D12}
+  .wrap{position:relative;z-index:1;width:720px;max-width:100%;height:100vh;display:flex;flex-direction:column}
+  .head{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border)}
+  .head .logo{width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,#3B6BFF,#22D3EE)}
+  .head .nm{font-size:13.5px;font-weight:600}.head .nm small{display:block;font-size:11px;color:var(--txt-mut);font-weight:400}
+  .prog{margin-left:auto;font-size:11.5px;color:var(--txt-sec)}.prog b{color:var(--txt)}
+
+  .log{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:16px}
+  .log::-webkit-scrollbar{width:8px}.log::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:4px}
+  .user{align-self:flex-end;max-width:80%;background:var(--surface-2);border:1px solid var(--border);
+    border-radius:16px;padding:11px 15px;font-size:13.5px;line-height:1.55}
+  .ai{display:flex;gap:11px;max-width:92%}
+  .ai .av{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#3B6BFF,#22D3EE);flex:none;margin-top:2px}
+  .ai .body{font-size:13.5px;line-height:1.7;color:var(--txt)}
+  .ai .body .pin{color:var(--cyan);font-weight:500}
+
+  /* recommendation card — agent proposes ONE best move */
+  .rec{margin-top:11px;border:1px solid var(--border-hi);border-radius:16px;background:var(--surface);overflow:hidden;
+    box-shadow:0 0 0 1px rgba(59,107,255,.12)}
+  .rec-h{display:flex;align-items:center;gap:10px;padding:13px 15px 4px}
+  .rec-h .ic{width:30px;height:30px;border-radius:9px;background:rgba(59,107,255,.16);color:#7c9bff;display:grid;place-items:center;font-size:15px}
+  .rec-h .t{font-size:13.5px;font-weight:600}
+  .rec-h .tag{margin-left:auto;font-size:10px;color:var(--cyan);border:1px solid rgba(34,211,238,.3);border-radius:6px;padding:2px 7px}
+  .rec-why{padding:2px 15px 12px 55px;font-size:12.5px;color:var(--txt-sec);line-height:1.55}
+  .rec-act{display:flex;align-items:center;gap:8px;padding:0 13px 13px 13px}
+  .btn{height:34px;padding:0 15px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--txt-sec);
+    font-family:inherit;font-size:12.5px;cursor:pointer;transition:all .16s}
+  .btn:hover{background:var(--surface-2);color:var(--txt)}
+  .btn.primary{background:linear-gradient(135deg,#3B6BFF,#4F7BFF);border:none;color:#fff;font-weight:500}
+  .btn.primary:hover{box-shadow:0 6px 18px rgba(59,107,255,.4)}
+  .alts{display:none;flex-direction:column;gap:6px;padding:0 13px 12px 13px}
+  .alts.show{display:flex}
+  .alt{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);
+    background:transparent;color:var(--txt-sec);font-family:inherit;font-size:12.5px;cursor:pointer;text-align:left;transition:all .16s}
+  .alt:hover{background:var(--surface);color:var(--txt);border-color:var(--border-hi)}
+  .alt b{color:var(--txt);font-weight:500}
+
+  /* adopted result chip */
+  .done{margin-top:10px;border:1px solid rgba(52,211,153,.25);border-radius:14px;background:rgba(52,211,153,.06);overflow:hidden}
+  .done-h{display:flex;align-items:center;gap:9px;padding:11px 14px;font-size:12.5px;color:#86efac}
+  .done-h .res{margin-left:auto;font-size:11px;color:var(--txt-mut)}
+  .done .snippet{background:#FbFbFd;color:#1a1c22;padding:14px 16px;font-size:12px;border-top:1px solid var(--border)}
+  .snippet h3{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:#3B6BFF;margin-bottom:5px}
+  .snippet table{width:100%;border-collapse:collapse}.snippet td,.snippet th{padding:4px 8px;border-bottom:1px solid #eee;text-align:left}.r{text-align:right}
+  .snippet p{font-family:Georgia,serif;line-height:1.6}
+
+  .composer{padding:14px 22px 20px;border-top:1px solid var(--border)}
+  .cbox{border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:13px 15px;display:flex;align-items:center;gap:10px}
+  .cbox input{flex:1;background:none;border:none;outline:none;color:var(--txt);font-family:inherit;font-size:13.5px}
+  .cbox input::placeholder{color:var(--txt-mut)}
+  .send{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#3B6BFF,#22D3EE);color:#fff;display:grid;place-items:center}
+  .typing{display:flex;gap:4px;padding:4px 0}.typing span{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:bl 1.2s infinite}
+  .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+  @keyframes bl{50%{opacity:.25}}
+</style>
+</head>
+<body>
+<div class="atmo"></div>
+<div class="wrap">
+  <div class="head"><div class="logo"></div>
+    <div class="nm">Medical Research Agent<small>흡연 × CVD · 박사급 · 쪽집게</small></div>
+    <div class="prog">완결성 <b id="pct">0%</b></div></div>
+  <div class="log" id="log"></div>
+  <div class="composer"><div class="cbox">
+    <input id="inp" placeholder="방향만 말하세요. 방법은 제가 제안합니다…" onkeydown="if(event.key==='Enter')userSay()">
+    <button class="send" onclick="userSay()">↑</button>
+  </div></div>
+</div>
+
+<script>
+  const log=document.getElementById('log');
+  let adopted=0; const TOTAL=5;
+
+  // 에이전트가 키워드를 읽고 "가장 적합한 다음 수"를 제안하는 스크립트
+  const FLOW=[
+    { say:`주제를 <span class="pin">흡연 → 심혈관질환 (한국 성인)</span>으로 잡았습니다. 결정적인 건 순서예요 — 분석부터 달려들기 전에, <b>같은 분석이 이미 나왔는지</b>부터 보는 게 맞습니다.`,
+      rec:{ic:"🔍",t:"신규성 확인 (PubMed 라이브)",tag:"추천",
+        why:"바로 통계로 가면 \"이미 다 나온 주제\"일 위험이 있어요. 먼저 갭을 잡아두면 이후 Results·Discussion의 방향이 흔들리지 않습니다.",
+        alts:[["바로 통계(Cox)부터","속도는 빠르지만 갭 확인 전이라 novelty 약하면 되돌아와야 함"],["코호트 정의부터","표본·추적기간 먼저 확정하고 싶을 때"]]},
+      done:{label:"신규성 — 갭 확인",res:"novelty 7.2/10",snippet:`<h3>PubMed novelty</h3><p style="font-family:var(--font);font-size:12px">한국 코호트 + <b>성별 교호작용 미보고</b> = 빈 자리. 이걸 노립니다.</p>`} },
+    { say:`갭이 명확합니다 — <span class="pin">성별 교호작용</span>이 비어 있어요. 그러니 다음은 그 갭을 <b>그대로 분석으로 잇는</b> 게 자연스럽습니다.`,
+      rec:{ic:"∿",t:"Cox aHR + 성별 교호작용",tag:"추천",
+        why:"novelty에서 찾은 빈 자리를 정확히 메우는 분석이에요. Table 1을 먼저 할 수도 있지만, 핵심 주장(aHR)을 먼저 세우는 편이 흐름이 빠릅니다.",
+        alts:[["Table 1 기저특성 먼저","독자에게 표본을 먼저 보여주고 싶을 때"],["dose-response(흡연량) 추가","흡연 강도까지 보고 싶으면"]]},
+      done:{label:"Cox aHR",res:"current 1.74 · p-int .03",snippet:`<h3>Table 2 · aHR</h3><table><tr><td>Current</td><td class="r">1.74 (1.41–2.15)</td></tr></table>`} },
+    { say:`수치가 강합니다. 이쯤에서 독자 설득력을 위해 <b>그림 하나</b>를 권합니다 — 필수는 아니지만 심사에서 효과가 커요.`,
+      rec:{ic:"📈",t:"Kaplan–Meier 곡선",tag:"선택 · 추천",
+        why:"aHR 숫자만보다 생존곡선이 한눈에 각인됩니다. 실데이터 엔진 렌더라 환각 없이 벡터로 나옵니다. 원치 않으면 건너뛰어도 본문엔 지장 없어요.",
+        alts:[["forest plot","subgroup 강조하고 싶으면"],["지금은 건너뛰기","나중에 figures 탭에서 언제든"]]},
+      done:{label:"Figure 1 · KM",res:"log-rank P<.001",snippet:`<svg viewBox="0 0 440 90" style="width:100%"><polyline fill="none" stroke="#1f4e79" stroke-width="2" points="20,20 150,28 300,38 430,46"/><polyline fill="none" stroke="#7d2e2e" stroke-width="2" points="20,20 150,40 300,60 430,76"/></svg>`} },
+    { say:`근거·통계·그림이 모였습니다. 이제 이걸 <span class="pin">Cho 스타일 Results 한 단락</span>으로 묶겠습니다 — 누적된 수치를 그대로 인용해서요.`,
+      rec:{ic:"✎",t:"Results 작성 (Cho 스타일)",tag:"추천",
+        why:"지금까지 채택한 aHR·교호작용·N을 문장으로 합칩니다. Introduction부터 쓸 수도 있지만, 결과가 확정됐으니 Results를 먼저 굳히는 게 안전합니다.",
+        alts:[["Introduction부터","배경 서사를 먼저 잡고 싶으면"],["Methods부터","재현성·심사 대비 먼저"]]},
+      done:{label:"Results 초안",res:"Cho 스타일",snippet:`<h3>Results</h3><p>current smoking was associated with incident CVD (adjusted HR, 1.74; 95% CI, 1.41–2.15)… stronger in men (P for interaction = .03).</p>`} },
+    { say:`Results까지 누적됐습니다. 남은 건 <b>Discussion(6-limitations) + 제출 패키지</b>뿐이에요. 준비되면 한 번에 묶겠습니다.`,
+      rec:{ic:"⊞",t:"Discussion + Word·EndNote 패키지",tag:"마무리",
+        why:"여기까지 채택한 주제·DB·통계·그림·Results를 그대로 받아 Discussion을 정형으로 쓰고, 제출용 .docx + EndNote XML로 내보냅니다.",
+        alts:[["Discussion만 먼저","제출 전에 토의부터 다듬고 싶으면"],["지금 상태로 검토","동료심사 AI에게 먼저 보여주기"]]},
+      done:{label:"제출 패키지",res:".docx + EndNote XML",snippet:`<h3>제출 준비 완료</h3><p style="font-family:var(--font);font-size:12px">Word + EndNote XML + figure 벡터 묶음 생성.</p>`} },
+  ];
+  let step=0;
+
+  function el(html){const d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
+  function scroll(){log.scrollTop=log.scrollHeight;}
+
+  function agentTurn(){
+    if(step>=FLOW.length){ log.appendChild(el(`<div class="ai"><div class="av"></div><div class="body">완성입니다. 더 다듬을 곳을 말씀하시면 해당 부분만 골라 갱신하겠습니다.</div></div>`)); scroll(); return; }
+    const f=FLOW[step];
+    // typing
+    const t=el(`<div class="ai"><div class="av"></div><div class="body"><div class="typing"><span></span><span></span><span></span></div></div></div>`);
+    log.appendChild(t); scroll();
+    setTimeout(()=>{
+      t.remove();
+      const card=el(`<div class="ai"><div class="av"></div><div class="body">${f.say}
+        <div class="rec">
+          <div class="rec-h"><div class="ic">${f.rec.ic}</div><div class="t">${f.rec.t}</div><div class="tag">${f.rec.tag}</div></div>
+          <div class="rec-why">${f.rec.why}</div>
+          <div class="rec-act">
+            <button class="btn primary">네, 이대로 진행</button>
+            <button class="btn alttoggle">다른 방법 ▾</button>
+          </div>
+          <div class="alts">${f.rec.alts.map(a=>`<button class="alt"><b>${a[0]}</b> — ${a[1]}</button>`).join('')}</div>
+        </div></div></div>`);
+      log.appendChild(card); scroll();
+      const recEl=card.querySelector('.rec');
+      card.querySelector('.primary').onclick=()=>accept(recEl,f);
+      card.querySelector('.alttoggle').onclick=(e)=>{card.querySelector('.alts').classList.toggle('show');e.target.textContent=card.querySelector('.alts').classList.contains('show')?'다른 방법 ▴':'다른 방법 ▾';scroll();};
+      card.querySelectorAll('.alt').forEach(b=>b.onclick=()=>accept(recEl,f,b.querySelector('b').textContent));
+    },820);
+  }
+  function accept(recEl,f,altLabel){
+    recEl.outerHTML=`<div class="done">
+      <div class="done-h">✓ 채택 · 논문에 누적 — ${altLabel?('<b style=\"color:#fff\">'+altLabel+'</b> 로 진행'):f.done.label}<span class="res">${f.done.res}</span></div>
+      <div class="snippet">${f.done.snippet}</div></div>`;
+    adopted=Math.min(TOTAL,adopted+1);
+    document.getElementById('pct').textContent=Math.round(adopted/TOTAL*100)+'%';
+    step++; scroll();
+    setTimeout(agentTurn,500);
+  }
+  function userSay(){
+    const v=document.getElementById('inp').value.trim(); if(!v)return;
+    document.getElementById('inp').value='';
+    log.appendChild(el(`<div class="user">${v.replace(/</g,'&lt;')}</div>`)); scroll();
+    if(step===0) setTimeout(agentTurn,400);
+  }
+
+  // seed
+  log.appendChild(el(`<div class="user">국건영으로 흡연이랑 심혈관질환 보고 싶어</div>`));
+  setTimeout(agentTurn,600);
+</script>
+</body>
+</html>

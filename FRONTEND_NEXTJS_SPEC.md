@@ -47,10 +47,15 @@ web/app/
 │   ├─ methods/[slug]/page.tsx    /methods/*   방법론 설명 (survey-weighted 등)
 │   ├─ about, pricing, blog/*
 │   └─ layout.tsx                 공개 셸 (헤더/푸터, JSON-LD)
-├─ (app)/                         ← 워크스페이스: CSR + SSE, noindex, 인증 필요
-│   ├─ layout.tsx                 3-pane 셸 (좌 projects / 중 chat / 우 preview)
-│   ├─ page.tsx                   /app         새 대화
-│   └─ project/[id]/page.tsx      /app/project/* 프로젝트 워크스페이스
+├─ (app)/                         ← 워크스페이스: CSR + SSE, noindex, 인증 필요 ★IA 고정
+│   ├─ layout.tsx                 사이드 nav(아래 IA) + 우측 작업영역
+│   ├─ dashboard/page.tsx         /app            프로젝트 목록·오늘 상태
+│   ├─ project/[id]/page.tsx      /app/project/*  ★메인 워크스페이스(§6 FigureLabs형 2-pane)
+│   ├─ manuscripts/page.tsx       /app/manuscripts  Draft / Submitted
+│   ├─ analysis/page.tsx          /app/analysis     Statistics / Figures / Tables
+│   ├─ knowledge/page.tsx         /app/knowledge    RAG·그래프·novelty
+│   ├─ references/page.tsx        /app/references   인용·EndNote
+│   └─ settings/page.tsx          /app/settings
 ├─ api/                           ← BFF (필요시; 주 백엔드는 FastAPI 별도)
 │   ├─ chat/route.ts              SSE 프록시 → FastAPI /chat
 │   └─ auth/[...]/route.ts
@@ -60,7 +65,16 @@ web/app/
 ```
 - **(public)** 그룹: 정적/ISR, 메타데이터+JSON-LD. 검색·AI엔진 타깃.
 - **(app)** 그룹: `export const dynamic = 'force-dynamic'`, `<meta robots="noindex">`, 인증 게이트. SSE 스트리밍.
-- 두 그룹이 **다른 layout** → 공개는 마케팅 셸, 앱은 3-pane 셸.
+- 두 그룹이 **다른 layout** → 공개는 마케팅 셸, 앱은 **사이드 nav + §6 FigureLabs형 2-pane 워크스페이스**.
+
+### 2.1 ★ IA / 네비게이션 (확정 — "내가 어디 있는지" 명확)
+```
+사이드 nav:  Dashboard · Projects · Manuscripts · Analysis · Knowledge · References · Settings
+메인 = Projects/<id> 워크스페이스 (§6): 좌 채팅 / 우 Before·After ↔ Preview(풀논문) 토글
+```
+- **Level 분리**(같은 워크스페이스 안 *모드*): L1 Chat(질문→답) · L2 Research(질문→분석→근거) · L3 Publication(논문·표·figure·인용). 채팅은 항상 좌측, 산출은 우측 캔버스.
+- → 채팅/논문/분석/RAG가 섞이지 않고 *어디서 무엇을 하는지* 고정. (이게 "채팅앱+패널"을 *제품*으로 만드는 구조.)
+- 이 IA가 마지막 명세다. 나머지(Product/Flow/Design System/Screen/Interaction)는 기존 스펙에 이미 있음 → **이제 실행(코드)**.
 
 ---
 
@@ -134,7 +148,110 @@ Sitemap: https://.../sitemap.xml
 
 ---
 
-## 6. 앱 셸 (3-pane + 컴포저 + SSE) — UX_CHAT_DESIGN 구현
+## 6. ★ 앱 셸 — FigureLabs형 2-pane + Before/After + Preview 토글 (사용자 확정 2026-06)
+
+> 사용자 첨부(figurelabs.ai) = 확정 UX 틀. 미감: **밝고 깨끗한 카드형 워크스페이스**(다크 sapphire 아님 — 논문은 흰 문서로 읽음).
+
+### 6.0 ★ 진입 히어로(Lovable형) → 워크스페이스 전환 (사용자 확정 2026-06)
+
+> 첫 로그인/새 대화 = **드라마틱 다크 그라데이션 히어로**(Lovable). 첫 메시지 보내면 → 워크스페이스로 *전환*.
+> ★ 미감 2종 의도 분리: **진입=sapphire 다크 그라데이션**(DESIGN.md sapphire_glass 그대로) / **워크스페이스=밝은 클린**(§6.4).
+
+**상태 A — 히어로(빈/새 대화):**
+```
+┌──────────────────────────── 전체 sapphire aurora 그라데이션 ────────────────────────────┐
+│  (상단 미니멀 nav)                                                                       │
+│                         무엇을 연구하시겠어요?   ← 굵은 흰 헤드라인 중앙                    │
+│                      한 줄로 — PICO·통계·신규성 정리                                       │
+│              ┌──────────────────────────────────────────────┐  ← 중앙 큰 입력(720px)      │
+│              │  연구 아이디어 한 줄…           [+][auto▾][🎤][↑] │     글래스 surface, radius18 │
+│              └──────────────────────────────────────────────┘                            │
+│              [KNHANES UPF×MASLD] [KYRBS 우울] [카페인] …  ← 예시 칩                        │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+```
+**확정 스펙 (사용자 2026-06 — Lovable 70 / ChatGPT 20 / FigureLabs 10):**
+- **배경 = 딥블루 그라데이션** `#0B1020 → #122B5E → #2F5EFF` (보라/마젠타 아님 — 의료=블루/신뢰/데이터).
+  + **아주 은은한 knowledge-graph/data-network** 배경(추상적 노드·엣지, 느린 drift). ★의료 이미지 금지, 추상만. Glass morphism.
+- **타이틀**: `Medical Research Agent` (40~56px, 굵은 흰색, 중앙).
+- **서브**: `Transform Questions into Evidence, Analysis and Publications`.
+- **입력**: `Ask a research question…` (중앙 720px, glass surface radius18, [+][auto▾][🎤][↑]).
+- **추천 카드 4~6** (클릭=해당 흐름 시작, 장식 아님):
+  `[KNHANES Analysis] [Meta-analysis] [Cohort Study] [Systematic Review] [Manuscript Draft]`
+- DESIGN.md에 **entry_hero 테마 토큰**(딥블루 3색 + graph-bg)을 추가 — sapphire_glass(보라)는 폐기/대체.
+
+**전환 (첫 메시지 send 시):**
+- Framer Motion **shared layout**: 중앙 입력박스가 *하단으로 docking*(레이아웃 애니메이션), 그라데이션 *후퇴/페이드*, 좌 nav rail + 우 캔버스(§6.1) slide-in.
+```tsx
+<motion.div layoutId="composer" transition={{type:"spring", stiffness:260, damping:30}}/>
+// 히어로(중앙) → 워크스페이스(하단) 같은 layoutId로 자연스럽게 이동
+```
+- 결과: "Lovable 히어로 → 작업 워크스페이스"가 *끊김 없이* 이어짐. 로그인 직후도 동일(히어로 먼저).
+
+**상태 B — 워크스페이스**: §6.1(좌 채팅 / 우 COMPARE↔Preview, 밝은 톤).
+
+---
+
+### 6.1 레이아웃
+```
+┌──────────────────────┬───────────────────────────────────────┐
+│  LEFT (~40%) 채팅      │  RIGHT (~60%) 캔버스  [Format][⤢Preview][Export]│
+│  - 프롬프트 입력         │  ┌───────────────────────────────────┐ │
+│  - 대화/진행            │  │  ▲ BEFORE  (현재 논문 섹션/상태)      │ │
+│                       │  ├───────────────────────────────────┤ │
+│                       │  │  ▼ AFTER   (AI 수정/제안 — diff)      │ │
+│  [입력…]    [↑]        │  └───────────────────────────────────┘ │
+└──────────────────────┴───────────────────────────────────────┘
+        │ [Preview ⤢] 버튼 클릭 →  슬라이드/카드플립 전환
+        ▼
+┌────────────────────────────────────────────────────────────────┐
+│  PREVIEW(퀵뷰) — 현재까지의 *풀버전 논문* 전체 (흰 문서 reading view) │
+│  Title·Abstract·Intro·Methods·Results·Discussion… 조립 완성본       │
+│  [◂ 편집으로]                                          [Word+EndNote]│
+└────────────────────────────────────────────────────────────────┘
+```
+
+### 6.2 핵심 인터랙션 — Preview 토글 전환(애니메이션)
+- 캔버스는 **두 모드**: `compare`(Before/After) ↔ `preview`(풀 논문). 버튼 1개로 토글.
+- 전환 효과(Framer Motion): **슬라이드(x축)** 또는 **카드 3D 플립(rotateY)** 택1.
+```tsx
+<AnimatePresence mode="wait">
+  {mode === "compare" ? (
+    <motion.div key="cmp" initial={{x:40,opacity:0}} animate={{x:0,opacity:1}}
+                exit={{x:-40,opacity:0}} transition={{duration:.28, ease:[.4,0,.2,1]}}>
+      <BeforeAfter before={section.current} after={section.revised}/>   {/* diff 하이라이트 */}
+    </motion.div>
+  ) : (
+    <motion.div key="prev" initial={{rotateY:90,opacity:0}} animate={{rotateY:0,opacity:1}}
+                exit={{rotateY:-90,opacity:0}} style={{transformPerspective:1200}}
+                transition={{duration:.35}}>
+      <FullPaperPreview state={researchState}/>   {/* 모든 섹션 조립, 흰 문서 */}
+    </motion.div>
+  )}
+</AnimatePresence>
+```
+- **Before/After** = `compare` 모드: 위=현재 섹션, 아래=AI 수정안(추가=emerald, 삭제=취소선 diff) + accept/reject.
+- **Preview(퀵뷰)** = `researchState.manuscript.sections` 전체를 *지금까지의 풀버전 논문*으로 조립 → A4 흰 문서 reading view(TNR/serif, double-space) + Word+EndNote export.
+
+### 6.3 컴포넌트
+```
+<Workspace>
+  <ChatPane width="40%">         {/* 프롬프트+대화 */}
+  <Canvas width="60%">
+    <Toolbar>[Format][Preview ⤢ 토글][Export]</Toolbar>
+    <AnimatePresence>
+      compare → <BeforeAfter/>     {/* 상 Before / 하 After + diff */}
+      preview → <FullPaperPreview/> {/* 풀 논문, 흰 문서 */}
+```
+### 6.4 미감 (FigureLabs 톤)
+- 밝은 배경 + 흰 카드 + 옅은 테두리/그림자 + 라운드. 상단 클린 툴바. 좌측 채팅 레일.
+- 강조 1색, 절제(DESIGN-LANGUAGE craft 규칙 그대로). 논문 캔버스는 *흰 문서* 고정(읽기).
+- → DESIGN.md에 **light workspace 테마** 토큰 추가(현 sapphire는 앱 chrome용, 논문 캔버스는 white-paper).
+
+> 아래 §6.5는 기존 3-pane 변형 — 6.1~6.4가 *확정 틀*. (좌 채팅 / 우 Before·After ↔ Preview 토글)
+
+---
+
+## 6.5 (구) 3-pane 참고 — UX_CHAT_DESIGN 구현
 
 ```
 (app)/layout.tsx:

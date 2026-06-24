@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Agent — Method Palette (non-linear, cumulative)</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0B0D12; --panel:rgba(255,255,255,.025); --panel2:rgba(255,255,255,.05);
+    --txt:#EAECF2; --txt-sec:#9298AB; --txt-mut:#5B6072;
+    --border:rgba(255,255,255,.07); --border-hi:rgba(255,255,255,.16);
+    --accent:#3B6BFF; --cyan:#22D3EE; --green:#34D399; --amber:#FBBF24;
+    --font:'Inter',-apple-system,'Segoe UI','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font);background:var(--bg);color:var(--txt);overflow:hidden;-webkit-font-smoothing:antialiased}
+  .atmo{position:fixed;inset:-200px;z-index:0;filter:blur(140px);opacity:.55;pointer-events:none;
+    background:radial-gradient(700px 560px at 18% 12%,rgba(59,107,255,.5),transparent 60%),
+               radial-gradient(820px 640px at 86% 22%,rgba(18,30,70,.7),transparent 62%),
+               radial-gradient(700px 600px at 60% 96%,rgba(34,211,238,.18),transparent 60%),#0B0D12}
+  .app{position:relative;z-index:1;display:grid;grid-template-rows:auto 1fr;height:100vh}
+
+  /* ── spine (canonical state) ── */
+  .spine{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border);
+    background:rgba(11,13,18,.6);backdrop-filter:blur(20px)}
+  .brand{display:flex;align-items:center;gap:9px;margin-right:8px}
+  .brand .logo{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#3B6BFF,#22D3EE)}
+  .brand b{font-size:13.5px;font-weight:600;letter-spacing:.01em}
+  .spine .arrow{color:var(--txt-mut);font-size:12px}
+  .chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 13px;border-radius:11px;
+    border:1px solid var(--border);background:var(--panel);font-size:12.5px;color:var(--txt-sec)}
+  .chip b{color:var(--txt);font-weight:500}
+  .chip.lock{border-color:rgba(59,107,255,.35);background:rgba(59,107,255,.1)}
+  .chip .edit{margin-left:4px;width:20px;height:20px;border-radius:6px;border:1px solid var(--border);
+    background:none;color:var(--txt-sec);cursor:pointer;font-size:10px;display:grid;place-items:center}
+  .chip .edit:hover{background:var(--panel2);color:var(--txt)}
+  .spine .right{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .ring{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--txt-sec)}
+  .ring b{color:var(--txt)}
+
+  .grid{display:grid;grid-template-columns:300px 1fr 286px;min-height:0;overflow:hidden}
+
+  /* ── left: method palette ── */
+  .palette{border-right:1px solid var(--border);overflow-y:auto;padding:16px 14px}
+  .ptitle{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-mut);margin:6px 4px 10px}
+  .pgroup{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--txt-mut);margin:16px 4px 7px}
+  .mod{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;cursor:pointer;
+    border:1px solid transparent;transition:background .16s,border-color .16s}
+  .mod:hover{background:var(--panel)}
+  .mod.active{background:var(--panel2);border-color:var(--border-hi)}
+  .mod .sd{width:9px;height:9px;border-radius:50%;background:var(--txt-mut);flex:none;transition:background .25s}
+  .mod .sd.adopted{background:var(--green);box-shadow:0 0 8px rgba(52,211,153,.5)}
+  .mod .sd.stale{background:var(--amber);animation:blink 1s infinite}
+  .mod .sd.running{background:var(--cyan);animation:blink .7s infinite}
+  @keyframes blink{50%{opacity:.3}}
+  .mod .ml{flex:1;font-size:13px}
+  .mod .ml small{display:block;font-size:10.5px;color:var(--txt-mut);margin-top:1px}
+  .mod .req{font-size:9px;color:var(--txt-mut);border:1px solid var(--border);border-radius:5px;padding:1px 5px}
+
+  /* ── center: stage ── */
+  .stage{overflow-y:auto;padding:26px 30px;display:flex;flex-direction:column}
+  .stage-h{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .stage-h .ti{font-size:18px;font-weight:600;letter-spacing:-.01em}
+  .stage-h .stt{margin-left:auto;font-size:11.5px;color:var(--txt-mut)}
+  .stage-sub{font-size:12.5px;color:var(--txt-sec);margin-bottom:18px}
+  .art{border:1px solid var(--border);border-radius:16px;background:var(--panel);overflow:hidden;flex:none}
+  .art .canvas{background:#FbFbFd;color:#1a1c22;padding:22px 24px;min-height:170px}
+  .art .bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-top:1px solid var(--border)}
+  .btn{height:34px;padding:0 15px;border-radius:10px;border:1px solid var(--border);background:transparent;
+    color:var(--txt-sec);font-family:inherit;font-size:12.5px;cursor:pointer;transition:all .16s}
+  .btn:hover{background:var(--panel2);color:var(--txt)}
+  .btn.primary{background:linear-gradient(135deg,#3B6BFF,#4F7BFF);border:none;color:#fff}
+  .btn.primary:hover{box-shadow:0 6px 18px rgba(59,107,255,.4)}
+  .btn.ghost{border:none}
+  .hint{margin-left:auto;font-size:11.5px;color:var(--txt-mut)}
+  .stale-banner{display:none;align-items:center;gap:8px;margin-bottom:14px;padding:10px 14px;border-radius:12px;
+    background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#FCD34D;font-size:12.5px}
+  .stale-banner.show{display:flex}
+
+  /* canvas content */
+  .doc h2{font-size:17px;font-weight:600;font-family:Georgia,serif;margin-bottom:7px}
+  .doc .meta{font-size:11.5px;color:#6a6e78;margin-bottom:14px;font-family:var(--font)}
+  .doc h3{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:#3B6BFF;margin:12px 0 6px;font-family:var(--font)}
+  .doc p{font-size:13.5px;line-height:1.7;font-family:Georgia,serif;margin-bottom:8px}
+  table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:6px 9px;border-bottom:1px solid #eee}.r{text-align:right}
+  .pm{display:flex;gap:9px;padding:6px 0;border-bottom:1px solid #eee;font-size:12px}.pm b{color:#3B6BFF;white-space:nowrap}
+  svg.km{width:100%;height:auto}
+
+  /* ── right: completeness ── */
+  .check{border-left:1px solid var(--border);overflow-y:auto;padding:18px 16px;background:rgba(11,13,18,.4)}
+  .check h4{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--txt-mut);margin:4px 2px 12px}
+  .ci{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;font-size:12.5px;transition:background .16s}
+  .ci:hover{background:var(--panel)}
+  .ci .box{width:17px;height:17px;border-radius:5px;border:1.5px solid var(--border);flex:none;display:grid;place-items:center;font-size:11px;color:#fff}
+  .ci.done .box{background:var(--green);border-color:var(--green)}
+  .ci.stale .box{background:var(--amber);border-color:var(--amber)}
+  .ci .cl{flex:1;color:var(--txt-sec)}.ci.done .cl{color:var(--txt)}
+  .ci .opt{font-size:9px;color:var(--txt-mut);border:1px solid var(--border);border-radius:5px;padding:1px 5px}
+  .submit{margin-top:16px;width:100%;height:44px;border-radius:12px;border:none;cursor:pointer;
+    font-family:inherit;font-size:13px;font-weight:600;color:#fff;transition:all .2s;
+    background:rgba(255,255,255,.06);color:var(--txt-mut)}
+  .submit.ready{background:linear-gradient(135deg,#3B6BFF,#22D3EE);color:#fff}
+  .submit.ready:hover{box-shadow:0 8px 24px rgba(59,107,255,.4)}
+  .note{font-size:11px;color:var(--txt-mut);margin-top:10px;line-height:1.5;padding:0 2px}
+</style>
+</head>
+<body>
+<div class="atmo"></div>
+<div class="app">
+  <!-- spine -->
+  <div class="spine">
+    <div class="brand"><div class="logo"></div><b>흡연 × 심혈관질환</b></div>
+    <span class="chip lock">주제 🔒 <b>흡연→CVD</b></span><span class="arrow">›</span>
+    <span class="chip">DB <b id="ds">KNHANES</b><button class="edit" onclick="changeDataset()" title="데이터셋 변경">✎</button></span><span class="arrow">›</span>
+    <span class="chip">노출 <b>smoking</b></span><span class="arrow">›</span>
+    <span class="chip">결과 <b>incident CVD</b></span>
+    <div class="right"><div class="ring">완결성 <b id="pct">0%</b></div></div>
+  </div>
+
+  <div class="grid">
+    <!-- palette -->
+    <aside class="palette" id="palette"></aside>
+    <!-- stage -->
+    <main class="stage">
+      <div class="stale-banner" id="banner">⚠ <span id="banner-t"></span></div>
+      <div class="stage-h"><span class="ti" id="st-ti">방법론을 고르세요</span><span class="stt" id="st-st"></span></div>
+      <div class="stage-sub" id="st-sub">좌측에서 아무 방법론이나 순서 상관없이 호출 → 결과를 <b>채택</b>하면 같은 논문에 누적됩니다.</div>
+      <div class="art"><div class="canvas doc" id="canvas">
+        <p style="font-family:var(--font);color:#888">호출된 방법론의 산출물이 여기 표시됩니다. à la carte — 순서 자유.</p>
+      </div><div class="bar" id="bar"></div></div>
+    </main>
+    <!-- completeness -->
+    <aside class="check">
+      <h4>제출 완결성 체크리스트</h4>
+      <div id="checklist"></div>
+      <button class="submit" id="submit">제출 패키지 (Word + EndNote)</button>
+      <div class="note" id="note">채택 = 누적. 미채택 = 방법론 교체(그 칸만 빠지고 나머지 누적 유지). 상류(DB/노출)를 바꾸면 연계된 하류가 자동 stale→재계산.</div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  // module model — id, label, group, required, deps(상류), artifact
+  const M = {
+    novelty:  {label:"신규성 검색", sub:"PubMed 라이브", group:"근거", req:true, deps:["topic"]},
+    table1:   {label:"Table 1 기저특성", sub:"survey-weighted", group:"통계", req:true, deps:["ds"]},
+    stats:    {label:"Cox 회귀 (aHR)", sub:"성별 교호작용", group:"통계", req:true, deps:["ds"]},
+    figure:   {label:"Figure · KM 곡선", sub:"lifelines 벡터", group:"통계", req:false, deps:["stats"]},
+    intro:    {label:"Introduction", sub:"Cho 스타일", group:"작성", req:true, deps:["topic"]},
+    methods:  {label:"Methods", sub:"수동태 압축", group:"작성", req:true, deps:["ds","stats"]},
+    results:  {label:"Results", sub:"aHR 인라인", group:"작성", req:true, deps:["stats"]},
+    discussion:{label:"Discussion", sub:"6-limitations", group:"작성", req:true, deps:["results"]},
+    refs:     {label:"References", sub:"Vancouver", group:"마감", req:true, deps:["novelty"]},
+  };
+  const ORDER=["novelty","table1","stats","figure","intro","methods","results","discussion","refs"];
+  const state={}; ORDER.forEach(k=>state[k]="empty"); // empty|adopted|stale
+  let active=null;
+
+  const ART = (id)=>({
+    novelty:`<h3>PubMed novelty — live</h3>
+      <div class="pm"><b>PMID 38·</b><span>Korea, cross-sectional only</span></div>
+      <div class="pm"><b>PMID 37·</b><span>cohort, sex interaction 미보고</span></div>
+      <p style="font-family:var(--font);font-size:12px;color:#1f6e3a">▶ 갭: 한국 코호트 + 성별 교호작용 → novelty 7.2</p>`,
+    table1:`<h3>Table 1 · baseline (${DS()})</h3><table><tr><th></th><th class="r">Never</th><th class="r">Current</th></tr>
+      <tr><td>N</td><td class="r">10,240</td><td class="r">4,200</td></tr><tr><td>Male %</td><td class="r">28</td><td class="r">81</td></tr></table>`,
+    stats:`<h3>Cox aHR · ${DS()}</h3><table><tr><th>Smoking</th><th class="r">aHR (95% CI)</th><th class="r">P</th></tr>
+      <tr><td>Former</td><td class="r">1.28 (1.05–1.56)</td><td class="r">.01</td></tr>
+      <tr><td>Current</td><td class="r">1.74 (1.41–2.15)</td><td class="r">&lt;.001</td></tr></table>
+      <p style="font-family:var(--font);font-size:11.5px;color:#666">p-interaction by sex=.03</p>`,
+    figure:`<h3>Figure 1 · KM</h3><svg class="km" viewBox="0 0 480 160"><line x1="40" y1="12" x2="40" y2="138" stroke="#2A2A2A"/><line x1="40" y1="138" x2="466" y2="138" stroke="#2A2A2A"/>
+      <polyline fill="none" stroke="#1f4e79" stroke-width="2" points="40,30 160,40 300,52 466,64"/><polyline fill="none" stroke="#7d2e2e" stroke-width="2" points="40,30 160,58 300,92 466,124"/></svg>`,
+    intro:`<h2>Smoking and incident CVD</h2><h3>Introduction</h3><p>Cardiovascular disease remains a leading cause of mortality in Korean adults…</p>`,
+    methods:`<h3>Methods</h3><p>A total of 18,420 ${DS()}-linked Korean adults without CVD were followed; Cox proportional hazards models were used, adjusted for BMI and covariates.</p>`,
+    results:`<h3>Results</h3><p>Current smoking was associated with incident CVD (adjusted HR, 1.74; 95% CI, 1.41–2.15) compared with never smoking; the association was stronger in men (P for interaction = .03).</p>`,
+    discussion:`<h3>Discussion</h3><p>In this cohort, smoking was independently associated with CVD risk. Our study has several limitations. First, … Second, …</p>`,
+    refs:`<h3>References</h3><p style="font-family:var(--font);font-size:12px">1. … 2. … 3. (Vancouver, EndNote XML 연동)</p>`,
+  }[id]);
+  function DS(){return document.getElementById('ds').textContent;}
+
+  function depStale(id){ // 상류가 stale/empty면 이 칸도 영향
+    return (M[id].deps||[]).some(d=>d!=="topic" && d!=="ds" && state[d]==="stale");
+  }
+
+  function renderPalette(){
+    let html="",lastG="";
+    ORDER.forEach(id=>{
+      if(M[id].group!==lastG){html+=`<div class="pgroup">${M[id].group}</div>`;lastG=M[id].group;}
+      html+=`<div class="mod ${active===id?'active':''}" onclick="open_('${id}')">
+        <span class="sd ${state[id]}"></span>
+        <span class="ml">${M[id].label}<small>${M[id].sub}</small></span>
+        ${M[id].req?'<span class="req">필수</span>':'<span class="req">선택</span>'}</div>`;
+    });
+    document.querySelector('.ptitle')?.remove();
+    document.getElementById('palette').innerHTML=`<div class="ptitle">방법론 — 아무거나 호출</div>`+html;
+  }
+  function renderChecklist(){
+    const req=ORDER.filter(id=>M[id].req).concat(["export"]);
+    let html="";
+    ORDER.forEach(id=>{
+      const s=state[id], cls=s==="adopted"?"done":s==="stale"?"stale":"";
+      html+=`<div class="ci ${cls}"><span class="box">${s==="adopted"?'✓':s==="stale"?'↻':''}</span>
+        <span class="cl">${M[id].label}</span>${M[id].req?'':'<span class="opt">선택</span>'}</div>`;
+    });
+    document.getElementById('checklist').innerHTML=html;
+    const need=ORDER.filter(id=>M[id].req);
+    const ok=need.filter(id=>state[id]==="adopted").length;
+    const pct=Math.round(ok/need.length*100);
+    document.getElementById('pct').textContent=pct+"%";
+    const ready=ok===need.length;
+    const sb=document.getElementById('submit'); sb.classList.toggle('ready',ready);
+    sb.textContent=ready?"제출 패키지 생성 ✓ (Word + EndNote)":`제출까지 ${need.length-ok}개 남음`;
+  }
+  function open_(id){
+    active=id;
+    document.getElementById('st-ti').textContent=M[id].label;
+    document.getElementById('st-st').textContent=state[id]==="adopted"?"채택됨 · 누적 반영":state[id]==="stale"?"stale · 재계산 필요":"미채택";
+    document.getElementById('st-sub').textContent=M[id].sub+" — 결과를 채택하면 논문에 누적됩니다.";
+    document.getElementById('canvas').innerHTML=ART(id);
+    const adopted=state[id]==="adopted";
+    document.getElementById('bar').innerHTML=
+      `<button class="btn ${adopted?'':'primary'}" onclick="adopt('${id}')">${adopted?'✓ 채택됨':'이 결과 채택 (누적)'}</button>
+       <button class="btn" onclick="regen('${id}')">다른 방식으로 재호출</button>
+       <span class="hint">채택 안 하면 이 칸은 비워둔 채 다른 방법론으로 교체 가능</span>`;
+    renderPalette();
+  }
+  function adopt(id){ state[id]="adopted"; open_(id); renderChecklist(); }
+  function regen(id){ // 미채택=교체: 잠깐 running 후 새 산출(누적 유지, 이 칸만 갱신)
+    state[id]="running"; renderPalette();
+    document.getElementById('st-st').textContent="다른 방식으로 재호출 중…";
+    setTimeout(()=>{ state[id]="empty"; open_(id); renderChecklist(); },650);
+  }
+  function changeDataset(){ // 상류 변경 → 연계 하류 자동 stale → 재계산
+    const cur=document.getElementById('ds').textContent;
+    document.getElementById('ds').textContent = cur==="KNHANES" ? "NHIS-HEALS" : "KNHANES";
+    const banner=document.getElementById('banner');
+    banner.classList.add('show');
+    document.getElementById('banner-t').textContent="DB 변경 → 연계된 Table 1·Cox·Methods·Results·Figure 자동 재계산 중…";
+    // dataset에 의존하는 것 + 그 하류 transitively
+    const hit=new Set();
+    function mark(id){ if(hit.has(id))return; hit.add(id);
+      ORDER.forEach(o=>{ if((M[o].deps||[]).includes(id)) mark(o); }); }
+    ORDER.forEach(id=>{ if((M[id].deps||[]).includes("ds")) mark(id); });
+    hit.forEach(id=>{ if(state[id]==="adopted") state[id]="stale"; });
+    renderPalette(); renderChecklist();
+    if(active) open_(active);
+    setTimeout(()=>{ // 재계산 완료 → 다시 adopted(값 갱신)
+      hit.forEach(id=>{ if(state[id]==="stale") state[id]="adopted"; });
+      banner.classList.remove('show'); renderPalette(); renderChecklist(); if(active) open_(active);
+    },1500);
+  }
+
+  renderPalette(); renderChecklist();
+</script>
+</body>
+</html>

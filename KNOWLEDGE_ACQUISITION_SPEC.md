@@ -191,5 +191,23 @@ def currency_study(owner, *, topics=active_topics(owner), cost_cap, opt_in=True)
 
 ---
 
-> 요약: 4티어 + **딥리서치 루프(실시간 RAG 강화)** + **최신화 study 루프(도메인 자동화)**, 전부 §13 통제 규율 위에서.
-> khoj는 *원리 참고*만(AGPL 코드 복제 금지). 보강은 네 스펙·인프라에 재구현.
+---
+
+## 14. ★ Dual-level 그래프 검색 (LightRAG 차용 — RAG 깊이 향상, MIT 참고)
+
+> 네 RAG 약점 = 검색 *깊이*(self_model avg_dist=0.515, 평면 벡터 top-k). LightRAG의 이중 검색을 schema_v2 그래프에 얹는다.
+
+```
+질의 → 두 갈래로 동시 검색:
+  ① Local(엔티티) : 질의의 엔티티/개념 추출 → schema_v2 그래프 1~2홉 이웃 → 구체 근거
+  ② Global(테마)  : 질의의 테마/커뮤니티(Louvain) → high-level 종합 페이지
+  → dense(PubMedBERT) + ① + ② 를 RRF(reciprocal rank fusion)로 융합 → rerank → top-k
+```
+- **현 단일 dense top-k 대비**: 구체(엔티티)와 거시(테마)를 동시에 → 관련성·맥락 둘 다↑.
+- 배선: `service.rag.search_with_rerank`에 graph-expansion 단계 추가(§T0) + `schema_v2` 이웃/커뮤니티 활용(KNOWLEDGE_MODEL §6 엣지). LightRAG는 *기술 참고*(MIT), 코드 복제 X — 네 그래프·임베딩으로 재구현.
+- FIX-6(rerank/HyDE)와 한 묶음. 빈틈(gap) 탐지(RESEARCH_STATE §1.6-C)도 같은 그래프 위.
+
+---
+
+> 요약: 4티어 + **딥리서치 루프** + **최신화 study 루프** + **dual-level 그래프 검색(LightRAG)**, 전부 §13 통제 규율 위에서.
+> khoj/LightRAG는 *원리·기술 참고*만(코드 복제 금지). 보강은 네 스펙·인프라에 재구현.

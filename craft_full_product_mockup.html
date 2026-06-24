@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Research Agent — Full Product Design</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    /* one cohesive token system */
+    --page:#F4F6F9; --surface:#FFFFFF; --surface-2:#FAFBFD;
+    --ink:#171A21; --ink-2:#565E6E; --ink-3:#8B919E;
+    --line:#ECEEF2; --line-2:#E1E4EA;
+    --navy:#1F4E79; --royal:#2F5EFF; --cyan:#22D3EE; --maroon:#7D2E2E;
+    --teal:#3D7068; --green:#1F9D6B; --amber:#B7791F;
+    --grad:linear-gradient(135deg,#2F5EFF,#22D3EE);
+    --grad-soft:linear-gradient(135deg,#3B6BFF,#4F7BFF);
+    --r-sm:8px; --r:12px; --r-lg:16px; --r-xl:20px;
+    --sh-1:0 1px 2px rgba(20,23,33,.04);
+    --sh-2:0 1px 2px rgba(20,23,33,.04),0 8px 24px rgba(20,23,33,.06);
+    --sh-3:0 2px 6px rgba(20,23,33,.05),0 18px 48px rgba(20,23,33,.10);
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Pretendard',sans-serif;
+    --serif:'Source Serif 4','Noto Serif KR',Georgia,'Times New Roman',serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font);background:var(--page);color:var(--ink);overflow:hidden;
+    -webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv05","tnum";letter-spacing:-.006em}
+  .app{display:grid;grid-template-columns:60px minmax(380px,42%) 1fr;height:100vh}
+
+  /* ───── rail ───── */
+  .rail{background:linear-gradient(180deg,#16233B,#0E1726);display:flex;flex-direction:column;
+    align-items:center;padding:14px 0;gap:3px}
+  .rail .logo{width:34px;height:34px;border-radius:11px;background:var(--grad);margin-bottom:12px;
+    box-shadow:0 4px 12px rgba(47,94,255,.4)}
+  .rnew{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.1);color:#fff;
+    display:grid;place-items:center;cursor:pointer;margin-bottom:8px;transition:.18s}
+  .rnew:hover{background:rgba(255,255,255,.18)}
+  .ri{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:rgba(255,255,255,.5);
+    cursor:pointer;transition:.18s;position:relative}
+  .ri:hover{background:rgba(255,255,255,.08);color:#fff}
+  .ri.on{background:rgba(255,255,255,.12);color:#fff}
+  .ri.on::before{content:'';position:absolute;left:-7px;top:9px;bottom:9px;width:3px;border-radius:2px;background:var(--cyan)}
+  .rav{margin-top:auto;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#5A6B8C,#36425C);
+    display:grid;place-items:center;color:#fff;font-size:12px;font-weight:600}
+
+  /* ───── chat column ───── */
+  .chat{display:flex;flex-direction:column;background:var(--surface);border-right:1px solid var(--line);min-width:0}
+  .chead{display:flex;align-items:center;gap:11px;padding:15px 20px;border-bottom:1px solid var(--line)}
+  .chead .t{font-size:14px;font-weight:600;letter-spacing:-.01em}
+  .lockchip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;
+    background:rgba(31,78,121,.08);color:var(--navy);font-size:11.5px;font-weight:500}
+  .ring{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-3)}
+  .ring .bar{width:54px;height:6px;border-radius:3px;background:var(--line-2);overflow:hidden}
+  .ring .bar i{display:block;height:100%;width:62%;background:var(--grad);border-radius:3px}
+
+  .log{flex:1;overflow-y:auto;padding:22px 20px;display:flex;flex-direction:column;gap:18px}
+  .log::-webkit-scrollbar{width:9px}.log::-webkit-scrollbar-thumb{background:#dfe3ea;border-radius:5px;border:2px solid var(--surface)}
+  .uq{align-self:flex-end;max-width:80%;background:var(--grad-soft);color:#fff;border-radius:18px 18px 4px 18px;
+    padding:11px 15px;font-size:13.5px;line-height:1.55;box-shadow:0 4px 14px rgba(47,94,255,.22)}
+  .ai{display:flex;gap:12px;max-width:96%}
+  .ai .av{width:28px;height:28px;border-radius:9px;background:var(--grad);flex:none;margin-top:2px;box-shadow:var(--sh-1)}
+  .ai .col{min-width:0;flex:1}
+  .ai .say{font-size:13.5px;line-height:1.72;color:var(--ink)}
+  .ai .say .pin{color:var(--royal);font-weight:600}
+  .ai .say b{font-weight:600}
+
+  /* recommendation card */
+  .rec{margin-top:11px;border:1px solid var(--line-2);border-radius:var(--r-lg);background:var(--surface);
+    box-shadow:var(--sh-2);overflow:hidden}
+  .rec-h{display:flex;align-items:center;gap:11px;padding:14px 16px 6px}
+  .rec-h .ic{width:32px;height:32px;border-radius:10px;background:rgba(47,94,255,.1);color:var(--royal);
+    display:grid;place-items:center;font-size:15px}
+  .rec-h .t{font-size:14px;font-weight:600}
+  .rec-h .tag{margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--royal);
+    background:rgba(47,94,255,.08);border-radius:6px;padding:3px 8px}
+  .rec-why{padding:0 16px 14px 59px;font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+  .rec-act{display:flex;gap:8px;padding:0 14px 14px}
+  .b-primary{height:36px;padding:0 17px;border-radius:10px;border:none;cursor:pointer;background:var(--grad-soft);
+    color:#fff;font-family:inherit;font-size:12.5px;font-weight:600;box-shadow:0 4px 12px rgba(47,94,255,.25);transition:.18s}
+  .b-primary:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(47,94,255,.35)}
+  .b-ghost{height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--line-2);background:transparent;
+    color:var(--ink-2);font-family:inherit;font-size:12.5px;cursor:pointer;transition:.18s}
+  .b-ghost:hover{background:var(--surface-2);color:var(--ink)}
+
+  /* adopted result — stat table (navy/maroon, publication tone) */
+  .result{margin-top:11px;border:1px solid rgba(31,157,107,.22);border-radius:var(--r-lg);overflow:hidden;background:var(--surface)}
+  .result-h{display:flex;align-items:center;gap:8px;padding:11px 15px;font-size:12px;color:var(--green);font-weight:500;background:rgba(31,157,107,.05)}
+  .result-h .res{margin-left:auto;color:var(--ink-3);font-weight:400}
+  .stat{padding:14px 16px}
+  .stat .cap{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);font-weight:600;margin-bottom:8px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+  th{text-align:left;font-weight:600;color:var(--ink-2);padding:7px 10px;border-bottom:1.5px solid var(--line-2);font-size:11.5px}
+  td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--ink)}
+  td.r,th.r{text-align:right}
+  td .hr{font-weight:600;color:var(--maroon)}
+
+  /* inline figure card */
+  .figc{margin-top:11px;border:1px solid var(--line-2);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);box-shadow:var(--sh-1)}
+  .figc-h{display:flex;align-items:center;gap:9px;padding:11px 15px;border-bottom:1px solid var(--line);font-size:12.5px;font-weight:500}
+  .figc-h .eng{margin-left:auto;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);background:rgba(31,78,121,.07);border-radius:5px;padding:2px 7px}
+  .figc .cv{padding:16px 18px 8px;background:var(--surface)}
+  .figc .cap{padding:10px 15px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-2);line-height:1.5}
+  .figacts{display:flex;gap:6px;padding:0 13px 13px}
+  .chip{height:28px;padding:0 11px;border-radius:8px;border:1px solid var(--line-2);background:transparent;
+    color:var(--ink-2);font-family:inherit;font-size:11px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:.16s}
+  .chip:hover{background:var(--surface-2);color:var(--ink)}
+  .chip.p{background:var(--navy);border:none;color:#fff}
+
+  /* composer */
+  .composer{padding:14px 20px 18px;border-top:1px solid var(--line);background:var(--surface)}
+  .refbar{display:flex;align-items:center;gap:8px;margin-bottom:9px;padding:8px 12px;border-radius:11px;
+    background:var(--surface-2);border:1px solid var(--line);font-size:11.5px;color:var(--ink-2)}
+  .refbar .add{margin-left:auto;height:25px;padding:0 11px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);font-size:11px;cursor:pointer}
+  .cbox{border:1px solid var(--line-2);border-radius:16px;background:var(--surface);padding:13px 15px;
+    box-shadow:var(--sh-1);transition:.18s}
+  .cbox:focus-within{border-color:rgba(47,94,255,.4);box-shadow:0 0 0 3px rgba(47,94,255,.1)}
+  .cbox .ta{font-size:13.5px;color:var(--ink-3)}
+  .crow{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .ci{width:32px;height:32px;border-radius:50%;border:1px solid var(--line-2);background:transparent;color:var(--ink-3);display:grid;place-items:center;cursor:pointer}
+  .cpill{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface-2);color:var(--ink-2);font-size:12px;display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+  .csend{margin-left:auto;width:36px;height:36px;border-radius:50%;border:none;background:var(--grad);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(47,94,255,.3)}
+
+  /* ───── preview canvas ───── */
+  .canvas{display:flex;flex-direction:column;background:var(--page);min-width:0}
+  .ctop{display:flex;align-items:center;gap:12px;padding:13px 22px;border-bottom:1px solid var(--line);background:var(--surface)}
+  .seg{display:inline-flex;gap:2px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:3px}
+  .seg button{height:30px;padding:0 14px;border-radius:8px;border:none;background:none;color:var(--ink-2);font-family:inherit;font-size:12.5px;font-weight:500;cursor:pointer;transition:.16s}
+  .seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh-1)}
+  .ctop .meta{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
+  .ctop .exp{height:32px;padding:0 14px;border-radius:9px;border:none;background:var(--navy);color:#fff;font-size:12px;font-weight:500;cursor:pointer}
+  .cbody{flex:1;overflow-y:auto;padding:34px 40px;display:flex;justify-content:center}
+  .paper{width:100%;max-width:660px;background:var(--surface);border:1px solid var(--line);border-radius:6px;
+    box-shadow:var(--sh-3);padding:54px 60px;font-family:var(--serif)}
+  .paper .jr{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);font-weight:600;font-family:var(--font);margin-bottom:14px}
+  .paper h1{font-size:23px;line-height:1.3;font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
+  .paper .auth{font-size:12.5px;color:var(--ink-3);font-family:var(--font);margin-bottom:26px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .paper h2{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--royal);font-weight:600;font-family:var(--font);margin:24px 0 9px}
+  .paper p{font-size:14.5px;line-height:1.85;color:#23262e;margin-bottom:13px}
+  .paper p .cit{color:var(--royal);font-size:11px;vertical-align:super;font-family:var(--font)}
+  .pfig{margin:20px 0;border:1px solid var(--line);border-radius:10px;padding:16px 18px 10px;background:var(--surface-2)}
+  .pfig .fl{font-size:11px;color:var(--ink-3);font-family:var(--font);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- rail -->
+  <nav class="rail">
+    <div class="logo"></div>
+    <div class="rnew" title="새 연구"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+    <div class="ri on" title="Dashboard"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg></div>
+    <div class="ri" title="Projects"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="6" width="16" height="14" rx="2"/><path d="M9 3h6v3H9z"/></svg></div>
+    <div class="ri" title="Manuscripts"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z M14 3v6h6"/></svg></div>
+    <div class="ri" title="Analysis"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16 M7 16V9 M12 16V5 M17 16v-6"/></svg></div>
+    <div class="ri" title="Knowledge"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></svg></div>
+    <div class="rav">수</div>
+  </nav>
+
+  <!-- chat -->
+  <section class="chat">
+    <div class="chead">
+      <span class="t">흡연 × 심혈관질환</span>
+      <span class="lockchip">🔒 흡연→CVD · KNHANES</span>
+      <div class="ring">완결성 <div class="bar"><i></i></div> 62%</div>
+    </div>
+    <div class="log">
+      <div class="uq">국건영으로 흡연이랑 심혈관질환 보고 싶어</div>
+
+      <div class="ai"><div class="av"></div><div class="col">
+        <div class="say">주제를 <span class="pin">흡연 → 심혈관질환 (한국 성인)</span>으로 잡았습니다. 결정적인 건 순서예요 — 분석부터 달려들기 전에, <b>같은 분석이 이미 나왔는지</b>부터 확인하는 게 맞습니다.</div>
+        <div class="rec">
+          <div class="rec-h"><div class="ic">🔍</div><div class="t">신규성 확인 (PubMed 라이브)</div><div class="tag">추천</div></div>
+          <div class="rec-why">바로 통계로 가면 "이미 다 나온 주제"일 위험이 있어요. 먼저 갭을 잡아두면 이후 Results·Discussion 방향이 흔들리지 않습니다.</div>
+          <div class="rec-act"><button class="b-primary">네, 이대로 진행</button><button class="b-ghost">다른 방법 ▾</button></div>
+        </div>
+      </div></div>
+
+      <div class="ai"><div class="av"></div><div class="col">
+        <div class="say">갭이 명확합니다 — <span class="pin">성별 교호작용</span>이 비어 있어요. 그 갭을 그대로 분석으로 이었습니다.</div>
+        <div class="result">
+          <div class="result-h">✓ 채택 · 논문에 누적 — Cox 회귀 (aHR)<span class="res">p-interaction by sex = .03</span></div>
+          <div class="stat">
+            <div class="cap">Table 2 · adjusted hazard ratios</div>
+            <table>
+              <tr><th>Smoking status</th><th class="r">Events</th><th class="r">aHR (95% CI)</th><th class="r">P</th></tr>
+              <tr><td>Never (ref)</td><td class="r">412</td><td class="r">1.00</td><td class="r">—</td></tr>
+              <tr><td>Former</td><td class="r">298</td><td class="r"><span class="hr">1.28</span> (1.05–1.56)</td><td class="r">.01</td></tr>
+              <tr><td>Current</td><td class="r">521</td><td class="r"><span class="hr">1.74</span> (1.41–2.15)</td><td class="r">&lt;.001</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="figc">
+          <div class="figc-h">📈 Figure 1 · Kaplan–Meier<span class="eng">engine · lifelines</span></div>
+          <div class="cv">
+            <svg viewBox="0 0 560 230" width="100%" font-family="Inter">
+              <line x1="48" y1="14" x2="48" y2="196" stroke="#171A21" stroke-width="1.2"/><line x1="48" y1="196" x2="540" y2="196" stroke="#171A21" stroke-width="1.2"/>
+              <g stroke="#ECEEF2"><line x1="48" y1="60" x2="540" y2="60"/><line x1="48" y1="108" x2="540" y2="108"/><line x1="48" y1="152" x2="540" y2="152"/></g>
+              <g fill="#565E6E" font-size="10" text-anchor="end"><text x="40" y="200">.85</text><text x="40" y="156">.90</text><text x="40" y="112">.95</text><text x="40" y="64">1.0</text></g>
+              <polyline fill="none" stroke="#1F4E79" stroke-width="2.4" points="48,56 170,64 300,74 420,84 540,94"/>
+              <polyline fill="none" stroke="#3D7068" stroke-width="2.4" points="48,56 170,78 300,102 420,124 540,146"/>
+              <polyline fill="none" stroke="#7D2E2E" stroke-width="2.4" points="48,56 170,90 300,124 420,158 540,184"/>
+              <g font-size="10.5" fill="#171A21"><rect x="376" y="26" width="150" height="50" rx="7" fill="#fff" stroke="#ECEEF2"/>
+                <line x1="388" y1="38" x2="406" y2="38" stroke="#1F4E79" stroke-width="2.4"/><text x="412" y="41">Never smoker</text>
+                <line x1="388" y1="52" x2="406" y2="52" stroke="#3D7068" stroke-width="2.4"/><text x="412" y="55">Former</text>
+                <line x1="388" y1="66" x2="406" y2="66" stroke="#7D2E2E" stroke-width="2.4"/><text x="412" y="69">Current</text></g>
+              <text x="294" y="220" font-size="10.5" fill="#565E6E" text-anchor="middle">Follow-up (years)</text>
+            </svg>
+          </div>
+          <div class="cap"><b>Figure 1.</b> KM survival curves for incident CVD by smoking status. Log-rank P &lt; .001.</div>
+          <div class="figacts"><button class="chip p">⤵ 논문에 삽입</button><button class="chip">SVG</button><button class="chip">PNG 300dpi</button><button class="chip">↻ 재생성</button></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="composer">
+      <div class="refbar">@ 다른 프로젝트 작업 재사용<button class="add">Add reference</button></div>
+      <div class="cbox">
+        <div class="ta">Ask Medical Agent…  방향만 말하세요, 방법은 제가 제안합니다</div>
+        <div class="crow">
+          <button class="ci"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10a9 9 0 1 1-18 0V8a4 4 0 0 1 8 0v8a3 3 0 1 1-6 0V10"/></svg></button>
+          <button class="cpill">⚡ auto ▾</button>
+          <button class="ci"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/></svg></button>
+          <button class="csend"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- preview -->
+  <section class="canvas">
+    <div class="ctop">
+      <div class="seg">
+        <button class="on">Preview</button><button>Compare</button><button>Edit</button><button>Tables</button><button>Figures</button><button>Sources</button>
+      </div>
+      <span class="meta">manuscript · 3 / 8 sections</span>
+      <button class="exp">⤓ Export</button>
+    </div>
+    <div class="cbody">
+      <article class="paper">
+        <div class="jr">Original Research · Cardiovascular Epidemiology</div>
+        <h1>Smoking status and incident cardiovascular disease among Korean adults: a prospective cohort study</h1>
+        <div class="auth">KNHANES-linked cohort · N = 18,420 · 94,300 person-years · Cho-style draft</div>
+        <h2>Results</h2>
+        <p>In this cohort study of 18,420 Korean adults (mean age, 47.2 years) with 94,300 person-years of follow-up, current smoking was associated with a higher risk of incident cardiovascular disease (adjusted HR, 1.74; 95% CI, 1.41–2.15) compared with never smoking.<span class="cit">[12]</span></p>
+        <div class="pfig">
+          <svg viewBox="0 0 560 150" width="100%" font-family="Inter"><line x1="40" y1="10" x2="40" y2="128" stroke="#171A21"/><line x1="40" y1="128" x2="540" y2="128" stroke="#171A21"/>
+            <polyline fill="none" stroke="#1F4E79" stroke-width="2.2" points="40,30 180,38 340,48 540,58"/>
+            <polyline fill="none" stroke="#7D2E2E" stroke-width="2.2" points="40,30 180,58 340,90 540,118"/></svg>
+          <div class="fl"><b>Figure 1.</b> Kaplan–Meier survival curves by smoking status.</div>
+        </div>
+        <p>A dose-response relationship was observed across smoking-quantity tertiles (P for trend &lt; .001). The association was stronger among men than women (P for interaction = .03).<span class="cit">[13]</span></p>
+        <h2>Discussion</h2>
+        <p>In this large prospective cohort of Korean adults, smoking was independently associated with cardiovascular risk, consistent with prior evidence and extending it to a Korean population…</p>
+      </article>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('.seg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');});
+</script>
+</body>
+</html>

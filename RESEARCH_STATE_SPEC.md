@@ -98,6 +98,42 @@ failure: {type: context_reset, cause: project_state_not_loaded,
 
 ---
 
+## 1.6 ★ 프로젝트-위키 패러다임 (Karpathy LLM Wiki 패턴 차용 — RAG-from-scratch 탈피)
+
+> 흡수 출처: Karpathy llm-wiki 패턴(GPL — *코드 아님, 패러다임만*). 내 #1 실패(망각/재질문)의 근본 해법.
+> 핵심: **RAG처럼 매 턴 처음부터 재검색하지 말고, 프로젝트마다 *영속 위키*를 점진 축적하고 매 턴 읽어라.**
+
+### A. `purpose.md` = 프로젝트의 "왜" (objective + Decision Lock의 문서화)
+프로젝트마다 `data/projects/<id>/purpose.md`:
+```
+# Purpose
+objective: 청소년 흡연 시작연령과 심혈관 위험 프로파일 연관성
+key_questions: [용량-반응 있나, 성별 차이, 조기개입 함의]
+hypotheses: [조기 흡연일수록 위험 프로파일 악화]
+locked: {population: KYRBS, exposure: smoking_initiation_age, outcome: CV_risk_profile}
+forbidden: [do not revert to ZCB-depression, do not switch outcome to depression]
+```
+- **매 인제스트·매 질의·매 턴에 purpose.md를 system에 주입**(§1.5 매턴 강제로드와 동일물 — 통합). 같은 자료라도 *이 프로젝트 의도*로 분류.
+- 사용 누적되면 LLM이 purpose.md 갱신 *제안*(사용자 승인 후).
+
+### B. 영속 — 재추론 금지 (persist, don't re-infer)
+- 한 번 분석한 결과는 **위키 페이지로 영속**(entities/concepts/sources/synthesis). 다음 턴엔 *재검색이 아니라 그 페이지를 읽음* → 속도↑ + 일관성↑ + 토큰↓.
+- 인제스트 = **2단계 CoT**: ① 분석(엔티티·개념·기존과 모순·구조) → ② 생성(페이지·index·log). "이해"와 "정리" 분리로 품질↑. (현 단일단계 chunker 개선)
+- SHA256 증분 캐시 — 안 바뀐 자료 skip. (이미 oa_bulk_fetcher 방향)
+
+### C. 그래프 인사이트 = 신규성/빈틈 탐지 (내 지식그래프에 적용)
+- LLM Wiki의 **knowledge gaps / sparse communities / bridge nodes / surprising connections** = 내 `schema_v2` 그래프에 그대로 유용.
+- 특히 **"빈틈(gap) 탐지" = novelty 탐지**: 개념 간 연결이 희박한 곳 = 미연구 영역 = 논문 신규성 후보. (RESEARCH_PIPELINE novelty 단계 + KNOWLEDGE_ACQUISITION에 연결)
+
+### D. 컨텍스트 예산 통제 (curate, don't stuff)
+- 명시적 토큰 배분: **위키(state) 60% / 대화 20% / 인덱스 5% / 시스템 15%**. 무한정 쌓지 말고 우선순위로 자른다.
+- 이게 내가 반복한 "9층 핫패스 다이어트 / 컨텍스트 큐레이션"의 구체 수치 기준.
+
+> 통폐합 효과: RESEARCH_STATE(상태) + KNOWLEDGE_ACQUISITION(딥리서치) + schema_v2(그래프) + §1.5(Decision Lock)가
+> **"프로젝트=영속 위키"** 단일 패러다임으로 묶인다. 망각·재질문·재추론이 *구조적으로* 사라진다.
+
+---
+
 ## 2. 영속 · 트랜잭션 (Control Plane, 원자적 전이)
 
 - **Supabase = 컨트롤플레인**: `ma_research_state`(신규 테이블, 기존 `ma_drafts` 확장/대체) + `ma_checkpoints`. 로컬 JSON은 캐시/오프라인용.
