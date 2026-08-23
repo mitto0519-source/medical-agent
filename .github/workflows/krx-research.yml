@@ -2,6 +2,12 @@ name: KRX multi-year research
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - krx-data-split-20260821
+    paths:
+      - 'tools/krx_research_pipeline.py'
+      - '.github/workflows/krx-research.yml'
 
 permissions:
   contents: read
